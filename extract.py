@@ -2,11 +2,13 @@ import sys
 from extractors.common_core import CommonCoreExtractor
 from extractors.brewers_guide import BrewersGuideExtractor
 from extractors.familiar_things import FamiliarThingsExtractor
+from extractors.questions_1001 import Questions1001Extractor
 
 EXTRACTORS = {
     "common_core": CommonCoreExtractor,
     "brewers_guide": BrewersGuideExtractor,
     "familiar_things": FamiliarThingsExtractor,
+    "1001_questions": Questions1001Extractor,
 }
 
 if __name__ == "__main__":
