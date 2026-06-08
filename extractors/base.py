@@ -103,6 +103,24 @@ class ChemistryExtractor(CatechismExtractor):
         return '\n\n'.join(paragraphs)
 
 
+class BotanyExtractor(CatechismExtractor):
+    """
+    Botany catechism. Numbered questions ('Q. 1. text'); '@.' OCRs as 'Q.' in places.
+    Heavy OCR-garbage preamble (~450 lines) before Q&A content begins.
+    """
+    def preprocess(self, text):
+        first_q = re.search(r'(?m)^Q\. \d+\.', text)
+        if first_q:
+            text = text[first_q.start():]
+        text = re.sub(r'^@\.', 'Q.', text, flags=re.MULTILINE)
+        text = re.sub(r'^Q\. \d+\. ', 'Q. ', text, flags=re.MULTILINE)
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
+        return '\n\n'.join(paragraphs)
+
+
 class EthicsExtractor(CatechismExtractor):
     """
     Ethics catechism. Questions prefixed 'N. Q.' (number then Q.); answers prefixed 'A.'.

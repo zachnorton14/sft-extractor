@@ -2,6 +2,7 @@ import sys
 from extractors.base import (
     AgricultureExtractor,
     AstronomyExtractor,
+    BotanyExtractor,
     BrewersGuideExtractor,
     ChemistryExtractor,
     CivilWarExtractor,
@@ -30,6 +31,7 @@ EXTRACTORS = {
     "symbological": SymbologicalExtractor,
     "agriculture": AgricultureExtractor,
     "astronomy": AstronomyExtractor,
+    "botany": BotanyExtractor,
     "chemistry": ChemistryExtractor,
     "civil_war": CivilWarExtractor,
     "constitution": ConstitutionExtractor,
