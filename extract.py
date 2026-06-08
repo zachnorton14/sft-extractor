@@ -1,12 +1,15 @@
 import sys
 from extractors.base import (
+    AgricultureExtractor,
     AstronomyExtractor,
     BrewersGuideExtractor,
     ChemistryExtractor,
     CommonCoreExtractor,
+    EngineeringExtractor,
     FamiliarThingsExtractor,
     InvestorsExtractor,
     LaborersExtractor,
+    MusicExtractor,
     Questions1001Extractor,
     StokersExtractor,
     SymbologicalExtractor,
@@ -20,9 +23,12 @@ EXTRACTORS = {
     "1001_questions": Questions1001Extractor,
     "stokers": StokersExtractor,
     "symbological": SymbologicalExtractor,
+    "agriculture": AgricultureExtractor,
     "astronomy": AstronomyExtractor,
     "chemistry": ChemistryExtractor,
+    "engineering": EngineeringExtractor,
     "investors": InvestorsExtractor,
+    "music": MusicExtractor,
     "laborers": LaborersExtractor,
     "world_history": WorldHistoryExtractor,
 }

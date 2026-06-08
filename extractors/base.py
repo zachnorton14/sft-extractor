@@ -103,6 +103,68 @@ class ChemistryExtractor(CatechismExtractor):
         return '\n\n'.join(paragraphs)
 
 
+class EngineeringExtractor(CatechismExtractor):
+    """
+    Engineering catechism. Standard Q./A. format with OCR hyphens and page headers.
+    """
+    def preprocess(self, text):
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
+        return '\n\n'.join(paragraphs)
+
+
+class MusicExtractor(BaseExtractor):
+    """
+    Music catechism. Questions are plain lines ending with '?', answers follow after a blank line.
+    No Q./A. markers. Page headers and section titles are interspersed.
+    """
+    def extract_pairs(self, text):
+        text = strip_gutenberg_boilerplate(text)
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
+        text = '\n\n'.join(paragraphs)
+
+        pattern = re.compile(r'^([^\n]+\?\.?)\n\n(.+?)(?=\n\n[^\n]+\?|\Z)', re.MULTILINE | re.DOTALL)
+
+        pairs = []
+        for q_text, a_text in pattern.findall(text):
+            question = re.sub(r" {2,}", " ", q_text.strip())
+            answer = re.sub(r" {2,}", " ", a_text.strip().replace("\n", " "))
+            if question and answer:
+                pairs.append({"q": question, "a": answer})
+
+        return pairs
+
+
+class AgricultureExtractor(BaseExtractor):
+    """
+    Agriculture catechism. Numbered questions ('1. What is X?') followed by answer paragraphs.
+    Section headers and OCR hyphens are interspersed.
+    """
+    def extract_pairs(self, text):
+        text = strip_gutenberg_boilerplate(text)
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+
+        pattern = re.compile(r"^\s*(\d+)\.\s+(.+?)(?=^\s*\d+\.\s+|\Z)", re.MULTILINE | re.DOTALL)
+
+        pairs = []
+        for _num, block in pattern.findall(text):
+            idx = block.rfind("?")
+            if idx == -1:
+                continue
+            question = re.sub(r" {2,}", " ", block[:idx + 1].strip().replace("\n", " "))
+            answer = re.sub(r" {2,}", " ", block[idx + 1:].strip().replace("\n", " "))
+            if question and answer:
+                pairs.append({"q": question, "a": answer})
+
+        return pairs
+
+
 def _is_symbological_header(paragraph):
     """
     Detect if a paragraph is a header like 'Question 1.' or 'Q.1' that should be removed before parsing.
