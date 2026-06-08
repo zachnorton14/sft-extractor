@@ -103,6 +103,45 @@ class ChemistryExtractor(CatechismExtractor):
         return '\n\n'.join(paragraphs)
 
 
+class ConstitutionExtractor(CatechismExtractor):
+    """
+    Constitution catechism. Standard Q./A. format; OCR renders Q. as '<£,' in places.
+    Inline page numbers and hyphenation artifacts present.
+    """
+    def preprocess(self, text):
+        text = re.sub(r'<£,', 'Q.', text)
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        text = re.sub(r'^\d+\s*$', '', text, flags=re.MULTILINE)
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p.strip() for p in paragraphs if p.strip()]
+        return '\n\n'.join(paragraphs)
+
+
+class CivilWarExtractor(BaseExtractor):
+    """
+    Civil War Q&A. Questions marked 'Q. —', answers marked 'A. —' (with em-dash).
+    Multi-paragraph answers, OCR hyphens, and 'Questions and Answers' page headers.
+    """
+    def extract_pairs(self, text):
+        text = strip_gutenberg_boilerplate(text)
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        text = re.sub(r'^Questions and Answers\s*$', '', text, flags=re.MULTILINE | re.IGNORECASE)
+        text = re.sub(r'\n{3,}', '\n\n', text)
+
+        pattern = re.compile(r'Q\. [—\-]\s+(.+?)\n\nA\. [—\-]\s+(.+?)(?=\n\nQ\. [—\-]|\Z)', re.DOTALL)
+
+        pairs = []
+        for q_text, a_text in pattern.findall(text):
+            question = re.sub(r'\s+', ' ', q_text.strip())
+            answer = re.sub(r'\s+', ' ', a_text.strip())
+            if question and answer:
+                pairs.append({"q": question, "a": answer})
+
+        return pairs
+
+
 class EngineeringExtractor(CatechismExtractor):
     """
     Engineering catechism. Standard Q./A. format with OCR hyphens and page headers.
