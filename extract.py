@@ -4,6 +4,7 @@ from extractors.base import (
     CommonCoreExtractor,
     FamiliarThingsExtractor,
     InvestorsExtractor,
+    LaborersExtractor,
     Questions1001Extractor,
     StokersExtractor,
     SymbologicalExtractor,
@@ -18,6 +19,7 @@ EXTRACTORS = {
     "stokers": StokersExtractor,
     "symbological": SymbologicalExtractor,
     "investors": InvestorsExtractor,
+    "laborers": LaborersExtractor,
     "world_history": WorldHistoryExtractor,
 }
 

@@ -190,6 +190,49 @@ class StokersExtractor(BaseExtractor):
         return pairs
 
 
+class LaborersExtractor(BaseExtractor):
+    """
+    The Laborer's Catechism. Format: each paragraph is a complete Q&A block: 'Question? Answer.'
+    Page headers and lesson titles are interspersed as noise. OCR hyphens span across page breaks.
+    """
+    def extract_pairs(self, text):
+        text = strip_gutenberg_boilerplate(text)
+        # Fix OCR hyphens: across page breaks and within lines
+        text = re.sub(r'(\w)-\s*\n+\s*(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        text = re.sub(r'\n{3,}', '\n\n', text)
+        # Drop front matter before first question
+        first_q = re.search(r'\n\n(?:Has |What |Who |How |Why |Does |Is |Are |By |Do |Can |If )', text)
+        if first_q:
+            text = text[first_q.start():]
+        # Strip header paragraphs (lesson headers and short mostly-uppercase page titles)
+        paragraphs = re.split(r'\n\n+', text)
+        filtered = []
+        for p in paragraphs:
+            stripped = p.strip()
+            if not stripped:
+                continue
+            if re.match(r'^LESSON\s+[IVX]+', stripped):
+                continue
+            alpha = sum(1 for c in stripped if c.isalpha())
+            upper = sum(1 for c in stripped if c.isupper())
+            if alpha > 0 and upper / alpha > 0.65 and len(stripped) < 60:
+                continue
+            filtered.append(stripped)
+
+        pairs = []
+        for p in filtered:
+            if '?' not in p:
+                continue
+            idx = p.index('?')
+            question = re.sub(r'\s+', ' ', p[:idx + 1].strip())
+            answer = re.sub(r'\s+', ' ', p[idx + 1:].strip())
+            if question and answer:
+                pairs.append({"q": question, "a": answer})
+
+        return pairs
+
+
 class InvestorsExtractor(BaseExtractor):
     """
     The Investor's Catechism. Format: 'What is TERM ?' / answer, similar to FamiliarThings.
