@@ -1,9 +1,13 @@
 import sys
-from extractors.common_core import CommonCoreExtractor
-from extractors.base import BrewersGuideExtractor, SymbologicalExtractor
-from extractors.familiar_things import FamiliarThingsExtractor
-from extractors.questions_1001 import Questions1001Extractor
-from extractors.stokers import StokersExtractor
+from extractors.base import (
+    BrewersGuideExtractor,
+    CommonCoreExtractor,
+    FamiliarThingsExtractor,
+    Questions1001Extractor,
+    StokersExtractor,
+    SymbologicalExtractor,
+    WorldHistoryExtractor,
+)
 
 EXTRACTORS = {
     "common_core": CommonCoreExtractor,
@@ -12,6 +16,7 @@ EXTRACTORS = {
     "1001_questions": Questions1001Extractor,
     "stokers": StokersExtractor,
     "symbological": SymbologicalExtractor,
+    "world_history": WorldHistoryExtractor,
 }
 
 if __name__ == "__main__":

@@ -179,3 +179,36 @@ class StokersExtractor(BaseExtractor):
                 pairs.append({"q": question, "a": answer})
 
         return pairs
+
+
+class WorldHistoryExtractor(BaseExtractor):
+    """
+    Catechism of Universal History. Format: 'N. Q. question' / 'A. answer'.
+    Q. sometimes OCRs as Q,. or Q,.. Single-line items ('N. Q. question? A. answer.')
+    also occur. Standalone page numbers and CHAP. headers are interspersed as noise.
+    """
+    def extract_pairs(self, text):
+        # Fix OCR hyphens
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        # Strip standalone page numbers and short OCR artifacts between blank lines
+        text = re.sub(r'\n\n\d{1,3}\n\n', '\n\n', text)
+        text = re.sub(r'\n\n[a-zA-Z]{1,2}\n\n', '\n\n', text)
+        # Strip CHAP. header lines
+        text = re.sub(r'\n\nCHAP\.[^\n]*\n\n', '\n\n', text)
+        # Normalize single-line Q&A: "N. Q. question? A. answer" → two paragraphs
+        text = re.sub(r'^(\d+\.\s+Q[.,]+\s+.+?\?)\s+(A\.\s+)', r'\1\n\n\2', text, flags=re.MULTILINE)
+
+        pattern = re.compile(
+            r'^\d+\.\s+Q[.,]+\s+(.+?)\n\nA\.\s+(.+?)(?=\n\n\d+\.\s+Q[.,]|\Z)',
+            re.MULTILINE | re.DOTALL
+        )
+
+        pairs = []
+        for q_text, a_text in pattern.findall(text):
+            question = re.sub(r" {2,}", " ", q_text.strip().replace("\n", " "))
+            answer = re.sub(r" {2,}", " ", a_text.strip().replace("\n", " "))
+            if question and answer:
+                pairs.append({"q": question, "a": answer})
+
+        return pairs
