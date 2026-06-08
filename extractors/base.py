@@ -103,6 +103,21 @@ class ChemistryExtractor(CatechismExtractor):
         return '\n\n'.join(paragraphs)
 
 
+class EthicsExtractor(CatechismExtractor):
+    """
+    Ethics catechism. Questions prefixed 'N. Q.' (number then Q.); answers prefixed 'A.'.
+    OCR hyphens and page headers interspersed.
+    """
+    def preprocess(self, text):
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        text = re.sub(r'^\d+\. Q\.', 'Q.', text, flags=re.MULTILINE)
+        text = re.sub(r'^A[,;]', 'A.', text, flags=re.MULTILINE)
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
+        return '\n\n'.join(paragraphs)
+
+
 class ElectricityExtractor(BaseExtractor):
     """
     Electrical catechism. Numbered questions ('1. What is X?') with answers in the next paragraph(s).
