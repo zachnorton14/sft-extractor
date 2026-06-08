@@ -103,6 +103,59 @@ class ChemistryExtractor(CatechismExtractor):
         return '\n\n'.join(paragraphs)
 
 
+class ElectricityExtractor(BaseExtractor):
+    """
+    Electrical catechism. Numbered questions ('1. What is X?') with answers in the next paragraph(s).
+    Unlike Agriculture/CommonCore, Q and A are in separate paragraphs rather than a single block.
+    """
+    def extract_pairs(self, text):
+        text = strip_gutenberg_boilerplate(text)
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
+        text = '\n\n'.join(paragraphs)
+
+        blocks = re.split(r'(?m)^\s*\d+\.\s+', text)
+
+        pairs = []
+        for block in blocks:
+            if '?' not in block:
+                continue
+            idx = block.index('?')
+            question = re.sub(r'\s+', ' ', block[:idx + 1].strip())
+            answer = re.sub(r'\s+', ' ', block[idx + 1:].strip())
+            if question and answer:
+                pairs.append({"q": question, "a": answer})
+
+        return pairs
+
+
+class MythologyExtractor(BaseExtractor):
+    """
+    Mythology catechism. Questions marked with '(1)', '(2)', etc.; answers follow after a blank line.
+    No answer marker — purely positional. Multi-line questions and answers.
+    """
+    def extract_pairs(self, text):
+        text = strip_gutenberg_boilerplate(text)
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
+        text = '\n\n'.join(paragraphs)
+
+        pattern = re.compile(r'^\(\d+\)\s+(.+?)\n\n(.+?)(?=^\(\d+\)|\Z)', re.MULTILINE | re.DOTALL)
+
+        pairs = []
+        for q_text, a_text in pattern.findall(text):
+            question = re.sub(r'\s+', ' ', q_text.strip())
+            answer = re.sub(r'\s+', ' ', a_text.strip())
+            if question and answer:
+                pairs.append({"q": question, "a": answer})
+
+        return pairs
+
+
 class ConstitutionExtractor(CatechismExtractor):
     """
     Constitution catechism. Standard Q./A. format; OCR renders Q. as '<£,' in places.
