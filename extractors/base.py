@@ -143,6 +143,27 @@ class SchoolBulletinExtractor(BaseExtractor):
         return pairs
 
 
+class GrammarExtractor(CatechismExtractor):
+    """
+    Grammar catechism. 4457-line preamble before Q&A section. OCR garbled the question
+    marker to '^;' / '^:' and answer marker to 'A:'. Single-line Q&As need splitting.
+    """
+    def preprocess(self, text):
+        qa_start = re.search(r'QUESTIONS AND ANSWERS', text)
+        if qa_start:
+            text = text[qa_start.start():]
+        text = re.sub(r'\[\d+\]', '', text)
+        text = re.sub(r'^\^[;:.*]+\s*', 'Q. ', text, flags=re.MULTILINE)
+        text = re.sub(r'^A:\s*', 'A. ', text, flags=re.MULTILINE)
+        text = re.sub(r'^(Q\. .+?\?) (A\. )', r'\1\n\n\2', text, flags=re.MULTILINE)
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
+        return '\n\n'.join(paragraphs)
+
+
+
 class LogicExtractor(CatechismExtractor):
     """
     Logic catechism. Severe extra-space OCR ('Q.  What  is  the  difference').
