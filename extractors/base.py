@@ -103,6 +103,46 @@ class ChemistryExtractor(CatechismExtractor):
         return '\n\n'.join(paragraphs)
 
 
+class NewYorkBarExtractor(CatechismExtractor):
+    """
+    NY Bar Exam study guide. Standard Q./A. catechism with OCR hyphens and topic headers.
+    """
+    def preprocess(self, text):
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
+        return '\n\n'.join(paragraphs)
+
+
+class SchoolBulletinExtractor(BaseExtractor):
+    """
+    Dime Question Book. Numbered questions with 'Ans.' or 'Ans—' answer marker.
+    Multi-paragraph answers; OCR hyphens and inline page headers.
+    """
+    def extract_pairs(self, text):
+        text = strip_gutenberg_boilerplate(text)
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
+        text = '\n\n'.join(paragraphs)
+
+        pattern = re.compile(
+            r'^\s*\d+\.\s+(.+?)\n\nAns[.\-—]+\s*(.+?)(?=^\s*\d+\.|\Z)',
+            re.MULTILINE | re.DOTALL,
+        )
+
+        pairs = []
+        for q_text, a_text in pattern.findall(text):
+            question = re.sub(r'\s+', ' ', q_text.strip())
+            answer = re.sub(r'\s+', ' ', a_text.strip().lstrip('—–-'))
+            if question and answer:
+                pairs.append({"q": question, "a": answer})
+
+        return pairs
+
+
 class LogicExtractor(CatechismExtractor):
     """
     Logic catechism. Severe extra-space OCR ('Q.  What  is  the  difference').
