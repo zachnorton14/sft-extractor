@@ -1,6 +1,16 @@
 import json
 import re
 
+_GUTENBERG_END = re.compile(r'\*{3}\s*END\b.*', re.DOTALL)
+
+def strip_gutenberg_boilerplate(text, stop_markers=None):
+    text = _GUTENBERG_END.split(text)[0]
+    if stop_markers:
+        for marker in stop_markers:
+            text = text.split(marker)[0]
+    return text
+
+
 class BaseExtractor:
     """
     Base class for extractors. Subclasses should implement the extract_pairs method to return a list of
@@ -123,8 +133,7 @@ class FamiliarThingsExtractor(BaseExtractor):
     should be included in the answer text.
     """
     def extract_pairs(self, text):
-        # Format: single line ending with '?' followed by blank line then answer
-        # Answers may include indented glossary definitions
+        text = strip_gutenberg_boilerplate(text, stop_markers=['\nINDEX.'])
         pattern = re.compile(r'^([^\n]+\?)\n\n(.+?)(?=\n\n[^\n]+\?|\Z)', re.MULTILINE | re.DOTALL)
 
         pairs = []
@@ -174,6 +183,38 @@ class StokersExtractor(BaseExtractor):
         pairs = []
         for q_text, a_text in pattern.findall(text):
             question = re.sub(r" {2,}", " ", q_text.strip().replace("\n", " "))
+            answer = re.sub(r" {2,}", " ", a_text.strip().replace("\n", " "))
+            if question and answer:
+                pairs.append({"q": question, "a": answer})
+
+        return pairs
+
+
+class InvestorsExtractor(BaseExtractor):
+    """
+    The Investor's Catechism. Format: 'What is TERM ?' / answer, similar to FamiliarThings.
+    Key terms appear in ALL CAPS in questions and are lowercased on extraction.
+    Front matter (index) precedes the content; page headers are interspersed as noise.
+    """
+    _PAGE_HEADER = re.compile(r'\n\n[\w]+ THE INVESTOR\'S CATECHISM[\w ]*\n\n|\n\nTHE INVESTOR\'S CATECHISM[\w ]*\n\n')
+
+    def extract_pairs(self, text):
+        text = strip_gutenberg_boilerplate(text)
+        # Drop everything before the first question
+        first_q = re.search(r'\nWhat ', text)
+        if first_q:
+            text = text[first_q.start():]
+        # Strip page headers
+        text = self._PAGE_HEADER.sub('\n\n', text)
+        # Normalize single-line Q&A: "What is X? Answer." → two paragraphs
+        text = re.sub(r'^(What [^\n]+?\?)\s+([A-Z])', r'\1\n\n\2', text, flags=re.MULTILINE)
+
+        pattern = re.compile(r'^(What [^\n]+\?)\n\n(.+?)(?=\nWhat |\Z)', re.MULTILINE | re.DOTALL)
+
+        pairs = []
+        for q_text, a_text in pattern.findall(text):
+            question = re.sub(r'\b([A-Z]{2,})\b', lambda m: m.group().lower(), q_text.strip())
+            question = re.sub(r" {2,}", " ", question)
             answer = re.sub(r" {2,}", " ", a_text.strip().replace("\n", " "))
             if question and answer:
                 pairs.append({"q": question, "a": answer})
