@@ -1,0 +1,3903 @@
+
+
+^  1   ir^  "a 
+
+
+>j,OFCMIF0;?^ 
+
+
+,-\\\EUNIVERy/A 
+
+
+^<I/OJ11V3JO^  <ril33NVS01^ 
+
+
+< 
+
+
+s    ^ 
+
+
+o 
+
+
+^lOSANCElfj-^ 
+o 
+
+
+(5 
+
+
+^HIBRARYQ^ 
+
+
+^(!/OJnV0JO^ 
+^OFCAIIFO/?^      ^OFCALIF 
+
+
+^^AyviiaiT# 
+
+
+^^HIBRARYOc 
+
+
+>* 
+
+
+^\^EUNIVERS'//> 
+
+
+'A- 
+
+
+-^IUBRATOa,       ^t•llBRARYQ^ 
+
+
+'^<!/0ailV3'JO'^ 
+
+
+^OFCAIIFOMi^^ 
+
+
+^'^AdvaaiH^      ^^Ayvaan-^^ 
+
+
+,ii:' 
+
+
+\WFl)NIVERS/A        vvlOSANCElFX;> 
+
+
+I 
+
+
+,^WE■UN1VER% 
+
+
+'^■sm'mm'^ 
+
+
+^aiMNn-iu"^^ 
+
+
+.vVOSANCElfj^^ 
+
+
+%a3AINfl-3WV^ 
+
+
+6> 
+
+
+vr. 
+
+
+-^^HIBRARYO^^       ^tl!BRARYa<'  ^^WEUNIVEl 
+
+
+PINNOCK'S  CATECHISMS. 
+
+
+CATECHISM 
+
+
+LOGIC. 
+
+
+SEVENTH   EDITION,  REVISED  AND   ALTERED. 
+
+
+LONDON : 
+WHITTAKER,  TREACHER,  AND  CO. 
+
+
+AVC-MARIA   LANE. 
+
+
+1S22. 
+
+
+A 
+
+CATF.CHiSM  OF  LOGIC. 
+
+CHAPTER  I. 
+
+INTRODUCTION. 
+
+Qaesllon.     What  is  Logic? 
+
+Answer.  Logic  is  the  science  that  instructs  us  in 
+the  principles  on  which  reasoning  is  founded ;  it  is 
+also  the  art  of  applying  those  principles  rightly  in 
+conducting  an  argument, 
+
+Q.  What  is  the  ditierence  between  science  and  art  ? 
+
+A.  A  science  is  a  systematic  arrangement  of  facts, 
+and  is  tlicrefore  hxoidedge  simply ;  an  art  teaches  the 
+application  of  that  knowledge  to  practical  purposes. 
+
+Q.  How  does  the  science  of  Logic  differ  from 
+INJetaphysics,  or  the  science  of  mind  ? 
+
+A.  jMetaphysics  treats  of  the  nature  of  mind  gene- 
+rally. Logic  only  regards  those  mental  faculties  which 
+are  concerned  in  reasoning. 
+
+Q.  Hov/  does  the  art  of  Logic  differ  from  the  arS 
+of  Rhetoric  ? 
+
+A.  The  object  of  Logic  is  to  convince,  that  of 
+Rhetoric  to  persuade  :  ])y  Logic,  a  thing  is  shown  to 
+
+2024810 
+
+
+2  CATECHISM    OF    LOGIC. 
+
+be  right  and  good ;  by  Rhetoric,  motives  are  supplied 
+for  choosing  that  whose  goodness  and  rectitude  has 
+been  demonstrated  :  finally.  Logic  addresses  itself 
+solely  to  the  understanding ;  Rhetoric,  for  the  most 
+part,  to  the  feelings  and  passions. 
+
+Q.  Is  Logic  a  useful  branch  of  learning? 
+
+A.  Few  studies  have  greater  claims  upon  our  atten- 
+tion, since  it  enables  us  to  dispose  our  own  arguments 
+so  as  to  produce  conviction,  and  to  detect  the  false 
+reasoning  of  others. 
+
+Q.  But  do  we  not  find  persons  ignorant  of  Logic 
+reason  correctly  ? 
+
+A.  Certainly ;  and  we  also  find  persons  ignorant  of 
+grammar  ^^'ho  speak  and  write  with  tolerable  correct- 
+ness ;  but  men  would  both  speak  and  reason  better  if 
+they  were  aided  by  useful  rules  for  their  direction, 
+and  were  acquainted  with  the  principles  on  which 
+these  rules  are  founded. 
+
+Q.  By  whom  was  Logic  invented  ? 
+
+A.  By  Zeno  of  Elea,  whose  principal  design  was  to 
+assist  the  Grecian  philosophers  in  the  disputes  which 
+they  incessantly  maintained. 
+
+Q.  Why  then  is  Aristotle  usually  esteemed  the  in- 
+ventor of  Logic  ? 
+
+A.  He  first  reduced  the  whole  into  an  orderly  sys- 
+tem, and  added  so  many  inventions  of  his  own  as  to 
+make  it  appear  altogether  a  new  art. 
+
+Q.  Why  has  the  study  of  Logic  been  so  much 
+neglected  ? 
+
+A.  The  followers  of  Aristotle  asserted,  that  Logic 
+M-as  not  only  the  best,  but  the  only  means  for  dis~ 
+coverinrj  truth, — a  purpose  to  which  it  is  scarcely 
+aj)plicable  ]  and  when  the  falsehood  of  this  claim  was 
+
+
+CATECHISM    OF    LOGIC.  S 
+
+etected,  tlie  world  ran  into  the  other  extreme,  and 
+laid  aside  the  entire  art  as  useless. 
+
+Q.  Might  not  another  reason  be  assigned  ? 
+A.  Yes ;  there  is  scarcely  any  study  which  requires 
+so  much  preparation  before  the  learner  can  perceive 
+its  real  utility :  when  people,  therefore,  cannot  per- 
+ceive some  immediate  benefit  resulting  from  their 
+application,  they  fancy  that  further  perseverance 
+would  be  a  useless  waste  of  time ;  acting  as  absurdly 
+as  the  husbandman  in  the  fable,  who  resigned  the 
+culture  of  his  lands  altogether,  because  corn  did  not 
+appear  immediately  after  his  field  was  ploughed. 
+
+
+CHAPTER  II. 
+
+Ideas  and  Terms. 
+
+Q.  What  are  the  principal  mental  operations  or 
+faculties  to  which  our  attention  is  directed  in  Logic  ? 
+
+A.  There  are  three  principal  faculties  regarded  by 
+Logic ;  1.  Simple  Apprehension,  by  which  we  receive 
+ideas ;  2.  Judgment,  by  which  we  compare  those 
+ideas  ;  and  3.  Reasoning,  by  which  we  deduce  in- 
+ferences from  those  comparisons. 
+
+Q.  ^^llat  is  an  idea  ? 
+
+A,  The  immediate  object  of  the  mind  in  thought ; 
+— that  vrhich  is  present  to  our  mind  when  we  think 
+of  any  thing. 
+
+Q.  What  is  apprehension  ? 
+
+A.  The  faculty  by  which  we  conceive  any  thing  in 
+our  minds  :  it  is  analogous  to  perception  in  the  body. 
+
+Q.  How  is  apprehension  divided  ? 
+
+A.  Into  two  kinds;  simple  and  complex. 
+B  2 
+
+
+4  CATECHISM    OF    LOGIC* 
+
+Q.  How  do  these  differ  ?  ^ 
+
+J.  When  we  conceive  objects  separately,  without 
+taking  into  account  any  relation  or  connection  be- 
+tween them ;  the  appreliension  is  simple,  as  of  "  a 
+man,"  "a  horse,"  "cards;"  but  if  two  or  more 
+ideas,  between  which  there  is  relation  or  connection, 
+be  considered,  the  apprehension  is  complex,  as  of 
+"  a  horseman,"  "  a  pack  of  cards,"  &c. 
+
+Q,  What  is  a  term  ? 
+
+A.  It  is  a  word  expressing  an  idea;  and  it  is  so 
+called,  because  it  terminates,  or  marks  out  the  limits 
+of  the  idea. 
+
+O.  Hov/  are  terms  divided  ? 
+
+A.  Into  singular  and  universal. 
+
+Q.  What  is  a  singular  term  ? 
+
+A.  A  singular  term  (called  by  grammarians  d. 
+proper  name),  is  that  which  can  only  be  applied  to 
+one  thing  in  the  same  sense.  The  single  thing  is 
+called  an  individual. 
+
+Q.  "Why  is  it  named  an  individual  ? 
+
+A.  Because  it  cannot  be  divided  into  things  of  the 
+same  sort  or  species.  Thus,  (to  use  an  old  illustra- 
+tion), a  leg  of  mutton  is  an  individual,  for  though  it 
+may  be  divided  into  portions,  it  cannot  be  divided 
+into  legs  of  mutton. 
+
+Q.  What  is  a  imiversal  term  ? 
+
+A.  That  which  can  be  applied  to  several  things  in 
+the  same  sense,  as  **  man,"  "  horse,"  "  star." 
+
+Q.  Are  not  the  same  singular  terms  frequently 
+applied  to  several  different  individuals  ? 
+
+A.  Yes ;  but  never  in  the  same  sense ;  Peter  the 
+(ircat,  and  Peter  tlie  Hermit,  have  the  same  proper 
+name,   hut  it  is  not  given  to  them  in  the  sense  of 
+
+
+CATECHISM    OF    LOGIC.  5 
+
+identity,  such  as  when  we  give  the  title  of  man  to 
+b-ath  these  indivifkials ;  a  Roman  general,  a  black 
+servant,  and  a  pet  dog,  may  be  each  named  Pompey, 
+but  the  resemblance  of  name  only  results  from  acci- 
+dent, which  is  not  the  case  when  we  say  that  the 
+three  individuals  are  animals. 
+
+
+CHAPTER   III. 
+
+Mfitr action,  S^-c. 
+
+Q.  "What  are  the  most  remarkable  affections  of 
+properties  of  terms  ? 
+
+A.  Comprehension  and  Extension. 
+
+Q.  What  is  the  comprehension  of  a  term  ? 
+
+A.  It  is  the  aggregate  of  all  the  simpler  ideas, 
+which,  together,  make  up  the  complex  idea,  signified 
+by  that  term. 
+
+Q.  ^Yhat  is  the  extension  of  a  term  ? 
+
+A.  It  is  the  aggregate  of  all  the  individuals  of 
+which  that  term  may  be  severally  predicated  or  af- 
+firaied. 
+
+Q.  Can  you  give  any  instance  ? 
+
+A.  The  comprehension  of  the  term  ''man"  in- 
+cludes the  ideas  of  "  substance,  form,  life,  sensation, 
+reason,"  &c. ;  because  these  simple  ideas  make  up 
+the  complex  notion  of  man :  the  extension  of  the 
+term  man  is  the  individuals  James,  John,  Richard, 
+&c.,  for  to  each  of  these  the  name  man  can  be  ap- 
+plied. 
+
+Q.  In  what  are  comprehension  and  extension  alike? 
+
+A.  They  are  both  aggregates  or  collections. 
+
+Q.  How  do  they  differ  ? 
+B  3 
+
+
+6  CATECHISM    OF    LOGIC. 
+
+J.  The  parts  of  comprehension  are  ideas,  and 
+taken  collectively;  the  parts  of  extension  are  indi- 
+viduals, and  taken  separately :  the  complex  notion  is 
+changed  if  any  of  the  parts  of  comprehension  be 
+removed ;  no  alteration  is  made  by  the  destruction  of 
+the  parts  of  extension. 
+
+Q.  How  are  universal  terms  formed  ? 
+
+A.  Terms  become  universal  by  being  made  the 
+r.ames  of  universal  ideas ;  ideas  become  universal  by 
+al5straction. 
+
+Q.  V>liat  is  Abstraction  ? 
+
+A.  The  consideration  of  attributes  common  to  se- 
+veral individuals ;  separating  from  them  those  which 
+are  peculiar  to  a  single  individual,  but  which  always 
+accompany  them  in  real  existence. 
+
+Q.  Can  you  explain  this  more  clearly  by  an  ex- 
+ample ? 
+
+A.  The  complex  notion  of  any  particular  man, 
+formed  in  the  mind,  contains  the  simpler  ideas  of 
+substance,  life,  reason,  &c.,  together  with  the  ideas 
+of  a  particular  form,  and  countenance,  and  existence, 
+in  a  certain  time  and  i)lace:  these  latter  simpler 
+ideas,  or  attributes,  belong  to  that  individual  alone, 
+and  distinguish  him  from  all  others ;  but  the  attri- 
+butes of  substance,  body,  life,  sensation,  and  reason, 
+belong  to  a  great  number  of  individuals  :  these  then 
+being  separated  from  the  peculiarities,  and  collected 
+together,  form  what  is  called  the  general  notion,  or 
+universal  idea  of  man  ;  and  the  process  by  which  this 
+separation  is  performed,  is  called  abstraction. 
+
+Q.  AYhence  arises  the  necessity  of  abstraction  ? 
+
+A.  All  our  ideas  are,  primarily,  ideas  of  individuals; 
+if  they  so  continued,  we  should  have  names  of  indi- 
+
+
+CATECHISM    OF    LOGIC.  7 
+
+vidiials  only,  and  it  would  be  manifestly  iiTipossible 
+for  men  to  find  a  separate  name  for  every  £C])arate 
+object ;  but  by  the  process  of  abstraction,  we  separate 
+objects  into  sorts  and  classes,  to  which,  when  we 
+liave  given  names,  we  obtain  universal  terms, 
+
+Q.  What  effect  does  abstraction  produce  on  com- 
+prehension ? 
+
+A.  It  diminishes  the  comprehension,  for  it  omits 
+certain  attributes. 
+
+Q.  "What  effect  does  abstraction  produce  on  exten-» 
+sion  ? 
+
+A.  It  increases  the  extension;  for  when  the  peculiar 
+attributes  are  omitted,  the  new  complex  idea  becomes 
+applicable  to  several  individuals,  whereas  before  it 
+was  limited  to  one. 
+
+Q.  How  are  comprehension  and  extension  con- 
+nected ? 
+
+Ai.  The  extension  of  a  term,  or  of  the  idea  signified 
+by  that  term,  depends  on  its  comprehension ;  for  the 
+greater  the  comprehension,  the  less  will  be  the  exten- 
+sion, and  rice  versa. 
+
+Q.  Why? 
+
+A.  Because  every  additional  attribute,  taken  into 
+the  comprehension  of  a  term,  or  the  idea  signified  by 
+a  term,  limits  its  application  to  individuals  which 
+have  a  corresponding  character :  for  instance,  if,  to 
+the  general  complex  idea  of  man,  containing  sub- 
+stance, body,  life,  sensation,  and  reason,  there  be 
+added  the  attribute  of  whiteness,  those  individuals 
+who  do  not  possess  a  v.'hite  colour,  will  no  longer  be 
+contained  in  its  extension. 
+
+
+S  CATECHISM    or    LOGIC. 
+
+CHAPTER  IV. 
+
+Of  Judgment  and  Propositions. 
+
+Q.  What  is  judgment  ? 
+
+A.  It  is  the  affirmation  or  negation  of  one  idea 
+about  another. 
+
+Q.  What  is  a  proposition  ? 
+
+A.  It  is  a  judgment  expressed  in  words,  and  may 
+be  defined,  the  affirmation  or  negation  of  one  term 
+respecting  another. 
+
+Q.  What  are  the  parts  of  a  proposition  ? 
+
+yl.  Two  ;  the  subject  and  the  predicate. 
+
+Q.  liow  are  they  defined  ? 
+
+A.  'J'he  subject  is  that  about  which  something  is 
+affirmed  or  denied;  the  predicate  is  that  which  is 
+affirmed  or  denied  concerning  the  subject. 
+
+Q.  Does  the  predicate  always  follow  the  subject  in 
+the  proposition  ? 
+
+A.  JNo ;  they  must  be  distinguished  by  the  meaning 
+of  the  sentence,  and  not  by  the  position  of  the  terms. 
+Thus,  when  we  say,  "  pleasant  are  the  paths  of  vir- 
+tue," jjleasant  is  the  predicate,  and  paths  of  virtue  the 
+sul^ject. 
+
+Q.  How  is  the  predicate  subdivided  ? 
+
+A.  Into  the  copula,  and  res  copulataj  but  the  latter, 
+by  itself,  is  most  usually  named  the  predicate. 
+
+Q.  Give  me  an  instance  of  a  proposition  and  its 
+parts  ? 
+
+A.  In  the  proposition  "man  is  mortal,"  "man" 
+is  the  subject,  "  is"  the  copula,  and  "  mortal"  the 
+res  copulata,  or  predicate. 
+
+Q.  Is  this  the  form  of  every  simple  proposition  ? 
+
+
+CATECHISM    OF   LOGIC.  9 
+
+A.  No :  in  common  conversation,  the  copula  (which 
+is  always  the  verb  substantive,  with  or  without  a 
+negative  particle)  frequently  forms  one  word  with 
+the  res  copulata,  as  **  horses  walk;"  but  for  the  sake 
+of  distinction,  logicians,  in  such  cases,  use  a  parti- 
+ciple and  the  verb  substantive,  instead  of  the  simple 
+verb  ;  thus,  the  instance  given  would  be  resolved 
+into  *'  horses  are  walking  beings." 
+
+Q.  Whether  are  subjects  or  predicates  the  more 
+general  ? 
+
+A.  Any  term  may  be  a  subject;  none  but  a  uni- 
+versal term  can  be  a  predicate. 
+
+Q.  Why  cannot  a  singular  term  be  a  predicate  ? 
+
+A.  Because  being  only  applicable  to  one  individual, 
+it  can  be  affirmed  of  that  alone,  or  else  the  proposition 
+would  be  identical,  as  "  Peter  is  Peter." 
+
+
+CHAPTER  V. 
+
+Predicables  and  Predicaments. 
+
+Q.  What  is  a  predicable  ? 
+
+A.  That  which  can  be  predicated  or  asserted  of 
+any  thing.  Every  universal  term  is  a  predicable,  for 
+it  may  be  asserted  of  the  individuals  contained  in  its 
+extension. 
+
+Q.  How  many  classes  of  predicables  are  there  ? 
+
+A.  Five;  Genus,  Species,  Difference,  Property,  and 
+Accident :  of  these,  the  two  former  declare  ichat  a 
+thing  is,  the  three  latter  ichat  kind  it  is. 
+
+Q.  How  do  you  define  genus  and  species  ? 
+
+A.  Genus  is  a  universal  term,  containing  in  its 
+extension  tAvo  or  more  imiversal  terms ;  Species  is  a 
+
+
+10  CATECHISM    OF    LOGIC. 
+
+universal  term  contained  in  the  extension  of  one  more 
+universal.  Thus,  "  animal"  is  a  genus,  for  it  contains 
+*'  man"  and  "  beast"  in  its  extension ;  these  latter 
+are  species,  for  they  are  contained  in  the  extension  of 
+animal. 
+
+Q.  How  do  you  define  the  other  predicablec  ? 
+
+A.  Difference,  called  also  the  Essential  Difference, 
+is  the  name  of  the  principal  essential  attribute  found 
+in  the  species,  but  not  in  the  genus  (as  reason  in 
+man) ;  Property,  is  the  name  of  every  essential  attri- 
+bute, except  the  principal,  which  is  found  in  the 
+species,  but  not  in  the  genus ;  Accident,  is  the  name 
+of  a  non-essential  attribute  ;  that  is,  an  attribute 
+which  is  found  in  individuals,  but  not  universally  in 
+a  class  or  species  (as  a  white  complexion,  red  hair, 
+&c.). 
+
+Q.  Which  is,  genus  or  species,  the  more  abstract 
+idea  ? 
+
+A.  Genus ;  for  it  has  greater  extension,  and  less 
+comprehension. 
+
+Q.  How  do  you  prove  this  ? 
+
+A.  It  has  greater  extension,  for  it  contains  the 
+species  in  its  extension;  it  has  less  comprehension, 
+for  the  Essential  Difference  and  the  Properties,  which 
+are  always  found  in  the  comprehension  of  the  species, 
+never  enter  into  that  of  the  genus. 
+
+Q.  Explain  the  process  by  which  the  five  predica- 
+bles  are  formed. 
+
+A.  The  process  of  abstraction  commences  by  omit- 
+ting the  attributes  which  are  peculiar  to  an  indivi- 
+dual ;  the  preserved  attributes  form  the  complex  idea 
+of  a  class  or  species,  the  omitted  attributes  are  Acci- 
+dents ,'  we  next  remove  the  attributes  peculiar  to  the 
+
+
+CATECHISM    OF   LOGIC.  11 
+
+species,  which  form  Difference  and  Property,  while 
+those  which  we  retain  form  the  complex  idea  of 
+genus. 
+
+Q.  How  are  genera  and  species  divided  r 
+
+A.  Genus  is  either  the  liighest  or  subaltern;  species 
+is  either  the  lowest  or  subaltern. 
+
+Q.  Explain  this  division. 
+
+A.  In  pursuing  the  process  of  abstraction,  after 
+removing  the  peculiar  attributes,  we  at  length  arrive 
+at  a  single  idea,  unlimited  by  any  attributes ;  this  is 
+called  the  Highest  genus :  the  first  class  which  we 
+formed  in  our  process  is  called  the  Lowest  species : 
+the  intervening  classes  are  called  subaltern,  genera, 
+and  species ;  for  they  are  species  with  respect  to  the 
+classes  above,  and  genera  v/ith  respect  to  the  classes 
+below  them. 
+
+Q.  Explain  this  by  an  example. 
+
+A.  In  abstracting  the  idea  of  an  individual  man, 
+we  omit  the  accidents  of  form,  countenance,  existence 
+in  time  and  place,  &c. ;  the  preserved  attributes  form 
+the  complex  idea  of  the  species,  man ;  this  is  called 
+the  lowest  species,  because  it  contains  only  indivi- 
+duals in  its  extension :  we  next  omit  the  Essential 
+Difference,  or  attribute  peculiar  to  that  species,  viz. 
+reason,  and  we  have  the  complex  idea  of  Animal, 
+which  is  a  genus,  because  it  contains  the  species 
+man  and  beast  in  its  extension  ;  but  Animal  is  also  a 
+species,  for  if  we  omit  the  Essential  Difierence,  sen- 
+sation, we  form  a  class  above  it,  Vivens  (living  thing), 
+which  includes  animal  and  plant  in  its  extension : 
+again,  omitting  the  attribute  life,  v/e  form  the  class 
+Body;  and,  finally,  removing  the  attribute /orm,  we 
+arrive  at  substance,  which  is  the  highest  genus,  be- 
+
+
+12  CATECHISM    OF    LOGIC, 
+
+cause  it  is  contained  in  the  extension  of  no  more 
+general  term. 
+
+Q.  What  is  a  predicament  ? 
+
+A.  A  predicament,  called  also  a  category,  is  the 
+highest  genus,  with  all  the  classes,  &c.  that  are  con- 
+tained in  its  extension. 
+
+Q.  What  is  a  predicamental  line  ? 
+
+A.  A  series  of  classes,  commencing  with  the  lowest 
+epecies,  and  terminating  with  the  highest  genus.  For 
+instance,  the  series  I\'Jan,  Animal,  Yivens,  Body,  Sub- 
+stance, is  a  predicam.entc '  line, 
+
+Q.  How  many  predicamental  lines  are  there  in  a 
+predicament  ? 
+
+^.  As  many  as  there  are  lowest  species, 
+
+Q,  Which  is,  predicament  or  predicable,  the  mora 
+extensive  term  ? 
+
+A.  Predicament;  for  it  contains  singular  terms 
+which  are  excluded  from  the  classes  of  predicables. 
+
+Q.  How  many  predicaments,  or  categories,  were 
+enumerated  by  the  old  logicians  ? 
+
+A.  Ten: — viz.  Substance;  Quantity,  with  its  three 
+species,  number,  time,  and  magnitude ;  Quality,  with 
+its  four  species,  habit,  natural  power,  patible  quality, 
+form,  and  figure ;  Relation,  Action,  Passion,  Where, 
+When,  Posture,  and  Habit. 
+
+Q,  How  does  Time,  a  species  of  quantity,  differ 
+from  the  category  When  ? 
+
+A.  The  former  relates  to  the  time  Jtoic  long. 
+
+Q.  What  do  you  mean  by  patible  qualities  ? 
+
+A.  Those  qualities  of  body  which  the  mind  is  pas- 
+sive in  receiving. 
+
+Q.  What  is  the  difference  between  habit,  a  species 
+of  quality,  sind  habit,  the  last  category  ? 
+
+
+CAi'ECHISM    OF   LOGIC.  13 
+
+A.  The  former  signifies  custom,  the  latter  dress. 
+
+Q.  What  do  you  mean  by  relation  ? 
+
+A.  Relation  takes  place  \\'hen  the  consideration  of 
+one  idea  necessarily  includes  the  consideration  of 
+another;  thus,  the  idea  of  parent  includes  that  of 
+child,  the  idea  of  master  that  of  servant,  &c.  The 
+idea,  primarily  considered,  is  called  the  Relate,  or  the 
+subject  of  relation ;  that,  whose  consideration  is  in- 
+cluded, is  called  the  Correlate,  or  term  of  the  relation ; 
+and  their  names  are  called  relative  and  Correlative 
+terms. 
+
+Q.  \yhat  was  the  object  of  classifying  the  predica- 
+m.ents  ? 
+
+A.  As  the  predicables  contained  the  predicates  of 
+propositions,  it  was  designed  to  include  the  subjects 
+in  the  classes  of  predicaments. 
+
+
+CHAPTER  VI. 
+
+The  absolute  affections  of  propositions. 
+
+Q.  How  are  propositions  divided  ? 
+
+A.  Into  simple  and  compound. 
+
+Q.  What  is  the  difference  between  them  ? 
+
+A.  A  simple  proposition  cannot  be  resolved  into 
+several;  a  compound  may  be  divided  into  several 
+simple. 
+
+Q.  How  are  the  affections  or  properties  of  propo- 
+sitions divided  ? 
+
+A.  Into  the  Absolute,  or  those  which  belong  to  a 
+proposition  considered  by  itself;  and  the  Relative 
+affections  which  result  from  the  comparison  of  several 
+propositions  with  each  other. 
+
+
+14  CATECHISM    OP   LOGIC. 
+
+Q.  What  are  the  absolute  affections  of  propositions  ? 
+
+A.  (iiiantity  and  Quality. 
+
+Q.  What  is  quantity  ? 
+
+A.  The  determination  of  the  extension  of  the  sub- 
+ject in  a  proposition  :  it  is  either  universahty  or  par- 
+ticularity. With  respect  to  quantity,  propositions 
+are  divided  into  universal  and  particular. 
+
+Q.  \Miat  is  quality  ? 
+
+A.  Thenature  of  the  assertion  made  in  a  proposition; 
+it  is  either  affirmation  or  negation.  With  respect  to 
+quahty,  propositions  are  diA'ided  into  affirmative  and 
+negative. 
+
+Q.  What  is  a  universal  proposition  ? 
+
+A.  That  in  which  the  subject  is  distributed,  or 
+taken  in  its  entire  extension.  If  the  subject  be  a 
+universal  term  (see  Chap.  II.),  a  mark  of  universality, 
+such  as  '*all,  every,  none,"  is,  for  the  most  part, 
+prefixed ;  but  if  the  subject  be  a  singular  term,  no 
+such  mark  is  required,  because  a  singular  term  being 
+only  applicable  to  one  individual,  must  always  be 
+taken  in  its  entire  extension. 
+
+Q.  What  is  a  particular  proposition  ? 
+
+A.  That  whose  subject  is  not  distributed  or  taken 
+in  its  entire  extension.  The  subject  must,  in  this 
+case,  be  a  universal  term;  and  to  show  that  it  is 
+taken  particularly,  a  mark  of  uncertain  quantity,  such 
+as  ''  some,  many,  a  few,  &c."  is  usually  prefixed. 
+
+Q.  Why  do  you  use  the  word  uncertain  ? 
+
+A.  Because,  if  the  quantity  were  certain,  it  would 
+individualize  the  subject,  and  make  it  in  fact  a  singu- 
+lar term ;  now  we  have  already  sho\vn,  that  propo- 
+sitions, whose  subjects  are  singular,  belong  to  the 
+class  of  universals.     Propositions,  whose  subjects 
+
+
+CATECHISM    OF   LOGIC.  15 
+
+have  a  mark  of  certain  quantity,  are  usually  termed 
+Collective. 
+
+Q.  Wliat  is  an  affiimative  proposition  ? 
+
+A.  That  in  which  the  predicate  is  said  to  agree 
+with  the  subject,  or  more  properly,  to  contain  the 
+entire  extension  which  the  subject  has  in  that  pro- 
+position. 
+
+Q.  \Mien  will  this  be  the  case  ? 
+
+A.  \\Tien  the  entire  comprehension  of  the  predicate 
+is  contained  in  the  comprehension  of  the  subject. 
+
+Q.  What  is  a  negative  proposition. 
+
+A.  That  in  which  the  predicate  is  said  to  disagree 
+with  the  subject,  or  more  properly,  to  exclude  the 
+entire  extension  which  the  su])ject  has  in  that  propo- 
+sition. 
+
+Q.  When  will  this  be  the  case  ? 
+
+A.  AVhen  there  are  one  or  more  ideas  in  the  com- 
+prehension of  the  predicate,  which  are  not  contained 
+in  the  comprehension  of  the  subject,  nor  in  any  of  its 
+parts. 
+
+Q.  How  are  propositions  divided  with  respect  to 
+quantity  and  quality  taken  together  ? 
+
+A.  Into  four  classes,  marked  for  convenience  by 
+the  four  vov/els,  as  follows  : — 
+
+A  a  universal  affirmative, 
+E  a  universal  negative, 
+I  a  particular  affirmative, 
+O  a  particidar  negative. 
+
+Q.  What  is  the  matter  of  a  proposition  ? 
+
+A.  The  nature  of  the  connection  between  the  sub- 
+ject and  predicate :  it  is  three-fold,  necessary,  impos- 
+sible, and  contingent. 
+
+c  2 
+
+
+16  CATECHISM   OP   LOGIC. 
+
+Q.  How  are  these  three  kinds  of  matter  distin- 
+guished ? 
+
+A.  If  the  predicate  agree  with  all  the  individuals 
+of  the  subject,  as  in  A,  the  matter  is  said  to  be  neces- 
+sary; if  it  disagree  with  all,  as  in  E,  the  matter  is 
+said  to  be  impossible ;  if  it  agi'ec  with  some,  and  dis- 
+agree with  others,  as  ia  I  and  O,  the  matter  is  said 
+to  be  contingent. 
+
+Q.  What  is  an  indefinite  proposition? 
+
+A.  That  in  which  the  matter  is  not  strictly  de- 
+fined, as  ''mothers  love  their  children,"  *' men  do 
+not  voluntarily  incur  loss  :"  in  these  cases,  the  extent 
+of  the  agreement  or  disagreement  between  the  subject 
+and  predicate,  cannot  be  discovered  from  the  terms 
+of  the  proposition,  and  therefore  such  propositions 
+are  excluded  from  strict  logical  reasoning. 
+
+
+CHAPTER  VH. 
+
+Truth  and  Falsehood. 
+
+Q.  How  many  kinds  of  truth  are  there  ? 
+
+A.  Two  ;  Logical  and  Ethical :  of  course  there  are 
+the  same  varieties  of  falsehood. 
+
+Q.  How  are  these  kinds  distinguished  ? 
+
+A.  Logical  truth  is  the  agreement  of  an  assertion 
+with  the  reality  of  things ;  Ethical  truth  its  agree- 
+ment with  the  judgment  of  the  mind. 
+
+Q.  "When  will  the  same  proposition  be  both  logi- 
+cally and  ethically  true  or  false  ? 
+
+A.  When  the  mind  forms  a  correct  judgment. 
+
+Q.  What  inferences  can  be  deduced  when  the  mind 
+forms  a  correct  judgment  ? 
+
+
+CATECHISM    OF    LOGIC.  17 
+
+A.  We  may  infer,  that  a  proposition  ethically  true 
+will  be  logically  true,  and  that  a  proposition  ethically 
+false  will  be  logically  false,  and  vice  versa. 
+
+Q.  What  inferences  may  be  deduced  when  the  mind 
+forms  aa  incorrect  judgment  ? 
+
+A.  We  may  infer,  that  a  proposition  logically  true 
+will  be  ethically  false,  and  vice  versa  j  but  we  cannot 
+infer  that  a  proposition  logically  false  will  be  ethically 
+true,  nor  that  a  proposition  ethically  false  will  be 
+logically  true. 
+
+Q.  Why  can  we  not  ? 
+
+A.  There  is  only  one  truth ;  the  varieties  of  false- 
+hood are  infinite;  for  instance,  I  may  suppose  that 
+this  book  contains  one  hundred  pages,  and  with 
+ethical  falsehood  assert,  that  it  contained  any  other 
+number ;  but  the  mental  falsehood  of  my  assertion 
+would  not  manifestly  constitute  logical  truth. 
+
+
+CHAPTER  VIII. 
+
+The  affections  of  the  terms  of  a  proposition. 
+
+Q.  Have  terms  any  relative  affection  ? 
+
+A.  Yes;  in  a  proposition  they  are  said  to  have 
+quantity. 
+
+Q.  Why  is  this  a  relative  affection  of  propositions  ? 
+
+A.  Because  quantity,  that  is,  universahty  or  par^ 
+ticularity,  does  not  belong  to  the  terms  taken  by 
+themselves,  but  is  determined  by  the  nature  of  the 
+proposition  in  which  they  are  found. 
+
+Q.  In  this  relative  sense,  what  is  a  universal  term  ? 
+
+A.  A  term  distributed  or  taken  in  its  entire  exten- 
+sion. 
+
+C3 
+
+
+18  CATECHISM    or    LOGIC. 
+
+Q.  "\Miat  is  a  particular  term  ? 
+
+A.  A  term  not  distributed;  that  is,  not  taken  in 
+its  entire  extension. 
+
+Q.  On  what  does  the  quantity  of  the  terms  of  a 
+proposition  depend  ? 
+
+A.  The  quantity  of  the  subject  depends  on  the 
+quantity  of  the  proposition ;  tlie  quantity  of  the  pre- 
+dicate on  the  quality  of  the  proposition. 
+
+Q.  How  does  the  quantity  of  the  subject  depend 
+on  the  quantity  of  the  proposition  ? 
+
+A.  In  every  universal  proposition,  the  subject  ig 
+imiversal,  and  in  every  particular  proposition,  par- 
+ticular ;  as  is  plain  from  the  definitions  in  Chap.  YI. 
+
+Q.  How  does  the  quantity  of  the  predicate  depend 
+on  the  quality  of  the  proposition  ? 
+
+A.  In  every  affirmative  proposition  the  predicate  is 
+particular,  and  in  every  negative  it  is  universal. 
+
+Q.  Why  is  the  predicate  of  an  affirmative  propo- 
+sition particular  ? 
+
+A.  The  assertion  of  an  affirmative  proposition  is, 
+that  the  predicate  contains  the  extension  of  the  sub- 
+ject; from  thence,  it  cannot  be  inferred,  that  the 
+predicate  contains  nothing  more ;  as  therefore  only 
+part  of  its  extension  can  be  inferred  from  the  propo- 
+sition, it  must  be  considered  particular. 
+
+Q.  But  is  not  the  predicate  of  an  affirmative  pro- 
+position sometimes  taken  in  its  entire  extension  ? 
+
+A.  When  the  terms  of  an  affirmative  proposition 
+are  reciprocal,  as  "  man  is  a  rational  animal,"  the 
+predicate  is  really  taken  in  its  entire  extension ;  but 
+it  must  still  be  considered  as  particular,  because  its 
+universality  is  inferred  from  knowledge  extrinsic  to 
+the  proposition. 
+
+
+CATECHISM    OF    LOGIC.  19. 
+
+Q.  \Miat  do  you  mean  by  reciprocal  terms  ? 
+
+A.  Terms  which  may  be  universally  predicated  of 
+each  other. 
+
+Q.  Why  is  the  predicate  of  a  negative  proposition 
+universal  ? 
+
+A,  The  assertion  of  a  negative  proposition  is,  that 
+the  extension  of  the  subject  is  excluded  from  the 
+entire  extension  of  the  predicate;  consequently,  the 
+predicate  is  taken  in  its  entire  extension,  and  is 
+therefore  universal. 
+
+
+CHAPTER  IX. 
+
+The  relative  affections  ofpronositions. 
+Subalternation. 
+
+Q.  How  many  relative  affections  of  propositions 
+are  noticed  by  Logicians  ? 
+
+A.  Three;  Subalternation,  Conversion,  and  Op- 
+position. 
+
+Q.  What  is  subalternation  r 
+
+A.  The  deduction  of  a  particular  or  singular  pro- 
+position, from  a  universal,  without  transposing  the 
+terms.  The  universal  proposition  is  called  the  sub- 
+aJfcrnans;  the  inferences  deduced  from  it  are  named 
+subalterns.  Thus,  from  the  subalternans,  *' every 
+man  is  an  animal,"  we  may  deduce  the  subalterns, 
+"  some  men  are  animals,"  *'  Peter  is  an  animal,"  &c. 
+
+Q.  What  are  the  canons  respecting  the  determina- 
+tion of  tiaith  and  falsehood  in  this  process  ? 
+
+A.  There  are  four;  but  the  two  last  may  be  in- 
+ferred from  the  others  : — 
+
+1.  The  truth  of  the  universal  infers  the  tnith  of 
+the  particular. 
+
+
+20  CATECHISM    OF   LOGIC. 
+
+2.  The  truth  of  the  particular  does  not  infer  the 
+
+truth  of  the  universal. 
+
+3.  The  falsehood   of  the  particular    infers  the 
+
+falsehood  of  the  universal. 
+
+4.  The  falsehood  of  the  universal  does  not  infer 
+
+the  falsehood  of  the  particular. 
+
+Q.  How  do  you  prove  the  first  and  third  ? 
+A.  If  the  predicate  contain  (or  exclude)  the  whole 
+extension  of  the  subject,  it  must  contain  (or  exclude) 
+a  part ;  and  on  the  other  hand,  if  it  be  false  that  part 
+of  the  extension  of  the  subject  is  contained  in  (or  ex- 
+cluded from)  the  extension  of  the  predicate,  it  must 
+be  false  that  the  whole  is  contained  (or  excluded). 
+
+Q.  How  do  you  prove  the  second  and  fourth  ? 
+
+A.  Though  it  be  true  that  the  predicate  contains  a 
+part  of  the  extension  of  the  subject,  it  may  be  false 
+that  it  contains  the  whole ;  and  on  the  other  hand, 
+though  it  be  false  that  the  whole  subject  is  contained 
+in  the  predicate,  yet,  it  may  be  true,  that  a  part  is 
+contained  in  its  extension. 
+
+Q.  What  practical  lule  is  derived  from  these 
+axioms  ? 
+
+A.  That  an  argument  from  a  particular  to  a  uni- 
+versal is  invalid. 
+
+Q.  Wliat  do  you  mean  by  this  rule  ? 
+
+A.  That  any  argument  from  a  term  taken  in  part  of 
+its  extension,  to  the  same  term  taken  in  the  whole  of 
+its  extension,  is  invalid. 
+
+Q.  Why  do  you  lay  such  stress  on  the  word  term  ? 
+
+A.  To  shew  that  the  rule  has  no  reference  to  pro- 
+positions, for  in  the  third  canon  of  subalternation  we 
+legitimately  reason  from  a  particular  projjosition  to  a 
+universal. 
+
+
+CATECHISM    OF   LOGIC.  41 
+
+
+CHAPTER  X. 
+
+Conversion. 
+
+Q.  What  is  conversion  ? 
+
+A.  The  legitimate  inference  of  one  proposition  from 
+another,  by  the  transposition  of  the  terms.  The  ori- 
+ginal proposition  is  called  the  convertend,  that  de- 
+duced from  it  the  converse. 
+
+Q.  How  many  species  of  conversion  are  there  ? 
+
+A.  Three;  simple  conversion,  in  which  the  con- 
+verse preserves  the  quantity  and  quality  of  the  con- 
+vertend ;  conversion  per  accidens,  in  which  the  quan^ 
+tity  is  diminished  but  the  quality  preserved;  and 
+conversion  by  contraposition,  in  which  the  quality  is 
+changed. 
+
+Q.  How  are  thes«  species  of  conversion  used  ? 
+
+A.  Universal  negatives,  and  particular  affirma- 
+tives, are  converted  simply;  universal  affirmatives 
+are  converted  2)er  accidens ;  particular  negatives  can 
+only  be  converted  by  contraposition ;  and,  as  this 
+species  is  rarely  used,  they  are  generally  said  to  be 
+incapable  of  conversion. 
+
+Q.  In  what  manner  are  these  facta  usually  stated 
+by  logicians  ? 
+
+A.        A  is  converted  into  I, 
+E  is  converted  into  E, 
+I  is  converted  into  I, 
+O  is  not  converted.     (See  Chap.  VI.) 
+
+Q.  In  what  manner  can  you  prove  that  A  is  con- 
+verted into  I ? 
+
+A.  The  assertion  of  a  universal  affirmative  is  that 
+
+
+22  CATBCHISM    OF   LOGIC. 
+
+the  entire  extension  of  the  subject  forms  part  of  the 
+extension  of  the  predicate,  from  -whence  it  manifestly 
+follows  that  a  part  of  the  individuals  contained  in  the 
+extension  of  the  predicate  is  the  same  as  those  con- 
+tained in  the  extension  of  the  subject;  but  no  infer- 
+ence can  be  made  respecting  the  entire  extension  of 
+the  predicate,  consequently  the  subject  of  the  con- 
+verse must  be  particular  and  the  converse  itself 
+affirmative. 
+
+Q.  How  do  you  prove  that  E  is  converted  into  E I 
+
+A.  The  assertion  of  a  negative  proposition  is  that 
+the  extension  of  the  subject  is  excluded  from  the 
+entire  extension  of  the  predicate  and  from  all  its 
+parts ;  consequently  the  whole  extension  of  the  pre- 
+dicate is  totally  different  from  the  extension  of  the 
+subject,  therefore,  the  subject  of  the  converse  is 
+universal,  and  the  converse  negative. 
+
+Q.  How  do  you  prove  that  I  is  converted  into  I  ? 
+
+A.  The  assertion  of  a  particular  affirmative  is,  that 
+part  of  the  extension  of  the  subject  agrees  with  part 
+of  the  extension  of  the  predicate  ;  consequent,  part  of 
+the  extension  of  the  predicate  agrees  with  part  of  the 
+extension  of  the  subject,  therefore,  the  converse  will 
+be  particular  and  affirmative. 
+'    Q.  Why  cannot  O  be  converted  ? 
+
+A.  The  assertion  of  a  particular  negative  is,  that 
+part  or  the  extension  of  the  subject  is  excluded  from 
+the  extension  of  the  predicate.  This  may  be  the  case 
+when  the  extension  of  the  predicate  is  contained  in 
+extension  of  the  subject,  as  "some  animals  are  not 
+men;"  or  when  the  extension  of  the  predicate  is  ex- 
+cluded from  the  extension  of  the  subject,  as  '*  some 
+men  are  not  stones,"  or  finally  when  it  is  partly  con- 
+
+
+CATECHISM    or   LOGIC.  23 
+
+tained,  and  partly  excluded,  as  "  some  men  are  not 
+white ;"  therefore,  in  a  particular  negative,  there  is 
+nothing  by  which  the  quantity  and  quality  of  the  con- 
+verse can  be  determined. 
+
+Q.  \^1lat  is  the  peculiarity  of  conversion  by  con- 
+traposition ? 
+
+A.  In  this  species  of  conversion  the  contradictions 
+of  the  terms  are  substituted  for  the  terms  themselves; 
+thus,  ''  every  man  is  an  animal,"  becomes,  **  what- 
+ever is  not  an  animal  is  not  a  man." 
+
+Q.  Are  there  no  means  by  which  a  particular  nega- 
+tive maybe  converted? 
+
+A.  It  may  be  converted  by  contraposition,  or  what 
+is  virtually  the  same,  by  joining  the  negative  particle 
+to  the  predicate,  and  considering  the  proposition  as  a 
+particular  affirmative  ;  thus,  "  some  animals  are  not 
+rational  beings,"  may  be  converted  into  *'  some  not 
+rational  beings  are  animals." 
+
+Q.  Vv'hen  does  a  universal  affirmative  appear  sus- 
+ceptible of  simple  conversion? 
+
+A.  When  the  terras  are  reciprocal ;  but  this  is  not 
+legitimate  conversion,  as  the  converse  is  not  deducted 
+from  the  convertend. 
+
+Q.  What  changes  are  made  in  conversion  by  con- 
+traposition ? 
+
+A.        A  is  converted  into  E, 
+E  is  converted  into  I , 
+I  is  not  converted, 
+O  is  converted  into  I, 
+as  easily  appears  from  the  proofs  of  the  other  species 
+of  conversion  given   in  the  commencement  of  this 
+chapter. 
+
+
+24  CATECHISM    OF   LOGIC. 
+
+
+CHAFIER  XI, 
+
+
+Opposition, 
+
+Q,  What  is  opposition  ? 
+
+A.  Opposition  is  the  disagreement  in  quahty  be- 
+tween two  propositions,  having  the  same  subject  and 
+the  same  predicate. 
+
+Q.  How  many  species  of  opposition  are  there  ? 
+
+A.  Three ;  contradiction,  contrariety,  and  sub- 
+contrariety, 
+
+Q.  What  is  contradiction? 
+
+A,  It  is  the  opposition  between  a  universal  and 
+particular,  or  between  two  singulars.  Of  contradict 
+tories,  one  is  always  true  and  the  other  false. 
+
+Q.  Prove  the  canon  of  contradiction. 
+
+A.  If  the  matter  of  the  proposition  be  necessary, 
+the  affirmative  v/ill  be  true  and  the  negative  false  ;  if 
+impossible,  the  negative  will  be  true  and  the  affirma- 
+tive false ;  if  contingent,  the  universal  will  be  false  and 
+the  particular  true.  In  singular  propositions  it  is 
+evident  that  the  same  attribute  cannot  agree  and  dis- 
+agree with  the  same  thing  at  the  same  time. 
+
+Q.  What  is  contrariety? 
+
+A.  The  opposition  between  two  univexsals.  Of 
+contraries  both  may  be  true,  but  both  cannot  be 
+false. 
+
+Q.  How  do  you  prove  the  canon  of  contrariety  ? 
+
+A.  In  necessary  matter,  the  affirmative  will  be  tnie 
+and  the  negative  false  ;  in  impossible  matter,  the  ne- 
+gative will  be  true  and  the  affirmative  false ;  in  con- 
+tingent matter,  both  will  be  false. 
+
+Q.  You  said  in  Chap.  YI.  that  singular  proposi- 
+
+
+CATECHISM    OF   LOGIC.  25 
+
+tions  are  reduced  to  the  class  of  universals,  why  then 
+is~the  opposition  between  singular  propositions  reck- 
+oned a  part  of  contrariety  ? 
+
+A.  Because  that  would  violate  the  canon  of  con- 
+trariety, for  singular  opposites  cannot  both  be  false. 
+
+Q.  What  is  subcontrariety  ? 
+
+A.  The  opposition  between  two  particulars;  sub- 
+contraries  may  be  both  true,  but  cannot  both  be 
+false. 
+
+Q.  How  do  you  prove  the  canon  of  subcontrariety? 
+
+A.  If  the  matter  of  the  proposition  be  necessary, 
+the  aOirmative  is  true  and  the  hegative  false;  if  im- 
+possible, the  negative  is  true  and  the  affirmative  false ; 
+if  contingent,  both  are  true. 
+
+Q.  What  objection  is  there  to  subcontrariety,  as  a 
+legitimate  species  of  opposition  ? 
+
+A.  The  subjects  of  the  subcontrary  opposites  may 
+be  different  parts  of  the  extension  of  the  term,  and, 
+thus,  though  apparently  the  same,  be  really  different. 
+
+Q.  When  Vv'ill  this  certainly  be  the  case  ? 
+
+A.  When  the  subcontrariea  arc  true,  for  the  same 
+attribute  cannot  agree  and  disagree  with  the  same 
+thing  at  the  same  time. 
+
+Q.  Can  you  shew  that  when  contraries  are  false, 
+subcontraries  will  be  true  ? 
+
+A.  Contraries  are  A  and  E,  by  hypothesis  they  are 
+both  false,  therefore  their  contradictions,  O  and  I  (by 
+the  canon  of  contradiction)  must  be  both  true,  but 
+these  are  subcontraries. 
+
+
+26  CATECHISM    OF   LOGIC. 
+
+CHAPTER  XII. 
+
+Definition  and  Division. 
+
+Q.  How  many  kinds  of  definition  are  there  ? 
+
+A.  Two ;  definition  of  a  name,  or  of  a  thing. 
+
+Q.  What  is  the  definition  of  a  name  ? 
+
+A.  The  explanation  of  a  word  which  was  before 
+imknouTi,  as  "  Algebra  signijies  the  art  of  computing 
+by  symbols." 
+
+Q.  How  can  you  best  judge  of  the  truth  in  any 
+definition  of  a  name? 
+
+A.  By  substituting  the  definition  for  the  word  in 
+any  given  sentence,  and  thus  seeing  whether  it  will 
+bear  the  signification  under  all  circumstances. 
+
+Q.  What  is  the  definition  of  a  thing  ? 
+
+A.  It  is  a  proposition  explaining  what  any  thing  is. 
+
+Q.  What  are  the  laws  of  a  perfect  definition  ? 
+
+A.  1.  It  must  be  adequate,  that  is,  it  must  con- 
+tain the  whole  thing  defined  and  nothing  more. 
+2.  It  must  be  clear,  so  as  to  make  the  nature  of  the 
+thing  defined  intelligible. 
+
+Q.  Of  what  does  a  perfect  logical  definition  con- 
+sist ? 
+
+A.  Of  the  proximate  genus  and  essential  difference. 
+Such  a  definition  will  always  be  adequate,  for  the 
+genus  contains  the  entire  thing  defined,  and  the  essen- 
+tial difterence  excludes  every  thing  else ;  but  it  will 
+not  always  be  clear,  for  the  genus  may  need  definition 
+as  much  as  the  species. 
+
+Q.  What  is  an  imperfect  definition  called  ? 
+
+A.  It  is  properly  termed  a  description. 
+
+
+CATECHISM    OF   LOGIC.  27 
+
+Q.  How  many  kinds  of  description  are  there  ? 
+
+A.  Two.  1.  A  proposition  declaring  the  nature  of  a 
+thing,  imperfectly  by  essential  attributes.  2.  By  non- 
+essential attributes,  as  **  man  is  a  two-legged  feather- 
+less  animal.  ^" 
+
+Q.  How  many  species  of  division  are  there  ? 
+
+A.  Tv/o  ;  division  of  a  name,  and  division  of  a 
+thing. 
+
+Q.  What  is  division  of  a  name  ? 
+
+A.  The  enumeration  of  the  meanings  of  an  ambi- 
+guous word  or  a  doubtful  sentence. 
+
+Q.  What  is  the  division  of  a  thing  ? 
+
+A.  The  distribution  of  a  whole  into  its  parts. 
+
+Q.  Is  not  the  vford whole  ambiguous? 
+
+A.  Yes,  it  may  mean  either  a  universal  whole  or  an 
+integrant  whole. 
+
+Q.  What  do  you  mean  by  a  universal  whole  ? 
+
+A.  That  whose  name  is  a  universal  term  ;  if  it  be  a 
+genus,  its  parts  are  species ;  if  it  be  a  species,  its  parts 
+are  individuals;  in  either  case  the  parts  are  called 
+subjective. 
+
+Q.  Why  are  they  named  subjective  ? 
+
+A.  Because  they  may  be  the  subjects  of  affirmative 
+propositions,  of  which  the  whole  would  be  the  pre- 
+dicate, and  also  because  they  are  placed  under  it 
+
+
+^  This  notable  attempt  at  definition  boasts  of  a  not  less 
+respectable  author  than  Plato :  it  was  practically  refuted  by 
+Diogenes,  who  presented  himself  in  the  academy  where  Plato 
+was  lecturing,  and  taking  from  under  his  cloak  acock,  which 
+he  had  stripped  of  its  feathers,  threw  it  on  the  ground,  ex- 
+claiming, *'  There's  Plato's  man  for  you  !" 
+D   2 
+
+
+23  CATECHISM    OF   LOGIC. 
+
+(subjecta  sunt)  in  the  predicamental  line.  (See 
+Chap.  V.) 
+
+Q.  What  do  you  mean  by  an  integrant  whole  ? 
+
+A.  Any  entire  individual  thing,  as  a  nation  whose 
+integrant  parts  are  provinces,  a  man  whose  integrant 
+parts  are  body,  head,  members,  &c.  The  division  of 
+an  integrant  whole,  is  commonly  called  partition. 
+
+Q.  Have  we  had  any  instance  in  this  work,  of  the 
+same  thing  divided  universally  and  integrantly  ? 
+
+A.  Yes;  propositions  as  universal  wholes  are  di- 
+vided into  simple  and  compound,  universal  and  parti- 
+cular, &c. ;  but  as  an  integrant  whole,  a  proposition 
+is  divided  into  subject  and  predicate. 
+
+
+CHAPTER  XHi. 
+
+Compound,  Hypothetic,  and  Modal  Propositions* 
+
+Q.  How  many  species  of  compound  propositions 
+are  there  ? 
+
+A.  Tw^o ;  those  compounded  in  words  and  those 
+compounded  in  sense. 
+
+Q.  \Miich  are  the  most  remarkable  kinds  of  pro- 
+positions compounded  in  words  ? 
+
+A.  Copulatives  and  disjunctives. 
+
+Q.  What  is  a  copulative  proposition  ? 
+
+A.  A  proposition  containing  several  subjects,  or 
+several  predicates,  or  both  connected  together  by  a 
+copulative  particle,  as  Aristotle  was  the  preceptor  of 
+Alexander  the  (}reat,  and  the  inventor  of  logic. 
+
+Q.  On  what  does  the  tiTith  of  a  copulative  propo- 
+sition depend  ? 
+
+A.  On  the  truth  of  all  the  parts  separately. 
+
+
+CATECHISM    OF   LOGIC.  29 
+
+Q.  Into  how  many  parts  may  a  copulative  pro- 
+position be  resolved  ? 
+
+A.  As  many  as  there  are  subjects  multiplied  by  the 
+number  of  predicates,  for  each  predicate  may  be 
+asserted  of  each  subject. 
+
+Q.  Is  there  not  a  species  of  copulative  proposition 
+in  which  something  more  than  the  mere  truth  of  the 
+parts  is  required  ? 
+
+A.  Yes;  in  an  adversative  proposition  there  must 
+be  an  apparent  opposition  between  the  parts,  or  it  will 
+be  nonsensical. 
+
+Q.  What  is  an  adversative  proposition  ? 
+
+A.  That  in  which  one  of  the  adversative  particles, 
+"  but,  yet,  although,"  &c.  occurs,  as  "  though  he 
+were  wounded,  yet  did  he  not  complain."  Every 
+person  perceives  that  it  would  be  nonsense  to  say 
+*'  though  he  were  gratified  yet  did  he  not  complain." 
+
+Q.  WTiat  must  be  the  species  of  opposition  between 
+the  parts  of  an  adversative  proposition  ? 
+
+A.  Subcontrariety ;  if  it  were  either  of  the  other 
+species  ;  the  parts  woidd  not  be  true.   (See  Chap.  XI,) 
+
+Q.  What  is  a  disjunctive  proposition  ? 
+
+A.  That  in  which  the  subject  is  said  to  be  contained 
+in  one  of  two  or  more  predicates  ;  these  predicates 
+are  in  fact  the  parts  of  some  whole,  and  on  their  per- 
+fect enumeration  the  truth  of  the  disjunctive  depends  ; 
+as  "  it  is  either  spring,  summer,  autumn,  or  winter,'* 
+where  the  four  predicates  enumerate  all  the  varieties 
+of  season,  (See  the  subject  of  division  in  the  pre- 
+ceding chapter). 
+
+Q.  Which  are  the  principal  kinds  of  propositions 
+compounded  in  sense? 
+
+A.  Exclusives,  exceptives,  and  inceptives  or 
+D  3 
+
+
+30  CATECHISM    OF    LOGIC. 
+
+(lesitives ;  tliey  are  called  by  a  common  name  cx- 
+ponibles. 
+
+Q.  Why  are  they  named  exponibles  ? 
+
+A.  Because  they  want  exposition  to  point  out  their 
+latent  composition. 
+
+Q.  What  is  an  exclusive  proposition  ? 
+
+A.  That  in  which  the  predicate  is  said  to  agree 
+with  the  subject  alone,  all  others  being  excluded,  as 
+'*  virtue  alone  is  true  nobility."  This  is  resolved  into 
+two  parts  ;  1.  the  predicate  agrees  with  the  subject. 
+2.  It  disagrees  with  every  thing  else. 
+
+Q.  What  is  an  exceptive  proposition  ? 
+
+A.  That  in  which  the  predicate  is  said  to  agree 
+with  the  subject,  a  part  being  excepted.  It  is  re- 
+solved into  two:  1.  the  predicate  does  not  agree  with 
+the  excepted  part ;  2.  it  agrees  with  all  the  rest. 
+
+0.  Are  not  exclusives  and  exceptives  very  similar  ? 
+
+A.  Yes ;  they  merely  differ  in  the  form  of  expres- 
+sion. 
+
+Q.  How  may  an  exclusive  be  changed  into  an  ex- 
+ceptive ? 
+
+A.  By  making  the  subject  of  the  exclusive  the 
+excepted  part  of  the  exceptive,  and  changing  the  qua- 
+lity. 
+
+Q.  What  is  an  inceptive  or  desitive  proposition  ? 
+
+A.  That  in  which  something  is  said  to  begin  or 
+end.  It  is  resolved  into  two  :  1.  stating  the  condition 
+before  the  change ;  2.  the  effect  of  the  alteration. 
+
+Q.  By  what  common  name  are  all  the  kinds  of 
+propositions  hitherto  mentioned  known  ? 
+
+A.  They  are  called  direct  or  categorical  proposi- 
+tions, because  they  contain  a  direct  assertion. 
+
+Q.  Are  there  any  other  species  ? 
+
+
+CATECHISM    OF    LOGIC.  31 
+
+A.  Yes ;  the  assertion  may  he  stated  in  the  form 
+of  a  supposition  as  in  hypothetics  ;  the  extent  of  the 
+connection  hetween  the  subject  and  predicate  may 
+depend  on  the  connection  between  some  other  subject 
+and  predicate,  as  in  comparatives;  besides  the  fact  of 
+connection  between  the  subject  and  predicate,  there 
+may  be  a  qualifying  assertion  stating  the  mode  or 
+manner  of  connection  as  in  the  JModal  propositions. 
+
+Q.  What  is  a  hypothetic  proposition  ? 
+
+A.  Two  or  more  categorical  propositions  united  by 
+the  hypothetic  conjunction  "  if;"  it  has  commonly 
+an  iUatlve  force,  that  is,  the  latter  part  is  said  to  be  the 
+consequence  of  the  preceding,  as  '*if  a  triangle  be 
+isosceles,  the  angles  at  its  base  are  equal." 
+
+Q  .What  are  the  parts  of  an  hypothetic  proposition  ? 
+
+A.  The  antecedent,  which  contains  the  supposition, 
+and  the  consequent,  which  states  the  inference  to  be 
+deduced  from  that  supposition. 
+
+Q.  On  what  does  the  truth  of  a  hypothetic  pro- 
+position depend  ? 
+
+A.  On  the  validity  of  the  inference  of  the  conse- 
+quent from  the  antecedent.  There  is  no  truth  requi- 
+site in  the  separate  categorical  propositions,  for  they 
+may  be  true,  and  the  h)i-)othetic  false,  as  "  if  the 
+moon  be  spherical,  it  revolves  round  the  earth ;"  or 
+the  parts  may  be  false  and  the  hypothetic  true,  as  **if 
+the  moon  shone  by  its  own  light,  it  would  always 
+appear  with  a  spherical  disc." 
+
+Q.  Is  there  not  another  species  of  proposition 
+sometimes  included  under  hypothetics  ? 
+
+yl.  Disjunctive  propositions,  which  have  been  al- 
+ready mentioned,  are  by  some  logicians  considered  a 
+species  of  hypothetics  j  so  also  are  causals,  they  are  in 
+
+
+32  CATECHISM   OF   LOGIC. 
+
+form  the  reverse  of  hypothetics,  for  the  preceding  part 
+is  said  to  be  the  consequence  of  what  follows;  as 
+**  the  moon  has  various  phases,  because  she  shines 
+with  the  reflected  light  of  the  sun." 
+
+Q.  In  what  other  respect  do  causals  differ  from 
+hypothetics  ? 
+
+A.  The  truth  of  the  parts  is  necessary  to  the  tnith 
+of  a  causal  proposition. 
+
+Q.  What  is  a  comparative  proposition  ? 
+
+A.  That  in  which  a  comparison  is  instituted,  as 
+"  Cicero  was  as  eloquent  a  speaker  as  Demosthenes ;" 
+from  the  assertion  of  such  a  proposition,  nothing  can 
+be  determined  categorically  of  the  parts,  for  I  may 
+say  "  Tuqjin  was  as  honest  as  his  associates,"  though 
+there  was  not  a  particle  of  honesty  among  them. 
+
+Q.  What  is  a  modal  proposition  ? 
+
+A,  That  in  which  a  mode  or  qualification  of  the 
+assertion  occurs,  as  "  it  will  probably  rain  to-day," 
+*'  human  society  is  necessarily  held  together  bylaws." 
+
+Q.  What  are  the  parts  of  a  modal  proposition  ? 
+
+A.  The  assertion  and  the  mode;  and  when  a  modal 
+proposition  is  considered  as  simple,  the  assertion 
+becomes  the  subject,  and  the  mode  the  predicate. 
+In  this  view  the  examples  quoted,  should  be  more 
+properly  expressed, 
+
+subject  predicate 
+
+**  That  it  will  rain  to-day,    is    a  probable  thing;" 
+
+subject 
+
+**  That  human  society  should  be  held  together  bylaw," 
+
+jjredicaie 
+is  a  necessary  thing. 
+
+Q.  How  many  modes  were  recognized  by  the  old 
+logicians  ? 
+
+
+CATECHISM    OF    LOGIC.  3S 
+
+A.  Only  four ;  necessary,  impossible,  possible,  and 
+contingent. 
+Q.  How  did  tliey  define  these  modes  ? 
+A.  Necessary,  that  which  is  and  must  be. 
+
+Impossible,  that  which  is  not  and  cannot  be. 
+Contingent,  that  which  is  and  may  not  be. 
+Possible,  that  which  is  not  but  may  be. 
+Q.  How  have  these  modes  been  extended  by  mo* 
+dern  logicians  ? 
+
+A.  IModern  -smters  on  logic  consider  every  thing  a 
+mode  which  qualifies  the  nature  or  extent  of  the  con- 
+nection between  the  subject  and  predicate. 
+
+
+CHAPTER  XIV. 
+
+Reasoninf/  and  Syllogism. 
+
+Q.  What  is  reasoning  ? 
+
+A.  The  inference  of  one  judgment  from  several. 
+
+Q.  What  is  reasoning,  when  expressed  in  words, 
+called  ? 
+
+A.  Argumentation. 
+
+Q.  What  is  the  most  usual  species  of  reasoning  ? 
+
+A.  The  inference  of  one  judgment  from  two. 
+
+Q.  By  what  name  do  logicians  call  this  species  of 
+reasoning,  when  expressed  in  words  ? 
+
+A.  They  term  it  a  syllogism. 
+
+Q.  How  then  do  you  define  a  syllogism  ? 
+
+A.  The  inference  of  one  proposition  from  two. 
+
+Q.  Wliat  is  the  usual  process  by  which  a  'syllogism 
+is  formed  ? 
+
+A.  When  in  argumentation  a  proposition  occurs, 
+respecting  the  agreement  or  disagreement  of  whose 
+subject  and  predicate,  a  doubt  is  entertained,  it  is  (for 
+the  most  part)  reduced  into  a  simple  categorical  form 
+
+
+34  CATECHISM    OF   LOGIC. 
+
+and  termed  the  question,  as,  for  instance,  "  whether 
+the  earth  be  a  globe?"  In  order  to  determine  the 
+connection  between  the  terms  of  this  question,  they 
+are  each  compared  with  some  third  term  ;  sui)i)ose  in 
+this  instance,  with  the  nature  of  the  shadow  which 
+they  cast,  and  from  their  relation  to  this  third  term, 
+their  mutual  connection  is  inferred.  This  inference 
+is  called  the  conclusion,  which  has  manifestly  the  same 
+tenns  as  the  question,  and  only  differs  from  it  in  hav- 
+ing a  determinate  quality. 
+
+Q.  How  many  terms  are  there,  consequently,  in  a 
+simple  syllogism  r 
+
+A.  Three ;  the  terms  of  the  question  (or  conclu- 
+sion) which  are  called  extremes,  and  the  term  with 
+which  they  are  compared,  usually  denominated  the 
+middle  term. 
+
+Q.  How  are  the  extremes  distinguished  ? 
+
+A.  The  subject  of  the  question  (or  conclusion)  is 
+called  the  minor  term,  and  the  predicate  is  deno- 
+minated the  major  term. 
+
+Q.  WTiy  have  they  received  these  names  ? 
+
+A.  Because  in  a  universal  affirmative  proposition, 
+which  logicians  consider  the  most  perfect  and  usefid, 
+the  predicate  has  always  as  great,  and  for  the  most 
+part  greater  extension  than  the  subject ;  it  is,  there- 
+fore, termed  Major,  (greater)  and  the  subject  is  called 
+Minor,  (lessj. 
+
+Q.  Is  there  any  other  reason  for  selecting  a  univer- 
+sal affirmative  besides  its  utility  ? 
+
+A.  That  is  the  only  species  of  proposition  in  which 
+the  relative  extension  of  the  terms  can  be  determined, 
+for  in  both  the  species  of  negatives,  (E  and  O)  the 
+extension  of  the  subject  being  excluded  from  that  of 
+the  predicate,  no  comparison  can  be  instituted  be- 
+
+
+CATECHISM    OF   LOGIC.  35 
+
+tween  them ;  and  in  particular  affirmatives,  (I),  the 
+subject  and  predicate  being  both  taken  only  in  part 
+of  their  extensions,  nothing  can  be  determined  respect- 
+ing the  entire  extension  of  these  terms. 
+
+Q.  You  have  said  that  a  syllogism  contains  only 
+three  terms,  and  yet  that  it  consists  of  three  propo- 
+sitions ;  how  are  these  propositions  formed  : 
+
+A.  Each  term  is  twice  repeated ;  in  the  first,  the 
+extreme  major  is  compared  with  the  middle;  this  is, 
+therefore,  called  the  major  proposition;  in  the  se- 
+cond, the  minor  extreme  is  compared  with  the  middle, 
+and  the  proposition  is  termed  the  minor  ;  in  the  con- 
+clusion, the  extremes  are  compared  together. 
+
+Q.  \Yhat  common  name  have  the  major  and  minor 
+propositions  ? 
+
+A.  They  are  called  premises. 
+
+Q.  Give  an  example  of  a  syllogism  and  its  parts  ? 
+
+A.  Major  premises  : 
+
+middle  term 
+
+Everybody  that  in  every  position  casts  a  circular  shadow, 
+
+major  term 
+is     a  globe. 
+
+minor  term 
+iMinor  premises :      The  earth     is, 
+middle  term 
+A  body  that  in  every  position  casts  a  circular  shadow. 
+
+minor  term         major  term 
+Conclusion.   Therefore,   The  earth  is,  a  globe. 
+Q.  What  species  of  matter  are  syllogisms  said  to 
+have  ? 
+
+A.  Two  kinds;  proximate  and  remote. 
+Q.  What  is  the  proximate  matter  of  a  syllogism  ? 
+A.  The  propositions  which  compose  the  syllogism, 
+viz.  the  premises  and  conclusion. 
+
+
+3G  CATECHISM    OF   LOGIC, 
+
+Q.  What  is  the  remote  matter  of  a  syllogism  ? 
+A.  The  terms  of  which  the  propositions  are  com- 
+posed, viz.  the  extremes  and  the  middle  term. 
+
+
+CHAPTER  XV. 
+
+Form  and  Figure  of  Sijlloyisms. 
+
+Q.  What  property  have  syllogisms  with  respect  to 
+their  proximate  matter  ? 
+
+A.  Form. 
+
+Q.  What  is  the  form  of  a  sj'llogisin  ? 
+
+A.  The  proper  arrangement  of  the  premises,  so  as 
+to  point  out  the  necessary  inference  of  the  conclusion. 
+
+Q.  \Miat  is  the  usual  form  of  a  syllogism  ? 
+
+A.  The  major  proposition  is  generally  placed  first, 
+as  in  the  example  given  in  the  preceding  chapter. 
+
+Q.  What  property  have  syllogisms  with  respect  to 
+their  remote  matter  ? 
+
+A.  Figure, 
+
+Q.  On  what  do  the  varieties  of  figure  depend  ? 
+
+A.  On  the  position  of  the  middle  term  in  the  pve- 
+niises. 
+
+Q.  How  many  varieties  of  figure  are  there  ? 
+
+A.  Four;  because  the  middle  term  may  have  four 
+difiercnt  positions  in  the  premises. 
+
+Q.  What  position  does  the  middle  term  hold  in 
+the  first  figure  ? 
+
+A.  It  is  the  su])ject  of  the  major,  and  the  predicate 
+of  the  minor,  as  in  the  example  given  in  the  })receding 
+chapter. 
+
+Q.  What  is  the  position  of  the  middle  term  in  the 
+second  figure  ? 
+
+A.  It  is  the  ])redicate  of  1)oth  i^remises  ;  as 
+
+
+CATECHISM    OF   LOGIC.  3/ 
+
+major  term 
+No  body  that  has  not  less  specific  gravity  than  itself 
+middle  term 
+can    revohe  round  the  earth  ; 
+minor  term  middle  term 
+
+The  moon    revolves  round  the  earth ; 
+
+Therefore, 
+The  moon  has  less  specific  gravity  than  the  earth. 
+
+Q.  What  is  the  position  of  the  middle  term  in  the 
+third  figure  ? 
+
+A.  It  is  the  subject  of  both  premises;  as 
+middle  term 
+
+Those  celestial  objects,  which  change  their  relative 
+
+major  term 
+
+positions,    are    planets ; 
+
+middle  term  minor  term 
+
+Such    changes  of  position    are  seen  among   the  stars ; 
+Therefore,  *'  Some  of  the  stars  are  planets." 
+
+Q.  What  is  the  position  of  the  middle  term  in  the 
+fourth  figure  ? 
+
+A.  It  is  the  predicate  of  the  major,  and  the  subject 
+of  the  minor ;  on  account  of  the  unnatural  position  of 
+its  terms,  it  was  not  recognised  by  Aristotle;  Imt  being 
+subsequently  introduced  by  Galen,  it  is  sometimes 
+termed  the  (lalenic  figure.  As  it  rarely  occurs  in 
+practice,  there  is  no  necessity  of  giving  an  examjile. 
+
+
+CHAPTER  XVI. 
+
+General  Rules  of  Syllogisms. 
+Q.  On  what  axioms  was  the  doctrine  of  syllogisms 
+founded  before  the  time  of  xVristotle  ^  ? 
+
+
+^  Aristotle's  doctrine  of  syllogisms  will  be  found  in  Chap. 
+XIX. 
+
+F, 
+
+
+3S  CATECHISM    OF   LOGIC. 
+
+A.  On  tlie  three  following : — 
+
+1.  If  two  things  agree  with  one  and  the  same  third, 
+they  agree  with  each  other. 
+
+2.  If  of  two  things  one  agree  and  the  other  dis- 
+agree with  the  tliird,  they  disagree  with  each  other. 
+
+3.  If  neither  agree  with  the  third,  no  inference  can 
+l)e  deduced, 
+
+Q.  How  many  general  rules  of  syllogisms  are  there  ? 
+A.  Six:    1.  The   middle   cannot    be    taken  twice 
+particularly,  but  must  be  at  least  once  universal. 
+
+2.  An  extreme  cannot  be  taken  more  universally 
+in  the  conclusion  than  in  the  premises. 
+
+3.  From  two  affirmative  premises  a  negative  con- 
+clusion does  not  follow. 
+
+4.  From  two  negative  premises  nothing  follov/s. 
+
+5.  The  conclusion  follows  the  weaker  part;  that 
+is,  if  one  premise  be  negaLive,  the  ■  conclusion  will  be 
+negative ;  and  if  one  premise  be  particular,  the  con- 
+clusion will  be  particular. 
+
+6.  From  two  particulars  nothing  follows. 
+Q.  How  do  you  prove  the  first  rule  ? 
+
+A.  If  the  middle  were  taken  twice  particularly,  it 
+might  be  taken  for  different  parts  of  the  same  uni- 
+versal whole,  and  thus  there  would  be  in  fact  two 
+middle  terms ;  but  it  appears,  from  the  axioms,  that 
+the  extremes  should  be  compared  with  one  and  the 
+same  third. 
+
+Q.  Is  not  this  rule  veiy  frequently  violated  by  in- 
+accurate rer.soners  ? 
+
+A.  None  more  so;  because  the  similarity  in  sound 
+prevents  us  from  immediately  perceiving  the  dis- 
+similarity in  sense,  when  an  ambiguous  or  undis- 
+tributed middle  is  used ;  thus,  in  the  common  jest ; 
+
+
+CATECHISM    or    LOGIC.  30 
+
+Whoever  says  you're  an  animal,  says  true  ; 
+Whoever  says  you're  a  goose,  says  you're  an  animal ; 
+Therefore,  whoever  says  you're  a  goose,  says  true. 
+The  fallacy  lies  in  the  middle  term,  "  animal,"  being 
+taken  in  only  part  of  its  extension  in  both  the  pre- 
+mises, viz.  only  so  m.uch  in  the  major  as  agrees  with 
+the  term,  man ;  and  so  much  in  the  minor  as  agrees 
+with  the  term,  goose.  (Though  the  instance  given 
+be  rather  ludicrous,  yet  it  will  aid  the  learner  in  the 
+detection  of  similar  fallacies  on  m-ore  important  occa- 
+sions.) 
+
+Q.  How  do  you  prove  the  second  general  rule  ? 
+
+A.  If  an  extreme  were  taken  more  universally  in 
+the  conclusion  than  in  the  premises,  we  should  argue 
+from  a  particular  to  a  universal,  contrary  to  the  rule 
+established  in  Chap.  IX. 
+
+Q.  How  do  you  prove  the  third  general  rule  ? 
+
+A.  If  there  be  but  one  middle,  both  extremes  agree 
+with  it,  and  cannot  therefore  disagree  with  each  other; 
+if  there  be  two  middle  terms  tlie  axioms  are  violated. 
+
+Q.  How  do  you  prove  the  fourth  general  rule  ? 
+
+A.  It  follows  immediately  from  the  third  axiom. 
+
+Q.  Into  how  many  parts  is  the  fifth  general  rule 
+divided  ? 
+
+A.  Two  :  first,  if  one  premise  be  negative,  the  con- 
+clusion will  be  negative,  which  follows  immediately 
+from  the  second  axiom ;  2dly.  If  one  premise  be  par- 
+ticular, the  conclusion  will  be  particular. 
+
+Q.  How  is  the  second  part  proved  ? 
+
+yi.  If  both  premises  be  affirmative,  there  can  be 
+
+only  one  universal  tenn  in  the  premises  (Chap.  VIII.)> 
+
+and  that,  by  the  first  general  rule,  must  be  the  middle 
+
+tenn ;  therefore,  the  minor  term,  being  particular  in 
+
+E  2 
+
+
+40  CATECHISM    OF    LOGIC. 
+
+the  premises,  must,  by  the  second  general  rule,  be 
+jiarticular  in  the  conclusion,  where  it  is  the  subject, 
+and  therefore  renders  the  conclusion  particular. 
+
+If  one  of  the  premises  be  negative,  the  conclusion, 
+by  the  first  part  of  this  rule,  must  be  negative,  and 
+its  predicate  consequently  universal  (Chap.  VIII.) ; 
+in  this  case,  there  can  be  only  two  universal  terms  in 
+the  premises,  one  of  which  must  be  the  middle,  and 
+the  other  the  major  (first  and  second  general  rules) ; 
+therefore,  the  minor  being  particular  in  the  premises, 
+will  be  also  particular  in  the  conclusion,  where  it  is 
+the  subject,  and  consequently  renders  the  conclusion 
+particular. 
+
+Q.  How  do  you  prove  the  sixth  general  rule  ? 
+
+A.  If  both  premises  ])e  affirmative,  there  will  be 
+no  universal  term  in  the  premises,  and  therefore  the 
+middle  will  be  taken  twice  particularly,  contrary  to 
+the  first  general  rule.  If  one  premise  be  negative,  the 
+conclusion  will  be  negative,  and  therefore  its  pre- 
+dicate universal ;  but  in  this  case  there  can  be  only 
+one  universal  term  in  the  premises ;  therefore,  either 
+the  middle  must  be  taken  twice  particularly,  contrary 
+to  the  first  general  rule,  or  the  major  extreme  must 
+be  taken  more  universally  in  the  conclusion  than  in 
+the  i)remises,  contrary  to  the  second. 
+
+
+CHAPTER  XVII. 
+
+Modes  and  special  rides. 
+
+Q.  What  is  the  mode  of  a  syllogism  ? 
+
+//.  The  legitimate  determination  of  the  proi)ositions 
+in  a  syllogism,  according  to  their  quantity  and  quality. 
+
+Q.  What  do  you  mean  by  the  special  rules  of  a  syl- 
+logism ? 
+
+
+CATECHISM    OF    LOGiC,  41 
+
+A.  Tho^e  rules  which  are  peculiar  to  any  bingle 
+ligure. 
+
+Q,  How  may  we  determine  the  rules  which  are 
+special  to  the  first  figure  ? 
+
+A.  The  conclusion  must  be  either  affinnative  or 
+negative.  If  it  be  affirmative,  both  premises,  and 
+therefore  the  minor,  must  be  affirmative;  but  the 
+middle  terra,  which,  in  this  case,  is  predic?.te  of  the 
+minor,  will  be  particular,  and  therefore  must  be  uni- 
+versal in  the  major,  where  it  is  the  subject,  and  con- 
+sequently renders  the  major  universal. 
+
+If  the  conclusion  be  negative,  its  predicate,  the 
+major  term,  wiU  be  universal,  and  must  consequently 
+have  the  same  quantity  in  the  major  premise;  but  in 
+the  major  premise,  it  is  the  predicate  :  therefore,  the 
+major  must  be  negative,  and  the  minor  affirmative  ; 
+consequently,  its  predicate,  the  middle  term,  will  be 
+particular  in  the  minor,  and  therefore  universal  in 
+the  major,  where  it  is  the  subject,  and  consequently 
+renders  the  major  universal. 
+
+Q.  V»'hat  special  rules  for  the  first  figure  are  de- 
+duced from  tliis  analysis  ? 
+
+A.  1.  The  major  must  be  universal. 
+2.  The  minor  m-ust  be  affirmative. 
+
+Q.  What  are  the  legitimate  modes  of  the  first 
+figure  established  by  the  same  analysis  ? 
+
+A.  Four;  as  follow  :  — 
+
+1.  2.  3.  4. 
+IMajor  premise  A  E  A  E 
+I\Iinor  premise  A  A  I  I 
+Conclusion  A      E       I       O     (See  Chap.  YL). 
+
+Which,  for  the  sake  of  memory,  are  formed  into  the 
+mnemonic  word,  Barbara,  Cekrent,  Darii,  Ferio. 
+£  3 
+
+
+42  CATECHISM    OF    LOGIC. 
+
+Q.  I  low  do  you  investigate  the  special  rules  of  the 
+second  figure  ? 
+
+A.  As  the  middle  term  is  predicate  of  both  pre- 
+mises, one  of  them  must  be  negative  (first  general 
+rule),  and  the  conclusion  must  also  be  negative  (fifth 
+general  rule) ;  consequently,  the  major  term,  as  pre- 
+dicate of  the  conchision,  will  be  universal,  and  must 
+therefore  (second  general  rule)  have  the  same  quan- 
+tity in  the  major  premise,  where  it  is  subject,  and 
+therefore  renders  that  premise  universal. 
+
+Q.  ^yhat  are  the  general  rules  deduced  from  this 
+analysis  ? 
+
+A.  1.  One  of  the  premises  must  be  negative : 
+2.  The  major  must  be  universal. 
+
+Q.  What  are  the  modes  of  the  second  figure  ac- 
+cording to  this  analysis  ? 
+
+A.  There  are  four: —   1. 
+
+JMajor  premise         E 
+
+IMinor  premise         A 
+
+Conclusion  E 
+
+Contained  in  the  technical  words,  Cc 
+
+Festino,  Baroko. 
+
+Q.  What  are  the  special  rules  of  the  third  figure? 
+
+A.  It  can  he  shewn  by  tlie  same  analysis  as  in  tlie 
+first  figure;  that  1.  the  minor  must  be  affirmative; 
+and  since  the  minor  term  is  predicate  of  the  minor 
+l)roposition,  it  must  be  particular,  and  therefore  the 
+conclusion  will  be  particular. 
+
+Q.  From  what  similarity  between  the  first  and  third 
+figure  have  they  a  similar  rule  and  similarly  proved. 
+
+A.  The  proof  in  both  instances  turns  on  the  i)o- 
+sition  of  the  major  term  in  the  i)remises,  and  in  both 
+it  is  the  predicate  of  the  major  proposition. 
+
+Q.  How  many  modes  are  there  in  the  third  figure  ? 
+
+
+2. 
+
+4. 
+
+A      !•: 
+
+A 
+
+E         I 
+
+O 
+
+E        <) 
+
+O 
+
+:1s,  Ccsare, 
+
+CVmicstrcs, 
+
+CATECHISM    OF    LOGIC.  43 
+
+
+A.  There  are  six  : 
+
+1. 
+
+2. 
+
+3. 
+
+4. 
+
+5. 
+
+6. 
+
+IMajor  premise 
+
+A 
+
+E 
+
+I 
+
+A 
+
+() 
+
+E 
+
+i\Iinor  premise 
+
+A 
+
+A 
+
+A 
+
+I 
+
+A 
+
+I 
+
+Conclusion 
+
+I 
+
+0 
+
+I 
+
+I 
+
+0 
+
+(> 
+
+Contained  in  the  mnemonic  words,  Daraptiy  Fekplan, 
+Dkamh,  DoAhi,  Bokardo,  Fmson. 
+
+Q.  What  are  the  special  rules  of  the  fourth  figure? 
+
+A.  In  this  figure,  on  account  of  the  confused  po- 
+sition of  the  terms,  all  the  rules  are  hypothetic :  by 
+an  easy  analysis,  we  can  discover,  1.  that  in  negative 
+modes  the  major  will  be  universal;  proved  like  the 
+second  nile  of  the  second  figure  :  2.  that  if  the  minor 
+be  affirmative,  the  conclusion  will  be  particular ; 
+proved  as  the  second  rule  of  the  third  figure  :  and 
+3.  if  the  major  be  jiarticular,  the  minor  must  be  ne- 
+gative ;  for  the  middle  term  will  then  be  particular,  as 
+subject  of  major;  therefore,  it  must  be  imiversal  in 
+minor,  where  it  is  predicate,  and  consequently  will 
+render  the  minor  negative. 
+
+Q.  ^lay  not  the  rules  of  the  fourth  figure  ])e  other- 
+wise expressed  ? 
+
+A.  They  may  be  converted  by  contraposition,  and 
+would  then  be  thus  expressed  : — 
+
+1.  If  the  major  be  particular,   the  mode  will  be 
+
+affirmative. 
+
+2.  If  the  conclusion  be  universal,  the  minor  must 
+
+be  negative. 
+
+3.  If  the  minor  be  afiirmative,  tlie  major  must  be 
+
+universal. 
+
+Q.  May  not  the  rules  of  the  fourth  figiu-e  be  ex- 
+pressed categorically  ? 
+
+A.  Two  categorical  rules  are  easily  deduced  from 
+the  hypothetics  already  given  : — 
+
+
+44  CATECHISM    OF    LOGIC. 
+
+1.  0  cannot  be  a  i)remise. 
+
+2.  A  cannot  be  a  legitimate  conclusion. 
+
+Q.  From  wliat  similarity  bet">veen  the  second  and 
+fourth  figures  have  they  a  rule  similarly  proved  ? 
+
+A.  The  proofs  of  the  first  rule  of  the  fourth  figure, 
+and  the  second  of  the  second  figure,  depend  in  both 
+on  the  position  of  the  major  term,  which  in  both  is 
+the  predicate  of  the  major  proposition. 
+
+Q.  From  what  similarity  between  the  third  and 
+fourth  figures  have  they  a  rule  similarly  proved  ? 
+
+A.  The  proofs  of  the  second  rules  of  the  third  and 
+fourth  figure,  depend  in  both  on  the  position  of  the 
+minor  term,  which  in  both  is  the  }iredicatc  of  the 
+minor  proposition. 
+
+Q.  What  are  the  modes  of  the  fourth  figure  ? 
+
+^'.  There  are  five : —    1.         2.         3.        4.        5. 
+
+Major  premise        A        A         I         E        E 
+
+Minor  premise        A        E        A        A         I 
+
+Conclusion  I         E         I         O        O 
+
+For  which  the  mnemonic  words  are  Brwrnantip,  Ca- 
+
+menes,  Dimaris,  Fesapo,  Fresison  ', 
+
+Q.  Which  of  the  figures  is  the  most  perfect  ? 
+
+A.  The  first,  for  in  that  alone  can  a  universal  af- 
+firmative conclusion  be  deduced ;  in  the  second,  the 
+conclusion  must  be  negative;  in  the  third,  particular; 
+in  the  fourth,  either  negative  or  particular. 
+
+1  Tlie  names  of  the  modes  are  included  in  the  following 
+Latin  lines: — 
+
+Barbara,  Celarent,  Darii,  Ferio  quoque  prima2, 
+C'sare,  Camestres,  Festino,  Barolco  secundae ; 
+Tcrtia  Darapti  sibi  vindicat  atque  Felaplon, 
+Adjungens  Disamia,  Datist,  Bokardo,  Ferison  ; 
+In  quaiia  Braviantip  sunt,  Carmeties,  DimarisqitCf 
+Adjungens  semper  Fesapo  atque  Fresison, 
+
+
+CATECHISM    OF   LOGIC. 
+
+
+45 
+
+
+<u        ;^  <; 
+
+
+Z  o         SLi  ;:) 
+
+
+M  -a 
+
+
+'^     5     2 
+
+
+< 
+< 
+< 
+< 
+
+_ 
+
+o 
+
+o 
+
+<5 
+< 
+
+-<      i 
+
+<  \ 
+
+■    J 
+< 
+
+<    \ 
+
+^ 
+
+— 
+
+t 
+1 
+
+< 
+
+< 
+
+< 
+
+'  c 
+
+c 
+
+o 
+
+< 
+o 
+
+<: 
+
+o 
+
+a 
+I 
+
+a    1 
+
+O 
+O 
+
+-H 
+>-^ 
+
+a 
+
+a 
+
+1 
+
+< 
+
+< 
+< 
+
+o 
+
+_ 
+< 
+
+< 
+
+o 
+_ 
+
+- 
+
+o 
+
+1—1 
+
+HI 
+
+a 
+a 
+
+a 
+
+< 
+
+o 
+
+-^ 
+
+1 
+
+„    ! 
+
+«     : 
+
+C" 
+
+w     i 
+
+^ 
+
+1 
+
+o 
+o 
+
+a    1 
+
+1 
+
+-3 
+
+o 
+
+o  • 
+*  2 
+
+o 
+
+1 
+
+1 
+
+- 
+
+a 
+a 
+< 
+< 
+< 
+< 
+
+c 
+■■? 
+
+a 
+< 
+o 
+
+< 
+
+< 
+
+a 
+
+< 
+
+a 
+
+n 
+
+< 
+
+Hi^ 
+
+1— ( 
+
+o 
+
+o 
+
+j  i 
+
+a 
+
+O 
+
+.2 
+o 
+
+46  CATECHISM    OF   LOGIC. 
+
+CHAPTER  XVIII. 
+
+Further  Considerations  on  the  Modes  and  Figures. 
+
+Q.  How  may  you  determine,  analytically,  that  A 
+can  be  a  conclusion  in  the  first  figure  only  ? 
+
+A.  Since  the  conckision  is  affirmative,  both  pre- 
+mises must  be  affirmative,  and  since  it  is  also  uni- 
+versal, its  subject,  the  minor  term,  must  be  universal 
+in  the  minor  proposition  (second  general  rule) ;  the 
+minor  term  must  therefore  be  the  subject  of  the 
+minor  proposition,  and  the  middle  its  predicate,  and 
+consequently  particular ;  the  middle  term  must  there- 
+fore be  universal  in  the  major  proposition,  and  to  be 
+so  must  be  its  subject :  hence  it  appears,  that  A  can 
+be  a  conclusion  only  when  tlie  middle  is  the  predicate 
+of  the  minor,  and  subject  of  the  major  propositions ; 
+that  is,  in  the  first  figure. 
+
+Q.  Is  there  any  proposition  restricted  as  a  premise  ? 
+
+A.  O  can  be  a  minor  proposition  only  in  the  second 
+figure,  and  a  major  only  in  the  third. 
+
+Q.  Hov/  do  you  show,  analytically,  that  O,  as  a 
+minor  premise,  is  restricted  to  the  second  figure  ? 
+
+A.  Since  minor  premise  is  negative,  tlie  conclusion 
+must  be  negative,  and  its  predicate  universal;  the 
+major  term,  or  predicate  of  the  conclusion,  must 
+therefore  be  universal  in  the  major  premise;  but 
+since  the  minor  premise  is  negative,  the  major  must 
+be  affirmative;  the  major  term  then  must  be  its  sub- 
+ject, and  the  middle,  being  its  predicate.  Mall  be  par- 
+ticular ;  it  must  therefore  be  universal  in  the  minor 
+premise,  and  to  be  so,  must  be  its  predicate :  hence 
+it  appears,  that  O  can  be  a  minor  premise  in  that 
+
+
+CATECHISM    OF   LOGIC.  4^- 
+
+figiire  only  which  has  the  middle  predicate  of  both, 
+viz.  the  second. 
+
+Q.  How  do  you  investigate  the  figure  in  which  O 
+may  be  major  premise  ? 
+
+A.  Since  one  of  the  premises  is  supposed  negative, 
+the  conclusion  must  be  negative,  and  its  predicate, 
+the  major  term,  universal;  this  term  must  be  uni- 
+versal in  the  major  proposition,  which  is  supposed  to 
+be  O,  and  therefore  must  be  its  predicate ;  the  middle 
+term  then  being  particular,  subject  of  the  minor, 
+must  be  universal  in  the  minor,  and  must  conse- 
+quently hold  the  place  of  subject,  for  since  the  major 
+is  negative,  the  minor  must  be  affirmative ;  O,  there- 
+fore, can  only  be  a  major  proposition  in  the  figure 
+where  the  middle  term  is  sul^ject  of  both  premises, 
+viz.  the  third. 
+
+Q.  Is  there  any  mode  peculiar  to  the  fourth  figure? 
+
+A.  The  fourth  is  the  only  term  in  v/hich  an  extreme 
+is  taken  more  universally  in  the  premises  than  in  the 
+conclusion. 
+
+Q.  What  is  the  only  extreme  so  taken  ? 
+
+A.  The  major;  for  if  the  minor  be  universal  in 
+the  premises,  it  maij  be  so  in  the  conclusion ;  and  it 
+is  useless  to  draw  a  particular  conclusion  when  wc 
+can  have  a  universal. 
+
+Q.  How  do  you  discover  by  analysis  the  figure  in 
+v/hich  the  major  extreme  is  particular  in  the  conclu- 
+sion, and  universal  in  the  premises  ^ 
+
+A.  The  major  extreme  being  particular  in  the 
+conclusion,  the  conclusion  itself,  and  therefore  both 
+premises  must  be  affi.rmative ;  but  since  the  major 
+extremxC  must  be  universal  in  the  preliiioes,  it  must 
+be  subject  of  the  major  proposition,  therefore  the 
+
+
+48  CATECHISM    OF    LOGIC. 
+
+middle  term,  as  predicate  of  major  premise,  being 
+particular,  must  be  universal  in  minor,  and  to  be  so 
+must  be  its  subject :  therefore,  the  major  extreme  can 
+be  particular  in  premise,  and  universal  in  conclusion, 
+only  in  that  figure  which  has  the  middle  for  predicate 
+of  major  premise,  and  subject  of  minor,  viz.  the 
+fourth. 
+
+Q.  What  mode  is  common  to  all  the  figures  ? 
+
+A.  E    I.  O. 
+
+Q.  Why? 
+
+A.  All  the  conditions  of  the  general  rules  will  be 
+fulfilled,  whatever  be  the  position  of  the  terms  in  the 
+premises. 
+
+Q,  Why  is  not  I.  E.  O.  a  legitimate  mode? 
+
+A.  Because  the  major  term,  which  is  universal  in 
+the  conclusion,  would  be  particular  in  the  major 
+premise,  whether  it  were  made  the  subject  or  pre- 
+dicate. 
+
+Q.  Wliy  is  A.  E.  0.  marked  a  useless  mode  ? 
+
+A.  As  the  minor  term,  whether  subject  or  pre- 
+dicate, must  be  universal  in  the  minor  proposition, 
+we  can  have  a  universal  conclusion  in  every  figure 
+which  can  have  these  premises. 
+
+Q.  Why  then  is  E.  A.  O.  a  useful  mode  ? 
+
+A.  Because  the  conclusion  from  these  premises 
+must  be  particular  in  those  figures  in  which  the 
+minor  term  is  predicate  of  the  minor  proposition. 
+
+Q.  What  conclusion  admits  the  greatest  variety  of 
+premises  ? 
+
+A.  A  particular  negative. 
+
+
+CATECHISM    OF   LOGIC.  49 
+
+CHAPTER  XIX. 
+
+The  Aristctelic  doctrine  of  syllogisms. 
+
+Q.  On  what  principles  did  Aristotle  establish  the 
+doctrine  of  syllogisms  ? 
+
+A.  On  what  are  called  the  rules  de  omni  and  de 
+nullo,  both  of  which  are  comprised  in  the  following 
+aphorism  : — 
+
+Whatever  is  predicated  affirmatively  or  negatively 
+of  a  term,  taken  in  its  entire  extension,  may  be  pre- 
+dicated in  like  manner  (that  is,  affirmatively  or  nega- 
+tively) of  any  thing  contained  under  that  term. 
+
+Q.  To  which  of  the  figures  is  this  principle  appli- 
+cable ? 
+
+A.  To  the  first  only. 
+
+Q.  Why? 
+
+A.  Because  in  the  first,  the  major  is  predicated  of 
+the  middle,  and  the  minor  is  contained  in  the  middle, 
+whence  we  immediately  infer  the  predication  of  the 
+major  respecting  the  minor ;  but  in  the  other  figures, 
+as  the  terms  are  not  disposed  in  their  naturrJ  order, 
+the  necessity  of  the  consequence  is  not  immediately 
+perceivable. 
+
+Q.  Why  do  you  say  their  natural  order? 
+
+A.  Because  if  we  observe  the  process  which  usually 
+takes  place  in  our  own  minds,  we  shall  see  that  our 
+reasoning,  for  the  most  part,  assumes  the  form  of 
+the  first  figure ;  for  we  first  endeavour  to  obtain  some 
+general  rule,  and  then  investigate  how  far  the  par- 
+ticular instance  is  contained  under  the  rule. 
+
+Q.  Can  you  illustrate  this  by  a  common  example? 
+
+A.  In  all  criminal  trials,  the  law  defining  the  crime 
+
+
+50  CATJECHISM    OP   LOGIC. 
+
+is  the  major  proposition ;  the  nature  of  the  action 
+committed  by  the  prisoner  is  the  minor  proposition ; 
+and  the  verdict  of  the  jury  is  the  conclusion. 
+
+Thus :  "■  To  kill  a  man  wilfully,  maliciously,  and 
+unlawfully,  is  murder. 
+
+*' M.  N.  did  kill  a  man  wilfully,  maliciously,  and 
+unlawfully. 
+
+**  Therefore  ]\I.  N.  is  guilty  of  murder." 
+
+Here  the  law  supplies  the  major  proposition;  the 
+prosecutor  furnishes  the  minor ;  and  the  jury  draw 
+the  conclusion  from  the  premises. 
+
+Q.  Has  not  this  simple  distinction  been  frequently 
+neglected  ? 
+
+A.  Yes;  from  not  keej>ing  the  propositions  suf- 
+ficiently distinct,  jurymen  have  frequently  required 
+proof  of  the  major,  and  thus  interfered  with  the  pro- 
+vince of  the  court ;  and,  on  the  other  hand,  instances 
+have  occurred  of  judges  directing  their  attention  to 
+the  minor,  the  consideration  of  which  belongs  to  the 
+jury. 
+
+Q.  How  did  Aristotle  distinguish  the  modes  of  the 
+first  figure  from  those  of  the  others  ? 
+
+A.  He  called  the  modes  of  the  first  figure  perfect, 
+and  the  others  imperfect. 
+
+Q.  What  are  the  attributes  of  a  perfect  mode  ? 
+
+A.  1.  The  middle  term  must  be  the  predicate  of  its 
+minor,  and  the  subject  of  its  major. 
+
+2.  The  minor  premise  must  be  affirmative,  and  the 
+major  universal. 
+
+3.  The  conclusion  must  have  the  quantity  of  the 
+minor,  and  the  quality  of  the  major  premise. 
+
+Q.  How  do  you  prove  the  first  and  second  ? 
+•     A.  It  is  manifest  from  the  principle  on  which  Aris- 
+
+
+CATECHISM    OF   LOGIC.  51 
+
+totle  has  founded  the  doctrine  of  syllogisms ;  for 
+there  must  be  some  general  rule  laid  down  about 
+some  universal  term,  of  whose  extension  the  subject 
+of  the  conclusion  forms  a  part. 
+
+Q.  How  do  you  prove  the  third  ? 
+
+A.  The  conclusion  must  have  the  quantity  of  the 
+minor ;  for  that  part  alone  of  the  universal  term,  or 
+universal  Avhole,  determined  in  the  premises,  can  be 
+introduced  into  the  conclusion ;  and  it  must  have  the 
+quality  of  the  major,  for  whatever  has  been  predicated 
+of  the  universal  whole,  must  also  be  predicated  of  its 
+parts. 
+
+
+CHAPTER  XX. 
+
+Reduction. 
+
+Q.  How  are  imperfect  modes  changed  into  perfect? 
+
+A.  By  reduction,  which  is  of  two  kinds,  ostensive 
+and  indirect. 
+
+Q.  What  is  ostensive  reduction  ? 
+
+A.  That  which  from  the  premises  of  the  imperfect 
+mode  gives  the  conclusion  in  a  perfect  mode,  or  a  con- 
+clusion immediately  inferring  it  by  conversion. 
+
+Q.  What  is  the  imperfect  mode  called  ? 
+
+A.  It  is  called  the  reducend,  and  the  perfect  mode 
+formed  from  it  is  termed  the  reduct. 
+
+Q.  How  do  the  names  of  the  imperfect  modes 
+suggest  the  perfect  modes  into  which  they  are  to  be 
+reduced  ? 
+
+A.  The  initial  letter  of  the  reducend  and  reduct 
+modes  are  the  same ;  8  or  P  following  a  vowel  in  the 
+reducend,  shows  that  the  proposition  must  be  con- 
+F  2 
+
+
+52  CATECHISM    OF   LOGIC. 
+
+verted  to  make  it  admissible  in  the  reduct  mode ;  i\I. 
+or  N.  declares  that  the  reducend  premise  must  be 
+transposed;  and  K.  declares  the  imi)erfect  mode  to  be 
+incapable  of  direct  or  ostensive  reduction. 
+
+Q.  What  then  are  the  perfect  and  imperfect  cor- 
+responding modes  ? 
+
+A.  Imperfect  modes.  Perfect  modes. 
+
+Bramantip  Barbara 
+
+Cesare,  Camestres,  Camenes  Celarent 
+
+Darapti,  Disamis,  Datisi,  Demaris  Darii 
+
+Festino,  Felapton,  Ferison,  Fesapo,  Fresison   Ferio 
+
+Baroko   ")  .  , ,      ^  .  -,      • 
+
+Bokardo  J  ^^^^P^"!^  of  ostensive  reduction. 
+
+Q.  Give  me  an  example  of  ostensive  reduction? 
+
+A.  Reducend  or  imperfect  mode. 
+
+Ce-    No  body  shining  by  its  own  light  changes 
+
+its  phases. 
+
+-sa- The  moon  changes  its  phases. 
+
+-re.     — • .  •  The  moon  does  not  shine  by  its  ov/n  light. 
+Reduct  or  perfect  mode. 
+
+Ce-     No  body  changing  its  phases  shines  by  its 
+
+own  light. 
+
+-la-     The  moon  changes  its  phases. 
+
+-rent. The  moon  does  not  shine  by  its  own  light. 
+
+Q.  How  is  the  second  figure  reduced  to  the  form 
+of  the  first  ? 
+
+A.  By  the  conversion  of  the  major;  for  the  minor 
+propositions  in  both  have  the  terms  in  the  same 
+order. 
+
+Q.  When  will  this  change  be  sufficient  ? 
+
+A.  When  the  minor  proposition  is  affirmative ;  for 
+in  the  second  figure  the  major  is  always  universal. 
+
+Q.  When  is  a  further  change  necessary  ? 
+
+
+CATECHISM    OF    LOGIC.  53 
+
+ui.  When  the  minor  is  a  universal  negative,  the 
+premises  must  be  transposed ;  ^vlien  it  is  a  particular 
+negative,  ostensive  reduction  is  inapplicable. 
+
+Q.  How  is  the  third  figure  reduced  to  the  form  of 
+the  first  ? 
+
+A.  By  the  conversion  of  the  minor;  for  the  terms 
+are  in  the  same  order  in  the  major  propositions  of 
+both. 
+
+Q.  When  will  this  be  sufficient  ? 
+
+A.  When  the  major  is  universal ;  for  in  the  third 
+figure  the  minor  is  always  aflSrmative. 
+
+Q.  When  will  transposition  be  also  necessary  ? 
+
+A.  When  the  major  is  a  particular  affirmative  ;  but 
+if  it  be  a  particular  negative,  ostensive  reduction  is 
+inapplicable. 
+
+Q.  How  is  the  fourth  figure  changed  into  the  form 
+of  the  first  ? 
+
+A.  Either  by  simple  transposition,  or  by  the  con- 
+version of  both  premises. 
+
+Q.  When  will  transposition  suffice  r 
+
+A.  When  the  minor  is  universal,  and  the  major 
+affirmative. 
+
+Q.  Vihen  transposition  of  premises  is  used  in 
+reduction,  vvill  the  reduct  conclusion  be  precisely  the 
+same  as  the  conclusion  of  reducend  ? 
+
+A.  No;  when  the  premises  are  transposed,  the 
+terms  of  the  conclusion  must  be  transposed  likewise  j 
+and  the  conclusion  of  the  reducend  must  then  be 
+derived  from  the  conclusion  of  the  reduct  by  con- 
+version. 
+
+Q.  Is  there  any  mode  in  which  it  can  be  deter- 
+minately  shown  that  the  conclusion  of  reducend  is 
+the  convertend  of  the  conclusion  of  reduct  ? 
+F  3 
+
+
+54  CATECHISM    OF   LOGIC. 
+
+A.  Yes;  Bramantip  is  such  a  mode,  and  there  is 
+no  other. 
+
+Q.  How  do  you  prove  this  ?  », 
+
+A.  In  order  that  such  a  relation  should  be  deter- 
+minable, the  convertend  must  be  a  universal  affirma- 
+tive, and  the  converse  a  particular  affirmative;  for 
+the  converses  of  universal  negatives,  and  particular 
+affirmatives,  do  not  differ  from  their  convertends  in 
+quantity;  now  as  the  conclusion  of  reduct  is  con- 
+vertend to  conclusion  of  reducend,  it  must  be  a  uni- 
+versal affirmative,  and  its  subject  being-  universal  in 
+the  conclusion,  must  have  been  universal  in  reduct 
+premises,  and  also  in  the  premises  of  reducend  from 
+whence  they  were  derived ;  but  as  conversion  is  ne- 
+cessary in  the  conclusion,  transposition  must  have 
+taken  place  in  the  premises,  and  consequently  the 
+universal  minor  of  the  reduct  is  a  universal  major  in 
+the  reducend ;  but  since  the  conclusion  of  the  re- 
+ducend is  affirmative,  its  predicate,  the  major  term, 
+is  particular,  but  it  is  universal  in  the  premises,  and 
+therefore  the  reducend  mode  is  Bramantip  in  the  fourth 
+figure,  as  has  been  aheady  shown  in  the  seventh 
+paragrajih  of  the  eighteenth  chapter. 
+
+Q.  How  do  you  shev/  the  validity  of  ostensive 
+reduction  ? 
+
+A.  The  premises  of  the  reducend  are  supposed  to 
+be  true,  therefore  the  premises  of  the  reduct  being 
+derived  from  them  by  a  legitimate  process,  are  true 
+likeAvise ;  since,  in  the  first  figure,  the  conclusion  is 
+the  necessary  result  of  the  premises,  the  conclusion 
+of  the  reduct  is  true,  and  this  is  either  the  same  as 
+the  conclusion  of  reducend,  or  infers  it  by  a  legiti- 
+mate process  of  conversion. 
+
+
+CATECHISM    OF   LOGIC.  55 
+
+CHAPTER   XXI. 
+
+Indirect  Reduction. 
+
+Q.  What  is  indirect  reduction  ? 
+
+A.  That  in  which,  from  the  contradictory  of  the 
+conclusion,  and  one  of  the  ])reinises,  a  conclusion  is 
+deduced  that  contradicts  the  other  premise  '. 
+
+Q.  What  is  the  process  of  reasoning  in  indirect 
+reduction  ? 
+
+A.  The  premises  of  the  reducend  are  supposed  to 
+be  both  true,  therefore  the  conclusion  of  the  reduct, 
+which  contradicts  one  of  them,  is  false ;  since  the  con- 
+clusion of  the  reduct  is  false,  one  of  the  premises  of 
+the  reduct  must  l^e  false,  and  this  must  be  the  new 
+premise,  or  contradictory  of  reducend  conclusion ; 
+since,  then,  the  contradictory  of  reducend  conclusion 
+is  false,  reducend  conclusion  must  be  true.  (See 
+Chap.  XI.) 
+
+Q.  Give  me  an  example  of  indirect  reduction. 
+
+A.  Reducend  or  imperfect  mode. 
+
+Ce-     No  body  shining  by  its  own  light  changes 
+
+its  phases. 
+
+-la-     The  moon  changes  its  phases. 
+
+-re.      — * .  ■  The  moon  does  not  shine  by  its  own  light. 
+Reduct  or  perfect  mode. 
+
+Bar-  Xo  body  shining  by  its  own  light  changes 
+
+its  phases. 
+
+-ba-    The  moon  shines  by  her  own  light. 
+
+-ra.     — •  .•  The  moon  does  not  change  her  phases. 
+
+
+'  Before  proceeding  with  the  investigations  of  tliis  ciiaptcr, 
+the  student  should  carefully  go  over  the  eleventh  chapter. 
+
+
+56  CATECHISM    OF    LOGIC. 
+
+Q.  In  this  instance,  the  conclusion  of  reducend 
+contradicts  the  minor  premise  of  reducend,  but  from 
+the  letters  there  would  appear  to  be  only  contrariety 
+between  them.  How  do  you  explain  the  apparent 
+error  ? 
+
+A.  You  have  mentioned  the  reason  that  led  to  the 
+selection  of  this  very  example :  in  addition  to  the 
+demonstration  of  the  principles  of  indirect  reduction, 
+it  is  of  importance  to  show  the  extensive  and  accurate 
+ap])lication  of  which  logical  reasoning  is  susceptible, 
+and  that  ap])arent  violations  of  the  forms  of  its  rules 
+are  still  regulated  by  its  strictest  principles. 
+
+(>.  Is  that  exemplified  in  the  present  instance  ? 
+
+A.  Yes ;  the  moon  being  ai)plicable  only  to  one 
+individual  is  a  singular  term,  therefore  the  proposi- 
+tion of  which  it  is  the  subject  must  be  universal ;  the 
+conclusion  from  two  universals  being  universal  in  the 
+first  figure,  the  reduct  is  both  a  universal  and  sin- 
+gular, but  the  opposition  between  two  singulars  is 
+contradiction.  In  another  part  of  this  chapter,  how- 
+ever, it  will  be  shown,  that  contrariety  which  might 
+arise  in  this  case  would  be  an  opposition  perfectly 
+sufficient  for  the  process  of  reasoning. 
+
+Q.  Has  this  indirect  process  of  reduction  any  other 
+names  ? 
+
+A.  It  is  commonly  called  by  the  old  logicians  re- 
+ductio  ad  imjiossiblle,  and  reductio  ad  absurdam. 
+
+Q.  What  changes  are  made  in  the  terms  of  the 
+reducend  by  indirect  reduction  ? 
+
+A.  The  extreme  of  preserved  premise  of  reducend 
+becomes  the  middle  term  of  the  reduct ;  the  middle 
+of  reducend  takes  in  the  reduct  the  name  of  the  ex^ 
+
+
+CATECHISM    OF    LOGIC.  &t 
+
+treme  of  the  preserved  premise ;  the  extreme  of  the 
+suppressed  premise  preserves  its  name. 
+
+Q.  How  do  you  prove  this  ? 
+
+A.  Since  the  extreme  of  the  preserved  premise 
+occurs  once  there  in  the  premises  of  the  reduct,  and 
+once  again  in  the  contradictory  of  the  conchision,  it 
+must  be  the  middle  term  of  the  reduct,  for  that  term 
+alone  occurs  twice  in  the  premises  of  a  syllogism : 
+since  the  former  middle  occurs  but  once  in  the  pre- 
+mises of  reduct,  it  must  become  an  extreme ;  and 
+since  it  occurs  only  in  the  preserved  premise,  it  will 
+be  the  extreme  of  that  premise  :  finally,  since  the 
+extreme  of  the  suppressed  premise  holds  the  same 
+situation  in  the  substituted  premise  (viz.  the  contra- 
+dictory of  the  conclusion),  it  must  retain  its  former 
+name. 
+
+Q.  Which  is  the  suppressed  premise  in  the  second 
+figure  ? 
+
+A,  The  minor. 
+
+Q.  Why? 
+
+A.  Since  the  major  premise  is  preserved,  the  major 
+term  will  become  the  middle ;  but  it  is  the  subject  of 
+the  preserved  premise,  and  will  be  the  predicate  of 
+the  substituted  premise,  for  it  is  the  predicate  of 
+reducend  conclusion,  and  consequently  of  its  contra- 
+dictory also. 
+
+Q.  Will  the  reduct  mode  then  fulfil  the  conditions 
+of  a  perfect  mode  ? 
+
+A.  Yes;  the  preserved  major  will  be  universal,  for 
+it  is  always  so  in  the  second  figure ;  and  the  substi- 
+tuted minor  wall  be  affirmative,  for  it  is  the  contra- 
+dictory of  the  conclusion,  which  in  the  second  figure 
+is  always  negative. 
+
+
+58  CATECHISM    OF    LOGIC. 
+
+Q.  Whicli  is  the  suppressed  premise  in  tlie  third 
+figure  ? 
+
+J.  The  major. 
+
+Q.  Why? 
+
+A.  Since  the  minor  is  the  preserved  premise,  the 
+minor  term  becomes  the  middle,  but  it  is  the  pre- 
+dicate of  the  preserved  premise,  and  will  be  of  course 
+the  subject  of  the  substituted  premise  (viz.  the  con- 
+tradictory of  reducend  conclusion). 
+
+Q.  Vtlll  the  reduct  mode  in  this  case  he  perfect  ? 
+
+A.  Yes;  the  preserved  minor  v^•ill  be  affirmative, 
+for  it  is  always  so  in  the  third  figure ;  and  the  new 
+major  will  be  universal,  as  being  the  contradictory  of 
+the  conclusion,  which  in  the  third  figure  is  always 
+particular. 
+
+Q.  Which  is  the  suppressed  premise  in  the  fourth 
+figure  ? 
+
+A.  The  fourth  figure  is  reduced  to  the  form  of  the 
+first  by  substituting  the  contradictory  of  the  conclu- 
+sion for  either  of  the  premises. 
+
+Q.  Why? 
+
+A.  If  contradictory  of  conclusion  be  substituted 
+for  major  premise,  the  minor  term  becomes  middle, 
+and  is  subject  of  major  and  predicate  of  minor;  if  it 
+be  substituted  for  minor  premise,  the  major  term 
+becomes  middle,  and  is  the  subject  of  major  and 
+predicate  of  minor,  as  is  required  in  a  perfect  mode. 
+
+Q.  How  then  do  we  determine  the  suppressed  pre- 
+mise in  this  figure  ? 
+
+A.  By  the  nature  of  the  conclusion:  1.  if  it  be  a 
+particular  affirmative,  the  major  must  be  suppressed; 
+2.  if  it  be  a  universal  negative,  the  minor  must  be 
+suppressed;  3.  if  it  be  a  particular  negative,  either 
+premise  may  be  suppressed  indiiferently. 
+
+
+CATECHISM    OP   LOGIC.  59 
+
+Q.  How  do  you  prove  the  first  part  ? 
+
+A.  If  the  conclusion  be  a  particular  affirmative,  its 
+contradictory  will  be  a  universal  negative,  and  con- 
+sequently only  admissible  as  a  major  in  the  first 
+figure. 
+
+Q.  Will  the  mode  then  be  perfect  ? 
+
+A.  Yes;  the  major,  as  we  have  shown,  will  be 
+universal,  and  the  minor  must  be  affirmative,  since 
+the  conclusion  is  so. 
+
+Q.  How  do  you  prove  the  second  part  ? 
+
+A.  The  contradictory  of  a  universal  negative  con- 
+clusion is  a  particular  affirmative,  which  is  only  ad- 
+missible as  a  minor  in  the  first  figure. 
+
+Q.  ^Yill  the  mode  then  be  perfect  ? 
+
+A.  Yes;  for  the  minor,  as  we  have  shown,  will  be 
+affirmative,  and  the  major  will  be  universal,  for  it  is 
+so  in  all  the  negative  modes  of  the  fourth  figure. 
+
+Q.  How  do  you  prove  the  third  part  ? 
+
+A.  The  major  is  universal  and  the  minor  affirma- 
+tive in  the  modes  of  the  fourth  figure,  which  have  a 
+particular  negative  conclusion;  consequently,  either 
+may  be  preserved  without  violating  the  rules  of  per- 
+fect modes ;  and  the  contradictory  of  the  conclusion 
+being  a  universal  affirmative,  may  become  either 
+major  or  minor  premise  of  reduct. 
+
+Q.  What  is  there  remarkable  in  the  indirect  rednct 
+modes  of  the  fourth  figure  ? 
+
+A.  The  terms  of  reduct  mode  are  always  in  the 
+reverse  order  of  the  terms  in  the  suppressed  premise. 
+
+Q.  Why? 
+
+A.  Because  the  middle  term  of  reducend  premise 
+changes  its  name  for  that  of  the  extreme  in  preserved 
+premise,  and  will  therefore  be  predicate  of  conclusion 
+
+
+60  CATECIII3M    OF    LOGIC. 
+
+when  the  minor  is  suppressed,  and  subject  when  the 
+major  is  suppressed  ;  but  in  the  fourth  figure,  the 
+middle  term  is  subject  of  minor  and  predicate  of 
+major. 
+
+Q.  \Miat  species  of  opposition  is  principally  used 
+in  the  ])rocess  of  indirect  reduction  ? 
+
+A.  Contradiction. 
+
+Q.  In  how  many  ways  is  it  apjjlied  ? 
+
+A.  In  two  ways :  we  argue  from  truth  of  suppressed 
+premise  to  falsehood  of  reduct  conclusion ;  and  from 
+falsehood  of  substituted  premise  to  truth  of  reducend 
+conclusion. 
+
+Q,  Could  the  other  species  of  opposition  be  used 
+in  either  of  these  ways  ? 
+
+A.  Yes :  contrariety  is  a  valid  argument  in  reason- 
+ing from  truth  to  falsehood;  and  subcontrariety  in 
+reasoning  from  falsehood  to  truth. 
+
+Q.  Does  contrariety  ever  arise  ? 
+
+A.  Yes;  whenever  the  reducend  mode  has  a  par- 
+ticular conclusion,  and  universal  premises. 
+
+Q.  Why  will  it  arise  in  this  case  ? 
+
+A.  Because  ])oth  premises  of  the  reduct  will  be 
+universal ;  and  whenever  this  is  the  case  in  a  perfect 
+mode,  the  conclusion  will  be  universal. 
+
+Q.  Will  the  argument  in  this  case  be  valid  ? 
+
+A.  Yes  ;  for  the  truth  of  the  suppressed  premise 
+will  prove  the  falsehood  of  the  reduct  conclusion. 
+
+Q.  Could  you  not  in  this  case  make  use  of  contra- 
+diction ? 
+
+A.  ^  Yes :    by  deducing  a  subaltern  from  the  re- 
+
+
+See  the  chapter  on  Subalternation  (IX). 
+
+
+CATECHISM    OF   LOGIC.  61 
+
+ducend  premise,  which  would  be  true  by  the  first 
+canon  of  subaltemation ;  and,  consequently,  its  con- 
+tradictory, the  conclusion  of  tlie  reduct  syllogism, 
+v/ould  be  false. 
+
+Q.  Could  subcontrariety  be  used  in  the  process  of 
+reduction  ? 
+
+A.'  No  :  the  argument  of  subcontrariety  would  be 
+valid  between  substituted  premise  and  conclusion  of 
+reducend  ;  but  if  thus  used,  it  must  also  occur  where 
+it  would  be  invalid,  viz.  between  su])pressed  premie 
+and  conclusion  of  reduct. 
+
+Q.  tlow  is  this  proved  ? 
+
+A.  In  order  that  _  substituted  premise  should  be 
+subcontrary  to  conclusion  of  redacend,  that  conclu- 
+sion must  be  O;  for  the  subcontrary  of  I  (viz.  ())  is 
+inadmissible  as  a  premise  in  a  perfect  mode :  also, 
+substituted  premise  must  be  the  mJnor,  for  a  par- 
+ticular is  not  r:lmissible  as  major  premise  in  a  perfect 
+mode ;  the  mode  must  therefore  occur  cither  in  the 
+second  or  fourth  figures  :  but  when  the  conclusion  is 
+particular  in  the  second  figure,  the  minor  is  so  like- 
+wise ;  and  since  the  reduct  has  a  particular  premise, 
+the  conclusion  of  reduct  will  be  particular,  and  there- 
+fore subcontrary  to  suppressed  premise ;  in  the  fourth 
+figure,  the  conclusion  is  particular  only  when  the 
+minor  is  affirmative ;  and  as  the  terms  of  reduct  con- 
+clusion are  in  reverse  order  to  the  terms  of  suppressed 
+premise,  it  vv'ill  be  subcontrary  to  the  converse  of  that 
+premise. 
+
+
+02  CATECHISM    OF   LOGIC. 
+
+CHAPTER  XXII. 
+
+Hypothetical  and  disjunctive  2)ropositions. 
+
+Q.  What  is  a  hypothetical  proposition  ? 
+
+A.  That  in  which  one  or  both  premises  are  hypo- 
+thetic propositions. 
+
+Q.  Wliat  is  the  most  common  form  of  a  hypothetic 
+syllogism  ? 
+
+A.  The  major  is  usually  a  hypothetic  proposition ; 
+the  minor  and  conclusion  both  categorical.  If  both 
+premises  be  hypothetic,  the  conclusion  will  be  hypo- 
+thetic likewise ;  and  the  pro])Osition  will  partake  of 
+the  nature  of  a  Sorites,  which  shall  be  described 
+hereafter. 
+
+Q.  What  are  the  legitimate  processes  of  reasoning 
+in  hypothetic  syllogism  ? 
+
+A.  From  the  position  of  the  antecedent  to  the 
+position  of  the  consequent ;  and  from  the  remotion  of 
+the  consequent  to  the  remotion  of  the  antecedent. 
+
+Q.  AMiat  do  you  mean  by  position  and  remotion  ? 
+
+A.  Position  is  the  assertion  of  a  proposition  preserv- 
+ing its  quality;  remotion  is  the  assertion  of  a  proposi- 
+tion after  its  quality  is  changed  to  the  opposite. 
+
+Q.  What  are  the  illegitimate  processes  of  reasoning 
+in  hypothetic  syllogisms  ? 
+
+A.  From  the  remotion  of  antecedent  to  the  remo- 
+tion of  consequent ;  or  from  the  position  of  conse- 
+quent to  the  position  of  antecedent. 
+
+Q.  How  do  you  prove  this  ? 
+
+A.  It  api)ears  from  what  we  have  already  stated 
+(Chap.  XIII.),  that  the  truth  of  a  hypothetic  propo- 
+sition depends  on  the  validity  of  the  inference  of  the 
+
+
+CATECHISM    OF    LOGIC.  '    63 
+
+consequent  from  the  antecedent ;  now  the  same  con- 
+sequent may  follow  from  several  antecedents,  there- 
+fore, the  remotion  of  one  antecedent  cannot  remove 
+the  consequent,  nor  the  position  of  the  consequent 
+prove  that  particular  antecedent. 
+
+Q.  Can  you  illustrate  this  by  an  example  ? 
+
+A.  Suppose  the  hypothetic  major  to  be — 
+"  If  the  moon  revolves  round  the  earth,  she  is  a 
+
+satellite." 
+Now  it  is  evident,  that  if  the  first  part  be  true,  the 
+second  follows  from  it  by  necessary  inference ;  and  if 
+the  consequent  be  false,  the  antecedent  must  be  so 
+likewise ;  but  no  inference  could  be  deduced  from  the 
+remotion  of  the  antecedent  or  position  of  the  conse- 
+quent, because  there  are  other  planets  besides  the 
+earth  that  have  satellites. 
+
+Q.  How  are  the  legitimate  processes  of  reasoning 
+in  hypothetic  syllogisms  designated  ? 
+
+A.  \Yhen  we  argue  from  position  of  antecedent  to 
+position  of  consequent,  the  syllogism  is  termed  Con- 
+structive; when  we  reason  from  remotion  of  conse- 
+quent to  remotion  of  antecedent,  the  syllogism  is 
+called  Destructive. 
+
+Q.  Can  a  constructive  be  changed  into  a  destruc- 
+tive syllogism  r 
+
+A.  Yes :  by  the  conversion  of  the  hj^iothetic  major 
+by  contraposition ;    thus,  the  example  given  above 
+would  become — 
+If  the  moon  is  not  a  sateUite,  she  does  not  revolve 
+
+round  the  earth ; 
+
+And  it  will  be  at  once  evident,  that  the  destructive 
+
+reasoning  from  this  form  of  the  proposition,  is  pre- 
+
+G  2 
+
+
+64  CATECHISM    OF    LOGIC. 
+
+cisely  equivalent  to  the  constructive  reasoning,  from 
+its  convertentl  and  rice  versa. 
+
+Q.  What  is  the  mo.^t  usual  fomi  of  a  hypothetic 
+proposition  ? 
+
+A.  The  antecedent  and  consequent  have,  for  the 
+most  part,  a  common  subject;  if  they  have  not,  it 
+will  be  found  convenient  to  change  them  into  this 
+form  by  conversion.  If  they  have  not  a  common 
+term,  som.e  part  of  the  reasoning  must  have  been 
+omitted,  which  should  be  supplied  before  it  is  sub- 
+jected to  the  strict  examination  of  logical  rules. 
+
+Q.  When  will  a  hypothetic  affirmative  of  this  form 
+be  true  ? 
+
+A,  It  will  be  true  when  the  extension  of  the  pre- 
+dicate of  the  antecedent  is  contained  in  the  extension 
+of  the  predicate  of  the  consequent. 
+
+Q.  When  will  a  hypothetic  negative  be  tnie  ? 
+
+A.  When  the  extension  of  the  predicate  of  the 
+consequent  is  contauied  in  the  extension  of  the  pre- 
+dicate 01  the  antecedent. 
+
+Q.  On  what  principle  do  these  miles  depend? 
+
+A.  On  the  aphorism  mentioned  in  the  beginning 
+of  Chap.  XIX.,  which  is  equally  the  foundation  of 
+reasoning  in  hypothetic  and  categorical  syllogisms. 
+
+Q.  W^hat  is  disjunctive  syllogism? 
+
+A.  That  in  which  the  major  is  a  disjunctive  pro- 
+position; as  the  truth  of  a  disjunctive  proposition 
+depends  on  the  subject  being  contained  in  one  or 
+more  of  the  predicates ;  therefore,  some  of  the  parts 
+must  be  true  and  the  rest  false. 
+
+Q.  How  many  processes  of  reasoning  are  there  in 
+disjunctive  syllogisms  ? 
+
+
+CATECHISM    OF   LOGIC.  65 
+
+A.  Two :  constructive  and  destructive ;  construc- 
+tive, when  from  the  remotion  of  one  or  more  parts 
+you  argue  to  the  position  of  the  rest;  destructive, 
+when  from  the  position  of  one  or  more  parts  you 
+argue  to  the  remotion  of  the  rest. 
+
+Q.  Can  you  give  me  an  example  ? 
+
+A.  Disjunctive  major. 
+
+The  world  is  either  eternal,  or  the  work  of  chance, 
+or  created  by  a  Deity. 
+
+Destructive  minor. 
+
+It  is  neither  eternal,  nor  the  work  of  chance. 
+Constructive  conclusion. 
+
+The  world  has  been  created  by  a  Deity, 
+or,   Constructive  minor. 
+
+The  world  has  been  created  by  a  Deity. 
+Destructive  conclusion. 
+
+It  is  neither  eternal  nor  the  work  of  chance. 
+
+Q.  On  what  does  the  validity  of  the  reasoning  in  a 
+disjunctive  syllogism  depend? 
+
+A.  On  the  aphorism  mentioned  in  Chap.  XIX.,  as 
+will  evidently  appear  on  the  slightest  consideration. 
+
+Q.  What  is  a  dilemma  ? 
+
+J.  It  is  a  more  complicated  form  of  disjunctive 
+syllogisms,  and  partakes  more  directly  of  the  natiure 
+of  hypothetic  syllogisms. 
+
+Q.  How  are  dilemmas  divided  ? 
+
+A.  Into  constructive  and  destructive;  and  these 
+again  are  subdivided  into  simple  and  complex. 
+
+Q.  AVhat  is  a  simple  constructive  dilemma  ? 
+
+A.  The  major  is  a  compound  hypothetic  propo- 
+sition,  containing  several  antecedents  and  a  single 
+consequent;  the  minor  is  a  disjunctive  proposition, 
+o  3 
+
+
+(J6  CATECHISM    OF    LOGIC. 
+
+affirming  the  antecedents ;  the  conclusion  is  a  cate- 
+gorical affirmation  of  the  single  consequent. 
+
+Q.  Can  you  give  an  exam})le  of  this  process  of 
+reasoning  ? 
+
+J.  Hypothetic  Major. 
+
+If  the  disappearance  of  Christ's  body  from  the 
+sepulchre  be  left  wholly  unexplained,  or  if  such  an 
+explanation  be  given  as  is  wholly  irreconcileable  with 
+the  ordinary  principles  of  human  action,  we  must 
+believe  the  doctrine  of  the  resurrection. 
+Disjunctive  Minor. 
+
+The  opponents  of  the  doctrine  arc  cither  totally 
+silent,  or  give  such  explanations  as  contradict  the 
+plainest  princi})les  of  action. 
+
+Categorical  Conclusion. 
+
+We  must  believe  the  doctrine  of  the  resurrection. 
+
+Q.  What  is  a  complex  constructive  dilemma  ? 
+
+A.  That  in  which  the  major  has  several  conse- 
+quents, and  the  conclusion  is  of  course  disjunctive. 
+
+Q.  Can  you  give  me  an  example  ? 
+
+A.  Hypothetic  major. 
+
+If  the  conduct  of  general  Mack  at  Ulm  was  pre- 
+meditated, he  was  a  knave;  if  unpremeditated,  he 
+was  a  fool. 
+
+Disjunctive  minor. 
+
+It  must  have  been  either  premeditated  or  unpre- 
+meditated. 
+
+Disjunctive  conclusion. 
+
+Mack  was  cither  a  traitor  or  a  fool. 
+
+Q.  What  is  a  simple  destructive  dilemma  ? 
+
+A.  It  differs  from  the  constructive  in  the  disjunc- 
+tive minor,  which  removes  all  the  antecedents;  and 
+
+
+CATECHISM    OF    LOGIC.  6/ 
+
+the  categorical  conclusion  then  removes  the  conse- 
+quent K 
+
+Q.  Can  you  give  me  an  example  r 
+
+A.  Hypothetic  major. 
+
+If  the  Gospels  be  false,  the  evangelists  must  either 
+have  been  deceivers  or  deceived. 
+
+Disjunctive  minor. 
+
+They  vrere  not  deceivers  (for  they  testified  to  the 
+truth  of  their  doctrine  by  lives  of  suffering  and  deaths 
+of  torture) ;  neither  were  they  deceived  (for  the  nature 
+of  the  facts  they  record  preclude  the  possibility  of 
+deception). 
+
+Categorical  conclusion. 
+
+The  Gospels  are  not  false. 
+
+Q.  On  what  does  the  truth  of  a  dilemma  depend  ? 
+
+A.  On  the  accuracy  of  the  division  in  the  disjunc- 
+tive proposition,  and  in  the  completeness  of  the 
+proof  of  the  remotion  or  position  of  the  several  pails 
+in  the  minor;  each  of  which  parts  should  be  demon- 
+strated by  a  categorical  syllogism. 
+
+Q.  \Miat  else  do  the  old  logicians  require  in  a 
+dilemma  ? 
+
+A.  That  it  should  be  incapable  of  being  retorted ; 
+and  of  this  they  gave  the  following  strange  illustra- 
+tion. A  sophist  engaged  to  teach  a  pupil  logic,  on 
+the  condition  of  receiving  a  certain  sum,  when  the 
+pupil  should  conquer  him  in  disputation.  Shielding 
+himself  under  the  terms  of  the  agreement,  the  dis- 
+
+
+'  By  making  similar  changes  in  the  definition  of  a  ecn* 
+structive  complex  dilemma,  the  student  ^Yill  have  the  dcfin". 
+tion  of  a  destructive  complex  dilemma. 
+
+
+G8  CATECHISM    OF    LOGIC. 
+
+ciple  refused  to  pay  for  his  education,  and  the  matter 
+\\-as  brought  to  trial  before  the  Athenian  court.  The 
+sophist  pleaded,  *'  If  I  conquer,  I  must  be  paid  by  the 
+rule  of  court  J  and  if  I  fail,  I  must  be  paid  by  the  terms 
+of  our  agreement :''  to  which  the  student  replied,  ''If 
+I  conquer,  I  juust  not  pay  by  the  rule  of  court  j  and  if  I 
+fail,  I  jnust  not  pay  by  the  terms  of  our  agreements 
+
+Q.  Is  this  a  necessary  rule  ? 
+
+A.  No ;  for  as  in  the  case  quoted,  a  dilemma  can 
+be  retorted  only  when  one  hyjoothesis  is  destiiictive 
+of  the  other. 
+
+
+CHAPTER  XXIII. 
+
+Of  Enthymemes  and  a  Sorites. 
+
+Q.  What  is  an  enthymeme  ? 
+
+A.  A  syllogism,  of  which  one  premise  is  sup- 
+pressed ? 
+
+Q.  How  may  we  know  which  premise  has  been 
+suppressed  ? 
+
+A.  If  the  predicate  of  the  conclusion  occurs  in  the 
+preserved  premise,  the  minor  has  been  suppressed; 
+if  the  predicate,  the  major.  But  if  neither,  the  en- 
+thymeme does  not  form  part  of  a  simple  syllogism. 
+
+Q.  How  may  we  know  to  what  figure  of  syuogisms 
+the  enthymeme  belongs  ? 
+
+A.  By  completing  the  syllogism,  and  comparing  it 
+with  the  general  niles. 
+
+Q.  What  is  a  sorites  ? 
+
+yi.  It  is  a  series  of  propositions  so  disposed,  that 
+the  predicate  of  the  first  is  the  subject  of  the  second; 
+and  so  on  in  succession,  until  in  the  conclusion,  the 
+last  predicate  is  predicated  of  the  first  subject. 
+
+
+CATECHISM    OF  LOGIC.  6^ 
+
+Q.  Can  you  give  me  an  example  of  a  sorites  ? 
+
+A.  '*  Those  whom  God  foreknew,  he  predestinated; 
+Those  whom  he  predestinated,  he  called  ; 
+Those  whom  he  called,  he  justified ; 
+Those  whom  he  justified,  he  glorified  :" 
+Therefore,  Those  whom  God  foreknew,  he  glorified. 
+
+Q.  On  what  does  the  perfection  of  the  reasoning 
+in  a  sorites  depend  ? 
+
+A.  On  the  perfection  of  the  simple  syllogisms  into 
+which  it  is  resolved. 
+
+Q.  How  is  a  sorites  resolved  into  syllogisms  ? 
+
+A.  The  second  premise  of  the  sorites  wiU  be  the 
+major  of  the  first  syllogism,  and  the  first  the  minor; 
+the  other  syllogisms  will  have  the  successive  propo- 
+sitions for  their  major  premise,  and  the  conclusions 
+of  the  preceding  syllogisms  as  their  minors;  therefore, 
+the  number  of  syllogisms  into  which  a  sorites  is  re- 
+solvable, must  be  one  less  than  the  number  of  pre- 
+mises in  the  sorites. 
+
+Q.  \'\Tiat  are  the  special  rules  of  a  sorites  ? 
+
+A.  The  first  premise  alone  can  be  particular,  and 
+the  last  alone  negative. 
+
+
+CHAPTER  XXIV. 
+0/  Sophisms. 
+
+Q.  What  is  a  sophism  ? 
+
+A.  An  argument,  which  under  the  appearance  of 
+rectitude,  is  fallacious.  A  false  argument,  manifestly 
+violating  the  rules  of  syllogism,  is  called  a  paralogism, 
+but  in  sophisms,  the  rules,  though  really  broken, 
+appear  to  be  preserved. 
+
+
+70  CATECHISM    OF   LOGIC. 
+
+Q.  How  are  sophisms  divided  ? 
+
+A.  Into  two  classes ;  sophisms  in  form  and  sophisms 
+in  matter,  termed  by  the  old  logicians.  Fallacies  in 
+dictioney  d.nd  fallacicB  extra  dictioiiem. 
+
+Q.  How  many  species  of  fallacies  in  form  were 
+enumerated  by  the  old  logicians  ? 
+
+A.  Six  :  viz. — 
+
+1.  The  fallacy  of  equivocation,  which  consists  in 
+using  the  same  word  in  different  senses.  Thus, 
+Roman  Catholics  sometimes  endeavour  to  prove,  that 
+even  Protestants  acknowledge  the  authority  of  the 
+Church,  since  they  receive  the  Scriptures  on  its  au- 
+thority. In  the  former  part  of  the  sentence,  authority 
+signifies  controlling  power;  in  the  latter,  it  merely 
+means  evidence. 
+
+2.  The  fcillacy  of  amphiboly,  or  doubtful  construc- 
+tion of  a  sentence.  Thus,  Hume's  argument  against 
+miracles,  when  he  says,  **  No  evidence  can  prove  a 
+miracle;  for  it  is  contrary  to  experience,  that  a 
+miracle  should  be  true,  but  not  contrary  to  experience 
+that  evidence  should  be  false,"  is  an  instance  of  this 
+and  the  former  fallacy  combined ;  for  in  the  first  part 
+of  the  sentence,  contrary  to  experience,  means,  "wholly 
+opposed  to  universal  experience,"  which  is  a  direct 
+assumption  of  the  point  at  issue ;  and  in  the  second 
+part,  it  merely  means,  inconsistent  with  the  personal 
+experience  of  some  particular  individual,  which,  from 
+its  nature,  every  miracle  must  be. 
+
+3.  and  4.  The  fallacies  of  composition  and  division, 
+where,  from  what  is  true  of  a  term  in  its  divided  sense, 
+we  infer  something  resi)ecting  the  aggregate,  or  the 
+contrary.  Thus,  the  Stoics  endeavoured  to  prove  the 
+doctrine   of  necessity  by  the  following  argument: 
+
+
+CATECHISM    OF  LOGIC.  71 
+
+*'  He,  who  necessarily  goes  or  stays,  is  not  a  free 
+agent;'*  "you  must  necessarily  go  or  stay;"  there- 
+fore, **  you  are  not  a  free  agent."  Here  the  fallacy 
+rests  on  the  word  necessarily  being  taken  with  both 
+members  in  the  first  proposition,  and  only  with  the 
+alternative  in  the  second. 
+
+5.  Fallacy  of  accent ;  or  a  play  on  words  of  the 
+same  sound  but  different  sense.  This  is  nothing 
+better  than  a  quibble  or  pun,  by  which  no  rational 
+being  was  ever  deceived. 
+
+6.  Fallacy  of  figure  of  speech,  or  a  fallacy  arising 
+from  the  grammatical  construction  of  language,  and 
+proceeding  on  the  false  supposition,  that  all  words 
+derived  from  the  same  root  have  a  correspondency  in 
+meaning.  It  is  impossible  to  give  such  a  fallacy  a 
+logical  form,  as  the  syllogism  will  be  at  once  seen  to 
+contain  two  mjddle  terms. 
+
+Q.  How  many  fallacies  in  matter  {extra  cUctionem) 
+are  there  ? 
+
+A.  The  old  logicians  enumerate  seven.  1.  Fallacy 
+of  accident,  where  some  accidental  circumstance  is 
+assumed  as  essential.  Thus,  certain  reasoners  blame 
+Christianity  as  the  origin  of  religious  wars,  not  per- 
+ceiving that  these  wars  arose,  not  from  Christianity 
+itself,  but  from  the  depraved  passions  of  its  professors. 
+
+2.  The  fallacy  of  arguing  from  a  modal  to  a  simple 
+assertion  (a  dicfo  secundum  quid  ad  dictum  simpViciter) , 
+thus,  some  opponents  of  war  say,  that  those  who 
+support  the  right  of  self-defence,  are  advocates  of 
+murder,  omitting  all  notice  of  the  circumstances  by 
+which  they  restrict  their  assertions. 
+
+3.  The  fallacy  of  erring  conclusion  (igiiorationis 
+elenchij :  this  fallacy  consists  in  proving  something 
+
+
+72  CATECHISM    OF    LOGIC. 
+
+wliicli  inaccurate  observers  might  be  led  to  mistake 
+for  tlie  question  at  issue.  Thus,  the  opponents  of 
+machinery  ])rove  that  it  has  injured  some  j)articular 
+classes,  not  regarding^  that  the  matter  really  to  be 
+decided  is,  whether  its  introduction  has  not  been, 
+on  the  v/hole,  beneficial  to  the  nation  at  large. 
+
+4.  The  fallacy  of  wrong  cause,  or  unreal  similarity, 
+in  which  an  effect  is  deduced  from  a  false  source,  or 
+a  case  quoted  as  similar,  which  is  by  no  means  pa- 
+rallel. 
+
+5.  The  fallacy  of  consequent,  where  something 
+is  deduced  which  does  not  necessarily  follow. 
+
+6.  The  fallacy  of  assumption  (petitionis  principiij, 
+in  which  the  question  at  issue,  or  something  inferring 
+it,  is  assumed  as  a  premise.  To  this  belongs  the 
+argument  in  a  circle,  where  two  doubtful  proposi- 
+tions are  used  to  prove  each  other.  This  is  a  very 
+common  sophism  with  popular  orators,  who  fre- 
+quently give  their  hearers  identity  of  assertion  for 
+argument. 
+
+7.  The  sophism  of  several  questions,  when  a  single 
+answer  is  required  to  a  question  that  may  receive 
+several;  thus,  *'  Is  it  just  to  kill  a  man?"  is  a  ques- 
+tion which  an  inaccurate  reasoner  would  promptly 
+answer  in  the  negative;  and  subsequently  be  sur})rised 
+to  find  that  he  had  given  up  the  right  of  self-defence, 
+and  denied  in  all  ca«es  the  legahty  of  capital  punisli- 
+ment.  ^ 
+
+
+THE   END.    r    <h^  0        ^ 
+
+
+CiLRERT  &  KiviNGTo,\,  rHnter.s,  St.  John's  Square,  London. 
+
+
+,^     "^/^aaAiNfi-itt^       ^(^Abvuani^"^      ^omm 
+
+
+-^^•IIBRARYQa  ^^\\EUN1VERS/^       ^lOSANC 
+
+
+5^       ^OJUVD-JO"^ 
+
+
+^i'ilDKVSOl^ 
+
+
+i#    "^^AHvaaiH^       <rii]ONvsoi^ 
+
+
+JMF11NIVER%.       ^VOSAN( 
+
+
+^lOS'ANCElfX^ 
+
+
+jvvlOSAKCElfJV. 
+
+
+^.OFCALIFO/?^ 
+
+
+^OFCAll 
+
+
+i^     "^/^aaAiNa-ii^^ 
+
+
+%avaaiH^    ^^Okwm 
+
+
+0/:^       ^l-UBRARY^^^         .^WEUNIVER%       ^lOSANi 
+
+
+<rii33NVsoi^     'v/5d3AiNniwv        ^^Ayvaan-T^ 
+
+
+-5>^UIBRARY' 
+
+
+^<!/0dlW3-JO^ 
+
+
+^OFCALIF0% 
+
+
+"^^Aavaan-i^ 
+
+
+UC  SOUTHERN  REGIONAL  LIBRARY  FACILIT"'' 
+
+
+B     000  002  852     2 
+
+i    ^ 
+
+
+% 
+
+
+1^ 
+
+
+^OFCALlFOft^         ^^WEUNIVERS/, 
+
+
+AWFUNIVERS/a 
+
+
+^TiiaONVSOl^ 
+
+
+.^WEUNIVERy/A 
+
+
+^lOSANCEl^^ 
+o 
+
+
+%a3AiNn-3WV^ 
+
+
+%a3AiNnmv^ 
+
+
+-^HIBRARY(5 
+
+
+^<I/0JI1VDJ0 
+
+
+^VVOSANCElfX^        ^OFCAllFO/i! 
+
+
+^6>Aavaan-^^ 
+
+
+^^UIBRARYi?/;^ 
+
+
+^IIIBRATOK 
+
+
+iUi;iiU(7i  i>^ 
+
+
+^\^EUNIVERy/ 
+
+

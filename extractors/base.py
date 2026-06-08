@@ -103,6 +103,63 @@ class ChemistryExtractor(CatechismExtractor):
         return '\n\n'.join(paragraphs)
 
 
+class LogicExtractor(CatechismExtractor):
+    """
+    Logic catechism. Severe extra-space OCR ('Q.  What  is  the  difference').
+    'Qaesllon.' OCRs as 'Question.'; 'J.' OCRs as 'A.' in places.
+    """
+    def preprocess(self, text):
+        text = re.sub(r' {2,}', ' ', text)
+        text = re.sub(r'^Qaesllon\.', 'Q.', text, flags=re.MULTILINE)
+        text = re.sub(r'^J\.', 'A.', text, flags=re.MULTILINE)
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
+        return '\n\n'.join(paragraphs)
+
+
+class PatriotismExtractor(CatechismExtractor):
+    """
+    Patriotism catechism. Standard Q./A. format; '-4.' OCRs as 'A.' in places.
+    OCR hyphens and chapter headers interspersed.
+    """
+    def preprocess(self, text):
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        text = re.sub(r'^-4\.', 'A.', text, flags=re.MULTILINE)
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
+        return '\n\n'.join(paragraphs)
+
+
+class SeeleysExtractor(BaseExtractor):
+    """
+    Seeley's Question Book. Numbered questions with positional answers (no 'A.' marker).
+    Q and A may be on the same line or split by a blank line; split at first '?'.
+    """
+    def extract_pairs(self, text):
+        text = strip_gutenberg_boilerplate(text)
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
+        text = '\n\n'.join(paragraphs)
+
+        blocks = re.split(r'(?m)^\s*\d+\.\s+', text)
+
+        pairs = []
+        for block in blocks:
+            if '?' not in block:
+                continue
+            idx = block.index('?')
+            question = re.sub(r'\s+', ' ', block[:idx + 1].strip())
+            answer = re.sub(r'\s+', ' ', block[idx + 1:].strip())
+            if question and answer:
+                pairs.append({"q": question, "a": answer})
+
+        return pairs
+
+
 class BotanyExtractor(CatechismExtractor):
     """
     Botany catechism. Numbered questions ('Q. 1. text'); '@.' OCRs as 'Q.' in places.
