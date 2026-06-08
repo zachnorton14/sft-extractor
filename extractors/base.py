@@ -1,6 +1,11 @@
 import json
+import re
 
 class BaseExtractor:
+    """
+    Base class for extractors. Subclasses should implement the extract_pairs method to return a list of
+    {"q": ..., "a": ...} dicts.
+    """
     def __init__(self, input_path, output_path):
         self.input_path = input_path
         self.output_path = output_path
@@ -29,3 +34,148 @@ class BaseExtractor:
 
         print(f"Extracted {len(pairs)} Q&A pairs → {self.output_path}")
 
+
+class CatechismExtractor(BaseExtractor):
+    """
+    Many catechisms are formatted with 'Question. Question text' followed by 'Answer. Answer text',
+    repeated for each Q&A pair. This extractor handles that format.
+    """
+    PATTERN = re.compile(
+        r'(?:Question|Q)\.\s+(.+?)\n\n(?:Answer|A)\.\s+(.+?)(?=\n\n(?:Question|Q)\.|\Z)',
+        re.MULTILINE | re.DOTALL
+    )
+
+    def preprocess(self, text):
+        return text
+
+    def extract_pairs(self, text):
+        text = self.preprocess(text)
+
+        pairs = []
+        for q_text, a_text in self.PATTERN.findall(text):
+            question = re.sub(r" {2,}", " ", q_text.strip().replace("\n", " "))
+            answer = re.sub(r" {2,}", " ", a_text.strip().replace("\n", " "))
+            if question and answer:
+                pairs.append({"q": question, "a": answer})
+
+        return pairs
+
+
+class BrewersGuideExtractor(CatechismExtractor):
+    pass
+
+
+def _is_symbological_header(paragraph):
+    """
+    Detect if a paragraph is a header like 'Question 1.' or 'Q.1' that should be removed before parsing.
+    """
+    lines = [l.strip() for l in paragraph.strip().split('\n') if l.strip()]
+    if not lines:
+        return True
+    if re.match(r'^(Question|Answer|Q|A)\.', lines[0]):
+        return False
+    if len(lines) > 3:
+        return False
+    text = ' '.join(lines)
+    alpha = sum(1 for c in text if c.isalpha())
+    upper = sum(1 for c in text if c.isupper())
+    return alpha > 0 and upper / alpha > 0.65 and len(text) < 80
+
+
+class SymbologicalExtractor(CatechismExtractor):
+    """
+    The Symbological is formatted with section headers like 'Question 1.' that break up the text. 
+    We need to remove those before parsing.
+    """
+    def preprocess(self, text):
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
+        text = '\n\n'.join(paragraphs)
+        return re.sub(r'\n{3,}', '\n\n', text)
+    
+class CommonCoreExtractor(BaseExtractor):
+    """
+    Common Core is formatted with numbered questions like '1. Question text' followed by answer text,
+    repeated for each Q&A pair.
+    """
+    def extract_pairs(self, text):
+        pattern = re.compile(r"^\s*(\d+)\.\s+(.+?)(?=^\s*\d+\.\s+|\Z)", re.MULTILINE | re.DOTALL)
+        matches = pattern.findall(text)
+
+        pairs = []
+        for _num, block in matches:
+            idx = block.rfind("?")
+            if idx == -1:
+                continue
+            question = re.sub(r" {2,}", " ", block[:idx + 1].strip().replace("\n", " "))
+            answer = re.sub(r" {2,}", " ", block[idx + 1:].strip().replace("\n", " "))
+            if question and answer:
+                pairs.append({"q": question, "a": answer})
+
+        return pairs
+
+class FamiliarThingsExtractor(BaseExtractor):
+    """
+    Familiar Things is formatted with questions as single lines ending with '?' followed by a blank line and
+    then the answer text, repeated for each Q&A pair. Answers may include indented glossary definitions that
+    should be included in the answer text.
+    """
+    def extract_pairs(self, text):
+        # Format: single line ending with '?' followed by blank line then answer
+        # Answers may include indented glossary definitions
+        pattern = re.compile(r'^([^\n]+\?)\n\n(.+?)(?=\n\n[^\n]+\?|\Z)', re.MULTILINE | re.DOTALL)
+
+        pairs = []
+        for q_text, a_text in pattern.findall(text):
+            question = q_text.strip()
+            answer = re.sub(r" {2,}", " ", a_text.strip().replace("\n", " "))
+            if question and answer:
+                pairs.append({"q": question, "a": answer})
+
+        return pairs
+
+class Questions1001Extractor(BaseExtractor):
+    """
+    1001 Questions is formatted with numbered questions like '1. Question text' followed by answer text starting
+    with 'Answer.' on the next line, repeated for each Q&A pair.
+    """
+    def extract_pairs(self, text):
+        pattern = re.compile(r"^\s*(\d+)\.\s+(.+?)(?=^\s*\d+\.\s+|\Z)", re.MULTILINE | re.DOTALL)
+
+        pairs = []
+        for _num, block in pattern.findall(text):
+            idx = block.rfind("?")
+            if idx == -1:
+                continue
+            question = re.sub(r" {2,}", " ", block[:idx + 1].strip().replace("\n", " "))
+            answer = re.sub(r" {2,}", " ", block[idx + 1:].strip().replace("\n", " "))
+            if question and answer:
+                pairs.append({"q": question, "a": answer})
+
+        return pairs
+    
+class StokersExtractor(BaseExtractor):
+    """
+    Stokers is formatted with numbered questions like '1. Question text' followed by answer text starting
+    with 'Answer.' on the next line, repeated for each Q&A pair. However, the question text may include inline
+    page markers like [8] that should be removed before parsing.
+    """
+    def extract_pairs(self, text):
+        # Strip inline page markers like [8] before parsing
+        text = re.sub(r'\[\d+\]', '', text)
+
+        pattern = re.compile(
+            r'^\d+\.\s+Question\.—(.+?)\n\nAnswer\.—(.+?)(?=\n\n\d+\.\s+Question\.|\Z)',
+            re.MULTILINE | re.DOTALL
+        )
+
+        pairs = []
+        for q_text, a_text in pattern.findall(text):
+            question = re.sub(r" {2,}", " ", q_text.strip().replace("\n", " "))
+            answer = re.sub(r" {2,}", " ", a_text.strip().replace("\n", " "))
+            if question and answer:
+                pairs.append({"q": question, "a": answer})
+
+        return pairs

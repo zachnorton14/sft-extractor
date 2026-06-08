@@ -1,10 +1,9 @@
 import sys
 from extractors.common_core import CommonCoreExtractor
-from extractors.brewers_guide import BrewersGuideExtractor
+from extractors.base import BrewersGuideExtractor, SymbologicalExtractor
 from extractors.familiar_things import FamiliarThingsExtractor
 from extractors.questions_1001 import Questions1001Extractor
 from extractors.stokers import StokersExtractor
-from extractors.symbological import SymbologicalExtractor
 
 EXTRACTORS = {
     "common_core": CommonCoreExtractor,
