@@ -75,6 +75,34 @@ class BrewersGuideExtractor(CatechismExtractor):
     pass
 
 
+class AstronomyExtractor(CatechismExtractor):
+    """
+    Astronomy catechism. Questions are numbered ('Q. 1. text') and some Q&As are on a single line.
+    '* A.' is an OCR variant of 'A.'. Short section/page headers are interspersed.
+    """
+    def preprocess(self, text):
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
+        text = '\n\n'.join(paragraphs)
+        text = re.sub(r'^Q\. \d+\. ', 'Q. ', text, flags=re.MULTILINE)
+        text = re.sub(r'\* A\.', 'A.', text)
+        text = re.sub(r'^(Q\. .+?\?) +(A\. )', r'\1\n\n\2', text, flags=re.MULTILINE)
+        return text
+
+
+class ChemistryExtractor(CatechismExtractor):
+    """
+    Chemistry catechism. Q. OCRs as Q.. / Q,, / Q, throughout. Contains OCR hyphens and page headers.
+    """
+    def preprocess(self, text):
+        text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
+        text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        text = re.sub(r'^Q[.,]+\s', 'Q. ', text, flags=re.MULTILINE)
+        paragraphs = re.split(r'\n\n+', text)
+        paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
+        return '\n\n'.join(paragraphs)
+
+
 def _is_symbological_header(paragraph):
     """
     Detect if a paragraph is a header like 'Question 1.' or 'Q.1' that should be removed before parsing.
