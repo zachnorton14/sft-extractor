@@ -127,10 +127,27 @@ class ChemistryExtractor(CatechismExtractor):
 class NewYorkBarExtractor(CatechismExtractor):
     """
     NY Bar Exam study guide. Standard Q./A. catechism with OCR hyphens and topic headers.
+    Q. OCRs with leading noise chars: 'I Q.', '•Q.', 'A^Q.', '\\ Q.', '; Q.', 'J Q.', '"^ Q.'
+    A. OCRs as 'A,' (comma) inline after questions.
     """
     def preprocess(self, text):
         text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
         text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        # Normalize specific Q. OCR variants at line start (noise chars prepended by OCR)
+        text = re.sub(r'^I\s+Q\.\s', 'Q. ', text, flags=re.MULTILINE)    # I Q.
+        text = re.sub(r'^J\s+Q\.\s', 'Q. ', text, flags=re.MULTILINE)    # J Q.
+        text = re.sub(r'^[•]\s*Q\.\s', 'Q. ', text, flags=re.MULTILINE)  # •Q.
+        text = re.sub(r'^[\\]\s+Q\.\s', 'Q. ', text, flags=re.MULTILINE) # \ Q.
+        text = re.sub(r'^["\'^]+\s*Q\.\s', 'Q. ', text, flags=re.MULTILINE)  # "^ Q. ^Q.
+        text = re.sub(r'^[A-Z]\^Q\.\s', 'Q. ', text, flags=re.MULTILINE) # A^Q.
+        # Normalize 'A,' inline answer marker after question mark
+        text = re.sub(r'\?\s+A,\s', '?\n\nA. ', text)
+        # Split inline Q. transitions after citation/answer endings
+        for _ in range(3):
+            prev = text
+            text = re.sub(r'([.,?!;])\s*["\'^•\\I]*\s*(Q\. )', r'\1\n\n\2', text)
+            if text == prev:
+                break
         paragraphs = re.split(r'\n\n+', text)
         paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
         return '\n\n'.join(paragraphs)
@@ -547,13 +564,21 @@ class EngineeringExtractor(CatechismExtractor):
             else:
                 merged.append(p)
         text = '\n\n'.join(merged)
-        # Split paragraphs where Q. and A. are inline with no blank line between them
-        result = []
-        for para in text.split('\n\n'):
-            if re.match(r'^Q\.', para) and re.search(r' A[.,] ', para):
-                para = re.sub(r'(\S) (A[.,] )', r'\1\n\nA. ', para, count=1)
-            result.append(para)
-        return '\n\n'.join(result)
+        # Split paragraphs where Q. and A. are inline with no blank line between them.
+        # Also handle inline noise tokens before Q. (page numbers, bullets, stray chars).
+        for _ in range(5):
+            prev = text
+            # Q paragraph containing inline A. → split at A.
+            text = re.sub(r'(^Q\.[^\n]+\S) (A[.,] )(?=[A-Z])', r'\1\n\nA. ', text, flags=re.MULTILINE)
+            # A paragraph (or any) containing inline Q. → split before Q.
+            text = re.sub(r'([.,?!;])\s*[-—~\'"`^*■•!l\s]*\s*(Q\. )', r'\1\n\n\2', text)
+            # Page refs like 'D*' before Q. (geometry/mechanics notation)
+            text = re.sub(r'\s+[A-Z]\w*\*\s+(Q\. )', r'\n\n\1', text)
+            # Comma directly attached to Q. (no space): ,Q. → ,\n\nQ.
+            text = re.sub(r',Q\. ', r',\n\nQ. ', text)
+            if text == prev:
+                break
+        return text
 
 
 class MusicExtractor(BaseExtractor):
