@@ -56,6 +56,7 @@ class CatechismExtractor(BaseExtractor):
     )
 
     def preprocess(self, text):
+        text = re.sub(r'^A,\s', 'A. ', text, flags=re.MULTILINE)
         return text
 
     def extract_pairs(self, text):
@@ -86,7 +87,10 @@ class AstronomyExtractor(CatechismExtractor):
         text = '\n\n'.join(paragraphs)
         text = re.sub(r'^Q\. \d+\. ', 'Q. ', text, flags=re.MULTILINE)
         text = re.sub(r'\* A\.', 'A.', text)
-        text = re.sub(r'^(Q\. .+?\?) +(A\. )', r'\1\n\n\2', text, flags=re.MULTILINE)
+        text = re.sub(r'^A,\s', 'A. ', text, flags=re.MULTILINE)  # A, OCR for A.
+        # Inline Q. and A. splits for multi-pair paragraphs
+        text = re.sub(r'([.,?])\s*\S*\s+(Q\. )', r'\1\n\n\2', text)
+        text = re.sub(r'([.?])\s+(A[.,] )(?=[A-Z][a-z])', r'\1\n\nA. ', text)
         return text
 
 
@@ -377,6 +381,10 @@ class BotanyExtractor(CatechismExtractor):
         text = '\n\n'.join(paragraphs)
         # Ensure A. always opens its own paragraph regardless of what preceded it
         text = re.sub(r'([^\n])\n(A\. )', r'\1\n\n\2', text)
+        # Also ensure Q. opens its own paragraph (handles headers/page-numbers before Q.)
+        text = re.sub(r'([^\n])\n(Q\. )', r'\1\n\n\2', text)
+        # Inline Q. after sentence-ending punct
+        text = re.sub(r'([.,?!;])\s*[-—~\d]*\s*(Q\. )', r'\1\n\n\2', text)
         return text
 
 
@@ -388,11 +396,20 @@ class EthicsExtractor(CatechismExtractor):
     def preprocess(self, text):
         text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
         text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
-        text = re.sub(r'^\d+\. Q\.', 'Q.', text, flags=re.MULTILINE)
+        # Normalize Q. with leading non-alpha chars at line start (.28. Q., ~213. Q.)
+        text = re.sub(r'^[^A-Za-z0-9]*\d+\.\s+Q\.', 'Q.', text, flags=re.MULTILINE)
         text = re.sub(r'^A[,;]', 'A.', text, flags=re.MULTILINE)
+        # Ensure Q./A. always open their own paragraphs so section headers get isolated
+        text = re.sub(r'([^\n])\n(Q\. )', r'\1\n\n\2', text)
+        text = re.sub(r'([^\n])\n(A\. )', r'\1\n\n\2', text)
         paragraphs = re.split(r'\n\n+', text)
         paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
-        return '\n\n'.join(paragraphs)
+        text = '\n\n'.join(paragraphs)
+        # Inline splits: numbered Q. (e.g. '— 288. Q.') → strip number, insert blank line
+        text = re.sub(r'[^A-Za-z0-9\n]\s*\d+\.\s+Q\.\s', '\n\nQ. ', text)
+        text = re.sub(r'([.,?!;])\s*[-—~]*\s*(Q\. )', r'\1\n\n\2', text)
+        text = re.sub(r'([.?])\s+(A\. )(?=[A-Z][a-z])', r'\1\n\n\2', text)
+        return text
 
 
 class ElectricityExtractor(BaseExtractor):
@@ -659,8 +676,10 @@ class SymbologicalExtractor(CatechismExtractor):
         paragraphs = re.split(r'\n\n+', text)
         paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
         text = '\n\n'.join(paragraphs)
-        return re.sub(r'\n{3,}', '\n\n', text)
-    
+        text = re.sub(r'\n{3,}', '\n\n', text)
+        text = re.sub(r'([.,?!;])\s*[-—~\d]*\s*(Q\. )', r'\1\n\n\2', text)
+        return text
+
 class CommonCoreExtractor(BaseExtractor):
     """
     Common Core is formatted with numbered questions like '1. Question text' followed by answer text,
@@ -836,11 +855,21 @@ class WorldHistoryExtractor(BaseExtractor):
         text = re.sub(r'\n\n[a-zA-Z]{1,2}\n\n', '\n\n', text)
         # Strip CHAP. header lines
         text = re.sub(r'\n\nCHAP\.[^\n]*\n\n', '\n\n', text)
+        # Normalize 'A,' (OCR for 'A.') at line-start
+        text = re.sub(r'^A,\s', 'A. ', text, flags=re.MULTILINE)
+        # Strip inline noise tokens that appear before Q-markers (page refs, abbrevs)
+        # e.g. 'p €2. Q.' (inline), 'bb» Q.' (line-start with non-alpha prefix)
+        text = re.sub(r'[^\w\n]+(\d+\.\s+Q[.,]+\s)', r'\n\n\1', text)
+        # Line-start Q. with non-alpha prefix (bb» Q., Sr. Q., p €2. Q.)
+        text = re.sub(r'^[^A-Za-z0-9\n]*\s*Q\.\s', 'Q. ', text, flags=re.MULTILINE)
+        text = re.sub(r'^[A-Za-z]{1,3}[^\w\s]*\s*Q\.\s', 'Q. ', text, flags=re.MULTILINE)
         # Normalize single-line Q&A: "N. Q. question? A. answer" → two paragraphs
-        text = re.sub(r'^(\d+\.\s+Q[.,]+\s+.+?\?)\s+(A\.\s+)', r'\1\n\n\2', text, flags=re.MULTILINE)
+        text = re.sub(r'^(\d+\.\s+Q[.,]+\s+.+?\?)\s+(A[.,]\s+)', r'\1\n\nA. ', text, flags=re.MULTILINE)
+        # Inline Q. split (for answers that absorbed subsequent Q markers)
+        text = re.sub(r'([.,?])\s*(Q\. )', r'\1\n\n\2', text)
 
         pattern = re.compile(
-            r'^\d+\.\s+Q[.,]+\s+(.+?)\n\nA\.\s+(.+?)(?=\n\n\d+\.\s+Q[.,]|\Z)',
+            r'^(?:\d+\.\s+)?Q[.,]+\s+(.+?)\n\nA\.\s+(.+?)(?=\n\n(?:\d+\.\s+)?Q[.,]|\Z)',
             re.MULTILINE | re.DOTALL
         )
 
