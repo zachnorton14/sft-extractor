@@ -92,12 +92,20 @@ class AstronomyExtractor(CatechismExtractor):
 
 class ChemistryExtractor(CatechismExtractor):
     """
-    Chemistry catechism. Q. OCRs as Q.. / Q,, / Q, throughout. Contains OCR hyphens and page headers.
+    Chemistry catechism. Q. OCRs as Q.. / Q,, / Q, / Gt. / Gl. throughout. Contains OCR hyphens
+    and page headers. Many Q/A pairs are crammed onto a single line with no blank-line separator;
+    these are split into proper paragraphs before parsing.
     """
     def preprocess(self, text):
         text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
         text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        # Normalize all OCR variants of 'Q.' to 'Q. '
         text = re.sub(r'^Q[.,]+\s', 'Q. ', text, flags=re.MULTILINE)
+        text = re.sub(r'^G[tl]\.\s', 'Q. ', text, flags=re.MULTILINE)
+        # Split inline Q./A. transitions: insert blank line before Q. or A. that
+        # immediately follows a sentence-ending punctuation on the same line
+        text = re.sub(r'([?.])\s+(Q\. )', r'\1\n\n\2', text)
+        text = re.sub(r'([?.])\s+(A\. )', r'\1\n\n\2', text)
         paragraphs = re.split(r'\n\n+', text)
         paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
         return '\n\n'.join(paragraphs)
@@ -231,12 +239,16 @@ class BotanyExtractor(CatechismExtractor):
         if first_q:
             text = text[first_q.start():]
         text = re.sub(r'^@\.', 'Q.', text, flags=re.MULTILINE)
+        text = re.sub(r'^_\s*([QA])[.,]', r'\1.', text, flags=re.MULTILINE)  # _A. / _ A, / _ Q. italic OCR
         text = re.sub(r'^Q\. \d+\. ', 'Q. ', text, flags=re.MULTILINE)
         text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
         text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
         paragraphs = re.split(r'\n\n+', text)
         paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
-        return '\n\n'.join(paragraphs)
+        text = '\n\n'.join(paragraphs)
+        # Ensure A. always opens its own paragraph regardless of what preceded it
+        text = re.sub(r'([^\n])\n(A\. )', r'\1\n\n\2', text)
+        return text
 
 
 class EthicsExtractor(CatechismExtractor):
@@ -284,8 +296,9 @@ class ElectricityExtractor(BaseExtractor):
 
 class MythologyExtractor(BaseExtractor):
     """
-    Mythology catechism. Questions marked with '(1)', '(2)', etc.; answers follow after a blank line.
-    No answer marker — purely positional. Multi-line questions and answers.
+    Mythology catechism. Questions marked with '(1)', '(2)', etc.
+    Some entries have a blank line before the answer; others don't.
+    Split at first '?' to reliably separate question from answer.
     """
     def extract_pairs(self, text):
         text = strip_gutenberg_boilerplate(text)
@@ -295,12 +308,14 @@ class MythologyExtractor(BaseExtractor):
         paragraphs = [p for p in paragraphs if not _is_symbological_header(p)]
         text = '\n\n'.join(paragraphs)
 
-        pattern = re.compile(r'^\(\d+\)\s+(.+?)\n\n(.+?)(?=^\(\d+\)|\Z)', re.MULTILINE | re.DOTALL)
-
+        blocks = re.split(r'(?m)^\(\d+\)\s+', text)
         pairs = []
-        for q_text, a_text in pattern.findall(text):
-            question = re.sub(r'\s+', ' ', q_text.strip())
-            answer = re.sub(r'\s+', ' ', a_text.strip())
+        for block in blocks:
+            if '?' not in block:
+                continue
+            idx = block.index('?')
+            question = re.sub(r'\s+', ' ', block[:idx + 1].strip())
+            answer = re.sub(r'\s+', ' ', block[idx + 1:].strip())
             if question and answer:
                 pairs.append({"q": question, "a": answer})
 
@@ -309,14 +324,36 @@ class MythologyExtractor(BaseExtractor):
 
 class ConstitutionExtractor(CatechismExtractor):
     """
-    Constitution catechism. Standard Q./A. format; OCR renders Q. as '<£,' in places.
+    Constitution catechism. Standard Q./A. format with many OCR variants.
+    Q. OCRs as '<£,', '<£.', '<£ ', '<j>.', '(j>.', '(£.', '(^.', '<^.', 'q.', 'Q ' (missing
+    period), 'Q,'.
+    A. OCRs as 'A,' and 'ei.' (garbled).
+    Some Q/A pairs are concatenated on a single line with no blank line between them.
     Inline page numbers and hyphenation artifacts present.
     """
     def preprocess(self, text):
-        text = re.sub(r'<£,', 'Q.', text)
+        # Repair hyphenation before any other normalization
         text = re.sub(r'(\w)- *\n *(\w)', r'\1\2', text)
         text = re.sub(r'(\w)- +(\w)', r'\1\2', text)
+        # Normalize OCR variants of 'Q.' at line starts
+        # <£, / <£. / <£<space>  and  <^.
+        text = re.sub(r'^<[£\^][,. ]', 'Q. ', text, flags=re.MULTILINE)
+        text = re.sub(r'^<[£\^]\.',    'Q.',  text, flags=re.MULTILINE)
+        # (j>. / (j). / (£. / (^.
+        text = re.sub(r'^\([j£\^][>)]?\.', 'Q.', text, flags=re.MULTILINE)
+        text = re.sub(r'^q\.', 'Q.', text, flags=re.MULTILINE)
+        text = re.sub(r'^Q ', 'Q. ', text, flags=re.MULTILINE)
+        text = re.sub(r'^Q,', 'Q.', text, flags=re.MULTILINE)
+        # Normalize OCR variants of 'A.' at line starts
+        text = re.sub(r'^A,', 'A.', text, flags=re.MULTILINE)
+        text = re.sub(r'^ei\.', 'A.', text, flags=re.MULTILINE)
+        # Strip inline page numbers
         text = re.sub(r'^\d+\s*$', '', text, flags=re.MULTILINE)
+        # Split concatenated Q/A pairs on the same line
+        text = re.sub(r'([.?])\s+(Q\.)\s+', r'\1\n\n\2 ', text)
+        text = re.sub(r'([.?])\s+(A\.)\s+([A-Z])', r'\1\n\nA. \3', text)
+        # Insert blank line between Q line and A line when missing
+        text = re.sub(r'(^Q\. .+)\n(A\. )', r'\1\n\n\2', text, flags=re.MULTILINE)
         paragraphs = re.split(r'\n\n+', text)
         paragraphs = [p.strip() for p in paragraphs if p.strip()]
         return '\n\n'.join(paragraphs)
