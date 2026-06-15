@@ -1,0 +1,87 @@
+model: claude-opus-4-8
+seed:  443
+n:     10
+
+--- SYSTEM PROMPT ---
+You are a dataset quality filter for public-domain Q&A pairs extracted from pre-1930s texts.
+Your job is to detect structural bleed — where an OCR extractor incorrectly merged multiple
+Q&A pairs into one entry.
+
+A bleed occurs when the Q field contains answer text followed by another question. The key
+signal is a pattern of: question → answer prose → question → answer prose → question.
+
+Bleed indicators in the Q field:
+- Answer text (declarative sentences that respond to the preceding question)
+- Numbered sub-questions mid-field, including OCR-corrupted numbers:
+  "go." = 90., "gt." = 91., "gi." = 91., "8o." = 80., "ioo." = 100., etc.
+
+The A field from the input always corresponds to the LAST question in the bleed.
+Only include recovered pairs where both Q and A are complete and meaningful.
+
+Do not fix OCR artifacts — preserve all text exactly as given, including corrupted numbers.
+Respond with valid JSON only.
+
+If the pair is CLEAN, respond with:
+  {"clean": true}
+
+If the pair has bleed and you can recover distinct Q&A pairs, respond with:
+  {"pairs": [{"q": "...", "a": "..."}, ...]}
+
+If no clean Q&A can be recovered, respond with:
+  {"discard": true}
+
+Examples:
+
+Input — Q: What is a measure? That by which extent is ascertained. go. How many dimensions has extension? Extension has three. gt. Explain how distance is measured by time?
+         A: Every circle is divided into 360 degrees.
+Output: {"pairs": [{"q": "What is a measure?", "a": "That by which extent is ascertained."}, {"q": "How many dimensions has extension?", "a": "Extension has three."}, {"q": "Explain how distance is measured by time?", "a": "Every circle is divided into 360 degrees."}]}
+
+Input — Q: What is History?
+         A: A record of past events.
+Output: {"clean": true}
+
+Input — Q: §§§ xh§ merged §§§ unreadable §§§
+         A: §§§ garbage
+Output: {"discard": true}
+
+--- END SYSTEM PROMPT ---
+[common-core--1816] CLEAN
+  IN Q: After 5 gallons of water had been added to 45 gal- lons of pure wine, the mixture was worth $1.26 per gallon; what was the pure wine worth per gallon?
+  IN A: Avs. Â¢1.40.
+
+[common-core--1119] CLEAN
+  IN Q: What article can be raised extensively in almost all the States?
+  IN A: Corn.
+
+[1001-questions--422] CLEAN
+  IN Q: Who founded the Peripatetic School ?
+  IN A: Aristotle, who was a student of Plato.
+
+[electricity--167] CLEAN
+  IN Q: What is the international farad ?
+  IN A: "The unit of capacity shall be what is known as the international farad, which is the capacity of a condenser charged to a potential of one international volt by one international coulomb of electricity." (See also No. 132.) This unit is named after Michael Faraday, a celebrated English physicist, who lived from 1791 to 1867.
+
+[common-core--1484] CLEAN
+  IN Q: What peculiar formation has the tongue?
+  IN A: It consists of a mass of muscular fibres so arranged as to admit of motion in every direction or several directions at once.
+
+[brewers-guide--577] CLEAN
+  IN Q: Why is a grey morning an indication of a fine day?
+  IN A: Because that air alone contiguous to the earth is damp and full of vapour. There are no vapours in the higher regions of the air to reflect red rays; and hence the morning-light looks grey.
+
+[electricity--708] CLEAN
+  IN Q: What will happen if one attempts to couple two dynamos, one of which has become reversed?
+  IN A: This will make a bad short-circuit and will melt the fuses on both machines, besides burning the brushes and commutators badly. It is also liable to strip the armature wires out of place and to break the belts or throw them off.
+
+[brewers-guide--1149] CLEAN
+  IN Q: How does this fine gauze wire prevent an explosion in the coal mine?
+  IN A: 1st—Because flame will never pass through fine gauze wire: and 2ndly—Though the wire get red-hot, it will not ignite the gas; for carburetted hydrogen gas can be ignited only by flame. (N. B. The interstices of the gauze wire must not exceed the 7th of an inch in diameter.)
+
+[1001-questions--697] CLEAN
+  IN Q: How majiy Houses gover^ied England during the Norman Period {82/ A. D. to 1399 A. B.) ?
+  IN A: Four.
+
+[civil-war--1719] CLEAN
+  IN Q: Who were the Huns? A— They were a people of Tartar or Ugrain stock, who, three centuries before Christ, appear to have dominated the whole of what is now known as Siberia. They first appeared west of the Volga in 374, and proceeded to attack the then allpowerful Gothic Empire. They were soon supreme between the Danube and the Volga, and expanded through into Persia and Syria. In 446 the mighty "Scourge of God," Attila, began his tremendous drive to the west. Civilization collapsed before his onslaught, and five years later he was outside Paris. There, at the tremendous battle of Chalons-sur-Marne, the combined armies of the Romans, under Aetius, and the Visigoths, under Theodoric, defeated him and saved France. Q. — Why are the Germans called Huns?
+  IN A: It is a term of opprobrium, and has nothing to do with _ their race, for the Germans are of entirely different stock. The cruelties and barbarisms of the Huns, combined with their great bravery and ferocity, gave a terror to their name, 295 296 which has lasted to this day. A few of them are said to have settled in northern France, and a few in Central Europe. They gave their name to Hungary, which is, however, now peopled by a different race. They were slowly assimilated by the peoples around them, or retired across the Volga, whence they came.
+

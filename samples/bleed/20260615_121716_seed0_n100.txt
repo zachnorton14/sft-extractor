@@ -1,0 +1,453 @@
+model: claude-opus-4-8
+seed:  0
+n:     100
+
+--- SYSTEM PROMPT ---
+You are a dataset quality filter for public-domain Q&A pairs extracted from pre-1930s texts.
+Your job is to detect structural bleed — where an OCR extractor incorrectly merged multiple
+Q&A pairs into one entry.
+
+A bleed occurs when the Q field contains answer text followed by another question. The key
+signal is a pattern of: question → answer prose → question → answer prose → question.
+
+Bleed indicators in the Q field:
+- Answer text (declarative sentences that respond to the preceding question)
+- Numbered sub-questions mid-field, including OCR-corrupted numbers:
+  "go." = 90., "gt." = 91., "gi." = 91., "8o." = 80., "ioo." = 100., etc.
+
+The A field from the input always corresponds to the LAST question in the bleed.
+Only include recovered pairs where both Q and A are complete and meaningful.
+
+Do not fix OCR artifacts — preserve all text exactly as given, including corrupted numbers.
+Respond with valid JSON only.
+
+If the pair is CLEAN, respond with:
+  {"clean": true}
+
+If the pair has bleed and you can recover distinct Q&A pairs, respond with:
+  {"pairs": [{"q": "...", "a": "..."}, ...]}
+
+If no clean Q&A can be recovered, respond with:
+  {"discard": true}
+
+Examples:
+
+Input — Q: What is a measure? That by which extent is ascertained. go. How many dimensions has extension? Extension has three. gt. Explain how distance is measured by time?
+         A: Every circle is divided into 360 degrees.
+Output: {"pairs": [{"q": "What is a measure?", "a": "That by which extent is ascertained."}, {"q": "How many dimensions has extension?", "a": "Extension has three."}, {"q": "Explain how distance is measured by time?", "a": "Every circle is divided into 360 degrees."}]}
+
+Input — Q: What is History?
+         A: A record of past events.
+Output: {"clean": true}
+
+Input — Q: §§§ xh§ merged §§§ unreadable §§§
+         A: §§§ garbage
+Output: {"discard": true}
+
+--- END SYSTEM PROMPT ---
+[agriculture--226] CLEAN
+  IN Q: What is a balanced ration?
+  IN A: A balanced ration is one in which the bulk and the digestible protein and carbohydrates are in that proportion which will most economically produce the particular results desired in feeding.
+
+[constitution--0] CLEAN
+  IN Q: In what country do you live ?
+  IN A: In the United States of America.
+
+[brewers-guide--1109] CLEAN
+  IN Q: How is the carbonic acid gas of beer generated?
+  IN A: The saccharine (or sugar) of the malt is converted by fermentation into carbonic acid gas and alcohol.
+
+[investors--129] CLEAN
+  IN Q: What are days of grace ?
+  IN A: They are the three days directly following the maturity of a note or bill, and in some States allowed debtors by law as an extension in which to make payment.
+
+[brewers-guide--1287] CLEAN
+  IN Q: What is a barometer?
+  IN A: A weather-glass, or instrument to show the changes of the weather, by marking the variations in the weight of air.
+
+[mythology--272] CLEAN
+  IN Q: Did the Greeks ever use poisoned arrows?
+  IN A: There is no evidence whatever of their ever .ving done so.
+
+[common-core--2745] CLEAN
+  IN Q: What motion supersedes all the other subsidiary questions?
+  IN A: To lay on the table.
+
+[civil-war--1011] CLEAN
+  IN Q: Who is spiritual head of the Armenian Church?
+  IN A: In the early days the headship was hereditary, and occasionally the "Catholicus" and the King were one and the same. Now, however, the Chief Catholicus is chosen by the Synod of bishops and monks, though, nominally, the choice is made by the Armenian people themselves. The seat of the Catholicus is at Echmiadzin, the convent of Valarshapat, a town in Russian Armenia. _ There is a rival Catholicus, who has his see at Sic.
+
+[common-core--1592] CLEAN
+  IN Q: What are the terms of division?
+  IN A: The dividend, divisor and quotient.
+
+[school-bulletin--123] CLEAN
+  IN Q: What is Mythology?
+  IN A: The word mythology Is compounded of two Greek words, nvSoS, a fable, and A 6yo%t a discourse; and signifies a system of fables, or the fabulous history of the false gods of the heathen world.
+
+[common-core--290] CLEAN
+  IN Q: What was the Whiskey Rebellion?
+  IN A: The inhabitants in Western Pennsylvania were deter- mined that no tax should be paid on whiskey, and they were so well organized that fifteen thousand troops had to be called out to subdue them.
+
+[astronomy--130] CLEAN
+  IN Q: When is it farthest away?
+  IN A: It is farthest away, or in aphelion, six months later.
+
+[brewers-guide--319] CLEAN
+  IN Q: Why is the bottom part purple of the flame of a candle?
+  IN A: The bottom part of the flame is overladen with hydrogen, raised from the tallow by the burning wick; and this half-burnt gas gives a purple tinge to the flame.
+
+[chemistry--148] CLEAN
+  IN Q: How is chlorine procured?
+  IN A: There are several modes of obtaining chlorine. It may be obtained by the action of muriatic acid on peroxide of manganese. Muriatic acid is decomposed ; its hydrogen uniting with the oxygen of the oxide forms water, and its chlorine escapes. Generally procured from chloride of sodium, which is heated in a glass or leaden retort, with diluted sulphuric acid and peroxide of manganese. The water of the acid is decomposed, the oxygen uniting with sodium to form soda, with which part of the acid combines, forming sulphate of soda. The hydrogen of the water is retained by the oxygen furnished from the oxide of manganese, while the chlorine alone is allowed to escape.
+
+[common-core--878] CLEAN
+  IN Q: How ts Oceantca divided ?
+  IN A: Into three-divisions: Malasia, Australasia, and Poly- nesia.
+
+[civil-war--516] CLEAN
+  IN Q: How is gun-cotton made?
+  IN A: Glycerine, nitric and sulphuric acids and cotton.
+
+[common-core--2295] CLEAN
+  IN Q: What three kinds of food do we need?
+  IN A: Nitrogenous, carbonaceous and mineral food.
+
+[mythology--131] CLEAN
+  IN Q: In what relation does she stand to Zeus?
+  IN A: Generally, in that of perfect harmony and submission.
+
+[brewers-guide--1583] CLEAN
+  IN Q: Why is a rose red?
+  IN A: Because the surface of a rose absorbs the blue and yellow rays of light, and reflects only the red ones.
+
+[common-core--2234] CLEAN
+  IN Q: What power has Congress in regard to the territory and other property belonging to the United States ?
+  IN A: It has power to dispose of, and make all needful rules and regulations respecting it.
+
+[1001-questions--37] CLEAN
+  IN Q: What other advantage is the river to Egypt ?
+  IN A: It is a means of rapid and ready communication between the remotest parts of the country.
+
+[botany--236] CLEAN
+  IN Q: What is the function of meristem?
+  IN A: The function of meristem or cambial tissue is secondary growth.
+
+[brewers-guide--127] CLEAN
+  IN Q: Why will cold water, mixed with sulphuric acid, produce heat?
+  IN A: Because water (being lighter than sulphuric acid), is condensed by the heavier liquid; and its heat is squeezed out, as water from a sponge.
+
+[electricity--775] CLEAN
+  IN Q: Are automatic rheostats ever arranged to prevent induction when the line switch is opened, after the automatic has opened?
+  IN A: In some starting boxes the end of the field circuit is permanently connected to the first live segment or button of the rheostat, an extra button being placed at the retaining magnet so as to cut the resistance out of the field circuit at the last step. This is shown diagrammatically and as actually made in the accompanying sketches. 324
+
+[seeleys--1091] CLEAN
+  IN Q: Why should politeness be taught?
+  IN A: Politeness is an evidence of culture, it aids materially in attaining success in life, it will save from many embarrassing situations, it is an expression of real kindness and unselfishness.
+
+[familiar-things--556] CLEAN
+  IN Q: Who was Alexander the Great?
+  IN A: The son of Philip, King of Macedonia, in Greece; he was celebrated for his great ambition, and the number of his conquests; he overturned the Persian empire, and subdued many cities and provinces in the East.
+
+[chemistry--2] CLEAN
+  IN Q: How is chemical reaction divided ?
+  IN A: Into attractive reaction, or attraction ; and repulsive reaction, or repulsion.
+
+[familiar-things--518] CLEAN
+  IN Q: What are the properties of Silex?
+  IN A: Silex, or pure flint, will not dissolve in water, nor can it be melted by itself in any heat; but combined with alkalies, as soda or potash, it forms glass. It is the principal ingredient of most of the precious stones.
+
+[brewers-guide--1599] CLEAN
+  IN Q: Why are potatoes (which grow exposed to the air and light) green?
+  IN A: Because the sun-light increases their carbon; which (mingling with the yellow sap) turns the potato green.
+
+[astronomy--283] CLEAN
+  IN Q: What is the fifth satellite's distance from Jupiter ?
+  IN A: The distance of the fifth satellite is 112,500 miles.
+
+[brewers-guide--22] CLEAN
+  IN Q: What is the cause of sheet lightning?
+  IN A: It is only the reflection of distant flashes, not distinctly visible: and sometimes several flashes (from different clouds) intermingle, and form one vast blaze or sheet of lightning.
+
+[seeleys--75] CLEAN
+  IN Q: For what two things is this age noted ?
+  IN A: For the translation of the Bible, and the rise and development of the English drama.
+
+[civil-war--1575] CLEAN
+  IN Q: When was the Berlin-Bagdad Railroad begun?
+  IN A: It was begun about 1900 when a German company obtained concessions 268 from the Sultan for the line from Constantinople to Bagdad. The intention was ultimately to extend from Bagdad to the Persian Gulf. The magnitude of the scheme naturally led to lively suspicions of schemes of aggrandizement and military menace.
+
+[1001-questions--1080] CLEAN
+  IN Q: What occurred during his reign ?
+  IN A: He was bent on restoring Bourbon despotism, and his usurpations led to the revolution of the Three Days of July. The Tuileries was sacked and the king fled.
+
+[seeleys--692] CLEAN
+  IN Q: Why have the peoples of Asta advanced less than the Europeans, who originally came from Asia?
+  IN A: The Asiatic peoples were so cut off by natural barriers that they had no opportunity to learn from others. Many of them, like the Chinese, became self-satisfied, and refused to advance. The wonderful development of navigation by the Europeans brought them in touch with all the world and gave them many colonies.
+
+[common-core--1870] CLEAN
+  IN Q: The mainmast of a ship is 95 feet long, the dia- meter of the base is 3} feet, that of the top 2} feet; what is its solidity?
+  IN A: As. 677.73475 feet.
+
+[astronomy--503] CLEAN
+  IN Q: What constellation is east of Hercules and south of Draco ?
+  IN A: Lyra, the Lyre, occupies this position ; it con- tains the bluish- white star Vega of the 0.2 magni- tude, near which is a parallelogram of fainter stars; Lyra culminates in August.
+
+[ethics--194] CLEAN
+  IN Q: What argument against so-called atheists can be drawn from this?
+  IN A: These men, so-called atheists, do admit moral obligation, at least in words; therefore they must admit the existence of a superior imposing the obligation, God.
+
+[seeleys--159] CLEAN
+  IN Q: What is the origin of the English alphabet ?
+  IN A: Cadmus, a Pheenician, introduced letters into Greece in the fifteenth century, B.C. The English alphabet sprang from the Phcenician through the Greek, Roman, and Anglo-Saxon alphabets. It is really the Latin alphabet with the addition of the letters W and K.
+
+[common-core--349] CLEAN
+  IN Q: What was the origin of the term â€œloco-focoâ€â€™ ?
+  IN A: It was a name applied to the Democratic party in 1835 in consequence of the outbreak of a quarrel in a Democratic meeting, where the lights were all put out, and but for the loco-foco or lucifer matches which some of the mem- bers carried in their pockets it would have been necessary to adjourn the proceedings.
+
+[logic--275] CLEAN
+  IN Q: Has this indirect process of reduction any other names ?
+  IN A: It is commonly called by the old logicians reductio ad imjiossiblle, and reductio ad absurdam.
+
+[symbological--71] CLEAN
+  IN Q: But how is she to have such power to slay the innocent, yet being herself so hated by the chief officers of state as to be at last destroyed by them with a destruction final and complete?
+  IN A: We are to understand that although scarlet Rome's ten chief rulers may then hate her with a hatred inveterate, yet not being kings in fact, they will not, because of her great majorities, gain sufficient power over her to make away with her until, perhaps, during the last few years of her last millenary hour of forty-one years and eight months. And thus we can see that, while Rome's ten chief rulers may so greatly hate her, yet will she for most of her last millenary hour, because of her great majorities, still have power to bring God's holy ones to the rack, the stake, the galloAvs and guillotine. But while w^e must recognize the good that is still in her and the many good people that still belong to her churches, yet when she shall enter upon her scarlet, or coallied state, then and there will she enter upon her fallen state, fully so, and so well described in these words: " And he cried mightily with a strong voice, saying, Babylon the Great is fallen, is fallen, and is become the habitation of devils, and the hold of every foul spirit, and a cage of every unclean and hateful bird." And thus we are led fairly to suspect, if no further, that for the very cause that God's own servants will be sent into her midst to persuade the just and the true to abandon her will she cause their blood to flow; nor yet sparing those that will dare exchange her pageantry for ^^the faith which was once delivered unto the ^ints."
+
+[electricity--1] CLEAN
+  IN Q: What does the zvord "electricity" mean?
+  IN A: It comes from a Greek word, elektron, meaning amber. The Greeks at the time of Thales, 600 B. C., knew that when amber was rubbed, it would attract bits of paper and straw.
+
+[civil-war--429] CLEAN
+  IN Q: Is there no substitute for spruce?
+  IN A: Up to this time no satisfactory substitute has been secured for spruce wood for the frames of the fuselage, the wings, the struts, and so on. It answers the purpose better than any other, resists shocks with greater strength, has a greater allround capability than any other wood or metal that has as yet been tried.
+
+[common-core--2718] CLEAN
+  IN Q: What becomes of the original motion when interrupted by the orders of the day?
+  IN A: It is removed from the assembly the same as an inter- ruption by an adjournment. See No. 118.
+
+[mythology--21] CLEAN
+  IN Q: Were the gods, then, arranged in some fixed order ?
+  IN A: Not at first ; but in later times the poets compared the diflferent tales that were told about the various gods, and then arranged them according to the relationship pointed out in each story.
+
+[logic--291] CLEAN
+  IN Q: How do you prove the third part ?
+  IN A: The major is universal and the minor affirmative in the modes of the fourth figure, which have a particular negative conclusion; consequently, either may be preserved without violating the rules of perfect modes ; and the contradictory of the conclusion being a universal affirmative, may become either major or minor premise of reduct.
+
+[civil-war--969] CLEAN
+  IN Q: Did other nations recognize the new republics?
+  IN A: No. They remained non-committal. In February, 1918, the Supreme National Council of Lithuania in Switzerland presented to the representatives of all neutral and belligerent nations a resolution adopted by the Vilna State Council, proclaiming the re-establishment of the independent status of Lithuania, with Vilna as its capital, but there was no response up to the time of Russia's signing of the peace treaty.
+
+[investors--31] CLEAN
+  IN Q: What is a bear ?
+  IN A: A Bear in Wall Street is a speculator who believes in lower prices, who sells stock, grain, cotton, etc., short, or advises the selling of stock believing it can be bought back at a lower price.
+
+[seeleys--201] CLEAN
+  IN Q: What ts inflection ?
+  IN A: Inflection, in grammar, is a change in the form of a word to mark a change in its meaning or use.
+
+[common-core--175] CLEAN
+  IN Q: How did the Americans regard the battle of Bunker fill?
+  IN A: The effect was that of a victory, as the untrained farmer- soldiers had met the seasoned troops of the British army, had repulsed them twice with great slaughter, and but for the Jack of ammunition would have been victorious.
+
+[astronomy--496] CLEAN
+  IN Q: What other constellations are in this region of the sky ?
+  IN A: Monoceros, the Unicorn, fills up the gap be- tween Canis Major and Canis Minor; Sextans, the Sextant, is between Leo and Hydra; adjoining Sextans at the southeast is Crater, the Cup, indicated by a pretty semicircle of six small stars; just east of Crater is Corvus, the Crow, which is marked out by a small quadrilateral of stars; south of Monoceros and east of Canis Major is a part of the huge southern constel- lation Argo Navis, the Ship Argo; adjoining this portion of Argo on the east is Pyxis Nautica, the Mariner's Campass, and east of this is Antlia Pneu- matica, the Air-pump; both are modern constellations merely designed to take up the spaces left between the older constellations.
+
+[chemistry--233] CLEAN
+  IN Q: How is bromohydric acid procured ?
+  IN A: By mixing the vapour of bromine with sulphuretted hydrogen.
+
+[familiar-things--43] CLEAN
+  IN Q: What is next done?
+  IN A: They are then removed with a kind of shovel resembling a fan, and poured on mats, whence they are taken in small quantities, and rolled in the palm of the hand always in one direction, until they cool and retain the curl.
+
+[common-core--2519] CLEAN
+  IN Q: What letters are but one space in height?
+  IN A: A, 6, â‚¬, t, M, N, 0, U, V, wand x.
+
+[brewers-guide--593] CLEAN
+  IN Q: Why do we feel almost suffocated in a hot cloudy night?
+  IN A: Because the heat of the earth (being unable to escape into the upper region of the air, in consequence of the clouds) floats, like a sea of heat, on the surface of the earth.
+
+[electricity--85] CLEAN
+  IN Q: How does static electricity break incandescent lamps?
+  IN A: The sparks pierce the glass globe of the lamp in jumping to or from the filament. This allows air to enter and destroy the vacuum, the filament being burned as soon as sufficient air enters. (See No. 125). More frequently the static charge on the globe attracts the filament until it touches the glass, and the intense heat then cracks the glass so that air enters.
+
+[engineering--1074] CLEAN
+  IN Q: What do you mean by the discharge of a cell?
+  IN A: Allowing it to furnish current, as it will do if the positive and negative terminals are connected by a conductor.
+
+[advanced-questions--183] CLEAN
+  IN Q: How was the formation of man accom- plished ?
+  IN A: Prometheus took a piece of earth, a portion oi clay still impregnated with divine particles, moistened it with water, and formed man after the image of the gods; so that he alone raises his look to heaven, while all other creatures bend their eyes to the ground.
+
+[grammar--555] CLEAN
+  IN Q: What is a phrase to be avoided ?
+  IN A: He dont; or the hke contraction with any subject that is third person singular.
+
+[engineering--876] CLEAN
+  IN Q: What are some of the substances having large specific resistance ?
+  IN A: Of the metals — lead, mercury, and alloys. The non-metals have a much higher specific resistance.
+
+[civil-war--571] CLEAN
+  IN Q: Did chlorine gas remain the worst?
+  IN A: No. Gas inventions accumulated with gruesome rapidity. Gases appeared that strangled, suffocated, blinded and paralyzed. Some of the gases were comparatively harmless, causing only temporary disability or simply forcing abandonment of gased areas. Others were frightful.
+
+[common-core--1388] CLEAN
+  IN Q: How is the perfect infinitive formed, and what does it denote?
+  IN A: By combining /o have or to have been, with a simple participle. It represents the completion of the act or state at the time referred to.
+
+[civil-war--336] CLEAN
+  IN Q: What is a torpedo mine?
+  IN A: It is a contrivance somewhat like a torpedo tube, loaded with a special form of mine, imbedded in the bottom of the channel. No mine sweepers can reach it, for it is buried in the bed itself. It is fired by electricity from the shore when a ship passes over it. This invention is used to defend harbors and straits.
+
+[common-core--1782] CLEAN
+  IN Q: How many acres in a square field measuring 70.71 rods between the opposite corners?
+  IN A: Avs. 15% acres.
+
+[engineering--865] CLEAN
+  IN Q: A certain size wire, 100 feet long, has a resistance of 2 ohms, — what will be the resistance of 200 feet of the same wire ?
+  IN A: 2 X 2, or 4 ohms.
+
+[brewers-guide--8] CLEAN
+  IN Q: Are all the rays bent into one point?
+  IN A: No, not quite all: and, therefore, the rim round the focus is only slightly shadowed. CHAPTER II.
+
+[civil-war--1468] CLEAN
+  IN Q: Which country has the largest birth rate?
+  IN A: Russia (44 per thousand), but Roumania and Bulgaria run her close. Following these come Hungary (36.3), Japan (33-9), Italy (32.4), Austria (31-3). German Empire (28.3), Commonwealth of Australia (28.3), Holland (28.1), Scotland (25.9), England and Wales (23.8), Ireland (23.0), Belgium (22.9), France (19.0).
+
+[school-bulletin--376] CLEAN
+  IN Q: What are wingless Dipters ?
+  IN A: Fleas which are noted for their strength and docility. The "learned fleas," exhibited in Paris, a few years ago, went through military evolutions, standing on their hind legs and shouldering tiny spears: and two of them drew a companion in a little wagon, a fourth sitting on the coachman's box and wielding the whip. The spectators viewed this wonderful exhibition through magnifying glasses. NOTE.-The Earwig (Earwing) sits upon its eggs till they are hatched, and then broods its young as a hen does its chickens.
+
+[mythology--636] CLEAN
+  IN Q: Are the Lares known under any other name ?
+  IN A: They are commonly addressed as the Manes^ a general name for the spirits of the dead. This word means * the good ones,' and recurs in the name of Mana, an Italian goddess, and in the word irriTnaniSy cruel.
+
+[civil-war--1362] CLEAN
+  IN Q: Is corn native to Europe?
+  IN A: Not if you mean what we call "corn" — the American plant which produces its fruit in large cobs covered with a green sheath. This is one of the comparatively few important foods that were added to the world's supply by the discovery of America, potatoes being the other great addition. In Europe the name of this western crop is maize, and that is the correct name. "Corn," in European terms, means wheat, rye, etc. Maize is raised quite extensively now through Europe, but it is nothing like the agricultural leader that it is in America.
+
+[brewers-guide--76] CLEAN
+  IN Q: Why is a mass of bodies a better conductor than a single body?
+  IN A: Each living body is a conductor of electricity; and a connected mass of such conductors is more likely to be struck, than a single individual.
+
+[1001-questions--460] CLEAN
+  IN Q: After his deaths what did Greece do ?
+  IN A: It formed a Confederacy of States, 52 GREECE.
+
+[electricity--98] CLEAN
+  IN Q: What is a condenser?
+  IN A: A Leyden jar is one form of condenser. The glass jars are so expensive, bulky and easily broken, that another form is generally used when a large capacity is desired. The common form consists of a number of sheets of tin foil separated from each other by sheets of mica or paper soaked in oil or paraffine. The alternate sheets of tin foil are connected together, as indicated in the figure, and are then placed in a wooden box into which melted paraffine is poured so that the whole becomes solid.
+
+[constitution--169] CLEAN
+  IN Q: Did the states give up any other power ?
+  IN A: They are forbidden by the Constitution, in the same manner that Congress is, to pass any bill of attainder, or ex-post-facto law, or grant any title of nobility, nor can they make any law which shall " impair the obligation of contracts."
+
+[logic--278] CLEAN
+  IN Q: Which is the suppressed premise in the second figure ?
+  IN A: The minor.
+
+[common-core--892] CLEAN
+  IN Q: What race of people are called Papuans? Where are they found, and what is noticeable of them?
+  IN A: They are a cannibal negro race and inhabit a long group of islands extending from New Guinea to New Caledonia.
+
+[new-york-bar--122] CLEAN
+  IN Q: A gave a note to B for f 100, dated May 1, 1894, due on demand. On June 10, 1901, B sued A on it. Draw an answer for A, omitting title and verification.
+  IN A: (Caption and title, same as in preceding forms.) A, the defendant in the above entitled action, appearing by James Kent, his attorney, for answer to the complaint herein alleges : That this action was not commenced within six years after the cause of action accrued. Wherefore, etc. (as in preceding forms). (Note. ) A note payable on demand is due immediately, and therefore the •Statute of Limitations begins to run from its date. Mills v. Davis, 113 N. Y. 243.
+
+[seeleys--27] CLEAN
+  IN Q: What ts force ?
+  IN A: Force is the loudness of the voice, or degree of energy, with which sounds are uttered.
+
+[grammar--275] CLEAN
+  IN Q: What are should and would?
+  IN A: These are the past forms of shall and will^ and are used as auxiharies for the potential.
+
+[world-history--134] CLEAN
+  IN Q: Was not its form of government very faulty ?
+  IN A: Being an elective monarchy, its nobles were constantly the dupes of foreign or domestic intrigues ; yet, with all its defects, under John Sobieski, the greatest of its sovereigns, it made a distinguished figure among the European powers. Prussia.
+
+[new-york-bar--558] CLEAN
+  IN Q: A hires B, a contractor, to build a certain house for him. The workingmen, becoming dissatisfied, go upon a strike, and A, being anxious to have his house finished in the fall, tells the workingmen, that if they will go on with the work, he will see them paid. The men comply with his request, and upon completion of the work, bring suit against him on his promise. A sets up the Statute of Frauds as a defense. Is the defense good?
+  IN A: No. " A promise made by the owner of a house, wluch a contractor was engaged in constructing, to workingmen employed by the contractor that if the workingmen will proceed with their work, the owner would see them paid, is an original undertaking, and is not within'the Statute of Frauds, notwithstanding the fact that the liability of the contractor to the workingmen is not affected thereby." Almond v. Hart, 46 App. Div. 431.
+
+[common-core--841] CLEAN
+  IN Q: Where is Lake Reys, and what river ts its outlet?
+  IN A: It is in Peru, and the Ucayle River is its outlet. This jake is the source of the Amazon. ;
+
+[new-york-bar--467] CLEAN
+  IN Q: A hires B as managing engineer to supervise the construction of a certain railroad. After having worked six months, B becomes seriously ill, so as to be incapacitated from doing any further work. The contract provided that B was to work for one year for .110,000. A refuses to pay for the work already performed ; B brings suit to recover 15,000 which he claims is due him. A sets up as a defense that the contract was entire, and alleges nonperformance. Judgment for whom and why? Give your reasons.
+  IN A: B can recover on a quantum meruit, and as this is a special contract could probably recover the proportionate amount of the contract price. B having been prevented fi-oni performing without any fault on his part, A would be unjustly enriched, if he were not compelled to pay for the work. " One, who under a contract requiring his personal services, and providing for partial payment during the employment and the remainder at the end of the term, performs services valuable to the employer, but is before the end of a stipulated period, disabled by sickness from completing his contract, is entitled to recover as upon a quantum meruit for sucli services as he rendered." Wolfe v. Howes, 20 N. Y. 197. " The compensation of an agent or servant employed under a special contract, a complete performance of which is prevented by his sickness or death, is not confined to a quantum meruit, but is to be measured by the contract." Clark v. Gilbert, 26 N. Y. 279.
+
+[logic--132] CLEAN
+  IN Q: What is the definition of a name ?
+  IN A: The explanation of a word which was before imknouTi, as " Algebra signijies the art of computing by symbols.
+
+[brewers-guide--256] CLEAN
+  IN Q: What prevents air being supplied, as fast as it is consumed by the fire?
+  IN A: Leather and curtains round the doors; sand-bags at the threshhold and on the window-frames; and other contrivances to keep out the draught.
+
+[common-core--1895] CLEAN
+  IN Q: What should be done for the school grounds?
+  IN A: They should be thoroughly drained, dry, level, sodded, 332 COMMON SCHOOL QUESTION BOOK. < ornamented with shade trees, neatly fenced, and supplied with pure water.
+
+[common-core--1375] CLEAN
+  IN Q: Which of these are sometimes principal verbs?
+  IN A: 4B, or am, was, do and have.
+
+[new-york-bar--13] CLEAN
+  IN Q: X, Y & Z who are trustees of the Seamen's Societ)^ sign, seal, and deliver a bond to John Brown. They are sued on the bond personally. Can the action be maintained ? The bond was executed in the following form : ." X, Y & Z, trustees of the Seamen's Society." "
+  IN A: Yes. The seals are not those of the society, and the affixing of the names of their offices does not relieve the parties from personal liability. Such words will be regarded merely as descriptive of the persons. Unless the promise purports to be by the corporation, it is that of the persons who subscribe to it ; and the fact of adding to their names some official title has no legal signification as qualifying their obligation, and imposes no liability on the corporation whose officers they may be. This must be regarded as the long and well settled rule in this state. Taft v. ^Brewster, 9 John. Mi ; Hills v. Bannister, 8 Cowen, 31 ; Moss V. Livingston, 4 N. Y. 208.
+
+[new-york-bar--452] CLEAN
+  IN Q: A and B are partners in the business of manufacturing hats. A sells and conveys his interest in the firm to C. What effect has the transfer on the partnership?! What rights does C, the purchaser, acquire ?
+  IN A: The transfer dissolves the firm, and as a partner's interest is merely a chose in action, the purchaser thereof merely acquires the right of a partner to an accounting, and the share of the assets whicii may be then found to be due him. " An sissignment by one partner in the share of the common stock, simply transfers the interest he mayhave in any surplus remaining after payment of the firm's debts, and the settlement of all accounts ; nor can the partnership effects be taken by an attachment or sold on execution to satisfy a creditor of one of the partners, except to the extent of such interest. , The remaining partners are entitled to the control of the firm property, and to apply it to the payment of its debts. Where a partner sells his interest to a stranger or it is sold upon execution against him, his right to have partnership debts paid, and his liability therefor discharged out of the property, is not divested by the sale." Menagh v. Whitwell, 52 N. Y. 146.
+
+[school-bulletin--464] CLEAN
+  IN Q: Describe Zircon.
+  IN A:  A mineral which occurs in square prisms, terminated with four-sided pyramids. Its color is red, brown, or gray. Its hardness is 7.5. It is found in granite, gneiss, granular limestone, and volcanic rocks. Clear red specimens are called Hyacinili, to be found at Litchfield, Me., Hammond, N". Y., Franklin, N. J., and at Green River, Henderson county, N. C. At the latter place the crystals occur loose in the soil and in the greatest abundance. Clear specimens of this mineral are used for gems, and for jewelling watches. 310 Dime Question Books.
+
+[electricity--914] CLEAN
+  IN Q: Explain more fully how the curves can' be made to print themselves?
+  IN A: A galvanometer is required, having a very light moving system in a very strong magnetic field, as suggested by the diamond-shaped needle in the figure. When no current flows through the coils, the needle points in the direction indicated, taking its position directly I > Am.Elec. in the path of the magnetic lines of force between the poles, N and 5. Current through the coils tends to place the needle in the direction of the line, A B, at right angles to its other position. When the needle is under the influence of both forces at the same time, it will take an intermediate position. Now if the current varies in amount or direction or both, the needle will respond and take a position at every instant corresponding to the relative strength of the current. A beam of light reflected from the needle or from a small mirror attached to it, will take a record upon a photographic plate which is moved at a regular speed in a direction perpendicular to the motion of the light. For this purpose a very sensitive instrument is required, and the amateur had better not waste time in trying the experiment. This is outlined simply to give a general idea of how it is done. The step-by-step method is tedious, but is delicate to handle. The automatic device is called an oscillograph.
+
+[common-core--565] CLEAN
+  IN Q: Who were the nominees for the Presidency to succeed President Hayes?
+  IN A: The Republicans nominated James A. Garfield and Chester A. Arthur. The Democrats nominated Winfield S. Hancock and William H. English. The Greenback- Labor party nominated James B. Weaver and Benjamin J. Chambers. UNITED STATES HISTORY. 115
+
+[seeleys--958] RECOVERED (2 pairs)
+  IN Q: How is the number of representatives determined ?
+  IN A: How are they chosen ? After each census (which is taken every ten years), Congress provides by law for the number of representatives, and these are apportioned among the States according to their population. Representatives are chosen every two years by a direct vote of the people.
+  PAIR 1 Q: How is the number of representatives determined ?
+  PAIR 1 A: After each census (which is taken every ten years), Congress provides by law for the number of representatives, and these are apportioned among the States according to their population.
+  PAIR 2 Q: How are they chosen ?
+  PAIR 2 A: Representatives are chosen every two years by a direct vote of the people.
+
+[advanced-questions--123] RECOVERED (1 pairs)
+  IN Q: Is the moon inhabited '?
+  IN A: This question is often asked in reference to all of the heavenly bodies, but no evidences of inhabitants have ever been discovered, even in the moon, which is the nearest to us. Nothing, however, seems to be created without an object, and if the planets are inhabited, it must be by creatures constituted very differently from the hu- man race. Surrounded by entirely different circumstances as regards temperature, gravity, atmosphere, etc., the inhabitants of the different planets must be races distinct from each other. 39* What is an eclipse of the sun or moon?
+  PAIR 1 Q: Is the moon inhabited ' ?
+  PAIR 1 A: This question is often asked in reference to all of the heavenly bodies, but no evidences of inhabitants have ever been discovered, even in the moon, which is the nearest to us. Nothing, however, seems to be created without an object, and if the planets are inhabited, it must be by creatures constituted very differently from the hu- man race. Surrounded by entirely different circumstances as regards temperature, gravity, atmosphere, etc., the inhabitants of the different planets must be races distinct from each other.
+
+[common-core--73] CLEAN
+  IN Q: Who was Nathantel Bacon? What was the cause of Baconâ€™s rebellion ?
+  IN A: A patriotic young lawyer, who rallied a company and de- fended the settlements against the Indians; he was de- nounced by Governor Berkeley as a traitor for acting with- out orders. During the contest which followed, Berkeley was driven out of Jamestown, and the village partially burned. In the midst of this struggle Bacon died.
+
+[seeleys--34] CLEAN
+  IN Q: What are rhetorical points ?
+  IN A: Characters used to mark the divisions in composition. They are: the comma(,); semicolon (;); colon (:); period (.); interrogation point (?); exclamation point (!); dash (—); parenthesis ( ); brackets [ ]; quotation marks Ce tos go. Name the etymological points and tell for what used. The apostrophe (’) used to mark the omission of a ietter. The caret (/\) to show the omission of a word. The dizresis (~) to mark the separation of contiguous vowels. Marks of quantity (i%4) to show the length of vowel sounds. Marks of accent—the grave(‘), the acute (’), and the circumflex (4) The hyphen (-) used to separate parts of compound words, or syllables.
+
+[seeleys--439] CLEAN
+  IN Q: Find highest common factor of: at—Sa* +8a2—7a+3 and 2a?
+  IN A: —9a2410a—3. . Ans. a’—4a+3. a+—92?--301—25 and eotart—7T +r. Ans. x#+3x+5. 14y4-++y3+8y2—y+2 and 6yt + 7y8 +772 +3741. , Ans. 2y*+y+1. 5 Find Least Common Multiple of: f2—4, 7216, #83—322—47+12. ; Ans. t&—3t2—4f+12. x2—4, 18427244748, a8 —2x2+44—8. Ans. x*—16. yy, 1, YEH, 94 FAH. Ans. yy:
+
+[agriculture--249] CLEAN
+  IN Q: What is pasteurized milk?
+  IN A: Milk that has been heated to a temperature of about 160 degrees and kept at that temperature for fifteen minutes and then rapidly cooled to 50 degrees. This destroys most of the germs and improves the keeping quality of the milk. CREAMERY PROBLEMS
+
+[school-bulletin--386] CLEAN
+  IN Q: What causes favor chemical action ? Am — Heat and light; and solution aids in chemical change, as it destroys cohesion and leaves the atoms free to unite. 3. What is Synthesis ?
+  IN A:  The puttiug of substances together to form chemical compounds; it may occur with different degrees of energy. It takes place: 1. In constant proportions between the same elements. 2. In multiple proportions between the same elements. 3. In constant or multiple proportions for all elements. 264 Dime Question Book. .Note.— The compounds formed are binary, ternary or double. jfliey may be formed : 1. By the simple bringing together of substances under conditions favorable to chemical action. 2. By the substitution of one substance for another in a given compound [substitution). 8. By interchanging of substances in two given compounds (metathesis or double substitution).
+

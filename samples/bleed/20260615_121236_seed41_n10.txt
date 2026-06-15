@@ -1,0 +1,83 @@
+model: claude-opus-4-8
+seed:  41
+n:     10
+
+--- SYSTEM PROMPT ---
+You are a dataset quality filter for public-domain Q&A pairs extracted from pre-1930s texts.
+Your job is to detect structural bleed — where an OCR extractor incorrectly merged multiple
+Q&A pairs into one entry.
+
+A bleed occurs when the Q field contains:
+- Answer text for one question followed by another question
+- Multiple distinct questions with embedded answers between them
+- Numbered sub-questions (e.g. "90." "91." or OCR variants like "go." "gt.") absorbed mid-field
+
+If the pair is CLEAN, respond with:
+  {"clean": true}
+
+If the pair has bleed and you can recover distinct Q&A pairs, respond with:
+  {"pairs": [{"q": "...", "a": "..."}, ...]}
+  The A field from the input always corresponds to the LAST question in the bleed.
+  Only include pairs where both Q and A are complete and meaningful.
+
+If no clean Q&A can be recovered, respond with:
+  {"discard": true}
+
+Do not fix OCR artifacts — preserve text exactly as given.
+Respond with valid JSON only.
+
+Examples:
+
+Input — Q: What is a measure? That by which extent is ascertained. 90. How many dimensions has extension? Extension has three. 91. Explain how distance is measured by time?
+         A: Every circle is divided into 360 degrees.
+Output: {"pairs": [{"q": "What is a measure?", "a": "That by which extent is ascertained."}, {"q": "How many dimensions has extension?", "a": "Extension has three."}, {"q": "Explain how distance is measured by time?", "a": "Every circle is divided into 360 degrees."}]}
+
+Input — Q: What is History?
+         A: A record of past events.
+Output: {"clean": true}
+
+Input — Q: §§§ xh§ merged §§§ unreadable §§§
+         A: §§§ garbage
+Output: {"discard": true}
+
+--- END SYSTEM PROMPT ---
+[civil-war--1871] CLEAN
+  IN Q: Were charges of atrocities by the German armies officially investigated?
+  IN A: They were investigated by the Bryce Committee, appointed December 15, 1914, in Great Britain under Viscount Bryce, once Ambassador to the United States, and by the Belgian Commission of Inquiry under M. Van Iseghem, President of the Court of Cassation, appointed August 7, 1914.
+
+[engineering--889] CLEAN
+  IN Q: Is the magnetic effect of a current proportional to the current strength ?
+  IN A: Strictly.
+
+[common-core--1426] CLEAN
+  IN Q: By what may a verb be modified?
+  IN A: By an object, a predicate adjective, an adverb, a parti- ciple, or an infinitive, as well as by phrases and clauses.
+
+[engineering--738] CLEAN
+  IN Q: What are some of the principal alloys ?
+  IN A: Brass, Bronze, and German Silver.
+
+[engineering--820] CLEAN
+  IN Q: Suppose that instead of moving the magnet toward the auxiliary coil, the coil is moved toward the magnet ?
+  IN A: The galvanometer needle jumps in the same direction as before, showing that current is produced in the same way and in the same direction.
+
+[seeleys--1033] CLEAN
+  IN Q: What are some of the most common school evils ?
+  IN A: Carelessness, laziness, tardiness, irregularity in attendance, tale-bearing, whispering, lying, cheating, Stealing, impudence and rebellion,
+
+[chemistry--773] CLEAN
+  IN Q: What chemical change does saponification consist in ?
+  IN A: When the oils or fats are boiled with an alkaline oxide, the oxide of glyceryl is dispossessed of its acid by the superior affinity existing between the latter and the alkali. The acid thus transferred is named according to the substances by which it is respectively yielded. Thus we have oleic, stearic and margaric acids.
+
+[seeleys--218] CLEAN
+  IN Q: What ts personification ?
+  IN A: Personification is a figure of speech by which gender is ascribed to inanimate objects. When strength, power, or violence is implied, such nouns are regarded as masculine; if gentleness, beauty or peace is ascribed, then they are classed as feminine. “The Sun holds Azs fiery course through mid-heaven.”’ ‘“‘When Fortune means to men most good She looks upon them with a threatening eve.’’
+
+[electricity--68] CLEAN
+  IN Q: How can static electricity be removed from a printing office?
+  IN A: A reasonable amount of moisture in the air is the most common cure. The moisture from the air makes everything slightly damp, and water is a good conductor fbr static electricity. The result is that the positive and negative charges come together and become neutralized, much of it going to the earth. Too much moisture, however, is apt to cause trouble by rusting. A common method is to "ground" the presses and also to provide special conductors for taking the static electricity from the paper to the earth. Connection with the water or gas-pipes will usually give sufficient connection with the earth, although it is better in some cases to connect with a pipe or rod driven into the earth to a depth where it is permanently damp.
+
+[common-core--1645] CLEAN
+  IN Q: What is a measure? That by which extent, dimension, capacity, or amount is ascertained. Measures are of eight kinds: length, surface or area, solidity, weight, time, angles, capacity and money. go. How many dimensions has extension? Extension has three: length, breadth, and thickness. gt. Explain how distance is measured by time?
+  IN A: Every circle is supposed to be divided into 360 equal parts called degrees. As the earth makes its revolution once in 24 hours, the 24 hours must equal 360Â°, or 1 hour, 15Â° of distance. By subdividing, we find that 1Â° would equal 4 minutes, and ,!, of a degree would equal 4 seconds.
+

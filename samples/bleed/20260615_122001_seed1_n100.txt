@@ -1,0 +1,447 @@
+model: claude-opus-4-8
+seed:  1
+n:     100
+
+--- SYSTEM PROMPT ---
+You are a dataset quality filter for public-domain Q&A pairs extracted from pre-1930s texts.
+Your job is to detect structural bleed — where an OCR extractor incorrectly merged multiple
+Q&A pairs into one entry.
+
+A bleed occurs when the Q field contains answer text followed by another question. The key
+signal is a pattern of: question → answer prose → question → answer prose → question.
+
+Bleed indicators in the Q field:
+- Answer text (declarative sentences that respond to the preceding question)
+- Numbered sub-questions mid-field, including OCR-corrupted numbers:
+  "go." = 90., "gt." = 91., "gi." = 91., "8o." = 80., "ioo." = 100., etc.
+
+The A field from the input always corresponds to the LAST question in the bleed.
+Only include recovered pairs where both Q and A are complete and meaningful.
+
+Do not fix OCR artifacts — preserve all text exactly as given, including corrupted numbers.
+Respond with valid JSON only.
+
+If the pair is CLEAN, respond with:
+  {"clean": true}
+
+If the pair has bleed and you can recover distinct Q&A pairs, respond with:
+  {"pairs": [{"q": "...", "a": "..."}, ...]}
+
+If no clean Q&A can be recovered, respond with:
+  {"discard": true}
+
+Examples:
+
+Input — Q: What is a measure? That by which extent is ascertained. go. How many dimensions has extension? Extension has three. gt. Explain how distance is measured by time?
+         A: Every circle is divided into 360 degrees.
+Output: {"pairs": [{"q": "What is a measure?", "a": "That by which extent is ascertained."}, {"q": "How many dimensions has extension?", "a": "Extension has three."}, {"q": "Explain how distance is measured by time?", "a": "Every circle is divided into 360 degrees."}]}
+
+Input — Q: What is History?
+         A: A record of past events.
+Output: {"clean": true}
+
+Input — Q: §§§ xh§ merged §§§ unreadable §§§
+         A: §§§ garbage
+Output: {"discard": true}
+
+--- END SYSTEM PROMPT ---
+[laborers--106] CLEAN
+  IN Q: Would it not be well to have the U. S. government go out of the money issuing business?
+  IN A: It would not.
+
+[chemistry--857] CLEAN
+  IN Q: What is conina or coneine?
+  IN A: It is an alkaline principle which exist^in all parts of the hemlock, (conium maculatum,) being very poisonous.
+
+[electricity--509] CLEAN
+  IN Q: What are the advantages of the electrodynamometer?
+  IN A: It is suitable for measuring currents either direct or alternating, and its calibration is independent of the frequency or form of the alternating current. Having no iron or permanent magnets, its reliability and permanency depend upon the spring, which experience shows does not change from year to year.
+
+[laborers--90] CLEAN
+  IN Q: Can one man fix the value of any useful thing?
+  IN A: He can not.
+
+[seeleys--212] CLEAN
+  IN Q: How should the plural of proper names be expressed ?
+  IN A: By making the title plural, or pluralizing the name itself. A/essrs. Ray, the Misses Lee.
+
+[1001-questions--69] CLEAN
+  IN Q: What did Atexander do in Egypt ?
+  IN A: Built a new city, Alexandria, at the mouth of the Nile.
+
+[seeleys--329] CLEAN
+  IN Q: What ts a common fraction ?
+  IN A: A common fraction is one whose denominator may be any number.
+
+[brewers-guide--369] CLEAN
+  IN Q: Why does reading aloud make us feel hungry?
+  IN A: Reading aloud increases respiration; and as more oxygen is introduced into the lungs, our food-fuel is more rapidly consumed.
+
+[engineering--744] CLEAN
+  IN Q: How does it compare, in tensile strength, with iron ?
+  IN A: Its tensile strength is very small indeed in comparison with that of iron.
+
+[botany--126] CLEAN
+  IN Q: What is vegetative reproduction?
+  IN A: Vegetative reproduction, which should rather be called propagation, consists in this that a part or member of the parent plant-body is separated from it, and then develops as an independent plant.
+
+[1001-questions--1131] CLEAN
+  IN Q: What great religious movement was begun under the reign of Maximilian ?
+  IN A: The Reformation.
+
+[1001-questions--301] CLEAN
+  IN Q: Who was Saul?
+  IN A: The first king of Israel, chosen of God through the prophet Samuel.
+
+[chemistry--697] CLEAN
+  IN Q: What properties distinguish the borates?
+  IN A: Those of the alkalies are soluble in water, all the others are sparingly soluble ; they are not decomposed by heat, very fusible, and detected when digested in a slight excess of sulphuric acid, evaporated to dryness, and the residue is boiled in alcohol, by the solution thus formed, burning with a green flame.
+
+[investors--178] CLEAN
+  IN Q: What is a funded debt ?
+  IN A: The "funded debt" of a corporation usually is one running many years and represents one or more issues of bonds. It is distinguished from the "floating debt" chiefly by its relatively permanent character. A floating debt may represent capital which has been borrowed for permanent uses, but a "funded <iebt" is nearly always for such a purpose. "Funded debt" is applied to the liabilities of the British government, such as have been issued in the form of permanent long-dated securities. The "floating debt," which is in the form of exchequer bonds and treasury bills is regarded as temporary. Such a distinction, however, is not always intelligent, as the English War Loan issued in 1900, and payable in 1910, is classed a floating debt, but should be called a funded debt.
+
+[familiar-things--606] CLEAN
+  IN Q: Who were the Scandinavians?
+  IN A: The inhabitants of Scandinavia, the ancient name of Denmark, Sweden, and Norway.
+
+[school-bulletin--413] CLEAN
+  IN Q: Describe Arsenic.
+  IN A:  As is found native, and is chiefly obtained from Fe As8 and Fe S2, Fe As3, arsenical pyrites, by roasting: is a brittle steel gray solid of metallic lustre commonly sold when impure, as cobalt, though the latter is a 'reddishwhite metal, found in combination with As. It volatilizes at 180° with an odor of garlic; burns with a bluish-white flame and is very poisonous in all its compounds. Note.— H3 As, arseniuretedhydrogen,or arsine, is important a3 affording a means of detecting the presence of As in compounds. AS2O3, arsenious anhydride, is a white powder (the arsenic of commerce)— the well-known "ratsttane"— used in the manufacture of glass, and many pigments, and for preserving the skins of animals. As is soluble in hot H2O, and has a slightly sweetish taste. It is a powerful poison, doses of two or three grains being fatal, although an overdose sometimes acts as an emetic. It is an antiseptic, and so in cases of poisoning frequently attracts attention by the preservation of parts of the body, even 20 or 30 years after the murder has been committed. The usual antidote for corrosive sublimate, is milk or white of eggs or any ordinary emetic. The exact chemical remedy for arsenic is hydrated ferric oxide.
+
+[grammar--397] CLEAN
+  IN Q: Have grammarians objected to this use?
+  IN A: Yes; they have insisted that we must say, any one's else^ etc., but we do not.
+
+[ethics--15] CLEAN
+  IN Q: Will not this be an endless study ?
+  IN A: No. What we want is a standard; and this we can get by taking account of some general principles.
+
+[common-core--2758] CLEAN
+  IN Q: What proceeding is sometimes allowed for the sake of speedily disposing of business ?
+  IN A: A member moves a principal question, and at the same time calls for the previous question, or that the resolution lie on the table.
+
+[1001-questions--731] CLEAN
+  IN Q: Where did Richard go ?
+  IN A: Embarked with an army for the Holy Land.
+
+[electricity--448] CLEAN
+  IN Q: Is it possible to prevent watches from becoming magnetised?
+  IN A: Common watches must be kept away from strong magnetic fields or they are liable to become magnetized. Some of the so-called . ' 'non-magnetic watches" have the springs and balance wheel made of some non-magnetizable substance, such as palladium, phoshorbronze or other alloy. Some of these are not affected even by comparatively strong fields.
+
+[common-core--1084] CLEAN
+  IN Q: What are Roumania, Servia and Montenegro?
+  IN A: They were formerly parts of the Turkish Empire, but are now separate Christian States.
+
+[engineering--531] CLEAN
+  IN Q: What is an economizer ?
+  IN A: It is a device used for heating the feed-water by means of the products of combustion of the boiler furnace as they pass into the stack.
+
+[common-core--2297] CLEAN
+  IN Q: What is carbonaceous food?
+  IN A: That which contains much carbon; it consists of two kinds, the sugars and the fats.
+
+[engineering--692] CLEAN
+  IN Q: What do you understand by a condenser ?
+  IN A: An apparatus for condensing the exhaust -steam of an engine, thereby reducing the back pressure and therefore increasing the power.
+
+[agriculture--253] CLEAN
+  IN Q: How thick should I skim my cream?
+  IN A: As close as possible to 35 per cent.
+
+[mythology--145] CLEAN
+  IN Q: What court at Athens bore the name of Ares ?
+  IN A: That of Areiopagus, as being built on the Hill of Ares.
+
+[ethics--12] CLEAN
+  IN Q: How shall we find the standard of good and evil — right and wrong?
+  IN A: By studying the nature of things.
+
+[common-core--2069] CLEAN
+  IN Q: In early education which should precede, the study of form or of color? Why?
+  IN A: Color. The element of interest must be brought into this study, and it is believed that color is more interesting than form. Moreover, it is believed that children notice masses of color before they pay attention to form.
+
+[familiar-things--28] CLEAN
+  IN Q: What is Corn?
+  IN A: Corn signifies a race of plants which produce grain in an ear or head, fit for bread, the food of man; or the grain or seed of the plant, separated from the ear.
+
+[civil-war--1918] CLEAN
+  IN Q: Were many German citizens in Belgium when war began?
+  IN A: Brand Whitlock says that there were nearly 5,000 assembled in Brussels alone. They were placed on trains and sent to Germany through Holland.
+
+[brewers-guide--95] CLEAN
+  IN Q: What is the good of a lightning-conductor?
+  IN A: Metal wire is a most excellent conductor; and as the lightning makes choice of the best conductors, it would run down the metal wire, rather than the bricks of the building.
+
+[common-core--2466] CLEAN
+  IN Q: When will feeling be lost and motion remain?
+  IN A: When the sensory nerve leading to any part is severed.
+
+[mythology--85] CLEAN
+  IN Q: Who was Hestia ?
+  IN A: The eldest child of Cronos and Bhea.
+
+[common-core--1180] CLEAN
+  IN Q: How wide is Bering Strait? Dover? Gibraltar?
+  IN A: Bering forty miles, Dover thirty, Gibraltar twelve.
+
+[1001-questions--704] CLEAN
+  IN Q: What battle ended the-Saxon rule ?
+  IN A: The Battle of Hastings.
+
+[civil-war--1807] CLEAN
+  IN Q: Has Serbia still a government?
+  IN A: Yes. It still has its king and cabinet, though, of course, they are not in Serbia. Prominent in this exiled court is Nicholas P. Pasitch, Premier of Serbia, who has held office since September, 1912. He piloted Serbia successfully through the Balkan wars, and during the vicissitudes of the little nation since the Austro-German-BuTgarian conquest (November, 1915) the venerable Premier was a constant inspiration to his people.
+
+[brewers-guide--981] CLEAN
+  IN Q: What good does this inspiration of oxygen do?
+  IN A: 1st—It gives vitality to the blood: and 2ndly—It is the cause of animal heat.
+
+[1001-questions--187] CLEAN
+  IN Q: What is Confucianism?
+  IN A: The practical government of man through a code of morals, having reference solely to his present state.
+
+[ethics--23] CLEAN
+  IN Q: What is a human being?
+  IN A: The human being, called man, is a composite being, made up of a material animal body and a spiritual soul. This spiritual soul is endowed with reason and free will.
+
+[civil-war--1190] CLEAN
+  IN Q: What were the anticipated revenue and expenditure for 1917-1918?
+  IN A: Bonar Law expected to get £612,- 500,000 ($2,980,731,250), an increase^ of $190,000,000 only over last year's receipts. He was imposing increased taxation, which was expected to swell the total to $3,096,000,000. The expenditure for the year was expected to reach $11,145,000,- 000. Evidently, therefore, at least £1,651,- 781,000 ($8,037,000,000) would have to be borrowed during the year. The new year was entered on with $89,000,000 in the Treasury, and over $2,400,000,000 Treasury Bills outstanding.
+
+[engineering--282] CLEAN
+  IN Q: What do you understand by the term ' ' steam pressure " ? 5
+  IN A: The elastic force which steam exerts in every direction.
+
+[1001-questions--403] CLEAN
+  IN Q: Who was the greatest Statesman of Athens?
+  IN A: Pericles.
+
+[engineering--394] CLEAN
+  IN Q: Why is this arrangement better than the old way of setting them in batteries, with a common flue connection ?
+  IN A: Because each boiler can be operated and shut down independently of the others; because the draught of one is not affected by the others; and, finally, because with the old method of setting, it often happened that when one shell gave out the whole battery exploded.
+
+[logic--135] CLEAN
+  IN Q: What are the laws of a perfect definition ?
+  IN A: 1. It must be adequate, that is, it must contain the whole thing defined and nothing more. 2. It must be clear, so as to make the nature of the thing defined intelligible.
+
+[familiar-things--412] CLEAN
+  IN Q: What do the terms Refining and Smelting signify?
+  IN A: Refining is the art of rendering the metal free from all impurities. Smelting means the melting of a metal from its ore in a smelting furnace, in order to separate the metallic parts from the sulphur, arsenic, and the earthy and stony substances with which they may be combined.
+
+[familiar-things--351] CLEAN
+  IN Q: What is the Steam Engine?
+  IN A: A machine that derives its moving power from the force of the steam produced from boiling water, which is very great, especially when, as in the steam engine, it is confined within a limited compass: this useful machine is one of the most valuable presents that the arts of life have received from the philosopher, and is of the greatest importance in working mines; supplying cities with water; in working metals; in many mechanical arts; and in navigation. By the aid of steam, vessels are propelled with greater swiftness than those which are wholly dependent on the winds and tides; and thus trade is facilitated, and we are enabled to communicate with distant lands in a much shorter space of time than was formerly consumed. On land, railroads are constructed, on which steam carriages run with astonishing rapidity, so that a journey which by coach and horses formerly required two or more days, may now be performed in four or five hours. _Mechanical_, belonging to Mechanics.
+
+[1001-questions--951] CLEAN
+  IN Q: What was the result of their contentions ?
+  IN A: Charles was defeated in several engagements, and after his death in the last battle, Burgundy was reannexed to the French dominions.
+
+[seeleys--52] CLEAN
+  IN Q: To what should the first efforts of the teacher be directed, in beginning the teaching of a new reading lesson ?
+  IN A: He should seek to find out how much the child knows, how much he can find out for himself of what he does not know, and how much he needs to be instructed.
+
+[grammar--229] CLEAN
+  IN Q: How is the time of the action of a verb indicated ?
+  IN A: By the tense.
+
+[brewers-guide--296] CLEAN
+  IN Q: Why do tin blowers help to get a fire up?
+  IN A: Because they compel the air to go through the fire, and not over it; therefore the fire is well supplied with oxygen, and the draught greatly increased.
+
+[chemistry--1002] CLEAN
+  IN Q: What was the first galvanic observation made ?
+  IN A: That a peculiar taste v^'as produced when the projecting ends of two metals, one being placed above, the other beneath the tongue, were brought in contact.
+
+[mythology--556] CLEAN
+  IN Q: What is the conflict which precedes tl death of Hector ?
+  IN A: The mighty battle of the vapours and the su who seems to trample on the darkness, just ; Achilles tramples on the body of Hector : and this victory of the sun is gained just as he sinking into the sea, so the death of Achilles said to follow very soon after that of Hector.
+
+[brewers-guide--883] CLEAN
+  IN Q: Why are our hair and the brim of our hat often covered with little drops of pearly dew in winter-time?
+  IN A: The breath (issuing from our mouth and nose) is condensed into drops, as it comes in contact with our cold hair or hat; and (being condensed) hangs there in little dew-drops.
+
+[common-core--715] CLEAN
+  IN Q: Which of the grand divisions ts the largest, which the smallest, which the most populous, and which the most fertile?
+  IN A: Asia is the largest, Europe the smallest and most popu- lous, and South America the most fertile.
+
+[1001-questions--833] CLEAN
+  IN Q: What reaction took place ?
+  IN A: From Puritan austerity, the people rushed to the oppo- site extreme of frivolity and revelry. The Established Church was restored, and two thousand ministers were expelled from their pulpits as Non-conformists.
+
+[logic--39] CLEAN
+  IN Q: Does the predicate always follow the subject in the proposition ?
+  IN A: JNo ; they must be distinguished by the meaning of the sentence, and not by the position of the terms. Thus, when we say, " pleasant are the paths of virtue," jjleasant is the predicate, and paths of virtue the sul^ject.
+
+[common-core--1852] CLEAN
+  IN Q: What number is that whose eighth exceeds its tenth by 14 less than its twelfth?
+  IN A: Avs. 240.
+
+[1001-questions--1002] CLEAN
+  IN Q: What zuas the Edict of Nantes ?
+  IN A: An edict granted by the king in 1598 in which he con- firmed the rights and privileges of the Huguenots, con- ferred upon them entire liberty of conscience and admitted them to all offices of honor and emolument.
+
+[electricity--83] CLEAN
+  IN Q: How is static electricity troublesome in spinning and weaving?
+  IN A: The fibres become electrified and refuse to lie close together, causing the threads and fabric to become loose. To overcome the trouble, it is common to keep the air moist and to connect the machines with the earth, so as to dissipate or carry off whatever static electricity appears. Somewhat similar trouble is experienced in paper mills. One of the advantages of the "indirect radiation" system of heating and ventilation is that the humidity of the air is under easy control.
+
+[civil-war--1480] CLEAN
+  IN Q: Is it true that a naturalized German in Australia ceases to be a British or Australian subject once he is beyond the three-mile limit?
+  IN A: Any foreigner naturalized in Australia ceases to enjoy the privileges of British citizenship as soon as he leaves the country, as the British Government does not recognize its responsibility for anyone naturalized in the colonies. An attempt to alter this anomalous state of affairs was made in the British Nationality and Status of Aliens Act, which received the royal assent on August 7, 1914, and came into force on January 1, 1915. It is, however, specifically stated in the Act that it does not apply to, nor does any certificate of naturalization granted thereunder have any effect in the Commonwealth, Canada, New Zealand, South Africa and Newfoundland, unless the Act is there adopted. As this has 250 not been done in Australia, any foreigner naturalized there is under the same disabilities as formerly — he ceases to enjoy the privileges of British citizenship as soon as he leaves the country.
+
+[investors--44] CLEAN
+  IN Q: What is a registered coupon bond ?
+  IN A: A registered coupon bond is one on which the principal may be paid only to the person in whose name it is recorded. The interest coupons, however, are payable to bearer and may be collected by any holder.
+
+[civil-war--1408] CLEAN
+  IN Q: How is any insufficient quota filled?
+  IN A: Immediately after the time of entrainment the local board must proceed to call and entrain a sufficient number of selected men to fill the deficiency, if any, in its quota. _ Upon receipt of notice from the mobilization camp that any selected men of the contingent of a local board have been rejected, or, though entrained, have failed to reach such camp, the local board proceeds to call and entrain a sufficient number of selected men to fill vacancies in its quota. Men sent to fill deficiencies get at least 24 hours' notice to appear for entrainment.
+
+[mythology--333] CLEAN
+  IN Q: What is the origin of this story?
+  IN A: It grew up in part from that idea of toil for the benefit of others, which marks the stories of Heracles, Perseus, Theseus, Bellerophon, and many others, and partly from old phrases which had spoken of the sun as having been united in the evening to the mother from whom he had sprung in the morning.
+
+[1001-questions--928] CLEAN
+  IN Q: Who invaded France during the reign of fohn the Good?
+  IN A: The Prince of Wales, called the Black Prince from the color of his armor.
+
+[chemistry--915] CLEAN
+  IN Q: Is gelatin capable of supporting animal life ?
+  IN A: No. As it contains no proteine, it cannot be converted into albumen, fibrin, or caseine, consequently it cannot form blood.* #
+
+[civil-war--402] CLEAN
+  IN Q: What are anti-aircraft guns?
+  IN A: They are guns so mounted that they may be pointed upward to deliver direct fire against objects in the sky. In the first stages of the great war they were very simple, often being merely improvised. After a period of experience, they became more and more specialized, until they acquired a distinct status of their own, being fitted with unique appliances and firing ammunition quite different from that of other guns.
+
+[civil-war--1575] CLEAN
+  IN Q: When was the Berlin-Bagdad Railroad begun?
+  IN A: It was begun about 1900 when a German company obtained concessions 268 from the Sultan for the line from Constantinople to Bagdad. The intention was ultimately to extend from Bagdad to the Persian Gulf. The magnitude of the scheme naturally led to lively suspicions of schemes of aggrandizement and military menace.
+
+[engineering--1026] CLEAN
+  IN Q: In calculating the carrying capacity of switches, what general rules are employed ?
+  IN A: Where current goes through solid metal allow one square inch per 1000 amperes, and w^here it goes through the joint between two pieces allow one square inch of contact surfaces to each 75 amperes.
+
+[civil-war--531] CLEAN
+  IN Q: Are the great twelve and fourteen-inch shells exploded by time-fuses?
+  IN A: No. These huge shells are used chiefly against ships or against fortifications. They are made to explode on impact— by "percussion," as artillerists call it. There is a firing pin in the sharp point of the shell, and when the projectile strikes this pin is driven home and explodes fulminate of mercury, which, in turn, explodes (detonates) the big bursting charge. In most cases these firing mechanisms in the big shells are so set that the projectile has time first to smash through the ship's armor, so that it shall explode inside.
+
+[advanced-questions--281] CLEAN
+  IN Q: What is the difference between Rhyme and Rhythm ?
+  IN A: Rhyme is a similarity of sound in syllables which begin differently but end alike. Rhythm is the harmonious arrangement of syllables in reference to sound. Rhymes are divided into two classes, perfect and admissible. Ex- ample: " Be thou the first true merit to befriend; His praise is lost who stay3 till all commend." "Good nature and good sense must everj&in: To err is human; to forgive divine."
+
+[civil-war--1747] CLEAN
+  IN Q: What was the family name of King George V before he changed it to Windsor?
+  IN A: King George I was a Guelph, and as his dynasty still reigns in England King George V presumably is held to be a 300 Who's Who in Royalty 301 Guelph also. The descent, however, came through the female line — Queen Victoria — whose husband, Prince Albert, was a member of the Wettin family, from which many of the Royal Houses of Europe have sprung. Had he not been of royal blood, King George V would be regarded therefore as a Wettin, not as a Guelph. It is interesting to note that the name Guelph was associated more particularly with Italy than with Germany, and for centuries the feud between this house and the Ghibellines raged throughout northern Italy. In fact, Guelph is held to be the Italianized form of Welf, and Ghibelline is the Italian name for Waiblingen. The feud is said to have originated in 1140 in a war between Conrad III, King of Germany, and Welf, Count of Bavaria, whose soldiers used the battle-cry, "Hie Welf." To this the King's men replied with the shout of "Hie Waiblingen," one of the titles of Conrad, who resided at a castle of that name.
+
+[civil-war--1876] CLEAN
+  IN Q: Where and when were these crimes committed?
+  IN A: "If a line is drawn from the Belgian frontier to Liege and continued to Charleroi, and a second line from Liege to Malines, a figure resembling an irregular Y will be formed. It is along this Y that most of the systematic (as opposed to isolated) outrages were committed. The period from August 4 to August 30 will be found to cover most of these. Termonde and Alost extend beyond the Y lines, and they belong to September. Murder, rape, arson, and pillage began the moment the German army crossed the frontier. For the first fortnight the villages near Liege were the chief sufferers. From August 10 to the end of the month outrages spread in the directions of Charleroi and Malines. There is a certain significance in the fact that the outrages round Liege coincide with the unexpected resistance of the Belgian Army in that district, and that the slaughter from August 19 to the end of the month is contemporaneous with the period when the German army's need for a quick passage through Belgium at all costs was deemed imperative." — Bryce Committee.
+
+[mythology--462] CLEAN
+  IN Q: Is the germ of the story of Ixion found these old poems ?
+  IN A: It is said that Dyaus (the sky) struggled hard snatch the wheel of the sun from the grasp of rht. From such phrases sprung the notion the dark Gorgons chasing Perseus as he hastens the Hyperborean gardens. '1
+
+[civil-war--848] CLEAN
+  IN Q: How was it possible for Great Britain to obtain warships from neutrals?
+  IN A: Ships building in British shipyards are liable to purchase by the Admiralty, there being a provision in the agreement to that effect. Article 6 of the Neutrality in Naval War Convention states definitely that "the supply on any ground whatever, either directly or indirectly, by a neutral power to a belligerent power of ships of war or munitions of war of any kind is forbidden."
+
+[common-core--311] CLEAN
+  IN Q: What was the American doctrine in regard to na- turalized foreigners? What the English doctrine?
+  IN A: The Americans claimed that a foreigner, when natural- ized, became an American and entitled to the same protec- tion as any other citizen. The English doctrine was â€œOnce an Englishman, always an Englishman.â€
+
+[seeleys--1029] CLEAN
+  IN Q: How may this be done ?
+  IN A: Explain to pupils the meaning of an appeal to honor. Be genuine in trusting them. Do not tell them you leave them on their honor, and then appoint a monitor or secret spy to watch them. Do not attempt too much at once or put too great a strain upon their moral sense. Call all offenders to strict account. Avoid suspicion, and treat pupils as if you expected only honorable action.
+
+[familiar-things--22] CLEAN
+  IN Q: What are the Muscles?
+  IN A: Bundles of thin fleshy fibres, or threads, fastened to the bones of animals, the contraction and expansion of which move the bones or perform the organic functions of life. _Organic_, relating to organs or natural instruments by which some process is carried on. _Functions_, employments or offices of any part of the body. _Contraction_, drawing in or shortening. _Expansion_, extending or spreading out.
+
+[electricity--758] CLEAN
+  IN Q: What are the advantages and disadvantages of using permanent magnets?
+  IN A: The advantage is that they do not require a continuous expenditure of energy while the motor is running. The disadvantages are that a permanent magnet can not be made as strong as an electromagnet of the same size, hence the motor has less power ; the strength - of such a magnet would gradually become less, so that the speed of the motor for a given voltage would increase.
+
+[music--55] CLEAN
+  IN Q: Which Is the fifth flat ?
+  IN A: The fifth flat is G flat ; the sixth flat is C flat ; and the seventh flat is V flat.
+
+[seeleys--1041] CLEAN
+  IN Q: Name some artificial incentives. Should they be used ?
+  IN A: Prizes, privileges, immunities, and grades or marks are included in school incentives. Most teachers are capable of controlling their pupils en a higher plane than that which requires artificial incentives. If such incentives are used at all they should be employed only as temporary expedients to attain a certain end, and never as permanent factors.
+
+[new-york-bar--204] CLEAN
+  IN Q: On May 1, A advertises in the Herald a reward of $1,000 to any person who captures or gives information leading to the apprehension of a certain thief. On May 3, A publishes in the same paper, a revocation of his offer. On May 4, B succeeds in apprehending the thief. He now claims the reward, and brings suit to recover the sum offered. Can he recover ? State your reasons.
+  IN A: B cannot recover, as the offer was withdrawn before the act asked for was performed. An offer may always be withdrawn before it is accepted, through the same source, and[jaj^l£L^am.aajiann er in which it w as „mad£. " It is not to be doubted that the offer was revocable at any time before it was accepted, and before anything was done in reliance upon it. There was no contract until its terms were complied with. Like any other offer of a contract, it might, therefore, be withdrawn before rights had accrued under it ; and it was withdrawn through the same channels in which it was made. The same notoriety was given to the revocation that was given to the offer; and the findings of fact^do not show that any information was given by the claimant, or that he did anything to entitle him to the reward offered, until five months after the offer had been withdrawn. True, it is found that then, and at all times until the arrest was actually made, he was ignorant of the withdrawal ; but that is an immaterial fact. The offer of the reward not having been made to him directly, but by means of a published proclamation, he should have known that it ceuld be revoked in the manner in which it was made." Strong, J., in Shuey v. U. S., 92 U. S. 73.
+
+[mythology--656] CLEAN
+  IN Q: How did this mystical system of the Egyptian priests grow up ?
+  IN A: It was grafted in the process of ages on ampler myths, which corresponded essentially to the phrases which lie at the root of Hindu, Greek, and Teutonic mythology. Thus the sleep of Osiris during the winter, before his reappearance in the spring, is the sleep of the fair maiden who is waked up by Sigurd, and answers to the imprisonment of KorS or Persephone in Hades.
+
+[civil-war--1948] CLEAN
+  IN Q: Did he enumerate the afflicted places?
+  IN A: Yes. He enumerated them thus : "Werchter-Wackerzeel, for instance, out of 380 homes 130 remain ; at Tremeloo, two-thirds of the village was razed to the ground ; at Bueken out of 100 houses 20 are standing ; at Schaffen 189 houses out of 200 are destroyed — 11 still stand. At Louvain, a third part of the city has been destroyed ; 1,074 dwellings have disappeared ; on the town land and in the suburbs, Kessel-Loo, Herent and Herverle, together 1,828 houses have been burnt." He named altogether 57 towns and villages that had been devastated.
+
+[school-bulletin--354] CLEAN
+  IN Q: "What is the difference between the Quail and the Partridge ?
+  IN A:  In New England the Perdicidae (Partridges) are called Quails. The true quail is found in the Old World, and is migratory in habit, leaving Africa in the spring, and returning from Europe in the autumn. The Ruffled Grouse is called partridge in New England and the West, and pheasant in the Middle and Southern States. 242 Dime QraB8Ti« Books.
+
+[1001-questions--969] CLEAN
+  IN Q: What was the res2dt of Charles's success ?
+  IN A: Francis became his bitter enemy and their rivalry deluged Europe in blood for nearly twenty-five years.
+
+[brewers-guide--556] CLEAN
+  IN Q: What are stra’tus clouds?
+  IN A: Creeping mists, especially prevalent in a summer’s evening: these clouds rise at sun-set in low damp places, and are always nearer the earth, than any other sort of cloud.
+
+[seeleys--747] CLEAN
+  IN Q: What are the products and ctttes ?
+  IN A: Wool, frozen and preserved meats, gold and kauri gum are the chief products. Hobart is the capital of Tasmania. Wellington is the capital of New Zealand, and Auckland and Dunedin the chief cities.
+
+[seeleys--63] CLEAN
+  IN Q: What effect had these invastons upon the language of England ?
+  IN A: Early England had no national language. After the Anglo-Saxon conquest the language assumed a more definite form. With the coming of the Normans many French and Latin words were introduced. NormanFrenck became the court language, while Anglo-Saxon remained the speech of the common people. Apvout the middle of the twelfth century, the two languages began to coalesce. This marks the beginning of our modern English language.
+
+[grammar--432] CLEAN
+  IN Q: What is a common error in the use of numeral and ordinal?
+  IN A: An ordinal following a numeral.
+
+[mythology--509] CLEAN
+  IN Q: Mention the names of some of these chiefs?
+  IN A: Nestor, the wise ruler of Pylos ; Ajax the son of Telamon; Ascalaphos and lalmenos, sons of Ar6s; Diomedes, son of Tydeus, and Admetus, the husband of AlkSstis. But the greatest of all was Achilles, the son of Peleus and the seanymph Thetis, and Odysseus, the son of Laertes who ruled in Ithaca.
+
+[world-history--132] CLEAN
+  IN Q: Who is the present sovereign of Denmark ?
+  IN A: Christian VIII. who both as king, and as regent in the life of his imbecile father, has had the address to preserve his country in a great measure, in peace. Poland.
+
+[common-core--1668] CLEAN
+  IN Q: How do we find the loss or gain per cent. when the cost and selling price are given?
+  IN A: Divide the gain or loss by the purchase price. 300 COMMON SCHOOL QUESTION BOOK.
+
+[new-york-bar--439] CLEAN
+  IN Q: A has a policy of fire insurance for fl»QO(®, The insured property is mortgaged for $5,000 to B, and in the policy is this clause : " Damage, if any, payable to the mortgagee to the extent of his interest." As a result of a fire, the insurance company becomes liable for $4,000, but because of the above clause in the policy, are undecided as to whom to pay the money, so they refuse to pay to either. Who may bring suit?
+  IN A: The suit may be brought by either A or B, on the principle that either a beneficiary or the promisee may sue on the contract. Lawrence v. Fox, 20 N. Y. 268. Partnership.
+
+[mythology--345] CLEAN
+  IN Q: But was not the idea of t\i^ SrjJcisa. derived from Egypt; and must not Spiunx therefore be an Egyptian word?
+  IN A: This was the mistaken notion of later timeSi The Greeks had the idea and the name of tha Sphinx (who was also called Phiz, from a woid connected with the Latin iigo, to fix) ages befoie Egypt was thrown open to Grreek merchants cr travellers. The Grreek Sphinx has the head of a woman with the body of a beast, the daws of s lion, the wings of a bird, and a serpent's tail, and might be represented in any attitude ; but when Greeks came into Egypt, and found figures with a woman's head joined to a lion's body, they called them by the same name, and afterwards fancied that they got the idea itself from the Egyptians.
+
+[new-york-bar--658] CLEAN
+  IN Q: A makes a will in 1895, and in 1897 makes a second will, which by its terras expressly revokes the former. At the death of A, the will of 1897 cannot be found, and the beneficiaries of the will of 1895 attempt to have the will of 1895 admitted to probate. Should probate be allowed ?
+  IN A: No. Where a will is revoked by the execution of a second will, which provides that all previous wills of the testator are there- by revoked, the first will will not be revived by the fact that after the testator's death, the second will cannot be found. In re Forbes's Will, 24 N. Y. Supp. 841 ; Matter of Barnes, 70 App. Div. 523. Sec. 58 of the Statute of Wills provides : " If after the making of any will, the testator shall duly make and execute a second will, the destruction, cancellation or revocation of such second will shall not revive the first will, unless it appear by the terms of such revocation, that it was his intention to revive and give effect to his first will ; or unless after such destruction, cancellation or revocation, lie shall duly republish his first will." (Note.) A will that has been revoked by a later one which was destroyed by the testator will not be revived by his statement that he desii-es his first will to stand, made to others than the subscribing witnesses, aod where the person to whom such statement was made, did not subscribe as a witness to the will. Republication requires the same formalities as publication itself; therefore a will which has been revoked can be revived only by its republication in the presence of its subscribing witnesses. Matter of Stickney, 161 N. Y. 42.
+
+[brewers-guide--1422] CLEAN
+  IN Q: When soap bubbles are blown from a pipe, why do they ascend?
+  IN A: Because they are filled with warm breath, which is lighter than air. CHAPTER XXVI. ICE.
+
+[seeleys--79] CLEAN
+  IN Q: Who was the greatest dramatist?
+  IN A: Tell briefly of his work. William Shakespeare was the greatest dramatist of this and all ages. His first poems were very meritorious although not dramatic. But it is upon kis wonderful dramas that his reputation rests. His plays are based upon historical and legendary subjects and upon Italian romances and older plays.
+
+[new-york-bar--29] CLEAN
+  IN Q: A, through B his attorney, loaned _C 18,000 on bond and mortgage for five years. The papers were left in B's possession, and he was authorized to collect the interest but not the principal. After the principal became due, B received from C two payments of $1,000 each to apply on the principal, the bond and mortgage being eacTi time produced by B. On a subsequent occasiQn,'|l,000 more was paid to B to apply on the principal, but the bond and mortgage were not produced, though B then had them in his possession and told C so. B then sold the bond and mortgage and forged an assignment of them to the pui-chaser. After that B received from C the balance due upon^tKe mortgage. A brings foreclosure. Can he recover, and what' are the rights of the parties ?
+  IN A: Judgment for A fortiSjOOO. Clearly, as to the first two payments, the attorney had apparent authority to receive the principal, and the mortgag^ could not deny to them, the effect of payment pro tanto, by proof that he did not have actual authority. As to the subsequent payment of 11,000, it is true, C did not at the time of making the payment see the bond and mortgage, but it was actually in the possession of the attorney, and the attorney so informed him. Here then, was possession, and information of the possession. It was information upon which he acted, and inasmuch as it was true, it constituted apparent authority. If it turned out to be untrue, it could not have availed him. There is no ground for insisting that a party must actually see and examine the securities, in order to entitle him to the protection of the doctrine of apparent authority ; if he have trustworthy information of the fact which lie believes and relies upon, and it shall prove to be true, there seems to be no reason, why it should not avail him, as well as a personal examination of the securities. It follows that the defendant should have been credited with the third payment of 11,000. As to the remaining 15,000 that was paid to B after he had parted with the bond and mortgage, C's failure to take the precaution of ascertaining whether the attorney was actually in the possession of the securities, when he paid the $5,000, deprived him of the right to assert that he was induced to make the payment, because it appeared to him that the attorney had the right to receive the money. " Information of the physical fact of possession by the attorney is alone effectual for protection. And hemust have such knowledge when every payment is made, for no presumption of a continuance of possession can be indulged in, for the purpose of giving support to an apparent authority on the part of an attorney to act, where no actual authority exists. The rule comprises two elements : First, possession of the securities by the attorney with the consent of the mortgagee ; second, knowledge of such possession on the part of the mortgagor. The mere possession of the securities by the attorney is not sufficient. The mortgagor must have knowledge of the fact. It is the appearance of authority to collect, furnished by the custody of the securities, which justifies him in making payment. And it is because the mortgagor acts in reliance upon such appearance, an appearance made possible only by the act of the mortgagee in leaving the securities in the hands of an attorney, that estops the owner from deujdng the existence of authority in the attorney which such possession indicates." Parker, J., in Crane v. Gruenewald, 120 N. Y. 274. (Note.) " Where an attorney who did not make the investment originally, and who has no direct atitliority to receive payment of tlie principal of a bond and mortgage, lias received by the authority of the assignee tliereof one payment of interest, and has obtained in some undisclosed manner the physical possession of the bond and mortgage, but not of the assignment thereof, he has not such apparent authority to receive payment of the principal of such bond and mortgage as will protect the mortgagDr, in paying the principalsecured thereby, to him. To justify such inference of authority ou the part of the attorney, he must have had control of the investment from tlie beginning to the end." Central Trust Co. V. Folsom, 26 App. Div. 40. Q, A, the holder of a mortgage, employed his son to retain an attorney to foreclose it, and directed B to bid for the property at the foreclosure sale on behalf of A, but not to bid beyond a certain sum. B attended the sale and bid as A directed him to do. Others bid for the property more than the sum to which A had limited B, and thSi-eupon B bid in his own name, and bought tlie property for himself. Assuming that there was no actual fraud on B's part, and A consults you as to his rights, what would you advise ? A. A has no rights against B. This was a special agency, and B's authority to bid was limited by the instructions given. He had no right to bid beyond the specified amount. When the sum named was exceeded by the other bids, his authority ceased. He was merely A's agent up to the amount limited. While he could not bid in opposition to his principal, as far as the limited amount was concerned, as this would be opposed to the fiduciary relation existing between them, yet there would be nothing inconsistent with good faith or loyalty to his piincipal in bidding for and buying the property himself when that amount was passed by other bids, for he was then no longer his agent. See Story on Agency, sees. 126, 127.
+
+[new-york-bar--5] CLEAN
+  IN Q: Thenresidg^Bp directors of a warehouse company passed a re|^BHiPPM^Kc^the president of the company authority to sign receipts for the goods in the warehouse^ The president issued a receipt to himself, claiming that he had goods in the warehouse, when in fact there were none. The president then pledged such receipt to a bank and received money on it. The bank sues the company for the amount of the receipt. Judgment for whom and wh}' ?
+  IN A: Judgment foi^^^^^kdant. A general power of authority giventoanageM^^^HBKt for his principal does not extend to ^HHIHtfe^Bi^earstliat the agent is himself the person on the other gjde. Where a power is intended to be given to the agent to act as such, in such a case, it must be expressed in language so plain, that no other interpretation can rationally be given it. Bank of N. Y., etc., v. Amer. D. & T. Co., 143 N. Y. 552. (Note.) This case must be distinguished from Hanover Nat. Bank v. Amer. D. & T. Co., 148 N. Y. 612, where it was held, that : " If an officer of a warehouse company having express authority to issue negotiable warehouse certificates to others for goods deposited, but having no such authority to issue certificates to himself, does issue warehouse certificates in his own favor to the knowledge express or implied of the company's directors, their acquiescence in such acts, after havinj; liada reasonable time to put an end thereto, will permit the inference that tlie act of certifying in his own favor was within the .officer's actual iiuthority, and will estop the company from denying, as to purchasers for value, that the jjower to so certify in fact so existed.
+
