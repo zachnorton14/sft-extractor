@@ -8,44 +8,47 @@ Set environment variables before running:
 
 import asyncio
 import json
+import sys
 from pathlib import Path
 
 import anthropic
 
 ROOT = Path(__file__).parent.parent
-INPUT_DIR = ROOT / "output"
+INPUT_DIR = ROOT / "output" / "bleed"
 OUTPUT_DIR = ROOT / "output" / "ocr"
 STATE_FILE = ROOT / ".ocr_state.json"
 MODEL = "claude-opus-4-8"  # maps to deepseek-v4-pro via ANTHROPIC_BASE_URL
-MAX_TOKENS = 512
+MAX_TOKENS = 2048
 CONCURRENCY = 20
 
 SYSTEM_PROMPT = """\
 You are an OCR correction assistant for public-domain texts published before 1930.
-Fix only mechanical scanning errors within each field. Do not modernize language.
+Your job is to fix mechanical scanning errors. Be aggressive about fixing — the source
+texts are legitimate pre-1930s works, so fix confidently.
 
-Fix:
+Fix all of the following:
 - Missing or extra spaces (Whatis → What is, "Biography ?" → "Biography?")
-- Single-character letter substitutions (ts → is, ln → in, 4 → A when clearly a letter)
+- Single-character letter substitutions (ts → is, ln → in, rn → m, 4 → A when clearly a letter)
 - Broken hyphenation across lines (na- tions → nations)
 - Unicode/encoding artifacts (Â¢ → ¢, â€™ → ', Ã© → é)
+- Obvious misrecognized words (tbe → the, liow → how, witb → with)
+- Missing terminal period on an answer that is clearly a complete sentence
+- Embedded page references or section headers in answer text (e.g. "FRANCE. 107", "6 EGYPT.", "244 COMMON SCHOOL QUESTION BOOK." — remove these entirely)
 
-Never:
-- Replace archaic or pre-1930s words with modern equivalents
-- Move, reassign, or restructure content between Q and A fields
-- Split a pair or merge pairs — one input pair always produces one output pair
-- Attempt to fix structural issues: if Q appears to contain embedded answer text, leave both fields exactly as-is
+Never alter grammar or word choice. Fix only what is clearly a scanning artifact.
+"Whom", archaic verb forms, and pre-1930s constructions are correct as-is.
 
-If the pair is so severely garbled that meaningful correction is impossible, respond with:
-  {"discard": true}
+Flag with "flagged": true if any word you chose as a replacement could be an anachronism —
+a word, term, or concept that did not exist before 1930. Do not flag for space fixes,
+punctuation, encoding artifacts, or clear single-character swaps.
 
-Flag with "flagged": true ONLY when you inferred a damaged word from context that could plausibly be wrong.
-Do NOT flag for: no changes, clear single-char swaps, space/punctuation fixes, hyphen rejoins, Unicode fixes.
+Only discard if the text is so severely garbled that no meaningful content can be recovered.
+When in doubt, fix and keep. Do not discard pairs that are merely messy.
 
 Respond with valid JSON only:
-  Corrected or unchanged:  {"q": "...", "a": "..."}
-  Inferred uncertain word: {"q": "...", "a": "...", "flagged": true}
-  Unrecoverable:           {"discard": true}
+  Corrected or unchanged:       {"q": "...", "a": "..."}
+  Possible anachronism in fix:  {"q": "...", "a": "...", "flagged": true}
+  Truly unrecoverable:          {"discard": true}
 
 Examples:
 
@@ -55,8 +58,8 @@ Output: {"q": "What is History?", "a": "A recital of what has happened respectin
 Input — Q: What is Biography ? / A: The history of a single individual.
 Output: {"q": "What is Biography?", "a": "The history of a single individual."}
 
-Input — Q: What are the chief sources ? / A: Records, Monuments, and I^egends.
-Output: {"q": "What are the chief sources?", "a": "Records, Monuments, and Legends.", "flagged": true}
+Input — Q: What are tbe chief sources ? / A: Records, Monuments, and I^egends.
+Output: {"q": "What are the chief sources?", "a": "Records, Monuments, and Legends."}
 
 Input — Q: §§§ xh§ pr¡n§¡p / A: Th§ §l¿ve §§ct¡¿n
 Output: {"discard": true}\
@@ -98,6 +101,11 @@ async def clean_pair(client, semaphore, dataset, i, q, a, state, progress):
                     messages=[{"role": "user", "content": f"Q: {q}\nA: {a}"}],
                 )
                 text = next((b.text for b in msg.content if b.type == "text"), "").strip()
+                if text.startswith("```"):
+                    text = text.split("```", 2)[1]
+                    if text.startswith("json"):
+                        text = text[4:]
+                    text = text.rstrip("`").strip()
                 try:
                     parsed = json.loads(text)
                 except json.JSONDecodeError:
@@ -172,8 +180,65 @@ def write_output(pairs, state):
     print(f"\nTotal: {total_written} pairs, {total_flagged} flagged, {total_discarded} discarded")
 
 
+async def test_run(pairs, seed, size):
+    import random
+    random.seed(seed)
+    sample = random.sample(pairs, size)
+    client = anthropic.AsyncAnthropic()
+    from datetime import datetime
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    samples_dir = ROOT / "samples" / "ocr"
+    samples_dir.mkdir(parents=True, exist_ok=True)
+    out_path = samples_dir / f"{ts}_seed{seed}_n{size}.txt"
+    header = [f"model: {MODEL}", f"seed:  {seed}", f"n:     {size}", "", "--- SYSTEM PROMPT ---", SYSTEM_PROMPT, "--- END SYSTEM PROMPT ---\n", ""]
+    out_path.write_text("\n".join(header))
+
+    async def process(dataset, i, q, a):
+        msg = await client.messages.create(
+            model=MODEL,
+            max_tokens=MAX_TOKENS,
+            system=SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": f"Q: {q}\nA: {a}"}],
+        )
+        raw = next((b.text for b in msg.content if b.type == "text"), "").strip()
+        try:
+            parsed = json.loads(raw)
+            if parsed.get("discard"):
+                out_q, out_a = "[DISCARD]", ""
+            else:
+                out_q = parsed.get("q", "")
+                out_a = parsed.get("a", "")
+            flagged = " [FLAGGED]" if parsed.get("flagged") else ""
+        except (json.JSONDecodeError, AttributeError):
+            out_q, out_a, flagged = "[PARSE ERROR]", raw, ""
+        entry = "\n".join([
+            f"[{dataset}--{i}]{flagged}",
+            f"  IN  Q: {q}",
+            f"  IN  A: {a}",
+            f"  OUT Q: {out_q}",
+            f"  OUT A: {out_a}",
+            "",
+        ])
+        with out_path.open("a") as f:
+            f.write(entry + "\n")
+
+    await asyncio.gather(*[process(d, i, q, a) for d, i, q, a in sample])
+    print(f"Wrote {out_path}")
+
+
 def main():
+    test = "--test" in sys.argv
+    seed_idx = next((i for i, a in enumerate(sys.argv) if a == "--seed"), None)
+    seed = int(sys.argv[seed_idx + 1]) if seed_idx is not None else 42
+    size_idx = next((i for i, a in enumerate(sys.argv) if a == "--size"), None)
+    size = int(sys.argv[size_idx + 1]) if size_idx is not None else 10
+
     pairs = load_all_pairs()
+
+    if test:
+        asyncio.run(test_run(pairs, seed, size))
+        return
+
     state = load_state()
 
     resolved = sum(1 for d, i, *_ in pairs if f"{d}--{i}" in state)
