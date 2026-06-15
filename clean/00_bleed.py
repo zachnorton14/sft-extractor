@@ -19,7 +19,7 @@ from pathlib import Path
 import anthropic
 
 ROOT = Path(__file__).parent.parent
-INPUT_DIR = ROOT / "output"
+INPUT_DIR = ROOT / "output" / "extracted"
 OUTPUT_DIR = ROOT / "output" / "bleed"
 STATE_FILE = ROOT / ".bleed_state.json"
 MODEL = "claude-opus-4-8"  # maps to deepseek-v4-pro via ANTHROPIC_BASE_URL
