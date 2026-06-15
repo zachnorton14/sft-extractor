@@ -845,13 +845,44 @@ class AdvancedQuestionsExtractor(BaseExtractor):
     Dime Question Books: Advanced series. Format: numbered questions ('N. question text')
     followed by 'Ans. — answer'. Answer marker has many OCR variants (An?., Aks,, Anb.,
     ANS.—). Note.— and Query.— paragraphs follow some answers and are excluded.
-    Page headers (e.g. 'Literature. 7') and interspersed front-matter are noise.
+    Some Q+A pairs appear on a single paragraph with the Ans marker inline.
+    Answers may span multiple paragraphs separated by page headers.
     """
-    # Matches OCR variants: Ans. —, Ans—, An?., Aks,, Anb., ANS.—, etc.
-    ANS_RE = re.compile(r'^A\w{1,3}[.,]?\s*[—\-]\s*', re.MULTILINE)
+    ANS_RE = re.compile(r'A[\w?]{1,3}[.,]?\s*[—\-]\s*')
+    # Inline variant requires sentence-ending punct before the marker to avoid
+    # false positives on hyphenated words like "(Am- phibia.)"
+    INLINE_ANS_RE = re.compile(r'(?<=[.?!])\s+A[\w?]{1,3}[.,]?\s*[—\-]\s*')
+    STOP_RE = re.compile(r'^(?:\d+\.|Note[.\-]|Query|Quer\s*y)', re.IGNORECASE)
+
+    _PAGE_HEADER_RE = re.compile(
+        r'^(?:'
+        r'\d+\s+\w'             # "93 Dxmb Question Books,"
+        r'|.*Question Books'    # "Dime Question Books."
+        r'|\w+[\.\s]+[\dIVXivx]{1,5}\W*$'  # "Chemistry. 26&" / "Literature. IT"
+        r')',
+        re.IGNORECASE
+    )
+
+    def _is_page_header(self, p):
+        lines = [l.strip() for l in p.split('\n') if l.strip()]
+        if not lines or len(lines) > 2:
+            return False
+        return bool(self._PAGE_HEADER_RE.match(p)) or _is_symbological_header(p)
+
+    def _collect_answer(self, paragraphs, start, first_text):
+        """Collect answer text across paragraphs until a stop marker."""
+        parts = [first_text]
+        j = start
+        while j < len(paragraphs):
+            nxt = paragraphs[j].strip()
+            if self.STOP_RE.match(nxt) or self.ANS_RE.match(nxt):
+                break
+            if not self._is_page_header(nxt):
+                parts.append(nxt)
+            j += 1
+        return re.sub(r'\s+', ' ', ' '.join(parts)).strip()
 
     def extract_pairs(self, text):
-        # Rejoin OCR-broken hyphenated words
         text = re.sub(r'(\w)-[ ]*\n[ ]*(\w)', r'\1\2', text)
 
         paragraphs = re.split(r'\n\n+', text)
@@ -859,24 +890,31 @@ class AdvancedQuestionsExtractor(BaseExtractor):
         i = 0
         while i < len(paragraphs):
             p = paragraphs[i].strip()
-            q_match = re.match(r'^\d+\.\s+(.+)', p, re.DOTALL)
+            q_match = re.match(r'^(\d+\.\s+)(.+)', p, re.DOTALL)
             if q_match:
-                q = re.sub(r'\s+', ' ', q_match.group(1)).strip()
-                # Look ahead for the answer paragraph
-                j = i + 1
-                while j < len(paragraphs):
-                    candidate = paragraphs[j].strip()
-                    ans_match = self.ANS_RE.match(candidate)
-                    if ans_match:
-                        a_text = candidate[ans_match.end():]
-                        a = re.sub(r'\s+', ' ', a_text).strip()
-                        if q and a:
-                            pairs.append({"q": q, "a": a})
-                        break
-                    # Stop if we've hit the next numbered question
-                    if re.match(r'^\d+\.', candidate):
-                        break
-                    j += 1
+                body = q_match.group(2)
+                inline = self.INLINE_ANS_RE.search(body)
+                if inline:
+                    # Q and Ans on same paragraph — split inline
+                    q = re.sub(r'\s+', ' ', body[:inline.start()]).strip()
+                    a = self._collect_answer(paragraphs, i + 1, body[inline.end():])
+                    if q and a:
+                        pairs.append({"q": q, "a": a})
+                else:
+                    q = re.sub(r'\s+', ' ', body).strip()
+                    # Look ahead for the answer paragraph
+                    j = i + 1
+                    while j < len(paragraphs):
+                        candidate = paragraphs[j].strip()
+                        ans_match = self.ANS_RE.match(candidate)
+                        if ans_match:
+                            a = self._collect_answer(paragraphs, j + 1, candidate[ans_match.end():])
+                            if q and a:
+                                pairs.append({"q": q, "a": a})
+                            break
+                        if re.match(r'^\d+\.', candidate):
+                            break
+                        j += 1
             i += 1
         return pairs
 
