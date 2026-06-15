@@ -42,8 +42,9 @@ Flag with "flagged": true if any word you chose as a replacement could be an ana
 a word, term, or concept that did not exist before 1930. Do not flag for space fixes,
 punctuation, encoding artifacts, or clear single-character swaps.
 
-Only discard if the text is so severely garbled that no meaningful content can be recovered.
-When in doubt, fix and keep. Do not discard pairs that are merely messy.
+Discard if the text is so severely garbled that no meaningful content can be recovered, or
+if the Q field contains embedded answer text followed by additional questions (structural bleed).
+When in doubt on OCR artifacts, fix and keep. Do not discard pairs that are merely messy.
 
 Respond with valid JSON only:
   Corrected or unchanged:       {"q": "...", "a": "..."}

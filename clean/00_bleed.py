@@ -22,7 +22,7 @@ ROOT = Path(__file__).parent.parent
 INPUT_DIR = ROOT / "output"
 OUTPUT_DIR = ROOT / "output" / "bleed"
 STATE_FILE = ROOT / ".bleed_state.json"
-MODEL = "claude-haiku-4-5-20251001"  # maps to cheaper DeepSeek model via ANTHROPIC_BASE_URL
+MODEL = "claude-opus-4-8"  # maps to deepseek-v4-pro via ANTHROPIC_BASE_URL
 MAX_TOKENS = 1024
 CONCURRENCY = 20
 
@@ -31,28 +31,32 @@ You are a dataset quality filter for public-domain Q&A pairs extracted from pre-
 Your job is to detect structural bleed — where an OCR extractor incorrectly merged multiple
 Q&A pairs into one entry.
 
-A bleed occurs when the Q field contains:
-- Answer text for one question followed by another question
-- Multiple distinct questions with embedded answers between them
-- Numbered sub-questions (e.g. "90." "91." or OCR variants like "go." "gt.") absorbed mid-field
+A bleed occurs when the Q field contains answer text followed by another question. The key
+signal is a pattern of: question → answer prose → question → answer prose → question.
+
+Bleed indicators in the Q field:
+- Answer text (declarative sentences that respond to the preceding question)
+- Numbered sub-questions mid-field, including OCR-corrupted numbers:
+  "go." = 90., "gt." = 91., "gi." = 91., "8o." = 80., "ioo." = 100., etc.
+
+The A field from the input always corresponds to the LAST question in the bleed.
+Only include recovered pairs where both Q and A are complete and meaningful.
+
+Do not fix OCR artifacts — preserve all text exactly as given, including corrupted numbers.
+Respond with valid JSON only.
 
 If the pair is CLEAN, respond with:
   {"clean": true}
 
 If the pair has bleed and you can recover distinct Q&A pairs, respond with:
   {"pairs": [{"q": "...", "a": "..."}, ...]}
-  The A field from the input always corresponds to the LAST question in the bleed.
-  Only include pairs where both Q and A are complete and meaningful.
 
 If no clean Q&A can be recovered, respond with:
   {"discard": true}
 
-Do not fix OCR artifacts — preserve text exactly as given.
-Respond with valid JSON only.
-
 Examples:
 
-Input — Q: What is a measure? That by which extent is ascertained. 90. How many dimensions has extension? Extension has three. 91. Explain how distance is measured by time?
+Input — Q: What is a measure? That by which extent is ascertained. go. How many dimensions has extension? Extension has three. gt. Explain how distance is measured by time?
          A: Every circle is divided into 360 degrees.
 Output: {"pairs": [{"q": "What is a measure?", "a": "That by which extent is ascertained."}, {"q": "How many dimensions has extension?", "a": "Extension has three."}, {"q": "Explain how distance is measured by time?", "a": "Every circle is divided into 360 degrees."}]}
 
@@ -196,7 +200,7 @@ async def test_run(pairs, seed, size):
     samples_dir = ROOT / "samples" / "bleed"
     samples_dir.mkdir(parents=True, exist_ok=True)
     out_path = samples_dir / f"{ts}_seed{seed}_n{size}.txt"
-    header = [f"model: {MODEL}", f"seed:  {seed}", f"n:     {size}", "", "--- SYSTEM PROMPT ---", SYSTEM_PROMPT, "--- END SYSTEM PROMPT ---", ""]
+    header = [f"model: {MODEL}", f"seed:  {seed}", f"n:     {size}", "", "--- SYSTEM PROMPT ---", SYSTEM_PROMPT, "--- END SYSTEM PROMPT ---\n", ""]
     out_path.write_text("\n".join(header))
 
     async def process(dataset, i, q, a):
