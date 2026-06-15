@@ -840,6 +840,47 @@ class InvestorsExtractor(BaseExtractor):
         return pairs
 
 
+class AdvancedQuestionsExtractor(BaseExtractor):
+    """
+    Dime Question Books: Advanced series. Format: numbered questions ('N. question text')
+    followed by 'Ans. — answer'. Answer marker has many OCR variants (An?., Aks,, Anb.,
+    ANS.—). Note.— and Query.— paragraphs follow some answers and are excluded.
+    Page headers (e.g. 'Literature. 7') and interspersed front-matter are noise.
+    """
+    # Matches OCR variants: Ans. —, Ans—, An?., Aks,, Anb., ANS.—, etc.
+    ANS_RE = re.compile(r'^A\w{1,3}[.,]?\s*[—\-]\s*', re.MULTILINE)
+
+    def extract_pairs(self, text):
+        # Rejoin OCR-broken hyphenated words
+        text = re.sub(r'(\w)-[ ]*\n[ ]*(\w)', r'\1\2', text)
+
+        paragraphs = re.split(r'\n\n+', text)
+        pairs = []
+        i = 0
+        while i < len(paragraphs):
+            p = paragraphs[i].strip()
+            q_match = re.match(r'^\d+\.\s+(.+)', p, re.DOTALL)
+            if q_match:
+                q = re.sub(r'\s+', ' ', q_match.group(1)).strip()
+                # Look ahead for the answer paragraph
+                j = i + 1
+                while j < len(paragraphs):
+                    candidate = paragraphs[j].strip()
+                    ans_match = self.ANS_RE.match(candidate)
+                    if ans_match:
+                        a_text = candidate[ans_match.end():]
+                        a = re.sub(r'\s+', ' ', a_text).strip()
+                        if q and a:
+                            pairs.append({"q": q, "a": a})
+                        break
+                    # Stop if we've hit the next numbered question
+                    if re.match(r'^\d+\.', candidate):
+                        break
+                    j += 1
+            i += 1
+        return pairs
+
+
 class WorldHistoryExtractor(BaseExtractor):
     """
     Catechism of Universal History. Format: 'N. Q. question' / 'A. answer'.
