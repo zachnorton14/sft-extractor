@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Pass 1: Fix OCR artifacts in extracted Q&A pairs using DeepSeek via Anthropic SDK.
 
 Set environment variables before running:
@@ -8,7 +7,7 @@ Set environment variables before running:
 
 import asyncio
 import json
-import sys
+from datetime import datetime
 from pathlib import Path
 
 import anthropic
@@ -63,7 +62,7 @@ Input — Q: What are tbe chief sources ? / A: Records, Monuments, and I^egends.
 Output: {"q": "What are the chief sources?", "a": "Records, Monuments, and Legends."}
 
 Input — Q: §§§ xh§ pr¡n§¡p / A: Th§ §l¿ve §§ct¡¿n
-Output: {"discard": true}\
+Output: {"discard": true}
 """
 
 
@@ -186,12 +185,11 @@ async def test_run(pairs, seed, size):
     random.seed(seed)
     sample = random.sample(pairs, size)
     client = anthropic.AsyncAnthropic()
-    from datetime import datetime
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     samples_dir = ROOT / "samples" / "ocr"
     samples_dir.mkdir(parents=True, exist_ok=True)
     out_path = samples_dir / f"{ts}_seed{seed}_n{size}.txt"
-    header = [f"model: {MODEL}", f"seed:  {seed}", f"n:     {size}", "", "--- SYSTEM PROMPT ---", SYSTEM_PROMPT, "--- END SYSTEM PROMPT ---\n", ""]
+    header = [f"model: {MODEL}", f"seed:  {seed}", f"n:     {size}", "", "--- SYSTEM PROMPT ---", SYSTEM_PROMPT, "--- END SYSTEM PROMPT ---", ""]
     out_path.write_text("\n".join(header))
 
     async def process(dataset, i, q, a):
@@ -225,35 +223,3 @@ async def test_run(pairs, seed, size):
 
     await asyncio.gather(*[process(d, i, q, a) for d, i, q, a in sample])
     print(f"Wrote {out_path}")
-
-
-def main():
-    test = "--test" in sys.argv
-    seed_idx = next((i for i, a in enumerate(sys.argv) if a == "--seed"), None)
-    seed = int(sys.argv[seed_idx + 1]) if seed_idx is not None else 42
-    size_idx = next((i for i, a in enumerate(sys.argv) if a == "--size"), None)
-    size = int(sys.argv[size_idx + 1]) if size_idx is not None else 10
-
-    pairs = load_all_pairs()
-
-    if test:
-        asyncio.run(test_run(pairs, seed, size))
-        return
-
-    state = load_state()
-
-    resolved = sum(1 for d, i, *_ in pairs if f"{d}--{i}" in state)
-    pending = len(pairs) - resolved
-    print(f"Total: {len(pairs)}  Resolved: {resolved}  Pending: {pending}")
-
-    if pending:
-        asyncio.run(run_async(pairs, state))
-        save_state(state)
-
-    print("Writing output...")
-    write_output(pairs, state)
-    print("Done.")
-
-
-if __name__ == "__main__":
-    main()

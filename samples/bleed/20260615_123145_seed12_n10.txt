@@ -1,0 +1,88 @@
+model: claude-opus-4-8
+seed:  12
+n:     10
+
+--- SYSTEM PROMPT ---
+You are a dataset quality filter for public-domain Q&A pairs extracted from pre-1930s texts.
+Your job is to detect structural bleed — where an OCR extractor incorrectly merged multiple
+Q&A pairs into one entry.
+
+A bleed occurs when the Q field contains answer text followed by another question. The key
+signal is a pattern of: question → answer prose → question → answer prose → question.
+
+Bleed indicators in the Q field:
+- Answer text (declarative sentences that respond to the preceding question)
+- Numbered sub-questions mid-field, including OCR-corrupted numbers:
+  "go." = 90., "gt." = 91., "gi." = 91., "8o." = 80., "ioo." = 100., etc.
+
+The A field from the input always corresponds to the LAST question in the bleed.
+Only include recovered pairs where both Q and A are complete and meaningful.
+
+Do not fix OCR artifacts — preserve all text exactly as given, including corrupted numbers.
+Respond with valid JSON only.
+
+If the pair is CLEAN, respond with:
+  {"clean": true}
+
+If the pair has bleed and you can recover distinct Q&A pairs, respond with:
+  {"pairs": [{"q": "...", "a": "..."}, ...]}
+
+If no clean Q&A can be recovered, respond with:
+  {"discard": true}
+
+Examples:
+
+Input — Q: What is a measure? That by which extent is ascertained. go. How many dimensions has extension? Extension has three. gt. Explain how distance is measured by time?
+         A: Every circle is divided into 360 degrees.
+Output: {"pairs": [{"q": "What is a measure?", "a": "That by which extent is ascertained."}, {"q": "How many dimensions has extension?", "a": "Extension has three."}, {"q": "Explain how distance is measured by time?", "a": "Every circle is divided into 360 degrees."}]}
+
+Input — Q: What is History?
+         A: A record of past events.
+Output: {"clean": true}
+
+Input — Q: §§§ xh§ merged §§§ unreadable §§§
+         A: §§§ garbage
+Output: {"discard": true}
+
+--- END SYSTEM PROMPT ---
+
+[engineering--758] CLEAN
+  IN Q: On what does the weight that a beam will support, depend?
+  IN A: On the length of the beam between the points of support, on its width and depth, and on the manner of application of the load.
+
+[common-core--1171] CLEAN
+  IN Q: What is the surface of Arabia?
+  IN A: The greater part is a desert plateau. The principal fertile tracts are Oman and Yemen, and the mountain valleys.
+
+[logic--211] CLEAN
+  IN Q: What is the mode of a syllogism ?
+  IN A: The legitimate determination of the proi)ositions in a syllogism, according to their quantity and quality.
+
+[common-core--1337] CLEAN
+  IN Q: What ts a pronominal adjective?
+  IN A: One sometimes used as a pronoun.
+
+[school-bulletin--10] CLEAN
+  IN Q: When was the beginning of Roman literature?
+  IN A: The early history of Rome is given in an unbroken narrative by the Roman writers, but these romantic legends can no longer be regarded as real. The records of the early days of Rome are known to have been destroyed when the city was burned by the Gauls (890 B. C); and Livy, the earliest writer on Roman affairs whose works have come down to us, wrote 750 years after the foundation of the city, or about the time of the Christian era. About the commencement of the second century before Christ, we have the beginning of that Latin literature which we still read. Ennius was the father of Roman poetry; Platjtus, his contemporary, was a man of rich poetic genius; the elder Cato was the first prose writer of note; while Terence was the most famous of the comic poets.
+
+[engineering--532] CLEAN
+  IN Q: How is it constructed ?
+  IN A: The economizer usually consists of a series of cast-iron or steel tubes connected at either end by headers similar to those used in water-tube boilers. The water circulates through the tubes, which are placed in the flue connection just at the entrance to the stack.
+
+[1001-questions--355] CLEAN
+  IN Q: What may be said of the Spartans at this time ?
+  IN A: They became masters of most of their near neighbors, and got control of the Peninsula. GREECE. 43
+
+[electricity--643] CLEAN
+  IN Q: Does the resistance of an arc-lighting circuit increase when more lamps are turned on?
+  IN A: Yes. All the lamps are generally in series, so that the same current passes through all, one after the other. From 40 volts to 60 volts must be supplied by the dynamo for each arc lamp in a series circuit.
+
+[music--130] CLEAN
+  IN Q: What is the meaning of pianissimo, oftentimes abbreviated pp. ?
+  IN A: This word is the superlative of piano, and denotes the utmost degree of softness in playing. 45
+
+[chemistry--5] CLEAN
+  IN Q: How many kinds of matter may be inferred to exist ? 2
+  IN A: Three. Because (here has been demonstrated to be at least as many innate properties, which cannot belong to the same elementary particles.
+
