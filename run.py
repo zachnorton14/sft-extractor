@@ -119,10 +119,22 @@ def cmd_bleed(args):
 def cmd_ocr(args):
     from clean import ocr
     pairs = ocr.load_all_pairs()
+    if args.test and args.retry_flagged:
+        state = ocr.load_state()
+        asyncio.run(ocr.test_retry_flagged(pairs, state, args.seed, args.size))
+        return
     if args.test:
         asyncio.run(ocr.test_run(pairs, args.seed, args.size))
         return
     state = ocr.load_state()
+
+    if args.retry_flagged:
+        asyncio.run(ocr.retry_flagged(pairs, state))
+        print("Writing output...")
+        ocr.write_output(pairs, state)
+        print("Done.")
+        return
+
     resolved = sum(1 for d, i, *_ in pairs if f"{d}--{i}" in state)
     pending = len(pairs) - resolved
     print(f"Total: {len(pairs)}  Resolved: {resolved}  Pending: {pending}")
@@ -184,19 +196,21 @@ def main():
     p_bleed = sub.add_parser("bleed", help="Run bleed detection/recovery pass (pass 0)")
     p_bleed.add_argument("--test", action="store_true", help="Sample and test without full run")
     p_bleed.add_argument("--seed", type=int, default=42)
-    p_bleed.add_argument("--size", type=int, default=10)
+    p_bleed.add_argument("--count", type=int, default=10, dest="size", metavar="N")
 
     # ocr
     p_ocr = sub.add_parser("ocr", help="Run OCR correction pass (pass 1)")
     p_ocr.add_argument("--test", action="store_true", help="Sample and test without full run")
     p_ocr.add_argument("--seed", type=int, default=42)
-    p_ocr.add_argument("--size", type=int, default=10)
+    p_ocr.add_argument("--count", type=int, default=10, dest="size", metavar="N")
+    p_ocr.add_argument("--retry-flagged", action="store_true",
+                        help="Re-process only currently flagged pairs using greedy bin-packing batches")
 
     # sample
     p_sample = sub.add_parser("sample", help="Sample raw pairs from any pipeline stage")
     p_sample.add_argument("stage", choices=list(OUTPUT_DIRS))
     p_sample.add_argument("--seed", type=int, default=42)
-    p_sample.add_argument("--size", type=int, default=10)
+    p_sample.add_argument("--count", type=int, default=10, dest="size", metavar="N")
 
     args = parser.parse_args()
 

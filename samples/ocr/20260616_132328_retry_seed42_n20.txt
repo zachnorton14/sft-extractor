@@ -1,0 +1,165 @@
+model: claude-opus-4-8
+seed:  42
+n:     20
+batch: 20
+pool:  2988 currently flagged pairs
+
+--- RETRY SYSTEM PROMPT ---
+You are an OCR correction assistant for public-domain texts published before 1930.
+You are reviewing a batch of Q&A pairs that a previous pass flagged but did NOT fix.
+Your job now is to actually fix them — do not echo text back unchanged unless it is
+already perfect. Be aggressive about fixing — the source texts are legitimate
+pre-1930s works, so fix confidently.
+
+Fix all of the following:
+- Missing or extra spaces (Whatis → What is, "Biography ?" → "Biography?")
+- Single-character letter substitutions (ts → is, ln → in, rn → m, 4 → A when clearly a letter)
+- Broken hyphenation across lines (na- tions → nations)
+- Unicode/encoding artifacts (Â¢ → ¢, â€™ → ', Ã© → é, â€” → —, â€˜/â€™ → ' or ‘’)
+- Obvious misrecognized words (tbe → the, liow → how, witb → with)
+- Missing terminal period on an answer that is clearly a complete sentence
+- Embedded page references or section headers anywhere in the text (e.g. "FRANCE. 107",
+  "6 EGYPT.", "244 COMMON SCHOOL QUESTION BOOK." — remove these entirely)
+
+Never alter grammar or word choice. Fix only what is clearly a scanning artifact.
+"Whom", archaic verb forms, and pre-1930s constructions are correct as-is.
+
+Set "flagged": true ONLY if you personally replaced a word/term with something that
+could be an anachronism — a word, term, or concept that did not exist before 1930.
+Do NOT flag merely because the subject matter is war, politics, or sensitive history.
+If you made no risky word substitution, set "flagged": false.
+
+Discard if the text is so severely garbled that no meaningful content can be recovered, or
+if either field contains structural bleed — embedded answer text followed by additional
+questions (e.g. "Q 1. ... A. ... Q 2." patterns, or "A— ..." mid-question).
+When in doubt on OCR artifacts, fix and keep. Do not discard pairs that are merely messy.
+
+You will receive a JSON array of items, each with an "i" index, "q", and "a". Respond with
+a JSON array of the same length, each item matching one input by "i":
+  Fixed:           {"i": 0, "q": "...", "a": "..."}
+  Anachronism risk:{"i": 0, "q": "...", "a": "...", "flagged": true}
+  Unrecoverable:   {"i": 0, "discard": true}
+
+Respond with the JSON array only, no other text.
+
+--- END RETRY SYSTEM PROMPT ---
+[new-york-bar--96]
+  IN  Q: A was a passenger on the D. L. & W. R. R. While seated in the train, he gave his baggage checks to the agent of the D Express Co., to have the baggage sent to his residence in New York. He received in return therefor, a printed receipt which contained a statement limiting the liability of the company to f 100. The car at the time was so dark that he could not read the printed matter, and he therefore did not do so. The express company fails to deliver. A sues the express company. Can he recover?
+  IN  A: Yes. The nature of the transaction was not such as would make the passenger believe that the receipt contained a contract. Where a railroad passenger in a dimly lighted car receives a receipt for baggage on which a contract is printed in fine type so as not to be easily read by a passenger ; if he fails to see it, he is not bound by its terms. It was so held in Blossom v. Dodd, 43 N. Y. 264. (Note.) Where a traveler, on delivery of baggage to a local express company, receives a paper, which he has a right to regard as a receipt, to enable him to follow and identify his property, and no notice is given him that it embodies the terms of a special contract, his omission to read the paper is not negligence, and he is not bound by its terms. There must be notice either actual or con- structive. The notice " read this ticket," etc., must be printed in large type at some conspicuous place on the ticket, so as to be easily read, in order to charge the party receiving it witli constructive notice. Madan v. Scherard, 73 \. Y. 329. ''It is incumbent upim a shipper to acquaint himself with the contents of a contract executed by him, and although he fails to do so, will be held chargeable with knowledge thereof. The cases where parties proposiffg to have articles o£ property transported by a carrier, deliberately enter into some necessary contract relating to the transportation, differ materially from those cases of travelers who commit their trunks or articles of baggage to an agent of some express or transportation company, and receive at the moment some paper whicli, as had been said, amounts simply to a voucher enabling them to follow and identify their property. There is a distinction between conti-acts of shipments of merchandise, and sucli contracts as local express companies endeavor to force upon travelers. While a carrier may limit its liability by express contract, the burden rests upon it to show that the passenger assented, to the terms of such receipt." Grrossman v. Dodd, 63 Hun, 324.
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[civil-war--1337]
+  IN  Q: Did the Socialists exercise their control importantly?
+  IN  A: At the time the Socialists and the Centrists achieved a Parliamentary success that might have altered the aspect of the entire war-situation, had they been able to make it permanent. On July 19, 1917, they succeeded in passing a resolution declaring that "The Reichstag labors for peace and a mutual understanding and lasting reconciliation among the nations. Forced acquisitions of territory and political, economic and financial violations are incompatible with such a peace."
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[advanced-questions--527]
+  IN  Q: What is conglomerate {puddingstone)?
+  IN  A: A rock consisting of pebbles cemented together, the cementing material filling the interstices and render- Geology ai*d Minee4J$£y. SftSt ing the whole compact. Breccia i% .a'jTook consisting:^ angular fragments consolidated into -Jiayjl.*tiHie, .■ "■
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[common-core--25]
+  IN  Q: What discovery was made by Vasco de Balboa?
+  IN  A: He crossed the isthmus of Panama, and from the summit of the Andes first saw the Pacific Ocean, September 26, 1513. Io COMMON SCHOOL QUESTION BOOK.
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[civil-war--1884]
+  IN  Q: How many women are employed in British industries?
+  IN  A: Omitting domestic servants and women at work in military, naval and Red Cross hospitals, it is estimated that nearly 5,000,000 women are directly employed in various occupations in Great Britain.
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[civil-war--1795]
+  IN  Q: Who was Lord Kitchener?
+  IN  A: The foremost British soldier of modern times, and at the time of his death beyond doubt the most dominant personality in the British Empire. His achievements — the conquest of the Sudan, the completion of the South African campaign, administration of Egyptian affairs, and, above all, the building up of a vast British fighting force for Britain's greatest war — place him in the front rank of the world's great men, as a soldier, ad- ministrator and military organizer. He was drowned in the sinking by mine or submarine of the British warship Hampshire off the western coast of the Orkney Isles June 5, 1916, while on his way to a consultation in Russia regarding details of the Allied offensive of 1916. His body was never recovered.
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[civil-war--1452]
+  IN  Q: Just how greatly did we increase our army in the first year?
+  IN  A: The Secretary of War, reviewing the first year's work, said : "The Regular Army was rapidly increased from 5,791 officers and 121,797 enlisted men to io,6q8 officers and 503,142 enlisted men ; the National Guard in Federal Service, from 3,733 officers and 76,- 713 enlisted men to 16,893 officers and 431.583 enlisted men ; the Reserve Corps in active service, from 4,000 enlisted men to 96,210 officers and 77,360 enlisted men. "In other words, the Army of the United States has increased in actual .'I 242 strength since April 6th, 1917, from 9.524 officers, and 202,510 enlisted men to 123,- 801 officers and 1,528,924 enlisted men."
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[civil-war--1300]
+  IN  Q: Must our Senators vote as the States instruct them?
+  IN  A: As a matter of political expediency, and in conformance with American principles, they usually meet an expressed desire of a majority of the people of their States. This is sometimes expressed through a Legislature, and may be practically a mandate. But no Senator need conform unless he choose. The two Senators from any one State may, and sometimes do, vote on opposite sides. The members of the Bundesrath, to the contrary, vote specifically as instructed and the representatives of each State cast their votes as a unit.
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[school-bulletin--23]
+  IN  Q: Who was Oliver Goldsmith (1728*- 1774)? Anb.— He was an Irishman, full of oddities and eccentricities, and remarkable alike for his strength and his weakness. Johnson said of him that "he wrote like an angel, but talked like poor Poll." His principal poems are " The Traveller," and " Deserted Village." "The Vicar of Wakefield" (a novel), "She stoops to Conquer" (a, comedy), a " Life of Beau Wash," " Chinese Letters," " GoodMatured Man," and variotis " Hisiones " comprise the remainder of his works. ♦His epitaph toy Dr. Johnson says Nov, 29th, 1781. Other aoounts state that he was born in 1729. Ltteratube. 23 Selections:— "Then pilgrim turn, thy cares forego, All earth-born cares are wrong; Man wants "but little here below, Nor wants that little long." "Sweet Auburn! loveliest village of the plain, Where health and plenty cheer' d the labouring swain," etc. ""When lovely woman stoops to folly, And finds too late that men betray," etc, 35, Name other authors of the Johnsonian Age. Aug.— Thomas Gray (1716-1771), "Elegy Written in a Country Churchyard," Odes " On the Spring" "On the Death of a Favorite Gat" " On a Distant Prospect of Eton College," "The Bard," and (s To Adversity." Robert Burns (1759-1798), "Highland Mury," " Auld La \g Syne." " The Goiter's Saturday Night," " Tarn O'Skanier," " To a Mountain Daisy" " Bonny Doon," "Ye Banks and Braes" "Man icas Made to Mourn," "Scotch Drink," etc. Selections: — "Had we never loved sae kindly, Had we never loved sae blindly, Never met or never parted, We had ne'er been broken-hearted." "Fare thee weel, thou first and fairestl Fare thee weel. thou best and dearest," etc. " Oh wad some power the giflie gie us To see oursels as iihers see us ! " ^ William Cowper (1781-1800), "John Gilpin," "On Receiving my Moilier's Picture, " ' ' The Castaway, " " Bymns, " and " The Task" (a long poem in six books). Samuel Johnson (1700-1784). who was at the head of 24 Dime Question Books. English writers of this age. His principal poema are "London" "The Vanity of Human Wishes," and his tragedy of '''Irene." In prose, he wrote " Rasselas" (a romance), " The Rambler " "Lives of the Poets," and "Dictionary of the English Language " His biography was written by James Boswell" (1740-1795), Edmund Burke (1730-1797), the great orator, is the author of " An Essay on the Sublime and Beautiful," " Reflections on the French Revolution," etc. ("There is, however, a limit at which forbearance ceases to be a virtue. "\ Laurence Sterne (1713 - 1768), an irreligious parson, author of " Tristam Shandy" and " Sentimental Journey." Note.— Additionally, were Samuel Richardson, "Pamela," " Clarissa," and " Sir diaries Grandison" ; Henry Fielding, " Joseph Andrews," " The Mfe of Jonathan Wild the Great," w Tom. Joms"~&n& Amelia"; Tobias George Smollett "Roderick Random," "Peregrine Pickle," "The Adventures of Ferdinand,Count Fathom" and a translation of "Don Quixote"; David Hume (171 1-177&), the infidel philosopher, author of a" Histoid of England" and a "Treatise on Human Nature"; Edward Gibbon (1737-1794), " Study of Literature" and "History of the Decline and Fall of the Roman Empire"; Sif;Philip Francis, supposed author of the unsolved political mystery, the " Letters of Junius " ; Eichard Brinsley Sheridan, (17511818) said by Byron to have made the best speech— that on the Begums op Oude— , written the two best comedies, the " Rivals " and the " School for Scandal "—, the best opera, the "Duenna" — and the best farce, the "Critic "; John Wolcot, David Garrick, Samuel Foote, Cumberland, Walpole, Paley, Eeid, ami Hannah More (" Coelebs in Search of a Wife.") Query— Can you regard Burns as an illustration of the adage, Poeta nascitur, nonfit (Poets are born, not made) ? Why ? From what author is it quoted ? What is meant by the statement, " Goldsmith was an intensely subjective poet " ? What is meant by the Shakespearian-Bacon controversy ? What extracts can you give from Hamlet, Macbeth, King Lear, Merchant of Venice, and Richard III ? 36. What were the literary impostures of the eighteenth century ? Aks,— The poetical forgeries of Macpherson, Gkatfcerfcon, and Ireland. James Macpherson (1738-1798) pretended to have accumulated in his travels through the Highlands of Scotland an immense mass of fragments of ancient poetrycomposed in the Gaelic or Erse dialect common to that country and Ireland, which he published under the title of thei* reputed author, " Ossian" Thomas Chatterton 0-752-1770), the "marvelous boy,'- deceived nearly all the scholars of his age by his imitations of Old English poetry, William Henry Ireland (1777-1885) indulged in Shakespearian forgeries, among which was a play entitled " Vortigern," in which John Reinble acted in 1795, Qwerfr.— Can you give the birth-place of Dryden ? of Shakespeare ? of Milton ? of Chaucer ? of Sterne ? of Cowper ? By what authors were these selections written ?— "Man's inhumanity to man makes countless thousands moura." " O, consistency, thou art a jewel! " H The only amaranthine flower on earth is virtue." " Fools rush in where angels fear to tread." "All is not gold that glitters." Ans. " All thai glistens is not gold,'* Shakespeare; "But all things lohieh that shineth as the gold, Ne is no gold, as I have heard it told," Chaucer; 24 Yet gold all is not thai doth golden seem," Spenser; " All, as they say, that gUtUrs is not gold," Dryden ; and by Gray, Middleton, and others. 37. What was the Age of Romantic Poetry ?
+  IN  A: This name is frequently applied to the Age of Scott. The authors of this age were George Gordon Noel Byron (1788-1824), who wrote M Child* Harold," " The Dream," "The Prisoner of ChiUon," " Mazejya," "TU 26 Dime Question Books. Bride of Abydos," "The Giaour," "Cain," "Manfred,* and "Don Juan.'" Extract from " Maseppa": — "For time at last set all thiBgs even? And if we do but watch the hour, There never yet was human power That could evade, if unforgiven, The patient search and vigil long, Of him who treasures up a wrong." Thomas Campbell (1777-1844), "Gertrude of Wyoming," " Hohenlinden," " LochieVs Warning," "O'Connor's Child." Extract from "Pleasures of Hope " : — "' Tis distance lends enchantment to the view, And robes the mountain in its azure hue." John Keats (1795-1821), " Endymion," " T lie Eve of Si. Agnes" "Hyperion," etc.
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[common-core--2900]
+  IN  Q: Do the terms accepting and adopting have the same meaning ?
+  IN  A: Practically, yes; though strictly the term â€œacceptingâ€ should be used when the report contains merely a state- ment of facts, reasoning or opinion, and the term â€œadoptingâ€ PARLIAMENTARY RULES. 515 when the report concludes with the resolutions or propo- sitions.
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[civil-war--1237]
+  IN  Q: How did the Austro-Hungarian State Bank help to finance the war?
+  IN  A: The first direct call which was made upon the bank was based upon an agreement of August 14, 1914. The two Governments (Austria and Hungary) took up 2,000,000,000 crowns (at normal exchange the Austro-Hungarian crown is worth $0.2026) against deposit of treasury bills to the amount of 2,666,000,000 crowns, redeemable in gold and bearing interest at 5 per cent. A second agreement (October 7, 1914) allowed the Governments to borrow not more than 2,000,000,000 crowns, and a supplementary agreement of April 12, 1915, placed a further 800,000,000 crowns at their disposal on the same terms.
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[familiar-things--376]
+  IN  Q: Of what is our Lime composed?
+  IN  A: Of a useful earth, which absorbs moisture and carbonic acid, and exists as limestone, or in marble and chalk, which, when burnt, become lime: in its native state it is called carbonate of lime, and is burnt to disengage the carbonic acid; when made into a paste, with one part water and three parts lime,[13] and mixed with some other mineral or metallic substances, it forms plastic cements and mortars; and afterwards, imbibing carbonic acid from the atmosphere, it becomes again carbonate of lime, as hard as at first; and hence its use in building. [Footnote 13: See Chapter XVI., article Lime.] _Plastic_, yielding, capable of being spread out or moulded.
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[common-core--627]
+  IN  Q: What dramatic coincidence attended the vote of the â€˜United States Senate for the ratification of the treaty? The struggle over ratification had been very fierce, a large number of Senators objecting to the assumption of sovereignty by the United States Government in the Phil- ippines. On February 4, 1899, after the 6th had been fixed as the date for the final vote, the Filipino insurgent army, under General Emilio Aguinaldo, opened fire upon the American army in the outposts of Manila. This was obviously done for the purpose of emphasizing the demand of the Filipinos for independence as opposed to annexa- tion to the United States. It seemed to have an effect the reverse of what was intended. Some of the Senators who had been inclined to listen to the plea of the Filipi- nos now declared that this violence must be punished. When the vote was taken on February 6, it stood 57 to 27, Or one more than the requisite two-thirds in favor of the treaty. 7o1. Has the United States any other foreign complications on hand at present?
+  IN  A: Yes. Ay joint commission representing Great Britain, Canada and the United States, which met in Washington in the fall of 1898, suspended its sessions for a time in the following spring, because, in considering the various sub- jects which had caused irritation between the United States and the other countries involved, it could not reach a satisfactory agreement on a boundary line between Alaska and the British possessions in the American North- west. In Samoa, also, trouble has grown out of the tripar- tite system of government, the British and American repre- UNITED STATES HISTORY. 127 sentatives espousing the cause of Malietoa, one of the claimants to the Samoan throne, while the German repre- sentatives sided with his rival, Mataafa. The dissension became so violent that Rear-Admiral Kautz, of the United States Navy, was sent to Apia with a suitable force and was obliged to do some fighting with the natives of Mataafaâ€™s faction. Aiea tens are apie Rise) Sopteeds Sd Y eer Pic, isgsy ee cteack BUF aH tig aboa gt 2 aie Oot toe afas cape ei oY ete teen ae e an TSS oe Jeanna ete ree aaa wh See SEU TR RRA She tala eee Bhi SSSt Pee ase we apy Rpteuk Ho tite get VRE if EN fer bee Bie Boren Siti Crye oe jschhinty ~ CaS pared a veh Por paw 7, QUESTIONS AND ANSWERS ON GROG RAPEY:
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[astronomy--126]
+  IN  Q: Are transits of Venus numerous ?
+  IN  A: These transits occur but seldom ; the last transit was December 6, 1882, and the next one will be June 8,
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[agriculture--234]
+  IN  Q: How may a ration for a dairy cow weighing 1,000 pounds be made up from the foodstuffs named in the foregoing table or any of the standard nutrition tables?
+  IN  A: By making estimates and trial calculations until the right quantity of dry matter and the proper 66 A CATECHISM OF AGRICULTURE amount and proportions of nutrients are obtained. In. the ration below the amount of dry matter is greater than is usually allowed by the standards: 4 D. M. Ie. Gatat 1th FEEDING STUFES. bs. lbs, lbs. lbs. lbs. ClOverhary see 2 e-a - 8 6.7764 544 Zeus OA ala seta Corn -Sstever =. .5%-. : 10 BOs mally 3.24 07 Oat, SUraiwe <eme - 2 : 3 PARE .036 1.158 .024 Corn mealle ee eka 2 5 4.47 .39 aaa 215 Wiheail, sora eee ok 4 4.405 .61 1.96 .135 Linseed meal ...... 3 2.724 879 981 el! IOWANS wppeteic, oe photoes 33 27.049 2.629 13.438 feo The nutritive ratio of the above ration is found by adding to the total carbohydrates 2 1-4 times the total fats and dividing by the weight of protein, thus: 13.438 plus (.79 x 2.25) —:— 2.629 equals 5.8, giving a nutritive ratio of 1: 5.8. ANIMAL JUDGING
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[civil-war--1264]
+  IN  Q: Have steel-workers' wages advanced?
+  IN  A: That wages have been advanced heavily is known. Government action in regard to wages, which affected many industries, appears to have affected the steel industry most heavily, perhaps because of the big number of men they employed. The steel manufacturers have expressed the view several times at conferences that wages had advanced to a point where they would handicap Germany's price-competition with other nations after war. On the other hand, the steel-makers' profits have been enormous (as in every country), and, in addition, the war-profits tax has been lighter than it has been in Great Britain.
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[civil-war--1776]
+  IN  Q: When was the late Czar born?
+  IN  A: Nicholas II was born in 1862. He ascended the throne October 20, 1894, and married Alexandra, Princess of Hesse, the same year. Nicholas inaugurated his reign by a rigorous repression of all liberal movements and then embarked on a policy of adventure in the Far East, which ended in the war with Japan (1904-5) and the defeat of Russia. During the war a revolutionary movement manifested itself at home, which, culminating in the general strike of October, 1905, forced the Czar to grant a constitution. But Nicholas distrusted the liberals and gave the bureaucracy a free hand in crushing liberal movements. At the beginning of the European war the Czar proclaimed the solidarity of throne and people, thereby securing a considerable measure of popularity; but, once again, he relied too exclusively on the bureaucracy, with disastrous results, for these reactionaries soon lost interest in the war, and the Czar was compelled by the revolutionists to abdicate March 15, 1917. He was put to death July 16, 1918.
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[civil-war--1833]
+  IN  Q: Why did Count Okuma resign as Japanese Prime Minister?
+  IN  A: Count Shigenobu Okuma (born 1838), after the fall of Kiachow, presented to China a series of demands which the latter found unacceptable. After considerable negotiation a compromise was reached which gave dissatisfaction in Japan, and in October, 1916, Count Okuma resigned in favor of Count Terauchi. Count Okuma does not belong to one of the great clans. He has always given great attention to the internal development of Japan, and Waseda University is his own creation.
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[common-core--968]
+  IN  Q: Which State ts split by the Mississippi River?
+  IN  A: Louisiana. About one-fifth of the State is on the east side of the river. GEOGRAPHY. 181
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+
+[laborers--243]
+  IN  Q: Can you make yourself clearer?
+  IN  A: Yes. Credit means trusting some one to return a thing borrowed or its equivalent in value with or without compensation. The village board borrowed no money, consequently, there was no "credit money" whatever in the transaction. When the president gave a mason working on the market some of the script, as wages, the mason had his "purchasing power" in his hands. The mason did not agree to return anything to the president; nor did the president agree to give anything else at a future time to the mason as would have been the case in a credit transaction. The mason had increased the value or "purchasing power" of the owners of the market, by skillfully laying bricks into a wall to form a part of the market. For this increase in the value of the market, by laying brick on top of bricks, in suitable beds of mortar, the president gave the mason "purchasing power" in the form of paper script; just as the grocer gave to the mason "purchasing power" in the form of bread, beef, clothing, etc., when the mason exchanged his paper script at the counter of the
+  OUT Q: [PARSE ERROR / MISSING]
+  OUT A: 
+

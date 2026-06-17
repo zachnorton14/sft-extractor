@@ -1,0 +1,123 @@
+stage: bleed
+seed:  7
+n:     30
+
+[common-core--2877]
+  Q: Low by nomination and vote?
+  A: The names of the members proposed are put to question singly, and approved or rejected by the assembly, by a vote taken in the usual way.
+
+[chemistry--239]
+  Q: What is the best test for sulphydric acid ?
+  A: Lead, forming a black sulphide.
+
+[engineering--1030]
+  Q: Why is this ?
+  A: So that the fuse may protect the smaller wire from an excess of current.
+
+[advanced-questions--416]
+  Q: What was the sacred bird of the Egyp- tians ?
+  A: The Ibis, probably because it rid them of ser- pents, the skins and scales of which have been found in the Ibis mummies. Some think, however, that the reason of this worship was merely because the coming of the bird was simultaneous with the annual overflow of the Nile, and hence symbolical of fertility. Whoever killed an Ibis was mobbed, while the dead bird was embalmed. The Ibis multiplied in consequence to such an extent as to im- pede travel in the streets. The affection of the bird for Egypt was so great that, according to Acteon, when taken away it died of home-sickness. But now, being killed and eaten by the modern inhabitants, who have abandoned the faith of their fathers, it has almost deserted the country. —{Figuier.)
+
+[astronomy--215]
+  Q: Are the tides much modified in their onward motion ?
+  A: Yes, the tides are very much modified by the varying depth of the oceans and by the continents that stretch like gigantic barriers across the path of the tidal wave. Mars. $ The Satellites of Mars. Q 1. Where is Mars situated ? A. The orbit of Mars is next outside of the orbit of the earth. Q 2. How far is Mars from the sun ? A. The mean distance of Mars from the sun is 141,500,000 miles; but it varies about 13,000,000 miles each way from the mean.
+
+[school-bulletin--64]
+  Q: When was the naval power of Spain
+  A: In 1805, at the battle of Trafalgar, when Lord Nelson, at the cost of his own life, gained a decisive victory over the allied fleets of Spain and France under the command of Count Yilleneuve, Note.— The remainder of Spanish history is principally that of a series of internal dissensions and revolutions, the partisan warfare carried on by Don Carlos within the past few years Deing a sample of the afflictions of Spain.
+
+[brewers-guide--68]
+  Q: What is meant by the clouds being in a “negative state of electricity?”
+  A: When the clouds contain less electric fluid than they ought to do, they are said to be in a negative state of electricity.
+
+[engineering--75]
+  Q: What is the rule for finding the number of horse-power which a shaft of a certain diameter will transmit at a certain speed?
+  A: Multiply the cube of the diameter in inches by the number of revolutions per minute and divide the product by 70.
+
+[seeleys--1022]
+  Q: How may the Constitution be amendcd ?
+  A: Congress, by a two-thirds vote May propose amendments, or upon request of two-thirds of the states a convention may be called to propose amendments. Such amendments become a part of the Constitution when ratified by three-fourths of the states.
+
+[agriculture--66]
+  Q: How many kinds of drainage are there?
+  A: Two—surface drainage, as it is called, by means of open ditches, and under drainage, when some underground system is used. 18 A CATECHISM OF AGRICULTURE
+
+[mythology--555]
+  Q: What is the restoration of Briseis?
+  A: It is the return of Iol6 to Heracles, of (Enoi to Paris, and of Brynhild to Sigurd.
+
+[civil-war--1283]
+  Q: Are the German cities as large as ours?
+  A: Germany has no cities as large as New York and Chicago in population, but Berlin, with 2 millions, has a population exceeded in America only by those two big cities. Of cities with more than 300,000 people, we have 18, while Germany has 11. Of cities with less than 300,000 and more than 100,000, we have 46, against Germany's 31. When it comes to cities next in rank of more than 50,- 000, we have 51 against Germany's 38.
+
+[advanced-questions--62]
+  Q: Give the history of the Crusades ?
+  A: Pope Urban, at the Council of Clermont in 1095, instigated his hearers to release that illustrious land (Pales- tine) from a race of heathen.. The extension of the Truce of God, which was an effort on the part of the church to mitigate the evils arising from the private wars of feudal times, furthered the plan, and finally Peter's eloquence, \ acting first upon the masses, then upon the higher nobility, moved the sovereigns to join in the Crusades. August 15, 1069, was the day fixed for the first great expedition, but early in the spriDg, the Hermit, impatient of delay, started with a great rabble under Walter the Penniless. These soon returned. Godfrey de Bouillon, Duke of Lorraine, started at the appointed time, conducting his great army to Constantinople, capturing the city of Nice in 1097, and arriving at Jerusalem in 1099. The attack was made on July 14th, and the next day they entered the city, massa- cring the Turks in great numbers. Bouillon was made king with the title of Defender of the Holy Sepulchre.
+
+[botany--77]
+  Q: What other kinds of roots may be met with?
+  A: Adventitious or aérial roots.
+
+[grammar--74]
+  Q: What are other examples of nouns of common gender?
+  A: Neighbor^ enemyy teacher.
+
+[familiar-things--302]
+  Q: What is Zinc?
+  A: A metal of a brilliant bluish white color. Its name was unknown to the ancient Greeks and Arabians. It is mixed with other substances in the ore, from which it is obtained by smelting in the furnace. It has never yet been found native or pure.
+
+[astronomy--131]
+  Q: How far is the earth away from the sun ?
+  A: The mean distance of the earth from the sun is 92,900,000 miles ; the actual distance varies about 1,500,000 miles each way from the mean distance.
+
+[common-core--152]
+  Q: Jn the French and Indian war, what was the most remarkable battle ?
+  A: The capture of Quebec.
+
+[botany--233]
+  Q: What is the function of the epidermis?
+  A: The function of the epidermis is protection of the underlying tissues, from mechanical injury and especially from too much evaporation.
+
+[school-bulletin--561]
+  Q: What is the solar spectrum ?
+  A: The dispersion of the white rays of the sun by their passage through a prism into the seven primary colors. Notb.— Ficon/or, mnemonic word,
+
+[familiar-things--510]
+  Q: What form does it bear?
+  A: Granite does not, generally, form one extensive mass, but remains in separate and large fragments, rudely compacted together; besides the three minerals of which it is composed, particles of other stones, or metallic earths, are often accidentally mixed with it. It is called granite from its granulous structure. _Compacted_, joined together. _Granulous_, consisting of small grains.
+
+[agriculture--102]
+  Q: What is the environment of a plant?
+  A: All of the things and conditions that surround and influence a plant are called its environment— such as heat, moisture, light, food, and the physical and chemical condition of the soil; also other plants, diseases, insects, birds, and other animals.
+
+[seeleys--454]
+  Q: The sum of two numbers multiplied by their product is 70. Their difference multiplied by their product is 30. What are the numbers?
+  A: Ans. 5 and 2.
+
+[brewers-guide--1040]
+  Q: Why does lightning strike the oak-tree more frequently than any other tree?
+  A: 1st—Because the grain of the oak, being closer than that of any other tree, renders it a better conductor: and 2ndly—The sap of the oak contains a large quantity of iron in solution, which is a most admirable conductor of lightning.
+
+[civil-war--1563]
+  Q: When was the concrete ship invented ?
+  A: The first craft made of reinforced concrete was a small one, built by a Frenchman in 1849. Before 1900 some barges of about 100 tons were in use in Italy and Holland. In 1900 a large 200ton barge for river traffic was built in Germany, and by 1918 concrete barges varying in capacity up to 700 tons were being used in the Panama Canal, the Welland Ship Canal, the Manchester Ship Canal in England, and in the harbors of San Francisco, Baltimore, and Sydney, New South Wales.
+
+[seeleys--1029]
+  Q: Why ts the profession of teacher important ?
+  A: It is the province of the school so to educate the child that he may live a complete life. The vital factor of the school is the teacher. Hence in order that the school may accomplish its great work it becomes necessary that the teacher be a person of lofty attainments and strong character. Any profession which demands of its members such qualifications is an important one.
+
+[agriculture--193]
+  Q: What are the distinctive characteristics of the coach horse?
+  A: It is between the speed and draft horses in size, combining certain characteristics of both. In some respects it may be classed as a general-purpose horse. Good type of roadster or driving horse.
+
+[seeleys--836]
+  Q: What was the origin of the territories ?
+  A: Congress provided for the sale of these newly acquired lands, and established a plan of government for them. This plan—the famous Ordinance of 1787—ordered that this region should be called ‘‘The Territory of the United States northwest of the Ohio River.”
+
+[stokers--2]
+  Q: What is the cause of the rapid motion of the water in the gauge-glass at times? Is that motion general throughout the boiler?
+  A: No; air enters the boiler with the feed-water, and the gauge-glass tube being in the vicinity of the incoming water, some of the air enters the glass and flies up rapidly through the top cock and into the boiler again; in fact there is very little motion of the water in the boiler at any time while working. I have proved this to be so, and in this manner: the boiler cleaners having finished the cleaning, hurriedly scrambled out of the boiler and left several tools they had been using on the crown of the fire-box, namely, a bass hand brush, a tin can, and a tin candlestick, and a small iron pail; the manhole cover was put on and boiler filled and put to work before the things were thought of, and then it was too late and they had to remain there until the next cleaning time, which was thirteen weeks; and when the boiler was at last blown out and the manhole cover removed, the things were on the crown of the fire-box exactly as they were left three months previously. In order to satisfy myself of this, to me, extraordinary discovery, I placed several articles on the crown of the fire-box, things that could not stop up the blow-off pipe if they were swept off, and got up steam as usual, and after three months' hard steaming I blew out the water and steam, took off the manhole cover, and there were the things as I had left them thirteen weeks previously; of course they were all coated with fine mud, but no signs of having moved a hair's breadth.
+
+[engineering--1091]
+  Q: What is the efficiency of a storage cell, and how is it measured ?
+  A: The efficiency of a cell is the ratio between the amount of power which can be taken out of it and that which is put into it. It, like capacity, varies with the rate of discharge, and may be anywhere from 50 to 95 per cent., according to the charge and discharge rates used. Eighty per cent, for the normal discharge-rate of a cell is a good value except for the very largest cells. To measure the efficiency the watt-hours put in during charge are measured by an ammeter and voltmeter, and, similarly, the watt-hours taken out in discharge. The quotient of the latter by the former is the efficiency. 22 Owing to the fact that the electro-motive force of a cell increases with charge and diminishes with discharge, it is necessary to have special arrangements by which a dynamo while supplying hghts may charge a battery of cells, and by which the electro-motive force of a set of cells may be kept constant while they are supplying lamps. The arrangement for discharge will be first described. Supposing a 110-volt system, we must have a number of cells in series equal to \-^^ volts, or about 60 cells. When fully charged, as each cell has an electro-motive force of 2.2 volts, the total electro-motive force of the 60 cells would be 132 volts, a pressure which would seriously injure the lamps. When the cells are fully charged, therefore, a sufficient number are switched out of circuit to bring the pressure down to 110 volts. As the cells discharge and their electro-motive force falls, these cells are switched back into the circuit one at a time, till at the end of the discharge they are all in circuit. In charging, the electro-motive force rises. As it is desired to run 110-volt lamps and charge the cells at the same time, we cannot raise the pressure of the lighting dynamo; so an auxiliary dynamo or booster is employed, its armature being 339 put in series with the cells and its field varied by its rheostat so as to give enough additional volts for charging at the proper rate. The accompany- ing diagram of connections shows the arrangement. B is the booster and R its rheostat. V is a voltmeter and A an ammeter, so arranged that ■i its needle stands in the center of the scale when no '■ current is flowing through it, moving to one side for a charging current and to the opposite side for a discharge current. K represents the main battery and H the switch which throws the reserve cells in and out. >S is a double-throw switch, which in one position connects the batteries to the lamp to be supplied with current, and in the other position connects it to the dynamo for charging. E is sl switch for connecting the voltmeter, so as to give the voltage of the battery, the line, and the charging dynamo and booster respectively. 0 is an automatic circuit-breaker, which will operate if too great current is taken out of the batteries, and C is a circuit-breaker which will open the circuit if the charging current becomes less than a certain value. This last is necessary if a compoundwound dynamo is used in order to protect the dynamo from having a reverse current sent through it from the battery if by accident it was slowed down or stopped before the charging switch had been opened. Several other arrangements are employed ; but a proper understanding of the one described above will be sufficient to enable the engineer to comprehend the others without difficulty.

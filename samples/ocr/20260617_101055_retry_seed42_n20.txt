@@ -1,0 +1,165 @@
+model: claude-haiku-4-5
+seed:  42
+n:     20
+batch: None
+pool:  2977 currently flagged pairs
+
+--- RETRY SYSTEM PROMPT ---
+You are an OCR correction assistant for public-domain texts published before 1930.
+You are reviewing a batch of Q&A pairs that a previous pass flagged but did NOT fix.
+Your job now is to actually fix them — do not echo text back unchanged unless it is
+already perfect. Be aggressive about fixing — the source texts are legitimate
+pre-1930s works, so fix confidently.
+
+Fix all of the following:
+- Missing or extra spaces (Whatis → What is, "Biography ?" → "Biography?")
+- Single-character letter substitutions (ts → is, ln → in, rn → m, 4 → A when clearly a letter)
+- Broken hyphenation across lines (na- tions → nations)
+- Unicode/encoding artifacts (Â¢ → ¢, â€™ → ', Ã© → é, â€” → —, â€˜/â€™ → ' or ‘’)
+- Obvious misrecognized words (tbe → the, liow → how, witb → with)
+- Missing terminal period on an answer that is clearly a complete sentence
+- Embedded page references or section headers anywhere in the text (e.g. "FRANCE. 107",
+  "6 EGYPT.", "244 COMMON SCHOOL QUESTION BOOK." — remove these entirely)
+
+Never alter grammar or word choice. Fix only what is clearly a scanning artifact.
+"Whom", archaic verb forms, and pre-1930s constructions are correct as-is.
+
+Set "flagged": true ONLY if you personally replaced a word/term with something that
+could be an anachronism — a word, term, or concept that did not exist before 1930.
+Do NOT flag merely because the subject matter is war, politics, or sensitive history.
+If you made no risky word substitution, set "flagged": false.
+
+Discard if the text is so severely garbled that no meaningful content can be recovered, or
+if either field contains structural bleed — embedded answer text followed by additional
+questions (e.g. "Q 1. ... A. ... Q 2." patterns, or "A— ..." mid-question).
+When in doubt on OCR artifacts, fix and keep. Do not discard pairs that are merely messy.
+
+You will receive a JSON array of items, each with an "i" index, "q", and "a". Respond with
+a JSON array of the same length, each item matching one input by "i":
+  Fixed:           {"i": 0, "q": "...", "a": "..."}
+  Anachronism risk:{"i": 0, "q": "...", "a": "...", "flagged": true}
+  Unrecoverable:   {"i": 0, "discard": true}
+
+Respond with the JSON array only, no other text.
+
+--- END RETRY SYSTEM PROMPT ---
+[civil-war--1238]
+  IN  Q: Did Austria depend heavily on the State Bank?
+  IN  A: It did. In the middle of 1915 the Governments again had recourse to the bank and this made it necessary for the directors to make a general decision on the whole attitude toward Government applications for loans during the war. They gave their consent to the Government applications, on conditions that recourse should be had to the bank only when no other method of obtaining money was practicable. The various agreements have been made at various dates from July 15, 1915, to November 24, 1917, under each of which the Governments have been authorized to borrow 1,500,000,000 crowns against promissory notes, the definite allocation of which is to take place not later than six months after the conclusion of peace. The amount actually borrowed in virtue of these agreements by December 7, 191 7, was 13,200,000,000 crowns.
+  OUT Q: Did Austria depend heavily on the State Bank?
+  OUT A: It did. In the middle of 1915 the Governments again had recourse to the bank and this made it necessary for the directors to make a general decision on the whole attitude toward Government applications for loans during the war. They gave their consent to the Government applications, on conditions that recourse should be had to the bank only when no other method of obtaining money was practicable. The various agreements have been made at various dates from July 15, 1915, to November 24, 1917, under each of which the Governments have been authorized to borrow 1,500,000,000 crowns against promissory notes, the definite allocation of which is to take place not later than six months after the conclusion of peace. The amount actually borrowed in virtue of these agreements by December 7, 1917, was 13,200,000,000 crowns.
+
+[familiar-things--434]
+  IN  Q: What is Engraving?
+  IN  A: The art of cutting metals or precious stones, and representing thereon figures, letters, and devices; the term is, however, more particularly applied to the art of producing figures or designs on metal, &c., for the purpose of being subsequently printed on paper. The ancients are well known to have excelled in engraving on precious stones; many specimens have been preserved, which surpass anything of the kind produced by the moderns. This art is frequently alluded to in the Bible. Engraving on wood, according to some authors, was introduced into Europe from China by Venetian merchants; it is certain the art was practised in eastern and northern Italy as early as the thirteenth century. The invention of copper-plate engraving has been ascribed to a goldsmith of Florence, about the year 1460. _Device_, that which is formed by design. _Design_, a representation of a thing by an outline; a sketch. Describe Wood Engraving. The subject is drawn on a block of box or pear-tree wood with a black-lead pencil, or with a pen and Indian ink; the wood is then cut away, so as to leave the lines which have been drawn, as raised parts. The ink is next applied, and by pressing damp paper upon the block, the impressions are obtained. Albert Durer, a celebrated painter of Germany, brought the art of engraving on wood and metal, and taking off impressions on paper, &c., to great perfection.
+  OUT Q: What is Engraving?
+  OUT A: The art of cutting metals or precious stones, and representing thereon figures, letters, and devices; the term is, however, more particularly applied to the art of producing figures or designs on metal, &c., for the purpose of being subsequently printed on paper. The ancients are well known to have excelled in engraving on precious stones; many specimens have been preserved, which surpass anything of the kind produced by the moderns. This art is frequently alluded to in the Bible. Engraving on wood, according to some authors, was introduced into Europe from China by Venetian merchants; it is certain the art was practised in eastern and northern Italy as early as the thirteenth century. The invention of copper-plate engraving has been ascribed to a goldsmith of Florence, about the year 1460. _Device_, that which is formed by design. _Design_, a representation of a thing by an outline; a sketch. Describe Wood Engraving. The subject is drawn on a block of box or pear-tree wood with a black-lead pencil, or with a pen and Indian ink; the wood is then cut away, so as to leave the lines which have been drawn, as raised parts. The ink is next applied, and by pressing damp paper upon the block, the impressions are obtained. Albert Durer, a celebrated painter of Germany, brought the art of engraving on wood and metal, and taking off impressions on paper, &c., to great perfection.
+
+[common-core--628]
+  IN  Q: From what ts the term geography derived?
+  IN  A: From the two Greek words ge (earth) and grapho (I describe).
+  OUT Q: From what is the term geography derived?
+  OUT A: From the two Greek words ge (earth) and grapho (I describe).
+
+[astronomy--126]
+  IN  Q: Are transits of Venus numerous ?
+  IN  A: These transits occur but seldom ; the last transit was December 6, 1882, and the next one will be June 8,
+  OUT Q: Are transits of Venus numerous?
+  OUT A: These transits occur but seldom; the last transit was December 6, 1882, and the next one will be June 8,
+
+[common-core--969]
+  IN  Q: On which side of the river is New Orleans?
+  IN  A: De- scribe tt. On the east side, about 100 miles from the mouth. _ It is the greatest cotton mart in the world, and is built around a bend in the river, whence it is called the Crescent City. The foundation is artificial, as it was built on a swamp. It lies below the level of the river, but is protected by the levee, which at this place is a continuous quay, four miles long and 100 feet wide.
+  OUT Q: On which side of the river is New Orleans?
+  OUT A: Describe it. On the east side, about 100 miles from the mouth. It is the greatest cotton mart in the world, and is built around a bend in the river, whence it is called the Crescent City. The foundation is artificial, as it was built on a swamp. It lies below the level of the river, but is protected by the levee, which at this place is a continuous quay, four miles long and 100 feet wide.
+
+[logic--21]
+  IN  Q: "What are the most remarkable affections of properties of terms ?
+  IN  A: Comprehension and Extension.
+  OUT Q: What are the most remarkable affections of properties of terms?
+  OUT A: Comprehension and Extension.
+
+[new-york-bar--125]
+  IN  Q: A sues B.for goods sold and delivered. B puts in an answer of general denial, and on the trial offers to prove payment. Will he be allowed to do so ?
+  IN  A: No. Payment is an affirmative defense. All facts which show the plaintiff's allegations to be untrue may be proved under a general denial, while matters in avoidance merely, which are consistent witli the truth of plaintiff's averment, but show that he has no cause of action, ai'e affirmative defenses, and must therefore be specifically pleaded. " Payment, whether total or partial, of the indebtedness sued for, cannot be proved under a general denial, even though the complaint contains the usual formal but unnecesary allegation of non-payment, and this be specifically traversed." McKyring v. Bull, 16 N. Y. 297. (Note.) "But if the complaintalleges that do part of the indebtedness shown has been paid, except specified suras, and demands judgment for the balance, a general denial puts in issue the allegation that no other payments have been made, and lets in evidence of other payments than those admitted. Where plaintiff sues for a balance, he voluntarily invites examination into the amount of the indebtedness, and the extent of the reduction thereof by payments." Quinn v. Lloyd, 41 N. Y. 349. "Where a complaint contains an allegation of non-payment as a necessary and material fact to constitute the cause of action, proof of payment is admissible under a general denial." Knapp v. Roche, 94 N. Y. 333.
+  OUT Q: A sues B. for goods sold and delivered. B puts in an answer of general denial, and on the trial offers to prove payment. Will he be allowed to do so?
+  OUT A: No. Payment is an affirmative defense. All facts which show the plaintiff's allegations to be untrue may be proved under a general denial, while matters in avoidance merely, which are consistent with the truth of plaintiff's averment, but show that he has no cause of action, are affirmative defenses, and must therefore be specifically pleaded. " Payment, whether total or partial, of the indebtedness sued for, cannot be proved under a general denial, even though the complaint contains the usual formal but unnecessary allegation of non-payment, and this be specifically traversed." McKyring v. Bull, 16 N. Y. 297. (Note.) "But if the complaint alleges that no part of the indebtedness shown has been paid, except specified sums, and demands judgment for the balance, a general denial puts in issue the allegation that no other payments have been made, and lets in evidence of other payments than those admitted. Where plaintiff sues for a balance, he voluntarily invites examination into the amount of the indebtedness, and the extent of the reduction thereof by payments." Quinn v. Lloyd, 41 N. Y. 349. "Where a complaint contains an allegation of non-payment as a necessary and material fact to constitute the cause of action, proof of payment is admissible under a general denial." Knapp v. Roche, 94 N. Y. 333.
+
+[civil-war--1338]
+  IN  Q: Did the Reichstag adhere to this principle?
+  IN  A: By the peace treaty between Germany and the Bolshevik Government of Russia, signed March, 1918, the Russians gave up Finland, Esthonia, Livonia, Courland, Poland and Lithouania in the west, the Ukraine in the south, Batum, Erivan and Kars in the Caucasus. While none of these territories was declared annexed to the Central Powers, and, indeed, while they were referred to as independent, the general tenor of the treaty and many of its provisions, with the expanding military occupation by German troops gave it an aspect that convinced the world that a huge scheme of aggrandizement was intended. Notwithstanding, the treaty was ratified in the Reichstag by an almost unanimous vote, the Social Democrats voting for it like all the others.
+  OUT Q: Did the Reichstag adhere to this principle?
+  OUT A: By the peace treaty between Germany and the Bolshevik Government of Russia, signed March, 1918, the Russians gave up Finland, Esthonia, Livonia, Courland, Poland and Lithuania in the west, the Ukraine in the south, Batum, Erivan and Kars in the Caucasus. While none of these territories was declared annexed to the Central Powers, and, indeed, while they were referred to as independent, the general tenor of the treaty and many of its provisions, with the expanding military occupation by German troops gave it an aspect that convinced the world that a huge scheme of aggrandizement was intended. Notwithstanding, the treaty was ratified in the Reichstag by an almost unanimous vote, the Social Democrats voting for it like all the others.
+
+[advanced-questions--527]
+  IN  Q: What is conglomerate {puddingstone)?
+  IN  A: A rock consisting of pebbles cemented together, the cementing material filling the interstices and render- Geology ai*d Minee4J$£y. SftSt ing the whole compact. Breccia i% .a'jTook consisting:^ angular fragments consolidated into -Jiayjl.*tiHie, .■ "■
+  OUT Q: What is conglomerate (puddingstone)?
+  OUT A: A rock consisting of pebbles cemented together, the cementing material filling the interstices and rendering the whole compact. Breccia is a rock consisting of angular fragments consolidated into a mass.
+
+[common-core--26]
+  IN  Q: What was the object of De Narvaezâ€™s explorations ?
+  IN  A: Receiving a grant of Florida in 1528, he attempted its conquest with 300 men, allured by the prospect of gold. The exploration proved a failure. Many perished while wandering in the swamps. After arriving at the Gulf of Mexico, his men hurriedly constructed boats and put to sea; but were shipwrecked, and De Narvaez was lost. Six years afterward four survivors reached the Spanish settle- ments on the Pacific coast.
+  OUT Q: What was the object of De Narvaez's explorations?
+  OUT A: Receiving a grant of Florida in 1528, he attempted its conquest with 300 men, allured by the prospect of gold. The exploration proved a failure. Many perished while wandering in the swamps. After arriving at the Gulf of Mexico, his men hurriedly constructed boats and put to sea; but were shipwrecked, and De Narvaez was lost. Six years afterward four survivors reached the Spanish settlements on the Pacific coast.
+
+[civil-war--1885]
+  IN  Q: How many were employed before the war?
+  IN  A: About 3,750,000. Since the war 1,250,000 men have been directly replaced by women.
+  OUT Q: How many were employed before the war?
+  OUT A: About 3,750,000. Since the war 1,250,000 men have been directly replaced by women.
+
+[civil-war--1796]
+  IN  Q: What was Beatty's command in the Jutland fight?
+  IN  A: Sir David Beatty, who was made Commander of the Grand Fleet of the British Navy in succession to Sir John R. Jellicoe, was present and played a gallant part in the battle of Jutland in 1916 as commander of the First Battle Cruiser Squadron. In 1901 he married a daughter of Marshall Field, of Chicago.
+  OUT Q: What was Beatty's command in the Jutland fight?
+  OUT A: Sir David Beatty, who was made Commander of the Grand Fleet of the British Navy in succession to Sir John R. Jellicoe, was present and played a gallant part in the battle of Jutland in 1916 as commander of the First Battle Cruiser Squadron. In 1901 he married a daughter of Marshall Field, of Chicago.
+
+[civil-war--1453]
+  IN  Q: How soon did we send men abroad?
+  IN  A: Within 10 weeks after we declared a state of war, the first American contingent landed safely in France.
+  OUT Q: How soon did we send men abroad?
+  OUT A: Within 10 weeks after we declared a state of war, the first American contingent landed safely in France.
+
+[civil-war--1301]
+  IN  Q: Must the Imperial Chancellor be Prussian?
+  IN  A: No. It has been habitual for German Emperors (being Prussian) to ap- 214 Germany (Political Structure) 21 point Prussians to the post, but there is no law for or against it The habit was broken in November, 1917, when Count George V. von Hertling, a Bavarian, was appointed to succeed Dr. Georg Michaelis, a Prussian
+  OUT Q: Must the Imperial Chancellor be Prussian?
+  OUT A: No. It has been habitual for German Emperors (being Prussian) to appoint Prussians to the post, but there is no law for or against it. The habit was broken in November, 1917, when Count George V. von Hertling, a Bavarian, was appointed to succeed Dr. Georg Michaelis, a Prussian.
+
+[school-bulletin--50]
+  IN  Q: What are the six dynasties of the German empire ?
+  IN  A: The Carlomngian, (481-911); the Savon, (9191024); the Franconian, (1024-1125); the Suabian, or Holienstaufen, (1138-1254); the house of Eapsburg, (1273-1438) j and the house of Austria, (1438-188.3). Note.— From the " migration of nations" about 370, we can trace the origin of the Germans from the Franks and Burgundians of the Visi-Goths, or West Goths. Charlemagne (742-814) was a wonderful man, worthy to be, as he was, Charles the Great, and Charles the First, both of the French and German and Roman empires. He was crowned " Emperor of the West" by the Pope of Rome, Christmas day, 800, and after married Irene, Queen of Byzantium. This coronation revived, in name, the Roman Empire. But the new empire depended on him alone, as his death fully proved. In 722, he began a war for the extension of the Christian religion. He defeated the Lombards, subdued the Saxons, and was obliged to interfere between the Moors and Arabs in Spain.
+  OUT Q: What are the six dynasties of the German empire ?
+  OUT A: The Carlovingian, (481-911); the Saxon, (919-1024); the Franconian, (1024-1125); the Suabian, or Hohenstaufen, (1138-1254); the house of Hapsburg, (1273-1438); and the house of Austria, (1438-1806). Note.— From the "migration of nations" about 370, we can trace the origin of the Germans from the Franks and Burgundians of the Visi-Goths, or West Goths. Charlemagne (742-814) was a wonderful man, worthy to be, as he was, Charles the Great, and Charles the First, both of the French and German and Roman empires. He was crowned "Emperor of the West" by the Pope of Rome, Christmas day, 800, and after married Irene, Queen of Byzantium. This coronation revived, in name, the Roman Empire. But the new empire depended on him alone, as his death fully proved. In 722, he began a war for the extension of the Christian religion. He defeated the Lombards, subdued the Saxons, and was obliged to interfere between the Moors and Arabs in Spain.
+
+[common-core--2912]
+  IN  Q: Do they need a book which thousands of teachers have declared was the first to interest them in the study of mind?
+  IN  A: If so, there is one book that will fully satisfy their needs. That book is Gordyâ€™s New Psychology. If you wish to see for yourself whether it possesses all of these characteristics send for a copy. It will cost you nothing if you do not like it. If you wish to keep it the price is $1.25. se HINDS & NOBLE 4-5-13-14 Cooper Institute - - New York City Best Methods of Teaching in Country Schools By G. Dallas Lind This work is not the fine-spun theory of a college pro- fessor, but the practical ideas of a country teacher, fresh from the country school-room. It is not a mass of â€˜â€˜ glittering generalities,â€ but sug- gestions in detail as to how to teach and manage an un- graded school, drawn from long experience and careful observations.
+  OUT Q: Do they need a book which thousands of teachers have declared was the first to interest them in the study of mind?
+  OUT A: If so, there is one book that will fully satisfy their needs. That book is Gordy's New Psychology. If you wish to see for yourself whether it possesses all of these characteristics send for a copy. It will cost you nothing if you do not like it. If you wish to keep it the price is $1.25. See HINDS & NOBLE 4-5-13-14 Cooper Institute - - New York City Best Methods of Teaching in Country Schools By G. Dallas Lind This work is not the fine-spun theory of a college pro- fessor, but the practical ideas of a country teacher, fresh from the country school-room. It is not a mass of "glittering generalities," but sug- gestions in detail as to how to teach and manage an un- graded school, drawn from long experience and careful observations.
+
+[agriculture--234]
+  IN  Q: How may a ration for a dairy cow weighing 1,000 pounds be made up from the foodstuffs named in the foregoing table or any of the standard nutrition tables?
+  IN  A: By making estimates and trial calculations until the right quantity of dry matter and the proper 66 A CATECHISM OF AGRICULTURE amount and proportions of nutrients are obtained. In. the ration below the amount of dry matter is greater than is usually allowed by the standards: 4 D. M. Ie. Gatat 1th FEEDING STUFES. bs. lbs, lbs. lbs. lbs. ClOverhary see 2 e-a - 8 6.7764 544 Zeus OA ala seta Corn -Sstever =. .5%-. : 10 BOs mally 3.24 07 Oat, SUraiwe <eme - 2 : 3 PARE .036 1.158 .024 Corn mealle ee eka 2 5 4.47 .39 aaa 215 Wiheail, sora eee ok 4 4.405 .61 1.96 .135 Linseed meal ...... 3 2.724 879 981 el! IOWANS wppeteic, oe photoes 33 27.049 2.629 13.438 feo The nutritive ratio of the above ration is found by adding to the total carbohydrates 2 1-4 times the total fats and dividing by the weight of protein, thus: 13.438 plus (.79 x 2.25) —:— 2.629 equals 5.8, giving a nutritive ratio of 1: 5.8. ANIMAL JUDGING
+  OUT Q: How may a ration for a dairy cow weighing 1,000 pounds be made up from the foodstuffs named in the foregoing table or any of the standard nutrition tables?
+  OUT A: By making estimates and trial calculations until the right quantity of dry matter and the proper amount and proportions of nutrients are obtained. In the ration below the amount of dry matter is greater than is usually allowed by the standards: 4 D. M. Ie. Gatat 1st FEEDING STUFFS. bs. lbs. lbs. lbs. lbs. Clover hay see 2 e-a - 8 6.7764 544 Zeus OA ala seta Corn stover =. .5%-. : 10 BOs mally 3.24 07 Oat straw <eme - 2 : 3 PARE .036 1.158 .024 Corn meal ee eka 2 5 4.47 .39 aaa 215 Wheat bran sora eee ok 4 4.405 .61 1.96 .135 Linseed meal ...... 3 2.724 879 981 el! IOWANS wppeteic, oe photoes 33 27.049 2.629 13.438 feo The nutritive ratio of the above ration is found by adding to the total carbohydrates 2 1-4 times the total fats and dividing by the weight of protein, thus: 13.438 plus (.79 x 2.25) — 2.629 equals 5.8, giving a nutritive ratio of 1: 5.8.
+
+[civil-war--1265]
+  IN  Q: Has Germany built more railroads than other nations?
+  IN  A: Not in mileage, as compared with the United States, but in proportion she did nearly what we did from 1890 to 1910. In that period we increased our railroad mileage 44 per cent, and Germany increased her mileage 42 per cent.
+  OUT Q: Has Germany built more railroads than other nations?
+  OUT A: Not in mileage, as compared with the United States, but in proportion she did nearly what we did from 1890 to 1910. In that period we increased our railroad mileage 44 per cent, and Germany increased her mileage 42 per cent.
+
+[civil-war--1777]
+  IN  Q: Was Francis Joseph a Hapsburg?
+  IN  A: Yes. Francis (Franz) Joseph (1830-1916), late Emperor of Austria and 302 King of Hungary, came to the throne on December 2, 1848, when the polyglot lands of the Hapsburg monarchy were on the point of dissolution. His task during his entire reign was essentially dynastic, the holding together of his dominions. Under his rule the Austrian Provinces in Italy, except Trentino and Trieste, were lost to the new Kingdom of Italy (1859-1866) and Austrian influence in Germany was destroyed by Prussia in the war of 1866. Bu« in his task of holding together the Austrian dominions proper he secured a rdative success. Hungary was pacified by the agreement of 1867, which granted autonomy in local matters and an equal share in the government of the monarchy. Opinions differ as to the native ability of Francis Joseph, but it would at least appear that long study of men had given him great fitness in dealing with the peculiar problems of Austria-Hungary. His private life was a pilgrimage of sorrow. Hi? wife was murdered by an anarchist, his son perished in an obscure affair, and lastly his nephew and heir was murdered a Serajevo in 1914.
+  OUT Q: Was Francis Joseph a Hapsburg?
+  OUT A: Yes. Francis (Franz) Joseph (1830-1916), late Emperor of Austria and King of Hungary, came to the throne on December 2, 1848, when the polyglot lands of the Hapsburg monarchy were on the point of dissolution. His task during his entire reign was essentially dynastic, the holding together of his dominions. Under his rule the Austrian Provinces in Italy, except Trentino and Trieste, were lost to the new Kingdom of Italy (1859-1866) and Austrian influence in Germany was destroyed by Prussia in the war of 1866. But in his task of holding together the Austrian dominions proper he secured a relative success. Hungary was pacified by the agreement of 1867, which granted autonomy in local matters and an equal share in the government of the monarchy. Opinions differ as to the native ability of Francis Joseph, but it would at least appear that long study of men had given him great fitness in dealing with the peculiar problems of Austria-Hungary. His private life was a pilgrimage of sorrow. His wife was murdered by an anarchist, his son perished in an obscure affair, and lastly his nephew and heir was murdered at Serajevo in 1914.
+
+[civil-war--1834]
+  IN  Q: How long did the Salandra ministry last after Italy declared war on Austria?
+  IN  A: One year. Antonio Salandra (born 1853) had become Premier in March, 1914. He had been professor of law at the University of Rome, and minister in several Italian cabinets. At the outbreak of the European war he refused to follow Germany and Austria, claiming that the Triple Alliance treaty had been broken by Austria. From this position he progressed toward hostility to Austria and alliance with the Triple Entente, and, despite the opposition of Giolitti, he carried his policy, and Italy declared war on Austria in May, 191 5. He resigned as Premier in June, 1916.
+  OUT Q: How long did the Salandra ministry last after Italy declared war on Austria?
+  OUT A: One year. Antonio Salandra (born 1853) had become Premier in March, 1914. He had been professor of law at the University of Rome, and minister in several Italian cabinets. At the outbreak of the European war he refused to follow Germany and Austria, claiming that the Triple Alliance treaty had been broken by Austria. From this position he progressed toward hostility to Austria and alliance with the Triple Entente, and, despite the opposition of Giolitti, he carried his policy, and Italy declared war on Austria in May, 1915. He resigned as Premier in June, 1916.
+

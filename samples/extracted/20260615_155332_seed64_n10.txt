@@ -1,0 +1,43 @@
+stage: extracted
+seed:  64
+n:     10
+
+[logic--263]
+  Q: When will transposition be also necessary ?
+  A: When the major is a particular affirmative ; but if it be a particular negative, ostensive reduction is inapplicable.
+
+[brewers-guide--1111]
+  Q: Why will not beer run out of the tub, till the vent peg is taken out?
+  A: When the tap is turned, air rushes through the tap into the bottom of the tub, and holds the liquor in. The upward pressure of air is illustrated by the following simple experiment:—Fill a wine-glass with water; cover the top of the glass with a piece of writing paper; turn the glass topsy turvy, and the water will not run out. The paper is used merely to give the air a medium sufficiently dense to act against.
+
+[familiar-things--11]
+  Q: What is Snow?
+  A: Rain congealed by cold in the atmosphere, which causes it to fall to the earth in white flakes. Snow fertilizes the ground by defending the roots of plants from the intenser cold of the air and the piercing winds. _Congealed_, turned by the force of cold from a fluid to a solid state; hardened. _Fertilize_, to render fruitful. _Intenser_, raised to a higher degree, more powerful.
+
+[school-bulletin--240]
+  Q: What is th3 difference between Ancient and Modern Yerse %
+  A:  Modern verse is governed by the accent; ancient verse was governed by the syllables, which had certain fixed and determinate lengths. Modern verse, therefore, is accentual; ancient verse was syllabic. Scan: " There was a gay maiden lived down by the mill, Ferry me over the ferry— Her hair was as bright as the waves of a rill, ' When the sun on the brink of his setting stands still, Her lips were as full as a cherry."— Boker. " The Assyrian came down like a wolf on the fold, And his cohorts wore gleaming fn purple and gold; And the sheen of their spears was like stars on the sea, When the blue wave ro Lis nightly ou deep Galilee. "— Byrom 79, Define Poetry. 172 Dimb Question Books, Ans. — It is the product of an excited and a creative Imagination, with a primary object to please, and expressed in the form of verse. Most of the definitions of Poetry which have been proposed are open to the objection that they apply equally well to certain kinds of prose. They describe what is poetical, rather than what is poetry. A poetical composition bears these three marks: 1. It is the product of an excited imagination. 2. It is the product of a creative imagination. 3. Its primary object is to please.
+
+[1001-questions--552]
+  Q: Who succeeded liim ?
+  A: His son-iu-law and murderer, Lucius Tarquiuius Superb- us.
+
+[civil-war--979]
+  Q: What did the peace treaty say about the Baltic Sea provinces?
+  A: There was a specific agreement as to the eastern boundaries of both Esthonia and Livonia, and Russia agreed to Clamoring Nationalities 165 evacuate them, while they were to be occupied by "a German police force until security is guaranteed by their own national institutions." Q.— What is the State of Esthonia? A. — It is one of the Russian Baltic Sea provinces inhabited by Letts and Lithuanians. These provinces run as follows, from west to east: (1) Courland, adjoining Germany, and containing the ports Libau and Riga; (2) Livonia, taking in the Gulf of Riga or part of it; (3) Esthonia, facing the Gulf of Finland, and extending toward Petrograd.
+
+[common-core--1160]
+  Q: What does British India include?
+  A: Nearly all of Hindoostan and the western coast of Indo- 212 COMMON SCHOOL QUESTION BOOK. China. It is the richest and most important dependency ever possessed by any nation.
+
+[civil-war--909]
+  Q: Is Luxembourg a neutral still?
+  A: Probably she is. technically. Luxembourg protested against the violation of its neutrality and against the expulsion of the French ambassador on August 4. But the duchy is said to have received about $256,000 indemnity, because it refrained from armed resistance, and acceptance of this may be held to have clouded the title to neutrality. However, Luxembourg appears still to be considered neutral and independent. Its ruler is Grand-Duchess Marie-Adelaide.
+
+[chemistry--164]
+  Q: Can you give the properties of bromine?
+  A: It is a liquid of a dark reddish colour, very volatile, in odour like chlorine, absorbed by water, alcohol and aether; boils at 89° and freezes at a temperature of from 7° to 12° below zero ; it extinguishes flame, does not conduct electricity, its specific gravity 2.966, and in other respects resembles chlorine, both as it regards its habitudes and its effects upon organic products. When taken internally it is a virulent poison.
+
+[astronomy--482]
+  Q: What constellation is east of Aries ?
+  A: Taurus, the Bull is east of Aries; the V-shaped Hyades and the Pleiades, frequently called the "Seven Sisters' V make Taurus an easy object for beginners; this constellation is on the meridian during Jan- uary. Fig. 23— Orion and His Dogs.

@@ -1,0 +1,244 @@
+model: claude-haiku-4-5
+seed:  43
+n:     20
+batch: None
+pool:  2977 currently flagged pairs
+
+--- RETRY SYSTEM PROMPT ---
+You are an OCR correction assistant for public-domain texts published before 1930.
+You are reviewing a batch of Q&A pairs that a previous pass flagged but did NOT fix.
+Your job now is to actually fix them — do not echo text back unchanged unless it is
+already perfect. Be aggressive about fixing — the source texts are legitimate
+pre-1930s works, so fix confidently.
+
+Fix all of the following:
+- Missing or extra spaces (Whatis → What is, "Biography ?" → "Biography?")
+- Single-character letter substitutions (ts → is, ln → in, rn → m, 4 → A when clearly a letter)
+- Broken hyphenation across lines (na- tions → nations)
+- Unicode/encoding artifacts (Â¢ → ¢, â€™ → ', Ã© → é, â€” → —, â€˜/â€™ → ' or ‘’)
+- Obvious misrecognized words (tbe → the, liow → how, witb → with)
+- Missing terminal period on an answer that is clearly a complete sentence
+- Embedded page references or section headers anywhere in the text (e.g. "FRANCE. 107",
+  "6 EGYPT.", "244 COMMON SCHOOL QUESTION BOOK." — remove these entirely)
+
+Never alter grammar or word choice. Fix only what is clearly a scanning artifact.
+"Whom", archaic verb forms, and pre-1930s constructions are correct as-is.
+
+Set "flagged": true ONLY if you personally replaced a word/term with something that
+could be an anachronism — a word, term, or concept that did not exist before 1930.
+Do NOT flag merely because the subject matter is war, politics, or sensitive history.
+If you made no risky word substitution, set "flagged": false.
+
+Discard if the text is so severely garbled that no meaningful content can be recovered, or
+if either field contains structural bleed — embedded answer text followed by additional
+questions (e.g. "Q 1. ... A. ... Q 2." patterns, or "A— ..." mid-question).
+When in doubt on OCR artifacts, fix and keep. Do not discard pairs that are merely messy.
+
+You will receive a JSON array of items, each with an "i" index, "q", and "a". Respond with
+a JSON array of the same length, each item matching one input by "i":
+  Fixed:           {"i": 0, "q": "...", "a": "..."}
+  Anachronism risk:{"i": 0, "q": "...", "a": "...", "flagged": true}
+  Unrecoverable:   {"i": 0, "discard": true}
+
+Respond with the JSON array only, no other text.
+
+--- END RETRY SYSTEM PROMPT ---
+[common-core--1005]
+  IN  Q: What is the general outline of Europe, and what ad- vantages does tt offer?
+  IN  A: It is more irregular than that of any other division of the earth. Large seas and gulfs penetrate far into the interior, affording unequalled advantages for commercial intercourse. Â°
+  OUT Q: What is the general outline of Europe, and what advantages does it offer?
+  OUT A: It is more irregular than that of any other division of the earth. Large seas and gulfs penetrate far into the interior, affording unequalled advantages for commercial intercourse.
+
+[common-core--671]
+  IN  Q: Why would the inclination of the earth affect the climate ?
+  IN  A: If the earth were perpendicular to the plane of its orbit there would be no change of seasons. As it becomes in- clined, the attitude of the earth toward the sun is continu- ally changed in the course of its annual revolution, and this change must produce a diversity of climate. It is by such inclination that the temperate zones acquire four sea- sons.
+  OUT Q: Why would the inclination of the earth affect the climate?
+  OUT A: If the earth were perpendicular to the plane of its orbit there would be no change of seasons. As it becomes inclined, the attitude of the earth toward the sun is continually changed in the course of its annual revolution, and this change must produce a diversity of climate. It is by such inclination that the temperate zones acquire four seasons.
+
+
+  IN  Q: A makes a will, leaving one-third of his realty to his wife, and the residue and remainder to be divided equally between his sons, C who is unmarried, and B who is married. A dies, and one hour after the probate of his will, his son B dies. B leaves no children. The property consists of $30,000 in money, and 400 acres of land. How should this be divided ?
+  IN  A: The personalty not being mentioned in the will, A must be deemed to have died intestate as to that, and therefore the personal property must be distributed according to the Statute of Distribution. A's widow would get one-third, C would also get one-third, B's one-third would be divided between his widow, his mother, and C, the widow receiving one-half, and the mothet and C dividing the other half equally between them. Sec. 2732, par. 2 of the Code of Civ. Pro. provides as follow : " If there be no children, nor any legal representatives of them, then one-half of the whole surplus shall be allotted to the widow, and the other half distributed to the next of kin of the deceased, entitled under the provisions of this section." Par. 6 is as follows : " If the deceased leave no children and no representatives of them, and no father, and leave a widow and a mother, the half not distributed to the widow shall be distributed in equal shares to his mother and brothers and sisters, or the representatives of such brothers and sisters ; and if there be no widow, the whole surplus shall be distributed in like manner to the mother, and to the brothers and sisters, or the representatives of such brothers and sisters." The real property would be distributed in the following manner : Assuming the provision to be in lieu of dower, the widow wiU. get one-third, C will also get his one-third, and B's one-third will be divided as follows : B's widow will get dower, a life estate in one-third of B's share, and the remainder of B's share will be divided as follows : To the mother for life, remainder in fee to C. This last is according to sec. 285 of the Real Prop. Law of 1896, which is as follows : " If the intestate die without descendants, and leave no father . . . and leave a mother and a brother or sister, or the descendant of a brother or sister, the inheritance shall descend to the mother for life, and the reversion to such brothers and sisters of the intestate as may be living, and to the descendants of such as may be dead. ... If the intestate in such case leave no brother or sister or descendant thereof, the inheritance shall descend to the mother in fee.
+  OUT Q: A makes a will, leaving one-third of his realty to his wife, and the residue and remainder to be divided equally between his sons, C who is unmarried, and B who is married. A dies, and one hour after the probate of his will, his son B dies. B leaves no children. The property consists of $30,000 in money, and 400 acres of land. How should this be divided?
+  OUT A: The personalty not being mentioned in the will, A must be deemed to have died intestate as to that, and therefore the personal property must be distributed according to the Statute of Distribution. A's widow would get one-third, C would also get one-third, B's one-third would be divided between his widow, his mother, and C, the widow receiving one-half, and the mother and C dividing the other half equally between them. Sec. 2732, par. 2 of the Code of Civ. Pro. provides as follow : " If there be no children, nor any legal representatives of them, then one-half of the whole surplus shall be allotted to the widow, and the other half distributed to the next of kin of the deceased, entitled under the provisions of this section." Par. 6 is as follows : " If the deceased leave no children and no representatives of them, and no father, and leave a widow and a mother, the half not distributed to the widow shall be distributed in equal shares to his mother and brothers and sisters, or the representatives of such brothers and sisters ; and if there be no widow, the whole surplus shall be distributed in like manner to the mother, and to the brothers and sisters, or the representatives of such brothers and sisters." The real property would be distributed in the following manner : Assuming the provision to be in lieu of dower, the widow will get one-third, C will also get his one-third, and B's one-third will be divided as follows : B's widow will get dower, a life estate in one-third of B's share, and the remainder of B's share will be divided as follows : To the mother for life, remainder in fee to C. This last is according to sec. 285 of the Real Prop. Law of 1896, which is as follows : " If the intestate die without descendants, and leave no father . . . and leave a mother and a brother or sister, or the descendant of a brother or sister, the inheritance shall descend to the mother for life, and the reversion to such brothers and sisters of the intestate as may be living, and to the descendants of such as may be dead. ... If the intestate in such case leave no brother or sister or descendant thereof, the inheritance shall descend to the mother in fee."
+
+[school-bulletin--510]
+  IN  Q: What are the epochs of the Stone Age ?
+  IN  A:  1. That of extinct animals such as the mammoth and cave-bear. 2. Migrated existing animals (Reindeer), 8. The Polished Stone. To the Metal Age belong the Bronze Epoch and the Iron Epoch. These are the classic Geolo&t and Mineealogy. 329 fications, according to the fossil remains, of the life of the prehistoric man.
+  OUT Q: What are the epochs of the Stone Age?
+  OUT A: 1. That of extinct animals such as the mammoth and cave-bear. 2. Migrated existing animals (Reindeer), 3. The Polished Stone. To the Metal Age belong the Bronze Epoch and the Iron Epoch. These are the classic Geology and Mineralogy classifications, according to the fossil remains, of the life of the prehistoric man.
+
+[common-core--425]
+  IN  Q: What effect had this defeat on the Northern people?
+  IN  A: At first they were much disappointed and discouraged ; then came a renewed determination. Congress voted Â¢500,000,000 and five hundred thousand men, and Gen. McClellan was appointed to the command of the Army of the Potomac.
+  OUT Q: What effect had this defeat on the Northern people?
+  OUT A: At first they were much disappointed and discouraged; then came a renewed determination. Congress voted $500,000,000 and five hundred thousand men, and Gen. McClellan was appointed to the command of the Army of the Potomac.
+
+[mythology--549]
+  IN  Q: Why are the Myrmidons compared to wolves ?
+  IN  A: For the same reason which suggested the idea that Lycaon and his sons were changed into wolves. The Greek 'word iMkol, vjolves, is the same in sound wit\iL.e\ik>o\,bTxllxaut\ ^^A^*^^ rays of the sun would be called Leukoi^ so, when the meaning of the phrase had been in part forgotten, the Myrmidons, who are simply the sun's rays, were compared to wolves, with gleaming eyes and blood-red jaws.
+  OUT Q: Why are the Myrmidons compared to wolves?
+  OUT A: For the same reason which suggested the idea that Lycaon and his sons were changed into wolves. The Greek word lukoi, wolves, is the same in sound with leukoi, white, because the rays of the sun would be called leukoi; so, when the meaning of the phrase had been in part forgotten, the Myrmidons, who are simply the sun's rays, were compared to wolves, with gleaming eyes and blood-red jaws.
+
+[electricity--44]
+  IN  Q: What is an 'induction coil?
+  IN  A: It consists of two coils of wire wound around a bundle of iron wires. One coil has a large number of turns of fine wire. The other coil has a comparatively small number of turns of coarse wire and is connected to a battery through a vibrator or interrupter that closes and opens the circuit rapidly, so as to make the current pulsate. The iron core is magnetized every time current flows, and loses it when the current stops. The changing magnetism "induces" in the fine wire coil a small current at very high pressure, which will jump across considerable distances and may be used for multiple gas lighting or other purposes. These are listed at from $4 to $75.
+  OUT Q: What is an induction coil?
+  OUT A: It consists of two coils of wire wound around a bundle of iron wires. One coil has a large number of turns of fine wire. The other coil has a comparatively small number of turns of coarse wire and is connected to a battery through a vibrator or interrupter that closes and opens the circuit rapidly, so as to make the current pulsate. The iron core is magnetized every time current flows, and loses it when the current stops. The changing magnetism "induces" in the fine wire coil a small current at very high pressure, which will jump across considerable distances and may be used for multiple gas lighting or other purposes. These are listed at from $4 to $75.
+
+[botany--181]
+  IN  Q: What is the principal difference between homosporous and heterosporous plants of this group as regards the prothallium ?
+  IN  A: The principal difference is this: The homosporous spores generally develop into a prothallium which has male and female organs, while the heterosporous spores develop only male prothallia from the microspore and only female prothallia from the macrospore. Fic. 22.— Development of gametophyte of ostrich fern (Onoclea): A. Spore without outer cot, B same germinating, C young prothallium, 7 rhizoid, D and F# older prothallium, a growing point, #’ female prothallium from below, vr rhizoids, ar archegonia (12 dia.), G and A longitudinal section of young archegonia, o egg, b lower, c upper canal cell (150 dia.), J ripe archegonium opening, o egg, J male prothallium (500 dia.) an, antheridia, 7 rhizoid K, LZ longitudinal section of young antheridia (300 dia.), m ripe antheridium (300 dia.), sp spermatozoids (300), Nand O antheridia ope aaa spermatozoids, P ciliated free swimming spermatozoids, vw vesicle a.)
+  OUT Q: What is the principal difference between homosporous and heterosporous plants of this group as regards the prothallium?
+  OUT A: The principal difference is this: The homosporous spores generally develop into a prothallium which has male and female organs, while the heterosporous spores develop only male prothallia from the microspore and only female prothallia from the macrospore. Fig. 22.— Development of gametophyte of ostrich fern (Onoclea): A. Spore without outer coat, B same germinating, C young prothallium, r rhizoid, D and F older prothallium, a growing point, E female prothallium from below, r rhizoids, ar archegonia (12 dia.), G and H longitudinal section of young archegonia, o egg, b lower, c upper canal cell (150 dia.), I ripe archegonium opening, o egg, J male prothallium (500 dia.) an, antheridia, r rhizoid K, L longitudinal section of young antheridia (300 dia.), m ripe antheridium (300 dia.), sp spermatozoids (300), N and O antheridia open and spermatozoids, P ciliated free swimming spermatozoids, w vesicle a.
+
+[common-core--71]
+  IN  Q: When did the first English women come to America?
+  IN  A: In 1608, to Jamestown, as wives for the settlers.
+  OUT Q: When did the first English women come to America?
+  OUT A: In 1608, to Jamestown, as wives for the settlers.
+
+[school-bulletin--449]
+  IN  Q: What is one of the most important of minerals ?
+  IN  A:  Carbon, which is one of the four grand elements Geology and Minekalogy. 301 In the composition of vegetable and animal substances. It is known under different forms as the diamond, graphite, coal, etc. Note.— The art of cutting and polishing diamonds was unknown till 1456, when it was discovered by Louis Berquen, of Bruges. In speaking of the size of diamonds the term carat is used. This is the name of a bean, which was used in its dried state by the natives of Africa in weighing gold, and in India in weighing diamonds. Though the beau is not used for this purpose now, the name is retained, and the carat is nearly four grains Troy.
+  OUT Q: What is one of the most important of minerals?
+  OUT A: Carbon, which is one of the four grand elements in the composition of vegetable and animal substances. It is known under different forms as the diamond, graphite, coal, etc. Note.— The art of cutting and polishing diamonds was unknown till 1456, when it was discovered by Louis Berquen, of Bruges. In speaking of the size of diamonds the term carat is used. This is the name of a bean, which was used in its dried state by the natives of Africa in weighing gold, and in India in weighing diamonds. Though the bean is not used for this purpose now, the name is retained, and the carat is nearly four grains Troy.
+
+[civil-war--1471]
+  IN  Q: What did we do to train sailors?
+  IN  A: To train and house men pi the Navy and Marine Corps we provided in the first year twenty huge camps. The Jamestown Exposition site on Hampton Roads, near Norfolk, Va., was made into our first Fleet Operating Base. The San Diego, Cal., and Gulfport, Miss., exposition grounds were taken over and converted into camps. The_ Great Lakes Training Station, near Chicago, was enlarged to accommodate 20,000 men. Older stations, like that at Newport, R. I., were expanded, and new stations were erected at Pelham Bay, N. Y., for 10,000 reserves ; at Charleston for 5,000 men ; at Cape May, N. J., and several other points. A great new camp for Marines was established at Quantico, Va., for 8,500 men.
+  OUT Q: What did we do to train sailors?
+  OUT A: To train and house men of the Navy and Marine Corps we provided in the first year twenty huge camps. The Jamestown Exposition site on Hampton Roads, near Norfolk, Va., was made into our first Fleet Operating Base. The San Diego, Cal., and Gulfport, Miss., exposition grounds were taken over and converted into camps. The Great Lakes Training Station, near Chicago, was enlarged to accommodate 20,000 men. Older stations, like that at Newport, R. I., were expanded, and new stations were erected at Pelham Bay, N. Y., for 10,000 reserves ; at Charleston for 5,000 men ; at Cape May, N. J., and several other points. A great new camp for Marines was established at Quantico, Va., for 8,500 men.
+
+[common-core--794]
+  IN  Q: Where are manufactures carried on to the greatest extent in these States? Name some of the most famous cittes Jor the manufacture of cotton ?
+  IN  A: The chief manufacturing centres are on the Merrimac and Pawtucket Rivers. Lowell, Lawrence, Fall River, Pawtucket and Woonsocket are noted for their cotton manufactures.
+  OUT Q: Where are manufactures carried on to the greatest extent in these States? Name some of the most famous cities for the manufacture of cotton?
+  OUT A: The chief manufacturing centres are on the Merrimac and Pawtucket Rivers. Lowell, Lawrence, Fall River, Pawtucket and Woonsocket are noted for their cotton manufactures.
+
+[common-core--415]
+  IN  Q: What other States followed this example?
+  IN  A: Mississippi, Florida, Alabama, Georgia, Louisiana, Texas, Virginia, North Carolina, Arkansas and Tennessee
+  OUT Q: What other States followed this example?
+  OUT A: Mississippi, Florida, Alabama, Georgia, Louisiana, Texas, Virginia, North Carolina, Arkansas and Tennessee.
+
+[civil-war--1276]
+  IN  Q: Can the Germans really make synthetic rubber?
+  IN  A: It is not impossible. Every chemist knows that synthetic rubber can be made. The chief trouble about it is that it costs more than natural rubber. In Germany's war-emergency, that objection may have become minor. Rubber is merely the sap of a certain kind of tree. One way known to make synthetic rubber is from starch, best obtained from potatoes, but it requires a Jot. An annual production of 10,000,000 pounds of rubber might require 500,000,- 000 pounds of potatoes. The starch is converted into acetone and butyl alcohol. A process known to have been at least partially developed by a German company is based on the use of acetone. This is obtainable from calcium carbide, which is very cheap, indeed.
+  OUT Q: Can the Germans really make synthetic rubber?
+  OUT A: It is not impossible. Every chemist knows that synthetic rubber can be made. The chief trouble about it is that it costs more than natural rubber. In Germany's war-emergency, that objection may have become minor. Rubber is merely the sap of a certain kind of tree. One way known to make synthetic rubber is from starch, best obtained from potatoes, but it requires a lot. An annual production of 10,000,000 pounds of rubber might require 500,000,000 pounds of potatoes. The starch is converted into acetone and butyl alcohol. A process known to have been at least partially developed by a German company is based on the use of acetone. This is obtainable from calcium carbide, which is very cheap, indeed.
+
+[common-core--756]
+  IN  Q: What is a republic, and what a monarchy?
+  IN  A: A country governed by men who are chosen by the people is called a republic. A monarchy is a government â€˜in which the chief power passes by inheritance, and the ruler holds his authority for life.
+  OUT Q: What is a republic, and what a monarchy?
+  OUT A: A country governed by men who are chosen by the people is called a republic. A monarchy is a government in which the chief power passes by inheritance, and the ruler holds his authority for life.
+
+[laborers--138]
+  IN  Q: mately pay all the taxes?
+  IN  A: It is. Why so? Because direct taxes which are apportioned among states or other divisions according to the number of persons, as provided by the Federal Constitution (article 1, section 9, paragraph 4), do not fall upon the tax-dodger with as much justice as when they are apportioned among the states or other divisions, according to the value of the property held and owned within the states or other divisions. Taxes that fall on the owners of real and personal property according to value, fall with less weight on the enterprising, and more weight on the monopolizing.
+  OUT Q: mately pay all the taxes?
+  OUT A: It is. Why so? Because direct taxes which are apportioned among states or other divisions according to the number of persons, as provided by the Federal Constitution (article 1, section 9, paragraph 4), do not fall upon the tax-dodger with as much justice as when they are apportioned among the states or other divisions, according to the value of the property held and owned within the states or other divisions. Taxes that fall on the owners of real and personal property according to value, fall with less weight on the enterprising, and more weight on the monopolizing.
+
+[common-core--940]
+  IN  Q: What are the pursuits of the people of New Jersey?
+  IN  A: Chiefly agricultural. They supply the vegetable markets of New York and Philadelphia.
+  OUT Q: What are the pursuits of the people of New Jersey?
+  OUT A: Chiefly agricultural. They supply the vegetable markets of New York and Philadelphia.
+
+[music--123]
+  IN  Q: 3. Syncopation What is the meaning of syncopation ?
+  IN  A: Syncopation takes place when the unaccented part of a bar is joined with the next accented part : this happens — 1. When long notes are placed between two other notes of a shorter duration, as a half note between two quarter notes, or three quarters between two eighths. 2. When two notes are connected by a tie, either in the middle of a bar, or from the last note of a bar to the first of the next. When syncopation takes place, how can the pianoforte player keep time '.' The treble and bass seldom syncopate together; one part generally marks the time by equal notes. But should they go together, the pianist then should count while the syncopated note is sustained. 4. Legato ami Staccato
+  OUT Q: What is the meaning of syncopation?
+  OUT A: Syncopation takes place when the unaccented part of a bar is joined with the next accented part : this happens — 1. When long notes are placed between two other notes of a shorter duration, as a half note between two quarter notes, or three quarters between two eighths. 2. When two notes are connected by a tie, either in the middle of a bar, or from the last note of a bar to the first of the next. When syncopation takes place, how can the pianoforte player keep time? The treble and bass seldom syncopate together; one part generally marks the time by equal notes. But should they go together, the pianist then should count while the syncopated note is sustained.
+
+[advanced-questions--431]
+  IN  Q: "What rank lowest among vertebrates?
+  IN  A: Fishes (pisces), "They fall far behind the rest in strength, intelligence and sensibility. The eyes, though large, are almost immovable, bathed by no tears, and pro- tected by no lids. Dwelling in the realm of sileoce, ears are little needed, and such as they have are without exter- nal parts, the sound being obliged to pass through the cranium. Taste and smell are blunted and touch is nearly confined to the lips. Destitute of the means of social in- tercourse (being almost mute), their chief enjoyment is to eat, and to be eaten is the end of their existence. But the class jields to no other in the number and variety of its forms. It includes nearly one -half of all the vertebrate species."
+  OUT Q: What rank lowest among vertebrates?
+  OUT A: Fishes (pisces), "They fall far behind the rest in strength, intelligence and sensibility. The eyes, though large, are almost immovable, bathed by no tears, and protected by no lids. Dwelling in the realm of silence, ears are little needed, and such as they have are without external parts, the sound being obliged to pass through the cranium. Taste and smell are blunted and touch is nearly confined to the lips. Destitute of the means of social intercourse (being almost mute), their chief enjoyment is to eat, and to be eaten is the end of their existence. But the class yields to no other in the number and variety of its forms. It includes nearly one-half of all the vertebrate species."
+
+[engineering--606]
+  IN  Q: If in the above example, instead of exhausting against a back pressure, a condenser had been used, in which there was a vacuum of 22 inches, what would have been the gain in power ?
+  IN  A: Since each inch of vacuum corresponds to about |- pound, the back pressure would be 22 X ^ == 11 pounds less than atmospheric, or 14.7 — 11 = 3.7 pounds absolute. Hence the mean effective pressure = 56.45 — 3.7 = 52.75 pounds, .,. T 52.75X113.1 X600 ,^^ and the horse-power ^ = 108. That is, the gain in power would be 108 — 75 = 33 horse-power, or over 40 per cent. The table on the following pages is calculated for different cylinder diameters from 4 inches to 5 feet and for piston speeds of 300 to 600 feet per minute. To find the horse-power of any engine 184 Horse-Power per Pound Mean Effective Pressure. 2'«'^ Speed of Piston in Feet per Minute. s 5 300 350 400 450 500 550 600 Inches. 4 .114 .133 .152 .171 .19 .209 .228 4>^ .144 .168 .192 .216 .24 .264 .288 5 .18 .21 .24 .27 .30 .33 .36 5>^ .216 .252 .288 .324 .36 .396 .432 6 .256 .299 .342 .385 .428 .471 .513 .807 .391 .409 .461 .512 .563 .614 7 .348 .408 .466 .524 .583 .641 .699 "ly, .401 .468 .534 .602 .669 .735 .802 8 .456 .532 .608 .685 .761 .837 .912 8>^ .516 .602 .688 .774 .86 .946 1.032 9 .577 .674 .770 .866 .963 1.059 1.154 .644 .751 .859 .966 1.074 1.181 1.288 10 .714 .833 .952 1.071 1.390 1.309 1.428 10^ .787 .919 1.050 1.181 1.313 1.444 1.575 11 .864 1.008 1.152 1.296 1.44 1.584 1.728 113^ .943 1.1 1.257 1.414 1.572 1.729 1.886 12 ^ 1.025 1.195 1.366 1.540 1.708 1.880 2.050 13 1.206 1.407 1.608 1.809 2.01 2.211 2.412 14 1.398 1.631 1.864 2.097 2.331 2.564 2.797 15 1.606 1.873 2.131 2.409 2.677 2.945 3.212 16 1.827 2.131 2.436 2.741 3.045 3.349 3.654 17 2.054 2.396 2.739 3.081 3.424 3.766 4.108 18 2.312 2.697 3.083 3.468 3.854 4.239 4.624 19 2.577 3.006 3. 436 3.865 4.295 4.724 5.154 20 2.855 3.331 3.807 4.265 4.7r9 5.234 5.731 21 3.148 3.672 4.197 4.722 5.247 5.771 6.296 22 3.455 4.031 4.607 5.183 5.759 6.334 6.911 23 3.776 4.405 5.035 5.664 6.294 6.923 7.552 24 4.111 4.797 5.482 6.167 6.853 7.538 8.223 25 4.461 5.105 5.948 6.692 7.436 8.179 8.923 26 4.826 5.630 6.435 7.2.39 8.044 8.848 9.652 27 5.199 6.066 6.932 7.799 8.666 9.532 10.399 28 5.596 6.529 7.462 8.395 9.. 328 10.261 11.193 29 6.006 7.007 8.008 9.009 10.01 11.011 12.012 185 Horse-Power per Pound Mean Effective Pressure. Speed of Piston in Feet per Minute. 2 o = 5 5 300 350 400 450 500 550 600 Inches. 30 6.426 7.497 8.568 9.639 10.71 11.781 12.852 31 6.865 8.001 9.144 10.287 11.43 12.573 13.716 32 7.308 8.526 9.744 10.962 12.18 13.398 14.616 33 7.770 9.065 10.360 11.655 12.959 14.245 15.54 34 8.238 9.611 10.984 12.357 13.73 15.103 16.476 35 8.742 10.199 11.656 13.113 14.57 16.027 17.484 36 9.252 10.794 12.336 13.878 15.42 16.962 18.504 37 9.774 11.403 13.032 14.861 16.29 17.919 19.548 38 10.308 12.026 13.744 15.462 17.18 18.898 20.616 39 10.86 12.67 14.48 16.29 18.1 19.91 21.62 40 11.424 13.328 15.232 17.136 19.04 20.944 22.848 41 12.006 14.007 16.008 18.009 20.00 22.011 24.012 42 12.594 14.693 16.792 18.901 20.99 23.089 25.188 48 13.20 15.4 17.6 19.8 22.0 24.2 26.4 44 13.818 16.121 18.424 20.727 23.03 25.333 27.636 45 14.454 16.863 19.272 21.681 24.09 26.339 28.908 46 15.128 •17.626 20.144 22.662 25.18 27.698 30.216 47 15.768 18.396 21.024 23.652 26.28 28.908 31.536 48 16.446 19.187 21.928 24.669 27.41 30.151 32.152 49 17.142 19.999 22.856 25.713 28.57 31.427 34.284 50 17.85 20.825 23.8 26.775 29.75 32.725 35.7 51 18.54 21.665 24.76 27.855 30.95 34.045 37.08 52 19.296 22.512 2.5.728 28.944 32.16 35.376 38.592 53 20.052 23.394 26.736 30.078 33.42 36.762 40.104 54 20.82 24.29 27.76 31.23 34.7 38.17 41.64 ■ 55 21.594 25.193 28.792 32.391 35.99 39.589 4.3.188 56 22.386 26.117 29.848 33.579 37 31 41.041 44.772 57 23.196 27.062 30.928 34.794 38.66 42.526 46.392 58 24.018 28.021 32.024 36.027 40.03 44.033 48.036 59 24.852 28.994 33.136 37.278 41.42 45.562 49.704 60 25.698 29.981 34.264 38.547 42.83 47.113 51.396 by means of this table, multipl}^ twice the number of revolutions per minute by the length of stroke in feet. This will give the piston speed in feet per minute. Look up the horse-power from the 186 koper's catechism for table for this piston speed and the proper diameter of cyHnder and multiply it by the mean effective pressure. Take the above example as an illustration; the piston speed was found to be 600 feet per minute, and hence for a 12-inch cylinder the horse-power from the table is 2.05 for each pound of mean effective pressure. Hence multiplying this by the mean effective pressure, 52.75, we have 52.75 X 2.05 = 108 horse-power.
+  OUT Q: If in the above example, instead of exhausting against a back pressure, a condenser had been used, in which there was a vacuum of 22 inches, what would have been the gain in power?
+  OUT A: Since each inch of vacuum corresponds to about ½ pound, the back pressure would be 22 × ½ = 11 pounds less than atmospheric, or 14.7 – 11 = 3.7 pounds absolute. Hence the mean effective pressure = 56.45 – 3.7 = 52.75 pounds. Hence the horse-power = (52.75 × 113.1 × 600) / 33,000 = 108. That is, the gain in power would be 108 – 75 = 33 horse-power, or over 40 per cent. The table on the following pages is calculated for different cylinder diameters from 4 inches to 5 feet and for piston speeds of 300 to 600 feet per minute. To find the horse-power of any engine
+
+Horse-Power per Pound Mean Effective Pressure.
+Speed of Piston in Feet per Minute.
+
+Inches. 300 350 400 450 500 550 600
+
+4 .114 .133 .152 .171 .19 .209 .228
+4½ .144 .168 .192 .216 .24 .264 .288
+5 .18 .21 .24 .27 .30 .33 .36
+5½ .216 .252 .288 .324 .36 .396 .432
+6 .256 .299 .342 .385 .428 .471 .513
+6½ .307 .391 .409 .461 .512 .563 .614
+7 .348 .408 .466 .524 .583 .641 .699
+7½ .401 .468 .534 .602 .669 .735 .802
+8 .456 .532 .608 .685 .761 .837 .912
+8½ .516 .602 .688 .774 .86 .946 1.032
+9 .577 .674 .770 .866 .963 1.059 1.154
+9½ .644 .751 .859 .966 1.074 1.181 1.288
+10 .714 .833 .952 1.071 1.390 1.309 1.428
+10½ .787 .919 1.050 1.181 1.313 1.444 1.575
+11 .864 1.008 1.152 1.296 1.44 1.584 1.728
+11½ .943 1.1 1.257 1.414 1.572 1.729 1.886
+12 1.025 1.195 1.366 1.540 1.708 1.880 2.050
+13 1.206 1.407 1.608 1.809 2.01 2.211 2.412
+14 1.398 1.631 1.864 2.097 2.331 2.564 2.797
+15 1.606 1.873 2.131 2.409 2.677 2.945 3.212
+16 1.827 2.131 2.436 2.741 3.045 3.349 3.654
+17 2.054 2.396 2.739 3.081 3.424 3.766 4.108
+18 2.312 2.697 3.083 3.468 3.854 4.239 4.624
+19 2.577 3.006 3.436 3.865 4.295 4.724 5.154
+20 2.855 3.331 3.807 4.265 4.719 5.234 5.731
+21 3.148 3.672 4.197 4.722 5.247 5.771 6.296
+22 3.455 4.031 4.607 5.183 5.759 6.334 6.911
+23 3.776 4.405 5.035 5.664 6.294 6.923 7.552
+24 4.111 4.797 5.482 6.167 6.853 7.538 8.223
+25 4.461 5.105 5.948 6.692 7.436 8.179 8.923
+26 4.826 5.630 6.435 7.239 8.044 8.848 9.652
+27 5.199 6.066 6.932 7.799 8.666 9.532 10.399
+28 5.596 6.529 7.462 8.395 9.328 10.261 11.193
+29 6.006 7.007 8.008 9.009 10.01 11.011 12.012
+
+Horse-Power per Pound Mean Effective Pressure.
+Speed of Piston in Feet per Minute.
+
+Inches. 300 350 400 450 500 550 600
+
+30 6.426 7.497 8.568 9.639 10.71 11.781 12.852
+31 6.865 8.001 9.144 10.287 11.43 12.573 13.716
+32 7.308 8.526 9.744 10.962 12.18 13.398 14.616
+33 7.770 9.065 10.360 11.655 12.959 14.245 15.54
+34 8.238 9.611 10.984 12.357 13.73 15.103 16.476
+35 8.742 10.199 11.656 13.113 14.57 16.027 17.484
+36 9.252 10.794 12.336 13.878 15.42 16.962 18.504
+37 9.774 11.403 13.032 14.861 16.29 17.919 19.548
+38 10.308 12.026 13.744 15.462 17.18 18.898 20.616
+39 10.86 12.67 14.48 16.29 18.1 19.91 21.62
+40 11.424 13.328 15.232 17.136 19.04 20.944 22.848
+41 12.006 14.007 16.008 18.009 20.00 22.011 24.012
+42 12.594 14.693 16.792 18.901 20.99 23.089 25.188
+43 13.20 15.4 17.6 19.8 22.0 24.2 26.4
+44 13.818 16.121 18.424 20.727 23.03 25.333 27.636
+45 14.454 16.863 19.272 21.681 24.09 26.339 28.908
+46 15.128 17.626 20.144 22.662 25.18 27.698 30.216
+47 15.768 18.396 21.024 23.652 26.28 28.908 31.536
+48 16.446 19.187 21.928 24.669 27.41 30.151 32.152
+49 17.142 19.999 22.856 25.713 28.57 31.427 34.284
+50 17.85 20.825 23.8 26.775 29.75 32.725 35.7
+51 18.54 21.665 24.76 27.855 30.95 34.045 37.08
+52 19.296 22.512 25.728 28.944 32.16 35.376 38.592
+53 20.052 23.394 26.736 30.078 33.42 36.762 40.104
+54 20.82 24.29 27.76 31.23 34.7 38.17 41.64
+55 21.594 25.193 28.792 32.391 35.99 39.589 43.188
+56 22.386 26.117 29.848 33.579 37.31 41.041 44.772
+57 23.196 27.062 30.928 34.794 38.66 42.526 46.392
+58 24.018 28.021 32.024 36.027 40.03 44.033 48.036
+59 24.852 28.994 33.136 37.278 41.42 45.562 49.704
+60 25.698 29.981 34.264 38.547 42.83 47.113 51.396
+
+by means of this table, multiply twice the number of revolutions per minute by the length of stroke in feet. This will give the piston speed in feet per minute. Look up the horse-power from the table for this piston speed and the proper diameter of cylinder and multiply it by the mean effective pressure. Take the above example as an illustration; the piston speed was found to be 600 feet per minute, and hence for a 12-inch cylinder the horse-power from the table is 2.05 for each pound of mean effective pressure. Hence multiplying this by the mean effective pressure, 52.75, we have 52.75 × 2.05 = 108 horse-power.
+

@@ -1,0 +1,43 @@
+stage: extracted
+seed:  42
+n:     10
+
+[brewers-guide--668]
+  Q: Why does a white crust appear (in hot weather) upon clothes wetted by sea water?
+  A: The white crust is the salt of the water left on the clothes by evaporation.
+
+[1001-questions--819]
+  Q: Who succeeded him ?
+  A: Ciiarles I. (1625-1649).
+
+[common-core--1369]
+  Q: How is the passive form expressed? How the pro- gressive?
+  A: id _ The passive form is expressed by combining the verb Ze, or some of its variations, with the perfect participle. The progressive form represents the continuation of the act or state, and is formed by combining the verb Je, or some of its variations, with the present participle. 244 COMMON SCHOOL QUESTION BOOK.
+
+[common-core--381]
+  Q: When was Texas admitted into the Union? Why was their petition at first rejected?
+  A: December 27, 1845. She had applied for admission in
+
+[civil-war--1625]
+  Q: Did the Food Board under took more than half of the entire total Hoover have power to fix retail £r enoush to f5ed .fubout 8,000000 men, ? c France was next, with enough for 4,200,- pnces. 000 men> ancj jtajy sumcient for more
+  A: No. Congress declined to give than 2,000,000. men. The three together such powers, and it is probably correct received an excess of protein capable of to say that the Administration did not supplying this portion of the diet to strongly desire them, because of comsome 20,000,000 additional men. plications and opposition that could be foreseen readily enough. V- — Dld we ship much food abroad in February, 191 8? Q.— How, then, did the GovernA.— The exports of grains and cereals, ment succeed in regulating reincluding flour, to the Allied nations and tail dealers? f°r Belgium relief work totaled 553,425 . T ,., . <( ,„ ., . (( tons for the month of February, 1918. A— It did not^ succeed, if by sueA tabulation of the exports of grains ceed you mean m keeping retail prices and cereals by weeks was : down to prescribed levels. It did, howTons ever, succeed in a very large sense, for peD 1 to 7.. 846^8 it established not only a strong and inpetj' g to 14!!! iso'oq1; telligent public opinion but also a general Feb. 15 to 21.'.! 14V82Q clear perception among the retail merFeb. 22 to 28.'. ..'.'..'.'.'.'. ...'.'...'. 174847 chants of the whole country that they * ' must exercise discretion and moderation. Total 557420 Q.— Did the Food Board exercise Q._Did our total food exports rise only moral influence? in 1917? A.— Technically and legally speaking, A.— The Bureau of Domestic and Foryes. But in actuality Hoover's machinery eign Commerce reported early in 1918 had a very real and very powerful weathat during 1917 dairy and meat product pon to compel observance of rules that exports had jumped to new high figures had no statute law behind them. This but cereal exports had declined. The exweapon lay in the legal control which ports of meat, dairy products and food Congress had given to the Food Board animals in 1917 exceeded $400,000,000, over the wholesale system of food supagainst less than $150,000,000 in the year plies. Under a licensing system for before the war, and against $255,000,000 wholesalers, the Food Board was able, in in the high record year 1916. Part of actual practice, to divert supplies from this increased value is due, of course, to retail dealers who transgressed the rules, the vastly higher prices; but the actual quantities have increased enormously.
+
+[brewers-guide--1592]
+  Q: Why is sugar white?
+  A: Sugar consists of a vast number of small crystals, which separate the rays into their elemental colours; but as these crystals are very numerous, the colours unite again before they meet the eye, and appear white.
+
+[brewers-guide--378]
+  Q: Why does cold produce hunger?
+  A: 1st—The air contains more oxygen in cold weather; and as fires burn fiercer, so animal combustion is more rapid: and 2ndly—We are more active in cold weather; and increased respiration acts like a pair of bellows on the capillary combustion.
+
+[school-bulletin--542]
+  Q: How can two sounds produce silence ? If two sounds meet in exactly opposite phases, and the two forces are equal, they balance each other, and silence ensues. A sound added to a sound will produce silence. Likewise two motions may produce rest; two lights may cause darkness ; two heats may produce cold. Query.— What are the divisions of wind instruments? What is a Siren? 46. Define heat — -the science of Pyronomics.
+  A:  Heat is motion. The molecules of a body are in constant motion. 350 Dime Question Books. When we increase the rapidity of this movement, we heat the body. When we decrease it, we cool the body. Query.— What is the caloric theory f What is sensible heat?
+
+[botany--141]
+  Q: What stages of development are comprised in the life-history of a dicotyledon?
+  A: All thestages from the germination of the ripe seed to the production of ripe seed.
+
+[familiar-things--600]
+  Q: To what did this revolution in its history give rise?
+  A: It caused it to be distinguished into ancient and modern. The ancient painting comprehends the Greek and Roman: the modern has formed several schools, each of which has its peculiar character and merit. The first masters who revived the art were greatly surpassed by their scholars, who carried it to the greatest state of perfection, and advanced it not only by their own noble works, but also by those of their pupils.

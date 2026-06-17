@@ -1,0 +1,43 @@
+stage: extracted
+seed:  252
+n:     10
+
+[1001-questions--531]
+  Q: What was done to the people of Alba Longa ?
+  A: They were taken to Rome and located on the Coelian Hill. The Albans and Romans now became one nation as the Sabines and Romans had in the days of Romulus.
+
+[common-core--1924]
+  Q: What is a good plan for studying history?
+  A: On this subject the teacher should be thoroughly informed. He should map out the points of greatest interest, and as the class advances give the subdivisions. Do not be afraid to call up a subject at the beginning, the middle, or the end. Review is the great secret of success. _
+
+[school-bulletin--386]
+  Q: What causes favor chemical action ? Am — Heat and light; and solution aids in chemical change, as it destroys cohesion and leaves the atoms free to unite. 3. What is Synthesis ?
+  A:  The puttiug of substances together to form chemical compounds; it may occur with different degrees of energy. It takes place: 1. In constant proportions between the same elements. 2. In multiple proportions between the same elements. 3. In constant or multiple proportions for all elements. 264 Dime Question Book. .Note.— The compounds formed are binary, ternary or double. jfliey may be formed : 1. By the simple bringing together of substances under conditions favorable to chemical action. 2. By the substitution of one substance for another in a given compound [substitution). 8. By interchanging of substances in two given compounds (metathesis or double substitution).
+
+[chemistry--109]
+  Q: Is the bulk of air subject to change ?
+  A: Yes. It is influenced by temperature as well as pressure. The resistance of the air is in proportion to its compression.
+
+[civil-war--678]
+  Q: What was Dr. McCarthy's general verdict on the German prison camps?
+  A: There were so many various aspects that he could not make a summingup that would be comprehensive. He says that he found prisons appallingly bad, and he found prisons really good: commandants and guards who were brutal, and others who were considerate, kind, and intelligent. Some working camps were bad, some satisfactory. As an outstanding example of a bad camp; Dr. McCarthy describes that at Minden, which was one of the worst in Germany, and whose conditions he found not only bad but "inexcusable." One of the best of the "parent" camps was that at Friedrichsfeld, which had been remodeled, Dr. McCarthy explains, "so as to make it comfortable. There was a splendid organization of the camp and every effort was being made to make the men comfortable, guard their health, give them mental and physical relaxation, and to refit them for more useful work in the future."
+
+[electricity--277]
+  Q: What is a fuse?
+  A: There are two entirely different devices called by the same name and based upon the heating effect of the current, one being used for firing explosives. The safety fuse referred to In connection with insurance rules is a special part of an electric circuit, designed to carry the ordinary amount of current, but to melt and open the circuit in case the current becomes great enough to heat any other part of the circuit beyond a safe temperature. The fuse is made of such material and dimensions that its resistance is considerably higher than an equal length of the rest of the circuit. Since the heat developed equals the product of the resistance by the square of the current, the fuse is continually at a higher temperature than other parts of the circuit (except, of course, lamps and other heating devices) ; as its melting temperature is generally comparatively low, an increase of current above that for which the circuit is designed will raise the fuse to its melting temperature, so that it will fall away and open the circuit.
+
+[common-core--1537]
+  Q: What would be the result ife final were not silent?
+  A: Two syllables would be formed for one.
+
+[investors--379]
+  Q: What is an undertone ?
+  A: Used in designating the underlying strength or weakness of the markets by financial letter writers, as "The market had a strong undertone."
+
+[mythology--222]
+  Q: Why does Phoebus refuse to impart his wisdom to Hermes ?
+  A: Because the rays of the sun can go down far beneath the surface of the sea, and shoot out rough the vast expanse of heaven, where the eath of the wind can never be felt (^243) What powers does Phoebus give him return for his lyre ? He is made the guardian of the steeds of the on, and receives a scourge with which to drive lem. In other words, the bright clouds must lOve across the sky when the wind drives them. [e is also told that his music shall cheer and )othe the children of men, and that his breath lall waft the spirits of the dead to their unseen ome.
+
+[common-core--995]
+  Q: Ls this country inhabited?
+  A: It is, by a Mongolian tribe called Laplanders. They own herds of reindeer, which supply them with food, cloth- ing and means of traveling. GEOGRAPHY. 189

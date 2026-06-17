@@ -1,0 +1,185 @@
+model: claude-haiku-4-5
+seed:  44
+n:     40
+batch: None
+pool:  23 currently flagged pairs
+
+--- RETRY SYSTEM PROMPT ---
+You are an OCR correction assistant for public-domain texts published before 1930.
+You are reviewing a batch of Q&A pairs that a previous pass flagged but did NOT fix.
+Your job now is to actually fix them — do not echo text back unchanged unless it is
+already perfect. Be aggressive about fixing — the source texts are legitimate
+pre-1930s works, so fix confidently.
+
+Fix all of the following:
+- Missing or extra spaces (Whatis → What is, "Biography ?" → "Biography?")
+- Single-character letter substitutions (ts → is, ln → in, rn → m, 4 → A when clearly a letter)
+- Broken hyphenation across lines (na- tions → nations)
+- Unicode/encoding artifacts (Â¢ → ¢, â€™ → ', Ã© → é, â€” → —, â€˜/â€™ → ' or ‘’)
+- Obvious misrecognized words (tbe → the, liow → how, witb → with)
+- Missing terminal period on an answer that is clearly a complete sentence
+- Embedded page references or section headers anywhere in the text (e.g. "FRANCE. 107",
+  "6 EGYPT.", "244 COMMON SCHOOL QUESTION BOOK." — remove these entirely)
+
+Never alter grammar or word choice. Fix only what is clearly a scanning artifact.
+"Whom", archaic verb forms, and pre-1930s constructions are correct as-is.
+
+Set "flagged": true ONLY if you personally replaced a word/term with something that
+could be an anachronism — a word, term, or concept that did not exist before 1930.
+Do NOT flag merely because the subject matter is war, politics, or sensitive history.
+If you made no risky word substitution, set "flagged": false.
+
+Discard if the text is so severely garbled that no meaningful content can be recovered, or
+if either field contains structural bleed — embedded answer text followed by additional
+questions (e.g. "Q 1. ... A. ... Q 2." patterns, or "A— ..." mid-question), or if the
+answer contains a multi-row numerical table or columnar data (legible or garbled) — tables
+are not meaningful prose for training and should not be preserved.
+When in doubt on OCR artifacts, fix and keep. Do not discard pairs that are merely messy.
+
+You will receive a JSON array of items, each with an "i" index, "q", and "a". Respond with
+a JSON array of the same length, each item matching one input by "i":
+  Fixed:           {"i": 0, "q": "...", "a": "..."}
+  Anachronism risk:{"i": 0, "q": "...", "a": "...", "flagged": true}
+  Unrecoverable:   {"i": 0, "discard": true}
+
+Respond with the JSON array only, no other text.
+
+--- END RETRY SYSTEM PROMPT ---
+[advanced-questions--195]
+  IN  Q: What is the story of Ixion !
+  IN  A: A king of Thessaly, who, for an unnatural crime, was banished from the society of mankind to the realms of Jupiter, where he made an attack upon the virtue of Juno. The angered gods seized him, and Mer- cury bound him upon the everlasting wheel over the abyss of Tartarus, and then compelled him to consort with the Magnesian mares on the planes of Pelion. Here was born the giant Centaurus, from whom a race of Centaurs filled the earth. Half horse, half man, the world trembled at their daring. Aesculapius was one of their students. IXION. Permitted with the feasting gods to sit, The bright, sun-clad, inflaming scene Within his blood the fires of passion lit, He dared to love Jove's queen. Smitten with thunder, hurled from heaven's height Headlong to hell— him Hermes bound Upon the wheel, which through eternal night Circles its restless round. % A myth symbolic, living from the old, Voicing through time, the well-earned fate Of him, who, spurning charms of mortal mould, Would with a goddess mate. a. P. S.
+  OUT Q: What is the story of Ixion?
+  OUT A: A king of Thessaly, who, for an unnatural crime, was banished from the society of mankind to the realms of Jupiter, where he made an attack upon the virtue of Juno. The angered gods seized him, and Mercury bound him upon the everlasting wheel over the abyss of Tartarus, and then compelled him to consort with the Magnesian mares on the plains of Pelion. Here was born the giant Centaurus, from whom a race of Centaurs filled the earth. Half horse, half man, the world trembled at their daring. Aesculapius was one of their students. Permitted with the feasting gods to sit, The bright, sun-clad, inflaming scene Within his blood the fires of passion lit, He dared to love Jove's queen. Smitten with thunder, hurled from heaven's height Headlong to hell— him Hermes bound Upon the wheel, which through eternal night Circles its restless round. % A myth symbolic, living from the old, Voicing through time, the well-earned fate Of him, who, spurning charms of mortal mould, Would with a goddess mate.
+
+[music--219]
+  IN  Q: How shall we find the relationship of the second degree from a major key ?
+  IN  A: By seeking out the four nearest related keys to each of the four nearest related keys of the key we first started from. Thus we know that G and F major, a and c minor, are the nearest related keys to c major. Now if Ave take G major from among these and render it the central point of a new relationship of the first degree, we find its result in the following figure : 				 1st figure 		 1 			 						 				 c 			 If 	 we 	 take F major 2d figure, 	 as a f- 	 central 1 -F— d B flat 	 point 	 Wf 	 find a minor will give us a third figure, e 3d figure I d and lastly, c minor results, thus : g Jfth figure E flat— c— C Now, if we separate from these tables of relationship, first, the starting keys, which are the four most nearly related to c major, we find as related to c major in the second degree, First figure : D major, g minor, e minor ; second figure : B flat major, d minor, f minor ; third figure : A major, e minor, d minor ; fourth figure : E flat major g minor, f minor ; d, e, f, and g minor appear twice, however, yet we find remaining, related in the second degree to c major : D, B flat, A and E flat major, g, d. f, and e minor.
+  OUT Q: [DISCARD]
+  OUT A: 
+
+[brewers-guide--64]
+  IN  Q: Why are the attics and cellar dangerous, during a thunder-storm?
+  IN  A: Lightning sometimes passes from the clouds to the earth, and sometimes from the earth to the clouds; and therefore, the middle story of a house is always the safest to be in, during a thunder-storm.
+  OUT Q: Why are the attics and cellar dangerous, during a thunder-storm?
+  OUT A: Lightning sometimes passes from the clouds to the earth, and sometimes from the earth to the clouds; and therefore, the middle story of a house is always the safest to be in, during a thunder-storm.
+
+[music--96]
+  IN  Q: How do you count triple time marked ? ?
+  IN  A: Generally three quarters in a bar. is b£=£ 12312 3128 However, in a slow movement, it is better to count six eighths in each bar. 33
+  OUT Q: [DISCARD]
+  OUT A: 
+
+[music--95]
+  IN  Q: How is the time of a musical composition to be counted ?
+  IN  A: Various ways, according to the number of parts contained in each bar; also, according to the speed of the movement. In common time marked C how is the time counted -.' The quarter being the measure note, generally four parts are counted in each bar. Moderato. «^ 4 12 3 4 1 3 4 1234 However, in a slow movement, it is better to subdivide each part, and to count eight eighth notes in each bar. 32 Grave. m 13 34 ft<aC t£dS ^■t t=t
+  OUT Q: [DISCARD]
+  OUT A: 
+
+[school-bulletin--2]
+  IN  Q: What were the first forms of literary art?
+  IN  A:  The Greek Literature. The oldest poems (poetry preceded prose) are the epics of Homer, — 880 B. C, — the Iliad (from Ilium, the name of Troy,) and the Odyssey. The Iliad is a history of the Trojan war, and the Odyssey describes the adventures of Ulysses, King of Ithaca, after the fall of Troy. Note.— Read Pope's or Bryant's translation. Query.— Who was Penelope ? What is an epic poem ? What English scholars have written on the authorship of Homer? Ans.— Barnes, Gladstone, and Blackie. Professor Joshua Barnes, of the University of Cambridge, England, in the reign of Queen Anne, who edited Homer, Anacreon, and Euripedes, wrote a poem to prove that Solomon was the author of the Iliad. His object was to raise money to publish his Homer.
+  OUT Q: What were the first forms of literary art?
+  OUT A: The Greek Literature. The oldest poems (poetry preceded prose) are the epics of Homer, — 880 B. C, — the Iliad (from Ilium, the name of Troy,) and the Odyssey. The Iliad is a history of the Trojan war, and the Odyssey describes the adventures of Ulysses, King of Ithaca, after the fall of Troy. Note.— Read Pope's or Bryant's translation. Query.— Who was Penelope? What is an epic poem? What English scholars have written on the authorship of Homer? Ans.— Barnes, Gladstone, and Blackie. Professor Joshua Barnes, of the University of Cambridge, England, in the reign of Queen Anne, who edited Homer, Anacreon, and Euripides, wrote a poem to prove that Solomon was the author of the Iliad. His object was to raise money to publish his Homer.
+
+[brewers-guide--145]
+  IN  Q: What are the peculiar characteristics of hydrogen gas?
+  IN  A: Though this gas itself will burn, yet a candle will not burn when immersed in it; nor can an animal live in it. Hydrogen gas is the lightest of all known substances.[7] [7] Hydrogen gas may be made thus:—Put some pieces of zinc or iron filings into a glass: pour over them a little sulphuric acid (vitriol), diluted with twice the quantity of water; then cover the glass over for a few minutes, and hydrogen gas will be given off. Exp. If a flame be put into the glass, an explosion will be made. If the experiment be tried in a phial, which has a piece of tobacco-pipe run through the cork; and a light held a few moments to the top of the pipe, a flame will be made. If a balloon be held over the phial, (so that the gas can inflate it,) the balloon will ascend in a very few minutes.
+  OUT Q: What are the peculiar characteristics of hydrogen gas?
+  OUT A: Though this gas itself will burn, yet a candle will not burn when immersed in it; nor can an animal live in it. Hydrogen gas is the lightest of all known substances.[7] Hydrogen gas may be made thus:—Put some pieces of zinc or iron filings into a glass: pour over them a little sulphuric acid (vitriol), diluted with twice the quantity of water; then cover the glass over for a few minutes, and hydrogen gas will be given off. Exp. If a flame be put into the glass, an explosion will be made. If the experiment be tried in a phial, which has a piece of tobacco-pipe run through the cork; and a light held a few moments to the top of the pipe, a flame will be made. If a balloon be held over the phial, (so that the gas can inflate it,) the balloon will ascend in a very few minutes.
+
+[civil-war--1746]
+  IN  Q: What were the other battles?
+  IN  A: Blenheim, where, in 1704, Marlborough, commanding German, British and Dutch troops, defeated the French and thus destroyed the vast fabric of power built up by Louis XIV. It is interesting to recall that the Irish Brigade, fighting for the French, almost turned defeat into victory. Pultowa, where Peter the Great defeated Charles of Sweden in 1709. This victory marked the entry of Russia into history as a European power, and with it began the decline of Sweden. It also marked the beginning of rivalry between Slav and Teuton, one of the deeper excuses for the world-devastating struggle of our day. Saratoga, where, in 1777, the Americans, under Gates and Arnold, defeated the British under Burgoyne and captured his army. Though few men were engaged, the victory was immediately important. Valmy, where the armies of the French Republic won their first victory in 1792. The battle saved Paris and the French democracy. Waterloo, where, in 1815, the British, Dutch, Brunswickers and Belgians, under Wellington, and the Prussians, under Blucher, defeated Napoleon, and completed the destruction of the mighty empire he had built up. At that time a von Bulow, by the way, commanded one of the Prussian army corps.
+  OUT Q: What were the other battles?
+  OUT A: Blenheim, where, in 1704, Marlborough, commanding German, British and Dutch troops, defeated the French and thus destroyed the vast fabric of power built up by Louis XIV. It is interesting to recall that the Irish Brigade, fighting for the French, almost turned defeat into victory. Pultowa, where Peter the Great defeated Charles of Sweden in 1709. This victory marked the entry of Russia into history as a European power, and with it began the decline of Sweden. It also marked the beginning of rivalry between Slav and Teuton, one of the deeper excuses for the world-devastating struggle of our day. Saratoga, where, in 1777, the Americans, under Gates and Arnold, defeated the British under Burgoyne and captured his army. Though few men were engaged, the victory was immediately important. Valmy, where the armies of the French Republic won their first victory in 1792. The battle saved Paris and the French democracy. Waterloo, where, in 1815, the British, Dutch, Brunswickers and Belgians, under Wellington, and the Prussians, under Blucher, defeated Napoleon, and completed the destruction of the mighty empire he had built up. At that time a von Bulow, by the way, commanded one of the Prussian army corps.
+
+[music--74]
+  IN  Q: What is a major third ?
+  IN  A: When from the tonic to the third note above there are four semitones (on the pianoforte five keys), the third is major, and the key is called a major key. C, E, is a major third. Semitones. Major Third. „ 1 a 3 4 3=£
+  OUT Q: [DISCARD]
+  OUT A: 
+
+[music--102]
+  IN  Q: Where are these words placed ?
+  IN  A: After the Italian word denoting the speed of the move ment, thus : Andante affetuoso. Allegro agitato. Allegro con brio. Andan tino amoroso.
+  OUT Q: Where are these words placed?
+  OUT A: After the Italian word denoting the speed of the movement, thus: Andante affettuoso. Allegro agitato. Allegro con brio. Andantino amoroso.
+
+[music--114]
+  IN  Q: How are these trills performed ?
+  IN  A: 1. The passing trill is very short. i^^^m Written. Played. 2. turn. Tin .liiin trill is longer, but is not ended by a Written. Played. 3. The trill with « turn, which duced at the end of a piece, is playe illy intro- l thm ? *000000 0 0000 , , i Written. Played.
+  OUT Q: [DISCARD]
+  OUT A: 
+
+[civil-war--1607]
+  IN  Q: Did Grey continue to seek peace?
+  IN  A: Lichnowsky writes that after the refusal of conference and mediation, Sir Edward Grey asked Germany to come forward with a proposal. He says : "We insisted upon war. I could get no other answer than that it was an enormous 'concession' on the part of Austria to contemplate no annexation of territory. Thereupon Sir Edward justly pointed out that even without annexations of territory a country can be humiliated and subjected, and that Russia would regard this as a humiliation which she would not stand. The impression became ever stronger that we desired war in all circumstances. Otherwise our attitude in a question which, after all, did not directly concern us was unintelligible. The urgent appeals and definite declarations of M. Sazonoff (Russian Foreign Minister), later on the positively humble telegrams of the Czar, the repeated proposals of Sir Edward, the warnings of San Giuliano (Italian Foreign Minister), and of Bollati (Italian Ambassador in Berlin), my urgent advice — it was all of no use, for Berlin went on insisting that Serbia must be massacred. "The more I pressed, the less willing they were to alter their course, if only because I was not to have the success of saving peace in the company of Sir Edward Grey. "So Grey on July 29th resolved upon his well-known warning. I replied that I had always reported that we should have to reckon upon English hostility if it came to war with France. The Minister said to me repeatedly: 'If war breaks out it will be the greatest catastrophe the world has ever seen.' "
+  OUT Q: Did Grey continue to seek peace?
+  OUT A: Lichnowsky writes that after the refusal of conference and mediation, Sir Edward Grey asked Germany to come forward with a proposal. He says: "We insisted upon war. I could get no other answer than that it was an enormous 'concession' on the part of Austria to contemplate no annexation of territory. Thereupon Sir Edward justly pointed out that even without annexations of territory a country can be humiliated and subjected, and that Russia would regard this as a humiliation which she would not stand. The impression became ever stronger that we desired war in all circumstances. Otherwise our attitude in a question which, after all, did not directly concern us was unintelligible. The urgent appeals and definite declarations of M. Sazonoff (Russian Foreign Minister), later on the positively humble telegrams of the Czar, the repeated proposals of Sir Edward, the warnings of San Giuliano (Italian Foreign Minister), and of Bollati (Italian Ambassador in Berlin), my urgent advice — it was all of no use, for Berlin went on insisting that Serbia must be massacred. "The more I pressed, the less willing they were to alter their course, if only because I was not to have the success of saving peace in the company of Sir Edward Grey. "So Grey on July 29th resolved upon his well-known warning. I replied that I had always reported that we should have to reckon upon English hostility if it came to war with France. The Minister said to me repeatedly: 'If war breaks out it will be the greatest catastrophe the world has ever seen.' "
+
+[music--123]
+  IN  Q: 3. Syncopation What is the meaning of syncopation ?
+  IN  A: Syncopation takes place when the unaccented part of a bar is joined with the next accented part : this happens — 1. When long notes are placed between two other notes of a shorter duration, as a half note between two quarter notes, or three quarters between two eighths. 2. When two notes are connected by a tie, either in the middle of a bar, or from the last note of a bar to the first of the next. When syncopation takes place, how can the pianoforte player keep time '.' The treble and bass seldom syncopate together; one part generally marks the time by equal notes. But should they go together, the pianist then should count while the syncopated note is sustained. 4. Legato ami Staccato
+  OUT Q: What is the meaning of syncopation?
+  OUT A: Syncopation takes place when the unaccented part of a bar is joined with the next accented part: this happens — 1. When long notes are placed between two other notes of a shorter duration, as a half note between two quarter notes, or three quarters between two eighths. 2. When two notes are connected by a tie, either in the middle of a bar, or from the last note of a bar to the first of the next. When syncopation takes place, how can the pianoforte player keep time? The treble and bass seldom syncopate together; one part generally marks the time by equal notes. But should they go together, the pianist then should count while the syncopated note is sustained.
+
+[engineering--339]
+  IN  Q: How, then, would you fix the size of boilers for different engines, assuming that the horsepower of the boilers were based on the Centennial Rating?
+  IN  A: It is always well to have the boiler capacity a little in excess of that of the engine, because its efficiency is not impaired by operating it below its rated capacity. If the engine were of the highspeed, automatic cut-off, single-expansion, noncondensing type, I should rate the boiler about 10 per cent, higher than the engine; if of the same type, but condensing, about equal; if plain slide valve, non-condensing, with throttling governor, 40 to 50 per cent, higher; the same, condensing, 10 to 20 per cent, higher; if automatic or fourvalve non-condensing, about equal; the same, condensing, about 10 to 20 per cent, lower; if compound, high-speed, non-condensing, about 10 per cent, lower; the same, condensing, 15 to 25 per cent, lower ; if compound, fourvalve, or Corliss, non-condensing, 10 to 15 per cent, lower; the same, condensing, 25 to 35 per cent, lower; if triple expansion, non-condensing, 10 to 15 per cent, lower; the same, condensing, 35 to 45 per cent, lower.
+  OUT Q: How, then, would you fix the size of boilers for different engines, assuming that the horsepower of the boilers were based on the Centennial Rating?
+  OUT A: It is always well to have the boiler capacity a little in excess of that of the engine, because its efficiency is not impaired by operating it below its rated capacity. If the engine were of the high-speed, automatic cut-off, single-expansion, noncondensing type, I should rate the boiler about 10 per cent, higher than the engine; if of the same type, but condensing, about equal; if plain slide valve, non-condensing, with throttling governor, 40 to 50 per cent, higher; the same, condensing, 10 to 20 per cent, higher; if automatic or fourvalve non-condensing, about equal; the same, condensing, about 10 to 20 per cent, lower; if compound, high-speed, non-condensing, about 10 per cent, lower; the same, condensing, 15 to 25 per cent, lower; if compound, fourvalve, or Corliss, non-condensing, 10 to 15 per cent, lower; the same, condensing, 25 to 35 per cent, lower; if triple expansion, non-condensing, 10 to 15 per cent, lower; the same, condensing, 35 to 45 per cent, lower.
+
+[symbological--68]
+  IN  Q: What are we to understand from Rev. i8: 9, 15-18, to the effect that the kings of the earth, and the merchants thereof, and every shipmaster, and all sailors, and all that trade by sea are to see the smoke of her burning? Or rather, is it not too manifest from all this that no city in any sense is or will ever be possible to such conditions?
+  IN  A: While Mystery Babylon may not be a city under the current force of that term, yet is she and will be a real city, being composed of inhabitants and buildings, just as all inhabited cities are. But not being a concentered, but, to the contrary, a distributed city, portions of her being found in most every city, town and village within those countries that are, and ^'ill be found within those limits, at least such as the old Romish imperial system as a whole would prescribe; therefore, will it be no mystery at all when her final calamity shall come, that the kings of the earth and all that habitually traverse the sea are to behold the smoke of her burning, considering, especially, that a few years, at least, may be required to effect her complete dispatchment.
+  OUT Q: What are we to understand from Rev. 18:9, 15-18, to the effect that the kings of the earth, and the merchants thereof, and every shipmaster, and all sailors, and all that trade by sea are to see the smoke of her burning? Or rather, is it not too manifest from all this that no city in any sense is or will ever be possible to such conditions?
+  OUT A: While Mystery Babylon may not be a city under the current force of that term, yet is she and will be a real city, being composed of inhabitants and buildings, just as all inhabited cities are. But not being a concentered, but, to the contrary, a distributed city, portions of her being found in most every city, town and village within those countries that are, and will be found within those limits, at least such as the old Romish imperial system as a whole would prescribe; therefore, will it be no mystery at all when her final calamity shall come, that the kings of the earth and all that habitually traverse the sea are to behold the smoke of her burning, considering, especially, that a few years, at least, may be required to effect her complete dispatchment.
+
+[seeleys--136]
+  IN  Q: Who is the acknowledged head of American novelists ?
+  IN  A: Nathanie! Hawthorne is acknowledged to be the head of American novelists. He is noted for his analytical insight and his command of all that is quaint, delicate, and suggestive, in the English language. His writings are largely psychological narratives which hinge upon the action of conscience. ‘The Scarlet Letter,” ‘(Marble Faun,’’ ‘‘House of Seven Gables’’ are his chief novels. His short stories and sketches were published under the title of ‘‘T'wice-Told Tales’’ and ‘‘Mosses from an Old Manse.”’
+  OUT Q: Who is the acknowledged head of American novelists?
+  OUT A: Nathaniel Hawthorne is acknowledged to be the head of American novelists. He is noted for his analytical insight and his command of all that is quaint, delicate, and suggestive, in the English language. His writings are largely psychological narratives which hinge upon the action of conscience. ‘The Scarlet Letter,’ ‘Marble Faun,’ ‘House of Seven Gables’ are his chief novels. His short stories and sketches were published under the title of ‘Twice-Told Tales’ and ‘Mosses from an Old Manse.’
+
+[music--26]
+  IN  Q: Describe their shape ?
+  IN  A: 1. The whole note is an open oval, written thus: a 2. The half is an oval with a stem : j* 3. The quarter is a black dot with a stem : f 4. The eighth is a black dot with a stem and a dash attached : £ 5. The sixteenth has two dashes to its stem : 5 (>. The thirty-second has three dashes to its stem: £
+  OUT Q: Describe their shape?
+  OUT A: 1. The whole note is an open oval, written thus: a 2. The half is an oval with a stem : j* 3. The quarter is a black dot with a stem : f 4. The eighth is a black dot with a stem and a dash attached : £ 5. The sixteenth has two dashes to its stem : 5 (>. The thirty-second has three dashes to its stem: £
+
+[music--51]
+  IN  Q: Which is the third sharp ?
+  IN  A: Gsharp, the fifth note in alphabetical order above 0 sharp. 2d sharp. 3d sharp. *J 1 2 3 4. fi
+  OUT Q: Which is the third sharp?
+  OUT A: G sharp, the fifth note in alphabetical order above C sharp.
+
+[music--40]
+  IN  Q: What is a tone ?
+  IN  A: The interval comprising two semitones; as from C to ] ), from C sharp to D sharp, or from ( ! to B flat.
+  OUT Q: What is a tone?
+  OUT A: The interval comprising two semitones; as from C to D, from C sharp to D sharp, or from E ! to B flat.
+
+[electricity--528]
+  IN  Q: What is the arrangement of voltmeters that have different scales corresponding to different binding posts?
+  IN  A: Such instruments usually have only one galvanometer coil, but have a number of different resistances in series. One terminal connects directly with the galvanometer coil ; the terminal for the lowest scale is connected directly to the other terminal of the coil, or often to a small adjusted resistance coil in series with the coil; the next higher terminal connects with the circuit after it has passed through a second and higher resistance. The theory of the instrument is as indicated in Nos. 848 and 931. A certain current is required to move the pointer to a certain mark ; but the pressure or voltage necessary to send such current through the instrument depends upon the resistance of the circuit ; hence each terminal governing the resistance in series with the galvanometer coil determines which scale shall be read for the true voltage. For " multipliers " see No. 931.
+  OUT Q: What is the arrangement of voltmeters that have different scales corresponding to different binding posts?
+  OUT A: Such instruments usually have only one galvanometer coil, but have a number of different resistances in series. One terminal connects directly with the galvanometer coil ; the terminal for the lowest scale is connected directly to the other terminal of the coil, or often to a small adjusted resistance coil in series with the coil; the next higher terminal connects with the circuit after it has passed through a second and higher resistance. The theory of the instrument is as indicated in Nos. 848 and 931. A certain current is required to move the pointer to a certain mark ; but the pressure or voltage necessary to send such current through the instrument depends upon the resistance of the circuit ; hence each terminal governing the resistance in series with the galvanometer coil determines which scale shall be read for the true voltage. For " multipliers " see No. 931.
+
+[music--63]
+  IN  Q: How are the tones and semitones arranged in the major scale ?
+  IN  A: The major scale proceeds by two successive tones, followed by a semitone, then by three successive tones and a semitone ; for instance, the scale of C Major proceeds thus : from C to 1) a tone, from I) to E atone, from Eto F a semitone, from F to CI a tone, G to A a tone, A to I) a tone, B to C a semitone. 1234 5 678 * -> s> &- tone tone tone tone tone semitone semitone
+  OUT Q: How are the tones and semitones arranged in the major scale?
+  OUT A: The major scale proceeds by two successive tones, followed by a semitone, then by three successive tones and a semitone ; for instance, the scale of C Major proceeds thus : from C to D a tone, from D to E a tone, from E to F a semitone, from F to G a tone, G to A a tone, A to B a tone, B to C a semitone. 1234 5 678 * -> s> &- tone tone tone tone tone semitone semitone
+
+[laborers--69]
+  IN  Q: Why not?
+  IN  A: Capital is always some useful thing which confers on its owner "purchasiug power' ' and is generally accumulated so that it can be used to greater advantage in commanding the services of toilers or the valuable property of other owners. It is generally employed to increase the supply of useful and ornamental things desired by humanity. To make its owners pay any more taxes or rent than is exacted from the owners of any other kind of wealth, having value and not used as capital, is discriminating against the enterprising who are generally "capitalists" or the owners of capital. Because capital is capital or confers "purchasing power" on its owners, is no sensible reason for taxing it any more than other valuable wealth which is not used as capital. Taxes should be imposed only on valuable wealth or capital, according to the "purchasing-power" exercised by the owners, which shows, without exception, how badly those who have not the valuable wealth or capital, need it ; and also the extent of the advantages enjoyed by the owners of capital or valuable wealth.
+  OUT Q: Why not?
+  OUT A: Capital is always some useful thing which confers on its owner "purchasing power" and is generally accumulated so that it can be used to greater advantage in commanding the services of toilers or the valuable property of other owners. It is generally employed to increase the supply of useful and ornamental things desired by humanity. To make its owners pay any more taxes or rent than is exacted from the owners of any other kind of wealth, having value and not used as capital, is discriminating against the enterprising who are generally "capitalists" or the owners of capital. Because capital is capital or confers "purchasing power" on its owners, is no sensible reason for taxing it any more than other valuable wealth which is not used as capital. Taxes should be imposed only on valuable wealth or capital, according to the "purchasing-power" exercised by the owners, which shows, without exception, how badly those who have not the valuable wealth or capital, need it ; and also the extent of the advantages enjoyed by the owners of capital or valuable wealth.
+
+[music--34]
+  IN  Q: How many sixteenths ?
+  IN  A: Twelve. , A dotted half f ' is equal to 3 * f f or (5 f/ fj' [J* or 12 f f f f f f f f f f f *
+  OUT Q: How many sixteenths?
+  OUT A: Twelve. A dotted half f ' is equal to 3 * f f or (5 f/ fj' [J* or 12 f f f f f f f f f f f *
+

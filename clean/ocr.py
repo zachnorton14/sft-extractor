@@ -16,9 +16,12 @@ ROOT = Path(__file__).parent.parent
 INPUT_DIR = ROOT / "output" / "bleed"
 OUTPUT_DIR = ROOT / "output" / "ocr"
 STATE_FILE = ROOT / ".ocr_state.json"
-MODEL = "claude-opus-4-8"  # maps to deepseek-v4-pro via ANTHROPIC_BASE_URL
+MODEL = "claude-haiku-4-5"  # maps to deepseek-v4-flash via ANTHROPIC_BASE_URL
 MAX_TOKENS = 2048
 CONCURRENCY = 20
+RETRY_MAX_TOKENS = 16000
+MAX_PAIR_TOKENS = 2048   # pairs exceeding this are too long for training context — discard
+RETRY_TOKEN_BUDGET = 800  # max estimated q+a input tokens per batch; keeps batches small enough for reasoning model
 
 SYSTEM_PROMPT = """\
 You are an OCR correction assistant for public-domain texts published before 1930.
@@ -42,7 +45,9 @@ a word, term, or concept that did not exist before 1930. Do not flag for space f
 punctuation, encoding artifacts, or clear single-character swaps.
 
 Discard if the text is so severely garbled that no meaningful content can be recovered, or
-if the Q field contains embedded answer text followed by additional questions (structural bleed).
+if either field contains structural bleed — embedded answer text followed by additional questions
+(e.g. "Q 1. ... A. ... Q 2." patterns, or "A— ..." mid-question), or if the answer contains
+a multi-row numerical table or columnar data — tables are not meaningful prose for training.
 When in doubt on OCR artifacts, fix and keep. Do not discard pairs that are merely messy.
 
 Respond with valid JSON only:
@@ -63,6 +68,47 @@ Output: {"q": "What are the chief sources?", "a": "Records, Monuments, and Legen
 
 Input — Q: §§§ xh§ pr¡n§¡p / A: Th§ §l¿ve §§ct¡¿n
 Output: {"discard": true}
+"""
+
+RETRY_SYSTEM_PROMPT = """\
+You are an OCR correction assistant for public-domain texts published before 1930.
+You are reviewing a batch of Q&A pairs that a previous pass flagged but did NOT fix.
+Your job now is to actually fix them — do not echo text back unchanged unless it is
+already perfect. Be aggressive about fixing — the source texts are legitimate
+pre-1930s works, so fix confidently.
+
+Fix all of the following:
+- Missing or extra spaces (Whatis → What is, "Biography ?" → "Biography?")
+- Single-character letter substitutions (ts → is, ln → in, rn → m, 4 → A when clearly a letter)
+- Broken hyphenation across lines (na- tions → nations)
+- Unicode/encoding artifacts (Â¢ → ¢, â€™ → ', Ã© → é, â€” → —, â€˜/â€™ → ' or ‘’)
+- Obvious misrecognized words (tbe → the, liow → how, witb → with)
+- Missing terminal period on an answer that is clearly a complete sentence
+- Embedded page references or section headers anywhere in the text (e.g. "FRANCE. 107",
+  "6 EGYPT.", "244 COMMON SCHOOL QUESTION BOOK." — remove these entirely)
+
+Never alter grammar or word choice. Fix only what is clearly a scanning artifact.
+"Whom", archaic verb forms, and pre-1930s constructions are correct as-is.
+
+Set "flagged": true ONLY if you personally replaced a word/term with something that
+could be an anachronism — a word, term, or concept that did not exist before 1930.
+Do NOT flag merely because the subject matter is war, politics, or sensitive history.
+If you made no risky word substitution, set "flagged": false.
+
+Discard if the text is so severely garbled that no meaningful content can be recovered, or
+if either field contains structural bleed — embedded answer text followed by additional
+questions (e.g. "Q 1. ... A. ... Q 2." patterns, or "A— ..." mid-question), or if the
+answer contains a multi-row numerical table or columnar data (legible or garbled) — tables
+are not meaningful prose for training and should not be preserved.
+When in doubt on OCR artifacts, fix and keep. Do not discard pairs that are merely messy.
+
+You will receive a JSON array of items, each with an "i" index, "q", and "a". Respond with
+a JSON array of the same length, each item matching one input by "i":
+  Fixed:           {"i": 0, "q": "...", "a": "..."}
+  Anachronism risk:{"i": 0, "q": "...", "a": "...", "flagged": true}
+  Unrecoverable:   {"i": 0, "discard": true}
+
+Respond with the JSON array only, no other text.
 """
 
 
@@ -144,6 +190,187 @@ async def run_async(pairs, state):
     await asyncio.gather(*tasks)
 
 
+def _estimate_tokens(q, a):
+    return (len(q) + len(a)) // 4
+
+
+def _pack_batches(items, token_budget=RETRY_TOKEN_BUDGET):
+    """Greedy bin-packing: fit as many pairs as possible per batch within token_budget.
+    Items with q+a > MAX_PAIR_TOKENS are discarded here (too long for training context).
+    Each item is a tuple ending in (..., q, a)."""
+    batches, current, current_tokens = [], [], 0
+    for item in items:
+        q, a = item[-2], item[-1]
+        tokens = _estimate_tokens(q, a)
+        if tokens > MAX_PAIR_TOKENS:
+            continue
+        if current and current_tokens + tokens > token_budget:
+            batches.append(current)
+            current, current_tokens = [], 0
+        current.append(item)
+        current_tokens += tokens
+    if current:
+        batches.append(current)
+    return batches
+
+
+def _strip_code_fence(text):
+    if text.startswith("```"):
+        text = text.split("```", 2)[1]
+        if text.startswith("json"):
+            text = text[4:]
+        text = text.rstrip("`").strip()
+    return text
+
+
+async def clean_batch(client, semaphore, dataset, batch, state, progress):
+    """batch: list of (i, q, a) tuples, all from the same dataset."""
+    keys = [f"{dataset}--{i}" for i, _, _ in batch]
+    payload = json.dumps([{"i": idx, "q": q, "a": a} for idx, (i, q, a) in enumerate(batch)])
+
+    async with semaphore:
+        for attempt in range(5):
+            try:
+                msg = await client.messages.create(
+                    model=MODEL,
+                    max_tokens=RETRY_MAX_TOKENS,
+                    system=RETRY_SYSTEM_PROMPT,
+                    messages=[{"role": "user", "content": payload}],
+                )
+                text = _strip_code_fence(
+                    next((b.text for b in msg.content if b.type == "text"), "").strip()
+                )
+                try:
+                    results = json.loads(text)
+                except json.JSONDecodeError:
+                    results = []
+
+                by_idx = {r["i"]: r for r in results if isinstance(r, dict) and "i" in r}
+                for idx, (i, q, a) in enumerate(batch):
+                    key = keys[idx]
+                    r = by_idx.get(idx)
+                    if not r:
+                        state[key] = {"q": q, "a": a, "flagged": True}
+                    elif r.get("discard"):
+                        state[key] = {"discard": True}
+                    elif "q" not in r or "a" not in r:
+                        state[key] = {"q": q, "a": a, "flagged": True}
+                    else:
+                        state[key] = {"q": r["q"], "a": r["a"], "flagged": bool(r.get("flagged"))}
+                break
+            except anthropic.RateLimitError:
+                await asyncio.sleep(2 ** attempt)
+            except Exception:
+                if attempt == 4:
+                    for idx, (i, q, a) in enumerate(batch):
+                        state[keys[idx]] = {"q": q, "a": a, "flagged": True}
+                else:
+                    await asyncio.sleep(2 ** attempt)
+
+    progress[0] += len(batch)
+    save_state(state)
+    print(f"  {progress[0]}/{progress[1]}", flush=True)
+
+
+async def retry_flagged(pairs, state):
+    """Re-process only currently-flagged pairs using greedy bin-packing batches."""
+    flagged_pairs = [
+        (d, i, q, a) for d, i, q, a in pairs
+        if state.get(f"{d}--{i}", {}).get("flagged")
+    ]
+
+    by_dataset = {}
+    for d, i, q, a in flagged_pairs:
+        by_dataset.setdefault(d, []).append((i, q, a))
+
+    batches = []
+    for d, items in by_dataset.items():
+        for batch in _pack_batches(items):
+            batches.append((d, batch))
+
+    print(f"Retrying {len(flagged_pairs)} flagged pairs → {len(batches)} packed batches...")
+
+    client = anthropic.AsyncAnthropic()
+    semaphore = asyncio.Semaphore(CONCURRENCY)
+    progress = [0, len(flagged_pairs)]
+    tasks = [
+        asyncio.create_task(clean_batch(client, semaphore, d, batch, state, progress))
+        for d, batch in batches
+    ]
+    await asyncio.gather(*tasks)
+    save_state(state)
+
+
+async def test_retry_flagged(pairs, state, seed, size, batch_size=None):
+    import random
+    flagged_pairs = [
+        (d, i, q, a) for d, i, q, a in pairs
+        if state.get(f"{d}--{i}", {}).get("flagged")
+        and _estimate_tokens(q, a) <= MAX_PAIR_TOKENS
+    ]
+    random.seed(seed)
+    sample = random.sample(flagged_pairs, min(size, len(flagged_pairs)))
+
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    samples_dir = ROOT / "samples" / "ocr"
+    samples_dir.mkdir(parents=True, exist_ok=True)
+    out_path = samples_dir / f"{ts}_retry_seed{seed}_n{size}.txt"
+    header = [
+        f"model: {MODEL}", f"seed:  {seed}", f"n:     {size}", f"batch: {batch_size}",
+        f"pool:  {len(flagged_pairs)} currently flagged pairs", "",
+        "--- RETRY SYSTEM PROMPT ---", RETRY_SYSTEM_PROMPT, "--- END RETRY SYSTEM PROMPT ---", "",
+    ]
+    out_path.write_text("\n".join(header))
+
+    client = anthropic.AsyncAnthropic()
+
+    async def process(batch):
+        payload = json.dumps([{"i": idx, "q": q, "a": a} for idx, (d, i, q, a) in enumerate(batch)])
+        msg = await client.messages.create(
+            model=MODEL,
+            max_tokens=RETRY_MAX_TOKENS,
+            system=RETRY_SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": payload}],
+        )
+        raw = _strip_code_fence(next((b.text for b in msg.content if b.type == "text"), "").strip())
+        parse_error = None
+        try:
+            results = json.loads(raw)
+            by_idx = {r["i"]: r for r in results if isinstance(r, dict) and "i" in r}
+        except json.JSONDecodeError as e:
+            by_idx = {}
+            parse_error = f"[BATCH PARSE FAILURE — {e}]\n  stop_reason: {msg.stop_reason}\n  raw ({len(raw)} chars): {raw[:500]}"
+
+        lines = []
+        if parse_error:
+            lines.append(parse_error)
+            lines.append("")
+        for idx, (dataset, i, q, a) in enumerate(batch):
+            r = by_idx.get(idx)
+            if r is None:
+                out_q, out_a, flagged = "[PARSE ERROR / MISSING]", "", ""
+            elif r.get("discard"):
+                out_q, out_a, flagged = "[DISCARD]", "", ""
+            else:
+                out_q = r.get("q", "")
+                out_a = r.get("a", "")
+                flagged = " [FLAGGED]" if r.get("flagged") else ""
+            lines += [
+                f"[{dataset}--{i}]{flagged}",
+                f"  IN  Q: {q}",
+                f"  IN  A: {a}",
+                f"  OUT Q: {out_q}",
+                f"  OUT A: {out_a}",
+                "",
+            ]
+        with out_path.open("a") as f:
+            f.write("\n".join(lines) + "\n")
+
+    batches = _pack_batches(sample, batch_size or RETRY_TOKEN_BUDGET)
+    await asyncio.gather(*[process(b) for b in batches])
+    print(f"Wrote {out_path}")
+
+
 def write_output(pairs, state):
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     datasets = {}
@@ -159,6 +386,9 @@ def write_output(pairs, state):
             if not result or result.get("discard"):
                 discarded += 1
                 continue
+            if _estimate_tokens(result["q"], result["a"]) > MAX_PAIR_TOKENS:
+                discarded += 1
+                continue
             item = {
                 "conversations": [
                     {"role": "user", "content": result["q"]},
@@ -166,6 +396,8 @@ def write_output(pairs, state):
                 ]
             }
             if result["q"] != orig_q or result["a"] != orig_a:
+                item["changed"] = True
+            if result.get("flagged"):
                 item["flagged"] = True
                 total_flagged += 1
             items.append(item)
@@ -175,7 +407,8 @@ def write_output(pairs, state):
         total_written += len(items)
         total_discarded += discarded
         flagged = sum(1 for it in items if it.get("flagged"))
-        print(f"  {dataset}: {len(items)} pairs ({flagged} flagged, {discarded} discarded)")
+        changed = sum(1 for it in items if it.get("changed"))
+        print(f"  {dataset}: {len(items)} pairs ({changed} changed, {flagged} flagged, {discarded} discarded)")
 
     print(f"\nTotal: {total_written} pairs, {total_flagged} flagged, {total_discarded} discarded")
 
