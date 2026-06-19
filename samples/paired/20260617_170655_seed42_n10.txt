@@ -1,0 +1,51 @@
+stage: paired
+seed:  42
+n:     10
+
+[laborers--92]
+  Q: Is money an essential and convenient institution as society is now organized?
+  A: It is.
+
+[botany--31] [multi-turn]
+  Q: How may leaves differ?
+  A: Leaves may differ from each other (1) by the presence or absence of the petiole or blade, (2) by divisions of either petiole or blade; (3) in venation; (4) in outline of blade; (5) in appendages to any of their parts.
+  Q: Name and describe the chief kinds of leaves — with regard to these differences. I. A leaf having a petiole is called stalked or petiolate, while a leaf without petiole is called sessile; a leaf which has no proper blade may be: (1) en or needle-shaped as in pines; or (2), tendril-like as in some vetches; or (3), cylindrical as in the onion; or (4), prismatic as in the stonecrop, etc. II. With regard to presence of divisions or their absence: a leaf without divisions of stalk or blade, is called a simple leaf, while leaves having completely divided leaf-blades only, or, divided leaf-blades and also divided petioles are called compound. Compound leaves are either pinnately, or palmately compound according as the separate divisions of the leaf-blade, called leaflets, are arranged on the sides of an elongated axis, as for instance, the pinnately compound leaf of the sumac; or when the leaflets all appear to arise from one point as the palmately compound leaf of clover. When the leaflets of the first division of a compound leaf are themselves similarly divided, the leaf is said to be twice pinnately compound or palmately compound; these divisions may extend still further, so that the leaf may be three times or four times compound; e. g., the leaf of the meadow-rue is thrice ternately compound. These higher divisions however, are often simply called decompound. III. The venation of a leaf may be either reticulate or parallel, pinnate or palmate. A leaf is said to be reticulate or net-veined when its veins appear to form a network; but it is parallel veined, when the veins appear to run parallel to each other. It is pinnate veined, when the secondary veins arise from a distinct axial vein, termed midrib, and palmate-veined when the veins arise from the insertion of the petiole. IV. The blades of leaves may differ in shape, in margin, in apex and base. The general shape of the leaf blade may be linear, elliptical, oval, cordate, lanceolate, peltate, etc. The margin or border of the blade may be entire, lobed, cleft, dentate, serrate, laciniate, divided, etc. The apex of the leaf blade may be acute, emarginate, obtuse, mucronate, cuspidate, etc. The base may be acute, obtuse, cordate, clasping, auriculate, perfoliate, connate, etc. V. Among the appendages of the leaf the most important are the stipules, which are outgrowths from the base or foot of the petiole; they may be foliaceous membranous, spiny, ocreate, etc. Other appendages or outgrowths from the leaf are hair, or spines, or scales. Q. 68. How are leaves modified or transformed?
+  A: Leaves are modified in accordance with their function.
+  Q: Mention some of the principal modifications or transformations. |
+  A: Some of the principal modifications of leaves are, floral or perianth leaves, stamens, carpels, spines, tendrils, pitchers, scales and bracts. Note—The floral leaves and bracts will be considered under the flower. Specially transformed leaves also occur, as for instance, in onion bulb or cabbage heads for storage of starch. A auriculate clasping leaf of Thlaspi perfoliatum. B perfoliate leaf of Bupleurum rotundifolium. C Connate perfoliate leaves of Honeysuckle (Lonicera Caprifolium).
+  Q: What are tendrils?
+  A: Tendrils are elongated, thread-like modifications of branches or leaves adapted to twine around suitable objects and to serve the plant which produces them as a means of mechanical support.
+
+[1001-questions--409] [multi-turn]
+  Q: What did the Danes do a century later?
+  A: They came in greater numbers than before, and the Danish King Canute (Knut) won the English crown.
+  Q: Who followed the Danes?
+  A: The Saxons were restored for twenty-five years.
+
+[school-bulletin--264]
+  Q: Describe Sodium.
+  A: Na is the metal found principally in "common salt. It can not be kept in the air, because it at once oxydizes and forms a white powder; neither can it be allowed to join H2O, as it will at once combine with O and set free H. Of the soda salts, rock-salt is found in largest quantity : it is obtained from mines in Cheshire, Cracow, Spain and Idaho, and from sea-water by evaporation. Experiment— To obtain sodium sulphate or Glauber's salts, pour sulphuric acid upon common salt ; a dense fume of hydrochloric acid gas comes off, and sodium sulphate is left.
+
+[civil-war--573]
+  Q: What could the belligerents gain in neutral countries by making sentiment?
+  A: They could hope to bring some neutral countries into the war on their side. They could hope to prevent some neutral countries from abandoning a useful neutrality. Even in countries which they could not hope to win as fellow belligerents, or which they did not need to fear as possible allies of their enemies, they could hope to make such sentiment that the neutrality would be distinctly in their favor.
+
+[civil-war--79]
+  Q: Did Mexico propose a method for terminating the war after we joined it?
+  A: Not after we entered, but after we had severed diplomatic relations with Germany. President Carranza sent a note to Washington, dated "Queretaro, February 11, 1917," suggesting that the warring nations be invited to bring the war to an end either by their own efforts or by availing themselves of the friendly mediation of neutrals, and proposing that if peace were not restored within a reasonable time, all neutrals refuse any kind of implements to the belligerents and suspend commercial relations with the warring nations.
+
+[chemistry--480]
+  Q: In what state is antimony found in nature?
+  A: As a metal, and a sulphide. The antimony of the shops is a sulphide. Pure antimony is usually designated by the name of regulus of antimony.
+
+[brewers-guide--340]
+  Q: Why does the mercury of a thermometer rise in hot weather?
+  A: Heat expands the metal; and as the metal is increased in bulk, it occupies a larger space, (or, in other words, rises higher in the tube.)
+
+[school-bulletin--181]
+  Q: What is a disk?
+  A: It is a part of the receptacle, or a growth from it, enlarged under or around the pistil. It is hypogynous when free from all union either with the pistil or the calyx, as in the Rue and the Orange. It is perigynous when it adheres to the base of the calyx, as in the Bladdernut and Buckthorn. In adhering both to the calyx and to the ovary, consolidating the whole together, it is sometimes carried up and expanded on the top of the ovary, as in the Parsley and Ginseng families, when it is said to be epigynous.
+
+[astronomy--228]
+  Q: Did they succeed?
+  A: Yes, both determined independently the position of the unknown planet, and Galle, of Berlin, found within half an hour's searching of the region which Le Verrier had indicated, the new planet, which was subsequently called Neptune, this was in 1846.

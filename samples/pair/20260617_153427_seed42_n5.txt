@@ -1,0 +1,221 @@
+model: claude-haiku-4-5
+seed:  42
+n:     5
+
+--- SYSTEM PROMPT ---
+You receive a window of Q&A pairs from a pre-1930s educational text.
+Group pairs that cannot stand alone — where the question uses a pronoun or implicit
+reference ("it", "he", "she", "they", "this", "that", "the same") that requires a
+prior question in this window or the CONTEXT section to resolve.
+
+Rules:
+- A self-contained question starts a new group (singleton if nothing follows from it)
+- A dependent question joins the group of the earliest question that resolves its referent
+- Chains are always contiguous — a question never skips an intervening question
+- Every pair [0]..[N] must appear in exactly one group
+- Set "continues": true if the last question introduces a subject or referent that a
+  follow-up question in the next window might reference with a pronoun
+
+Respond with JSON only: {"groups": [[0, 1], [2], [3, 4, 5]], "continues": false}
+
+--- END SYSTEM PROMPT ---
+[civil-war window 80]  continues=False
+  CONTEXT:
+    [-3] Q: Do the southern Germans hate the Prussians?
+         A: There has always been a very general feeling of intellectual disdain for the Prussian. His marked practical abilities are recognized, though not always admired, and his faults also are recognized and pretty sharply characterized. He is accounted crude and sordid by the southern Germans, and the appellation "Preuss" used by them is not complimentary. But events have shown that the whole German people has been trained to obey its rulers, to the extent of violating all other obligations. And the relentless, organizing Prussian has ruled Germany for nearly half a century.
+    [-2] Q: What is the defect in Reichstag representation?
+         A: It lies in the fact that no new apportionment of districts has been made in many years. The result is that districts now enormously populated are represented in the Reichstag on a basis of past sparse population. Districts that have become industrial lack the type of representation that they would send under modern apportionment. This reacts especially on the new big cities; and the political party suffering most from it is the Socialist in all its groups.
+    [-1] Q: Which is the largest Lower House?
+         A: The British House of Commons with 670 members, against the French Chamber of Deputies with 602, our House of Representatives with 435 Congressmen and the Reichstag with 397 members.
+  WINDOW + GROUPS:
+    [0](g0) Q: How do German Parliamentary politics differ from ours?
+            A: The striking difference is in the big number of parties or "groups" into which the German Reichstag representation is split, whereas in our Congress and in the British House of Commons there are, as a rule, only two chief parties, and such minor parties as are represented rarely have enough magnitude for any great degree of power. The German Reichstag, in contrast, had in 1912: 110 Social Democrats, 90 Liberals and Radicals, 70 Conservatives, 93 Centrists (party of the Center) and a few unclassified. On specific issues these various groups often split up into still more groups and if any combine on an issue, they do so only temporarily.
+    [1](g1) Q: What party is the Junker party?
+            A: The Conservative. It is the party of the landed interests, the "agrarians," officials and so forth. Because of its interest in agriculture, it gets the support of many peasants, especially the prosperous ones. It is the party that fights for protective tariffs on agricultural products including meats. It stands also for colonial expansion and strong armies and navies. Being led largely by the Junker class it opposes political reform.
+    [2](g2) Q: What party do the Pan-Germans represent?
+            A: They are a powerful part of the Conservative party. They are powerful, less by numbers than by solidarity, wealth, aggressiveness and the cohesive and commanding influence of office-holding members. The whole Conservative Party is numerically small compared with others, but its power is undoubted.
+    [3](g3) Q: Is there a party of the middle classes?
+            A: Yes. The National-Liberals represent the German middle class largely. They oppose the Conservatives on the tariff, favoring a "revision downward" on agricultural products, but they do not want free trade on manufactures.
+    [4](g4) Q: Why is there a Clerical party in German politics?
+            A: The Clerical party, better known in our day as the party of the Center because it occupies a middle ground of its own between the Conservative and the Liberal and Radical groups, is a survival of the "Kulturkampf." This was a struggle between the German Government under Bismarck's leadership and the Papal doctrine of supreme authority. It had become a political issue particularly through the dogmas adopted in 1869 by the Vatican Council, a great ecclesiastical assemblage convened in Rome. Beginning in 1871, the Kulturkampf lasted for years. In 1873-1875 there were enacted a series of laws known as "May Laws," making civil marriage compulsory, obliging all candidates for priesthood to attend government schools and universities and to pass government examinations. The Pope declared the laws null and void, and the fight became intensely bitter. It did not cease till 1878 when a new Pope, Leo XIII, with more moderate views, made peace with Bismarck. Between that date and 1886 most of the "May Laws" were repealed. The Clerical party became much reduced in numbers and activity, but remained as an important factional power in politics. Its tactical strength today lies in the fact that its support may give a majority to the side it joins.
+    [5](g5) Q: How many Socialists are in Germany?
+            A: The general German elections of 1912 showed 4,250,000 Socialists in a total number of about 11 million voters. They had 2½ million adherents more than the next most powerful party, the Center party. The parties that followed in numerical importance were : Liberals, Radicals and Conservatives. Each of these had more than a million adherents. Thus, while the Socialist element among the German voters is far from a possible majority of the popular suffrage, it is easily the most powerful in the empire, so far as massed solidarity is concerned.
+    [6](g6) Q: What led autocratic German Government to socialize the State?
+            A: An early realization of the problems that were being crystallized by the modern development of industry. The fact that Germany was industrializing herself almost literally over night naturally made many of these problems much more clear to German eyes than they would be in countries that had developed into industrialism gradually. Bismarck was foremost in perceiving and facing the new social questions and conditions that from 1880 on were tending everywhere in the world to create two huge antagonistic classes— the working class and the capital-owning, employing class. He was determined that the German State should avoid the error of producing a working class that regarded the State as an enemy.
+    [7](g7) Q: What were the chief laws that socialized the German State?
+            A: They were a series of laws passed from 1883 to 1911. The first was the Illness Insurance Law of 1883, making insurance compulsory on all laborers with wages less than $500 a year, the insurance fund being made up by contributions from employers and employees. In 1884 followed the Accident Insurance Law, the funds for which are drawn entirely from employers on the principle that accidents are part of the risk that is taken in earning profits. An Old Age and Invalidity Law was passed in 1889. It went beyond all preceding policies, and formed a pension fund made of contributions from the State as well as employers and workingmen, for workers totally incapacitated at any time and for those who passed 70 years (reduced to 65 years in 1915). The pensions range from $30 to $60 annually.
+    [8](g8) Q: What were the laws of 1911?
+            A: They were a codification or unification in about 2,000 articles of the whole series of social insurance and protection laws, and it was largely the passage of this very voluminous and remarkable legislation that focussed the attention of the world on the vast issues raised by the policy of the socialized State.
+    [9](g9) Q: Did the Government at the same time fight Socialism?
+            A: Yes. Even while Bismarck declared that it was the duty of a State to protect its weaker members from being "run over and trampled under foot on the highroad of life," he remained a champion of a series of so-called "exceptional laws" aimed at the growing power of the Social Democratic doctrine. The formation of a Social Democratic party followed the Franco-Prussian War almost immediately, and from the first it opposed Bismarck bitterly and openly worked for the establishment of a Democratic republic. The first repressive laws were enacted in 1878 after two attempts had been made to assassinate Emperor William (the first German Emperor and grandfather of the present Emperor). He was aged and undoubtedly beloved, and the Government had no difficulty in passing laws that for a time practically outlawed Social Democracy.
+    [10](g10) Q: Did the repressive laws hinder the growth of Socialism?
+            A: No. They increased it. Even the clear-sighted Bismarck did not realize, and never would admit, that force against deep-seated political ideas only strengthens them. While he had a great intellectual disdain for force used by shortsighted government to extinguish problems that it was incompetent to solve properly, he still believed that force was an efficient and normal part of government. Therefore during the years of his leadership the German State continually socialized itself and continually fought Socialism. It must not be forgotten, however, that his political genius told him that socialization by government was in itself likely to blunt Socialism's sharpest weapon. "Give the workingman the right to employment as long as he has health, assure him care when he is ill and support when he is old," he said in the Reichstag, "then these gentlemen, the Socialists, will utter their bird-calls in vain." Another time he told the middle-class Liberals, who were against the social laws, that they could not frighten him with the word "socialism." He said : "If you believe that you can call up spectres with this word, you assume an attitude that I abandoned long ago."
+    [11](g11) Q: What was the growth of Socialism during the repressive laws?
+            A: A table presented by Professor Schapiro in the most recent account of European political development ("Modern and Contemporary European History") shows that the gain was not only steady but extraordinary. In 1871 the Socialist vote in the Reichstag elections was 124,500, and they won only 2 seats. In 1874 it had more than doubled (352,000) and they returned 10 Reichstag members. "In only one election, that of 1881, was there a marked falling off of the Socialist vote." In the next Reichstag election, that of 1884, they passed the halfmillion mark (550,000) and won 24 seats. In 1890, the year of Bismarck's retirement, the "exceptional laws" passed out of existence by not being renewed. In that year's Reichstag elections the Socialist vote reached 1,427,000 and returned 35 representatives. In 1898 it passed 2 million, in 1903 it exceeded 3 million, and in 1912 a vote of 4,250,000 sent no Socialist representatives to the Reichstag.
+    [12](g12) Q: What are the leading German Socialist political principles?
+            A: Leaving aside the confused issues that have been raised by the war, the principles of the German Socialist Democratic party were laid down as follows in the famous Erfurt Congress held by them in 1891 after the repeal of the antiSocialist laws : maximum demands, abolition of private capital and establishment of a co-operative commonwealth ; minimum demands (for immediate prosecution) substitution of a popular militia for the standing army, heavy inheritance and income taxes, universal 8-hour work-day, woman suffrage, equal, direct and secret suffrage for all legislative bodies, proportional representation, full freedom of speech and assembly, civil equality for men and women, free secular education and complete separation of Church and State.
+    [13](g13) Q: Have the German Socialists always opposed militarism?
+            A: As recently before the war as 1912, there was a big Socialist anti-military explosion in the Reichstag. It was on October 20, 1912, and on that same day demonstrations were made in Dusseldorf, Dortmund, Bremen, Kiel, Leipzig, Berlin, Hamburg, Dresden, Spandau, Cassel, Frankfurt and Stuttgart. Similar ones occurred on November 17, 1912, in Bremen and Hanover. In October and November, 1912, protests against the advances of Austrian diplomacy in the Balkan situation were made in the Bavarian Parliament, and in the Austrian Parliament. Protest meetings were held during these months at Prague and other Hungarian towns, Vienna, and throughout Austria. The German Socialists protested in Parliament (Reichstag) against the Zabern Affair on November 28 and December 3 and 4, 1913, and again on January 23 and 24, 1914.
+    [14](g14) Q: Did the Socialists ever vote for Army and Navy appropriations?
+            A: They did so once — the year before the war. Before 1913 the German and Austrian Socialists, in their Parliaments, had voted at all times against the Army and Navy budgets, and against all increase in taxes for military purposes. In September, 1913, however, when rival German and French army bills made a tense situation, the German Socialists voted in favor though the French Socialists voted against the French three-year army bill under Jaures, who was assassinated, largely because of this opposition, soon after war began.
+
+[common-core window 5]  continues=False
+  CONTEXT:
+    [-3] Q: What valuable plants were discovered in America?
+         A: Indian corn, potatoes and tobacco.
+    [-2] Q: When was the first Indian plot to massacre the English?
+         A: In 1609, but the massacre was prevented by Pocahontas, who revealed the plot to the people of Jamestown.
+    [-1] Q: When was the first massacre in Virginia? The second?
+         A: In 1622, when in one hour 347 men, women and children were massacred. 'The second was in 1644, when 300 were killed; this plot was originated by Opechancanough, and was intended to exterminate the English settlers.
+  WINDOW + GROUPS:
+    [0](g0) Q: Who was Nathaniel Bacon? What was the cause of Bacon's rebellion?
+            A: A patriotic young lawyer, who rallied a company and defended the settlements against the Indians; he was denounced by Governor Berkeley as a traitor for acting without orders. During the contest which followed, Berkeley was driven out of Jamestown, and the village partially burned. In the midst of this struggle Bacon died.
+    [1](g1) Q: When and where was the first Colonial Assembly?
+            A: June 28, 1619, at Jamestown. It consisted of the governor, council and deputies, or 'burgesses,' chosen from the various plantations.
+    [2](g2) Q: Who was King Philip?
+            A: King Philip was an Indian chief, the son of Massasoit, who, becoming jealous of the intrusion of the whites, planned a confederation of the Indian tribes against these intruders.
+    [3](g3) Q: When was King Philip's war?
+            A: The war began in 1675, continuing about one year. King Philip was shot by an Indian, an ally of the English, in 1676.
+    [4](g4) Q: What were the Navigation Acts?
+            A: In 1660 the British Parliament ordered that the commerce of the colonies should be carried on in English vessels, and their tobacco and all other products shipped to England. In fact, American manufactures were prohibited, and nothing allowed to be done that would enter into competition with the people of England.
+    [5](g5) Q: What was the effect of these laws?
+            A: - These laws bore very heavily on the people, causing great discontent, and were one of the causes which led to the Revolution.
+    [6](g6) Q: Were the Navigation Acts observed in Massachusetts?
+            A: No. An officer was sent to enforce them, but without success. Charles II seized upon the excuse thus offered, and made Massachusetts a royal province. The king died before his plan was completed, but James II, in 1686, declared the charters of all the New England colonies forfeited.
+    [7](g7) Q: Who was Sir Edmund Andros?
+            A: The first royal governor of New England. He was sent by James II. The colonies endured his oppressions for three years, when, learning that his royal master was dethroned, they revolted and imprisoned him.
+    [8](g8) Q: From what was derived the appellation of Charter Oak?
+            A: When James II declared that the charters of all the New England colonies were forfeited, Connecticut refused to surrender hers. Governor Andros demanded the charter of the assembly then in session at Hartford, and during the debate which ensued the lights were suddenly extinguished, and the charter was seized by William Wadsworth and hidden in the hollow of an old oak, which since that time has been called the Charter Oak.
+    [9](g9) Q: Who was Sir William Phipps?
+            A: The second royal governor of Massachusetts, or a province embracing Massachusetts, Maine and Nova Scotia.
+    [10](g10) Q: What were the results of the so-called “Salem witchcraft”?
+            A: A superstition prevailed that persons were subject to the control of invisible evil spirits, and it is estimated that some 200 persons were accused, 150 imprisoned, 28 condemned, 19 hanged, and one pressed to death.
+    [11](g11) Q: What was the cause of the Pequot war? How did it end?
+            A: The Indians had become troublesome and dangerous to the early settlers of Connecticut, who resolved to make war upon the Pequots. A battle took place at Mystic River, where the tribe was nearly annihilated ; those Indians who were not killed were captured and made slaves, or escaped and joined other tribes.
+    [12](g12) Q: When and by whom was Connecticut settled?
+            A: In 1636, by a company of persons from Massachusetts, with their minister, Mr. Hooker. 'Their settlements were at Windsor, Hartford and Wethersfield.
+    [13](g13) Q: By whom was the first settlement in New Hampshire made ?
+            A: By the Rev. Mr. Wheelright and a few followers, who were also banished from Massachusetts on account of their religion.
+    [14](g14) Q: Who made the first settlement in Maine ?
+            A: Ferdinand Georges, in 1636.
+
+[brewers-guide window 30]  continues=False
+  CONTEXT:
+    [-3] Q: Why does ale or porter froth more, after it has been set before the fire?
+         A: The froth of ale or porter depends upon the pressure to which it is subjected; and as the air (between the liquor and the cork) is expanded by the heat, it presses against the liquor, and increases the quantity of froth.
+    [-2] Q: Why is the froth of ale and porter increased by pressure?
+         A: Because the liquor absorbs carbonic acid so long as it is under pressure; and the moment that the pressure is removed, the carbonic acid escapes in foam or froth.
+    [-1] Q: When a boy makes a balloon, and sets fire to the cotton or sponge (which has been steeped in spirits of wine), why is the balloon inflated, or blown out?
+         A: The air inside the balloon is expanded by the flame, till the whole balloon is blown out without a crumple.
+  WINDOW + GROUPS:
+    [0](g0) Q: Why does the balloon rise, after it has been inflated by the expanded air?
+            A: The same quantity of air is expanded to three or four times its original volume; and is made so much lighter than common air, that even when all the paper, wire, and cotton are added, it is still lighter bulk for bulk.
+    [1](g1) Q: What is meant by being lighter “bulk for bulk?”
+            A: If the balloon be 3 square feet in size, it is lighter (when inflated) than 3 square feet of common air, and therefore floats through it; as a cork (at the bottom of a tub of water) would rise to the surface.
+    [2](g2) Q: Why does smoke rush up a chimney?
+            A: The heat of the fire expands the air in the chimney; and (being thus made lighter than the air around), it rises up the chimney, and carries the smoke in its current.
+    [3](g3) Q: Why has a long chimney a greater draught than a short one?
+            A: Because air rises faster and faster the higher it ascends in a chimney flue; the same as a stone falls faster and faster the nearer it approaches to the ground.
+    [4](g4) Q: Why will a long chimney smoke, unless the fire be pretty fierce?
+            A: If the fire be not pretty fierce, its heat will not be sufficient to rarefy all the air in the chimney; and then the chimney will smoke.
+    [5](g5) Q: Why will the chimney smoke, if the fire be not big enough to heat all the air in the chimney flue?
+            A: Because the cold air (condensed in the upper part of the flue), will sink from its own weight, and sweep the ascending smoke back with it into the room.
+    [6](g6) Q: What is the use of a cowl upon a chimney-pot?
+            A: The cowl acts as a screen against the wind, to prevent it from blowing into the chimney.
+    [7](g7) Q: What harm would the wind do, if it were to blow into a chimney?
+            A: 1st—It would prevent the smoke from getting out: and 2ndly—The cold air (introduced into the chimney by the wind) would fall down the flue, and drive the smoke with it back into the room.
+    [8](g8) Q: Why does a smoke-jack turn round in a chimney?
+            A: The current of hot air up the chimney, striking against the oblique vanes of the smoke-jack, drives them round and round; in the same way as the sails of a wind-mill are driven round by the wind.
+    [9](g9) Q: Why are some things solid, others liquid, and others gaseous?
+            A: As heat enters any substance, it drives its particles further asunder; and a solid (like ice) becomes a liquid; and a liquid (like water) becomes a gas.
+    [10](g10) Q: Why does water simmer before it boils?
+            A: The particles of water near the bottom of the kettle (being formed into steam sooner than the rest) shoot upwards; but are condensed again (as they rise) by the colder water, and produce what is called “simmering.”
+    [11](g11) Q: What is meant by simmering?
+            A: A gentle tremor or undulation on the surface of the water. When water simmers, the bubbles collapse beneath the surface, and the steam is condensed to water again: but when water boils, the bubbles rise to the surface, and steam is thrown off.
+    [12](g12) Q: Why does a kettle sing when the water simmers?
+            A: Because the air (entangled in the water) escapes by fits and starts through the spout of the kettle; which makes a noise like a wind instrument, when it is blown into.
+    [13](g13) Q: Why does not a kettle sing, when the water boils?
+            A: As all the water is boiling hot, the steam meets with no impediment, but freely escapes in a continuous stream.
+    [14](g14) Q: When does a kettle sing most?
+            A: When it is set on a hob to boil.
+
+[common-core window 67]  continues=False
+  CONTEXT:
+    [-3] Q: What is the size of the Russian Empire?
+         A: It is next to the largest in the world, comprising fully one-half of Europe and more than one-third of Asia. The entire area is about 8,000,000 square miles.
+    [-2] Q: What is the surface of this empire?
+         A: For the most part it is very level. The only mountainous section in European Russia is between the Azov and Caspian Seas.
+    [-1] Q: How are the inhabitants divided?
+         A: Into four classes: the nobles, the clergy, the merchants, and the lately emancipated serfs.
+  WINDOW + GROUPS:
+    [0](g0) Q: What are the government and religion?
+            A: The government is an absolute monarchy. The greater part of the inhabitants belong to the Greek Church.
+    [1](g1) Q: What are the inhabitants called, and what is the title of their monarch?
+            A: The inhabitants are called Sclavs, and their monarch the Czar.
+    [2](g2) Q: What subject is strongly agitating the minds of the Russian people?
+            A: The question of a constitution which will change the government to a limited monarchy.
+    [3](g3) Q: Who are the Nihilists?
+            A: They are revolutionists who seek the overthrow of the empire and resort to secret violence to accomplish their cause.
+    [4](g4) Q: What political relations, of a strained character, exist between Russia and England?
+            A: England is fearful of the Russian advances in Asia, and jealously watches every movement.
+    [5](g5) Q: In what does the principal wealth of Russia consist?
+            A: In its forests, covering two-fifths of the country, and the products of agriculture and grazing.
+    [6](g6) Q: Where are the great wheat-growing regions of Europe?
+            A: In Central and Southern Russia.
+    [7](g7) Q: What is the nature of the country around the Caspian Sea?
+            A: It is mostly sterile, and has the appearance of having been subjected to volcanic fires. There are many salt lakes and fire-hills.
+    [8](g8) Q: What are steppes, and where are they found?
+            A: Large, barren plains in Southeastern Russia.
+    [9](g9) Q: Where are Poland and Circassia?
+            A: Poland is that part of Russia lying north of Austria. Circassia is the region of the Caucasus Mountains.
+    [10](g10) Q: Where is Moscow, and when was it burned?
+            A: It is near Central Russia, on a branch of the Oka River. It is a railroad centre, and one of the principal cities for trade. It was burned by the Russians during Napoleon's invasion of 1812, to deprive his troops of their expected winter quarters. This great sacrifice of the Russians saved their empire, by compelling Napoleon to withdraw from the country.
+    [11](g11) Q: For what is Sebastopol famous?
+            A: For a siege which it sustained for one year, against the combined English, French, Turkish and Sardinian armies.
+    [12](g12) Q: What was the cause of this siege?
+            A: Sebastopol was one of the strongest Russian fortifications, and a perpetual menace to Turkey; its destruction ended the Crimean war.
+    [13](g13) Q: Who inhabit the steppes of Russia?
+            A: The Cossacks, who are of great service to the Russian army as light cavalry.
+    [14](g14) Q: What takes place at Nizhni Novgorod every year?
+            A: A great fair is held there, which is attended by thousands of people who come from different parts of Europe and Asia to buy and sell goods.
+
+[1001-questions window 51]  continues=False
+  CONTEXT:
+    [-3] Q: What did this do for the English?
+         A: It gave them an open door into the heart of France.
+    [-2] Q: Who succeeded Edward III.?
+         A: Richard of Bordeaux (1377-1399 A. D.).
+    [-1] Q: What was the character of his reign?
+         A: Continual trouble with French and rebels at home. The first part of his reign is noted for an insurrection of the lower orders of the people, occasioned by the condition of serfdom in which they were kept.
+  WINDOW + GROUPS:
+    [0](g0) Q: What did King Richard do?
+            A: He met the people on Smithfield commons, and as their leader had been slain he boldly exclaimed, "I am your king, I will be your leader."
+    [1](g1) Q: What course did the Parliament take?
+            A: They refused to ratify the king's pledges, and the insurrection was trodden out by the nobles.
+    [2](g2) Q: What great reformer lived during this reign?
+            A: Wickliffe, called by some the "Morning Star of the Reformation." He translated the Bible.
+    [3](g3) Q: What great poet lived then?
+            A: Chaucer, styled the Father of English Poetry. He wrote "The Canterbury Tales."
+    [4](g4) Q: Who succeeded Richard II.?
+            A: Henry IV., of the House of Lancaster (1399-1413 A. D.).
+    [5](g5) Q: How long did the House of Lancaster rule, and who were the other kings?
+            A: Sixty-two years. Henries V. and VI.
+    [6](g6) Q: What did Henry IV. do?
+            A: In order to give the discontented nobles war abroad, instead of leaving them to plot treason at home, Henry invaded France.
+    [7](g7) Q: What was the result?
+            A: He met a vastly superior French force upon the plain of Agincourt and drove all before him.
+    [8](g8) Q: What was England's relation to France at this time?
+            A: England controlled France until the year 1428, when the tide turned.
+    [9](g9) Q: What great battle or siege occurred in the year 1428?
+            A: The Siege of Orleans, in France.
+    [10](g10) Q: Who was the Heroine of this siege?
+            A: Joan of Arc, a peasant girl.
+    [11](g11) Q: What did Joan of Arc do?
+            A: Obtained command of the forces, and drove the English from their fortifications, and saved the city for the French.
+    [12](g12) Q: How long did the House of York rule?
+            A: Twenty-four years, by Edward IV., Edward V., and Richard III.
+    [13](g13) Q: What was commenced in 1455?
+            A: The "Wars of the Roses," between the Yorks and Lancasters, a struggle concerning the succession to the English throne.
+    [14](g14) Q: Why so called?
+            A: The Yorkists wore a white rose and the Lancasters a red one as their symbols.
+

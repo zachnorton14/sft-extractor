@@ -1,0 +1,167 @@
+=== ENRICHED/ATTACHED (2100 total) ===
+
+[brewers-guide--916] clear → ATTACHED
+  Q: What is the chief use of a barometer?
+
+[1001-questions--279] bare → ATTACHED
+  Q: What caused his great defeat?
+
+[common-core--1090] clear → ATTACHED
+  Q: What is a simple sentence? compound? complex?
+
+[common-core--412] clear → ATTACHED
+  Q: What were our treaties with China in 1880?
+
+[common-core--17] bare → ATTACHED
+  Q: (a) Where and when did Columbus discover the mainland? (b) How many voyages did he make?
+
+[chemistry--383] clear → ATTACHED
+  Q: Does sulphuric acid react with silver?
+
+[brewers-guide--656] clear → ATTACHED
+  Q: Why does a kettle run over, when the water boils?
+
+[brewers-guide--323] clear → ATTACHED
+  Q: Why is a pot, which is full to overflowing (while the water is boiling hot), nothing like full, when it has been taken off the fire for a short time?
+
+[logic--25] clear → ATTACHED
+  Q: Which is, predicament or predicable, the more extensive term?
+
+[1001-questions--382] clear → ATTACHED
+  Q: What are some of the most famous ruins of Rome?
+
+[1001-questions--348] clear → ATTACHED
+  Q: What was the state of the Plebeian power?
+
+[brewers-guide--474] clear → ATTACHED
+  Q: How do you know that a metal handle would be hotter than a wooden one?
+
+[civil-war--1151] clear → ATTACHED
+  Q: Have the French restricted food consumption?
+
+[common-core--210] clear → ATTACHED
+  Q: When and where was the treaty of peace signed, and who were the commissioners who signed it?
+
+[seeleys--609] bare → ATTACHED
+  Q: What troubles occurred at this time growing out of old colonial laws?
+
+[1001-questions--299] clear → ATTACHED
+  Q: What did the Athenian Congress do?
+
+[civil-war--718] clear → ATTACHED
+  Q: Does the Danube run through Roumania?
+
+[laborers--102] bare → ENRICHED
+  OLD: Could the village board have built another market by issuing more scrip?
+  NEW: In political economy, am I to understand that under the Perpetual Voting System electors will be voting "all the time?"
+
+[civil-war--1180] clear → ATTACHED
+  Q: How much coal does France ordinarily consume?
+
+[mythology--41] clear → ATTACHED
+  Q: Was Zeus worshipped under many names?
+
+[common-core--1191] clear → ATTACHED
+  Q: Is m ever silent?
+
+[1001-questions--126] clear → ATTACHED
+  Q: When was Buddhism introduced into China?
+
+[civil-war--17] bare → ATTACHED
+  Q: Did we send troops to France before the draft bill was in force?
+
+[logic--29] bare → ENRICHED
+  OLD: What do you mean by relation?
+  NEW: In logic, what is quantity?
+
+[engineering--322] clear → ATTACHED
+  Q: Whenever the fire-door of the furnace is open, should the damper be closed, if possible?
+
+[common-core--1180] clear → ATTACHED
+  Q: When is g silent?
+
+[chemistry--696] clear → ATTACHED
+  Q: What are different kinds of fermentation?
+
+[civil-war--1050] bare → ATTACHED
+  Q: What full tonnage capacity had the new yards?
+
+[engineering--256] clear → ATTACHED
+  Q: Approximately, what horse-power of boiler (Centennial Rating) would be required to supply steam to a 100 horse-power, four-valve, non-condensing engine, consuming 26 pounds of steam at 70 pounds pressure per horse-power per hour ?
+
+[brewers-guide--648] clear → ATTACHED
+  Q: Why are tomb-stones covered with hoar-frost, long after it has melted from every object around?
+
+[brewers-guide--457] clear → ATTACHED
+  Q: Why do digging and ploughing help to make a country warm?
+
+[familiar-things--144] clear → ATTACHED
+  Q: What are frequently substituted for Capers?
+
+[brewers-guide--541] clear → ATTACHED
+  Q: Why is boiling water kept hot in a bright tin vessel longer, than in an earthen one?
+
+[engineering--600] clear → ATTACHED
+  Q: What are primary batteries?
+
+[engineering--383] clear → ATTACHED
+  Q: What is meant by automatic stoking?
+
+[common-core--794] clear → ATTACHED
+  Q: What influence has Paris throughout the civilized world?
+
+[agriculture--160] clear → ATTACHED
+  Q: What is pasteurized milk?
+
+[mythology--164] clear → ATTACHED
+  Q: How does the marriage of Andromeda resemble those of other mythical heroines?
+
+[brewers-guide--1195] clear → ATTACHED
+  Q: Why do some echoes repeat only one syllable?
+
+[familiar-things--123] clear → ATTACHED
+  Q: What is Phenicia?
+
+
+=== CLEAR PASSTHROUGH SAMPLE (potential misses, 8281 total) ===
+
+[brewers-guide--136]  Q: Why is the light of a fire more intense sometimes than at others?
+[common-core--1969]  Q: What is the average number of respirations per minute?
+[familiar-things--57]  Q: What is Flax?
+[civil-war--911]  Q: Did German ammunition manufacturers profit or lose during war?
+[botany--39]  Q: What are aerial roots?
+[advanced-questions--515]  Q: Define Acoustics— the science of sounds.
+[common-core--647]  Q: Who was Count Ferdinand de Lesseps?
+[common-core--1898]  Q: Where are the largest veins situated?
+[brewers-guide--153]  Q: Why is not the red hot wick kindled by the air around it, without blowing it?
+[common-core--783]  Q: What questions agitate the people of Ireland?
+[brewers-guide--649]  Q: Why is there little or no hoar-frost under shrubs and shadowy trees?
+[investors--63]  Q: What is a bushel?
+[common-core--1694]  Q: Why do some people take a glass of liquor before eating?
+[new-york-bar--612]  Q: A, by will, devises to his executors in trust, a certain piece of real estate with instructions to sell it immediately after his death, and divide the proceeds between his sons, B and C. A few days after his death, and before the sale of the real estate, B dies leaving a wife and son surviving. How would the property descend? Give the rule governing such a state of facts.
+[familiar-things--138]  Q: Of what does Printing consist?
+[civil-war--176]  Q: What is meant by the "Hindenburg Line?"
+[familiar-things--339]  Q: What are the Mechanical Arts?
+[ethics--56]  Q: Could not honor be the highest good?
+[common-core--160]  Q: At the opening of the year 1777, how many British armies were in America?
+[common-core--1470]  Q: What is the equated time on the following debts: $180 due in 4 months, $540 due in 7 months, $280 due in 10 months?
+[botany--84]  Q: What is a monocotyledon?
+[civil-war--404]  Q: Have the Germans many machine guns?
+[common-core--1037]  Q: What modifications have adjectives?
+[civil-war--189]  Q: Why could not troops be sent in battleships?
+[school-bulletin--175]  Q: When is the flower said to be "parted"?
+[investors--52]  Q: What is a commission broker?
+[common-core--1529]  Q: Who are the important factors in the school?
+[common-core--447]  Q: What remarkable separation occurred between the prices of silver and wheat in 1897?
+[electricity--429]  Q: Is there any general principle by which all dynamos are regulated to give constant current or constant voltage?
+[agriculture--211]  Q: What is mixed farming?
+[common-core--681]  Q: What is the government of Australia?
+[advanced-questions--255]  Q: What is Vernation?
+[electricity--218]  Q: How may one calculate the watts necessary to raise water a certain number of degrees in temperature?
+[laborers--29]  Q: Have you any respect for the rights of property?
+[common-core--1482]  Q: A club spent £2 12s. 1d.; on settling, each paid as many pence as there were individuals in the party; how many pounds were there in each?
+[astronomy--269]  Q: What are meteor-rings?
+[common-core--203]  Q: Who rendered gallant assistance in the South in the lawless attacks of the Tories, and often successfully routed small detachments of the British soldiers?
+[electricity--200]  Q: How is the safe carrying capacity of a conductor determined?
+[common-core--260]  Q: What foreigner visited this country as “The Nation’s Guest”?
+[seeleys--655]  Q: What were the Civil Rights, Freedmen's Bureau and Tenure of Office Bills?

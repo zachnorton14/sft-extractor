@@ -1,0 +1,81 @@
+model: claude-haiku-4-5
+seed:  42
+n:     20
+
+--- DETECT PROMPT ---
+You receive opening questions from pre-1930s educational Q&A texts.
+Classify each as one of three statuses:
+
+"bare"      — no subject at all; unintelligible without prior context
+              e.g. "What is the effect?", "Describe their shape?", "Why not?"
+
+"ambiguous" — has a subject, but its meaning depends heavily on the domain
+              e.g. "What is a disk?" (botany vs. computing), "What is a cell?"
+
+"clear"     — fully self-contained; subject is unambiguous without domain knowledge
+              e.g. "What is arsenic?", "Who was Napoleon?", "What causes thunder?"
+
+Input: JSON array [{"i": 0, "q": "..."}, ...]
+Output JSON only: [{"i": 0, "status": "clear"}, ...]
+
+--- END DETECT PROMPT ---
+
+[laborers--92] CLEAR
+  Q: Is money an essential and convenient institution as society is now organized?
+
+[botany--31] CLEAR
+  Q: How may leaves differ?
+
+[1001-questions--409] AMBIGUOUS
+  Q: What did the Danes do a century later?
+
+[school-bulletin--264] CLEAR
+  Q: Describe Sodium.
+
+[civil-war--573] CLEAR
+  Q: What could the belligerents gain in neutral countries by making sentiment?
+
+[civil-war--79] AMBIGUOUS
+  Q: Did Mexico propose a method for terminating the war after we joined it?
+
+[chemistry--480] CLEAR
+  Q: In what state is antimony found in nature?
+
+[brewers-guide--340] CLEAR
+  Q: Why does the mercury of a thermometer rise in hot weather?
+
+[school-bulletin--181] AMBIGUOUS
+  Q: What is a disk?
+
+[astronomy--228] BARE
+  Q: Did they succeed?
+
+[mythology--225] AMBIGUOUS
+  Q: How was this story regarded in later times?
+
+[school-bulletin--250] CLEAR
+  Q: How can we get hydrogen from water?
+
+[engineering--564] CLEAR
+  Q: What are some substances having a low specific resistance?
+
+[agriculture--193] CLEAR
+  Q: What effect has increasing population upon the capital invested in farming?
+
+[familiar-things--378] CLEAR
+  Q: What is an Electric current?
+
+[common-core--1609] CLEAR
+  Q: What is insolvency?
+
+[1001-questions--520] CLEAR
+  Q: What name has been given Louis IX. (1226-1270)?
+
+[1001-questions--488] CLEAR
+  Q: What does the political history of England under the Georges reveal?
+
+[astronomy--84] CLEAR
+  Q: What is the surface of the earth?
+
+[chemistry--405] CLEAR
+  Q: How is the protosulphate formed?

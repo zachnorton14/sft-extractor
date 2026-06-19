@@ -1,0 +1,321 @@
+model: claude-haiku-4-5
+seed:  44
+n:     100
+
+--- DETECT PROMPT ---
+You receive opening questions from pre-1930s educational Q&A texts.
+Classify each as one of three statuses:
+
+"bare"      — no subject at all; unintelligible without prior context
+              e.g. "What is the effect?", "Describe their shape?", "Why not?"
+
+"ambiguous" — has a subject, but its meaning depends heavily on the domain
+              e.g. "What is a disk?" (botany vs. computing), "What is a cell?"
+
+"clear"     — fully self-contained; subject is unambiguous without domain knowledge
+              e.g. "What is arsenic?", "Who was Napoleon?", "What causes thunder?"
+
+Input: JSON array [{"i": 0, "q": "..."}, ...]
+Output JSON only: [{"i": 0, "status": "clear"}, ...]
+
+--- END DETECT PROMPT ---
+
+[common-core--1390] ?
+  Q: A gentleman has a garden 400 feet long and 300 feet wide which he would raise 9 inches higher by means of the earth to be dug out of a ditch that goes around it. To what depth must the ditch be dug, supposing its breadth to be everywhere 6 feet?
+
+[engineering--149] ?
+  Q: What are some of the principal fuels used in the production of steam?
+
+[engineering--508] ?
+  Q: How is the tensile strength affected by heat?
+
+[new-york-bar--238] ?
+  Q: A does certain painting for the X corporation, which afterwards becomes insolvent. A, not having been paid for his work, sues B, one of the stockholders. Can the action be maintained? If you had been A's attorney, what would you have done?
+
+[botany--118] ?
+  Q: What are the principal substances of which plants are composed?
+
+[brewers-guide--948] ?
+  Q: In what months is the barometer lowest?
+
+[common-core--915] ?
+  Q: What objects are to be aimed at in the study and teaching of reading?
+
+[chemistry--512] ?
+  Q: What is a salt defined to be?
+
+[civil-war--811] ?
+  Q: Why did Japan enter the European war?
+
+[1001-questions--476] ?
+  Q: When was the Kingdom restored?
+
+[chemistry--504] ?
+  Q: Where is cadmium found?
+
+[familiar-things--21] ?
+  Q: Who were the Sicilians?
+
+[1001-questions--144] ?
+  Q: What did the Shogun acquire in 1192?
+
+[astronomy--190] ?
+  Q: Who discovered these moons?
+
+[brewers-guide--621] ?
+  Q: Why is meat very subject to taint on a moon-light night?
+
+[seeleys--443] ?
+  Q: Which states of the Northern Section are especially noted for one or more of the following: wool, wheat, flax, corn, tobacco, dairy products, iron, coal and petroleum?
+
+[engineering--45] ?
+  Q: How can forces be conveniently represented so as to calculate the effect which they will produce on a body?
+
+[new-york-bar--28] ?
+  Q: John Doe, a gentleman, engages B as his agent to purchase a coach horse for him, and limits him strictly to the price of $5,000. B purchases a horse from C for the price of $6,000 on Doe's acceptance, and offers it to Doe, who refuses because of the price. B then sues C for $5,000 which he has paid C, who knew nothing of the limitation on B's agency. Can B recover?
+
+[civil-war--1031] ?
+  Q: What was the vital problem before us when we entered war?
+
+[new-york-bar--105] ?
+  Q: Draw a summons in a divorce case.
+
+[laborers--3] ?
+  Q: What is his right to life?
+
+[common-core--897] ?
+  Q: Which are the five largest islands in the world?
+
+[familiar-things--386] ?
+  Q: Who was the inventor of the telegraph in this country?
+
+[common-core--1333] ?
+  Q: What is equated time?
+
+[seeleys--306] ?
+  Q: What is the Binomial Theorem?
+
+[new-york-bar--69] ?
+  Q: A gives B his promissory note for good consideration, payable at the Mechanics Bank, Troy, N. Y. On the day of payment B goes to the bank and inquires if the note is paid. B does not protest the note, but goes to A's place of business, tells him that the note is not paid, and then and there demands payment of A. A refuses to pay. B brings suit on the note. Can he recover?
+
+[mythology--115] ?
+  Q: What are the incidents of Apollo's journey to the Western Pytho?
+
+[common-core--40] ?
+  Q: Who were the first Spanish, French, English and Dutch discoverers?
+
+[common-core--567] ?
+  Q: How many distinct races of men are there?
+
+[advanced-questions--524] ?
+  Q: Why does heat expand and cold contract?
+
+[common-core--248] ?
+  Q: What were some of the most important naval victories for the Americans in 1812?
+
+[civil-war--699] ?
+  Q: Who are the Cossacks?
+
+[investors--128] ?
+  Q: What does the sign d. mean?
+
+[brewers-guide--659] ?
+  Q: Why is heat applied to the bottom, and not to the top of a kettle?
+
+[botany--42] ?
+  Q: What is a flower?
+
+[engineering--1] ?
+  Q: For what is machinery used?
+
+[advanced-questions--466] ?
+  Q: How was the Carboniferous Period inaugurated?
+
+[familiar-things--347] ?
+  Q: What does the word Nature signify?
+
+[astronomy--99] ?
+  Q: Is the moon a fine object in the telescope?
+
+[civil-war--490] ?
+  Q: How are our soldiers identified?
+
+[civil-war--1234] ?
+  Q: How did the present Austrian Emperor succeed to the throne?
+
+[astronomy--313] ?
+  Q: Where is Cygnus, the Swan?
+
+[investors--261] ?
+  Q: What is non-assessable stock?
+
+[civil-war--813] ?
+  Q: What was the Japanese-American Agreement?
+
+[1001-questions--573] ?
+  Q: What was the condition of France?
+
+[common-core--342] ?
+  Q: When was the Emancipation Proclamation issued?
+
+[common-core--1019] ?
+  Q: When are two terms in apposition, and when is one predicated by the other? In what must these terms agree?
+
+[astronomy--118] ?
+  Q: 1. What are the tides?
+
+[electricity--90] ?
+  Q: Has atmospheric electricity ever been used, or is it likely to be?
+
+[electricity--71] ?
+  Q: How can one see stars by electricity?
+
+[brewers-guide--1176] ?
+  Q: Why do flutes, &c. produce musical sounds?
+
+[brewers-guide--1143] ?
+  Q: Why are some things white?
+
+[brewers-guide--184] ?
+  Q: Why do old rags, used for cleaning lamps and candles, sometimes set a house on FIRE?
+
+[civil-war--299] ?
+  Q: How can aviators safely have glass windows and goggles?
+
+[school-bulletin--355] ?
+  Q: What is Magnetism?
+
+[civil-war--129] ?
+  Q: How many Americans were in the great fighting of July and August, 1918?
+
+[seeleys--478] ?
+  Q: What other points should receive attention in the study of Europe?
+
+[advanced-questions--125] ?
+  Q: To how many full moons is the sun's light equal?
+
+[advanced-questions--30] ?
+  Q: Who represent the 'Golden Age' of American literature?
+
+[mythology--176] ?
+  Q: What was the Minotauros?
+
+[mythology--276] ?
+  Q: How did Menelaus bear the loss of Helen?
+
+[common-core--1846] ?
+  Q: Will a regular routine of food be beneficial?
+
+[new-york-bar--373] ?
+  Q: On the trial of A for larceny, B is called as a witness. Upon cross-examination, B is asked if he has ever been convicted of burglary. He answers that he has not. How may the district attorney contradict him, if at all? Give the general rule.
+
+[1001-questions--619] ?
+  Q: Who succeeded Louis at his death?
+
+[school-bulletin--216] ?
+  Q: Which bird has a bill almost as long as its body?
+
+[new-york-bar--434] ?
+  Q: A and B wrongfully take a carriage belonging to C. C brings an action on an implied contract to recover its value. He recovers judgment and issues execution, but the same is returned unsatisfied. He then discovers that the carriage is in the possession of D, having been bought from B. He brings an action of replevin against D. Judgment for whom and why?
+
+[new-york-bar--125] ?
+  Q: What must an affidavit in an action of replevin contain?
+
+[school-bulletin--190] ?
+  Q: How is wood formed?
+
+[logic--157] ?
+  Q: How are sophisms divided?
+
+[common-core--81] ?
+  Q: By whom was Delaware settled? Where and when? What transpired a few years after their settlement ?
+
+[common-core--751] ?
+  Q: What is the size of the Russian Empire?
+
+[constitution--136] ?
+  Q: But suppose I say of my rulers what is false and injurious, may I not be punished?
+
+[investors--347] ?
+  Q: What is preferred stock?
+
+[common-core--2129] ?
+  Q: What is a quorum?
+
+[familiar-things--370] ?
+  Q: What is a Spectrum?
+
+[world-history--54] ?
+  Q: Did not the Swedes recover their national independence?
+
+[engineering--485] ?
+  Q: How much water is required for condensers?
+
+[brewers-guide--521] ?
+  Q: Why is it cool under a shady tree in a hot summer’s day?
+
+[chemistry--644] ?
+  Q: Do the different acids all operate upon the same principle?
+
+[electricity--191] ?
+  Q: What is a thermopile?
+
+[common-core--2161] ?
+  Q: When should motions to postpone be made?
+
+[seeleys--764] ?
+  Q: What other methods may be mentioned?
+
+[school-bulletin--183] ?
+  Q: Name the kinds of fruits.
+
+[mythology--340] ?
+  Q: What were the Parcae?
+
+[common-core--364] ?
+  Q: During the siege of Richmond, what two important events occurred?
+
+[investors--112] ?
+  Q: What are coppers?
+
+[school-bulletin--200] ?
+  Q: What are the three families of quadrumana?
+
+[advanced-questions--33] ?
+  Q: What is the history of the Hebrews?
+
+[civil-war--621] ?
+  Q: Could warships be protected with concrete?
+
+[brewers-guide--630] ?
+  Q: Why does not the drop of rain wet the dust over which it rolls?
+
+[1001-questions--152] ?
+  Q: What excited the alarm of the government at last?
+
+[chemistry--479] ?
+  Q: Is the colour of the precipitate produced by sulphuretted hydrogen, peculiar to arsenic alone?
+
+[1001-questions--239] ?
+  Q: What may be said of the Spartans at this time?
+
+[familiar-things--207] ?
+  Q: What is the Steam Engine?
+
+[seeleys--99] ?
+  Q: What is phonology?
+
+[grammar--198] ?
+  Q: What is done in parsing a word?
+
+[logic--48] ?
+  Q: How many relative affections of propositions are noticed by Logicians?
+
+[ethics--32] ?
+  Q: What is the first one intended (the nearest) called?
+
+[engineering--528] ?
+  Q: Would pulling one of the wires out of the copper sulphate solution have the same effect as cutting the wire?
+
+[civil-war--682] ?
+  Q: How many men did Belgium have at the front during the invasion of her country?

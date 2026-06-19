@@ -1,0 +1,481 @@
+[1001-questions--13]  Q: What is the Historic Race?
+[1001-questions--14]  Q: What does the Semitic branch embrace?
+[1001-questions--15]  Q: What does the Hamitic branch include?
+[1001-questions--99]  Q: What occurred in the nth century?
+[1001-questions--322]  Q: Into how many Classes are the early inhabitants divided?
+[1001-questions--402]  Q: What did the Romans do for the country?
+[advanced-questions--522]  Q: What is meant by absorption?
+[agriculture--20]  Q: What is availability?
+[agriculture--153]  Q: What consideration should judges give to performance?
+[agriculture--183]  Q: What is the best time of year for cows to freshen?
+[agriculture--192]  Q: What is the effect of an intensive system upon the capital used?
+[agriculture--199]  Q: Which are most desirable, married or unmarried men?
+[agriculture--209]  Q: What should be the character of the land?
+[agriculture--213]  Q: What system of bookkeeping should be adopted?
+[astronomy--102]  Q: 16. What do the phases prove?
+[astronomy--141]  Q: What are the orange portions?
+[astronomy--142]  Q: What are the canals?
+[astronomy--143]  Q: What are the oases?
+[astronomy--243]  Q: 11 How are the orbits situated with regard to the ecliptic?
+[botany--151]  Q: On what facts is the theory of constancy based?
+[brewers-guide--5]  Q: What is the second chief source of heat?
+[brewers-guide--98]  Q: What is the third chief source of heat?
+[brewers-guide--169]  Q: Why does the extra heat revive the flame?
+[brewers-guide--188]  Q: What are blacks?
+[brewers-guide--925]  Q: What effect has wind on the mercury?
+[brewers-guide--941]  Q: What effect does a sudden change produce on the weather?
+[brewers-guide--949]  Q: What are the driest months?
+[brewers-guide--950]  Q: What are the wettest months?
+[brewers-guide--1211]  Q: Why do these things destroy the taint of meat?
+[chemistry--237]  Q: How is the common carbonate procured?
+[chemistry--262]  Q: What is the common mineral water of the shops?
+[chemistry--394]  Q: How may the protoxide be formed?
+[chemistry--398]  Q: How is the simple sulphide formed?
+[chemistry--399]  Q: How is the bisulphide formed?
+[chemistry--402]  Q: How is the nitrate formed?
+[chemistry--405]  Q: How is the protosulphate formed?
+[chemistry--410]  Q: What is formed by throwing the bipersulphate into water?
+[chemistry--423]  Q: How is the carbonate obtained?
+[civil-war--2]  Q: What nations are actually included under the term "Allies"?
+[civil-war--7]  Q: Does the espionage act cover only cases of actual spies?
+[civil-war--48]  Q: Did the President inquire for specific peace terms?
+[civil-war--212]  Q: Were the American destroyers really effective in the warzone?
+[civil-war--218]  Q: Was the Deutschland a warship?
+[civil-war--255]  Q: At the beginning of war, how many aircraft were there?
+[civil-war--256]  Q: What was Germany's air strength later in the war?
+[civil-war--269]  Q: How much gas could the L-49 carry?
+[civil-war--270]  Q: Why did the L-49 have five motors?
+[civil-war--280]  Q: Has the war evolved a distinct type of aeroplane?
+[civil-war--291]  Q: Is the aviation service not the most dangerous of any in this war?
+[civil-war--294]  Q: How does a fighter attack?
+[civil-war--324]  Q: How do the belligerents compare in battle-cruisers?
+[civil-war--325]  Q: How many ships did Japan have when war began?
+[civil-war--330]  Q: When was the first American gun fired in the war?
+[civil-war--331]  Q: What was the first American force in actual war service?
+[civil-war--339]  Q: Is any system used in naming the small ships added since the war?
+[civil-war--367]  Q: What weapons in this war are American inventions?
+[civil-war--369]  Q: What is meant by von Mackensen's "phalanx"?
+[civil-war--379]  Q: To what extent is smokeless powder used in the war?
+[civil-war--385]  Q: What are time-fuses like?
+[civil-war--458]  Q: What is a primer?
+[civil-war--573]  Q: What could the belligerents gain in neutral countries by making sentiment?
+[civil-war--575]  Q: What was the effort of rival activity in Italy?
+[civil-war--595]  Q: What are the distances in the European battleground?
+[civil-war--617]  Q: Are submarines being sunk extensively now?
+[civil-war--624]  Q: What is the present enrollment in the British armies?
+[civil-war--626]  Q: What are the military forces of the neutral countries?
+[civil-war--673]  Q: What sum would cover damage to destroyed property?
+[civil-war--835]  Q: How much did the war and navy departments spend?
+[civil-war--921]  Q: Are the German cities as large as ours?
+[civil-war--925]  Q: Did Germany buy more from us than she sold?
+[civil-war--932]  Q: Must our Senators vote as the States instruct them?
+[civil-war--943]  Q: Which is the largest Lower House?
+[civil-war--959]  Q: Can the Legislative Assemblies of other nations be dissolved?
+[civil-war--971]  Q: How does Germany's agricultural area compare with ours?
+[civil-war--972]  Q: How do we compare in farms with Germany?
+[civil-war--1026]  Q: What were the ages of men in the Civil War?
+[civil-war--1089]  Q: How many German and Austrian ships did we requisition?
+[civil-war--1090]  Q: Why did we not seize the German ships in the Danish Islands?
+[civil-war--1099]  Q: How did our Atlantic merchant fleet begin to grow?
+[civil-war--1100]  Q: How did we get Great Lakes ships to the Atlantic?
+[civil-war--1102]  Q: How many shipyards have we?
+[civil-war--1105]  Q: What was the "Great Shipyard Drive"?
+[civil-war--1106]  Q: Have we a training ship for the merchant marine?
+[civil-war--1116]  Q: How fast is our merchant marine growing?
+[civil-war--1117]  Q: What had we built during the first year of war?
+[civil-war--1118]  Q: How many had our government yards produced?
+[civil-war--1134]  Q: What were the Lichnowsky revelations?
+[civil-war--1135]  Q: What was the burden of Lichnowsky's charges?
+[civil-war--1138]  Q: Was a prophecy made by Lichnowsky?
+[civil-war--1163]  Q: How do our States rank agriculturally?
+[civil-war--1165]  Q: Is wheat our most valuable crop?
+[civil-war--1166]  Q: Did our live stock increase or decrease after we joined the war?
+[civil-war--1172]  Q: How can we get nitrogen?
+[civil-war--1173]  Q: How did ship shortage affect our war material supply?
+[civil-war--1174]  Q: Could American mines produce all the basic raw materials we need?
+[civil-war--1179]  Q: Do we really waste our coal?
+[civil-war--1201]  Q: What was our reply to the Peace Appeal of the Pope in August, 1917?
+[civil-war--1219]  Q: Has our Government an authorized censorship?
+[civil-war--1224]  Q: Does the Home Service help soldiers, too?
+[civil-war--1251]  Q: Was General Wood a doctor at first?
+[civil-war--1257]  Q: Was General French a cavalryman?
+[civil-war--1266]  Q: Why was General Robertson retired?
+[civil-war--1274]  Q: How old are the leading soldiers in this war?
+[civil-war--1279]  Q: How many Foreign Ministers has Germany had since war began?
+[civil-war--1281]  Q: Who was Premier of France when war began?
+[civil-war--1282]  Q: Had Clemenceau been Premier before?
+[civil-war--1283]  Q: Has the President of France held office throughout the war?
+[civil-war--1294]  Q: Who was the first Russian Premier after the revolution?
+[civil-war--1303]  Q: Was von Bernstorff in America long before the war?
+[civil-war--1305]  Q: How old are the English leaders?
+[civil-war--1338]  Q: Did civilians suffer from the very beginning?
+[civil-war--1344]  Q: Is it true that children were wantonly killed?
+[civil-war--1348]  Q: Did the United States protest formally?
+[civil-war--1354]  Q: What could a lawyer do for the defense?
+[civil-war--1356]  Q: Were many German citizens in Belgium when war began?
+[common-core--183]  Q: What assistance was sent by France in the spring?
+[common-core--197]  Q: What fleet came to assist the Americans in July?
+[common-core--207]  Q: What successful operations were conducted by Gen. Greene in September?
+[common-core--208]  Q: How was the war conducted at the North?
+[common-core--209]  Q: What event brought the war to a close?
+[common-core--217]  Q: Where was the second session of Congress held?
+[common-core--226]  Q: What treaty was made with England in regard to English debts? How was this treaty received by the American people?
+[common-core--228]  Q: By what majority was Adams elected?
+[common-core--230]  Q: What was the political feeling during the Adams administration?
+[common-core--236]  Q: What difficulties arose between England and the United States?
+[common-core--266]  Q: What important events occurred during Adams’s administration?
+[common-core--269]  Q: Why was Adams not elected to a second term of office?
+[common-core--275]  Q: What demands were made of the French government?
+[common-core--282]  Q: What occurred in relation to the Mormons?
+[common-core--286]  Q: What was the great political question on which hinged the campaign for President? Who were the nominees?
+[common-core--293]  Q: What is to be said of the invasion of Cuba?
+[common-core--297]  Q: What treaty was made with Japan?
+[common-core--472]  Q: How many revolutions has the earth?
+[common-core--650]  Q: What is the government of the provinces of the Dominion?
+[common-core--671]  Q: What are the commercial routes of the Dominion?
+[common-core--802]  Q: What are the capitals of the four kingdoms?
+[common-core--841]  Q: Where is lead found most abundantly?
+[common-core--882]  Q: Where do the French hold possessions?
+[common-core--909]  Q: Where are the chief canals?
+[common-core--931]  Q: What is transition?
+[common-core--949]  Q: What are the points of reference?
+[common-core--987]  Q: When is the word that?
+[common-core--1002]  Q: What are the methods of distinguishing the two sexes?
+[common-core--1014]  Q: What is case?
+[common-core--1092]  Q: What is discourse, and of what may it treat?
+[common-core--1093]  Q: What is a paragraph?
+[common-core--1104]  Q: What is a period in grammar?
+[common-core--1106]  Q: What is a figure in grammar?
+[common-core--1116]  Q: What is a foot?
+[common-core--1139]  Q: What is sound, and how are sounds classified?
+[common-core--1140]  Q: What is a letter?
+[common-core--1206]  Q: What is the power of a letter?
+[common-core--1215]  Q: What's a sign?
+[common-core--1277]  Q: What is a scale?
+[common-core--1422]  Q: What number is that, 3, and 1/3 of which being multiplied together, will produce the number itself?
+[common-core--1532]  Q: What is discipline?
+[common-core--1563]  Q: What is method?
+[common-core--1570]  Q: Of what does pragmatics treat?
+[common-core--1572]  Q: What is conception?
+[common-core--1647]  Q: What is a bill?
+[common-core--1673]  Q: What is a view?
+[common-core--1674]  Q: What is a bilateral form?
+[common-core--1819]  Q: What do animals always possess?
+[common-core--1832]  Q: To what can every organ of the body be reduced?
+[common-core--1845]  Q: Why should care be banished from the table?
+[common-core--1865]  Q: What is the common error in regard to eating?
+[common-core--1877]  Q: What are the natural effects of stimulation?
+[common-core--1936]  Q: What is a felon?
+[common-core--2038]  Q: What is meant by movement?
+[common-core--2039]  Q: What is meant by form?
+[common-core--2040]  Q: What is a line?
+[common-core--2044]  Q: What is a degree?
+[common-core--2051]  Q: What is meant by principles?
+[common-core--2054]  Q: What is meant by spacing?
+[common-core--2064]  Q: What is meant by shading?
+[common-core--2072]  Q: What are figures?
+[common-core--2073]  Q: How are figures formed?
+[common-core--2074]  Q: What is the height of figures?
+[common-core--2077]  Q: What is the width of the figures?
+[common-core--2078]  Q: Where is the stroke begun forming the figures?
+[common-core--2164]  Q: Are these questions open to amendment?
+[common-core--2172]  Q: In the third form of amending, by striking out and inserting, what is the mode of proceeding?
+[common-core--2176]  Q: In deliberative assemblies, what motion can be made to take the place of a regular question?
+[common-core--2181]  Q: To what are questions of privilege assumed to relate?
+[common-core--2182]  Q: What are the orders of the day?
+[common-core--2183]  Q: What becomes of the original motion when interrupted by the orders of the day?
+[common-core--2184]  Q: If the business relating to the orders of the day is not disposed of on the day assigned, what becomes of it?
+[common-core--2185]  Q: What are incidental questions?
+[common-core--2187]  Q: What is an appeal from the decision of the chair?
+[common-core--2188]  Q: What is the rule in regard to reading papers?
+[common-core--2191]  Q: What is the suspension of a rule?
+[common-core--2192]  Q: How is an amendment of an amendment to be treated?
+[common-core--2193]  Q: Which of the subsidiary questions admit of no amendment?
+[common-core--2194]  Q: How are questions of postponement classed?
+[common-core--2196]  Q: If a motion for commitment is decided in the affirmative, can the previous question, or a motion for postponement, be used then?
+[common-core--2197]  Q: How may a motion to commit, or recommit, be amended?
+[common-core--2198]  Q: What motion supersedes all the other subsidiary questions?
+[common-core--2203]  Q: When a paper has been referred to a committee and is reported back to the assembly, how is it taken up for consideration?
+[common-core--2204]  Q: When the paper referred to a committee is reported back in a new draft, which is often done when numerous changes are made, how is the new draft considered?
+[common-core--2206]  Q: When is a proposition in order for any member to discuss it?
+[common-core--2208]  Q: When a member has obtained the floor, what right belongs to him?
+[common-core--2209]  Q: How shall a member address himself to the presiding officer when he wishes to call attention to some point of order or privilege or to the orders of the assembly?
+[common-core--2210]  Q: When the time arrives for proceeding with the orders of the day, can a man be interrupted while speaking, and new subjects presented?
+[common-core--2211]  Q: After a motion has been made, seconded and proposed, to whom is it customary to give the floor on opening the debate?
+[common-core--2212]  Q: When two or more members claim the floor, to whom should the presiding officer give the preference?
+[common-core--2220]  Q: Does the introduction of a subsidiary motion restrain debate on the general question?
+[common-core--2221]  Q: When a member is called to order for departing from the subject under consideration, what privilege may be extended to him?
+[common-core--2230]  Q: What is the order, resolution or vote of the assembly?
+[common-core--2232]  Q: What is the form used by the presiding officer in putting a question to the assembly?
+[common-core--2235]  Q: Is it the duty of the presiding officer to give the casting vote?
+[common-core--2238]  Q: After the affirmative side has been put, and voting begun, is the question open to debate?
+[common-core--2239]  Q: When a question is taken by ayes and noes, the negative and affirmative taken at the same time, why can there be no opening of the debate, as in other cases?
+[common-core--2240]  Q: When, during a division, a question is raised concerning the right of any member to vote, how is it settled?
+[common-core--2241]  Q: Suppose, in counting the assembly on a division, it appears that there is not a quorum present, what shall be done?
+[common-core--2242]  Q: What is a motion for reconsideration?
+[common-core--2243]  Q: Who has a right to make a motion to reconsider?
+[common-core--2247]  Q: What is a standing committee?
+[common-core--2265]  Q: What is meant by recommitting a subject?
+[common-core--2268]  Q: What is a committee of the whole?
+[constitution--4]  Q: How is this country governed?
+[constitution--6]  Q: What was the change produced by the Revolution?
+[constitution--43]  Q: What are Duties?
+[electricity--26]  Q: How are automatic burners connected?
+[electricity--61]  Q: What is a condenser?
+[electricity--63]  Q: Are condensers common?
+[electricity--64]  Q: What are condensers used for?
+[electricity--65]  Q: Is there a simple and elementary explanation of the action of the condenser?
+[electricity--325]  Q: What is the compass?
+[electricity--480]  Q: What is a booster?
+[electricity--576]  Q: How many poles do alternators have?
+[electricity--577]  Q: What limits the frequency of alternating currents?
+[electricity--578]  Q: How can the frequency of an alternating current be measured?
+[electricity--579]  Q: How can the number of alternations be determined?
+[electricity--580]  Q: What is a two-phase current?
+[electricity--581]  Q: How are two-phase currents obtained?
+[electricity--582]  Q: What is a two-phase alternator?
+[electricity--583]  Q: What is a three-phase current?
+[electricity--584]  Q: How are three-phase currents obtained?
+[electricity--585]  Q: What are polyphase currents, and for what are they used?
+[electricity--587]  Q: Do not the rules of ordinary arithmetic apply to alternating currents?
+[electricity--588]  Q: What is the sum of two alternating currents 90 degrees apart?
+[electricity--589]  Q: How are two-phase alternator armatures wound?
+[electricity--590]  Q: How are three-phase alternator armatures wound?
+[electricity--591]  Q: What is meant by a mesh-connected three-phase armature?
+[electricity--592]  Q: What is meant by a star-connected three-phase armature?
+[electricity--593]  Q: How many wires are required for carrying three-phase currents?
+[electricity--594]  Q: How can three separate currents be carried on three wires and yet be distinct?
+[electricity--595]  Q: What sort of current is used for the field coils of alternating-current machines?
+[electricity--596]  Q: Why is it necessary to use direct current in the field coils of alternators?
+[electricity--597]  Q: How is the exciting current obtained?
+[electricity--598]  Q: How is the exciter generally driven?
+[electricity--599]  Q: Why is the exciter armature sometimes mounted on the same shaft with the alternator?
+[electricity--600]  Q: Why are alternators generally made with revolving fields?
+[electricity--601]  Q: What sort of machines have both field and armature stationary?
+[electricity--602]  Q: How may the voltage of an alternator be regulated?
+[electricity--603]  Q: How can the number of active wires be changed in the armature of an alternator?
+[electricity--604]  Q: In what ways may the field strength of an alternator be changed?
+[electricity--605]  Q: In what ways may the field current of an alternator be changed?
+[electricity--606]  Q: How is the voltage of the exciter varied?
+[electricity--607]  Q: How was the Heisler alternator regulated?
+[electricity--608]  Q: What is an alternator of the composite type?
+[electricity--609]  Q: How is the alternating current rectified?
+[electricity--610]  Q: How is the rectifier connected into the circuit?
+[electricity--611]  Q: Can several circuits be supplied at different voltages by the same alternator?
+[electricity--612]  Q: What is a booster?
+[electricity--613]  Q: What is a choke coil?
+[electricity--614]  Q: For what purposes is a choke coil used?
+[electricity--615]  Q: What advantage has a choke coil over a resistance coil?
+[electricity--616]  Q: Is a choke coil suitable for direct currents?
+[electricity--617]  Q: How can a choke coil reduce the current without wasting energy?
+[electricity--618]  Q: Is not the energy of an alternating current equal to the product of amperes by volts?
+[electricity--619]  Q: How can the energy of an alternating current be different from the simple product of amperes by volts?
+[electricity--620]  Q: How can a line deliver current or energy back to a generator?
+[electricity--621]  Q: How can an alternating current be wattless or without energy?
+[electricity--622]  Q: Is it correct to say that part of an alternating current is wattless and that the rest has energy or power?
+[electricity--623]  Q: What is meant by the "power factor"?
+[electricity--624]  Q: Does the line voltage have a wattless component?
+[electricity--625]  Q: Why do writers on alternating currents use so many diagrams with circles or triangles?
+[electricity--632]  Q: How can the angle of lag be determined experimentally?
+[electricity--633]  Q: When an alternating current lags behind the E.M.F., is there not a considerable current at times when the E.M.F. is zero?
+[electricity--634]  Q: Does not Ohm's law hold true for alternating currents?
+[electricity--635]  Q: How can the shape of the curves of current and of E.M.F. be measured when the whole cycle is completed in a very small part of a second?
+[electricity--636]  Q: How can the relative positions or the difference of phase between the current and voltage be determined?
+[electricity--637]  Q: What is a rotary converter?
+[electricity--638]  Q: How could a two-phase current be obtained?
+[electricity--639]  Q: How can three-phase current be obtained from a converter?
+[electricity--640]  Q: Will a rotary converter also obtain a continuous current from an alternating current?
+[electricity--641]  Q: Are rotary converters used much?
+[engineering--73]  Q: What is the rule for obtaining the length of an open belt?
+[engineering--74]  Q: How would you measure the length of a belt in a coil?
+[engineering--75]  Q: How would you determine the proper size of a driven pulley to run at a certain number of revolutions per minute, having given the diameter and speed of the driving pulley?
+[engineering--76]  Q: In arranging for belting, which side should be the loose side, the upper or lower?
+[engineering--77]  Q: What advantages does rope transmission have over belt driving?
+[engineering--78]  Q: What are the two general methods of using ropes ?
+[engineering--79]  Q: At what speeds do the ropes run?
+[engineering--80]  Q: Can you give any figures showing what horse-power is transmitted by a certain size rope?
+[engineering--81]  Q: What is the pitch of a gear wheel?
+[engineering--82]  Q: What is the thickness of a gear tooth?
+[engineering--83]  Q: What is backlash?
+[engineering--84]  Q: What are spur gears used for?
+[engineering--85]  Q: When are bevel gears used?
+[engineering--86]  Q: What are the two principal forms of gear teeth?
+[engineering--87]  Q: How would you calculate the diameter or number of teeth in a driven wheel to run a certain speed having given the diameter or number of teeth of the driver?
+[engineering--88]  Q: For what are friction-clutch connections principally used?
+[engineering--89]  Q: What are some of the purposes for which compressed air is used as a means of transmitting power?
+[engineering--90]  Q: Why in steam-driven air compressors is the duplex or compound type used so largely?
+[engineering--91]  Q: What is the intercooler?
+[engineering--92]  Q: How much of a saving in steam is attained by the cooling of the air?
+[engineering--93]  Q: How is the regulation of air pressure maintained?
+[engineering--94]  Q: What are receivers and why are they used?
+[engineering--95]  Q: What is a common pressure for compressed air systems?
+[engineering--96]  Q: How does the loss of pressure due to friction of air flowing through pipes vary?
+[engineering--97]  Q: Can you give any figures showing the number of cubic feet of compressed air used by air motors?
+[engineering--98]  Q: What percentage of the power put into the air compressor would you expect to get out of the air motors? In other words, what would be the efficiency of a complete pneumatic transmission system?
+[engineering--99]  Q: Describe the general method of transmitting power electrically.
+[engineering--100]  Q: What three types of direct-current motors are there?
+[engineering--101]  Q: What type of direct-current motor is generally used for driving machine tools?
+[engineering--102]  Q: What is the gain, in size of wire used on the line, if we employ a 220-volt system instead of a 110-volt system?
+[engineering--103]  Q: What determines the size of wire to be used for connecting a generator and motor?
+[engineering--105]  Q: What would you use for slow speeds and heavy pressures on the bearings?
+[engineering--106]  Q: What is an oil separator and on what principle does it operate ?
+[engineering--107]  Q: What are three common methods of measuring power?
+[engineering--108]  Q: How would you determine by the indicator method the power used by a certain tool?
+[engineering--109]  Q: What instruments would you require for the electrical method, if direct currents were used?
+[engineering--110]  Q: How would you measure the power used in operating a tool driven by a direct-current electric motor?
+[engineering--111]  Q: Describe the Prony brake.
+[engineering--112]  Q: What is a dynamometer?
+[engineering--113]  Q: For what purpose is a spring dynamometer used?
+[engineering--126]  Q: What is sensible heat?
+[engineering--138]  Q: Apart from the waste of fuel due to loss of heat by radiation from steam pipes, is there any other effect?
+[engineering--143]  Q: What is a thermal unit?
+[engineering--154]  Q: How many heat-units does 1 pound of good coal, containing 90 per cent, of carbon, produce?
+[engineering--155]  Q: How much air does it require to burn 1 pound of coal?
+[engineering--156]  Q: How much air does it require to burn 100 pounds of coal?
+[engineering--161]  Q: What is meant by the term 'free hydrogen' in connection with coal?
+[engineering--165]  Q: How many pounds of water can be evaporated by a pound of coal?
+[engineering--199]  Q: What is meant by the term "head" applied to water?
+[engineering--200]  Q: What pressure corresponds to a head of 1 foot?
+[engineering--201]  Q: When water flows from an orifice in the bottom of a tank under a head, how can its velocity be calculated?
+[engineering--202]  Q: Suppose that you desired to know the number of cubic feet of water flowing from an orifice, how would you obtain it?
+[engineering--203]  Q: When water is led from a tank through a long pipe and then allowed to flow from the mouth of the pipe into the air, will the velocity be the same as calculated above?
+[engineering--282]  Q: How do you calculate the safe working pressure?
+[engineering--343]  Q: What is meant by a gauge?
+[engineering--374]  Q: What is a collapse?
+[engineering--408]  Q: Define the unit of power.
+[engineering--436]  Q: What is a receiver?
+[engineering--455]  Q: How is the governor usually made to vary the cut-off?
+[engineering--482]  Q: What do you understand by a condenser?
+[engineering--483]  Q: What degree of vacuum should exist in a good condenser?
+[engineering--484]  Q: How much power is gained by the use of the condenser?
+[engineering--485]  Q: How much water is required for condensers?
+[engineering--544]  Q: What do you mean by right-handed?
+[engineering--635]  Q: What is a mil?
+[engineering--639]  Q: What are the varieties of concealed work?
+[engineering--681]  Q: What is the efficiency of a storage cell, and how is it measured?
+[engineering--682]  Q: Of what four elements are most signal systems made up?
+[engineering--684]  Q: Into what classes are bells divided?
+[engineering--685]  Q: How is a vibrating bell connected?
+[engineering--686]  Q: What three styles of bells are there?
+[engineering--687]  Q: What is an annunciator ?
+[engineering--688]  Q: What is an automatic set-back annunciator?
+[engineering--689]  Q: What is a fire-alarm attachment?
+[engineering--690]  Q: How does a burglar-alarm system differ from the ordinary annunciator system?
+[engineering--691]  Q: Why are watchmen's clock systems used?
+[engineering--692]  Q: What are the advantages of the magneto system?
+[engineering--693]  Q: Describe the magneto receiver.
+[engineering--694]  Q: What was the original form of the transmitter?
+[engineering--696]  Q: What form of transmitter is now used?
+[engineering--697]  Q: Do the present forms of transmitter consist of a single carbon contact?
+[engineering--698]  Q: What are the methods used in calling up?
+[engineering--699]  Q: On what two systems are telephones operated?
+[engineering--701]  Q: What requirement must a successful intercommunicating system fulfil?
+[engineering--703]  Q: What is the general nature of exchange systems?
+[engineering--704]  Q: How are the subscribers called up?
+[engineering--705]  Q: What is the general method of operation in an exchange system when one party wishes to talk to another?
+[ethics--5]  Q: Do we here treat ethics, right and wrong, from the side of supernatural revelation?
+[familiar-things--380]  Q: What is a Cell; what a Battery?
+[familiar-things--382]  Q: What effects are produced by currents?
+[familiar-things--389]  Q: What is a Cable?
+[laborers--142]  Q: What are the chief features of Perpetual Voting?
+[laborers--143]  Q: Am I to understand that under the Perpetual Voting System electors will be voting "all the time?"
+[logic--12]  Q: "What are the most remarkable affections of properties of terms?
+[logic--31]  Q: How are propositions divided?
+[logic--32]  Q: How are the affections or properties of propositions divided?
+[logic--33]  Q: What is quantity?
+[logic--34]  Q: What is quality?
+[logic--40]  Q: What is the matter of a proposition?
+[logic--43]  Q: Have terms any relative affection?
+[logic--49]  Q: What is conversion?
+[logic--52]  Q: What is opposition?
+[logic--53]  Q: What is contrariety?
+[logic--55]  Q: What is subcontrariety?
+[logic--65]  Q: What do you mean by an integrant whole?
+[logic--82]  Q: What species of matter are syllogisms said to have?
+[logic--83]  Q: What property have syllogisms with respect to their proximate matter?
+[logic--84]  Q: What property have syllogisms with respect to their remote matter?
+[music--8]  Q: How are the keys divided?
+[music--41]  Q: What is the meaning of the word key?
+[music--42]  Q: How many kinds of keys are there?
+[music--53]  Q: How many keys are there?
+[music--55]  Q: What is time?
+[music--56]  Q: How many kinds of time are there?
+[music--59]  Q: What is the meaning of the figures 4?
+[music--72]  Q: Explain the turn?
+[music--79]  Q: What are the principal means of expression?
+[music--83]  Q: What is meant by emphasis?
+[music--93]  Q: What is a hold?
+[music--108]  Q: What is understood by fingering?
+[music--123]  Q: What is an interval?
+[music--124]  Q: What is a tone?
+[music--138]  Q: What is a caprice?
+[music--139]  Q: What is a potpourri?
+[mythology--48]  Q: Is there anything in the legends which may throw light on the meaning of the name?
+[mythology--67]  Q: When a city sent out men to form a colony, how was the bond of union with the parent state kept up?
+[mythology--130]  Q: Why is Hermes bidden to go to the shrine for wisdom?
+[mythology--305]  Q: What is Pallas?
+[new-york-bar--32]  Q: A and B contract, A to furnish the principal part of the materials, and B some minor materials, and to do the work necessary to make a quantity of shears, which are to correspond to a sample furnished by A. Part of the shears have been made and delivered, when it is found that they have a latent defect, and A refuses to take any more, or to pay for those already delivered.
+[new-york-bar--609]  Q: The executor of a will in the state of New Jersey discovers personal property in this state belonging to the testator. He comes to you for advice. What would you advise him to do?
+[school-bulletin--26]  Q: Who were the five great generals of modern times?
+[school-bulletin--48]  Q: What is opposition?
+[school-bulletin--73]  Q: What tradition had the Greeks?
+[school-bulletin--78]  Q: What is said of the vestal virgins?
+[school-bulletin--84]  Q: How was the formation of man accomplished?
+[school-bulletin--159]  Q: What are the axes?
+[school-bulletin--181]  Q: What is a disk?
+[school-bulletin--266]  Q: What compound has never been separated?
+[school-bulletin--271]  Q: What is the symbol of civilization?
+[school-bulletin--359]  Q: Name the late inventions.
+[seeleys--24]  Q: What is force?
+[seeleys--25]  Q: What is stress?
+[seeleys--26]  Q: What is movement?
+[seeleys--31]  Q: What are the points of reference?
+[seeleys--85]  Q: What churchmen and statesmen have been prominent in the field of literature during this age?
+[seeleys--121]  Q: When is the long sound of a used?
+[seeleys--122]  Q: When has a the short sound?
+[seeleys--124]  Q: What is a mute?
+[seeleys--125]  Q: What is a semivowel?
+[seeleys--126]  Q: What are subvocals?
+[seeleys--127]  Q: What are aspirates?
+[seeleys--128]  Q: What letters are called liquids?
+[seeleys--130]  Q: What is a substitute?
+[seeleys--132]  Q: How are words classed as to form?
+[seeleys--133]  Q: What is a primitive word?
+[seeleys--134]  Q: What is a derivative word?
+[seeleys--142]  Q: What is a compellative?
+[seeleys--146]  Q: What is inflection?
+[seeleys--147]  Q: What is declension?
+[seeleys--148]  Q: What is number?
+[seeleys--149]  Q: How is number usually indicated?
+[seeleys--159]  Q: What is case?
+[seeleys--165]  Q: What are the differences between conjunctive and personal pronouns?
+[seeleys--166]  Q: What are the two uses of a conjunctive pronoun?
+[seeleys--171]  Q: How are compound conjunctive pronouns formed?
+[seeleys--172]  Q: Give classification and use of adjective pronouns. (1) Demonstrative pronouns - This and these, referring to things near by; that and those, to things more distant: This is the house where those men live. (2) Indefinite pronouns point out objects indefinitely. Each, either, and neither are always singular. One and its compounds, somebody and the like, other and another, either and neither, have a possessive case. One and other have plurals. Some may be used in either a singular or plural sense. None is usually singular. Each praised the other. “She is somebody’s mother, boys,” he said. Some of the passengers were injured. None but the brave deserves the fair. What are reciprocal pronouns?
+[seeleys--174]  Q: What is comparison?
+[seeleys--183]  Q: What are attributive verbs?
+[seeleys--187]  Q: What does the root and 's' form of the verb express?
+[seeleys--191]  Q: What is voice?
+[seeleys--192]  Q: What of the voice of intransitive verbs?
+[seeleys--193]  Q: What is mode?
+[seeleys--196]  Q: What is conjugation?
+[seeleys--218]  Q: What is a unit?
+[seeleys--220]  Q: What is the order of a figure?
+[seeleys--295]  Q: What are the different classes of terms?
+[seeleys--296]  Q: What is meant by the dimensions of a term?
+[seeleys--299]  Q: What are the signs of opposition, and how used?
+[seeleys--305]  Q: What are the three general principles most often used in algebra?
+[seeleys--312]  Q: What is involution?
+[seeleys--433]  Q: What are the most important mineral products?
+[seeleys--447]  Q: What are some of the most important canals?
+[seeleys--453]  Q: Name the leading coast cities?
+[seeleys--454]  Q: What are some of the river and inland cities?
+[seeleys--456]  Q: What are some of the chief minerals and where found in largest quantities?
+[seeleys--554]  Q: What two colonies were granted charters?
+[seeleys--587]  Q: How were manufactures fostered?
+[seeleys--757]  Q: Why is method important?
+[world-history--0]  Q: What is meant by History?
+[world-history--38]  Q: What remarkable events happened in the reign of Leopold I.?
+[world-history--39]  Q: What happened after the death of Charles VI.?
+[world-history--44]  Q: In whom ended the line of Valois?
+[world-history--64]  Q: Was not Selim I. a warlike prince?

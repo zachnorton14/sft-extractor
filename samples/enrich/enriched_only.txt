@@ -1,0 +1,736 @@
+147 enriched total
+
+[1001-questions--13] ambiguous
+  OLD: What is the Historic Race?
+  NEW: What is the Caucasian Historic Race?
+  A:   The Caucasian, the others having done little worth recording.
+
+[1001-questions--14] ambiguous
+  OLD: What does the Semitic branch embrace?
+  NEW: What does the Semitic branch embrace?
+  A:   The Assyrians, the Hebrews, the Phoenicians and the Arabs.
+
+[1001-questions--15] ambiguous
+  OLD: What does the Hamitic branch include?
+  NEW: What does the Hamitic branch include?
+  A:   The Chaldeans and the Egyptians.
+
+[1001-questions--99] ambiguous
+  OLD: What occurred in the nth century?
+  NEW: What Tartar event occurred in the nth century?
+  A:   The Tartars again obtained the throne.
+
+[1001-questions--322] ambiguous
+  OLD: Into how many Classes are the early inhabitants divided?
+  NEW: Into how many Classes are the early Italian inhabitants divided?
+  A:   Into three great classes: Italians, Iapygians, and Etruscans.
+
+[1001-questions--402] ambiguous
+  OLD: What did the Romans do for the country?
+  NEW: What did the Romans do for the country?
+  A:   Made improvements, built roads and bridges, and introduced Christianity.
+
+[advanced-questions--522] ambiguous
+  OLD: What is meant by absorption?
+  NEW: What is meant by absorption of heat?
+  A:   When ether waves strike against the surface of a body, those which are not reflected pass into the body. If, in passing through the body, the waves give up their motion to the molecules, the body becomes hot, and the heat is absorbed. The reflection of heat is like the reflection of sound.
+
+[agriculture--20] ambiguous
+  OLD: What is availability?
+  NEW: What is plant food availability?
+  A:   Plant food is said to be available when it is dissolved or soluble in the soil-water, in which condition only can it be taken up by plant roots.
+
+[agriculture--153] ambiguous
+  OLD: What consideration should judges give to performance?
+  NEW: In judging livestock, what consideration should judges give to performance?
+  A:   In judging horses, considerable value should be given to training, gait and all other factors involved in performance, for his ability to do the work expected is of primary importance. In judging a dairy cow, performance is of even more importance, and should be duly considered by the judge, because in the last analysis it is her ability to profitably produce milk and butter that fixes her value.
+
+[agriculture--183] ambiguous
+  OLD: What is the best time of year for cows to freshen?
+  NEW: What is the best time of year for cows to freshen?
+  A:   In October or November, provided the young calves are given adequate winter shelter. A cow freshening in the fall produces from thirty to forty pounds more of butter fat in a year than the same cow freshening in the spring. Moreover, most of the additional butter fat is produced when prices are highest.
+
+[agriculture--192] ambiguous
+  OLD: What is the effect of an intensive system upon the capital used?
+  NEW: What is the effect of an intensive agricultural system upon the capital used?
+  A:   Just as an intensive system of agriculture is substituted for a more extensive system, land improvement increases; better buildings are erected; silos, improved acres and conveniences increase; better teams, better live stock and better equipment are manifest; more labor is employed and more money used in the business.
+
+[agriculture--199] ambiguous
+  OLD: Which are most desirable, married or unmarried men?
+  NEW: Which are most desirable, married or unmarried men, for farm labor?
+  A:   For many reasons married men are to be preferred for regular farm labor. They are more to be depended upon, and much more likely to be efficient and contented.
+
+[agriculture--209] ambiguous
+  OLD: What should be the character of the land?
+  NEW: What should be the character of the land for farming?
+  A:   Of first importance is the nature of the land, depending upon the character of farming engaged in. The fertility or productive power of the land should be certainly ascertained. It is usually cheaper to purchase fertility in the land than in a fertilizer sack. The contour of the land should receive careful consideration—steepness, roughness, stoniness, dryness, wetness, etc. The proportion of waste land, buildings, water supply, woodland, orchards, fences and attractiveness of surroundings should be duly considered.
+
+[agriculture--213] ambiguous
+  OLD: What system of bookkeeping should be adopted?
+  NEW: What system of bookkeeping should be adopted for a farm?
+  A:   No particular system is necessary. The simplest method that can be adopted that will secure the desired result is best. Some knowledge of the general principles of bookkeeping is important.
+
+[astronomy--102] ambiguous
+  OLD: 16. What do the phases prove?
+  NEW: 16. What do the moon's phases prove?
+  A:   They prove that the moon is a dark body and shines by reflected light only.
+
+[astronomy--141] ambiguous
+  OLD: What are the orange portions?
+  NEW: What are the orange portions of Mars?
+  A:   It seems quite probable that the orange portions are dry land.
+
+[astronomy--142] ambiguous
+  OLD: What are the canals?
+  NEW: What are the Martian canals?
+  A:   These were first discovered by Schiaparelli in 1877; Lowell and others think that they are water courses together with the vegetation which, they suppose, grows on either side of the canals.
+
+[astronomy--143] ambiguous
+  OLD: What are the oases?
+  NEW: What are the Martian oases?
+  A:   The oases are small round patches which are situated at the intersections of two or more canals; they are also supposed to be principally due to vegetation.
+
+[astronomy--243] ambiguous
+  OLD: 11 How are the orbits situated with regard to the ecliptic?
+  NEW: 11 How are the orbits of comets situated with regard to the ecliptic?
+  A:   Unlike the orbits of the planets which all make but a small angle with the ecliptic, the orbits of the comets are inclined to it by angles ranging from 0° to 90°.
+
+[botany--151] ambiguous
+  OLD: On what facts is the theory of constancy based?
+  NEW: On what facts is the theory of constancy of species based?
+  A:   On the following: 1. On the observed constancy of species in historical times as far as trustworthy records show. 2. On the infertility of hybrids, i. e., offspring of distinct species. 3. On the important fact, that no new species, truly and strictly so-called, has actually been observed to arise.
+
+[brewers-guide--5] ambiguous
+  OLD: What is the second chief source of heat?
+  NEW: What is the second chief source of heat, electricity?
+  A:   Electricity.
+
+[brewers-guide--98] ambiguous
+  OLD: What is the third chief source of heat?
+  NEW: What is the third chief source of heat, chemical action?
+  A:   Chemical Action.
+
+[brewers-guide--169] ambiguous
+  OLD: Why does the extra heat revive the flame?
+  NEW: Why does the extra heat revive the tallow flame?
+  A:   Because it again liberates the hydrogen of the tallow, and ignites it.
+
+[brewers-guide--188] ambiguous
+  OLD: What are blacks?
+  NEW: In chimney smoke, what are blacks?
+  A:   When the hot air of the chimney has been cooled by the external air, it can no longer buoy up the solid smoke; so it falls to the earth in condensed flakes, called “blacks.”
+
+[brewers-guide--925] ambiguous
+  OLD: What effect has wind on the mercury?
+  NEW: What effect has wind on the barometer mercury?
+  A:   All winds make the barometer drop, except eastern winds: those winds which blow from the south, and south-west make it drop the lowest.
+
+[brewers-guide--941] ambiguous
+  OLD: What effect does a sudden change produce on the weather?
+  NEW: What effect does a sudden temperature change produce on the weather?
+  A:   A great and sudden change (either from hot to cold, or from cold to hot) is generally followed by rain within 24 hours.
+
+[brewers-guide--949] ambiguous
+  OLD: What are the driest months?
+  NEW: In the yearly cycle, what are the driest months?
+  A:   March and June; then May and August; then April and November.
+
+[brewers-guide--950] ambiguous
+  OLD: What are the wettest months?
+  NEW: In the yearly cycle, what are the wettest months?
+  A:   October and February; then July and September; then January and December.
+
+[brewers-guide--1211] ambiguous
+  OLD: Why do these things destroy the taint of meat?
+  NEW: In meat preservation, why do these things destroy the taint of meat?
+  A:   Because they combine with the putrescent particles, and neutralize their offensive taste and smell.
+
+[chemistry--237] ambiguous
+  OLD: How is the common carbonate procured?
+  NEW: How is the common subcarbonate procured?
+  A:   By heating a mixture of muriate of ammonia and carbonate of lime. It is a subcarbonate.
+
+[chemistry--262] ambiguous
+  OLD: What is the common mineral water of the shops?
+  NEW: What is the common carbonic acid water of the shops?
+  A:   Water impregnated with carbonic acid.
+
+[chemistry--394] ambiguous
+  OLD: How may the protoxide be formed?
+  NEW: How may the protoxide of mercury be formed?
+  A:   By exposing mercury to mechanical agitation in the air, or by mixing calomel briskly with pure potassa in excess, and washing with water. This oxide is also obtained by precipitation from a solution of the proto-nitrate of mercury, by means of pure alkalies.
+
+[chemistry--398] ambiguous
+  OLD: How is the simple sulphide formed?
+  NEW: How is the simple sulphide of mercury formed?
+  A:   By passing sulphydric acid gas through a solution of the protonitrate of mercury. It is of a dense black colour.
+
+[chemistry--399] ambiguous
+  OLD: How is the bisulphide formed?
+  NEW: How is the bisulphide of mercury formed?
+  A:   By fusing sulphur with about six times its weight of mercury. When thus formed, it is the artificial cinnabar. It is of a gray colour, and when levigated it is converted into vermilion, which is red.
+
+[chemistry--402] ambiguous
+  OLD: How is the nitrate formed?
+  NEW: How is the nitrate of mercury formed?
+  A:   By the action of nitric acid on mercury. If the metal be in excess, protonitrate is formed; but if the acid be in excess, the deuto or pernitrate results.
+
+[chemistry--405] ambiguous
+  OLD: How is the protosulphate formed?
+  NEW: How is the protosulphate of mercury formed?
+  A:   By heating two parts of mercury with three of sulphuric acid, so as to form a slow effervescence. For medicinal purposes it is made by triturating metallic mercury with the bisulphate of the deutoxide.
+
+[chemistry--410] ambiguous
+  OLD: What is formed by throwing the bipersulphate into water?
+  NEW: What is formed by throwing the bipersulphate of mercury into water?
+  A:   A yellow precipitate, commonly called turpeth mineral.
+
+[chemistry--423] ambiguous
+  OLD: How is the carbonate obtained?
+  NEW: How is the carbonate of copper obtained?
+  A:   By the double decomposition of an alkaline carbonate with the sulphate of copper.
+
+[constitution--4] ambiguous
+  OLD: How is this country governed?
+  NEW: How is this Republic governed?
+  A:   It is a Republic, and is governed by persons whom the people choose from time to time to make the laws.
+
+[constitution--6] ambiguous
+  OLD: What was the change produced by the Revolution?
+  NEW: What was the change produced by the American Revolution?
+  A:   The different Colonies became each a free state, having power to govern itself in any way it should think proper.
+
+[constitution--43] ambiguous
+  OLD: What are Duties?
+  NEW: What are customs Duties?
+  A:   Duties are sums of money, which must be paid by persons who bring goods of any kind from another country, into the United States, and which are in proportion to the quantity or value of such goods. It is paid at certain places called Custom-houses, and is sent from these to the Treasury of the United States.
+
+[ethics--5] ambiguous
+  OLD: Do we here treat ethics, right and wrong, from the side of supernatural revelation?
+  NEW: Do we here treat natural ethics, right and wrong, from the side of supernatural revelation?
+  A:   No: we treat it as it is knowable by natural means, as natural knowledge. And we do not enter into the question how far our natural knowledge has been preserved free from error by supernatural revelation.
+
+[familiar-things--380] ambiguous
+  OLD: What is a Cell; what a Battery?
+  NEW: What is a Voltaic Cell; what a Battery?
+  A:   If a piece of zinc and copper joined by a wire be dipped in a liquid--generally weak sulphuric acid--which will act chemically on the metals, a current is produced. Such an arrangement is called a couple, or cell. If many cells are connected, then it is called a battery.
+
+[familiar-things--382] ambiguous
+  OLD: What effects are produced by currents?
+  NEW: What effects are produced by electric currents?
+  A:   They produce heat, light, decomposition and combination in liquid chemical compounds; they melt all metals, excite magnetism, and in the animal body excite movements of the muscles.
+
+[familiar-things--389] ambiguous
+  OLD: What is a Cable?
+  NEW: What is a Submarine Cable?
+  A:   It is a telegraph wire under water. Prof. Morse, in 1842, laid a wire insulated by a covering of hemp coated with pitch-tar and India-rubber between Governor's Island and the Battery, New York. Several attempts were made in other countries.
+
+[laborers--142] ambiguous
+  OLD: What are the chief features of Perpetual Voting?
+  NEW: What are the chief features of Perpetual Voting?
+  A:   It permits the people to exercise the power of recall; to introduce any law they desire to have written on our statute books; to decide what per cent of the vote shall elect to or remove any elective official from office; to veto or repeal any unjust law; to nominate a candidate directly; and to have indisputable evidence against any fraudulent voter who attempts to vote by illegally writing down any candidate's name on the Vote Record.
+
+[laborers--143] ambiguous
+  OLD: Am I to understand that under the Perpetual Voting System electors will be voting "all the time?"
+  NEW: Am I to understand that under the Perpetual Voting System electors will be voting "all the time?"
+  A:   "No."
+
+[logic--12] ambiguous
+  OLD: "What are the most remarkable affections of properties of terms?
+  NEW: What are the most remarkable affections of properties of logical terms?
+  A:   Comprehension and Extension.
+
+[logic--31] ambiguous
+  OLD: How are propositions divided?
+  NEW: How are logical propositions divided?
+  A:   Into simple and compound.
+
+[logic--32] ambiguous
+  OLD: How are the affections or properties of propositions divided?
+  NEW: How are the affections or properties of logical propositions divided?
+  A:   Into the Absolute, or those which belong to a proposition considered by itself; and the Relative affections which result from the comparison of several propositions with each other.
+
+[logic--33] ambiguous
+  OLD: What is quantity?
+  NEW: What is quantity in a proposition?
+  A:   The determination of the extension of the subject in a proposition: it is either universality or particularity. With respect to quantity, propositions are divided into universal and particular.
+
+[logic--34] ambiguous
+  OLD: What is quality?
+  NEW: What is quality in a proposition?
+  A:   The nature of the assertion made in a proposition; it is either affirmation or negation. With respect to quality, propositions are divided into affirmative and negative.
+
+[logic--40] ambiguous
+  OLD: What is the matter of a proposition?
+  NEW: What is the matter of a logical proposition?
+  A:   The nature of the connection between the subject and predicate: it is three-fold, necessary, impossible, and contingent.
+
+[logic--43] ambiguous
+  OLD: Have terms any relative affection?
+  NEW: Have logical terms any relative affection?
+  A:   Yes; in a proposition they are said to have quantity.
+
+[logic--49] ambiguous
+  OLD: What is conversion?
+  NEW: What is logical conversion?
+  A:   The legitimate inference of one proposition from another, by the transposition of the terms. The original proposition is called the convertend, that deduced from it the converse.
+
+[logic--52] ambiguous
+  OLD: What is opposition?
+  NEW: What is logical opposition?
+  A:   Opposition is the disagreement in quality between two propositions, having the same subject and the same predicate.
+
+[logic--53] ambiguous
+  OLD: What is contrariety?
+  NEW: What is logical contrariety?
+  A:   The opposition between two universals. Of contraries both may be true, but both cannot be false.
+
+[logic--55] ambiguous
+  OLD: What is subcontrariety?
+  NEW: What is logical subcontrariety?
+  A:   The opposition between two particulars; subcontraries may be both true, but cannot both be false.
+
+[logic--65] ambiguous
+  OLD: What do you mean by an integrant whole?
+  NEW: In logic, what do you mean by an integrant whole?
+  A:   Any entire individual thing, as a nation whose integrant parts are provinces, a man whose integrant parts are body, head, members, &c. The division of an integrant whole, is commonly called partition.
+
+[logic--82] ambiguous
+  OLD: What species of matter are syllogisms said to have?
+  NEW: What species of matter are logical syllogisms said to have?
+  A:   Two kinds; proximate and remote.
+
+[logic--83] ambiguous
+  OLD: What property have syllogisms with respect to their proximate matter?
+  NEW: What property have logical syllogisms with respect to their proximate matter?
+  A:   Form.
+
+[logic--84] ambiguous
+  OLD: What property have syllogisms with respect to their remote matter?
+  NEW: What property have logical syllogisms with respect to their remote matter?
+  A:   Figure.
+
+[music--8] ambiguous
+  OLD: How are the keys divided?
+  NEW: How are the keyboard keys divided?
+  A:   The white keys are in regular succession throughout the key-board; the black keys are divided into clusters of three and two alternately.
+
+[music--41] ambiguous
+  OLD: What is the meaning of the word key?
+  NEW: What is the meaning of the word key in music?
+  A:   The word key implies a regular succession of seven tones, regulated by a principal tone called the key-note or tonic.
+
+[music--42] ambiguous
+  OLD: How many kinds of keys are there?
+  NEW: How many kinds of musical keys are there?
+  A:   Two — major and minor.
+
+[music--53] ambiguous
+  OLD: How many keys are there?
+  NEW: How many musical keys are there?
+  A:   Twelve major and twelve minor keys.
+
+[music--55] ambiguous
+  OLD: What is time?
+  NEW: What is musical time?
+  A:   Time is the measure of sounds with regard to their duration.
+
+[music--56] ambiguous
+  OLD: How many kinds of time are there?
+  NEW: How many kinds of musical time are there?
+  A:   Two principal, viz., common and triple time.
+
+[music--59] ambiguous
+  OLD: What is the meaning of the figures 4?
+  NEW: What is the meaning of the figures 4 in music?
+  A:   The figure 4 shows that the measure note is a quarter, and the figure 2 indicates that every measure consists of two quarters, or their equivalent in other notes.
+
+[music--72] ambiguous
+  OLD: Explain the turn?
+  NEW: Explain the musical turn?
+  A:   The turn is the union of the upper and lower jointure; it is either direct or inverted.
+
+[music--79] ambiguous
+  OLD: What are the principal means of expression?
+  NEW: What are the principal means of musical expression?
+  A:   Strict attention to the accents, emphasis, syncopation, and a close observance of legato, staccato, crescendo and diminuendo. 1. Accents. What is meant by accent in music? The stress given to one note in preference to another, according to its place in the bar or measure. Where are the accents placed in common time? In common time of four quarter notes in a bar, the first and third parts of the measure are accented, the second and fourth parts unaccented. ac. un. ac.
+
+[music--83] ambiguous
+  OLD: What is meant by emphasis?
+  NEW: What is meant by emphasis in music?
+  A:   Emphasis is a deviation from the rules given concerning the accents ; it takes place when a note which should not be accented has a stress given to it : for instance, in common time, the second and fourth parts of the bar are unaccented ; should a stress be laid on one of these parts, it would be termed an emphasis.
+
+[music--93] ambiguous
+  OLD: What is a hold?
+  NEW: What is a hold in music?
+  A:   A hold, marked thus 𝄐 or thus^, signifies that the note or rest over or under which it is placed is to be prolonged beyond its ordinary value.
+
+[music--108] ambiguous
+  OLD: What is understood by fingering?
+  NEW: What is understood by fingering in music?
+  A:   A proper disposition of the fingers in playing a piece of music on the pianoforte. The hands should be kept as much as possible over five keys, so that each finger may cover its respective key, and the motion be scarcely perceived.
+
+[music--123] ambiguous
+  OLD: What is an interval?
+  NEW: What is a musical interval?
+  A:   An interval is the difference in pitch between two tones. It must be remembered that all intervals are called according to the degrees of the staff, or according to the numbers of letters they are distant from each other. For instance, Fig. 1 is a Second; Fig. 2 a Sharp Second; but if the same keys are struck, and called (Fig. 3), the interval is that called a third.
+
+[music--124] ambiguous
+  OLD: What is a tone?
+  NEW: What is a musical tone?
+  A:   It consists of two semitones. The interval between F and F sharp is one semitone, and between F sharp and G is another. For example, F—G consequently the interval between F and G is a whole tone.
+
+[music--138] ambiguous
+  OLD: What is a caprice?
+  NEW: What is a musical caprice?
+  A:   A composition in which the composer expresses some particular accidental mood or humor. The form may be handled freely, in the style of a fantasia, or strictly according to rule. The pianoforte caprices of A. B. Muller are fine examples of the latter class.
+
+[music--139] ambiguous
+  OLD: What is a potpourri?
+  NEW: What is a musical potpourri?
+  A:   An arrangement of different and generally well known melodies, for one or more instruments. Many modern fantasias are really nothing but potpourris of this kind.
+
+[mythology--48] ambiguous
+  OLD: Is there anything in the legends which may throw light on the meaning of the name?
+  NEW: Is there anything in the legends which may throw light on the meaning of the name Poseidon?
+  A:   In the Iliad and Odyssey Poseidon is represented as equal to Zeus in dignity, and inferior to him only in might. He has also the power of creation, but, according to one story, he is the maker of the horse. He is also called Gaieochos, meaning the earth-shaker, and Enosichthon, the world-shaker; and lastly, he disputes with Hera, Helios and Athena the sovereignty of certain Greek cities. Hence it is not unlikely that the name originally expressed simply the idea of lordship or power, and that it is connected with such words as lord and despot; Hera, the wife of Zeus, being called Potnia, or the mighty one.
+
+[mythology--67] ambiguous
+  OLD: When a city sent out men to form a colony, how was the bond of union with the parent state kept up?
+  NEW: When a city sent out men to form a colony, how was the bond of union with the parent state kept up by the sacred fire of Hestia?
+  A:   By the sacred fire of Hestia, a portion of which was carried away by the colonists, to be kept alive for ever in their new home, and as long as this fire continued burning, they felt they still had a common interest with the citizens of their old country.
+
+[mythology--130] ambiguous
+  OLD: Why is Hermes bidden to go to the shrine for wisdom?
+  NEW: Why is Hermes bidden to go to the shrine for wisdom?
+  A:   Because we may speak of the wind when it pierces into caves and glens and all secret places, seeking to discover the hidden treasures of the earth, and to gain a knowledge to which man can never attain.
+
+[mythology--305] ambiguous
+  OLD: What is Pallas?
+  NEW: What is Pallas?
+  A:   A name given to Athena, probably as being the virgin goddess.
+
+[new-york-bar--32] ambiguous
+  OLD: A and B contract, A to furnish the principal part of the materials, and B some minor materials, and to do the work necessary to make a quantity of shears, which are to correspond to a sample furnished by A. Part of the shears have been made and delivered, when it is found that they have a latent defect, and A refuses to take any more, or to pay for those already delivered.
+  NEW: A and B contract, A to furnish the principal part of the materials, and B some minor materials, and to do the work necessary to make a quantity of shears, which are to correspond to a sample furnished by A. Part of the shears have been made and delivered, when it is found that they have a latent defect, and A refuses to take any more, or to pay for those already delivered. Is this a bailment?
+  A:   B has no rights. " The contract was one of bailment, and not of sale and purchase, and so title to the completed articles was at all times in the bailor, and this, notwithstanding his refusal to receive them ; the bailees having wholly failed to perform were not entitled to recover anything for their work ; and the acceptance of part of the articles, and the omission to return them on discovery of the defect, or to notify bailees thereof, did not preclude the bailor from claiming non-performance, as he had the absolute right to retain them, and was neither bound to inspect them, or to notify bailees of his objection; also the bailor was entitled to recover upon a counterclaim as damages, the difference, between the price agreed upon for bailee's work, and the value of the articles had they been made according to sample." Mack v. Snell, supra.
+
+[new-york-bar--609] ambiguous
+  OLD: The executor of a will in the state of New Jersey discovers personal property in this state belonging to the testator. He comes to you for advice. What would you advise him to do?
+  NEW: The executor of a will in the state of New Jersey discovers personal property in this state belonging to the testator. He comes to you for advice on ancillary letters testamentary. What would you advise him to do?
+  A:   He should apply for ancillary letters testamentary, according to sec. 2695 of the Code of Civ. Pro.
+
+[school-bulletin--26] ambiguous
+  OLD: Who were the five great generals of modern times?
+  NEW: Who were the five great generals of modern times?
+  A:   Prince Eugene, who gained the battles of Peterwardein (1716) and Belgrade(1717), Wellington, Napoleon, Marlborough, and Frederic the Great.
+
+[school-bulletin--48] ambiguous
+  OLD: What is opposition?
+  NEW: What is opposition in astronomy?
+  A:   When a superior planet is in the same straight line, but with the earth in the middle, we say it is in opposition, because it is then in the part of the heavens opposite to the sun.
+
+[school-bulletin--73] ambiguous
+  OLD: What tradition had the Greeks?
+  NEW: What tradition of a great flood had the Greeks?
+  A:   That of a great flood which swept away the whole human race except one pair, Deucalion and his wife Pyrrha, who were preserved and landed on Mount Parnassus when the flood abated. By the direction of Jupiter, he and his wife threw stones behind them, and those which Deucalion threw became men, and those thrown by Pyrrha became women.
+
+[school-bulletin--78] ambiguous
+  OLD: What is said of the vestal virgins?
+  NEW: What is said of the vestal virgins?
+  A:   The service of Vesta occupied a far more important place in the life of the Romans. Her most ancient temple, which was supposed to have been built by Numa Pompilius, was situated on the slope of the Palatine opposite the Forum. It was built in a circle, and was of moderate dimensions, being, indeed, little more than a covered fire-place. In it the eternal fire, a symbol of the life of the state, was kept burning. Here, too, the service was performed by virgins, whose number was at first four, but was afterward increased to six. Their chief occupation was to maintain the sacred fire, and to offer up daily prayers at the altar of the goddess for the welfare of the Roman people. The extinction of the sacred flame was esteemed an omen of coming misfortune, and brought severe punishment on the negligent priestess. The choice of vestals lay with the Pontifex Maximus. They were chosen between the ages of six and ten years, always out of the best Roman families, for thirty years they remained bound to their sacred office, during which time they had to preserve the strictest chastity. At the end of this time they returned to civil life, and were permitted to marry if they liked.
+
+[school-bulletin--84] ambiguous
+  OLD: How was the formation of man accomplished?
+  NEW: How was the formation of man accomplished in Greek mythology?
+  A:   Prometheus took a piece of earth, a portion of clay still impregnated with divine particles, moistened it with water, and formed man after the image of the gods; so that he alone raises his look to heaven, while all other creatures bend their eyes to the ground. Note— Prometheus is said to have been the first to secure the use of fire for mankind, which he succeeded in doing by stealing it from heaven. As a punishment for the theft, he was condemned to be chained alive to a rock in the Caucasus mountains, while every day a vulture came and ate of his liver, which grew again as fast as eaten. Hercules set Prometheus free, and destroyed the vulture that preyed on his liver. Prometheus out of gratitude warned him not to go himself to take the golden apples of the Hesperides, but to send Atlas for them, and in the meantime to support the Heaven in his stead. The hero did as desired, and, at his request, Atlas went to the Hesperides and obtained three apples from there. He then proposed to take them himself to Eurystheus, while Hercules remained to support the sky. At the suggestion of Prometheus, the hero feigned consent, but begged him to take hold of the heavens till he made a pad to put upon his head. Atlas threw down the apples and good-humoredly consented, when Hercules, of course, left him in his former position and made off with the prize.
+
+[school-bulletin--159] ambiguous
+  OLD: What are the axes?
+  NEW: What are the axes in botany?
+  A:   One part, the root, grows downward into the soil: it may, therefore, be called the descending axis. The other grows upward into the light and air: it may be called the ascending axis. Note.— The root grows on continually from the extremity, and so does not consist of joints, nor does it bear leaves or anything of the kind. The stem grows by a succession of joints, each bearing one or more leaves on its summit.
+
+[school-bulletin--181] ambiguous
+  OLD: What is a disk?
+  NEW: What is a floral disk?
+  A:   It is a part of the receptacle, or a growth from it, enlarged under or around the pistil. It is hypogynous when free from all union either with the pistil or the calyx, as in the Rue and the Orange. It is perigynous when it adheres to the base of the calyx, as in the Bladdernut and Buckthorn. In adhering both to the calyx and to the ovary, consolidating the whole together, it is sometimes carried up and expanded on the top of the ovary, as in the Parsley and Ginseng families, when it is said to be epigynous.
+
+[school-bulletin--266] ambiguous
+  OLD: What compound has never been separated?
+  NEW: What compound has never been separated in chemistry?
+  A:   Ammonium (H4N), which acts like a metal, forming salts and amalgams; H4NOH is common ammonia water; H4N salts are obtained by distilling nitrogenous bodies. Its chief compounds are H4NCl, sal ammoniac; (NH4)2CO3·3H2O, sal-volatile; (H4N)2SO4; H4NNO3; NaNH4HPO4·4H2O, microcosmic salt; (H4N)2S, H4N and H4I, used in photography.
+
+[school-bulletin--271] ambiguous
+  OLD: What is the symbol of civilization?
+  NEW: What is the symbol of civilization?
+  A:   Iron. Fe is rarely found native, but is dug from "mother-earth" as an ore from which the metal is obtained with difficulty. Meteors, however, containing as high as 93 per cent of Fe associated with Ni and other metals, have fallen to the earth from space. One most useful ore of iron is red iron oxide, called haematite iron ore. By heating this with charcoal the oxygen is eliminated, and the metal Fe remains. After puddling this is called wrought or malleable Fe, because it can be hammered and made (when red hot) into anything which is wanted. This form is very useful because when hot two pieces of Fe can be welded together so firmly that they can not be separated. Note.— Cast-iron is made from iron ore and coal, and limestone, by placing these minerals in blast furnaces. Cast-iron is brittle and breaks into pieces under the hammer. By a process called puddling, the carbon, which the cast-iron has obtained from the coal is burnt away. It is an exception to the law that "cold contracts," since at the very instant of solidification it expands, so as to copy exactly every line of the mould into which it is poured.
+
+[school-bulletin--359] ambiguous
+  OLD: Name the late inventions.
+  NEW: Name the late inventions of the 19th century.
+  A:   The Telephone, invented by Bell; the microphone by Prof. Hughes; the phonograph, an apparatus for recording the sounds of the voice, and reproducing them at any future time, invented by Edison.
+
+[seeleys--24] ambiguous
+  OLD: What is force?
+  NEW: What is force in elocution?
+  A:   Force is the loudness of the voice, or degree of energy, with which sounds are uttered.
+
+[seeleys--25] ambiguous
+  OLD: What is stress?
+  NEW: What is stress in elocution?
+  A:   Stress is the manner in which force is applied.
+
+[seeleys--26] ambiguous
+  OLD: What is movement?
+  NEW: What is movement in elocution?
+  A:   Movement is the rate or speed of utterance.
+
+[seeleys--31] ambiguous
+  OLD: What are the points of reference?
+  NEW: What are the typographical points of reference?
+  A:   The asterisk (*), dagger (†), double dagger (‡), section (§), parallel (||), and paragraph (¶). These marks are used to refer the reader to some other part or page of the book.
+
+[seeleys--85] ambiguous
+  OLD: What churchmen and statesmen have been prominent in the field of literature during this age?
+  NEW: What churchmen and statesmen have been prominent in the field of Victorian literature during this age?
+  A:   Cardinal Newman, whose influence upon Victorian literature was very marked. Canon Farrar, best known from his "Life of Christ." Charles Spurgeon, the most distinguished non-conformist minister of the period. Dean Stanley, who was beloved by both sovereign and people. Lord Beaconsfield, whose fame as a novelist is only eclipsed by his career as a statesman. William Ewart Gladstone's chief literary work was his "Studies in Homer."
+
+[seeleys--121] ambiguous
+  OLD: When is the long sound of a used?
+  NEW: When is the long sound of a used in English?
+  A:   A has its long sound when it ends an accented syllable, when followed by a consonant and silent e, and in the digraphs ai and ay; as cable, cane, rail.
+
+[seeleys--122] ambiguous
+  OLD: When has a the short sound?
+  NEW: When has a the short sound in English?
+  A:   A has the short sound when followed by a single consonant in the same syllable, when followed by more than one consonant in the same syllable; as barrel, lack.
+
+[seeleys--124] ambiguous
+  OLD: What is a mute?
+  NEW: What is a mute in phonetics?
+  A:   A mute is a consonant which represents an explosive sound. It is formed by a position of the mouth organs which stop the passage of the breath. The mutes are p, b, t, d, k, hard c and g.
+
+[seeleys--125] ambiguous
+  OLD: What is a semivowel?
+  NEW: What is a semivowel in phonetics?
+  A:   Name the semivowels. A semivowel is a sound intermediate between a vowel and a consonant. It represents a continuous sound which is only partially affected by the vocal organs. The semivowels are soft c, f, l, h, soft g, l, m, n, r, s, v, w, x, y, z, and all the consonant combinations, th, ch, sh, zh, wh, ng.
+
+[seeleys--126] ambiguous
+  OLD: What are subvocals?
+  NEW: What are subvocals in phonetics?
+  A:   Name them. Subvocals are consonants which are obstructed by the vocal organs, in the process of articulation. The subvocals are b, d, l, h, m, n, r, v, w; y, z, th, ch, ng, hard and soft g.
+
+[seeleys--127] ambiguous
+  OLD: What are aspirates?
+  NEW: What are aspirates in phonetics?
+  A:   Name them. Aspirates are sounds made by the breath, usually modified by the organs of speech. The aspirates are c, f, h, k, p, s, t, th, ch, sh, wh.
+
+[seeleys--128] ambiguous
+  OLD: What letters are called liquids?
+  NEW: What letters are called liquids in phonetics?
+  A:   L, m, n, and r are called liquids because their sounds unite readily with those of other letters.
+
+[seeleys--130] ambiguous
+  OLD: What is a substitute?
+  NEW: What is a substitute in orthography?
+  A:   A substitute is a letter or combination of letters representing a sound usually represented by another letter.
+
+[seeleys--132] ambiguous
+  OLD: How are words classed as to form?
+  NEW: How are words classed as to form in English grammar?
+  A:   Now, as to origin, *writers differ greatly on this subject. The list given is based upon that found in Irish’s Orthography. Words are classed as to form, as simple and compound words. As to origin, as primitive and derivative words.
+
+[seeleys--133] ambiguous
+  OLD: What is a primitive word?
+  NEW: What is a primitive word in English grammar?
+  A:   A primitive word is one not derived from any other word in the language; as, strong.
+
+[seeleys--134] ambiguous
+  OLD: What is a derivative word?
+  NEW: What is a derivative word in English grammar?
+  A:   A derivative word is one formed by adding a prefix or suffix, or both, to a primitive word; as, stronger.
+
+[seeleys--142] ambiguous
+  OLD: What is a compellative?
+  NEW: What is a compellative in grammar?
+  A:   Give example. A word in a sentence used to attract or compel the attention of the person addressed, is called a compellative. ‘‘Backward, turn backward, O Time, in thy flight.’’
+
+[seeleys--146] ambiguous
+  OLD: What is inflection?
+  NEW: What is inflection in grammar?
+  A:   Inflection, in grammar, is a change in the form of a word to mark a change in its meaning or use.
+
+[seeleys--147] ambiguous
+  OLD: What is declension?
+  NEW: What is declension in grammar?
+  A:   The inflection of nouns and pronouns is called declension.
+
+[seeleys--148] ambiguous
+  OLD: What is number?
+  NEW: What is number in grammar?
+  A:   Number is that property of a noun which distinguishes one from more than one.
+
+[seeleys--149] ambiguous
+  OLD: How is number usually indicated?
+  NEW: How is number usually indicated in grammar?
+  A:   Most nouns indicate number by a change in terminations, but personal pronouns require an entire change of words.
+
+[seeleys--159] ambiguous
+  OLD: What is case?
+  NEW: What is case in grammar?
+  A:   The word case is used to indicate the three relations which a noun or pronoun may hold to other words in the sentence.
+
+[seeleys--165] ambiguous
+  OLD: What are the differences between conjunctive and personal pronouns?
+  NEW: What are the differences between conjunctive and personal pronouns in grammar?
+  A:   (1) Personal pronouns have different forms for each grammatical person, while the conjunctive pronouns do not change their form. (2) A personal pronoun may be the subject of an independent sentence, but the conjunctive is always found in a dependent clause.
+
+[seeleys--166] ambiguous
+  OLD: What are the two uses of a conjunctive pronoun?
+  NEW: What are the two uses of a conjunctive pronoun in grammar?
+  A:   Its pronominal use in representing a noun in any relation, and its conjunctive use in joining a limiting clause to its antecedent.
+
+[seeleys--171] ambiguous
+  OLD: How are compound conjunctive pronouns formed?
+  NEW: How are compound conjunctive pronouns formed in grammar?
+  A:   Compound conjunctive pronouns are formed by annexing ever or soever to the simple conjunctive pronouns. They have no antecedent expressed, refer to no definite person or thing, but have the same connective force as the simple conjunctives: Whoever (he who) studies will learn.
+
+[seeleys--172] ambiguous
+  OLD: Give classification and use of adjective pronouns. (1) Demonstrative pronouns - This and these, referring to things near by; that and those, to things more distant: This is the house where those men live. (2) Indefinite pronouns point out objects indefinitely. Each, either, and neither are always singular. One and its compounds, somebody and the like, other and another, either and neither, have a possessive case. One and other have plurals. Some may be used in either a singular or plural sense. None is usually singular. Each praised the other. “She is somebody’s mother, boys,” he said. Some of the passengers were injured. None but the brave deserves the fair. What are reciprocal pronouns?
+  NEW: What are reciprocal pronouns in grammar?
+  A:   Each other and one another imply reciprocal action and are classed as reciprocal pronouns: They helped each other.
+
+[seeleys--174] ambiguous
+  OLD: What is comparison?
+  NEW: What is comparison in grammar?
+  A:   Comparison is the inflection of adjectives (and adverbs) to denote degrees of quality or quantity.
+
+[seeleys--183] ambiguous
+  OLD: What are attributive verbs?
+  NEW: What are attributive verbs in grammar?
+  A:   Attributive verbs are those which contain in themselves attributes of the subject. In this class are included all complete intransitive verbs and all transitive verbs. The equivalent of an attributive verb is a copula and attribute: The rain falls. The rain is falling.
+
+[seeleys--187] ambiguous
+  OLD: What does the root and 's' form of the verb express?
+  NEW: What does the root and 's' form of the verb express in grammar?
+  A:   Illustrate. (1) Present time: Do you see him? (2) Indefinite time: The lark sings in the meadow. (3) Historical present: After conquering the provinces, Caesar returns to Rome. (4) As referring to the future: He enters Harvard next year.
+
+[seeleys--191] ambiguous
+  OLD: What is voice?
+  NEW: What is voice in grammar?
+  A:   Voice is a form of the verb which shows whether its subject names the doer or the receiver of the action.
+
+[seeleys--192] ambiguous
+  OLD: What of the voice of intransitive verbs?
+  NEW: What of the voice of intransitive verbs in grammar?
+  A:   All verbs are active voice, their subject naming the doer of the action. But as intransitive verbs have no objects (receivers of the action) to become subjects in the passive, they cannot be changed to passive. A few intransitive verbs have a passive form but not passive voice: The melancholy days are come. Others which are followed by a preposition and its object assume passive form: The soldier dreamed of home. Home was dreamed of by the soldier.
+
+[seeleys--193] ambiguous
+  OLD: What is mode?
+  NEW: What is mode in grammar?
+  A:   Mode is the manner in which the action, being, or state of a verb is asserted.
+
+[seeleys--196] ambiguous
+  OLD: What is conjugation?
+  NEW: What is conjugation in grammar?
+  A:   Conjugation is the orderly arrangement of the forms of a verb in the different modes and tenses.
+
+[seeleys--218] ambiguous
+  OLD: What is a unit?
+  NEW: What is a unit in arithmetic?
+  A:   A unit is a single thing of any kind.
+
+[seeleys--220] ambiguous
+  OLD: What is the order of a figure?
+  NEW: What is the order of a figure in arithmetic?
+  A:   The order of a figure is the place it occupies in a number.
+
+[seeleys--295] ambiguous
+  OLD: What are the different classes of terms?
+  NEW: What are the different classes of terms in algebra?
+  A:   A monomial, which consists of a single term. A polynomial which contains two or more terms. A binomial which is a polynomial of two terms.
+
+[seeleys--296] ambiguous
+  OLD: What is meant by the dimensions of a term?
+  NEW: What is meant by the dimensions of a term in algebra?
+  A:   By its degree? The dimensions of a term are its literal factors. The degree of a term is the number of its literal factors, and is determined by the sum of their exponents.
+
+[seeleys--299] ambiguous
+  OLD: What are the signs of opposition, and how used?
+  NEW: What are the signs of opposition in algebra, and how used?
+  A:   In algebra the signs + and — not only denote operation, but they also show that the quantities belong to opposite series. In temperature, degrees above zero may be considered as + degrees of temperature, those below zero as — degrees. Thus if the mercury falls 10° below zero we indicate it thus —10°. If it fall 6° more we say it is 16° below, and we express this second variation thus,—10° and —6° is —16°. So in algebra, a number preceded by +, expressed or understood, is called a positive quantity; one preceded by — is called a negative quantity. These signs are called positive and negative signs, and numbers having the same signs are said to have like signs.
+
+[seeleys--305] ambiguous
+  OLD: What are the three general principles most often used in algebra?
+  NEW: What are the three general principles most often used in algebra?
+  A:   Principle I. The square of the sum of two quantities is equal to the square of the first, plus twice the product of the first by the second, plus the square of the second. Principle II. The square of the difference of two quantities is equal to the square of the first, minus twice the product of the first by the second, plus the square of the second. Principle III. The product of the sum and difference of two numbers is equal to the difference of their squares.
+
+[seeleys--312] ambiguous
+  OLD: What is involution?
+  NEW: What is involution in algebra?
+  A:   Evolution? Involution is the process of raising a quantity to a given power. Evolution is the process of finding the required root of a given quantity.
+
+[seeleys--433] ambiguous
+  OLD: What are the most important mineral products?
+  NEW: What are the most important mineral products of the United States?
+  A:   Anthracite and bituminous coal, iron, petroleum and salt.
+
+[seeleys--447] ambiguous
+  OLD: What are some of the most important canals?
+  NEW: What are some of the most important canals in the United States and Canada?
+  A:   The Erie Canal from Buffalo to Albany; the Welland Canal, around Niagara Falls; the “Soo” canal, connecting Lake Superior and Lake Huron, through which is carried more freight than through any other canal in the world.
+
+[seeleys--453] ambiguous
+  OLD: Name the leading coast cities?
+  NEW: Name the leading coast cities of the southern United States?
+  A:   Charleston, Savannah (which ships more naval stores than any other port in the world), Tampa, Mobile, and Galveston are engaged chiefly in shipping lumber and cotton.
+
+[seeleys--454] ambiguous
+  OLD: What are some of the river and inland cities?
+  NEW: What are some of the river and inland cities of the southern United States?
+  A:   Memphis, Vicksburg, Natchez, Baton Rouge, Shreveport and Little Rock are river ports. Chattanooga in central Tennessee, Birmingham in the iron region of Alabama, Dallas, Ft. Worth, San Antonio and El Paso, the leading cities of Texas, are other important places.
+
+[seeleys--456] ambiguous
+  OLD: What are some of the chief minerals and where found in largest quantities?
+  NEW: What are some of the chief minerals in the western United States and where found in largest quantities?
+  A:   Gold, silver, copper, lead, and quicksilver are mined. Montana produces more copper than any other state in the Union. Colorado is the greatest silver producing region of the world, and produces more lead than any other state. It ranks with California in the production of gold. California also produces a large amount of quicksilver. Wyoming and Washington mine most coal.
+
+[seeleys--554] ambiguous
+  OLD: What two colonies were granted charters?
+  NEW: What two colonies were granted charters in colonial America?
+  A:   Rhode Island and Connecticut.
+
+[seeleys--587] ambiguous
+  OLD: How were manufactures fostered?
+  NEW: How were manufactures fostered in the early United States?
+  A:   The Embargo Act threw the people on their own resources, hence manufactures became a necessity. Mills were built, prizes were offered for home-made articles, societies were formed pledging their members to use only articles made in this country.
+
+[seeleys--757] ambiguous
+  OLD: Why is method important?
+  NEW: Why is method important in teaching?
+  A:   Just as the unskilled laborer works harder than the trained artisan because he does not know how to take advantage of his tasks, so the teacher who does not know method labors at a great disadvantage. Method furnishes the plan of attacking a problem, but does not prevent the exercise of individuality. It becomes the servant of the teacher and enables him to produce the best results according to his own ideals, and taking into account his own personality. The teacher must not be a slave to method. He must employ it as a guide, as a servant through which his definite aims are to be reached, He must not think of his method as a finished product in itself, but as a means of securing the ends sought. The teacher must not let adherence to any particular method so absorb his attention or control his teaching that he forgets the main purpose, that of teaching the lesson so that the child grasps it. Hence the teacher, master of many methods, will be able to adapt himself to the particular class, or to the individual child. The true teacher, equipped with a variety of methods, will adapt himself to each individual case in hand and employ the right method as an instrument to secure the desired result. Method is the instrument of securing the result and not the result itself. There is a great deal of truth in the remark of an old superintendent, “I do not care which way my teachers take their pupils around the block, the main thing is that they get around the block.”
+
+[world-history--0] ambiguous
+  OLD: What is meant by History?
+  NEW: What is meant by History?
+  A:   In the general sense of the word, it signifies a faithful relation of facts and events, in chronological order.
+
+[world-history--38] ambiguous
+  OLD: What remarkable events happened in the reign of Leopold I.?
+  NEW: What remarkable events happened in the reign of Leopold I., Holy Roman Emperor?
+  A:   He concluded the peace of Westphalia, and saw his capital Vienna, which had been besieged by the rebellious Hungarians, aided by the Turks, relieved by the courage of Sobieski, king of Poland. His son and successor, Joseph I., who mounted the imperial throne in 1705, in conjunction with the allies, carried on a successful war against France.
+
+[world-history--39] ambiguous
+  OLD: What happened after the death of Charles VI.?
+  NEW: What happened after the death of Charles VI., Holy Roman Emperor?
+  A:   This emperor having no male issue, the Austrian dominions devolved on Maria Theresa, whose husband, Francis I. grand duke of Tuscany, was finally raised to the imperial dignity, after the death of Charles VII. elector of Bavaria, who had intermediately swayed the sceptre.
+
+[world-history--44] ambiguous
+  OLD: In whom ended the line of Valois?
+  NEW: In whom ended the line of the House of Valois?
+  A:   In Henry III. when Henry IV. of the house of Bourbon, ascended the throne, and proving one of the best and most amiable of princes, justly obtained the title of Great; but fell by the hand of a fanatic, in 1610.
+
+[world-history--64] ambiguous
+  OLD: Was not Selim I. a warlike prince?
+  NEW: Was not Selim I, Ottoman sultan, a warlike prince?
+  A:   He certainly extended the limits of the empire by the conquest of Egypt, and several countries of the East.

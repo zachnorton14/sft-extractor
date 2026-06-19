@@ -1,0 +1,23 @@
+model: claude-haiku-4-5
+seed:  45
+n:     20
+
+--- DETECT PROMPT ---
+You receive opening questions from pre-1930s educational Q&A texts.
+Classify each question as bare, ambiguous, or clear.
+
+"bare" — cannot be understood without prior context:
+  - no subject at all: "What is the effect?", "Why not?", "Describe their shape?"
+  - continuative language implying prior discussion: "What acts did they continue to commit?", "What further steps were taken?"
+  - definite reference to an entity not universally known: "What was the character of the Assembly?", "What was the result of the Act?"
+
+"ambiguous" — has a subject but it is domain-dependent; meaning shifts by field:
+  "What is a disk?", "What is a cell?", "Define the term."
+
+"clear" — fully self-contained regardless of domain:
+  "What is arsenic?", "Who was Napoleon?", "What causes thunder?"
+
+Input: JSON array [{"i": 0, "q": "..."}, ...]
+Output JSON only: [{"i": 0, "status": "clear"}, ...]
+
+--- END DETECT PROMPT ---

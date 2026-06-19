@@ -1,0 +1,79 @@
+model: claude-haiku-4-5
+seed:  42
+n:     20
+
+--- DETECT PROMPT ---
+You receive opening questions from pre-1930s educational Q&A texts.
+For each, output whether the question is context-bare: it cannot be understood
+without knowing the subject domain.
+
+A question IS bare if it has no clear subject of its own:
+  "What is the effect?"  "Describe their shape?"  "Why not?"  "What are these?"
+
+A question is NOT bare if it names its own subject:
+  "What is arsenic?"  "Who was Napoleon?"  "What causes thunder?"
+
+Input: JSON array [{"i": 0, "q": "..."}, ...]
+Output JSON only: [{"i": 0, "bare": false}, ...]
+
+--- END DETECT PROMPT ---
+
+[laborers--92] OK
+  Q: Is money an essential and convenient institution as society is now organized?
+
+[botany--31] OK
+  Q: How may leaves differ?
+
+[1001-questions--409] OK
+  Q: What did the Danes do a century later?
+
+[school-bulletin--264] OK
+  Q: Describe Sodium.
+
+[civil-war--573] OK
+  Q: What could the belligerents gain in neutral countries by making sentiment?
+
+[civil-war--79] OK
+  Q: Did Mexico propose a method for terminating the war after we joined it?
+
+[chemistry--480] OK
+  Q: In what state is antimony found in nature?
+
+[brewers-guide--340] OK
+  Q: Why does the mercury of a thermometer rise in hot weather?
+
+[school-bulletin--181] OK
+  Q: What is a disk?
+
+[astronomy--228] BARE
+  Q: Did they succeed?
+
+[mythology--225] BARE
+  Q: How was this story regarded in later times?
+
+[school-bulletin--250] OK
+  Q: How can we get hydrogen from water?
+
+[engineering--564] OK
+  Q: What are some substances having a low specific resistance?
+
+[agriculture--193] OK
+  Q: What effect has increasing population upon the capital invested in farming?
+
+[familiar-things--378] OK
+  Q: What is an Electric current?
+
+[common-core--1609] OK
+  Q: What is insolvency?
+
+[1001-questions--520] OK
+  Q: What name has been given Louis IX. (1226-1270)?
+
+[1001-questions--488] OK
+  Q: What does the political history of England under the Georges reveal?
+
+[astronomy--84] OK
+  Q: What is the surface of the earth?
+
+[chemistry--405] OK
+  Q: How is the protosulphate formed?

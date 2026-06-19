@@ -1,0 +1,79 @@
+model: claude-haiku-4-5
+seed:  45
+n:     20
+
+--- DETECT PROMPT ---
+You receive opening questions from pre-1930s educational Q&A texts.
+For each, output whether it needs enrichment or is clear.
+
+"needs" — the question cannot be fully understood without domain context:
+  - no subject at all ("What is the effect?", "Why not?", "Describe their shape?")
+  - subject is domain-dependent ("What is a disk?", "What is a cell?")
+
+"clear" — fully self-contained regardless of domain:
+  "What is arsenic?", "Who was Napoleon?", "What causes thunder?"
+
+Input: JSON array [{"i": 0, "q": "..."}, ...]
+Output JSON only: [{"i": 0, "status": "clear"}, ...]
+
+--- END DETECT PROMPT ---
+
+[civil-war--521] CLEAR
+  Q: Have the nations at war tried to hide their total casualties?
+
+[common-core--1540] CLEAR
+  Q: What is learning?
+
+[electricity--266] NEEDS
+  Q: What are closed circuit batteries?
+
+[civil-war--288] NEEDS
+  Q: Were these guns successful?
+
+[agriculture--110] NEEDS
+  Q: Which are known as dual-purpose breeds?
+
+[civil-war--1034] NEEDS
+  Q: How soon did we send men abroad?
+
+[common-core--246] CLEAR
+  Q: What acts did England continue to commit against the United States, and with what result?
+
+[1001-questions--353] NEEDS
+  Q: How were the Gauls persuaded to leave the city?
+
+[advanced-questions--504] CLEAR
+  Q: How can we determine, by means of the pendulum, the variations of the intensity of gravity at different parts of the earth?
+
+[electricity--205] NEEDS
+  Q: What is an inclosed fuse?
+
+[1001-questions--180] CLEAR
+  Q: What was the most important building of Babylon?
+
+[botany--88] NEEDS
+  Q: What are gymnosperms?
+
+[civil-war--717] CLEAR
+  Q: Is the Dobrudja a Balkan State?
+
+[botany--135] NEEDS
+  Q: To what factors are the plant societies of the second type, i. e., the smaller local plant formations due?
+
+[civil-war--1163] NEEDS
+  Q: How do our States rank agriculturally?
+
+[school-bulletin--296] CLEAR
+  Q: Define mud?
+
+[logic--89] NEEDS
+  Q: How many general rules of syllogisms are there?
+
+[1001-questions--585] NEEDS
+  Q: What was the character of the Legislative Assembly?
+
+[investors--254] CLEAR
+  Q: What is the national debt?
+
+[advanced-questions--410] NEEDS
+  Q: What is the compound C6H10O5?

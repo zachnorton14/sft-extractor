@@ -1,0 +1,171 @@
+model: claude-haiku-4-5
+seed:  43
+n:     50
+
+--- DETECT PROMPT ---
+You receive opening questions from pre-1930s educational Q&A texts.
+Classify each as one of three statuses:
+
+"bare"      — no subject at all; unintelligible without prior context
+              e.g. "What is the effect?", "Describe their shape?", "Why not?"
+
+"ambiguous" — has a subject, but its meaning depends heavily on the domain
+              e.g. "What is a disk?" (botany vs. computing), "What is a cell?"
+
+"clear"     — fully self-contained; subject is unambiguous without domain knowledge
+              e.g. "What is arsenic?", "Who was Napoleon?", "What causes thunder?"
+
+Input: JSON array [{"i": 0, "q": "..."}, ...]
+Output JSON only: [{"i": 0, "status": "clear"}, ...]
+
+--- END DETECT PROMPT ---
+
+[1001-questions--631] AMBIGUOUS
+  Q: What was the Commune?
+
+[civil-war--754] CLEAR
+  Q: Could the Central Powers and Russia exist by themselves?
+
+[new-york-bar--149] CLEAR
+  Q: The surrogate is about to take certain action in a will contest which will be prejudicial to your client. You desire to prevent the action being taken. What proceedings would you take?
+
+[seeleys--250] CLEAR
+  Q: What is Trade or Commercial Discount, and what are its terms?
+
+[brewers-guide--412] CLEAR
+  Q: Why do persons who ascend in balloons feel pain in their eyes, ears and chest?
+
+[constitution--0] CLEAR
+  Q: In what country do you live?
+
+[common-core--757] CLEAR
+  Q: What political relations, of a strained character, exist between Russia and England?
+
+[mythology--142] CLEAR
+  Q: How was the legend of Heracles treated by the sophist Prodicus?
+
+[new-york-bar--186] CLEAR
+  Q: A is indebted to B in the sum of $1,000. B agrees that if A will pay him $750, he will receipt him in full. A pays the money, and B refuses to give the receipt, and sues A. Can he recover?
+
+[seeleys--746] BARE
+  Q: What should be its objects?
+
+[astronomy--126] CLEAR
+  Q: Why is the tide-raising force of the moon greater than that of the sun?
+
+[common-core--2122] AMBIGUOUS
+  Q: When rival claims are presented, what is the procedure?
+
+[grammar--115] AMBIGUOUS
+  Q: What is another classification of verbs?
+
+[electricity--434] CLEAR
+  Q: Are many dynamos regulated by changing the number of magnetic lines of force through the armature?
+
+[grammar--282] CLEAR
+  Q: When is the exclamation mark used?
+
+[1001-questions--313] CLEAR
+  Q: Has there been any uprising against the Turks?
+
+[engineering--51] CLEAR
+  Q: Is any power gained by using a lever, or, more accurately speaking, is any energy gained?
+
+[common-core--1781] CLEAR
+  Q: If the crime is not committed in the United States, where must the trial be held?
+
+[familiar-things--151] AMBIGUOUS
+  Q: What is the Lime?
+
+[common-core--797] CLEAR
+  Q: What is the Zuyder Zee?
+
+[investors--247] CLEAR
+  Q: What is a monetary standard?
+
+[engineering--590] AMBIGUOUS
+  Q: Suppose we have a circuit similar to that in the sketch and we desire to measure the current taken by four lamps. How would you proceed?
+
+[seeleys--130] AMBIGUOUS
+  Q: What is a substitute?
+
+[common-core--1808] CLEAR
+  Q: What does the fifteenth amendment provide?
+
+[common-core--1151] CLEAR
+  Q: What are subvocals?
+
+[brewers-guide--940] CLEAR
+  Q: What effect does a thunder-storm produce on the weather?
+
+[advanced-questions--264] CLEAR
+  Q: What is the rachis?
+
+[astronomy--307] CLEAR
+  Q: Where is Cetus, the Whale?
+
+[brewers-guide--94] CLEAR
+  Q: Why is a tree sometimes scorched by lightning, as if it had been set on fire?
+
+[common-core--855] CLEAR
+  Q: What is the longest inland commercial route on the globe?
+
+[brewers-guide--568] CLEAR
+  Q: Why should the front and top of a kettle be clean and well polished?
+
+[astronomy--117] AMBIGUOUS
+  Q: When will the next eclipses of the sun occur, which are total eclipses somewhere in the United States?
+
+[brewers-guide--685] CLEAR
+  Q: How does the combination of oxygen with the blood produce animal heat?
+
+[engineering--24] CLEAR
+  Q: Is the weight of a body everywhere the same?
+
+[electricity--397] CLEAR
+  Q: How does the telephone receiver operate?
+
+[brewers-guide--162] CLEAR
+  Q: Why does water extinguish a fire?
+
+[seeleys--408] CLEAR
+  Q: What leads to the exchange of goods?
+
+[common-core--1035] CLEAR
+  Q: What is a pronominal adjective?
+
+[grammar--89] BARE
+  Q: Which of the interrogatives and relatives?
+
+[electricity--572] CLEAR
+  Q: Can transformers be made to give secondary current of constant strength when the primary is connected to a constant potential circuit?
+
+[civil-war--522] CLEAR
+  Q: Did the British Government not report its aggregate losses?
+
+[familiar-things--127] CLEAR
+  Q: In what year, and where, was the making of glass bottles begun?
+
+[brewers-guide--1033] CLEAR
+  Q: When running water is frozen, why is the ice generally very rough?
+
+[common-core--872] BARE
+  Q: What are the chief productions of these islands?
+
+[advanced-questions--359] CLEAR
+  Q: Chemistry is what?
+
+[advanced-questions--120] CLEAR
+  Q: What causes the difference between a sidereal and a solar year?
+
+[familiar-things--194] CLEAR
+  Q: Who was Sir Walter Raleigh?
+
+[advanced-questions--321] CLEAR
+  Q: How do birds breathe?
+
+[brewers-guide--1111] CLEAR
+  Q: When a ship (out at sea) is approaching the shore, why do we see the small masts before we see the bulky hull?
+
+[advanced-questions--325] CLEAR
+  Q: Which bird has a bill almost as long as its body?

@@ -1,0 +1,211 @@
+893 bare attachments total
+
+[laborers--123] PREDECESSOR
+  Q: Would the Secretary ever under this system be required to withdraw money from circulation?
+  A: Not if money cornering or counterfeiting could be prevented.
+[laborers--124] BARE (attached)
+  Q: Would money issued in this manner meet either a large or small demand for it?
+  A: It would.
+
+[botany--93] PREDECESSOR
+  Q: What plants belong to this class?
+  A: The conifers, as pines, spruces, firs, cedars, the Gnetaceae, cycads, etc.
+[botany--94] BARE (attached)
+  Q: What division of the vegetable kingdom do the plants so far specialized constitute?
+  A: They constitute the spermaphyta or seed-bearing plants.
+
+[1001-questions--153] PREDECESSOR
+  Q: Who is regarded, by the Japanese as their greatest man?
+  A: Taiko-Sama.
+[1001-questions--154] BARE (attached)
+  Q: What edict did he issue?
+  A: An edict expelling all foreign religious leaders.
+
+[mythology--91] PREDECESSOR
+  Q: How is Athena represented?
+  A: As the goddess with the bright or gleaming eyes (Glaukopis), and as having on her aegis or cloak the face of the Gorgon ...
+[mythology--92] BARE (attached)
+  Q: What celebrated temple was dedicated to her honour?
+  A: The Parthenon, on the Acropolis of Athens, before which stood the colossal statue of the goddess, carved in gold and ivo...
+
+[civil-war--424] PREDECESSOR
+  Q: How is it used?
+  A: It is projected from regular artillery in shells that have a thinner casing than the common explosive shell. The effecti...
+[civil-war--425] BARE (attached)
+  Q: Is there any warning against it?
+  A: Practically none, except the sound of the bursting shell. It has only a faint, sweetish, not disagreeable odor and the v...
+
+[civil-war--222] PREDECESSOR
+  Q: What are ballast tanks?
+  A: They are tanks that can be pumped full of water so that the submarine will submerge. If the vessel wants to rise, the wa...
+[civil-war--223] BARE (attached)
+  Q: How much water must be in the tanks to help submersion?
+  A: A submarine of, say 500 tons, would need to take in about 125 tons of water in order to submerge. This water is admitted...
+
+[civil-war--64] PREDECESSOR
+  Q: What were the Hindu plots?
+  A: The German Government gave aid to members of the Indian Nationalist Party, which has long aimed to overthrow British rul...
+[civil-war--65] BARE (attached)
+  Q: What were the attempts against Canada?
+  A: Horst von der Goltz, by orders of the German General Staff and through direct aid from Captain von Papen, tried to engin...
+
+[chemistry--77] PREDECESSOR
+  Q: What influence does it exert over chemical action?
+  A: It limits it so as to prevent the escape of gaseous substances from combination.
+[chemistry--78] BARE (attached)
+  Q: What other mechanical properties does the air possess?
+  A: It is compressible, elastic, and its specific gravity is made unity or the standard of the gases.
+
+[mythology--78] PREDECESSOR
+  Q: What then is the sorrow of Demeter?
+  A: The gloom which falls on the earth during the cheerless months of winter.
+[mythology--79] BARE (attached)
+  Q: Is this story found in the legends of other nations?
+  A: Yes. It exists in many versions, especially in the legends of northern countries. In these Persephone is a beautiful mai...
+
+[astronomy--171] PREDECESSOR
+  Q: What is the distance of III.?
+  A: The distance of III. is 664,000 miles.
+[astronomy--172] BARE (attached)
+  Q: At what distance does IV. move around Jupiter?
+  A: The distance of IV. from its primary is 1,167,000 miles.
+
+[logic--92] PREDECESSOR
+  Q: How do you prove the fourth general rule?
+  A: It follows immediately from the third axiom.
+[logic--93] BARE (attached)
+  Q: Into how many parts is the fifth general rule divided?
+  A: Two: first, if one premise be negative, the conclusion will be negative, which follows immediately from the second axiom...
+
+[mythology--89] PREDECESSOR
+  Q: Are there any stories in which she is described as acting from unworthy or unseemly motives?
+  A: In the legend of Pandora,* she takes part in the plot which results in increasing the misery of mankind.
+[mythology--90] BARE (attached)
+  Q: What city bears the name of this goddess?
+  A: Athens, which is said to have been named after her when she produced the olive tree as a better gift for man than the ho...
+
+[ethics--134] PREDECESSOR
+  Q: If the law is so clear, why are there so many disputes about good and evil, right and wrong?
+  A: The dispute is not about the general principles, but about certain applications which reason has to make in certain part...
+[ethics--135] BARE (attached)
+  Q: Still if the law is so universally known, why is it that we often find large bodies of people sometimes violating one or another precept?
+  A: This happens not for want of knowledge, but in spite of knowledge: it comes from a wilful choice of evil.
+
+[advanced-questions--483] PREDECESSOR
+  Q: What is matter?
+  A: Whatever occupies space and prevents other things from occupying the same space.
+[advanced-questions--484] BARE (attached)
+  Q: Classify the substances.
+  A: Elementary substances, or elements (63 in number), are those which contain only a single kind of matter. The union of tw...
+
+[grammar--38] PREDECESSOR
+  Q: How are these cases distinguished?
+  A: By the noun's relations to other words.
+[grammar--39] BARE (attached)
+  Q: What are examples?
+  A: The subject of a verb is in the nominative case, but the object of a verb or preposition is in the objective case.
+
+[common-core--1418] PREDECESSOR
+  Q: How far from the end of a stick of timber 30 feet long, of equal size from end to end, must a lever be placed so that 3 men, 2 at the lever and 1 at the end of the stick, may each carry } of its weight?
+  A: Ans. 7} feet.
+[common-core--1419] BARE (attached)
+  Q: Said A to B: if I take one of your bags I shall have twice as many as you, and if I give you one of mine, we shall have an equal number?
+  A: Ans. 5 and 7.
+
+[1001-questions--174] PREDECESSOR
+  Q: What is the modern name?
+  A: The City Hillah, which was built out of its ruins, and near the ancient site of Babylon, in the year 1101.
+[1001-questions--175] BARE (attached)
+  Q: What was used for building material in the Empire?
+  A: Brick made of the native clay.
+
+[1001-questions--171] PREDECESSOR
+  Q: What may be said of the education of the Chaldeans?
+  A: They were highly educated. Astronomical calculations taken by them as far back as 2000 B. C. were found to be correct. T...
+[1001-questions--172] BARE (attached)
+  Q: When did they lose their power?
+  A: When Babylon was destroyed by Cyrus 538 B.C.
+
+[agriculture--189] PREDECESSOR
+  Q: What are some of the most important changes that have taken place?
+  A: Along with every other kind of business, the last few years have developed a decided specialization in farm labor, farm ...
+[agriculture--190] BARE (attached)
+  Q: What are the most important causes of the changed conditions?
+  A: Undoubtedly the most important cause is the world movement in the direction of applied science, which is manifesting its...
+
+[civil-war--58] PREDECESSOR
+  Q: What were the other treaties?
+  A: One was an agreement (dated February 1-14, 1917) by which France was to include in her terms of peace the following: (1)...
+[civil-war--59] BARE (attached)
+  Q: What was the "Willy and Nicky" correspondence?
+  A: It was a series of letters and dispatches between Emperor William and the late Czar, dating between 1904 and 1907, and s...
+
+[civil-war--91] PREDECESSOR
+  Q: What methods were used by German agents to clear ships illegally?
+  A: False manifests — that is, papers stating false ports of destination, etc. High officials of the Hamburg-American line, ...
+[civil-war--92] BARE (attached)
+  Q: How long did the German ship "Prinz Eitel Friedrich" hold the seas?
+  A: She held the seas from the outbreak of hostilities until March 10, 1915, when she ran the cordon of Allied warships off ...
+
+[engineering--554] PREDECESSOR
+  Q: How is the resistance of a conductor affected by increasing its length?
+  A: The resistance is increased proportionately to the increase in length.
+[engineering--555] BARE (attached)
+  Q: What is the effect of increasing the area of cross-section?
+  A: The resistance is lessened proportionately; in other words, the resistance is inversely proportional to the area of the ...
+
+[grammar--89] PREDECESSOR
+  Q: Which of the interrogatives and relatives?
+  A: Which and what.
+[grammar--90] BARE (attached)
+  Q: Which of the demonstratives?
+  A: This, these, that, those.
+
+[1001-questions--160] PREDECESSOR
+  Q: What has been accomplished by the new order?
+  A: Absolute religious freedom is secured, elementary education made compulsory, kindergarten methods are provided, and a fl...
+[1001-questions--161] BARE (attached)
+  Q: What was the result?
+  A: Both countries sent large bodies of troops into Corea, and the Japanese were victorious. A treaty of peace was signed Ma...
+
+[familiar-things--32] PREDECESSOR
+  Q: Who was the original discoverer of Coffee, for the drink of man?
+  A: It is not exactly known: the earliest written accounts of the use of Coffee are by Arabian writers in the 15th century; ...
+[familiar-things--33] BARE (attached)
+  Q: How is it prepared?
+  A: The berries are roasted in a revolving metallic cylinder, till they are of a deep brown color, and then ground to powder...
+
+[civil-war--35] PREDECESSOR
+  Q: Did Germany change its attitude as a result of the "Sussex" protest?
+  A: On May 4, 1916, the German Government sent a long answer repeating its charges of previous violations of international l...
+[civil-war--36] BARE (attached)
+  Q: Did the German Government reply to this American note?
+  A: No. Germany apparently pursued the policy of "standing pat" on its note, and the United States did the same.
+
+[mythology--20] PREDECESSOR
+  Q: Did these stories differ much from one another?
+  A: So much that it is often impossible to make them agree together, and we can only say, in many cases, that each country o...
+[mythology--21] BARE (attached)
+  Q: Is this the case with the legends of Zeus and the gods who went before him?
+  A: Yes. In one account, the first beings are Chaos and Gaia, from whom springs Ouranos (or Uranus) and the Great Mountains ...
+
+[laborers--136] PREDECESSOR
+  Q: If we had an open system of voting would not the rich man intimidate the poor man by threatening the latter with loss of employment?
+  A: Not if the vote-recording-system were applied to the whole United States.
+[laborers--137] BARE (attached)
+  Q: Why do you insist that a public record of every vote should be preserved under a just system of voting?
+  A: Because the illegal vote, when once detected and identified, under an open method of recording votes, could be rendered ...
+
+[mythology--3] PREDECESSOR
+  Q: What is the conclusion to be drawn from this?
+  A: That the legends of all these nations have one common source.
+[mythology--4] BARE (attached)
+  Q: And what is this source?
+  A: The words or phrases used by the most ancient tribes in speaking of the things which they saw, heard, or felt in the wor...
+
+[common-core--1395] PREDECESSOR
+  Q: If a pole be  in the mud, 3 in the water, and 6 feet out of the water, what is its length?
+  A: Ans. 90 feet.
+[common-core--1396] BARE (attached)
+  Q: A man being asked how many geese he had, replied: If I had  as many as I now have, and 2 geese more, I should have 100; how many had he?
+  A: Ans. 65.

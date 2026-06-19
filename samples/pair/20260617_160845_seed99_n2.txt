@@ -1,0 +1,95 @@
+model: claude-haiku-4-5
+seed:  99
+n:     2
+
+--- SYSTEM PROMPT ---
+You receive Q&A pairs from a pre-1930s text, optionally preceded by one CONTEXT pair.
+For each pair [0]..[N], output whether its question depends on the immediately preceding pair.
+
+"Depends" means the question uses a pronoun (it, he, she, they), demonstrative (this, that, so called),
+or a specific term quoted from the prior answer — and cannot be understood without it.
+
+deps[0] = does [0] depend on the CONTEXT pair? (false if no context)
+deps[i] = does [i] depend on [i-1]?
+
+Example:
+CONTEXT: Q: What did Henry IV do? A: He invaded France and won at Agincourt.
+[0] Q: What was the result?   → true  ("the result" references the invasion)
+[1] Q: What is a monarchy?    → false (new topic)
+[2] Q: Why so called?         → true  ("so called" references "monarchy" from [1])
+
+Output JSON only: {"deps": [true, false, true]}
+
+--- END SYSTEM PROMPT ---
+[engineering window 60]
+  STOP: max_tokens  BLOCKS: ['thinking']
+  RAW: 
+  CONTEXT: Q: How would you measure a resistance; for instance, the resistance of a coil of wire?
+           A: If I had an ammeter and voltmeter of proper range I would put the ammeter in series with the coil and would connect the voltmeter to its terminals. Then I would send a current from a battery or dynamo through the coil and take the readings of the ammeter and voltmeter. By Ohm's law, current = voltage / resistance, or resistance = voltage / current.
+  [0](F) Q: What do you mean by instruments of proper range in this case?
+         A: The ammeter must be suitable for measuring the largest current which the coil can carry without overheating, and the voltmeter must be such that the voltage at the terminals of the coil will give a deflection of the needle large enough to be readable with accuracy.
+  [1](F) Q: Is there any other method of measuring resistance?
+         A: Several. One of the most valuable, since it needs only a voltmeter of known resistance and some form of current generator, is known as the Voltmeter Method. This method requires two readings of the instrument. For the first reading the instrument is connected to the terminals of the current generator. For the second reading the unknown resistance is put in series with the voltmeter and then the two connected to the generator. In the figure X is the unknown resistance, and for the first reading the connection shown by the dotted line is made. For the second reading the connection is as shown by the solid lines. To calculate the resistance from the readings divide the first reading by the second, then multiply the quotient by the resistance of the voltmeter, and from the product subtract the resistance of the voltmeter.
+  [2](F) Q: Which of these methods would you use for low resistances of, say, less than 100 ohms?
+         A: The first method.
+  [3](F) Q: Which for high resistances, such as insulation tests?
+         A: The voltmeter method.
+  [4](F) Q: How would you connect for a test of the insulation of the armature coils of a dynamo, from the frame?
+         A: As in the figure, the heavy black line representing a commutator segment, and the cross-hatched portion representing the frame. The white space between, of course, represents the insulating material.
+  [5](F) Q: How would you measure the power used in any part of a circuit, as, for example, in a lamp?
+         A: Power being the product of volts by amperes (in direct-current circuits), I would connect an ammeter in series with the lamp and a voltmeter to its terminals, and would multiply their readings together, thus obtaining the number of watts.
+  [6](F) Q: Suppose you wished to get the horse-power?
+         A: I would divide the number of watts by 746.
+  [7](F) Q: What two kinds of electric generators are in most common use?
+         A: The chemical generators, or batteries, and the magnetoelectric generators, or dynamos.
+  [8](F) Q: In what cases are batteries used?
+         A: When the amount of power to be supplied is small, as for bells, time clocks, telegraphs, telephones, surgical lamps, dental engines, etc., and in some cases in which the introduction of the engine which would be needed to drive a dynamo would be objectionable.
+  [9](F) Q: Why are batteries not used when large amounts of power are required?
+         A: On account of the expense of the chemicals used. Zinc is in nearly all batteries the fuel, and since the energy produced by burning one pound of it is only one-sixth that produced by one pound of coal, and, moreover, since the cost of zinc is about sixty times that of coal, it is much cheaper to generate electric power by means of coal rather than by means of zinc.
+  [10](F) Q: What are secondary or storage batteries?
+         A: Those whose chemical actions may be reversed by sending an electric current (from some outside source) through them in the opposite direction to the current which they have produced. Thereby they are restored to the original condition which existed before they were used to produce electric current.
+  [11](F) Q: Do they store electricity?
+         A: Not at all. They store up energy in the form of chemical energy, which at any time may be changed into electrical energy by connecting the terminals of the battery together by some conductor.
+  [12](F) Q: What are primary batteries?
+         A: Those whose chemical actions cannot be reversed by passing an electric current through them in the reverse direction.
+  [13](F) Q: Give an example of a reversible cell.
+         A: The Daniell cell.
+  [14](F) Q: Is it used as a storage or as a primary battery?
+         A: As a primary; others being better adapted for use as secondaries.
+
+[engineering window 12]
+  STOP: max_tokens  BLOCKS: ['thinking']
+  RAW: 
+  CONTEXT: Q: What is convection of heat?
+           A: It is the transfer or diffusion of heat in a fluid mass by means of its particles.
+  [0](F) Q: Will water boil in a vacuum with less heat than under the pressure of the atmosphere?
+         A: Yes; in a vacuum of 1 pound absolute pressure water boils at 98° to 100°.
+  [1](F) Q: Does water give out heat in freezing?
+         A: Yes; water in freezing gives 142 heat units.
+  [2](F) Q: What is a thermal unit?
+         A: It is the quantity of heat required to raise 1 pound of water 1°, the water being at its maximum density (=39° Fahr.). It is also called a British thermal unit, and is abbreviated B. T. U.
+  [3](F) Q: What is combustion?
+         A: Combustion is a chemical process which takes place rapidly, in which the one or more of the elements which make up the combustible body combines with the oxygen of the air. Briefly, combustion is a rapid oxidation accompanied by flame or fire.
+  [4](F) Q: What is smoke?
+         A: Smoke is the result of imperfect combustion, and its appearance is due to minute unburned particles in the air.
+  [5](F) Q: What is necessary to produce complete combustion?
+         A: We must have sufficient air, must mix the combustible thoroughly with the air, and must maintain the combustible and air mixed with it at a temperature above the igniting-point of the combustible.
+  [6](F) Q: What is the meaning of the term fuel?
+         A: Fuel is used to denote substances that may be burned with air rapidly enough to produce sufficient heat for commercial purposes.
+  [7](F) Q: What sort of substances does fuel consist of?
+         A: Of vegetable substances or the products of their decomposition.
+  [8](F) Q: What are some of the principal fuels used in the production of steam?
+         A: Coal, coke, wood, petroleum, natural gas, peat, and vegetable refuse of various kinds.
+  [9](F) Q: What are the elementary substances which are found in most fuels?
+         A: Carbon, hydrogen, oxygen, nitrogen, and small quantities of other elements.
+  [10](F) Q: What is the chief constituent of coal?
+         A: Carbon.
+  [11](F) Q: How much carbon does good coal contain?
+         A: Anthracite contains about 90 per cent.
+  [12](F) Q: Are there any other elements in coal except carbon?
+         A: Yes ; hydrogen, nitrogen, and sulphur in small quantities.
+  [13](F) Q: How many heat-units does 1 pound of good coal, containing 90 per cent, of carbon, produce?
+         A: It produces in burning about 13,000 units.
+  [14](F) Q: What is the mechanical equivalent of 13,000 units?
+         A: 10,114,000 foot-pounds, — that is to say, 10,114,000 pounds raised 1 foot high.
+

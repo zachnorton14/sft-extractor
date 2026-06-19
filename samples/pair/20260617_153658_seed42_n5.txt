@@ -1,0 +1,21 @@
+model: claude-haiku-4-5
+seed:  42
+n:     5
+
+--- SYSTEM PROMPT ---
+You receive a window of Q&A pairs from a pre-1930s educational text.
+Group pairs that cannot stand alone — where the question uses a pronoun or implicit
+reference ("it", "he", "she", "they", "this", "that", "the same") that requires a
+prior question in this window or the CONTEXT section to resolve.
+
+Rules:
+- A self-contained question starts a new group (singleton if nothing follows from it)
+- A dependent question joins the group of the earliest question that resolves its referent
+- Chains are always contiguous — a question never skips an intervening question
+- Every pair [0]..[N] must appear in exactly one group
+- Set "continues": true if the last question introduces a subject or referent that a
+  follow-up question in the next window might reference with a pronoun
+
+Respond with JSON only: {"groups": [[0, 1], [2], [3, 4, 5]], "continues": false}
+
+--- END SYSTEM PROMPT ---

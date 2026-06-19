@@ -1,0 +1,83 @@
+model: claude-haiku-4-5
+seed:  45
+n:     20
+
+--- DETECT PROMPT ---
+You receive opening questions from pre-1930s educational Q&A texts.
+Classify each question as bare, ambiguous, or clear.
+
+"bare" — cannot be understood without prior context:
+  - no subject at all: "What is the effect?", "Why not?", "Describe their shape?"
+  - continuative language implying prior discussion: "What acts did they continue to commit?", "What further steps were taken?"
+  - definite reference to an entity not universally known: "What was the character of the Assembly?", "What was the result of the Act?"
+
+"ambiguous" — has a subject but it is domain-dependent; meaning shifts by field:
+  "What is a disk?", "What is a cell?", "Define the term."
+
+"clear" — fully self-contained regardless of domain:
+  "What is arsenic?", "Who was Napoleon?", "What causes thunder?"
+
+Input: JSON array [{"i": 0, "q": "..."}, ...]
+Output JSON only: [{"i": 0, "status": "clear"}, ...]
+
+--- END DETECT PROMPT ---
+
+[civil-war--521] CLEAR
+  Q: Have the nations at war tried to hide their total casualties?
+
+[common-core--1540] AMBIGUOUS
+  Q: What is learning?
+
+[electricity--266] CLEAR
+  Q: What are closed circuit batteries?
+
+[civil-war--288] BARE
+  Q: Were these guns successful?
+
+[agriculture--110] CLEAR
+  Q: Which are known as dual-purpose breeds?
+
+[civil-war--1034] BARE
+  Q: How soon did we send men abroad?
+
+[common-core--246] BARE
+  Q: What acts did England continue to commit against the United States, and with what result?
+
+[1001-questions--353] CLEAR
+  Q: How were the Gauls persuaded to leave the city?
+
+[advanced-questions--504] CLEAR
+  Q: How can we determine, by means of the pendulum, the variations of the intensity of gravity at different parts of the earth?
+
+[electricity--205] CLEAR
+  Q: What is an inclosed fuse?
+
+[1001-questions--180] CLEAR
+  Q: What was the most important building of Babylon?
+
+[botany--88] CLEAR
+  Q: What are gymnosperms?
+
+[civil-war--717] CLEAR
+  Q: Is the Dobrudja a Balkan State?
+
+[botany--135] BARE
+  Q: To what factors are the plant societies of the second type, i. e., the smaller local plant formations due?
+
+[civil-war--1163] BARE
+  Q: How do our States rank agriculturally?
+
+[school-bulletin--296] CLEAR
+  Q: Define mud?
+
+[logic--89] CLEAR
+  Q: How many general rules of syllogisms are there?
+
+[1001-questions--585] BARE
+  Q: What was the character of the Legislative Assembly?
+
+[investors--254] CLEAR
+  Q: What is the national debt?
+
+[advanced-questions--410] CLEAR
+  Q: What is the compound C6H10O5?

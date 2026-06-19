@@ -1,0 +1,123 @@
+stage: enriched
+seed:  42
+n:     20
+
+[new-york-bar--444]
+  Q: A and B each own adjoining lots; each has a well on his own lot. B gets angry at A, and maliciously sinks his well deep enough to destroy the general source, thereby drying up A's well completely. What action, if any, has A against B? State the general rule.
+  A: A has no right of action against B. Percolating waters belong to the owner of the land through which they percolate, and he may do what he sees fit with the waters. He may take the waters absolutely, and appropriate them to his own use. If there is an interference with percolating waters, preventing them from reaching the neighboring land, that interference does not give rise to a right of action. It is not a violation of any legal right, so that even though the interference be due to an improper motive, though it be actuated by malice, yet it will not give rise to a right of action, because where there is no violation of a legal right, motive is of no moment. "A party is not liable for the consequence of an act done upon his own land, lawful in itself, and which does not infringe upon any lawful rights of another, because he was influenced in the doing of it by wrong and malicious motives; the courts will not inquire into the motive actuating a person in the enforcement of a legal right." Phelps v. Nowlen, 72 N. Y. 39.
+
+[brewers-guide--24]
+  Q: Does not scenery affect the sound of thunder?
+  A: Yes; the flatter the country, the more unbroken the peal: Mountain scenery breaks the peal, and makes it harsh and irregular.
+
+[1001-questions--409]
+  Q: Who assists the Sovereign in ruling?
+  A: A Cabinet of Ministers or Lords.
+
+[civil-war--796]
+  Q: Why are the Germans called "Boche"?
+  A: "Boche" appears to be an abbreviation of "Alboche," an Alsatian word for "Allemand" (meaning German). In Alsace-Lorraine, it has been for some time used as a synonym for drunkard, liar, barbarian, and adjectively for "unmentionably cruel." The French adopted the word in the beginning of the war as typifying the Prussians. Many other explanations are given from time to time of what the slang-word really means, and how it came to be applied. It was probably used also in the Franco-Prussian War in 1870, for Zola, in his novel La Debacle, a story dealing with the war, puts the term in the mouths of French soldiers to designate the Germans. The term ce boche was used, before the Franco-Prussian War at least, as equivalent to "that chump," and tete de boche is given by French dictionaries of slang as equivalent to "wooden-pate" or "blockhead." It is, perhaps, for this reason that some French scholars derive the present use of boche from caboche, a French word meaning head.
+
+[civil-war--302] [multi-turn]
+  Q: When did the Germans first use poisonous gas?
+  A: In May, 1915, at Hill 60 on the Ypres line, against the British. It was the kind that became known as chlorine gas, because that chemical was its chief constituent and gave it its chief deadliness. It was produced by volatilizing liquid sulphurous acid and liquefied chlorine, a process that liberates enormous bulks of vapor. Its principal action was on the bronchial tubes and the lungs, which it injured seriously, leaving pitiable aftereffects. It caused intense suffering, and the men caught in the first gas-attack were, of course, quite helpless, being unprovided with any defense. As one soldier said : "The ghastliest wounds were sweet compared to it."
+  Q: Was this gas sent from guns?
+  A: No. It was liberated from cylinders and it could be used only when the wind blew toward the opposing lines. Even then there always remained the chance that a shift of wind might blow it back. Therefore, terrible as the new weapon was, gas-warfare did not assume dominant importance until, realizing its possibilities, the armies began to project it inside of explosive shells. By the middle of 1918 it had become "the deadliest instrument of the war."
+  Q: Did chlorine gas remain the worst?
+  A: No. Gas inventions accumulated with gruesome rapidity. Gases appeared that strangled, suffocated, blinded and paralyzed. Some of the gases were comparatively harmless, causing only temporary disability or simply forcing abandonment of gassed areas. Others were frightful.
+
+[chemistry--650] [multi-turn]
+  Q: What are different kinds of fermentation?
+  A: The saccharine, the vinous, the viscous, the acetous, and what is called putrefaction.
+  Q: What does the saccharine consist in?
+  A: The conversion of the starch of grain into grape sugar. It is that which takes place in the wash of the distillery. The starch takes two atoms of water.
+
+[brewers-guide--486]
+  Q: Where would the heat escape to, if the body were not wrapped in wool or fur?
+  A: The heat of the body would fly off into the air; for the cold air (coming into contact with our body) would gradually draw away its heat, till it was as cold as the air itself.
+
+[botany--15] [multi-turn]
+  Q: Of what does a plant’s body consist?
+  A: A plant’s body consists of one or more cells.
+  Q: Upon what does the shape and form of the plant’s body depend?
+  A: The form of the plant’s body depends upon the formative activity of the plant’s protoplasm.
+  Q: How many fundamentally different forms of the plant body are there?
+  A: There are only two; (1) thallus; (2) the plant's body is differentiated into stem and root.
+  Q: What is a thallus?
+  A: A thallus is a form of plant body, which is either not segmented at all, or segmented into similar parts only. Note.—These two forms of the plant body afford a criterion for dividing the whole vegetable kingdom into two Grand Divisions: Thallophytes, i.e., plants whose body is a thallus, including all plants from the lowest unicellular forms up to, but excluding the mosses; cormophytes, including all plants from the mosses upwards.
+
+[seeleys--88]
+  Q: What dictionaries are regarded as authorities?
+  A: Webster’s, Worcester’s, The Century, and The Standard.
+
+[grammar--207] [multi-turn]
+  Q: What is the case of pronouns in the predicate?
+  A: The nominative.
+  Q: What is of importance in this connection?
+  A: Scrupulous care to use the nominative form when this differs from the objective.
+  Q: What are examples of the correct form?
+  A: It is I; It is she; It is they
+  Q: What are forms to be avoided?
+  A: It is me; It is her; It is them.
+  Q: What is an excuse for the use of me instead of I in the predicate?
+  A: It seems less self-assertive.
+  Q: Is a corresponding case used in another language?
+  A: Yes, in the French, where it is grammatically accepted.
+  Q: Is it then permissible to use me thus in English?
+  A: No.
+
+[astronomy--86] [multi-turn]
+  Q: How often does the earth turn on its axis in a year of 365 days?
+  A: It turns 366 times on its axis. i. e., any fixed star will pass the north and south line (meridian) of an observer 366 times in a year of 365 days.
+  Q: What causes this difference of one?
+  A: The earth's revolution around the sun.
+
+[music--57] [multi-turn]
+  Q: What is the meaning of the word legato?
+  A: This Italian word signifies a smooth and connected style of playing, blending the sound of one note with that of the next. How is this effected? By keeping each note down until its successor is struck.
+  Q: How is the legato expressed?
+  A: By curved lines placed over the notes, these curved lines are termed slurs.
+
+[common-core--2081]
+  Q: When a report is of considerable length, how is it usually presented to the members?
+  A: It is printed, and each member given a copy. This renders the reading of the papers by the clerk unnecessary.
+
+[1001-questions--520]
+  Q: What is said of his character and conduct?
+  A: With the talents to have enabled him to confer the greatest blessings on his race, he chose to be its scourge, and sacrificed to his selfish schemes every principle of benevolence and rectitude. During nineteen years of almost constant war, he inflicted upon Europe the most appalling miseries.
+
+[1001-questions--488]
+  Q: What did the Assembly decree?
+  A: The entire abolition of the principles and practices of the former government.
+
+[astronomy--197]
+  Q: Where is the orbit of Uranus?
+  A: The orbit of Uranus is situated between the orbits of Saturn and Neptune.
+
+[chemistry--575] [multi-turn]
+  Q: Where does uric acid exist?
+  A: It is an ingredient in the urine, and the most abundant material in urinary calculi.
+  Q: What are the properties of this acid?
+  A: It crystallizes in thin spangles, with a dazzling white saline lustre. It is insipid, inodorous, heavier than water, almost insoluble in cold and but little soluble in boiling water. It is soluble in dilute nitric acid with effervescence, from the escape of nitrogen and carbonic acid.
+  Q: What does the resulting solution contain?
+  A: Alloxan, alloxatin, urea, parabanic acid and ammonia.
+  Q: By what means can we recognize this acid?
+  A: By adding to the above solution in nitric acid an excess of ammonia, the concentrated liquid becomes of a purple red, on account of the generation of murexide.
+  Q: Which are the most important of these?
+  A: Morphia, quinine and cinchonia. Besides these we have codeine, narcotina, strychnine, emetia, atropia, &c.
+  Q: What properties are common to the vegetable alkalies?
+  A: They are solid, white, inodorous and of a bitter and acrid taste; they render the syrup of violets green, and are all soluble in alcohol, and nearly or quite insoluble in cold water.
+  Q: How are these alkalies generally obtained?
+  A: They are separated from the acids with which they are combined as they exist in nature, by precipitation from a solution containing them, by means of a more salifiable base, such as potash, soda, ammonia, lime, or magnesia. Purified by mixing with animal charcoal and dissolving in boiling water.
+
+[civil-war--101]
+  Q: Are listening posts inside of the trenches or outside?
+  A: Listening posts are in No Man's Land between the trenches. They are in trenches that have been dug out toward the enemy trench, and they are as near to the foe as the conditions permit. They are elaborately surrounded with barbed wire, and are used mostly at night, when a soldier creeps into the post and listens for any sound in the enemy lines that may warn him of an intended raid, of any movement or transfer of troops, etc.
+
+[ethics--110]
+  Q: What, once more, is good with reference to man?
+  A: Whatever is necessary to preserve his essential relations.
+
+[mythology--128]
+  Q: What is the death of the Sphinx?
+  A: It is the victory of Indra who smites his enemy Vritra, and immediately brings rain on the thirsting earth. So the rain pours down on Thebes as soon as the Sphinx hurls herself from the cliff.

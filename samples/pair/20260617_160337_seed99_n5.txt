@@ -1,0 +1,196 @@
+model: claude-haiku-4-5
+seed:  99
+n:     5
+
+--- SYSTEM PROMPT ---
+You receive Q&A pairs from a pre-1930s text, optionally preceded by one CONTEXT pair.
+For each pair [0]..[N], output whether its question depends on the immediately preceding pair.
+
+"Depends" means the question uses a pronoun (it, he, she, they), demonstrative (this, that, so called),
+or a specific term quoted from the prior answer — and cannot be understood without it.
+
+deps[0] = does [0] depend on the CONTEXT pair? (false if no context)
+deps[i] = does [i] depend on [i-1]?
+
+Example:
+CONTEXT: Q: What did Henry IV do? A: He invaded France and won at Agincourt.
+[0] Q: What was the result?   → true  ("the result" references the invasion)
+[1] Q: What is a monarchy?    → false (new topic)
+[2] Q: Why so called?         → true  ("so called" references "monarchy" from [1])
+
+Output JSON only: {"deps": [true, false, true]}
+
+--- END SYSTEM PROMPT ---
+[engineering window 60]
+  RAW: 
+  CONTEXT: Q: How would you measure a resistance; for instance, the resistance of a coil of wire?
+           A: If I had an ammeter and voltmeter of proper range I would put the ammeter in series with the coil and would connect the voltmeter to its terminals. Then I would send a current from a battery or dynamo through the coil and take the readings of the ammeter and voltmeter. By Ohm's law, current = voltage / resistance, or resistance = voltage / current.
+  [0](F) Q: What do you mean by instruments of proper range in this case?
+         A: The ammeter must be suitable for measuring the largest current which the coil can carry without overheating, and the voltmeter must be such that the voltage at the terminals of the coil will give a deflection of the needle large enough to be readable with accuracy.
+  [1](F) Q: Is there any other method of measuring resistance?
+         A: Several. One of the most valuable, since it needs only a voltmeter of known resistance and some form of current generator, is known as the Voltmeter Method. This method requires two readings of the instrument. For the first reading the instrument is connected to the terminals of the current generator. For the second reading the unknown resistance is put in series with the voltmeter and then the two connected to the generator. In the figure X is the unknown resistance, and for the first reading the connection shown by the dotted line is made. For the second reading the connection is as shown by the solid lines. To calculate the resistance from the readings divide the first reading by the second, then multiply the quotient by the resistance of the voltmeter, and from the product subtract the resistance of the voltmeter.
+  [2](F) Q: Which of these methods would you use for low resistances of, say, less than 100 ohms?
+         A: The first method.
+  [3](F) Q: Which for high resistances, such as insulation tests?
+         A: The voltmeter method.
+  [4](F) Q: How would you connect for a test of the insulation of the armature coils of a dynamo, from the frame?
+         A: As in the figure, the heavy black line representing a commutator segment, and the cross-hatched portion representing the frame. The white space between, of course, represents the insulating material.
+  [5](F) Q: How would you measure the power used in any part of a circuit, as, for example, in a lamp?
+         A: Power being the product of volts by amperes (in direct-current circuits), I would connect an ammeter in series with the lamp and a voltmeter to its terminals, and would multiply their readings together, thus obtaining the number of watts.
+  [6](F) Q: Suppose you wished to get the horse-power?
+         A: I would divide the number of watts by 746.
+  [7](F) Q: What two kinds of electric generators are in most common use?
+         A: The chemical generators, or batteries, and the magnetoelectric generators, or dynamos.
+  [8](F) Q: In what cases are batteries used?
+         A: When the amount of power to be supplied is small, as for bells, time clocks, telegraphs, telephones, surgical lamps, dental engines, etc., and in some cases in which the introduction of the engine which would be needed to drive a dynamo would be objectionable.
+  [9](F) Q: Why are batteries not used when large amounts of power are required?
+         A: On account of the expense of the chemicals used. Zinc is in nearly all batteries the fuel, and since the energy produced by burning one pound of it is only one-sixth that produced by one pound of coal, and, moreover, since the cost of zinc is about sixty times that of coal, it is much cheaper to generate electric power by means of coal rather than by means of zinc.
+  [10](F) Q: What are secondary or storage batteries?
+         A: Those whose chemical actions may be reversed by sending an electric current (from some outside source) through them in the opposite direction to the current which they have produced. Thereby they are restored to the original condition which existed before they were used to produce electric current.
+  [11](F) Q: Do they store electricity?
+         A: Not at all. They store up energy in the form of chemical energy, which at any time may be changed into electrical energy by connecting the terminals of the battery together by some conductor.
+  [12](F) Q: What are primary batteries?
+         A: Those whose chemical actions cannot be reversed by passing an electric current through them in the reverse direction.
+  [13](F) Q: Give an example of a reversible cell.
+         A: The Daniell cell.
+  [14](F) Q: Is it used as a storage or as a primary battery?
+         A: As a primary; others being better adapted for use as secondaries.
+
+[engineering window 12]
+  RAW: 
+  CONTEXT: Q: What is convection of heat?
+           A: It is the transfer or diffusion of heat in a fluid mass by means of its particles.
+  [0](F) Q: Will water boil in a vacuum with less heat than under the pressure of the atmosphere?
+         A: Yes; in a vacuum of 1 pound absolute pressure water boils at 98° to 100°.
+  [1](F) Q: Does water give out heat in freezing?
+         A: Yes; water in freezing gives 142 heat units.
+  [2](F) Q: What is a thermal unit?
+         A: It is the quantity of heat required to raise 1 pound of water 1°, the water being at its maximum density (=39° Fahr.). It is also called a British thermal unit, and is abbreviated B. T. U.
+  [3](F) Q: What is combustion?
+         A: Combustion is a chemical process which takes place rapidly, in which the one or more of the elements which make up the combustible body combines with the oxygen of the air. Briefly, combustion is a rapid oxidation accompanied by flame or fire.
+  [4](F) Q: What is smoke?
+         A: Smoke is the result of imperfect combustion, and its appearance is due to minute unburned particles in the air.
+  [5](F) Q: What is necessary to produce complete combustion?
+         A: We must have sufficient air, must mix the combustible thoroughly with the air, and must maintain the combustible and air mixed with it at a temperature above the igniting-point of the combustible.
+  [6](F) Q: What is the meaning of the term fuel?
+         A: Fuel is used to denote substances that may be burned with air rapidly enough to produce sufficient heat for commercial purposes.
+  [7](F) Q: What sort of substances does fuel consist of?
+         A: Of vegetable substances or the products of their decomposition.
+  [8](F) Q: What are some of the principal fuels used in the production of steam?
+         A: Coal, coke, wood, petroleum, natural gas, peat, and vegetable refuse of various kinds.
+  [9](F) Q: What are the elementary substances which are found in most fuels?
+         A: Carbon, hydrogen, oxygen, nitrogen, and small quantities of other elements.
+  [10](F) Q: What is the chief constituent of coal?
+         A: Carbon.
+  [11](F) Q: How much carbon does good coal contain?
+         A: Anthracite contains about 90 per cent.
+  [12](F) Q: Are there any other elements in coal except carbon?
+         A: Yes ; hydrogen, nitrogen, and sulphur in small quantities.
+  [13](F) Q: How many heat-units does 1 pound of good coal, containing 90 per cent, of carbon, produce?
+         A: It produces in burning about 13,000 units.
+  [14](F) Q: What is the mechanical equivalent of 13,000 units?
+         A: 10,114,000 foot-pounds, — that is to say, 10,114,000 pounds raised 1 foot high.
+
+[world-history window 0]
+  RAW: 
+  [0](F) Q: What is meant by History?
+         A: In the general sense of the word, it signifies a faithful relation of facts and events, in chronological order.
+  [1](F) Q: Is not the knowledge of History indispensably necessary?
+         A: As it relates to whatever has passed in the world, and enables us to form our opinions, or to regulate our actions from the conduct of those that have gone before us; no study can be more instructive or useful.
+  [2](F) Q: How is history divided?
+         A: Considered with respect to the nature of its subjects, it may be divided into general and particular; with respect to time, into ancient and modern.
+  [3](F) Q: What is ancient history?
+         A: It commences with the creation of the world, and is usually extended to the reign of Charlemagne, in the year 800.
+  [4](F) Q: What is modern history?
+         A: It begins with the year 800, and reaches down to the present times.
+  [5](F) Q: But are there no other divisions of history?
+         A: Yes. History is very commonly considered as being sacred or profane.
+  [6](F) Q: What is sacred history?
+         A: It is the history of religion before the birth of Jesus Christ, and is to be found only in the Bible: ecclesiastical history, which is certainly a branch of sacred, treats of the establishment of the Christian religion, and comprehends the lives, characters, and conduct of those who have promoted or opposed the doctrines of our Saviour.
+  [7](F) Q: What is profane history?
+         A: It includes the histories of all nations which are not written by inspired writers, and is subdivided into ancient and modern, which have already been explained.
+  [8](F) Q: What history is most valuable?
+         A: Sacred history.
+  [9](F) Q: Whence is the knowledge of sacred history derived?
+         A: From the Scriptures, which teach us that there is but one God who is eternal, and that all things are the work of his hands.
+  [10](F) Q: When was the world created?
+         A: About 4004 years before the birth of Christ, and in the space of six days; when God hallowed the seventh, and made it a day of religious rest.
+  [11](F) Q: What were the names of the first man and woman?
+         A: Adam and Eve; who, disobeying the positive command of their Maker, entailed death and misery on all their posterity.
+  [12](F) Q: Was there not something very remarkable in the lives of the first men?
+         A: Their longevity: for we are told that most of them lived from 800 to 900 years. In consequence of this, probably, they became very wicked and depraved.
+  [13](F) Q: When did the descendants of Noah begin to disperse?
+         A: On the confusion of tongues, which took place at the building of the tower of Babel, as a punishment for the arrogance of men, who thought of equalling themselves with the Supreme.
+  [14](F) Q: What important event happened next?
+         A: The calling of Abraham, who was ordered to leave his kindred and country, and to go to the land of Canaan, in order that the worship of the one true God, might be preserved among men, who had already become grossly corrupted.
+
+[civil-war window 32]
+  RAW: 
+  CONTEXT: Q: Why cannot one kind of powder be used for everything?
+           A: For a variety of highly technical reasons. Briefly and very generally, because the "explosive" powder that bursts shells is so powerful that it would be liable to burst the guns if it were used as a propulsive powder. Furthermore, the high explosives generate gases of chemical composition that would "erode" gun chambers and gun bores — that is, eat them away. Again, the high explosives explode too quickly, whereas to get the utmost range, a shell must be hurled out of the gun by a "slow-burning" powder. Smokeless propulsive powder is slowburning — as compared with the high explosives.
+  [0](F) Q: What materials are required for explosive powders?
+         A: Picric acid is made from a product of coal-tar called phenol and nitric and sulphuric acids. T.N.T. is produced by similarly "nitrating" toluene, also a coal-tar product. The disadvantage of picric acid is that it attacks most metals, hence a shell filled with it has to be protected in its interior with some material on which picric acid will not act. Trinitrotoluol, on the other hand, suffers from no such disadvantage. Picric acid, however, is mixed with nitrate of ammonium, charcoal, aluminium and trinitrotoluol. The resultant powder is called ammonal. It is largely used by the Austrians, and is very safe. It does not always explode, though, for it is apt to become moist.
+  [1](F) Q: How much T.N.T. does a modern army need?
+         A: It has been estimated that the American mobile artillery (heavy and light field artillery) might require as much as 2,000,000 gallons of toluol in a year.
+  [2](F) Q: How much cotton does Germany need for explosives?
+         A: That is impossible to say, as we have no knowledge of the amount of explosives being made in Germany. We must not forget, however, that cotton is used only for propulsive ammunition and not as explosive for filling shells. To make one ton of gun-cotton, half a ton of cotton fiber is needed, roughly speaking. A German Mauser cartridge contains 48.4 grains of gun-cotton, to produce which would require something over 25 grains of cotton. Assuming that there are 3,000,000 men in the field, and that they average 10 rounds daily for each man, we would have an expenditure of 51 tons of cotton a day, or 18,600 tons a year, for rifles alone. If we assume that the expenditure on machine guns is about the same, we have a total of 36,000 tons a year. The average propulsive charge for field guns is, probably, 50 pounds. Assuming that the Germans are using 5,000 guns, and that each fires ten shots a day, this would demand 1,000 tons of gun-cotton, for which about 550 tons of cotton would be required, or, say, 200,000 tons a year. This, probably, is a large overestimate. These figures are purely speculative and have no value except as furnishing some basis for possible calculation.
+  [3](F) Q: Did Germany have cotton stored for war?
+         A: It is assumed that Germany used some 100,000 tons of cotton annually for making 180,000 tons of gun-cotton. If she had stored this for the last five years before the war, she could have had at least 900,000 tons of gun-cotton available when the war started. During 1913 Germany and Austria imported in the ordinary way 560,000 tons of cotton. Undoubtedly a good deal of this could not have been transformed into manufactured articles, and thus would be available. During 1914 it is assumed that some 12,000 tons reached Germany via Sweden, and that she also got supplies via Holland and Italy, especially the latter. It was calculated at the time that Germany would have sufficient cotton to carry her through two years' war at any rate, and she may have been able to get hold of enough to last for three years. It would seem inevitable, however, that the time came in 1917, when lack of this important ingredient in the making of ammunition became a critical problem to Germany. A certain amount of cotton is produced in Turkey, but even if the cotton fields there were greatly developed since the war began, nothing like enough could be obtained from that source. In 1912 the total cotton output of Turkey was about 200,000 bales. As there are 400 pounds in a bale this means that the total production of Turkey was only 40,000 tons.
+  [4](F) Q: Is there no substitute for cotton?
+         A: Cotton consists of cellulose, the chief constituent of wood, but cotton fiber appears to be the only form of cellulose adapted for making gun-cotton. There is always the possibility that under the stress of urgent need the German chemists have discovered a substitute for cotton, as they have for so many other things, but it is unlikely.
+  [5](F) Q: What is the biggest cannon used in war?
+         A: Cannon calibers have increased progressively during the war. The gun of greatest length and power made its appearance in March, 1918, when the great German offensive broke through the British St. Quentin front and began the vast Battle of Picardy. On March 24, projectiles began to fall into Paris, which was 64 miles from the very nearest German line on that date. The greatest range ever achieved by a gun before was 20 miles. The largest American gun in 1918 was the 16-inch coast-defense rifle. It has a range of somewhat less than 20 miles. The big gun with which the Germans so swiftly destroyed the fortifications of Liege and Namur was a 42-centimeter gun, meaning in inches that its caliber (the diameter of its muzzle) was 16½ inches. For a long time army officers could not credit that a mobile gun of such power could really exist. This famous 42-centimeter weapon was on the howitzer order — that is, it did not fire its projectile with a fairly flat trajectory as the rifled cannon do, but discharged it by so-called high-angled fire : it was pointed toward the sky and thus sent its shell flying in a great arc.
+  [6](F) Q: Have the Allies a bigger gun than the German "Big Bertha"?
+         A: The French recently built a mortar of 52 centimeters caliber as against the Germans' 42-centimeter gun. One of these guns was used by the French in the Verdun surprise attack of August, 1917. Two shells fired from this gun were sufficient to wreck Fort Malmaison. This French 52-centimeter gun is, in our figures, a trifle under 20½-inch diameter.
+  [7](F) Q: Are solid cannon-balls used any more?
+         A: Practically every projectile from every kind of cannon nowadays is an explosive shell — that is, a conical steel shell that has in its pointed head a large hollow chamber filled with high explosive. Some of these explosive shells have a contact primer in their points — a primer that explodes the charge when the projectile strikes. Most shells, however, are fitted with a time-fuse so set that the shell explodes in a certain number of seconds after it leaves the muzzle of the gun.
+  [8](F) Q: Is it possible to set a time-fuse accurately?
+         A: Yes. A modern artillerist knows to the fraction of a second how long it requires for his projectile to go a certain distance. Range-finders and aeroplane observation (spotting) enable him to figure to the foot just how far away the target is. The time-fuse is set in the pointed snout of the shell, and adjusted just right with a key the moment before it is shoved into the gun.
+  [9](F) Q: Are the great twelve and fourteen-inch shells exploded by time-fuses?
+         A: No. These huge shells are used chiefly against ships or against fortifications. They are made to explode on impact— by "percussion," as artillerists call it. There is a firing pin in the sharp point of the shell, and when the projectile strikes this pin is driven home and explodes fulminate of mercury, which, in turn, explodes (detonates) the big bursting charge. In most cases these firing mechanisms in the big shells are so set that the projectile has time first to smash through the ship's armor, so that it shall explode inside.
+  [10](F) Q: What are time-fuses like?
+         A: They are of a vast variety of designs. For many years there have been specialists in every army in the world who studied and designed little else but fuses. Some time-fuses are simply little contrivances that contain a powder-fuse of a determined length. This is lit by the discharge of the gun, and, at about the time that the projectile reaches its goal, the flame reaches the explosive charge. Other fuses are operated by little vanes that revolve as the projectile speeds through the air. Still others operate by clockwork mechanism.
+  [11](F) Q: What is the artillery equipment of the American Army?
+         A: The War Department decided in 1917 on the practical adoption of the French 75-millimeter (2.955-inch) field gun ; a continuance of 3-inch field guns (American pattern) for use in camps at home ; Colts, Browning, Vickers-Maxim and Chauchat automatic machine guns ; 4.7-inch field guns, 6.1-inch, 8-inch, 9.2-inch and 10.5-inch howitzers ; Lewis machine guns for aeroplane work.
+  [12](F) Q: What is a howitzer?
+         A: Its prototype is the ancient ballista of the Romans, a machine which hurled great stones in a mighty arc through the air, so that, vaulting the defending walls, they fell on the soldiers behind. That is to say, the attack came from above, whilst that of the catapult, the forerunner of the modern gun, came from the side. The howitzer of today is really a development of the mortar. It is a short piece of ordnance, designed, like the old ballista, to throw a heavy projectile so high into the air that it can fall from above on objects behind cover, which would be quite safe from the ordinary high-velocity gun.
+  [13](F) Q: Does it require a heavy charge?
+         A: A comparatively small charge is needed, just enough to propel a huge shell through the air. It is not the speed of the shell which does the damage, but the bursting of the large amount of high explosive in the shell itself. As all a howitzer need to do is to give a great shell a toss into the air, so to speak, it does not need to be a long or very powerful weapon, compared to a field or naval gun, which latter weapon must actually drive its projectile almost straight to its target.
+  [14](F) Q: How big is a howitzer?
+         A: The latest German ones are no less than 16.5 inches, inside diameter. These guns are, of course, rifled, and load at the breech. We get some idea of the difference between howitzers and guns by comparing the two British six-inch weapons. The six-inch howitzer fires a steel shell weighing 122 lbs., including a lyddite bursting charge of 19 lbs., while the six-inch gun has a 100-lb. shell, and a 10-lb. lyddite bursting charge. The howitzer weighs 30 cwts., the gun 7 tons; the former is 7 feet 10 inches long, the latter 23 feet 3 inches.
+
+[chemistry window 55]
+  RAW: 
+  CONTEXT: Q: What is belladonine?
+           A: It is obtained from the belladonna, and consists of colourless, rectangular, prismatic crystals, having an odour resembling that of ammonia.
+  [0](F) Q: What is daturia or daturine?
+         A: It is the principle obtained from the datura stramonium.
+  [1](F) Q: What is conina or coneine?
+         A: It is an alkaline principle which exists in all parts of the hemlock, (conium maculatum,) being very poisonous.
+  [2](F) Q: What is picrotoxin or picrotoxine?
+         A: It is an extremely poisonous principle existing in the Cocculus indicus.
+  [3](F) Q: What is antiaria or antiarien?
+         A: It is the active principle of the deadly upas poison.
+  [4](F) Q: What are some bases obtained from the oil of mustard?
+         A: Thiasinnamina obtained by the action of strong ammonia upon the oil, and purified by distillation; it is a crystalline substance, its formula being C H N S. Sinnamina, obtained from the latter by digesting with moist hydrated protoxide of lead till all the sulphur is removed, then subjecting the residue first to water, then to alcohol, and evaporating the solution thus obtained. The supposed formula being C H N. And sinapine, obtained by depriving the oil of mustard of its sulphur, by means of baryta or oxide of lead, having the formula C H12 N2 O2.
+  [5](F) Q: What is salicine?
+         A: It is a neutral organic principle, existing in the bark and leaves of bitter willows and in that of some species of poplar.
+  [6](F) Q: What are ethers?
+         A: They are peculiar inflammable liquids resulting from the decomposition of alcohol.
+  [7](F) Q: How are ethers obtained?
+         A: By the action of acids on alcohol.
+  [8](F) Q: Do the different acids all operate upon the same principle?
+         A: No. Sulphuric acid abstracts water from the alcohol, chlorohydric acid substitutes a volume of acid vapour for the water, while nitric and acetic acid combine with alcohol.
+  [9](F) Q: What properties characterize the ethers?
+         A: They have a fragrant odour, affecting the animal nerves powerfully when inhaled, a stimulating taste, but little soluble in water, and highly susceptible of union with alcohol, essential oils and resins, are capable of distillation and especially distinguished from alcohol by their very inferior miscibility with water.
+  [10](F) Q: How are ethers divided?
+         A: Into ethylic ethers or those containing ethyl, and into methylic ethers, or those containing methyl.
+  [11](F) Q: What are the most important of the ethylic ethers?
+         A: Common ether or oxide of ethyl, nitric or nitrous ether, the hyponitrite of the oxide of ethyl.
+  [12](F) Q: How is the oxide of ethyl obtained?
+         A: By distilling equal weights of alcohol and sulphuric acid together until the appearance of white fumes.
+  [13](F) Q: What happens if the heat be continued?
+         A: Sulphurous acid and carbon are evolved, and an oily substance called etherial oil, or oil of wine passes into the receiver.
+  [14](F) Q: How is the formation of common ether from alcohol explained?
+         A: In consequence of the strong affinity of sulphuric acid for water, it displaces a portion of the latter from the alcohol, so that the remaining elements form ether. For the conversion of alcohol into ether requires but the removal of an atom of water.
+

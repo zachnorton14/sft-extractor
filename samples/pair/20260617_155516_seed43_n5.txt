@@ -1,0 +1,193 @@
+model: claude-haiku-4-5
+seed:  43
+n:     5
+
+--- SYSTEM PROMPT ---
+You receive Q&A pairs from a pre-1930s text, optionally preceded by one CONTEXT pair.
+For each pair [0]..[N], output whether its question depends on the immediately preceding pair.
+
+"Depends" means the question uses a pronoun (it, he, she, they), demonstrative (this, that, so called),
+or a specific term quoted from the prior answer — and cannot be understood without it.
+
+deps[0] = does [0] depend on the CONTEXT pair? (false if no context)
+deps[i] = does [i] depend on [i-1]?
+
+Example:
+CONTEXT: Q: What did Henry IV do? A: He invaded France and won at Agincourt.
+[0] Q: What was the result?   → true  ("the result" references the invasion)
+[1] Q: What is a monarchy?    → false (new topic)
+[2] Q: Why so called?         → true  ("so called" references "monarchy" from [1])
+
+Output JSON only: {"deps": [true, false, true]}
+
+--- END SYSTEM PROMPT ---
+[common-core window 89]
+  CONTEXT: Q: When is a noun or pronoun in the same case as another?
+           A: When it denotes the same person or thing.
+  [0](F) Q: In how many cases are compound personal pronouns used?
+         A: Only in the nominative and objective cases, and then they retain the same form.
+  [1](F) Q: Decline who, which, what, and that?
+         A: Nominative who, possessive whose, objective whom; which and what have the same form in the nominative and objective, but borrow whose for their possessive. That is not declined.
+  [2](F) Q: When may that have two cases?
+         A: When it is a relative, and equivalent to 'that which'.
+  [3](F) Q: What is declension?
+         A: A regular arrangement of the grammatical properties of a noun or pronoun.
+  [4](F) Q: How are the articles the, a, and an used?
+         A: The is used to point out a particular one, object or class; a or an, to show that no particular one of a class is meant.
+  [5](F) Q: Why are both a and an called the indefinite article?
+         A: Because they have the same meaning. A is used when the next word begins with a consonant sound; an, when the next word begins with a vowel sound.
+  [6](F) Q: What is an adjective?
+         A: A word used to qualify or limit the meaning of a noun or pronoun.
+  [7](F) Q: How are the adjectives divided?
+         A: Into descriptive and definitive.
+  [8](F) Q: Into what smaller classes are adjectives divided?
+         A: Into common, proper, numeral, pronominal, participial and compound.
+  [9](F) Q: What is a participial adjective?
+         A: A participle used as an adjective.
+  [10](F) Q: What is a compound adjective?
+         A: A compound word used as an adjective.
+  [11](F) Q: What is a numeral adjective?
+         A: One that expresses number.
+  [12](F) Q: How are the numeral adjectives divided?
+         A: Into cardinal, ordinal, multiplicative, and indefinite.
+  [13](F) Q: What is a pronominal adjective?
+         A: One sometimes used as a pronoun.
+  [14](F) Q: Into what classes are pronominal adjectives divided?
+         A: The distributive, the demonstrative and the indefinite.
+
+[brewers-guide window 96]
+  CONTEXT: Q: Why then are not whole rivers frozen (layer by layer) till they become solid ice?
+           A: Because water is so slow a conductor, that our frosts never continue long enough to convert a whole river into a solid mass of ice.
+  [0](F) Q: Why does not running water freeze so fast as still water?
+         A: 1st—Because the motion of the current dissolves the crystals as fast as they are formed; and 2ndly—The heat of the under surface is more freely distributed to the upper surface by the rolling water.
+  [1](F) Q: When running water is frozen, why is the ice generally very rough?
+         A: Because little flakes of ice are first formed and carried down the stream, till they meet some obstacle to stop them; other flakes of ice (impinging against them) are arrested in like manner; and the edges of the different flakes overlapping each other, make the surface rough.
+  [2](F) Q: Why do some parts of a river freeze less than others?
+         A: Because springs issue from the bottom, and (as they bubble upwards) thaw the ice, or make it thin.
+  [3](F) Q: When persons fall into a river in winter time, why does the water feel remarkably warm?
+         A: Because the frosty air is at least 10 or 12 degrees colder than the water. (The water below the surface is at least 42°; but the air 32°, or even less.)
+  [4](F) Q: Why is shallow water frozen quicker than deep water?
+         A: Because (as the whole volume of water must be cooled to 42 degrees before the surface can be frozen) it will take a longer time to cool down a deep bed of water than a shallow one.
+  [5](F) Q: Why is sea-water rarely frozen?
+         A: 1st—Because the mass of water is so great that it requires a very long time to cool the whole volume down to 42 degrees: 2dly—The ebb and flow of the sea interfere with the cooling influence of the air: and 3dly—Salt never freezes till the surface is cooled down at least 25 degrees below the freezing point.
+  [6](F) Q: Why do some lakes rarely if ever freeze?
+         A: 1st—Because they are very deep: 2ndly—Because their water is supplied by springs, which bubble from the bottom.
+  [7](F) Q: Why does the depth of the water retard its freezing?
+         A: As the whole volume of water must be reduced to 39 degrees before the surface will freeze, the deeper the water, the longer it will be before the whole volume is thus reduced.
+  [8](F) Q: Why do springs at the bottom of a lake prevent its freezing?
+         A: Because they keep continually sending forth fresh water, which prevents the lake from being reduced to the necessary degree of coldness.
+  [9](F) Q: Why is it colder in a thaw than in a frost?
+         A: When frozen water is thawed, it absorbs heat from the air and objects around to melt its ice, in consequence of which the cold is greatly increased.
+  [10](F) Q: Why is it warmer in a frost than in a thaw?
+         A: When water freezes it gives out its latent heat, in order that it may be converted into solid ice; and as much heat is liberated from the water into the air, we feel warmer.
+  [11](F) Q: Why does salt dissolve ice?
+         A: Water freezes at 32°, but salt and water will not freeze till the air is 25° colder: if, therefore, salt be added to frozen water it becomes liquid, unless the thermometer stands below 7°, (which it never does in our island).
+  [12](F) Q: Will any thing do instead of salt?
+         A: Yes; any acid, such as sulphuric, nitric, &c.
+  [13](F) Q: Why are salt and snow mixed together, colder than snow?
+         A: When salt is mixed with snow, it dissolves the crystals into a fluid; and whenever a solid is converted to a liquid, heat is absorbed, and the cold made more intense.
+  [14](F) Q: Why does frost make the earth crack?
+         A: During the warm weather the earth absorbed abundance of moisture, which the winter freezes: and (as water expands by frost) the expanding water thrusts the particles of earth apart from each other, and leaves a chink or crack behind.
+
+[grammar window 37]
+  CONTEXT: Q: What are other contractions that must be avoided?
+           A: Ain't and Hain't.
+  [0](F) Q: Why are these contractions objectionable?
+         A: Because they are characteristic of the illiterate.
+  [1](F) Q: What is a wrong use of them?
+         A: Its substitution for those.
+  [2](F) Q: What is an example?
+         A: I saw them fellers runnin'.
+  [3](F) Q: What is to be noted?
+         A: That them must never be used to qualify a noun.
+  [4](F) Q: When is those sometimes wrongly used for that?
+         A: Before a singular noun in a phrase containing a plural idea.
+  [5](F) Q: What is an example?
+         A: A careless speaker says, those kind of men, when he should say, that kind of men.
+  [6](F) Q: What is a common error in connection with the word real?
+         A: It is used instead of really before an adjective.
+  [7](F) Q: What is an example?
+         A: A real good man.
+  [8](F) Q: What is the correct form?
+         A: A really good man.
+  [9](F) Q: What is to be noted concerning the preposition between?
+         A: It is properly used in reference to only two persons or things.
+  [10](F) Q: What is the corresponding preposition for more than two?
+         A: Among.
+  [11](F) Q: What is an example of a proper phrase?
+         A: Between you and me.
+  [12](F) Q: What is an example of an improper phrase?
+         A: Between us three.
+  [13](F) Q: How should this be expressed?
+         A: Among us three.
+  [14](F) Q: What additional fact is to be noted in the phrase: between you and me?
+         A: The pronoun me is in the objective case as an object of the preposition.
+
+[electricity window 49]
+  CONTEXT: Q: Is there any risk in getting the motor starting box connected improperly?
+           A: If the heavy wires from the motor are mixed, as shown in the figure, the field circuit is shunted around the armature when starting, instead of being connected across the line. The result is that the field is very weak when it should be strong, and the motor will require an excessive current for starting and may blow the fuses or burn out the motor. The condition is shown more simply in the second sketch.
+  [0](F) Q: How can shunt motors be started and stopped safely from a distant point?
+         A: A common method is to place the starting rheostat and the main switch at the point desired and to run the two main wires and the field wires from that point to the motor. This often requires considerable extra length of wire, which means additional cost in wiring and additional loss on the line.
+  [1](F) Q: How can shunt motors be started automatically so that the operator need only close or open a single switch?
+         A: Several devices are used. At the left of the figure is one suitable for small motors; when the main switch is closed, current passes through the field coils and thence through a starting solenoid a, which then attracts the iron plunger C, which in turn raises the shoe EF so as to make contact with one after another of the rheostat contacts B ; the solenoid thus closes the armature circuit through the starting rheostat and then cuts out the resistance a step at a time ; by means of the dash pot d and valve e, the motion may be made fast or slow. For motors of 25 hp and larger, a master solenoid energizes a series of electromagnetically operated switches one after the other, and these in turn cut out the starting resistance one step at a time ; the main circuit is closed and opened by a solenoid circuit-maker-and-breaker having magnetic blow-outs for disrupting the arcs.
+  [2](F) Q: How is the magnetisation of a shunt motor maintained after the line current is cut off?
+         A: The magnetizing current is caused by the E.M.F. due to the rotation of the armature in the magnetic field. When the motor is driven by current from the line, an E.M.F. is generated in its armature just as in a dynamo. When the machine is running as a motor, this E.M.F. is in a direction tending to prevent current from passing through the armature from the line. When the line current is cut off for any reason, the motor E.M.F. sends current through the field coil in the same direction as the previous current from the line, as indicated by the arrows in the figure at the right. (The direction of the currents from the line is shown in the figure at the left.) The motor then acts as a shunt dynamo, exciting its own field until the speed drops off. (See No. 1336.)
+  [3](F) Q: Is the motor E.M.F. of any practical importance?
+         A: It is of great importance in the operation of the motor. Early inventors tried to get rid of it, but it was soon found that the motor E.M.F. was necessary for the efficient operation of an electric motor.
+  [4](F) Q: Why did inventors try to get rid of motor E.M.F.?
+         A: Because it limits the current through the motor. They reasoned that the power delivered by the motor was proportional to the current taken. But they found that the motor E.M.F. was in such a direction as to oppose the current (for which reason it is often called a "counter electromotive force," or "C.E.M.F."), and so they tried to make motors that would not develop much C.E.M.F. Such motors were found to take more current, as was expected, but they did not develop the desired power.
+  [5](F) Q: Does Ohm's law apply to the current taken by a motor?
+         A: It does when properly applied. The current through the armature of a shunt motor equals the difference between line E.M.F. and C.E.M.F. divided by the resistance of the motor armature (including resistance of brushes and commutator). The current through the field of such a motor is simply the pressure divided by resistance.
+  [6](F) Q: What is meant by "effective magnetic lines of force"?
+         A: In a dynamo or motor the brushes are so set, or the magnetic field is so distributed, that the E.M.F. in some of the wires is in the opposite direction to that in the rest. Sometimes this is to diminish the sparking at the brushes, or is due to incorrect design or to improper setting of the brushes. For this reason the effective number of wires or of magnetic lines is less than the total. We may consider either that not all the wires are effective, or that not all the lines are effective.
+  [7](F) Q: Does the power delivered by a motor increase as the C.E.M.F. increases?
+         A: The two vary inversely so long as the C.E.M.F. is more than half of the line E.M.F. This is because the current is controlled by the C.E.M.F., being equal to the difference between the line voltage and the C.E.M.F. divided by the resistance of the armature circuit. The power equals the product of current by C.E.M.F., and it follows that the power increases as the C.E.M.F. decreases, so long as the difference between the two E.M.F.'s increases faster than the C.E.M.F. decreases.
+  [8](F) Q: What is meant by the efficiency of a motor?
+         A: The efficiency of any machine is the ratio of the power delivered to that received. The total power given out by a direct-current motor is the product of the armature current by the C.E.M.F. The net power delivered is something less than this by an amount equal to the heat loss in the armature core plus the friction at the brushes, bearings and against the air. The total power received by the motor equals the sum of the electrical energies given to the armature and to the field. We may distinguish between the electrical and the commercial efficiency of a motor.
+  [9](F) Q: What is meant by the electrical efficiency of a motor?
+         A: The electrical efficiency of a motor is the ratio of the product of armature current by C.E.M.F. to the total electrical energy supplied to the motor. Neglecting the small amount taken by the field we may say that the electrical efficiency is the ratio of the energies in the armature ; that is, the product of armature current by total voltage across the armature divided by the product of the armature current by the C.E.M.F. Since the current is the same in numerator and denominator, we may cancel it and say that the electrical efficiency is the total voltage divided by the C.E.M.F. (The above refers only to direct-current motors, for in A. C. motors the C.E.M.F. may be smaller or larger than the line voltage, and the product must be multiplied by a factor depending upon the difference of phase between current and pressure. (See also No. 1357.)
+  [10](F) Q: What is meant by the commercial efficiency of a motor?
+         A: The commercial efficiency is the ratio of the power delivered from the pulley to the total electrical energy received.
+  [11](F) Q: How can the C.E.M.F. be measured?
+         A: It can not be measured directly. It can be calculated by taking the difference between the total pressure at the terminals of the armature and the product of armature current by the resistance of the armature.
+  [12](F) Q: How does the C.E.M.F. affect the starting of a motor?
+         A: When a motor is standing still, there is no C.E.M.F. due to armature rotation, and the current taken at first is governed principally by the resistance of the circuit. If the motor is series wound, there is a transient C.E.M.F. due to self-induction for a few seconds during the rapid building up of the magnetic field. If the motor is shunt wound, self-induction delays the current through the field coil, but that through the armature is not impeded much from such cause. As soon as the armature begins to rotate, the motor E.M.F. begins to develop and the resistance may be cut out gradually from the starting box as the armature comes up to speed. Thus C.E.M.F. gradually replaces ohmic drop in limiting the current as the motor starts.
+  [13](F) Q: What governs the current taken when the motor is running, at full speed?
+         A: At a given load and speed, the current is governed by the C.E.M.F. and the resistance of the armature circuit (neglecting the small current through the field), and the pull on the belt is just enough to turn the shaft at the right speed. If an additional load is put on, the pull on the armature for an instant is not large enough, and it begins to slow down; this reduces the C.E.M.F., which allows greater current to pass and increase the pull on the armature and so bring the armature up toward its original speed. If the voltage on the line remains constant and if the magnetic field of the motor is not changed, the armature will run somewhat slower as the load increases.
+  [14](F) Q: Does the resistance of the armature have much to do with the amount the speed slows down?
+         A: The less the resistance of the armature, the more nearly the C.E.M.F. equals the line voltage, and the less reduction of C.E.M.F. necessary to allow the greater current to pass. Hence the speed of the motor will be more constant for varying loads as the resistance of the armature is less.
+
+[advanced-questions window 1]
+  CONTEXT: Q: When was the "Revival of Learning"?
+           A: A new literature began to spring up in French, Spanish, Italian, and German about the time of the crusades (1096-1192), The first language to develop a new literature was the Romance of Southern France. The romance languages are the French, Spanish, and Italian. "While Europe however was sunk in the grossest ignorance, the Saracens were actively engaged in the cultivation of science, learning, and the arts. "The schools of Cordova vied with those of Bagdad in the collection of books and the encouragement of science, and from them proceeded nearly all that was original in the medicine, physics, and metaphysics of Europe during the middle ages."
+  [0](F) Q: What Universities were founded?
+         A: The University of Oxford in England is said to have been founded by King Alfred (ninth century), but it was not a flourishing seat of learning till the eleventh century. In the year 1201, it contained 3,000 scholars. The University of Paris became famous at the beginning of the twelfth century, under the teachings of Abelard. The University of Bologna had a roll of 1,000 students in the twelfth century; while the University of Paris, in the fifteenth century, numbered 25,000 students. Cambridge was founded in the thirteenth century. The earliest German university was that of Prague, established in 1350.
+  [1](F) Q: Who were Roger Bacon and Albertus Magnus?
+         A: Bacon was an English monk who with Magnus began to investigate mathematical and scientific questions, in the thirteenth century. They made wonderful advances in true knowledge, but each had to pay the penalty of being in advance of his age, for they were both punished as magicians.
+  [2](F) Q: When was the beginning of Modern Literature?
+         A: A native literature had begun to spring up in the thirteenth and fourteenth centuries. The principal specimens are the German collection known as the Nibelungen Lied, the Spanish romance of the Cid, and the cycle of poetry relating to the British Arthur and his Knights of the Round Table. The real beginnings of our modern literature are the works of Dante, 1265-1321, and Chaucer, 1328-1400.
+  [3](F) Q: What are Chaucer's works?
+         A: The principal one is the Canterbury Tales. It is a collection of admirable daguerreotypes of the various classes of English society, and consists of twenty-four stories supposed to have been told by a company of pilgrims on their way to Canterbury. The others are the Romaunt of the Rose, Court of Love, Chaucer's Dream, Book of the Duchesse, Legend of Good Women, etc. Extract: — " And the rivere that I sat upon, It made such a noise as it ron, Accordaunt with the birdes armony, Methought it was the beste melody That mighte ben y heard of any man." Cuckow and the Nightingale.
+  [4](F) Q: What are the nine periods of English literature?
+         A: I. The Age of Chaucer, 1350-1400. II. The Age of Caxton, 1400-1550. III. The Elizabethan Age, 1550-1625. IV. The Age of Milton, 1625-1660. V. The Age of the Restoration, 1660-1700. VI. The Age of Queen Anne, 1700-1750. VII. The Age of Johnson, 1750-1800. VIII. The Age of Scott, 1800-1830. IX. The Victorian Age, 1830-1882.
+  [5](F) Q: Name other writers of Chaucer's age.
+         A: — (1) William Langland (1332-1400), Piers the Plowman. (2) John Gower— "Moral Gower," Chaucer calls him— (1320-1408) was the author of three great works, Speculum Meditantis, in Norman French; Vox Clamantis, in Latin; and Confessio Amantis (A Lover's Confession), in English. English Prose Literature begins with (3) Sir John Mandeville (1300-1371), author of a book of Travels. (4) John Barbour (1316-1396) was the great Scottish poet of this age.
+  [6](F) Q: Who were the writers of Caxton's age?
+         A: William Dunbar (1465-1520), The Dance of the Seven Deadly Sins. James I. (1394-1437), wrote a collection of love verses under the title of the King's Quhair. (i. e. Quire or Book). John Skelton (1460-1529), Colin Clout, etc. Sir Thomas Moore (1503-1542), author of Utopia, a philosophical romance, written in Latin, Wyatt, Blind Harry, Surrey, Tyndale and Coverdale.
+  [7](F) Q: What was the Elizabethan age?
+         A: The most glorious era of English literature. It is renowned for its three writers — Spenser, Shakespeare* and Bacon — either of whom would have made an age illustrious. The first name is that of George Gascoigne (1530-1577) one of the founders of the great English school of the drama, "Steel Glass," "Fruits of War." Thomas Sackville (1536-1608), "A Mirrour for Magistrates." Edmund Spenser (1533-1599) "The Faerie Queene," "Shepherd's Calendar" (a series of pastorals similar to Virgil's Bucolics), and "Mother Hubbard's Tale."
+  [8](F) Q: Who has been called the "myriad-minded"?
+         A: William Shakespeare, the greatest dramatist, and probably the greatest genius of all time, (1564-1616). His dramas are thirty-seven in number. Othello, Lear, and Hamlet are distinctly tragedies. As You Like It, Merry Wives of Windsor, Taming of the Shrew and Twelfth Night are comedies, while the rest are termed Historical Plays. Venus and Adonis, "the first heir of his invention," was published in 1593. Extracts: — "Sweet are the uses of adversity." — "As You Like It," Act I, Sc. 3.— Duke. —"We are such stuff as dreams are made of." — "Tempest," Act IV, Sc. 1.— Prospero. "Misery acquaints a man with strange bed-fellows." — "Tempest," Act II, Sc. 2.— Trinculo. "And the imperial vot'ress passed on In maiden meditation, fancy free," "Midsummer Night's Dream." Act II, Sc. 1. Oberon. "I'll put a girdle round the earth in forty minutes." Same as above. — Puck. "Then must you speak of one that lov'd not wisely, but too well." — Othello, Act V, Sc. 2.
+  [9](F) Q: Who was the author of the "Novum Organum"?
+         A: Sir Francis Bacon, known as Lord Bacon, (1561-1626). This was the second part of his Instauratio Magna, a work to consist of six books, three of which only were finished, a brief extract being given of the fourth. His Essays are the most popular. Selections:— 'Knowledge is power.' 'A little philosophy inclineth a man's mind to atheism, but depth in philosophy bringeth men's minds about to religion.' Compare this with Pope's, "A little knowledge is a dangerous thing."
+  [10](F) Q: Who were the dramatic poets of this age?
+         A: Christopher Marlowe (1564-1593), "Tamburlaine," and "Faustus." Rare Ben Jonson (1573-1637), second to Shakespeare only, "Every Man Out of His Humor" "Alchemist" "Catiline" "Epicene, or the Silent Woman," "Fall of Sejanus," "Tale of a Tub," "Masques," etc. Beaumont (1586-1615) and Fletcher (1576-1625), "who worked together with so intimate a union that it is impossible, in the works composed before their friendship was dissolved by death, to separate their contributions," were the authors of "Maid's Tragedy," "A King and No King" "Laws of Candy," "Beggar's Bush," "Rule a Wife and Have a Wife," "Spanish Curate," etc. Philip Massinger (1584-1640), "Fatal Dowry," "Roman Actor" "Maid of Honor" "Unnatural Combat," "New Way to Pay Old Debts," etc. John Ford (1586-1639), "Witch of Edmonton," "Lover's Melancholy," "Love's Sacrifice," etc. John Webster, "Duchess of Malfy" "Guise, or the Massacre of France," "White Devil," etc.
+  [11](F) Q: What other great writers were there in the sixteenth century?
+         A: In Italy, the historians Guicciardini (1482-1540); Machiavelli (1469-1527); the poets Ariosto (1474-1533), author of "Orlando Furioso," and Vittorio Colonna (1490-1547); and Tasso, who celebrated the First Crusade in his "Jerusalem Delivered." Cervantes (1547-1616) was a renowned Spanish writer. His immortal work is "Don Quixote." Rabelais (1483-1533), a famous French satirist, was a priest, and wrote a book called "Life of Gargantua and Pantagruel." Montaigne (1533-1592) was a judge and mayor of Bordeaux, the author of "Essays." Camoens (1524-1579), a Portuguese poet, is known principally from his great work called "Lusiad," which celebrates the chief actors in, and events of, the history of Portugal.
+  [12](F) Q: Who is the author of "Paradise Lost"?
+         A: John Milton (1608-1674). His principal poetic works are "Paradise Regained," "Comus," "Lycidas," "L'Allegro," and "Il Penseroso." His prose writings are too numerous to mention. The writers of his age are the so-called metaphysical poets, and theologians.
+  [13](F) Q: Who is the greatest author of the "Restoration Age"?
+         A: John Dryden (1631-1700), who wrote dramas, poems, and essays, "Duke of Guise," "Wild Gallant," "Rival Ladies," "Hind and Panther," "Ode on St. Cecilia's Day," "All for Love," and a "Translation of Virgil's Aeneid." Selections— "Men are but children of a larger growth," "Great wits are sure to madness near allied, And thin partitions do their bounds divide." "Three poets in three distant ages born, Greece, Italy and England did adorn."
+  [14](F) Q: Who were the contemporaries of Dryden?
+         A: Locke, Newton, Boyle, Temple, Evelyn, Bunyan, L'Estrange, and Samuel Pepys (1682-1703), the author of a "Diary," which is a complete scandalous chronicle of a society so gay and debauched that the simple description of what took place is equal to the most dramatic picture of the novelist.
+

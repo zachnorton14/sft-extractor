@@ -1,0 +1,53 @@
+stage: paired
+seed:  43
+n:     10
+
+[1001-questions--631]
+  Q: What was the Commune?
+  A: In 1871 the Parisian rabble inaugurated a second reign of terror. Another siege of Paris followed more disastrous than the first, and the Tuileries and many of the finest public buildings were destroyed.
+
+[civil-war--754]
+  Q: Could the Central Powers and Russia exist by themselves?
+  A: There is one great staple of modern commercial life which they could not produce within their own territories in sufficient amount, whatever else they might manage to do. They depend on the outer world for enough cotton. At present their only adequate supply comes from us and from Egypt, with some from India. The trans-Caucasus, Russian Central Asia and Turkey put together produce only about one-sixteenth of the production of our southern States. While the Turkish production seems to be increasing steadily, it is obvious that the supply would fall ever so far short of requirements for many years to come.
+
+[new-york-bar--149]
+  Q: The surrogate is about to take certain action in a will contest which will be prejudicial to your client. You desire to prevent the action being taken. What proceedings would you take?
+  A: Apply for a writ of prohibition. This writ is used to arrest judicial action. It is a writ directed to some inferior court restraining an abuse of jurisdiction. See section 2091 of the Code, et seq.
+
+[seeleys--250]
+  Q: What is Trade or Commercial Discount, and what are its terms?
+  A: Commercial discount is a deduction from the list price of goods. The list, or asking price, is the price from which discounts are allowed. The discounts are the deductions from the list price. There may be one or more successive discounts, and they are expressed as so many percent off or so many of. The net price is the price paid, or the cost price.
+
+[brewers-guide--412]
+  Q: Why do persons who ascend in balloons feel pain in their eyes, ears and chest?
+  A: Because the air in the upper regions is more rare than the air in their bodies; and (till the equilibrium is restored) great pain is felt in all the more sensitive parts of the body.
+
+[constitution--0] [multi-turn]
+  Q: In what country do you live?
+  A: In the United States of America.
+  Q: Why is this country called the United States?
+  A: Because it is made up of a number of States which were once separate, but afterwards agreed to unite together.
+  Q: What do you mean by a State?
+  A: I mean any district of country whose people are all under one government.
+  Q: Had then the different States which united together, each a government of its own?
+  A: Yes; but they agreed to put themselves all under one general government.
+  Q: Why did they do this?
+  A: Because it would promote their general welfare.
+
+[common-core--757]
+  Q: What political relations, of a strained character, exist between Russia and England?
+  A: England is fearful of the Russian advances in Asia, and jealously watches every movement.
+
+[mythology--142] [multi-turn]
+  Q: How was the legend of Heracles treated by the sophist Prodicus?
+  A: As illustrating the victory of righteousness over iniquity.
+  Q: How does he show this?
+  A: He represents Heracles as accosted by two maidens, one clad in a seemly robe of pure white, the other scantily clothed and with a flushed face and restless eyes. The latter, who is called Kakia, or Vice, tempts him with the offer of ease and pleasures; the other (Arete, or Virtue) bids him toil manfully for a future and perhaps distant recompense. Heracles follows the counsel of Arete, and begins his toils with a brave heart.
+
+[new-york-bar--186]
+  Q: A is indebted to B in the sum of $1,000. B agrees that if A will pay him $750, he will receipt him in full. A pays the money, and B refuses to give the receipt, and sues A. Can he recover?
+  A: Yes. There was no consideration for B's promise to give the receipt, as B was already legally bound to pay the entire sum. In order to have consideration, there must be the waiver of a legal right; doing what one is already legally bound to do can constitute no consideration. Where, as here, the claim is liquidated, the mere acceptance of a part with the promise to discharge the whole, is not enough, for there is no new consideration. Bunge v. Koop, 48 N. Y. 225; Nassoy v. Tomlinson, 148 N. Y. 326.
+
+[seeleys--746]
+  Q: What should be its objects?
+  A: Its objects should be to find out what the pupil knows, to fix more firmly his knowledge, to help him to understand more clearly what he has already been taught, and to impart new knowledge.

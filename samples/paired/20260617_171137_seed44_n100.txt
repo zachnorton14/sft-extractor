@@ -1,0 +1,467 @@
+stage: paired
+seed:  44
+n:     100
+
+[common-core--1390]
+  Q: A gentleman has a garden 400 feet long and 300 feet wide which he would raise 9 inches higher by means of the earth to be dug out of a ditch that goes around it. To what depth must the ditch be dug, supposing its breadth to be everywhere 6 feet?
+  A: Ans. 10.9.
+
+[engineering--149]
+  Q: What are some of the principal fuels used in the production of steam?
+  A: Coal, coke, wood, petroleum, natural gas, peat, and vegetable refuse of various kinds.
+
+[engineering--508]
+  Q: How is the tensile strength affected by heat?
+  A: It is diminished, disappearing entirely at about 1300° Fahr.
+
+[new-york-bar--238]
+  Q: A does certain painting for the X corporation, which afterwards becomes insolvent. A, not having been paid for his work, sues B, one of the stockholders. Can the action be maintained? If you had been A's attorney, what would you have done?
+  A: The action cannot be maintained without first exhausting the remedies against the corporation, and otherwise complying with sec. 54 of the Stock Corp. Law of 1892, which is in part as follows : "The stockholders of every stock corporation shall jointly and severally be personally liable for all debts due and owing to any of its laborers, servants or employees, other than contractors, for services performed by them for such corporation. Before such laborer, servant or employee, shall charge such shareholder for such services, he shall give him notice in writing within thirty days after the termination of such services that he intends to hold him liable, and shall commence an action therefor within thirty days after the return of an execution unsatisfied against the corporation upon a judgment recovered against it for such services." Sec. 55 provides that : "No action shall be brought against a stockholder for a debt of the corporation, until judgment therefor has been recovered against the corporation, and an execution thereon has been returned unsatisfied in whole or in part, and the amount due on such execution shall be the amount recoverable with costs against the stockholder."
+
+[botany--118] [multi-turn]
+  Q: What are the principal substances of which plants are composed?
+  A: They are: 1. Nitrogenous substances. 2. Nonnitrogenous, according as they contain the element nitrogen or not.
+  Q: Mention the principal nitrogenous substances?
+  A: They are: 1. Protoplasm. 2. Proteids. 3. Amides. 4. Alkaloids and some coloring matters.
+
+[brewers-guide--948]
+  Q: In what months is the barometer lowest?
+  A: In November and February; then in October, July, December, and January.
+
+[common-core--915]
+  Q: What objects are to be aimed at in the study and teaching of reading?
+  A: The acquisition of great knowledge. The acquisition of a love for reading. The improvement of the memory, judgment and taste. Improvement of the social faculties. Improvement of the health. A graceful carriage and address. A preparation for public life. The prevention and correction of improprieties.
+
+[chemistry--512]
+  Q: What is a salt defined to be?
+  A: A soluble compound, (containing one or more acid or corrosive ingredients,) the qualities of the ingredients being either neutralized or modified. — Hare.
+
+[civil-war--811]
+  Q: Why did Japan enter the European war?
+  A: Japan explained her entry into the war by declaring that her treaty with Great Britain made it incumbent on her to do so. This was the Anglo-Japanese Treaty of 1902, made before the Russo-Japanese War. Its direct object, according to its clauses, was the maintenance of the situation then existent in Korea and Manchuria. It stipulated that should either of the parties to the treaty become involved in war with a single power, the other party should maintain "benevolent neutrality." If attacked by two powers, the other was bound to come to its aid. In 1905 the treaty was extended to protect British interests in India and Afghanistan, while Japan got a free hand in Korea.
+
+[1001-questions--476]
+  Q: When was the Kingdom restored?
+  A: May, 1660 A. D.
+
+[chemistry--504]
+  Q: Where is cadmium found?
+  A: With the ores of zinc, from which it can be obtained by precipitating a solution of the ore in sulphuric acid by means of sulphydric acid.
+
+[familiar-things--21]
+  Q: Who were the Sicilians?
+  A: Inhabitants of Sicily, the largest island of the Mediterranean Sea, now a part of Italy, and separated from the mainland by the Strait of Messina.
+
+[1001-questions--144]
+  Q: What did the Shogun acquire in 1192?
+  A: The entire control of political affairs.
+
+[astronomy--190]
+  Q: Who discovered these moons?
+  A: Sir William Herschell discovered these two in 1789.
+
+[brewers-guide--621]
+  Q: Why is meat very subject to taint on a moon-light night?
+  A: In a bright moon-light night, meat radiates heat very freely; and is, therefore, soon covered with dew, which produces rapid decomposition.
+
+[seeleys--443]
+  Q: Which states of the Northern Section are especially noted for one or more of the following: wool, wheat, flax, corn, tobacco, dairy products, iron, coal and petroleum?
+  A: Ohio noted for wool and petroleum. Minnesota and North Dakota for wheat. The states of the Missouri basin produce much flax. Iowa produces more corn, oats, hay, and hogs than any other state. Kentucky and Virginia lead in the production of tobacco. New York and Iowa are noted for dairy products. Pennsylvania and Michigan produce the most iron, and Pennsylvania the most coal.
+
+[engineering--45]
+  Q: How can forces be conveniently represented so as to calculate the effect which they will produce on a body?
+  A: We represent each force by a line whose direction represents the direction of the force, and whose length is proportional to the amount of the force.
+
+[new-york-bar--28]
+  Q: John Doe, a gentleman, engages B as his agent to purchase a coach horse for him, and limits him strictly to the price of $5,000. B purchases a horse from C for the price of $6,000 on Doe's acceptance, and offers it to Doe, who refuses because of the price. B then sues C for $5,000 which he has paid C, who knew nothing of the limitation on B's agency. Can B recover?
+  A: Yes. It is very clear, that any one who proposes to deal with a special agent, has the right, in the first place, to know what authority he possesses and all limitations upon it. He deals with him at his peril, because he is bound to inquire into the nature and extent of the authority conferred. In this case, the sale was made conditional upon Doe's acceptance, and there was no fraud or concealment as Doe refused to accept; there was no sale, and B could recover back the amount paid. "The principal is not to be bound by the acts of the special agent, beyond what he is authorized, because he has not misled the party dealing with him, or enabled the agent to practice any deception; has never held the agent out as having any general authority whatever in the premises, and if the other party trusts without inquiry, he trusts to the good faith of the agent, and not to that of the principal." Story on Agency, sec. 125.
+
+[civil-war--1031]
+  Q: What was the vital problem before us when we entered war?
+  A: Newton D. Baker, Secretary of War, expressed it as follows in a statement made at the end of the first American war year: "Our task was to co-ordinate ManPower with Munition-Power and adapt both to what we may call Tonnage-Power in order to arrive at our final result — War-Power. "To realize our Man-Power program without upsetting our Munition-Power program and at the same time not let either get too far ahead of our Tonnage-Power, was the problem which we set about to solve. "The Selective Draft recommendations were submitted to Congress as representing the fairest, most economical and speedy method of raising our armies. Congress without delay recognized the wisdom of the measure and on May 18th the President signed the Selective Service Act. On June 5th, nearly ten million men between the ages of 21 and 31 years, registered for service. We were thus assured of an inexhaustible supply of men."
+
+[new-york-bar--105]
+  Q: Draw a summons in a divorce case.
+  A: Supreme Court, County of New York. John Brown, Plaintiff, against Mary Brown, Defendant. Action for a Divorce. To the above named Defendant : You are hereby summoned to answer the complaint in this action, and to serve a copy of your answer on the plaintiff's attorney within twenty days after the service of this summons, exclusive of the day of service ; and in case of your failure to appear or answer, judgment will be taken against you by default, for the relief demanded in the complaint. Dated, New York, May 1, 1902. Joseph Stoppy, Plaintiff's Attorney. Post-office address and office, No. 50 Wall St., Borough of Manhattan, New York City. For the form of summons, see sec. 418 of the Code of Civ. Pro. The special requirement in divorce cases, as to the form of the summons, is found in sec. 1774. It is there provided that final judgment shall not be rendered in favor of the plaintiff upon the defendant's default in appearing or pleading, unless the copy of the summons served contains legibly written or printed upon the face thereof, " Action to annul a marriage ; " " Action for a divorce ; " or " Action for a separation," as the case may be.
+
+[laborers--3] [multi-turn]
+  Q: What is his right to life?
+  A: The right to the means of living is indispensable to the right to life.
+  Q: What are the means of living?
+  A: Air, land, water, sunshine, and a voice in the management of any material thing which has not been created by individual or collective man.
+  Q: How can the means of living be justly enjoyed by all mankind so as not to impair, in the smallest degree, the rights of any individual?
+  A: By adopting a system of ownership, which when applied to the means of living, will not unjustly exclude anyone and will assure every person an equal opportunity to use the means of living as each sees fit, without abridging or interfering with the natural rights of anyone else.
+
+[common-core--897]
+  Q: Which are the five largest islands in the world?
+  A: Australia, Greenland, Borneo, New Guinea and Madagascar.
+
+[familiar-things--386]
+  Q: Who was the inventor of the telegraph in this country?
+  A: Samuel F.B. Morse, who was born at Charlestown, Mass., April 27, 1791. He began life as a painter, but did not give his whole attention to art--chemistry and experiments in electricity and galvanism claiming much of his time. He first conceived the idea of the telegraph in 1832, and exhibited his invention to Congress in 1837. He struggled on with scanty means, and was about to give up in despair when Congress appropriated $30,000 for an experimental line, which was opened on May 12, 1844, between Washington and Baltimore. Prof. Morse died in 1872, but not before he had reaped honors and fortune from his invention.
+
+[common-core--1333]
+  Q: What is equated time?
+  A: The date at which several debts may be paid at one time.
+
+[seeleys--306]
+  Q: What is the Binomial Theorem?
+  A: By the Binomial Theorem (discovered by Sir Isaac Newton), the sum or difference of any two quantities may be raised to any power. Its laws are as follows: I. The number of terms in the result is always one more than the exponent of the power. II. The exponent of the first term is the same as the exponent of the given power and decreases by one in each succeeding term. III. The exponent of the second term of the binomial, is one in the second term of the series and increases by one in each succeeding term. IV. The last term of the binomial does not appear in the first term of the series, and its first term does not appear in the last term of the series. V. The coëfficient of the first term is one, and the coëfficient of the second term is the same as the power. In the succeeding terms the coëfficient may be found by multiplying the coëfficient of the preceding term by the exponent of the leading letter and dividing the product by the number of the term. VI. When both terms are positive the signs will be positive. When the second term is negative, all the odd terms will be positive and all the even terms negative.
+
+[new-york-bar--69]
+  Q: A gives B his promissory note for good consideration, payable at the Mechanics Bank, Troy, N. Y. On the day of payment B goes to the bank and inquires if the note is paid. B does not protest the note, but goes to A's place of business, tells him that the note is not paid, and then and there demands payment of A. A refuses to pay. B brings suit on the note. Can he recover?
+  A: Judgment for B. It is not necessary to present the instrument, give notice of dishonor, or notice of protest in order to hold the maker liable. Sec. 130 of the Neg. Inst. Law provides as follows : " Presentment for payment is not necessary in order to charge the person primarily liable on the instrument ; but if the instrument is by its terms payable at a special place, and he is able and willing to pay it there at maturity, such ability and willingness are equivalent to a tender of payment on his part. But except as herein otherwise provided, presentment for payment is necessary in order to charge the drawer and indorsers." Protest is not necessary according to sec. 189, which is as follows : " Where any negotiable instrument has been dishonored, it may be protested for non-acceptance or non-payment, as the case may be ; but protest is not required except in the case of foreign bills of exchange." Notice of dishonor need not be given to the maker, but must be given to the drawer and indorsers in order to hold them liable. Sec. 160.
+
+[mythology--115] [multi-turn]
+  Q: What are the incidents of Apollo's journey to the Western Pytho?
+  A: Passing through many lands, he came to the fountain of Telphusa, where he wished to build himself a home ; but Telphusa, saying that her broad plain could give him no peaceful abodes urged him to go on to the more favoured land of Crisa. So Phoebus went on, and coming to Crisa, built himself a shrine beneath Mount Parnassus, and there slew the great dragon Pythoo, who nursed Typhaon, the child of Hera.
+  Q: What is this Python?
+  A: It is the great dragon or snake which appears in all solar legends. It is the Vritra of the Indian tale, the Echidna of the story of Heracles, the Sphinx in that of Oedipus, and the dragon Fafnir of the glistening heath in the tale of Sigurd.
+
+[common-core--40]
+  Q: Who were the first Spanish, French, English and Dutch discoverers?
+  A: Columbus was the first discoverer under Spanish auspices, John Verrazani the first under French, John Cabot the first under English, and Hudson the first under Dutch.
+
+[common-core--567]
+  Q: How many distinct races of men are there?
+  A: Five: Caucasian, Mongolian, American or Indian, African, and Malay.
+
+[advanced-questions--524]
+  Q: Why does heat expand and cold contract?
+  A: By the addition of heat, the molecules are urged into swifter motion, and, therefore pushed further apart, increasing the size of the body.
+
+[common-core--248] [multi-turn]
+  Q: What were some of the most important naval victories for the Americans in 1812?
+  A: The capture of the Guerriere by the Constitution, August 19; of the Frolic by the Wasp, October 18; of the Macedonian by the United States, October 25; and of the Java by the Constitution, December 29.
+  Q: What effect did these remarkable naval victories have upon the people?
+  A: They aroused great enthusiasm and inspired confidence. Enlistments became rapid, and the course of the government was generally approved. In the midst of these successes Madison was re-elected with but little opposition.
+
+[civil-war--699] [multi-turn]
+  Q: Who are the Cossacks?
+  A: Originally they were roving bands inhabiting what is now known as the Ukraine. Hunters and fishermen originally, the encroaching Turks and Tartars compelled them to take to arms to protect themselves. Later, becoming stronger, they carried the war into their Lithuanians and Poles enemies' country, and harried them, carried on, indeed, a war of extermination. Curiously enough, they borrowed their name from the lower ranks of Tartar soldiery called Kasaki, a word meaning freebooters. The success of their raids induced them to go further afield, and, in time, they became dangerous to the settled western lands they should have protected from Turkish inroads.
+  Q: Where did they come from originally?
+  A: When Lublin and Lithuania were incorporated in Poland, in the sixteenth century, many serfs migrated from these provinces to escape the heavy taxes and the cruel rule of the Polish nobles. They settled along the Dnieper, and spread, in time, eastwards to the Don. On the former river they set up a sort of commonwealth, nominally under Polish domination. However, the relations between the Cossacks and the Poles were often strained, and finally religious differences led to open fighting. The Poles were, and are, Roman Catholics, and the Cossacks profess the Orthodox religion. This, at first, led to the loss of all the privileges the Cossacks had enjoyed. But, later, leagued with their old enemies, the Tartars, they defeated the Poles and established a brief independence. Finally they and their lands were incorporated in Muscovy, and they have been Russian ever since.
+
+[investors--128]
+  Q: What does the sign d. mean?
+  A: It stands for an English penny; equal to about two American cents.
+
+[brewers-guide--659]
+  Q: Why is heat applied to the bottom, and not to the top of a kettle?
+  A: Because the heated water always ascends to the surface, heating the water through which it passes: if, therefore, heat were applied to the top of a vessel, the water below the surface would never be heated.
+
+[botany--42]
+  Q: What is a flower?
+  A: A flower is a portion of the stem or its branches in the higher plants, modified for the purpose of producing spores, i.e., reproductive cells.
+
+[engineering--1]
+  Q: For what is machinery used?
+  A: To make force available for practical purposes. Machinery does not create force, but transmits it, diffusing it, concentrating it, or changing its direction.
+
+[advanced-questions--466]
+  Q: How was the Carboniferous Period inaugurated?
+  A: By the formation of a conglomerate sandstone the Millstone Grit whose ledges often separate into huge blocks. Where a portion has been swept away during subsequent geologic changes, the remains present a striking resemblance to the streets and blocks of a ruined city. Several of these so-called "Rock cities" are situated in southwestern New York.
+
+[familiar-things--347]
+  Q: What does the word Nature signify?
+  A: In the above sense, the system of the universe; the creation, the works of God. By the kingdom of nature is meant the world and all things in it: nature is divided into three kingdoms, the animal, vegetable, and mineral.
+
+[astronomy--99]
+  Q: Is the moon a fine object in the telescope?
+  A: On account of its nearness, the telescope shows comparatively smooth stretches of surface, mountain ranges, gigantic, crater-like formations and craterlets, rills, rays, etc. (See figure 10.)
+
+[civil-war--490]
+  Q: How are our soldiers identified?
+  A: A "Statistical Division" with a foreign branch in Paris takes care of this. Every man in the Army, whether officer or private, is indexed by name, and the records filed in alphabetical order for immediate reference, should the names appear either in Army orders or casualty lists. With the description of each soldier is given the name of his next of kin with emergency address. Each soldier wears about his neck and underneath his clothing a small tag giving his name and company. The foreign branch of the Statistical Division has the fighting forces listed by regiments, as well as alphabetically. Whenever the names of soldiers figure in official dispatches, duplicate sets of records kept at Washington will afford quick reference.
+
+[civil-war--1234]
+  Q: How did the present Austrian Emperor succeed to the throne?
+  A: The Archduke Charles Francis Joseph became Charles I, Emperor of Austria and King of Hungary, on the death of his great-uncle, Emperor Francis Joseph, on November 21, 1916. He is the eldest son of the late Emperor's nephew, Otto, the younger brother of the Archduke Francis Ferdinand, murdered at Serajevo on June 28, 1914. Charles I married, in 1911, Princess Zita, of the Bourbon House of Parma, and has two sons. He received a democratic education in the public schools of Vienna, which shocked sticklers at etiquette of the Viennese Court, but which has secured him much popularity with his subjects. It is generally believed that, compared with the other Hapsburgs, his tendency is towards democratic reforms for Austria; but the clamoring demands of the divided elements in this patchwork Empire go far beyond such ideas, and his government, for example, has proclaimed the Czechoslovaks as traitors who would receive no mercy.
+
+[astronomy--313]
+  Q: Where is Cygnus, the Swan?
+  A: Cygnus is due east of Lyra; it is readily recognized by the great cross made by its brightest stars; 61 Cygni, a double star, and the apex of a small triangle in the northeast quarter of the cross, is one of our nearest neighbors; the light of this star is on the way 8.1 years before it reaches us; Cygnus culminates in September.
+
+[investors--261]
+  Q: What is non-assessable stock?
+  A: A stock that cannot be assessed. Ordinarily nowadays, stocks are issued in non-assessable form.
+
+[civil-war--813] [multi-turn]
+  Q: What was the Japanese-American Agreement?
+  A: On November 2, 1917, Viscount Ishii for Japan and Secretary Lansing for the United States exchanged notes clarifying the policy of the United States and Japan regarding China. The important points of the agreement were: "The Governments of the United States and Japan recognize that territorial propinquity creates special relations between countries, and consequently the Government of the United States recognizes that Japan has special interests in China, particularly in the part to which her possessions are contiguous. The territorial sovereignty of China, nevertheless, remains unimpaired, and the Government of the United States has every confidence in the repeated assurances of the Japanese Government that, while geographical position gives Japan such special interests, they have no desire to discriminate against the trade of other nations. . . . Moreover, they mutually declare that they are opposed to the acquisition by any Government of any special rights or privileges that would affect the independence or territorial integrity of China, or that would deny to the subjects or citizens of any country the full enjoyment of equal opportunities in the commerce and industries of China." The Chinese Government has issued a statement protesting and refusing to be bound by agreements concerning it entered into by other Powers.
+  Q: What active part did Japan take in the war?
+  A: In November, 1914, she forced the surrender of Kiaou-Chau, the province in China which Germany had acquired as indemnity for the Boxer outrages, and from which as a base she was extending a railway system into China in furtherance of German commerce. Japan was Great Britain's ally in the East. She despatched an ultimatum to Germany August 15, 1914, demanding the departure of German ships from Chinese waters and the transfer of Kiaou-Chau to Japan as first step to its return to Chinese control. The time limit of the ultimatum was August 23, and on that day Japan declared war upon Germany. After a siege of eight weeks Kiaou-Chau was surrendered and Germany's rule in the Far East was at an end.
+
+[1001-questions--573] [multi-turn]
+  Q: What was the condition of France?
+  A: The public debt was enormous, the government had no credit, and the regent, the Duke of Orleans, was a man without honor or principle.
+  Q: What followed?
+  A: An era of vice. The world had not seen such a profligate court since the days of the Roman emperors. War added hundreds of millions to the already hopeless debt, and Louis's death left the country plunged in anarchy and ruin.
+
+[common-core--342]
+  Q: When was the Emancipation Proclamation issued?
+  A: January 1, 1863.
+
+[common-core--1019]
+  Q: When are two terms in apposition, and when is one predicated by the other? In what must these terms agree?
+  A: When a verb joins the terms, one is predicated of the other; as, “He is president.” When no verb joins them, the latter term is in apposition with the former; as, “Webster, the orator.” These terms must agree in case.
+
+[astronomy--118]
+  Q: 1. What are the tides?
+  A: The tides are the periodical rising and falling of the water of the ocean.
+
+[electricity--90]
+  Q: Has atmospheric electricity ever been used, or is it likely to be?
+  A: The quiet effects of the electricity are doubtless of great value in agriculture. The remarkably rapid growth of vegetation during the short summers in Finland and other northern countries is believed to be due largely to the great amount of atmospheric electricity present. (See also Nos. 10 and 148). The lightning apparently causes the formation of more or less nitric acid and ammonia found in the air after thunder showers. Many interesting experiments have been made. Probably the largest commercial enterprise yet developed from atmospheric electricity is the manufacture of lightning rods and lightning arresters.
+
+[electricity--71]
+  Q: How can one see stars by electricity?
+  A: A drinking glass with metal case such as used at soda fountains makes a condenser that may be loaded easily, as suggested in No. 1, the liquid and the metallic holder being the two surfaces. After the cup is charged (not too strongly for fear of injuring the victim), hand it to a friend to drink. He will see stars and will endeavor to share the sensation with the perpetrator of the joke. One can also see stars by the help of an incandescent lamp. Charge a lamp feebly by holding the bulb in the hand and bringing the lamp base near a belt for a short time, being careful not to charge it too strongly; then touch the lamp base to the forehead. One will seem to see a flash of light, although the eyes are tightly closed. The electricity passing between the forehead and hands affects the optic nerve in about the same way that light affects it.
+
+[brewers-guide--1176]
+  Q: Why do flutes, &c. produce musical sounds?
+  A: The breath of the performer causes the air in the flute to vibrate, and sets in motion the sound-waves of the air.
+
+[brewers-guide--1143]
+  Q: Why are some things white?
+  A: Because they absorb none of the rays of light, but reflect them all.
+
+[brewers-guide--184]
+  Q: Why do old rags, used for cleaning lamps and candles, sometimes set a house on FIRE?
+  A: Because they very readily ferment, and (during fermentation) throw off exceedingly inflammable gases. (N.B. Lamp-black mixed with linseed oil is more liable to spontaneous combustion, than anything that servants handle.)
+
+[civil-war--299]
+  Q: How can aviators safely have glass windows and goggles?
+  A: In order to keep fragments of glass from injuring the pilot in case of accident, triplex glass is used for windows and goggles. In a recent accident where an aeroplane, going ninety miles an hour, struck a tree, the triplex glass window did not throw off a single fragment.
+
+[school-bulletin--355]
+  Q: What is Magnetism?
+  A: It is the science that treats of the laws, properties, and phenomena of magnets. A magnet is a body that possesses the power of attracting and repelling other magnets. Magnets are either natural or artificial. Query.— What are natural magnets called? From what did the magnet derive its name?
+
+[civil-war--129] [multi-turn]
+  Q: How many Americans were in the great fighting of July and August, 1918?
+  A: On July 20, soon after the big Allied offensive was under way, 270,000 American troops were engaged between Chateau-Thierry and Soissons alone. Seven divisions and at least one separate regiment participated. That would mean that at least 160,000 American troops were actually in the fierce fighting, the others being on the lines of supply, etc. In addition there were 30,000 men east of Rheims, making the whole number of Americans engaged 200,000 men at least. More were thrown in as the battle progressed.
+  Q: What troops were engaged first?
+  A: The 42d, or Rainbow, Division, composed of National Guard troops from twenty-six States and the District of Columbia, including the New York 69th Infantry, then designated as the 165th Infantry, fought in the Champagne east of Rheims. The six other divisions were associated with the French in the counter-offensive between Chateau-Thierry and Soissons. These were the 1st, 2d, 3d, and 4th of the regular army, the 26th National Guard Division, composed of troops from the six New England States, and the 28th, composed of the Pennsylvania National Guard. Marines were included in this number.
+
+[seeleys--478]
+  Q: What other points should receive attention in the study of Europe?
+  A: It would be impossible to study the geography of Europe without giving some attention to the wealth of material found in the legends, history, and literature of the various countries. The many famous buildings, the renowned cities, the noted historical personages, all furnish profitable and helpful subjects for study. The most important of all these interesting things should be brought to the attention of the pupil and made to contribute to the interest and value of his study of geography.
+
+[advanced-questions--125]
+  Q: To how many full moons is the sun's light equal?
+  A: It would require 800,000 full moons to produce a day as brilliant as one of cloudless sunshine.
+
+[advanced-questions--30]
+  Q: Who represent the 'Golden Age' of American literature?
+  A: William Cullen Bryant, "Thanatopsis," "Song of the Stars"; Henry Wadsworth Longfellow, "Evangeline," "The Bridge," "Outre-Mer," "Kavanagh," "Hyperion"; John Greenleaf Whittier, "Maud Muller," "Snow-Bound," "Barbara Frietchie," "A Tent on the Beach"; James Russell Lowell, "The Biglow Papers," "The Vision of Sir Launfal," "The First Snowfall"; Oliver Wendell Holmes, "Autocrat of the Breakfast-Table," "One Hoss Shay," "Old Ironsides"; Edgar Allan Poe, "The Raven," "The Bells"; John Godfrey Saxe, "Briefless Barrister," "Proud Miss MacBride"; Thomas Buchanan Read, "Sheridan's Ride," "Drifting"; Bayard Taylor, "The Story of Kennett," "Masque of the Gods," "Song of the Camp"; Alice and Phoebe Cary, "Clover Nook," "Married, not Mated," "The Poet to the Painter"; Thomas Bailey Aldrich, "The Face Against the Pane," "Babie Bell"; Edmund Clarence Stedman, "John Brown of Osawatomie"; J. G. Holland, "Bitter-Sweet," "Kathrina," "Timothy Titcomb's Letters," "Sevenoaks"; Francis Bret Harte, "The Heathen Chinee," "A Newport Romance"; Joaquin Miller, "Songs of the Sierras," "Burns and Byron"; John Howard Payne, "Home, Sweet Home"; N. P. Willis, "People I Have Met"; Nathaniel Hawthorne, "The Marble Faun," "Twice-Told Tales," "The Scarlet Letter"; Harriet Beecher Stowe, "Uncle Tom's Cabin"; Edward Eggleston, "The Hoosier Schoolmaster"; Samuel L. Clemens, "The Innocents Abroad," "The Gilded Age"; and Irving, Prescott, Bancroft, Sprague, Stoddard, Whitman, Pierpont, Dana, Percival, Boker, Morris, Cooper, Everett, Webster, Sumner, Agassiz, Emerson, White, Parker, Henry Ward Beecher, Parton, Lossing, Simms, Cooke, Arthur, Trowbridge, Mrs. Moulton, Miss Alcott, Mrs. Evans-Wilson, Hale, Mitchell, Mann, "Fanny Fern," etc., etc. Gems. "Reading maketh a full man, conference a ready man and writing an exact man."—Bacon. "He left a name at which the world grew pale, To point a moral or adorn a tale."—Dr. Johnson. *Referring to Charles XII, of Sweden. "A handful of red sand, from the hot clime Of Arab deserts brought, Within this glass becomes the spy of time, The minister of thought."—Longfellow. "Next to the originator of a good sentence is the first quoter of it."—Emerson. "Tell me tales of thy first love— April hopes, the fools of chance— Till the graves begin to move, And the dead begin to dance."—Tennyson. "Here's a sigh to those that love me, And a smile to those that hate, And whatever sky's above me, Here's a heart for any fate."—Byron. "Drink to me only with thine eyes, And I will pledge with mine; Or leave a kiss but in the cup, And I'll not ask for wine."—Ben Jonson. "Dream, dream, dear of my own love! Sweet is the wind from the odorous South — Sweet is the island we sail to alone, love— Sweet is a kiss from thy ruddy young mouth."—Mortimer Collins. From "Lucille": "He who seeks one thing in life and but one, May hope to achieve it before life be done. But he who seeks all things wherever he goes, Only reaps from the hopes which around him he sows A harvest of barren regrets."—Lord Lytton. Food for Thought. Who was Hipparchus? What does the phrase "to pass the Rubicon" signify? Who is the most voluminous English poet? Who were the Poets Laureate? Who wrote "Peter Bell"? What was George Cruikshank? What English poet achieved distinction despite the loss of eyesight? Who is the author of the Theory of Evolution, epitomized in the familiar expression, "the survival of the fittest"? What were the works of Goethe, Beranger, Richter, Guizot, Hugo, Verne, Thiers, Pushkin, and Dumas? Have you read Burton's "Anatomy of Melancholy"? Who wrote "The Arcadia"? Who is the author of "Mother Goose"? What is Caesar's "De Bello Gallico"? Who was G. P. R. James? What Pope published the Pagnini version of the Bible? Who was Confucius? What plays of Shakespeare are drawn from English history, and over what period do they extend? What do we mean by the classic productions of an age? Who are the leading characters in "Romeo and Juliet"? Who wrote "Phormio," "Pro Murena," "Lycidas," "Cato," "Much Ado About Nothing," "The Village Blacksmith," "The Vicar of Wakefield," "The Toilers of the Sea," "The Heathen Chinee," "Gulliver's Travels," "Marco Bozzaris," "Rasselas," "Hiawatha," "The Fable for Critics," "The Excursion," "Jane Eyre," "The Moonstone," "The Task," and "The Faerie Queene"?
+
+[mythology--176]
+  Q: What was the Minotauros?
+  A: A monster in the form of a bull, which was said to be born from Pasiphaë, the wife of Minos.
+
+[mythology--276] [multi-turn]
+  Q: How did Menelaus bear the loss of Helen?
+  A: He determined to rescue her from Paris, and he invited Agamemnon, king of Mycenae, and other great chieftains, to take part in the expedition.
+  Q: Mention the names of some of these chiefs?
+  A: Nestor, the wise ruler of Pylos; Ajax the son of Telamon; Ascalaphos and Ialmenos, sons of Ares; Diomedes, son of Tydeus, and Admetus, the husband of Alkestis. But the greatest of all was Achilles, the son of Peleus and the sea-nymph Thetis, and Odysseus, the son of Laertes who ruled in Ithaca.
+  Q: How did they go to Troy?
+  A: By sea; but the fleet was becalmed in Aulis, and Calchas, the seer, affirming that this was caused by the anger of Artemis for the slaughter of a stag in her sacred grove, declared that she could be appeased only by the sacrifice of Iphigeneia, the daughter of Agamemnon.
+  Q: Was this sacrifice made?
+  A: Yes, according to the Homeric story; but others said that Artemis herself rescued Iphigeneia, who became a priestess of the goddess: others again said that Artemis and Iphigeneia were the same person.
+  Q: What was the consequence of this deed?
+  A: Ate, who takes vengeance for the shedding of innocent blood, brooded over the house of Agamemnon, until she had brought about the death of the king by the hands of his wife Clytaemnestra, and the death of Clytaemnestra by the hands of her son Orestes.
+
+[common-core--1846]
+  Q: Will a regular routine of food be beneficial?
+  A: By a regular routine of food the appetite becomes indifferent, and long continuance generally produces a sickness from disgust.
+
+[new-york-bar--373]
+  Q: On the trial of A for larceny, B is called as a witness. Upon cross-examination, B is asked if he has ever been convicted of burglary. He answers that he has not. How may the district attorney contradict him, if at all? Give the general rule.
+  A: B can be contradicted either by cross-examination or by the record. The question in this case is fully answered by sec. 832 of the Code of Civ. Pro., which is as follows : " A person who has been convicted of a crime or misdemeanor is, notwithstanding, a competent witness in a civil or criminal action or special proceeding ; but the conviction may be proved for the purpose of affecting the weight of his testimony, either by the record, or by his cross-examination, upon which he must answer any question relevant to that inquiry ; and the party cross-examining him is not concluded by his answer to such a question.
+
+[1001-questions--619]
+  Q: Who succeeded Louis at his death?
+  A: His brother, Charles X. (1824-1830.)
+
+[school-bulletin--216]
+  Q: Which bird has a bill almost as long as its body?
+  A: The Toucan (Ramphastidae). The bill is light, being cellular in its structure, and is serrated on its edges. The Ivory-billed Woodpecker is the largest north of Central America. With its wedge-shaped bill it can bore a hole three feet deep for its nest in the trunk of a living tree.
+
+[new-york-bar--434]
+  Q: A and B wrongfully take a carriage belonging to C. C brings an action on an implied contract to recover its value. He recovers judgment and issues execution, but the same is returned unsatisfied. He then discovers that the carriage is in the possession of D, having been bought from B. He brings an action of replevin against D. Judgment for whom and why?
+  A: Judgment for D. By bringing an action on contract, C elected to treat the transaction as a sale, and the title thereby passed to the wrongdoers; therefore the wrongdoers could pass a good title, and C must therefore fail in his action of replevin against D. Terry v. Munger, supra.
+
+[new-york-bar--125]
+  Q: What must an affidavit in an action of replevin contain?
+  A: Sec. 1695 of the Code provides as follows : " The affidavit, to be delivered to the sheriff, as prescribed in the last section, must particularly describe the chattel to be replevied ; and must contain the following allegations : 1. That the plaintiff is the owner of the chattel, or is entitled to the possession thereof, by virtue of a special property therein ; the facts with respect to which must be set forth. 2. That it is wrongfully detained by the defendant. 3. The alleged cause of the detention thereof, according to the best knowledge, information, and belief of the person making the affidavit. 4. That it has not been taken by virtue of a warrant, against the plaintiff, for the collection of a tax, assessment, or fine, issued in pursuance of a statute of the state, or of the United States; or, if it has been taken under color of such a warrant, either that the taking was unlawful, by reason of defects in the process, or other causes specified, or that the detention is unlawful by reason of facts specified which have subsequently occurred. 5. That it has not been seized by virtue of an execution or warrant of attachment, against the property of the plaintiff, or of any person from or through whom the plaintiff has derived title to the chattel, since the seizure thereof ; or, if it has been so seized, that it was exempt from the seizure, by reason of facts specified, or that its detention is unlawful, by reason of facts specified which have subsequently occurred. 6. Its actual value."
+
+[school-bulletin--190]
+  Q: How is wood formed?
+  A: Of cells which at first are just like those that form the soft parts of plants. But early in their growth some of these lengthen and at the same time thicken their walls; these are called woody fibre or wood cells; others grow to a greater size, have thin walls with various markings upon them, and often run together end to end so as to form pretty large tubes, comparatively; these are called ducts or vessels.
+
+[logic--157] [multi-turn]
+  Q: How are sophisms divided?
+  A: Into two classes; sophisms in form and sophisms in matter, termed by the old logicians. Fallacies in dictione, and fallacies extra dictionem.
+  Q: How many species of fallacies in form were enumerated by the old logicians?
+  A: Six : viz. — 1. The fallacy of equivocation, which consists in using the same word in different senses. Thus, Roman Catholics sometimes endeavour to prove, that even Protestants acknowledge the authority of the Church, since they receive the Scriptures on its authority. In the former part of the sentence, authority signifies controlling power; in the latter, it merely means evidence. 2. The fallacy of amphiboly, or doubtful construction of a sentence. Thus, Hume's argument against miracles, when he says, "No evidence can prove a miracle; for it is contrary to experience, that a miracle should be true, but not contrary to experience that evidence should be false," is an instance of this and the former fallacy combined ; for in the first part of the sentence, contrary to experience, means, "wholly opposed to universal experience," which is a direct assumption of the point at issue ; and in the second part, it merely means, inconsistent with the personal experience of some particular individual, which, from its nature, every miracle must be. 3. and 4. The fallacies of composition and division, where, from what is true of a term in its divided sense, we infer something respecting the aggregate, or the contrary. Thus, the Stoics endeavoured to prove the doctrine of necessity by the following argument: "He, who necessarily goes or stays, is not a free agent;" "you must necessarily go or stay;" therefore, "you are not a free agent." Here the fallacy rests on the word necessarily being taken with both members in the first proposition, and only with the alternative in the second. 5. Fallacy of accent ; or a play on words of the same sound but different sense. This is nothing better than a quibble or pun, by which no rational being was ever deceived. 6. Fallacy of figure of speech, or a fallacy arising from the grammatical construction of language, and proceeding on the false supposition, that all words derived from the same root have a correspondency in meaning. It is impossible to give such a fallacy a logical form, as the syllogism will be at once seen to contain two middle terms.
+
+[common-core--81]
+  Q: By whom was Delaware settled? Where and when? What transpired a few years after their settlement ?
+  A: By the Swedes and Finns, in 1630, near the entrance of Delaware Bay, where they laid the foundation of Lewiston, the oldest town in the State. After a few years, Governor Stuyvesant of New Netherlands conquered their colony.
+
+[common-core--751] [multi-turn]
+  Q: What is the size of the Russian Empire?
+  A: It is next to the largest in the world, comprising fully one-half of Europe and more than one-third of Asia. The entire area is about 8,000,000 square miles.
+  Q: What is the surface of this empire?
+  A: For the most part it is very level. The only mountainous section in European Russia is between the Azov and Caspian Seas.
+
+[constitution--136]
+  Q: But suppose I say of my rulers what is false and injurious, may I not be punished?
+  A: Yes, if they can prove in a court of justice that what you have said is false, and that your saying or publishing it has injured them. So may any of your fellow citizens. But you are still at liberty to speak and to print, being liable to the consequences if you abuse your liberty.
+
+[investors--347]
+  Q: What is preferred stock?
+  A: A stock that shares in the surplus earnings or dividends of a corporation before the common stock of a corporation can participate. Some stock issues are arranged in first and second "preferred" and "common" classes, but ordinarily, only "preferred" and "common" stock are specified in the capitalization of a corporation.
+
+[common-core--2129] [multi-turn]
+  Q: What is a quorum?
+  A: A sufficient number of members for the transaction of business.
+  Q: What number constitutes a quorum?
+  A: Usually, in councils, legislative bodies or associations, a rule is adopted determining this point; but in the absence of any other rule, a majority of all members is necessary to constitute a quorum.
+  Q: What is the duty of the presiding officer in regard to a quorum?
+  A: He should not take the chair until he is satisfied that a quorum is present; if notice be taken, at any time in the course of the proceedings, that a quorum is not present, it becomes the duty of the presiding officer to ascertain by count the number present; should a quorum be lacking, the assembly must cease to transact business.
+  Q: Why is it necessary that a certain number should constitute a quorum?
+  A: In order to secure fairness of proceeding, and to prevent hasty action, or action agreed to by so small a number of the members as not to command proper respect.
+
+[familiar-things--370]
+  Q: What is a Spectrum?
+  A: It is this beautiful band of seven colors obtained by the refraction of a ray of light through the prism.
+
+[world-history--54]
+  Q: Did not the Swedes recover their national independence?
+  A: Yes. Gustavus Vasa, a descendant of the ancient kings, recovered the liberty of his country, in 1544, and the states made the crown hereditary in his family.
+
+[engineering--485]
+  Q: How much water is required for condensers?
+  A: About 25 times the quantity evaporated in the boiler.
+
+[brewers-guide--521]
+  Q: Why is it cool under a shady tree in a hot summer’s day?
+  A: 1st—Because the overhanging foliage screens off the rays of the sun: 2ndly—As the rays of the sun are warded off, the air (beneath the tree) is not heated by the reflection of the earth: and 3rdly—The leaves of trees, being non-conductors, allow no heat to penetrate through them.
+
+[chemistry--644]
+  Q: Do the different acids all operate upon the same principle?
+  A: No. Sulphuric acid abstracts water from the alcohol, chlorohydric acid substitutes a volume of acid vapour for the water, while nitric and acetic acid combine with alcohol.
+
+[electricity--191] [multi-turn]
+  Q: What is a thermopile?
+  A: The thermopile is an apparatus for transforming heat energy into electrical energy. It is the thermo-couple developed by making a circuit of a number of pairs of metals or alloys so arranged that alternate junctions may be heated while the remaining junctions are kept at a lower temperature, somewhat as suggested in the figure. If the two conductors are iron and German silver, the heat causes a current to flow from the German silver to the iron at the hot junctions. Such currents are called ''thermo-electric." The heat is generally supplied by one or more gas jets, although the largest sizes are made like stoves and are suitable for burning coal. The outer junctions are usually kept comparatively cool by means of extended plates, sometimes formed into tubes so as to assist the circulation of cooling air; in the Cox thermopile, which probably represents the highest development, the outer ends are cooled by the circulation of water in the jacket. A cylindrical Noe thermopile and a larger Gulcher apparatus are also shown in the accompanying figures.
+  Q: For what purposes are thermopiles used?
+  A: They are used for obtaining currents where great steadiness is required, such as in chemical analysis. They are suitable for all purposes for which a closed circuit battery would be used, that is, when currents of uniform strength are desired for long periods. They are suitable for electro-plating, for operating telegraph lines, small motors, fans, or for other purposes. Current from a thermopile is generally cheaper and less troublesome than when it must be obtained from a primary battery. Thermopiles are also used for measuring radiant energy and for measuring temperatures.
+  Q: Are thermopiles suitable for electric lighting?
+  A: They have not been constructed in sufficiently large sizes, except for small lamps. They can not compete with engines and dynamos, both because of difficulty in making large sizes, and because of the greater efficiency of the engine and dynamo.
+
+[common-core--2161] [multi-turn]
+  Q: When should motions to postpone be made?
+  A: When the members individually want more information than they possess, or where there is something else which they desire to dispose of first.
+  Q: If a subject is postponed, when may it be taken up again?
+  A: Whenever it may suit the convenience of the assembly.
+
+[seeleys--764]
+  Q: What other methods may be mentioned?
+  A: (a) The oral method, in which the teacher presents the subject without the aid of a text-book. (b) The text-book method, in which the teacher closely follows the book. (c) The lecture method, in which the material is presented in the form of lectures and in which the pupils take no active part.
+
+[school-bulletin--183] [multi-turn]
+  Q: Name the kinds of fruits.
+  A: They are three in number, viz: 1, Fleshy Fruits; 2, Stone Fruits; and 3, Dry Fruits. In fleshy fruits, the whole pericarp thickens and becomes soft (fleshy, juicy or pulpy) as it ripens. Of this the leading kind is the berry, such as the gooseberry, currant, cranberry, blueberry, tomato, and grape. The orange is merely a berry with a leathery rind.
+  Q: What other forms are there of the berry?
+  A: The Pepo, or Gourd-fruit, is the sort of berry which belongs to the Gourd family, mostly with a hard rind, and the inner portion softer. The pumpkin, squash, cucumber and melon are the leading representatives. The Pome is a name applied to the apple, pear, and quince; fleshy fruits, like a berry, but the principal thickness is calyx, only the papery pods arranged like a star in the core really belonging to the pistil itself.
+
+[mythology--340]
+  Q: What were the Parcae?
+  A: According to later poets they are three sisters who were identified with the Greek Moerae, Clotho, Lachesis, and Atropos.
+
+[common-core--364] [multi-turn]
+  Q: During the siege of Richmond, what two important events occurred?
+  A: The Mine Explosion at Petersburg, Va., and the capture of the Weldon Railroad.
+  Q: What was the result of the mine explosion?
+  A: A mine was dug beneath a strong Confederate fort, and was fired with a blast of 8,000 pounds of powder. The fort and garrison were destroyed. At the same time the Union artillery opened along the line, and an assaulting column rushed forward; but it stopped in the crater produced by the explosion. The Confederates, rallying, turned their artillery upon the mass of men within the demolished fort, and about 4,000 were lost before the rest could retreat to the Union lines. This is known as the "Battle of the Crater."
+
+[investors--112]
+  Q: What are coppers?
+  A: The copper mine stocks are referred to as Coppers in the market.
+
+[school-bulletin--200] [multi-turn]
+  Q: What are the three families of quadrumana?
+  A: Simiidae, Monkeys of the Old World; Cebidae, monkeys of the New World; and Lemuridae, monkeys of Madagascar. The first named has the two divisions of Anthropoid Apes (without tails), and Monkeys Proper (with tails). Of those without "posterior callosities" are the three following: Genus. Species. Examples. Troglodytes, Niger, Chimpanzee. Troglodytes, Gorilla, Gorilla. Simia, Satyrus, Orang-outang. (Snub-nosed satyr).
+  Q: Which bears the greatest resemblance to man?
+  A: The Chimpanzee, though inferior in stature and strength. Like the Gorilla, it has its home in the dense forests of Western Africa. Both have been represented as dwelling in huts built in trees, and snatching up the unwary traveller who passes beneath; whereas, they generally remain upon the ground, eat fruit and vegetables, and merely bend down branches for a seat, and, perhaps for concealment.
+
+[advanced-questions--33]
+  Q: What is the history of the Hebrews?
+  A: The most complete history of a people of the Semitic race is that of the Hebrews, contained in the Bible, generally called sacred history. Jewish national history begins with the Exodus, and, from that event to the absorption of Judea in the Roman empire, 63 B. C., it is divided into four periods. Their kingdom reached its zenith under Solomon, 1015-975 B.C. Under his successor, Rehoboam, ten of the twelve tribes revolted and formed the Kingdom of Israel, which was conquered by Assyria in 721 B.C. Jerusalem, the capital of the Kingdom of Judah (two tribes), was captured by Nebuchadnezzar, 586 B. C., and the people were carried into captivity to Babylon for 70 years. The siege and destruction of Jerusalem by Titus took place in the year 70 A. D. Note.— The two great races that appeared "on the vast table-lands of Asia at a remote period in the past, were the Aryan and Semitic. The Aryan race receives its name from a Sanskrit word meaning 'noble,' and the Semitic is named for Shem, the son of Noah. These two great races have always been antagonistic to each other, and in the contests the Aryans have almost invariably triumphed.
+
+[civil-war--621]
+  Q: Could warships be protected with concrete?
+  A: Some naval engineers have proposed systems for using concrete instead of armor. The essential idea is to use several layers of concrete between steel armor-plates. The concrete would have to be from 3 to 4 feet thick, and for such places as turrets there would be almost equal thickness of concrete and armor combined. The idea has not gone beyond theory.
+
+[brewers-guide--630]
+  Q: Why does not the drop of rain wet the dust over which it rolls?
+  A: Because it is driven from grain to grain by capillary repulsion.
+
+[1001-questions--152]
+  Q: What excited the alarm of the government at last?
+  A: The intrigues of the missionaries.
+
+[chemistry--479]
+  Q: Is the colour of the precipitate produced by sulphuretted hydrogen, peculiar to arsenic alone?
+  A: No; with antimony, tin, cadmium and selenium, this gas gives yellow coloured precipitates.
+
+[1001-questions--239]
+  Q: What may be said of the Spartans at this time?
+  A: They became masters of most of their near neighbors, and got control of the Peninsula.
+
+[familiar-things--207] [multi-turn]
+  Q: What is the Steam Engine?
+  A: A machine that derives its moving power from the force of the steam produced from boiling water, which is very great, especially when, as in the steam engine, it is confined within a limited compass: this useful machine is one of the most valuable presents that the arts of life have received from the philosopher, and is of the greatest importance in working mines; supplying cities with water; in working metals; in many mechanical arts; and in navigation. By the aid of steam, vessels are propelled with greater swiftness than those which are wholly dependent on the winds and tides; and thus trade is facilitated, and we are enabled to communicate with distant lands in a much shorter space of time than was formerly consumed. On land, railroads are constructed, on which steam carriages run with astonishing rapidity, so that a journey which by coach and horses formerly required two or more days, may now be performed in four or five hours. _Mechanical_, belonging to Mechanics.
+  Q: To whom are we indebted for its invention?
+  A: Its invention is by most writers ascribed to the Marquis of Worcester, an Englishman, about 1663; but it does not appear that the inventor could ever interest the public in favor of this, or his other discoveries. The steam engine of Captain Savery, also an Englishman, is the first of which any definite description has been preserved. It was invented in 1698. Since that period it has been successively improved by various persons, but it is to Mr. Watt and Mr. Boulton, of England, that it is indebted for much of its present state of perfection. By whom was the Steam Engine first applied to the purposes of Navigation? By John Fitch, of Pennsylvania. From papers in the historical collections of Pennsylvania, it appears that the first successful experiments were made at Philadelphia, in 1785, three years before the attempts at Falkirk, and on the Clyde, in Scotland. The boat made several trips on the Delaware and Schuylkill rivers, but owing to repeated accidents to her machinery, and the want of funds and competent mechanics for the necessary repairs, she was abandoned. In 1807, Robert Fulton, also of Pennsylvania, made his first experimental trip on the Hudson River, with complete success. To this distinguished and ingenious American justly belongs the honor of having brought navigation by steam to a state of perfection. In 1819, the first steamship crossed the Atlantic from Savannah to Liverpool; and in 1838, a regular communication by steamship was established between Great Britain and the United States. Since that period, ocean navigation by steam-vessels has made rapid progress, and, at the present time, numbers of steamers connect our various seaports with those of other nations, and with each other.
+
+[seeleys--99]
+  Q: What is phonology?
+  A: Phonology or phonetics is the science of the elementary sounds uttered by the human voice in speech, including the various distinctions, modifications, and combinations of tones.
+
+[grammar--198]
+  Q: What is done in parsing a word?
+  A: It is examined and described as to its properties and its relationship to the sentence.
+
+[logic--48] [multi-turn]
+  Q: How many relative affections of propositions are noticed by Logicians?
+  A: Three; Subalternation, Conversion, and Opposition.
+  Q: What is subalternation?
+  A: The deduction of a particular or singular proposition, from a universal, without transposing the terms. The universal proposition is called the subalternans; the inferences deduced from it are named subalterns. Thus, from the subalternans, “every man is an animal,” we may deduce the subalterns, “some men are animals,” “Peter is an animal,” &c.
+  Q: What are the canons respecting the determination of truth and falsehood in this process?
+  A: There are four; but the two last may be inferred from the others : — 1. The truth of the universal infers the truth of the particular. 2. The truth of the particular does not infer the truth of the universal. 3. The falsehood of the particular infers the falsehood of the universal. 4. The falsehood of the universal does not infer the falsehood of the particular.
+  Q: How do you prove the first and third?
+  A: If the predicate contain (or exclude) the whole extension of the subject, it must contain (or exclude) a part; and on the other hand, if it be false that part of the extension of the subject is contained in (or excluded from) the extension of the predicate, it must be false that the whole is contained (or excluded).
+  Q: How do you prove the second and fourth?
+  A: Though it be true that the predicate contains a part of the extension of the subject, it may be false that it contains the whole; and on the other hand, though it be false that the whole subject is contained in the predicate, yet, it may be true, that a part is contained in its extension.
+  Q: What practical rule is derived from these axioms?
+  A: That an argument from a particular to a universal is invalid.
+  Q: What do you mean by this rule?
+  A: That any argument from a term taken in part of its extension, to the same term taken in the whole of its extension, is invalid.
+  Q: Why do you lay such stress on the word term?
+  A: To shew that the rule has no reference to propositions, for in the third canon of subalternation we legitimately reason from a particular proposition to a universal.
+
+[ethics--32]
+  Q: What is the first one intended (the nearest) called?
+  A: The proximate end.
+
+[engineering--528]
+  Q: Would pulling one of the wires out of the copper sulphate solution have the same effect as cutting the wire?
+  A: Yes.
+
+[civil-war--682]
+  Q: How many men did Belgium have at the front during the invasion of her country?
+  A: Belgium had probably about one hundred thousand men at the front during the invasion.

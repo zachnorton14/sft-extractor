@@ -1,0 +1,83 @@
+model: claude-haiku-4-5
+seed:  46
+n:     20
+
+--- DETECT PROMPT ---
+You receive opening questions from pre-1930s educational Q&A texts.
+Classify each question as bare, ambiguous, or clear.
+
+"bare" — cannot be understood without prior context:
+  - no subject at all: "What is the effect?", "Why not?", "Describe their shape?"
+  - continuative language implying prior discussion: "What acts did they continue to commit?", "What further steps were taken?"
+  - definite reference to an entity not universally known: "What was the character of the Assembly?", "What was the result of the Act?"
+
+"ambiguous" — has a subject but it is domain-dependent; meaning shifts by field:
+  "What is a disk?", "What is a cell?", "Define the term."
+
+"clear" — fully self-contained regardless of domain:
+  "What is arsenic?", "Who was Napoleon?", "What causes thunder?"
+
+Input: JSON array [{"i": 0, "q": "..."}, ...]
+Output JSON only: [{"i": 0, "status": "clear"}, ...]
+
+--- END DETECT PROMPT ---
+
+[agriculture--20] AMBIGUOUS
+  Q: What is availability?
+
+[common-core--1250] CLEAR
+  Q: From what are the names of decimal orders derived?
+
+[1001-questions--654] CLEAR
+  Q: What influence did the cities have in the Middle Ages?
+
+[familiar-things--347] AMBIGUOUS
+  Q: What does the word Nature signify?
+
+[familiar-things--319] CLEAR
+  Q: In how many divisions may musical instruments be arranged?
+
+[chemistry--567] CLEAR
+  Q: What are the two forms in which sugar occurs?
+
+[laborers--12] BARE
+  Q: Who owns that rock lying in the road?
+
+[engineering--78] CLEAR
+  Q: What are the two general methods of using ropes ?
+
+[brewers-guide--543] CLEAR
+  Q: Are good absorbers of heat good reflectors also?
+
+[familiar-things--267] CLEAR
+  Q: What is Musk?
+
+[engineering--444] CLEAR
+  Q: What are single and double-acting engines?
+
+[world-history--61] CLEAR
+  Q: Of what religion are the Turks?
+
+[1001-questions--527] BARE
+  Q: What great battle was fought?
+
+[1001-questions--497] CLEAR
+  Q: What became of George III?
+
+[advanced-questions--448] CLEAR
+  Q: What is the weight of an iceberg?
+
+[seeleys--586] CLEAR
+  Q: What caused the ‘War for Commercial Independence’?
+
+[civil-war--1311] CLEAR
+  Q: What is the biggest American labor organization?
+
+[investors--373] AMBIGUOUS
+  Q: What are trunk lines?
+
+[advanced-questions--211] CLEAR
+  Q: Antithesis is what?
+
+[1001-questions--505] CLEAR
+  Q: If a proposed measure is lost by a vote of Parliament, what is the result?
