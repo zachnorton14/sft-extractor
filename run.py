@@ -3,11 +3,12 @@
 
 Usage:
   python run.py extract <name> <input> <output>   Run a single extractor
-  python run.py bleed [--test] [--seed N] [--size N]  Run/test bleed pass
-  python run.py ocr   [--test] [--seed N] [--size N]  Run/test OCR pass
-  python run.py sample <stage> [--seed N] [--size N]  Sample raw pairs from any stage
+  python run.py bleed [--test] [--seed N] [--count N]  Run/test bleed pass
+  python run.py ocr   [--test] [--seed N] [--count N]  Run/test OCR pass
+  python run.py pair  [--test] [--seed N] [--count N]  Run/test pair pass
+  python run.py sample <stage> [--seed N] [--count N]  Sample from any stage
 
-Stages: extracted | bleed | ocr
+Stages: extracted | bleed | ocr | paired
 
 Set environment variables for model passes:
     export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
@@ -88,6 +89,8 @@ OUTPUT_DIRS = {
     "extracted": ROOT / "output" / "extracted",
     "bleed":     ROOT / "output" / "bleed",
     "ocr":       ROOT / "output" / "ocr",
+    "paired":    ROOT / "output" / "paired",
+    "enriched":  ROOT / "output" / "enriched",
 }
 
 
@@ -100,6 +103,14 @@ def cmd_extract(args):
 
 def cmd_bleed(args):
     from clean import bleed
+    if args.retry_bleed:
+        pairs = bleed.load_ocr_pairs()
+        state = bleed.load_retry_state()
+        asyncio.run(bleed.retry_bleed(pairs, state))
+        print("Writing output...")
+        bleed.write_retry_output(state)
+        print("Done. Re-run `pair` to rebuild multi-turn conversations.")
+        return
     pairs = bleed.load_all_pairs()
     if args.test:
         asyncio.run(bleed.test_run(pairs, args.seed, args.size))
@@ -146,24 +157,57 @@ def cmd_ocr(args):
     print("Done.")
 
 
+def cmd_enrich(args):
+    from clean import enrich
+    datasets = enrich.load_all_conversations()
+    if args.test:
+        asyncio.run(enrich.test_run(datasets, args.seed, args.size))
+        return
+    state = enrich.load_state()
+    asyncio.run(enrich.run_async(datasets, state))
+    print("Writing output...")
+    enrich.write_output(datasets, state)
+    print("Done.")
+
+
+def cmd_pair(args):
+    from clean import pair
+    datasets = pair.load_all_pairs()
+    if args.test:
+        asyncio.run(pair.test_run(datasets, args.seed, args.size))
+        return
+    state = pair.load_state()
+    all_keys = {f"{d}--w{w}" for d, pairs in datasets.items()
+                for w in range(len(pair.make_windows(pairs)))}
+    resolved = sum(1 for k in all_keys if k in state)
+    pending = len(all_keys) - resolved
+    print(f"Total windows: {len(all_keys)}  Resolved: {resolved}  Pending: {pending}")
+    if pending:
+        asyncio.run(pair.run_async(datasets, state))
+        pair.save_state(state)
+    print("Writing output...")
+    pair.write_output(datasets, state)
+    print("Done.")
+
+
+
+
+
 def cmd_sample(args):
     directory = OUTPUT_DIRS[args.stage]
     if not directory.exists():
         print(f"Directory not found: {directory}. Has this stage been run yet?")
         sys.exit(1)
 
-    pairs = []
+    convs_list = []
     for json_file in sorted(directory.glob("*.json")):
         dataset = json_file.stem
         items = json.loads(json_file.read_text())
         for i, item in enumerate(items):
-            convs = item["conversations"]
-            q = next(c["content"] for c in convs if c["role"] == "user")
-            a = next(c["content"] for c in convs if c["role"] == "assistant")
-            pairs.append((dataset, i, q, a))
+            convs_list.append((dataset, i, item["conversations"], item.get("chained", False)))
 
     random.seed(args.seed)
-    sample = random.sample(pairs, min(args.size, len(pairs)))
+    sample = random.sample(convs_list, min(args.size, len(convs_list)))
 
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     samples_dir = ROOT / "samples" / args.stage
@@ -171,8 +215,14 @@ def cmd_sample(args):
     out_path = samples_dir / f"{ts}_seed{args.seed}_n{args.size}.txt"
 
     lines = [f"stage: {args.stage}", f"seed:  {args.seed}", f"n:     {args.size}", ""]
-    for dataset, i, q, a in sample:
-        lines += [f"[{dataset}--{i}]", f"  Q: {q}", f"  A: {a}", ""]
+    for dataset, i, convs, chained in sample:
+        label = f"[{dataset}--{i}]" + (" [multi-turn]" if chained else "")
+        lines.append(label)
+        turns = [(c["role"], c["content"]) for c in convs]
+        for role, content in turns:
+            prefix = "  Q:" if role == "user" else "  A:"
+            lines.append(f"{prefix} {content}")
+        lines.append("")
     out_path.write_text("\n".join(lines))
     print(f"Wrote {out_path}")
 
@@ -197,6 +247,8 @@ def main():
     p_bleed.add_argument("--test", action="store_true", help="Sample and test without full run")
     p_bleed.add_argument("--seed", type=int, default=42)
     p_bleed.add_argument("--count", type=int, default=10, dest="size", metavar="N")
+    p_bleed.add_argument("--retry-bleed", action="store_true",
+                         help="Re-run bleed detection on output/ocr/ and update in place")
 
     # ocr
     p_ocr = sub.add_parser("ocr", help="Run OCR correction pass (pass 1)")
@@ -206,8 +258,20 @@ def main():
     p_ocr.add_argument("--retry-flagged", action="store_true",
                         help="Re-process only currently flagged pairs using greedy bin-packing batches")
 
+    # pair
+    p_pair = sub.add_parser("pair", help="Run dependency-chain grouping pass (pass 2)")
+    p_pair.add_argument("--test", action="store_true", help="Sample and test without full run")
+    p_pair.add_argument("--seed", type=int, default=42)
+    p_pair.add_argument("--count", type=int, default=10, dest="size", metavar="N")
+
+    # enrich
+    p_enrich = sub.add_parser("enrich", help="Detect and enrich context-bare opening questions (pass 3)")
+    p_enrich.add_argument("--test", action="store_true", help="Sample and test without full run")
+    p_enrich.add_argument("--seed", type=int, default=42)
+    p_enrich.add_argument("--count", type=int, default=20, dest="size", metavar="N")
+
     # sample
-    p_sample = sub.add_parser("sample", help="Sample raw pairs from any pipeline stage")
+    p_sample = sub.add_parser("sample", help="Sample conversations from any pipeline stage")
     p_sample.add_argument("stage", choices=list(OUTPUT_DIRS))
     p_sample.add_argument("--seed", type=int, default=42)
     p_sample.add_argument("--count", type=int, default=10, dest="size", metavar="N")
@@ -220,6 +284,10 @@ def main():
         cmd_bleed(args)
     elif args.cmd == "ocr":
         cmd_ocr(args)
+    elif args.cmd == "pair":
+        cmd_pair(args)
+    elif args.cmd == "enrich":
+        cmd_enrich(args)
     elif args.cmd == "sample":
         cmd_sample(args)
 

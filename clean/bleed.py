@@ -11,6 +11,7 @@ Set environment variables before running:
 
 import asyncio
 import json
+import re
 from datetime import datetime
 from pathlib import Path
 
@@ -19,10 +20,31 @@ import anthropic
 ROOT = Path(__file__).parent.parent
 INPUT_DIR = ROOT / "output" / "extracted"
 OUTPUT_DIR = ROOT / "output" / "bleed"
+OCR_DIR = ROOT / "output" / "ocr"
 STATE_FILE = ROOT / ".bleed_state.json"
+RETRY_STATE_FILE = ROOT / ".bleed_retry_state.json"
 MODEL = "claude-haiku-4-5"  # maps to deepseek-v4-flash via ANTHROPIC_BASE_URL
-MAX_TOKENS = 1024
+MAX_TOKENS = 8192
 CONCURRENCY = 20
+
+CANDIDATE_RE = re.compile(r'\b[Qq][.\s]\s*\d+[.\s]|\b\d{1,3}\.\s+[A-Z][a-z]')
+SPLIT_RE = re.compile(
+    r'\s+(?:go|gt|gi|g0|8o|ioo|100)\.\s+'
+    r'|\s+[Qq]\.\s*\d+[.\s]\s+'
+    r'|\s+\d{1,3}\.\s+(?=[A-Z][a-z])',
+    re.IGNORECASE,
+)
+
+RETRY_DETECT_PROMPT = """\
+You receive Q&A pairs from a pre-1930s text.
+For each pair, detect whether the Q field contains a BLEED — multiple Q/A pairs incorrectly
+merged into one. A bleed occurs when Q contains answer prose followed by another question,
+often signalled by OCR-corrupted numbers (go., gt., gi., Q.68.) or declarative sentences
+mid-Q followed by a new question.
+
+Input: JSON array [{"i": 0, "q": "...", "a": "..."}, ...]
+Output JSON only: [{"i": 0, "bleed": false}, ...]
+"""
 
 SYSTEM_PROMPT = """\
 You are a dataset quality filter for public-domain Q&A pairs extracted from pre-1930s texts.
@@ -233,3 +255,209 @@ async def test_run(pairs, seed, size):
 
     await asyncio.gather(*[process(d, i, q, a) for d, i, q, a in sample])
     print(f"Wrote {out_path}")
+
+
+# --- Retry-bleed pass (runs on output/ocr/) ---
+
+def load_retry_state():
+    if RETRY_STATE_FILE.exists():
+        return json.loads(RETRY_STATE_FILE.read_text())
+    return {}
+
+
+def save_retry_state(state):
+    RETRY_STATE_FILE.write_text(json.dumps(state))
+
+
+def load_ocr_pairs():
+    pairs = []
+    for json_file in sorted(OCR_DIR.glob("*.json")):
+        dataset = json_file.stem
+        items = json.loads(json_file.read_text())
+        for i, item in enumerate(items):
+            convs = item["conversations"]
+            q = next(c["content"] for c in convs if c["role"] == "user")
+            a = next(c["content"] for c in convs if c["role"] == "assistant")
+            pairs.append((dataset, i, q, a))
+    return pairs
+
+
+def find_bleed_candidates(pairs):
+    return [(d, i, q, a) for d, i, q, a in pairs
+            if CANDIDATE_RE.search(a) or CANDIDATE_RE.search(q[len(q) // 2:])]
+
+
+def try_algorithmic_split(q, a):
+    """Split on OCR number markers. Returns list of {q, a} dicts or None."""
+    parts = SPLIT_RE.split(q)
+    if len(parts) < 2:
+        return None
+    result = []
+    for idx, part in enumerate(parts):
+        part = part.strip()
+        if not part:
+            continue
+        if idx == len(parts) - 1:
+            result.append({"q": part, "a": a})
+        else:
+            q_end = part.find("?")
+            if q_end == -1:
+                return None
+            pair_q = part[:q_end + 1].strip()
+            pair_a = part[q_end + 1:].strip()
+            if not pair_q or not pair_a:
+                return None
+            result.append({"q": pair_q, "a": pair_a})
+    return result if len(result) >= 2 else None
+
+
+def _estimate_tokens(q, a):
+    return (len(q) + len(a)) // 4
+
+
+def _pack_batches(candidates, token_budget=1200):
+    batches, current, current_tokens = [], [], 0
+    for item in candidates:
+        tokens = _estimate_tokens(item[2], item[3])
+        if current and current_tokens + tokens > token_budget:
+            batches.append(current)
+            current, current_tokens = [], 0
+        current.append(item)
+        current_tokens += tokens
+    if current:
+        batches.append(current)
+    return batches
+
+
+async def _detect_batch(client, semaphore, batch, state):
+    keys = [f"{d}--{i}" for d, i, _, _ in batch]
+    payload = json.dumps([{"i": idx, "q": q, "a": a}
+                          for idx, (_, _, q, a) in enumerate(batch)])
+    async with semaphore:
+        for attempt in range(5):
+            try:
+                msg = await client.messages.create(
+                    model=MODEL,
+                    max_tokens=4096,
+                    system=RETRY_DETECT_PROMPT,
+                    messages=[{"role": "user", "content": payload}],
+                )
+                text = next((b.text for b in msg.content if b.type == "text"), "").strip()
+                if text.startswith("```"):
+                    text = text.split("```", 2)[1]
+                    if text.startswith("json"):
+                        text = text[4:]
+                    text = text.rstrip("`").strip()
+                results = json.loads(text)
+                for r in results:
+                    idx = r.get("i")
+                    if isinstance(idx, int) and 0 <= idx < len(keys):
+                        state[keys[idx]] = {"bleed": bool(r.get("bleed", False))}
+                return
+            except anthropic.RateLimitError:
+                await asyncio.sleep(2 ** attempt)
+            except Exception:
+                if attempt == 4:
+                    for key in keys:
+                        if key not in state:
+                            state[key] = {"bleed": False}
+                else:
+                    await asyncio.sleep(2 ** attempt)
+
+
+async def _recover_one(client, semaphore, dataset, i, q, a, state):
+    key = f"{dataset}--{i}"
+    async with semaphore:
+        for attempt in range(5):
+            try:
+                msg = await client.messages.create(
+                    model=MODEL,
+                    max_tokens=MAX_TOKENS,
+                    system=SYSTEM_PROMPT,
+                    messages=[{"role": "user", "content": f"Q: {q}\nA: {a}"}],
+                )
+                text = next((b.text for b in msg.content if b.type == "text"), "").strip()
+                state[key]["recovery"] = parse_response(text, q, a)
+                return
+            except anthropic.RateLimitError:
+                await asyncio.sleep(2 ** attempt)
+            except Exception:
+                if attempt == 4:
+                    state[key]["recovery"] = {"clean": True}
+                else:
+                    await asyncio.sleep(2 ** attempt)
+
+
+async def retry_bleed(pairs, state):
+    candidates = find_bleed_candidates(pairs)
+    print(f"  {len(candidates)} bleed candidates")
+
+    client = anthropic.AsyncAnthropic()
+    semaphore = asyncio.Semaphore(CONCURRENCY)
+
+    # Phase 1: batched boolean detection
+    pending = [(d, i, q, a) for d, i, q, a in candidates if f"{d}--{i}" not in state]
+    if pending:
+        batches = _pack_batches(pending)
+        print(f"  Phase 1: {len(batches)} detection batches...")
+        tasks = [asyncio.create_task(_detect_batch(client, semaphore, b, state))
+                 for b in batches]
+        await asyncio.gather(*tasks)
+        save_retry_state(state)
+
+    confirmed = [(d, i, q, a) for d, i, q, a in candidates
+                 if state.get(f"{d}--{i}", {}).get("bleed")]
+    print(f"  {len(confirmed)} confirmed bleeds")
+
+    # Phase 2: algorithmic split or model recovery
+    needs_model = []
+    for d, i, q, a in confirmed:
+        key = f"{d}--{i}"
+        if "recovery" in state[key]:
+            continue
+        split = try_algorithmic_split(q, a)
+        if split:
+            state[key]["recovery"] = {"pairs": split}
+        else:
+            needs_model.append((d, i, q, a))
+
+    if needs_model:
+        print(f"  Phase 2: model recovery for {len(needs_model)} pairs...")
+        tasks = [asyncio.create_task(_recover_one(client, semaphore, d, i, q, a, state))
+                 for d, i, q, a in needs_model]
+        await asyncio.gather(*tasks)
+        save_retry_state(state)
+
+
+def write_retry_output(state):
+    total_split = total_discarded = 0
+    for f in sorted(OCR_DIR.glob("*.json")):
+        dataset = f.stem
+        existing = json.loads(f.read_text())
+        new_items = []
+        for i, item in enumerate(existing):
+            key = f"{dataset}--{i}"
+            result = state.get(key)
+            if not result or not result.get("bleed"):
+                new_items.append(item)
+                continue
+            recovery = result.get("recovery", {})
+            if "pairs" in recovery:
+                valid = [p for p in recovery["pairs"] if p.get("q") and p.get("a")]
+                if len(valid) >= 2:
+                    for p in valid:
+                        new_items.append({"conversations": [
+                            {"role": "user", "content": p["q"]},
+                            {"role": "assistant", "content": p["a"]},
+                        ], "recovered": True})
+                    total_split += 1
+                    continue
+            if recovery.get("discard"):
+                total_discarded += 1
+                continue
+            new_items.append(item)
+        f.write_text(json.dumps(new_items, indent=2, ensure_ascii=False))
+        delta = len(new_items) - len(existing)
+        if delta:
+            print(f"  {dataset}: {len(existing)} → {len(new_items)} ({delta:+d})")
+    print(f"\nTotal: {total_split} bleeds split, {total_discarded} discarded")
