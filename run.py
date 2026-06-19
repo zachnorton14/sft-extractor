@@ -91,6 +91,8 @@ OUTPUT_DIRS = {
     "ocr":       ROOT / "output" / "ocr",
     "paired":    ROOT / "output" / "paired",
     "enriched":  ROOT / "output" / "enriched",
+    "filtered":  ROOT / "output" / "filtered",
+    "scored":    ROOT / "output" / "scored",
 }
 
 
@@ -154,6 +156,34 @@ def cmd_ocr(args):
         ocr.save_state(state)
     print("Writing output...")
     ocr.write_output(pairs, state)
+    print("Done.")
+
+
+def cmd_filter(args):
+    from clean import filter as f
+    if args.sample:
+        f.sample_dropped(n=args.size, seed=args.seed)
+        return
+    f.run()
+
+
+def cmd_score(args):
+    from clean import score
+    datasets = score.load_all_conversations()
+    if args.test:
+        asyncio.run(score.test_run(datasets, args.seed, args.size))
+        return
+    state = score.load_state()
+    resolved = sum(1 for d, items in datasets.items() for i in range(len(items))
+                   if f"{d}--{i}" in state)
+    total = sum(len(items) for items in datasets.values())
+    pending = total - resolved
+    print(f"Total: {total}  Resolved: {resolved}  Pending: {pending}")
+    if pending:
+        asyncio.run(score.run_async(datasets, state))
+        score.save_state(state)
+    print("Writing output...")
+    score.write_output(datasets, state, filter_pct=args.filter_pct)
     print("Done.")
 
 
@@ -270,6 +300,20 @@ def main():
     p_enrich.add_argument("--seed", type=int, default=42)
     p_enrich.add_argument("--count", type=int, default=20, dest="size", metavar="N")
 
+    # filter
+    p_filter = sub.add_parser("filter", help="Rule-based garbage filtering (pass 4)")
+    p_filter.add_argument("--sample", action="store_true", help="Preview what would be dropped without writing output")
+    p_filter.add_argument("--seed", type=int, default=42)
+    p_filter.add_argument("--count", type=int, default=20, dest="size", metavar="N")
+
+    # score
+    p_score = sub.add_parser("score", help="Score conversations and filter bottom N% (pass 4)")
+    p_score.add_argument("--test", action="store_true", help="Sample and test without full run")
+    p_score.add_argument("--seed", type=int, default=42)
+    p_score.add_argument("--count", type=int, default=20, dest="size", metavar="N")
+    p_score.add_argument("--filter-pct", type=float, default=0.05, metavar="F",
+                         help="Fraction to drop (default 0.05 = bottom 5%%)")
+
     # sample
     p_sample = sub.add_parser("sample", help="Sample conversations from any pipeline stage")
     p_sample.add_argument("stage", choices=list(OUTPUT_DIRS))
@@ -288,6 +332,10 @@ def main():
         cmd_pair(args)
     elif args.cmd == "enrich":
         cmd_enrich(args)
+    elif args.cmd == "filter":
+        cmd_filter(args)
+    elif args.cmd == "score":
+        cmd_score(args)
     elif args.cmd == "sample":
         cmd_sample(args)
 
