@@ -74,6 +74,139 @@ data/*.txt
 | symbological | 10 | 7 | 0 |
 | world-history | 71 | 34 | 5 |
 
+## Example conversations
+
+These examples illustrate the dataset's range, authenticity, and the value of multi-turn chaining.
+
+---
+
+**Natural philosophy — trade winds** *(6 turns, brewers-guide)*
+```
+Q: Do winds never blow regularly?
+A: Yes; in those parts of the world where these obstructions do not exist; as on the
+   Atlantic and Pacific Ocean, the winds blow with great regularity.
+
+Q: What are the winds which blow over the Atlantic and Pacific Ocean called?
+A: They are called "Trade Winds."
+
+Q: Why are they called trade winds?
+A: Because (as they blow uniformly in one direction) they are very convenient to those
+   who carry on trade by means of these winds.
+
+Q: In what direction do the trade winds blow?
+A: That in the northern hemisphere blows from the north-east; that in the southern
+   hemisphere from the south-east.
+
+Q: Why do they not blow from the full north and south?
+A: Because the polar current, combining with the equatorial current, give the wind a
+   new direction.
+
+Q: What is the cause of the equatorial current?
+A: The rotation of the earth upon its axis.
+```
+
+---
+
+**History of astronomy** *(6 turns, astronomy)*
+```
+Q: Who are some noted astronomers of still later times?
+A: Huyghens, Roemer, Newton, and William Herschel.
+
+Q: What is to be noted of Huyghens?
+A: Huyghens (1629–1695) proposed the wave-theory of light, and made the first
+   pendulum clock.
+
+Q: Who was Roemer?
+A: Roemer, a Dane (1644–1710) is the inventor of the transit instrument; he likewise
+   roughly determined the velocity of light.
+
+Q: What is to be said of Newton?
+A: Newton (1642–1727) discovered the law of universal gravitation and wrote a
+   monumental work called the Principia.
+
+Q: What did William Herschel do?
+A: William Herschel (1738–1822) built several large reflecting telescopes; he also
+   discovered the planet Uranus.
+
+Q: Are there noted astronomers who lived later than the ones just mentioned?
+A: Yes, there are a great many noted astronomers who lived after Herschel's time, or
+   who are still living; some of their discoveries will be mentioned later.
+```
+
+---
+
+**Medieval history — the Jacquerie** *(4 turns, 1001-questions)*
+```
+Q: What great battle was fought?
+A: Battle of Poitiers (1356), in which the French were defeated by a small army of
+   English archers.
+
+Q: What insurrection burst forth at this time?
+A: An insurrection of the peasantry caused by the misery in which they had been so
+   long kept by the tyrannical nobles.
+
+Q: What is it called in history?
+A: The Jacquerie, from Jacques Bonhomme, a name derisively applied to a French peasant.
+
+Q: How did it end?
+A: After sacking the feudal castles the peasants were finally defeated in an attack
+   upon one of the towns and massacred by the nobles.
+```
+
+---
+
+**Moral philosophy** *(3 turns, ethics)*
+```
+Q: Are there various divisions of ends or purposes?
+A: Yes. For, one purpose intended may be intended for another purpose; and this for a
+   third; and the third for a fourth; and so on; until we arrive at one which is
+   intended for its own sake only.
+
+Q: What is the first one intended (the nearest) called?
+A: The proximate end.
+
+Q: What is the last one intended (the farthest off) called?
+A: The ultimate end. If there be but one end intended, it is of course first and last,
+   or proximate and ultimate.
+```
+
+---
+
+**Everyday science** *(singleton, brewers-guide)*
+```
+Q: Why is beer flat, if the cask be open too long?
+A: Because too much of the carbonic acid gas (produced by fermentation) is suffered
+   to escape.
+```
+
+---
+
+**Military history — soldier wages, 1917** *(2 turns, civil-war)*
+```
+Q: What wages do the soldiers of the belligerents receive per day?
+A: Great Britain gives 1s. 2d. (29 cents); Germany, 5 cents; France, 3 cents;
+   Canada, $1.12; New Zealand, $1.25; and Australia, $1.25.
+
+Q: How would the daily army pay-bills of the nations compare?
+A: That of Great Britain probably would be about six times that of Germany, while
+   Australia appears to be paying every day for its soldiers about 25 times as much
+   as Germany pays.
+```
+
+---
+
+**Constitutional law** *(singleton, constitution)*
+```
+Q: Why is the 4th of July kept with such public rejoicing through all parts of the
+   United States?
+A: Because on the 4th of July 1776 the Colonies first declared themselves free and
+   independent; from that day the independence of the country is reckoned in all our
+   public proceedings; though it was not until the treaty of 1783 that Great Britain
+   acknowledged the fact.
+```
+
+---
+
 ## Output format
 
 Each file is a JSON array of conversation objects:
