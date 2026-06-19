@@ -1,0 +1,123 @@
+model: claude-haiku-4-5
+seed:  42
+n:     30
+
+[laborers--105] avg:8.4  ocr:10  intelligible:10  relevant:8  complete:4  clean:10
+  Q: Which is the most powerful trust, existing under our present government?
+  A: The money or banking trust.
+
+[new-york-bar--28] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: John Doe, a gentleman, engages B as his agent to purchase a coach horse for him, and limits him strictly to the price of
+  A: Yes. It is very clear, that any one who proposes to deal with a special agent, has the right, in the first place, to kno
+
+[brewers-guide--4] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: Why do burning glasses set fire to substances submitted to their power?
+  A: The rays of the sun, collected by the Burning Glass, are all bent to one point, called the “focus;” thus the heat and li
+
+[1001-questions--409] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: Who followed George III. ?
+  A: His son was appointed Regent when his father became insane, and held the office from 1811 to 1820 A. D.
+
+[seeleys--722] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is the moral value of industry?
+  A: Children should be trained to industry, not merely 'to keep them out of mischief,' but as a safeguard against vice. The 
+
+[civil-war--758] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What was the chief feature of German advance before the war?
+  A: The systematic and wholesale application of scientific research to every industrial operation from coal mining to toy-ma
+
+[civil-war--264] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is meant by a "naval screen"?
+  A: It means the sending out of scout cruisers and other very fast vessels with enough cruising radius and power to sweep fa
+
+[chemistry--621] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is sweet spirits of nitre?
+  A: It is a solution of hyponitrous ether in alcohol, obtained by subjecting nitre and sulphuric acid to distillation with a
+
+[brewers-guide--466] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: Why is the handle of a metal tea-pot made of wood?
+  A: As wood is a bad conductor, the heat of the boiling water is not so quickly conveyed to the wooden handle, nor so quickl
+
+[seeleys--639] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What are the official rights of Congressmen?
+  A: They are exempt from arrest during sessions of Congress or while going to or returning from the same, except for treason
+
+[astronomy--327] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What are nebulae?
+  A: Nebulae are faintly shining patches in the sky which the spectroscope has shown to consist of matter in the gaseous stat
+
+[school-bulletin--12] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: Give an account of the battle of Salamis.
+  A: Themistocles, availing himself of the fleet that his foresight had provided, gained so complete a victory that Xerxes in
+
+[seeleys--708] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is the analytic Method?
+  A: “The analytic method of teaching is the method in which we set out with individuals or wholes, and proceed to a consider
+
+[familiar-things--213] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is Oxygen?
+  A: Air, mentioned in the first chapter of this work as the gaseous substance which composes the atmosphere, is formed by a 
+
+[astronomy--72] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: How far is the earth away from the sun?
+  A: The mean distance of the earth from the sun is 92,900,000 miles; the actual distance varies about 1,500,000 miles each w
+
+[investors--316] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is salting a mine?
+  A: It is placing high grade ore in a poor or worthless mine for the purpose of deceiving a prospective purchaser.
+
+[common-core--1966] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: In how many ways are the strokes of the pen united in forming letters?
+  A: Three: by angular juncture, as in the upper part of the small 7; by short curves, as at the base of the small z; and by 
+
+[1001-questions--520] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: Who was placed on the throne?
+  A: Louis XVIII., brother of Louis XVI.
+
+[1001-questions--488] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What was the condition of the lower classes?
+  A: They were overwhelmed by taxation, while the nobility and clergy, who owned two-thirds of the land, were exempt. Men wer
+
+[astronomy--183] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is the distance and period of Enceladus?
+  A: The distance of Enceladus is 157,000 miles; its period is 1 day 8 hours 53 minutes.
+
+[chemistry--546] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What properties characterize oils?
+  A: They have a peculiar unctuous feel, are inflammable, and insoluble in water.
+
+[civil-war--63] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What was the principle in the Presidential peace program for Poland?
+  A: Article XIII declared: "An independent Polish State should be erected which should include the territories inhabited by 
+
+[engineering--394] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What determines the height of chimneys?
+  A: The height of chimneys is determined by the required draught. It is influenced by the kind of coal to be burned as well 
+
+[1001-questions--434] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What was the first great battle of the Hundred Years' War?
+  A: The Battle of Crecy (1346), in which Philip was defeated.
+
+[grammar--88] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is the passive voice?
+  A: When the subject is presented as being acted upon.
+
+[chemistry--221] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What are some of the salts of ammonia?
+  A: The sulphate, muriate, and carbonates. The carbonate is generally known as the salt of ammonia.
+
+[seeleys--304] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What are similar radicals?
+  A: Similar radicals are those which have the same index and the same number under the radical.
+
+[new-york-bar--199] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: A and B entered into a contract by which B was to build a house for A. A was to pay $1,000 upon its completion, and B wa
+  A: Yes. Where a contractor in a building contract has substantially performed, although by the contract he is bound to proc
+
+[seeleys--63] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: Who wrote “Hudibras”? What was its character?
+  A: “Hudibras” was a satire upon the Puritans, and was written by Samuel Butler.
+
+[familiar-things--206] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is Coral?
+  A: A substance which, like sponge, was considered as a vegetable production, until about the year 1720, when a French gentl

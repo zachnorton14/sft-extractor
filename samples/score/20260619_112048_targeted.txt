@@ -1,0 +1,139 @@
+[music--103] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: How is the key-board divided?
+  A: The counter-tones, the great and small octaves, and at all events a part of the one lined octave, are comprehended under the name of the Bass, or bass
+
+[music--97] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: How are the minor scales with flats fingered with the left hand?
+  A: The minor scales of Bb, Eb, Ab, and Db, are not fingered as the major scales of the same name: the thumb of the left hand is placed on F and C, in des
+
+[music--51] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What are the principal graces made use of in musical compositions?
+  A: The appoggiatura, the acciaccatura, the turn, the trill, and the mordent.
+
+[music--45] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: How is simple common time expressed?
+  A: By C or the same sign with a line through it — ¢; also by 2
+
+[music--58] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: How is the inverted turn played?
+  A: The inverted turn begins with the note below, and ends on the principal note. Written. Played.
+
+[music--63] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What are the principal means of musical expression?
+  A: Strict attention to the accents, emphasis, syncopation, and a close observance of legato, staccato, crescendo and diminuendo. 1. Accents. What is mean
+
+[music--34] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What is a minor third?
+  A: When from the tonic to the third note above there are but three semitones (on the pianoforte four keys), the third is minor, and the key a minor key.
+
+[music--22] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: Which is the first flat?
+  A: B flat.
+
+[music--64] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: How are the accents placed in 4-4?
+  A: The first quarter is accented, and the others unaccented.
+
+[music--98] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What is necessary to a student to be conversant with transposition?
+  A: Acquaintance with all clefs and keys.
+
+[music--125] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What is a mass or missa?
+  A: A musical composition set and sung to the words of the principal Catholic service, such as the Kyrie, the Gloria, etc.
+
+[music--107] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What is a minor or lesser third?
+  A: A minor third (sometimes improperly called a flat third) is three semitones from the note named. For example, the Minor Third of A must be reckoned th
+
+[music--55] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: How is the acciaccatura expressed and performed?
+  A: The acciaccatura is also expressed by a small note; but it has a line drawn through it. It is played very short, as its name — derived from the verb a
+
+[music--95] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: How are the scales fingered with the left hand?
+  A: In C, and in keys with sharps, the thumb must be placed on the 1st and 5th degrees in the descending and ascending, in major and minor. i i r i i The 
+
+[music--99] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: Are the names of the notes on the lines and spaces the same in every clef?
+  A: No; when the position of the clef is changed, the names of the notes are also changed, as may be seen by the foregoing examples.
+
+[music--54] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What is the length of the appoggiatura?
+  A: It borrows half the value of the large note which it precedes, and which consequently must be played one half shorter.
+
+[music--38] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What are the keys with four flats?
+  A: The fourth flat being Db, the two keys are Ab major and F minor; the first a fifth, and the second a third above Db.
+
+[music--118] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What is a fantasia?
+  A: A composition the form of which is left to the taste and fancy of the composer. It has its periods, groups, and parts, like other compositions, but th
+
+[music--86] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What is the meaning of a double or treble stroke through the stem of a half or quarter note?
+  A: It signifies that the half or quarter note is to be divided into sixteenths, or thirty-seconds. Written. Played.
+
+[music--21] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: Which is the fourth sharp?
+  A: The fourth sharp is D sharp; the fifth A; the sixth E; and the seventh B sharp.
+
+[common-core--2165] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: Of what use are committees?
+  A: To reduce to a convenient shape matters which require care to construct, or to conduct an investigation; or it may prepare for quick consideration any
+
+[common-core--359] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What treaty was made with China?
+  A: In 1868 an embassy from China, in charge of Anson Burlingame, then our diplomatic representative in China, visited the United States. This was the fir
+
+[common-core--1921] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: How many kinds of nerves are there?
+  A: Two: motor and sensory.
+
+[common-core--1295] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What is the square root of a number?
+  A: One of two equal factors that produce that number.
+
+[common-core--1649] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What is impeachment?
+  A: An accusation or charge brought against a public officer for misconduct in office.
+
+[common-core--174] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: When did the massacre of Wyoming occur, and who directed it?
+  A: July 3, 1778, under the direction of John Butler and Joseph Brandt at the head of 1,600 Tories and Indians.
+
+[common-core--1103] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: Is u ever a consonant?
+  A: 'When it is preceded by g or s, and immediately followed by a vowel sound, it is a consonant and a substitute for w; as in language.
+
+[common-core--31] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: Who were the most important English discoverers and explorers?
+  A: The Cabots, Sir Francis Drake, Sir Humphrey Gilbert, Sir Walter Raleigh and Bartholomew Gosnold.
+
+[common-core--1741] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What functions are peculiar to animals alone?
+  A: Sensation and voluntary motion; these are, therefore, called animal functions.
+
+[common-core--834] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What part of the United States is in the same latitude north of the equator, that the southern part of Africa is south of it?
+  A: The boundary line which divides the States of Mississippi, Alabama and Georgia from Tennessee.
+
+[grammar--92] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What name is given to the different manners of expression employed for verbs?
+  A: Moods.
+
+[grammar--238] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What is the object of punctuation?
+  A: Help toward clear understanding for the reader.
+
+[grammar--136] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: Do adverbs have irregular forms of comparison?
+  A: A very few do; worse is the comparative of badly or ill, and worst the superlative; farther and further, farthest and furthest are forms from far; las
+
+[grammar--20] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: How is the plural usually formed in English words?
+  A: By adding s or es to the singular.
+
+[grammar--118] avg:5.0  ocr:5  intelligible:5  relevant:5  complete:5  clean:5
+  Q: What are shall and will?
+  A: Auxiliaries of the future tense.

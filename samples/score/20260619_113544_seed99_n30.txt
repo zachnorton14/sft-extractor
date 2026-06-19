@@ -1,0 +1,123 @@
+model: claude-haiku-4-5
+seed:  99
+n:     30
+
+[chemistry--242] avg:8.6  ocr:10  intelligible:6  relevant:7  complete:10  clean:10
+  Q: Can you enumerate the compounds of oxygen and carbon?
+  A: Carbonic oxide, carbonous oxide, and carbonic acid.
+
+[civil-war--24] avg:9.0  ocr:10  intelligible:10  relevant:5  complete:10  clean:10
+  Q: What is the meaning of "the battle line of democracy"?
+  A: It is a characterization used by President Wilson in a letter addressed in September, 1917, to the "American Alliance of
+
+[common-core--1672] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: Where shall bills for raising revenue originate?
+  A: In the House of Representatives.
+
+[common-core--1292] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is a perfect power? An imperfect power?
+  A: A perfect power is a number whose root can be found. An imperfect power is one whose root cannot be exactly found.
+
+[laborers--63] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: Is labor wealth?
+  A: It is.
+
+[brewers-guide--1109] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: Why do near-sighted persons bring objects close to the eye, in order to see them?
+  A: As the distance between the front and back of their eye is too great, distant objects are reflected before they reach th
+
+[civil-war--322] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What does enfilade mean?
+  A: Enfilading fire is the military term for a raking fire. A gun enfilades a trench when it is placed in such a position th
+
+[brewers-guide--363] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What regulates the motion of the clouds?
+  A: The motion of the clouds is generally directed by the winds; but sometimes electricity will influence their motion also.
+
+[astronomy--66] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: Who was the first to discover the phases of Venus?
+  A: Galileo discovered the phases of Venus in 1610; this discovery furnished a strong proof for the theory of Copernicus.
+
+[civil-war--366] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is an army division?
+  A: A division is a group of various branches of the Army, making the whole body complete in itself — that is, able to fight
+
+[seeleys--517] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: How was New Jersey settled?
+  A: A. The Duke of York granted the land between the Hudson and the Delaware to Lord Berkeley and Sir George Carteret. It wa
+
+[common-core--1330] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: A laborer dug a cellar, the length of which was 2 times the width, and the width 3 times the depth; he removed 144 cubic
+  A: Ans. 36 feet.
+
+[ethics--152] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What four things must we consider in a right?
+  A: The subject, the term, the matter, and the title of the right. The subject of the right is the person who possesses the 
+
+[school-bulletin--136] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What are the various sources of Sublimity?
+  A: The simplest form in which sublimity develops itself is vastness. The second circumstance that may be named as producing
+
+[seeleys--49] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: In what way is the twelfth century noted in English history and literature?
+  A: The English nation made many advances in learning and national growth. Oxford and Cambridge Universities were establishe
+
+[familiar-things--102] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is Barley Sugar?
+  A: Sugar boiled till it is brittle, and cast on a stone anointed with oil of sweet almonds, and then formed into twisted st
+
+[astronomy--119] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What are spring tides?
+  A: Spring tides are the highest tides of the month.
+
+[mythology--75] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: How are we to explain the noise made by Hermes when Apollo seizes him in his arms?
+  A: It is a momentary blast of wind, which dies away as suddenly as it came.
+
+[engineering--131] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What substances radiate heat most readily?
+  A: Those which absorb it most readily and reflect it the least.
+
+[chemistry--232] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is the composition of phosphoric acid?
+  A: Two atoms of phosphorus with five atoms of oxygen.
+
+[common-core--1962] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: When are lines parallel?
+  A: When they are equi-distant from each other throughout their entire length.
+
+[seeleys--405] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What rivers besides the Mississippi empty into the Gulf of Mexico?
+  A: The Appalachicola, Mobile, Brazos, Colorado, Rio Grande, Sabine, Trinity and Nueces Rivers.
+
+[music--33] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: How do you know the major key from the minor?
+  A: The major key is known by its major third, and the minor key by its minor third.
+
+[investors--282] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What constitutes a power of attorney?
+  A: When a person wishes to delegate to an agent or representative the right to transact any business which necessitates sig
+
+[chemistry--514] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: Are there any important cyanoferrites?
+  A: Yes; cyanoferrite of potash, and cyanoferrite of iron.
+
+[common-core--1181] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is a circulating decimal?
+  A: A decimal in which a figure or set of figures are continually repeating.
+
+[common-core--1412] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is it to educate a human being aright?
+  A: It is to direct the mind, the thoughts, the feelings, the instincts, into the channel of truth, morality, enterprise, de
+
+[school-bulletin--104] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What is Criticism?
+  A: The art of judging with propriety concerning any object or combination of objects. Every branch of literary study, as we
+
+[chemistry--447] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: What are the tests for arsenious acid?
+  A: Lime water, ammoniacal nitrate of copper, ammoniacal nitrate of silver, sulphydric acid, (sulphuretted hydrogen,) and th
+
+[brewers-guide--674] avg:10.0  ocr:10  intelligible:10  relevant:10  complete:10  clean:10
+  Q: How is food converted into blood?
+  A: After it is swallowed, it is dissolved in the stomach into a grey pulp; it then passes into the intestines, and is conve

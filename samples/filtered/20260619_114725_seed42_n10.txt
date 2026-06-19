@@ -1,0 +1,51 @@
+stage: filtered
+seed:  42
+n:     10
+
+[new-york-bar--35]
+  Q: A pledged with B two diamond studs. B placed one of the studs in his safe, and the other he wore in his necktie. Thereafter the stud in the safe was stolen, and subsequently thereto, the one in the tie was also stolen. A demands the return of the diamonds, and upon B's failure to deliver them, brings suit. Can he recover?
+  A: He cannot recover as to the one stolen from the safe, but may recover as to the one stolen from the tie. A pawnbroker or bailee is only liable for ordinary diligence, and where his place of business is broken into, and articles pledged are stolen therefrom, he is not liable if he exercised ordinary diligence. Abbett v. Frederick, 56 How. Pr. 68. "Jewels held in pawn may be worn, if the pawnee takes care not to lose or injure them, the pawnee being liable for any loss through theft or otherwise, which might happen in the wearing, for the pawn is so far in the nature of a depositum that it can be used but at the peril of the pawnee." Sheridan v. Presas, 18 Misc. 180.
+
+[brewers-guide--5]
+  Q: What is the second chief source of heat, electricity?
+  A: Electricity.
+
+[1001-questions--409]
+  Q: Who followed George III. ?
+  A: His son was appointed Regent when his father became insane, and held the office from 1811 to 1820 A. D.
+
+[stokers--3]
+  Q: If your water gauge-glass broke while the boiler was working, how would you proceed to rectify the mishap?
+  A: By immediately shutting off both cocks, the water-cock first, then I would open the blow-out cock (at the bottom of the gauge-glass) and keep it open to the finish, and commence unscrewing the nuts, clearing them of any bits of india-rubber that adhered to them, also the sockets. Get one of the half dozen glasses already cut, and my string of rubber rings, enter two rings on the bottom end of the glass, slip the nut over them, slip two rings on the top part of the glass after having slipped the nut on, and enter the rings in the sockets, then screw up both top and bottom nuts by hand alternately, and when screwed up evenly, open the steam cock a shade to warm the glass, and when it is hot enough, open it more and commence closing the blow-out cock, by tapping it lightly by hand, then open the steam cock a little more and open the water cock a little also, and shut off the blow-out cock, and presently the water enters the glass, and both top and bottom cocks may now be opened to their full extent, and the job is done.
+
+[civil-war--759]
+  Q: With whom did Germany do the biggest business during peace?
+  A: In 1913 and 1912 she did her biggest all-round business, counting both exports and imports, with the United States and Russia. Great Britain was a close third. Other countries with which she did a major business were France, Italy, Holland, Austria-Hungary, Belgium, Argentina, British India, Australia, Brazil, and Chile. Her trade with British West Africa and Egypt had been very large in 1912, but it had fallen away astonishingly in 1913.
+
+[civil-war--265]
+  Q: What are territorial waters?
+  A: Territorial waters are the harbors and indentations of a nation's coasts, and, in addition, the open sea to a limit of three marine miles (6,000 yards) from the whole line of coast. This distance of three miles was fixed long ago, merely because at that time the utmost range of a coast cannon was about that distance. It has often been proposed to extend this territorial zone to ten or more miles, but the three-mile limit remains in force. Within that distance of a neutral coast, enemies may not fight or take prizes, etc.
+
+[chemistry--622] [multi-turn]
+  Q: What is aldehyde?
+  A: It is the hydrated oxide of acetyl, formed when we deprive alcohol of two atoms of hydrogen, and is one of the products of the decomposition of alcohol or ether by passage through a red hot tube, and is also generated during etherification by nitric acid, &c.
+  Q: What are the properties of aldehyde?
+  A: It is a colourless, inflammable liquid, of a peculiar etherial and suffocating odour, soluble in water, alcohol and ether ; and by absorbing atmospheric oxygen, it is converted spontaneously into acetic acid.
+
+[brewers-guide--467]
+  Q: Why would a metal handle burn the hand of the tea-maker?
+  A: As metal is an excellent conductor, the heat of the boiling water rushes quickly into the metal handle, and into the hand that touches it.
+
+[seeleys--646]
+  Q: What prohibitions does the Constitution place upon the states?
+  A: The Constitution provides that the state shall have authority in local and municipal affairs. But all powers delegated to Congress shall not be exercised by the State, and all prohibitions placed upon Congress shall be binding upon the State.
+
+[astronomy--327] [multi-turn]
+  Q: What are nebulae?
+  A: Nebulae are faintly shining patches in the sky which the spectroscope has shown to consist of matter in the gaseous state in various stages of condensation.
+  Q: Are there many nebulae?
+  A: Yes, over 10,000 have already been discovered, mainly by photography, but only a very few are visible to the naked eye.
+  Q: How are the nebulae distributed in the heavens?
+  A: Their distribution is opposite to that of the stars; only a few are in or near the Milky Way, but their number increases rapidly as the distance from the galaxy increases.
+  Q: Which are a few of the most notable nebulae?
+  A: The Great Nebula in Andromeda, the Great Nebula in Orion, the Ring Nebula in Lyra, the Dumb-bell Nebula in Vulpecula, the Spiral Nebula in Canes Venatici and the Trifid Nebula in Sagittarius are some of the most noted nebulae; the first two are visible to the naked eye.

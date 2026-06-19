@@ -1,0 +1,503 @@
+stage: filtered
+seed:  42
+n:     100
+
+[new-york-bar--35]
+  Q: A pledged with B two diamond studs. B placed one of the studs in his safe, and the other he wore in his necktie. Thereafter the stud in the safe was stolen, and subsequently thereto, the one in the tie was also stolen. A demands the return of the diamonds, and upon B's failure to deliver them, brings suit. Can he recover?
+  A: He cannot recover as to the one stolen from the safe, but may recover as to the one stolen from the tie. A pawnbroker or bailee is only liable for ordinary diligence, and where his place of business is broken into, and articles pledged are stolen therefrom, he is not liable if he exercised ordinary diligence. Abbett v. Frederick, 56 How. Pr. 68. "Jewels held in pawn may be worn, if the pawnee takes care not to lose or injure them, the pawnee being liable for any loss through theft or otherwise, which might happen in the wearing, for the pawn is so far in the nature of a depositum that it can be used but at the peril of the pawnee." Sheridan v. Presas, 18 Misc. 180.
+
+[brewers-guide--5]
+  Q: What is the second chief source of heat, electricity?
+  A: Electricity.
+
+[1001-questions--409]
+  Q: Who followed George III. ?
+  A: His son was appointed Regent when his father became insane, and held the office from 1811 to 1820 A. D.
+
+[stokers--3]
+  Q: If your water gauge-glass broke while the boiler was working, how would you proceed to rectify the mishap?
+  A: By immediately shutting off both cocks, the water-cock first, then I would open the blow-out cock (at the bottom of the gauge-glass) and keep it open to the finish, and commence unscrewing the nuts, clearing them of any bits of india-rubber that adhered to them, also the sockets. Get one of the half dozen glasses already cut, and my string of rubber rings, enter two rings on the bottom end of the glass, slip the nut over them, slip two rings on the top part of the glass after having slipped the nut on, and enter the rings in the sockets, then screw up both top and bottom nuts by hand alternately, and when screwed up evenly, open the steam cock a shade to warm the glass, and when it is hot enough, open it more and commence closing the blow-out cock, by tapping it lightly by hand, then open the steam cock a little more and open the water cock a little also, and shut off the blow-out cock, and presently the water enters the glass, and both top and bottom cocks may now be opened to their full extent, and the job is done.
+
+[civil-war--759]
+  Q: With whom did Germany do the biggest business during peace?
+  A: In 1913 and 1912 she did her biggest all-round business, counting both exports and imports, with the United States and Russia. Great Britain was a close third. Other countries with which she did a major business were France, Italy, Holland, Austria-Hungary, Belgium, Argentina, British India, Australia, Brazil, and Chile. Her trade with British West Africa and Egypt had been very large in 1912, but it had fallen away astonishingly in 1913.
+
+[civil-war--265]
+  Q: What are territorial waters?
+  A: Territorial waters are the harbors and indentations of a nation's coasts, and, in addition, the open sea to a limit of three marine miles (6,000 yards) from the whole line of coast. This distance of three miles was fixed long ago, merely because at that time the utmost range of a coast cannon was about that distance. It has often been proposed to extend this territorial zone to ten or more miles, but the three-mile limit remains in force. Within that distance of a neutral coast, enemies may not fight or take prizes, etc.
+
+[chemistry--622] [multi-turn]
+  Q: What is aldehyde?
+  A: It is the hydrated oxide of acetyl, formed when we deprive alcohol of two atoms of hydrogen, and is one of the products of the decomposition of alcohol or ether by passage through a red hot tube, and is also generated during etherification by nitric acid, &c.
+  Q: What are the properties of aldehyde?
+  A: It is a colourless, inflammable liquid, of a peculiar etherial and suffocating odour, soluble in water, alcohol and ether ; and by absorbing atmospheric oxygen, it is converted spontaneously into acetic acid.
+
+[brewers-guide--467]
+  Q: Why would a metal handle burn the hand of the tea-maker?
+  A: As metal is an excellent conductor, the heat of the boiling water rushes quickly into the metal handle, and into the hand that touches it.
+
+[seeleys--646]
+  Q: What prohibitions does the Constitution place upon the states?
+  A: The Constitution provides that the state shall have authority in local and municipal affairs. But all powers delegated to Congress shall not be exercised by the State, and all prohibitions placed upon Congress shall be binding upon the State.
+
+[astronomy--327] [multi-turn]
+  Q: What are nebulae?
+  A: Nebulae are faintly shining patches in the sky which the spectroscope has shown to consist of matter in the gaseous state in various stages of condensation.
+  Q: Are there many nebulae?
+  A: Yes, over 10,000 have already been discovered, mainly by photography, but only a very few are visible to the naked eye.
+  Q: How are the nebulae distributed in the heavens?
+  A: Their distribution is opposite to that of the stars; only a few are in or near the Milky Way, but their number increases rapidly as the distance from the galaxy increases.
+  Q: Which are a few of the most notable nebulae?
+  A: The Great Nebula in Andromeda, the Great Nebula in Orion, the Ring Nebula in Lyra, the Dumb-bell Nebula in Vulpecula, the Spiral Nebula in Canes Venatici and the Trifid Nebula in Sagittarius are some of the most noted nebulae; the first two are visible to the naked eye.
+
+[school-bulletin--19]
+  Q: Who was Beatrice Cenci?
+  A: A remarkably beautiful girl who was born about 1583, and executed in September, 1599, when she was but sixteen years old. Her father, Francesco Cenci, subjected her and her step mother to atrocious cruelties. Beatrice vainly appealed to Pope Clement VIII. for protection, and she and her step mother determined to rid themselves of their unnatural persecutor. On September 9th, 1598, they drugged Francesco, and Beatrice introduced assassins into his room, where he was murdered while asleep. One of the murderers made a full confession of the homicide, implicating Beatrice, her step mother, and two brothers as being parties to the crime. They were tried for murder, and all, save the younger brother, were found guilty, and subsequently executed. To the last moment, Beatrice displayed the most heroic courage, and her youth and beauty were so great that her execution caused a thrill of horror throughout Rome. "Guido's masterpiece." There stands, on one of Rome's far famous hills, The palace of the Barberini race: Within, amidst the varied art which fills The walls, there hangs the painting of a face.
+
+[seeleys--715]
+  Q: How is self-control taught?
+  A: By giving an intelligent conception of the powers of the body and mind. The child that is taught to sit erect, to carry his body in proper position, to walk firmly and easily, to bring his whole physical being under the direction of the will is being taught self-control. He who has learned to hold his mind to the matter in hand without regard to surrounding distractions has gained the power of self-control. Hence the school is peculiarly adapted to teach this habit. The teacher should utilize the subjects of the curriculum, the discipline, the whole life of the school to secure this end. Q. How can discipline be utilized to this end? *See discussion of this point in Seeley’s “School Management,” p. 67. There are two methods of discipline. In the first, the teacher by rules and constant vigilance in the enforcement of them may be able to keep the children in order. In this case the attitude of mind on the part of pupils is that the maintenance of discipline rests with the teacher and the whole purpose is to escape detection. An evil committed, if undetected, causes the pupil but little conscientious qualm,—it is the teacher’s business to preserve order. Indeed, to get ahead of the teacher is considered quite a smart thing. In the other form of discipline, the child is placed on his honor*. He is taught to measure his deed by his own sense of right and wrong, by his inner consciousness. From this he cannot escape. It is true that some rules will be necessary in every school, but the pupil’s attitude towards them will be that they are instruments to aid him in the carrying out of his own ideas of duty. Just in so far as the child possesses correct ideas of duty and is called upon to exercise, these ideas is he trained to self-control. School discipline therefore, is one of the most important agencies in teaching children self-control.
+
+[familiar-things--214]
+  Q: What is meant by Combustion?
+  A: The decomposition of bodies by the action of fire; the union of combustible bodies with the oxygen of the atmosphere. The greater access the air has to a burning body, the more rapid and complete is the process. _Combustible_, capable of taking fire. _Access_, the means or liberty of approach to anything.
+
+[astronomy--72]
+  Q: How far is the earth away from the sun?
+  A: The mean distance of the earth from the sun is 92,900,000 miles; the actual distance varies about 1,500,000 miles each way from the mean distance.
+
+[investors--317]
+  Q: What is salting down stock?
+  A: To buy stock and hold it for a long period; practically the equivalent of an investment.
+
+[common-core--1967] [multi-turn]
+  Q: What are the units for measuring the height and width of letters?
+  A: The height of the small e, commonly called a space, is the unit of height. The horizontal distance between the two straight lines in the letter H is the unit of width.
+  Q: What letters are but one space in height?
+  A: A, C, E, T, M, N, O, U, V, W and x.
+
+[1001-questions--520]
+  Q: Who was placed on the throne?
+  A: Louis XVIII., brother of Louis XVI.
+
+[1001-questions--488] [multi-turn]
+  Q: What was the condition of the lower classes?
+  A: They were overwhelmed by taxation, while the nobility and clergy, who owned two-thirds of the land, were exempt. Men were sent to prison without trial or charges and kept till death. The laws were enacted by those who considered the common people born for the use of the higher class.
+  Q: What did the strife between classes awaken?
+  A: An intense hatred.
+  Q: What was the religious thought at this time?
+  A: Skepticism prevailed, and all that is elevating in religion and morals was made the subject of ridicule.
+  Q: What did all these conditions develop?
+  A: The French Revolution.
+
+[astronomy--183] [multi-turn]
+  Q: What is the distance and period of Enceladus?
+  A: The distance of Enceladus is 157,000 miles; its period is 1 day 8 hours 53 minutes.
+  Q: Who discovered these moons?
+  A: Sir William Herschell discovered these two in 1789.
+
+[chemistry--547]
+  Q: What properties distinguish stearine?
+  A: It is a white crystalline solid, not greasy to the touch, easily pulverized, soluble in boiling alcohol, but insoluble in cold alcohol, water, or ether.
+
+[civil-war--64]
+  Q: What was the final article of the peace program?
+  A: Article XIV called for a league of nations in these words : "A general association of nations must be formed, under specific covenants, for the purpose of affording mutual guaranties of political independence and territorial integrity to great and small States alike."
+
+[engineering--395]
+  Q: For what purpose are steam separators used?
+  A: For removing moisture from steam before it enters the engine cylinder; or they may be used for extracting other liquids from vapors, as, for example, the oil contained in exhaust steam. The first named is generally called a live steam separator.
+
+[laborers--106] [multi-turn]
+  Q: Can a government prevent its citizens from making contracts?
+  A: Only in a limited degree.
+  Q: Why so?
+  A: Because citizens will make reasonable contracts in secrecy and carry them out in secrecy, even when prohibited by the government.
+
+[1001-questions--434]
+  Q: What was the first great battle of the Hundred Years' War?
+  A: The Battle of Crecy (1346), in which Philip was defeated.
+
+[grammar--89]
+  Q: How is the passive voice formed?
+  A: By using forms of the verb be with the past participle of any required verb.
+
+[chemistry--222]
+  Q: What is the old name for ammonia?
+  A: Hartshorn, derived from the circumstance of obtaining it from the horn of the hart.
+
+[seeleys--311]
+  Q: A boy was hired for 40 days, at fifty cents a day and his board. For each day he was idle he forfeited 25 cents. At the end of the time he received $11, how many days did he work?
+  A: Ans. 28 days.
+
+[new-york-bar--206]
+  Q: A agrees by written contract to employ B at $10 per week for an indefinite time, and B agrees to give A three weeks' notice in writing before leaving or forfeit $200. B works for twenty weeks without drawing salary, and then leaves without giving A any notice. B sues A to recover $200, as salary due. A sets up the agreement as a defense. Judgment for whom and why?
+  A: Judgment for B. The amount of damages agreed upon as a forfeiture is so much greater than the actual loss suffered, as to avoid the stipulation on the ground that it is a penalty. A can of course set up as a counterclaim his actual damage sustained by reason of B's breach. " Where the parties to a contract stipulate for a payment in liquidation of damages by a party in default, if the damages are in their nature uncertain and incapable of exact ascertainment, and may be dependent upon extrinsic consideration and circumstances, and the amount is not upon the face of the contract out of all proportion to the probable loss, it will be treated as liquidated damages. The fact that the sum agreed to be paid is termed by the parties a penalty, is not controlling upon the question of construction. It seems, however, that when the stipulated sum is disproportionate to the presumable or probable damage, or to a readily ascertainable loss, the courts will treat it as a penalty, and will relieve upon the principle that the precise sum was not the essence of the agreement, but was in the nature of a security for performance." Gray, J., in Ward v. H. R. Bridge Co., 125 N. Y. 230.
+
+[seeleys--70] [multi-turn]
+  Q: Who were the historians of the Eighteenth Century?
+  A: David Hume, who wrote "A History of England from the Invasion of Julius Caesar to the Revolution of 1688." Edward Gibbon, whose great work is "The Decline and Fall of the Roman Empire." William Robertson, the author of "A History of Scotland," and "A History of America."
+  Q: What was the character of the drama at this time?
+  A: The drama, and the histrionic art as well, reached a high degree of excellence at this time. Goldsmith’s “She Stoops to Conquer,” and Sheridan’s “Rivals” and “School for Scandal” have become classics. Other dramatists were Garrick, Foote and Cibber.
+  Q: Who were the noted theologians of this time?
+  A: Bishop Butler, whose principal work is the “Analogy of Religion.” William Paley, who wrote “Elements of Moral and Political Philosophy.” The Wesleys and George Whitefield, the founders of Methodism, each of whom wrote many sermons and hymns.
+
+[familiar-things--207]
+  Q: Where is the Coral Insect found?
+  A: In nearly all great seas; but particularly in the Mediterranean, where it produces Corallines of the most beautiful forms and colors: it is in the Pacific Ocean, however, where these tiny workmen are effecting those mighty changes, which exceed the most wonderful works of man. What is that part of the Pacific called, where the Coral Rocks are most abundant? The Coral Sea, from the number of coral reefs and sunken islands, with which it abounds; it includes a region of many miles in extent, the whole of which is studded with numberless reefs, rocks, islands, and columns of coral, continually joining and advancing towards each other. All navigators who have visited these seas, state that no charts or maps are of any service after a few years, owing to the number of fresh rocks and reefs which are continually rising to the surface. The wonderful instinct of these animals leads them to continue working without ceasing, until their labors are finished, or their lives extinct. _Reef_, a chain or line of rocks lying near the surface of the water. _Extinct_, at an end, dead.
+
+[common-core--1928]
+  Q: What is reflex action?
+  A: A sudden action occurring without thought or meditation, as we start at a sound, jump from sudden danger, or wink at a flash of light or threatened blow.
+
+[chemistry--576] [multi-turn]
+  Q: Where does gallic acid exist?
+  A: In the bark of trees, and united with tannic acid in nut galls.
+  Q: What are the properties of gallic acid?
+  A: It crystallizes from a hot solution in thin silky needles which require 100 parts of cold water for solution, although when boiling, 3 parts are sufficient. It is very soluble in alcohol and sparingly soluble in ether. It is a monobasic compound represented by the formula C7H6O5.
+
+[electricity--104]
+  Q: What is the metric unit of power?
+  A: The unit is the watt, which equals one joule per second. A larger unit is often used, the kilowatt, which equals 1000 watts. The number of watts equals the product of amperes by volts, or the product of resistance by the current squared. The joule was named after James Prescott Joule (1818 to 1889), an English physicist who did much to verify the law of conservation of energy. The watt was named after James Watt (1736 to 1819), who greatly improved the steam engine, being practically the inventor of the modern engine. (See Nos. 231, 232.)
+
+[investors--297]
+  Q: What is a quintal?
+  A: In metric measure it is equal to 220.46 pounds avoirdupois.
+
+[civil-war--810]
+  Q: What party is the Junker party?
+  A: The Conservative. It is the party of the landed interests, the "agrarians," officials and so forth. Because of its interest in agriculture, it gets the support of many peasants, especially the prosperous ones. It is the party that fights for protective tariffs on agricultural products including meats. It stands also for colonial expansion and strong armies and navies. Being led largely by the Junker class it opposes political reform.
+
+[1001-questions--106]
+  Q: What are some of the rewards given for ability in public service?
+  A: A peacock feather, to be worn in the official hat and possessed of no eye, or of one, two or three eyes, according to the magnitude of the favor shown; permission to enter the outer gate of the palace on horseback; a sable robe; and most prized of all, a short jacket of imperial yellow, the color sacred to His Majesty.
+
+[brewers-guide--796]
+  Q: Why is bread heavy, if the dough be removed from the fire?
+  A: Because the dough gets cold, and then the air in the bladders condenses,—the paste falls,—and the bread is close and heavy.
+
+[seeleys--18] [multi-turn]
+  Q: What is a monotone?
+  A: A monotone is an unvaried tone throughout a sentence or discourse.
+  Q: When is it permissible?
+  A: It may be used to express solemnity or sublimity of thought, or intensity of feeling. It is used, also when the entire sentence is emphatic.
+
+[common-core--1979]
+  Q: What distance is allowed between capitals used as initial letters?
+  A: One space.
+
+[common-core--629] [multi-turn]
+  Q: How large is Australia?
+  A: About four-fifths as large as the United States.
+  Q: What is the surface of this island?
+  A: Near the coast are mountain ranges. The central regions have never been explored, but are supposed to consist of a low, barren plain. The Murray is the only river of much importance.
+  Q: What are the inhabitants?
+  A: The greater part of them are Europeans and their descendants. The natives are of the Papuan race.
+  Q: What are the chief pursuits of the people?
+  A: Mining and raising wool. They also produce large amounts of wheat, indigo, cotton, sugar, coffee, tin and copper.
+
+[civil-war--805] [multi-turn]
+  Q: What was the political contest in Prussia in 1917-1918 about?
+  A: It was over a determined attempt to reform the suffrage and thus to democratize the composition of the Lower House. The Emperor's approval of the reform gave it national importance in itself, quite apart from the fact that democratization of Prussia would mean a mighty impetus toward national democratization. Prussian reform had been a national issue in Germany for several years before the war. It began in 1910 when the Government introduced a bill changing the class voting system by putting voters of superior education into the second class, regardless of taxation, and abolishing indirect voting and thus largely reducing the over-balance of the first class. Socialists and Liberals refused the measure as inadequate. The Junker classes denounced it as revolutionary. It was withdrawn.
+  Q: Did this kill the movement for reform?
+  A: No. It accentuated it. It was made a subject of Reichstag agitation, and in the 1912 elections to the Reichstag, the Social Democrats gained 57 members, giving them no altogether. This, with the 90 members elected by the Liberals and the Radicals, gave the parties of opposition ("the Left" as it is called in European political parlance) an actual numerical majority, and made the Socialists the largest single party in the Reichstag. After the war began, the struggle was resumed in Prussia. The Imperial Chancellor (as the Prussian Minister of State) introduced a reform bill, backed by the Emperor's emphatic declarations in support. Thus the Prussian Junkers were suddenly lined up against the government instead of being the supporters of it. They fought bitterly and uncompromisingly. Even the Emperor's threat of dissolution and new elections did not induce them to cease opposition or to abandon their plainly uttered purpose of emasculating any measure that might pass.
+
+[brewers-guide--728]
+  Q: In what part of the year is it most difficult to keep stoves and fire-irons bright?
+  A: In autumn and winter; because the capacity of the air for holding water being on the decrease, its vapour is deposited on everything with which it comes in contact.
+
+[chemistry--492]
+  Q: What properties distinguish the nitrates?
+  A: The three following, namely: — 1st. By deflagrating with charcoal and other combustibles. 2d. By their power of dissolving gold leaf on the addition of muriatic acid. 3d. By emitting, when subjected to concentrated sulphuric acid, the dense white fumes of nitric acid. The neutral nitrates are all soluble.
+
+[common-core--569]
+  Q: What city of the West Indies is in the same latitude north of the equator that Rio Janeiro is south of it?
+  A: Havana.
+
+[astronomy--322] [multi-turn]
+  Q: What are spectroscopic binaries?
+  A: Spectroscopic binaries are stars which cannot be shown as double by any telescope; the spectroscope, however, gives conclusive evidence that the light of such stars comes from two distinct sources which alternately approach and recede from us as they revolve in their orbit.
+  Q: Are there many spectroscopic binaries?
+  A: About every twelfth star of the brighter ones so far examined has proved to be a spectroscopic binary.
+  Q: What are the periods and the orbital velocities of the spectroscopic binaries?
+  A: The periods range from a day to several years and their orbital velocities reach several hundred miles a second; Beta Aurigae, for instance, has a period of four days, a velocity of about 150 miles a second, a mass more than twice that of the sun, and the orbit in which the two components move is about 8,000,000 miles in diameter.
+
+[astronomy--167]
+  Q: Who discovered the fifth and innermost of Jupiter's satellites?
+  A: Barnard discovered the fifth satellite of Jupiter in 1892 with the big Lick telescope; it is, perhaps, not 100 miles in diameter and only the large telescopes will show it.
+
+[common-core--1279]
+  Q: How many antecedents are there in a proportion, and how many consequents?
+  A: As each ratio has an antecedent and consequent, the first and third terms of a proportion are the antecedents, and the second and fourth the consequents.
+
+[astronomy--232] [multi-turn]
+  Q: When comets move in an elliptic orbit do they return?
+  A: Since the ellipse is a closed curve, comets which have an elliptic orbit return at regular intervals.
+  Q: Do the orbits of the comets which move in ellipses approach the circular form, as do the orbits of the planets?
+  A: No; the orbits of the comets are very elongated.
+
+[common-core--936]
+  Q: How are most nouns made plural?
+  A: By adding s to the singular; but those ending in o, a, w, y, preceded by a consonant, or in s, x, z, sh, and soft ch, add es.
+
+[common-core--690] [multi-turn]
+  Q: Which of the States are separated by the Mississippi River?
+  A: Wisconsin, Illinois, Kentucky, Tennessee and Mississippi on the east shore are separated from Minnesota, Iowa, Missouri, Arkansas and most of Louisiana on the west.
+  Q: Which are separated by the Ohio River?
+  A: Ohio, Indiana and Illinois, from Kentucky and West Virginia.
+
+[logic--24] [multi-turn]
+  Q: How many predicaments, or categories, were enumerated by the old logicians?
+  A: Ten: — viz. Substance; Quantity, with its three species, number, time, and magnitude; Quality, with its four species, habit, natural power, patible quality, form, and figure; Relation, Action, Passion, Where, When, Posture, and Habit.
+  Q: How does Time, a species of quantity, differ from the category When?
+  A: The former relates to the time how long.
+  Q: What do you mean by passible qualities?
+  A: Those qualities of body which the mind is passive in receiving.
+
+[civil-war--586] [multi-turn]
+  Q: Did Petrograd recognize the Ukraine republic?
+  A: No. Both the Kerensky and the Lenine-Trotzky revolutionary governments refused to recognize an independent Ukraine, an independent Finland, or independent Lithuanian States. They sent troops to Finland and the Ukraine. The Lenine-Trotzky Government ordered war on the Ukraine, and continued hostilities till they themselves signed a treaty of peace with the Central Powers and therein bound themselves to recognize the new republics.
+  Q: Why did the Bolsheviki oppose the Ukrainians?
+  A: The Bolsheviki claimed that the party in the Ukraine that had proclaimed independence was a party composed of the bourgeois population; and, as the Bolsheviki plan for Russia was to make it a republic of the proletariat, an attempt by the bourgeois to assert independence was just as obnoxious to them (and quite logically so) as if the old aristocracy had attempted a counter-revolution in Russia. In fact, the "counter-revolution" feared by the Bolsheviki is essentially a counter-revolution by the bourgeois. If the Russian question were a perfectly clear-cut issue between aristocracy and common people, the situation would be very simple. We would then have seen much less of these apparently contradictory actions.
+
+[advanced-questions--119]
+  Q: What is a solar day?
+  A: — Sun time, or the interval between two successive passages of the sun across the meridian of any place.
+
+[seeleys--535] [multi-turn]
+  Q: What led Parliament to pass the 'Five Intolerable Acts'?
+  A: The Boston Massacre and the Boston Tea Party.
+  Q: What were these "Intolerable Acts"?
+  A: (1) Boston Port Bill, closing the port of Boston. (2) Transportation Bill, authorizing the sending of persons out of the colony for trial. (3) Massachusetts Bill, appointing a military governor and forbidding public meetings. (4) Quartering Act. (5) Quebec Act, enlarging the province of Quebec and including territory claimed by Massachusetts, Connecticut and Virginia.
+  Q: To what did these “Acts” lead?
+  A: To the calling of the First Continental Congress at Philadelphia, September 5, 1774.
+  Q: What was done by this Congress?
+  A: It agreed to hold no commercial intercourse with Great Britain. It issued a "Declaration of Rights" asserting the rights of the colonists to life, liberty, property; power of taxation, right to petition and peaceable assemblage; and charter rights. It sent a petition to the king and ordered another congress to be held May 10, 1775, to take action on this petition.
+  Q: What important measures were taken by the Second Continental Congress?
+  A: War was declared and George Washington was appointed Commander-in-Chief.
+
+[electricity--272]
+  Q: What is an ion?
+  A: All substances are composed of very minute particles known as molecules, which in turn are composed of still smaller elementary particles called atoms. Until recently the molecule has been looked upon as being the smallest particle of matter that could exist alone or in a free state, the atoms never remaining free, but always uniting with other atoms of the same or of different elements, so as to form molecules. Recent physical investigations indicate that in every solution there exist members of free atoms or groups of atoms smaller than molecules, which are called ions. The ions tend to appear at the electrodes, those at the anode being called anions, those at the cathode being called cations. Each ion is believed to carry a static charge, by which it is attracted to the oppositely charged electrode. A theory which is now coming into general acceptance is that, in the case of elementary gases, the passage of an electrical discharge breaks up the atoms, which have heretofore been considered as the ultimate particles of matter, into positive and negative ions, the negative ion being only a small chip forming about one one-thousandth part of the original atom, while the remainder of the atom becomes the positive ion ; each of these charged particles may gather around itself a number of molecules and travel toward the electrode. Thus, in an elementary gas, such as hydrogen or oxygen, an ion may be a small chip of an atom, or the remainder of the atom, or either of these together with a group of other attracted molecules. In general, an ion may be said to be a small charged particle of matter. Many recent investigations strengthen the theory that all " elements " are modifications of one fundamental unit which is electricity.
+
+[familiar-things--64]
+  Q: Does it not undergo some change during the year?
+  A: Each year the bark of a tree divides, and distributes itself two contrary ways, the outer part gives towards the skin, till it becomes skin itself, and at length falls off; the inner part is added to the wood. The bark is to the body of a tree, what the skin of our body is to the flesh.
+
+[brewers-guide--226] [multi-turn]
+  Q: Why is a rush light extinguished so much more quickly than a cotton-wicked candle?
+  A: As the rush wick is smooth and hard, the mere motion of the air (produced by carrying the candle from one place to another,) is sufficient to sever the flame from the rush.
+  Q: Why is it more difficult to blow out a cotton wick?
+  A: The cotton wick is quite full of small threads or filaments, which help to hold the flame on the wick, like the roots of a tree.
+
+[common-core--1256]
+  Q: What is exchange, and how many kinds are there?
+  A: Exchange is a method of remitting money from one person to another, or making payments by written orders. There are two kinds, domestic and foreign.
+
+[agriculture--152]
+  Q: In judging livestock, what consideration should judges give to performance?
+  A: In judging horses, considerable value should be given to training, gait and all other factors involved in performance, for his ability to do the work expected is of primary importance. In judging a dairy cow, performance is of even more importance, and should be duly considered by the judge, because in the last analysis it is her ability to profitably produce milk and butter that fixes her value.
+
+[familiar-things--323] [multi-turn]
+  Q: Name a few of the ancient poets.
+  A: David was an inspired poet of the Hebrews: Homer, one of the earliest poets of the Greeks: Ossian, an ancient poet of the Scots: Taliesin, an ancient poet of the Welsh: and Odin, an early poet of the Scandinavians.
+  Q: Who were the Scandinavians?
+  A: The inhabitants of Scandinavia, the ancient name of Denmark, Sweden, and Norway.
+
+[civil-war--1056] [multi-turn]
+  Q: What was the greatest sea battle?
+  A: The fight with the Spanish Armada, which, in 1588, was destroyed by the British fleet. Spain's dominion of the sea was broken, and after that her mighty empire began to crumble.
+  Q: What were the other battles?
+  A: Blenheim, where, in 1704, Marlborough, commanding German, British and Dutch troops, defeated the French and thus destroyed the vast fabric of power built up by Louis XIV. It is interesting to recall that the Irish Brigade, fighting for the French, almost turned defeat into victory. Pultowa, where Peter the Great defeated Charles of Sweden in 1709. This victory marked the entry of Russia into history as a European power, and with it began the decline of Sweden. It also marked the beginning of rivalry between Slav and Teuton, one of the deeper excuses for the world-devastating struggle of our day. Saratoga, where, in 1777, the Americans, under Gates and Arnold, defeated the British under Burgoyne and captured his army. Though few men were engaged, the victory was immediately important. Valmy, where the armies of the French Republic won their first victory in 1792. The battle saved Paris and the French democracy. Waterloo, where, in 1815, the British, Dutch, Brunswickers and Belgians, under Wellington, and the Prussians, under Blucher, defeated Napoleon, and completed the destruction of the mighty empire he had built up. At that time a von Bulow, by the way, commanded one of the Prussian army corps.
+  Q: How do numbers of ancient armies compare with to-day?
+  A: There is no comparison at all. Never before in the history of the world had armies so been used. The largest armies of modern times before this war were the American armies of the Civil War. When the Civil War ended there were 2,000,000 Northerners and 1,000,000 Southerners under arms. In the Franco-Prussian War the Germans had 1,124,000 soldiers, the French 1,000,000. At Waterloo, Napoleon had 72,000 men, Wellington 67,700, and Blucher 50,000. Napoleon's Grande Armee, which invaded Russia, crossed the border 600,000 strong. Only 20,000 men returned. In ancient times Hannibal invaded Italy with 60,000 men. Alexander the Great conquered the known world with 50,000. Charles Martel smashed the Saracens and saved France from Mohammedan domination with an army of 20,000. The Turks were defeated by the brilliant Pole, Pan Sobieski, before the gates of Vienna, in 1683, saving Europe.
+
+[mythology--159] [multi-turn]
+  Q: What does Herodotus tell us about Io?
+  A: His story is that when a Phoenician merchant ship chanced to come to Argos, she went on board to make choice of things to be purchased; that the captain of the vessel carried her away, either with or against her will, and that this offence led the Greeks to make reprisals by carrying off Medea from Colchis.
+  Q: What resemblance has this to the other tale?
+  A: None whatever; the only point in common between them is that Io is carried into Asia.
+  Q: Is Herodotus, then, speaking of the same Io?
+  A: Clearly he is; for he calls her the daughter of Inachus.
+  Q: How is his version of the story to be accounted for?
+  A: When the marvellous incidents of the old legends came to be thought incredible, Herodotus and other writers fancied that they could mend matters by putting aside all that was marvellous in each story, and then regarding it as still the same story. Thus, according to him, Io was not changed into a heifer, and never talked with Prometheus. In the same way the historian Thucydides makes a very plausible history of the Trojan war, by leaving out all that is said about Hector, and Helen, and Achilles, and all the other actors in the tale.
+  Q: Is this method trustworthy?
+  A: It is neither more nor less trustworthy than the story of Jack the Giant-killer would be, if we were to say that he never climbed up to the sky on a bean-stalk, and that he never killed any giants, because there are no giants to kill.
+
+[music--121]
+  Q: What is a cantata?
+  A: A composition consisting of arias, duets, and choruses arranged according to the incidents of the poem, interspersed with recitatives, which, though resembling the musical drama in its plan form, is intended to be performed without scenic assistance.
+
+[common-core--980] [multi-turn]
+  Q: What properties have verbs?
+  A: Voice, mode, tense, person and number.
+  Q: Define voice, mode and tense?
+  A: Voice shows whether the subject does or receives the act. Mode is manner of assertion. Tense expresses time.
+
+[investors--102]
+  Q: What is a commitment?
+  A: It is an act of engagement or pledging in the market among brokers. A verbal agreement to buy or sell at a certain price.
+
+[chemistry--115]
+  Q: What is the best test for chlorine?
+  A: Silver in solution; which causes a dense white precipitate of chloride of silver.
+
+[seeleys--123]
+  Q: What is a word?
+  A: A word is the sign of an idea.
+
+[agriculture--0]
+  Q: What is the art of agriculture?
+  A: The art of agriculture, or farming, includes the tilling of the soil, the raising of farm crops common to a particular region, and the rearing, feeding, and using of farm animals.
+
+[advanced-questions--158] [multi-turn]
+  Q: Who was Hebe (Juventus)?
+  A: The cup-bearer of the gods, to whom, at meal, she presents the sweet nectar. It may at first seem strange that the daughter of the greatest of the divinities of Greece (Jove) should be relegated to so inferior a position. This, however, is easily explained by the old patriarchal custom of the Greeks, by which the young unmarried daughters, even in royal palaces, waited at table on the men of the family and the guests.
+  Q: By whom was she succeeded?
+  A: By Ganymede, son of Tros, the king of Troy, who was made immortal by Jupiter, and installed as cup-bearer of the gods. Neither Homer nor Pindar, however, relates the episode of Jupiter sending his eagle to carry off Ganymede. This is first found in Apollodorus. The Roman poet Ovid then went a step farther, and made the ruler of Olympus transform himself into an eagle, in order to carry off his favorite.
+
+[new-york-bar--393]
+  Q: A, the wife of B, secures a policy of insurance on his life, payable in ten years to herself in case she lives, and in case she die before her husband, to be paid to her husband. In case she outlives her husband, to be paid to her children, share and share alike. One year after the issuance of the policy, A and B make an assignment of the policy to D. The insurance company at the end of the ten years pays to the assignee of A and B. At that time, A is living with her three children. The children, through a guardian, bring suit against the insurance company to enforce their rights under the policy. What are their rights, and was the assignment valid? Who should have judgment?
+  A: Judgment for the insurance company. The policy was payable to A, if she were alive, and she having assigned her rights to D, he acquired and possesses the same rights she would have had under the policy. The children therefore have no rights; whatever right they had was cut off by the assignment. The assignment was valid. An assignment of a life insurance policy, issued upon the life of a husband, in which his wife is the beneficiary, is valid, where the assignment is made by the wife with the written consent of the husband. Fuller v. Kent, 13 App. Div. 529.
+
+[chemistry--698]
+  Q: Is there a diversity in the appearance of the electric spark?
+  A: Yes. There is the short straight, and the long zigzag spark.
+
+[civil-war--994] [multi-turn]
+  Q: Was drunkenness in England really great?
+  A: The figures of convictions for drunkenness in the sixteen English cities which have a population of over 200,000 show a notable decrease since the war. In the year 1913 the convictions in these sixteen large towns were 107,316. In 1915 the convictions were 80,091, and in 1916 they were 46,638. In London the drop has been from 65,488 in 1913, to 29,453 in 1916. In Liverpool the convictions in 1913 were 14,894 and in 1916 only 5,926. Of course millions of men have gone into the army, but this is to a great extent balanced by the fact that the working classes have been fully employed at high wages, which in fact, in ordinary circumstances, would tend to increase drunkenness; so that the decrease may reasonably be credited to the way in which the sale and consumption of liquor have been regulated.
+  Q: Was the decrease due mostly to restrictions on liquor?
+  A: Notably. The Central Control Board states that during the five years 1909-13, there was a steady rise in the number of convictions for drunkenness. A rapid decline set in immediately after the orders of the Board came into operation. In December, 1913, the total convictions in the London areas numbered 5,701; in December, 1914, they were 5,295; in December, 1915, they were 3,105 in February, 1916, they had fallen to 2,506. From statistics gathered by the Board it would seem that the reduction of drunkenness throughout England was from 40 to 50 per cent. Results in Scotland had not been so satisfactory. The Board was taking special steps to deal with the increase of drunkenness among women, especially those in receipt of separation allowances.
+
+[agriculture--168]
+  Q: How much milk and butter fat should a dairy cow give in a year?
+  A: At least 6,000 pounds of milk and 225 pounds of butter fat. Under Kansas conditions a cow must give 4,000 pounds of milk or 160 pounds of butter fat to pay for her keep. The greater the amount above that the more profitable is the cow.
+
+[civil-war--67] [multi-turn]
+  Q: How many Americans were in the great fighting of July and August, 1918?
+  A: On July 20, soon after the big Allied offensive was under way, 270,000 American troops were engaged between Chateau-Thierry and Soissons alone. Seven divisions and at least one separate regiment participated. That would mean that at least 160,000 American troops were actually in the fierce fighting, the others being on the lines of supply, etc. In addition there were 30,000 men east of Rheims, making the whole number of Americans engaged 200,000 men at least. More were thrown in as the battle progressed.
+  Q: What troops were engaged first?
+  A: The 42d, or Rainbow, Division, composed of National Guard troops from twenty-six States and the District of Columbia, including the New York 69th Infantry, then designated as the 165th Infantry, fought in the Champagne east of Rheims. The six other divisions were associated with the French in the counter-offensive between Chateau-Thierry and Soissons. These were the 1st, 2d, 3d, and 4th of the regular army, the 26th National Guard Division, composed of troops from the six New England States, and the 28th, composed of the Pennsylvania National Guard. Marines were included in this number.
+
+[astronomy--302] [multi-turn]
+  Q: Where is the constellation Bootes?
+  A: Bootes is east of Canes Venatici and Coma Berenices, and reaches from Ursa Major down to Virgo; it comes to the meridian in June; Arcturus, a star of ruddy hue, and one of the brightest fixed stars, is in this constellation.
+  Q: What small, but very pretty, constellation borders upon Bootes at the east?
+  A: This pretty constellation is Corona Borealis, the Northern Crown, which is very readily recognized by a semicircle of six stars; the open part of the figure lies toward the northeast.
+  Q: What constellation is south of Corona?
+  A: It is Serpens, the Serpent; a sinuous line of stars leads to Ophiuchus,* the Serpent-bearer; a lozenge-shaped figure, made by stars in Serpens and Ophiuchus, is one of the most characteristic groups of stars which strike the eye on a summer evening. Fig. 26— Midsummer Evening Constellations.
+  Q: What constellations are south of the ones just mentioned?
+  A: They are Libra, the Scales, and Scorpius, the Scorpion; the latter is very easily recognized by its curved line of bright stars, among which blazes the fiery Antares, the rival of Mars in color and brightness; this star is of the 1.2 magnitude. * Ophiuchus is also called Serpentarius.
+  Q: What constellation is north of Ophiuchus?
+  A: It is Hercules, which extends as far north as Draco; Alpha of Hercules and Alpha of Ophiuchus, the brightest stars of their constellations, are separated only by a short distance and occupy a rather isolated position.
+  Q: What constellation is east of Hercules and south of Draco?
+  A: Lyra, the Lyre, occupies this position; it contains the bluish-white star Vega of the 0.2 magnitude, near which is a parallelogram of fainter stars; Lyra culminates in August.
+  Q: Is there anything noteworthy regarding Vega?
+  A: Yes, on account of the precession of the equinoxes, the celestial pole describes a circle in the heavens around the pole of the ecliptic once in about 25,800 years; 12,000 years hence the celestial north pole will have moved close to Vega, which will then be the pole-star.
+
+[common-core--1282]
+  Q: What is a direct proportion?
+  A: One in which each term increases or diminishes, as the one on which it depends increases or diminishes.
+
+[civil-war--807]
+  Q: Do the southern Germans hate the Prussians?
+  A: There has always been a very general feeling of intellectual disdain for the Prussian. His marked practical abilities are recognized, though not always admired, and his faults also are recognized and pretty sharply characterized. He is accounted crude and sordid by the southern Germans, and the appellation "Preuss" used by them is not complimentary. But events have shown that the whole German people has been trained to obey its rulers, to the extent of violating all other obligations. And the relentless, organizing Prussian has ruled Germany for nearly half a century.
+
+[electricity--173]
+  Q: Does applying a certain E.M.F. to a conductor having one end insulated raise the whole of the conductor to that E.M.F., irrespective of its length?
+  A: When no current is flowing through a conductor, it usually has the same potential throughout its length, except when it is charged inductively. For example, suppose that one terminal of a battery (say the negative) giving 10 volts is connected to the earth, while the other terminal (the positive) is connected with one point of an insulated wire. There is then a difference of potential of 10 volts between the earth and the positive terminal of the battery; the same difference of potential exists between the earth and every part of the insulated wire, provided it is not acted upon by any E.M.F. other than that of the battery. If, however, the insulated wire be connected with the earth either directly or through a resistance, current will flow through the wire, causing a fall of potential equal to product of current by resistance; the difference of potential between the wire and the earth then falls from about 10 at the battery terminal toward zero at the point of contact with the earth. When a conductor is charged inductively, somewhat as discussed in Nos. 99 to 101, the potential may vary in different parts when no current flows. For example, suppose that one end of a conductor is near a body charged negatively, while the other end is grounded; the difference of potential between the earth and the conductor then varies from zero at the grounded end to a maximum at the end nearest the charged body.
+
+[mythology--275]
+  Q: What was Oannes?
+  A: The fish-god of the Babylonians. This being, who was represented with a human form behind which appeared the scaly covering of a fish, was said to dwell in the sea, out of which he came every day to teach the Babylonians all wisdom and science. By the Philistines he was worshipped under the name Dagon. As emerging daily from the sea, and as possessed of a mysterious wisdom, he is manifestly the same as the Greek Proteus.
+
+[common-core--1032]
+  Q: What part of a sentence is considered the most important?
+  A: The beginning; the next most important is the end.
+
+[brewers-guide--845]
+  Q: Why are the winds in Europe generally the most placid during the months of September and August?
+  A: August and September are our warmest months, when we approach nearer to the heat of the torrid zone than in any other two months; therefore, the air (to and from the equator) moves with less velocity in our northern hemisphere.
+
+[common-core--1120]
+  Q: Is m ever silent?
+  A: In the word mnemonic or Mnemon.
+
+[common-core--875]
+  Q: What is personation?
+  A: Changes of the voice necessary to represent two or more persons speaking.
+
+[chemistry--397]
+  Q: How is the carbonate of copper obtained?
+  A: By the double decomposition of an alkaline carbonate with the sulphate of copper.
+
+[new-york-bar--539]
+  Q: A sues B for false imprisonment. At the trial, the judge charges the jury that the plaintiff in order to succeed must establish the want of probable cause and malice, in addition to the unlawful restraint. Is the charge sustainable on appeal?
+  A: No. "Even malicious motives, and the absence of probable cause, do not give a party arrested an action for false imprisonment. They may aggravate his damages, but they have nothing whatever to do with the cause of action." Earl, J., in Marks v. Townsend, 97 N.Y. 690. All that is necessary, in order to maintain an action for false imprisonment, is unlawful restraint of one's person.
+
+[civil-war--627]
+  Q: Have Constitutional Reforms been recommended for India?
+  A: During this war the Secretary of State for India (who with an appointive Council has the administration in England of the Indian Empire) visited India, and as a result a report was made recommending far-reaching constitutional reforms. The important basis for them was an extension and development of Provincial and other local self-government. The chief recommendations were : (1) Completion of the edifice of local self-government. (2) A considerable measure of responsibility in various fields to the Provincial Legislatures, which are to be mainly composed of directly elected representatives, with as wide a franchise as possible under Indian conditions. (3) The Viceregal Legislature to be dualized, the Second Chamber being called the Council of State. (4) Machinery for periodic inquiry whether further subjects can be transferred to popular control. (5) Creating a select committee of the House of Commons on Indian affairs. (6) An inquiry into the constitution and operation of the Secretary of State's Council and the India Office. (7) Creation of an Indian Privy Council and a Council of Princes.
+
+[seeleys--78]
+  Q: What was the character of the books of our early American Literature?
+  A: The first books written in America were in prose and were of a religious character.
+
+[school-bulletin--131]
+  Q: What means a change of name?
+  A: Metonymy. This is a figure in which the name of one object is put for some other object, the two being so related that the mention of one naturally suggests the other; as, "The drunkard loves his bottle" and when, for instance, gray hairs are put for old age, as "to bring one's gray hairs with sorrow to the grave."
+
+[new-york-bar--176]
+  Q: A wires B that he has a horse, and thinks that he will suit B, describing him, whereupon B writes A that he will take the horse if he "will fill the bill." A immediately telegraphs B, "The horse is yours," and sends the horse to B by his man. B refuses to take the horse saying that he has bought no horse of A. What are the rights of the parties? Give reasons.
+  A: A has no rights against B, as there was no contract. B's reply was not an acceptance of A's offer, nor was it a counter-offer. In order to have a contract, there must be mutual assent of the parties. An offer to sell imposes no obligation, until it is accepted according to its terms. For a case covering this point, see Stagg v. Compton, 88 Ind. 171, the principle of which is fully recognized in this state.
+
+[agriculture--30]
+  Q: What is a manure or fertilizer?
+  A: Any substance which may supply the soil with available plant food, especially nitrogen, potassium, or phosphorus.
+
+[logic--113] [multi-turn]
+  Q: What changes are made in the terms of the reducend by indirect reduction?
+  A: The extreme of preserved premise of reducend becomes the middle term of the reduct; the middle of reducend takes in the reduct the name of the extreme of the preserved premise; the extreme of the suppressed premise preserves its name.
+  Q: How do you prove this?
+  A: Since the extreme of the preserved premise occurs once there in the premises of the reduct, and once again in the contradictory of the conclusion, it must be the middle term of the reduct, for that term alone occurs twice in the premises of a syllogism: since the former middle occurs but once in the premises of reduct, it must become an extreme; and since it occurs only in the preserved premise, it will be the extreme of that premise: finally, since the extreme of the suppressed premise holds the same situation in the substituted premise (viz. the contradictory of the conclusion), it must retain its former name.
+
+[mythology--263]
+  Q: Who was Ammon?
+  A: The god so called by the Greeks (who connected the name with the sand, ammos with which his temple in the Oasis was surrounded), is the Egyptian Amen-ra, or Kneph, the ram-headed and horned god, who reappears in the Orphic Zagreus.
+
+[brewers-guide--984] [multi-turn]
+  Q: Why is pump water called hard water?
+  A: Because it is laden with foreign matters, and will not readily dissolve substances immersed in it.
+  Q: What makes pump-water hard?
+  A: Because when it filters through the earth, it becomes impregnated with sulphate of lime, and many other impurities from the earths and minerals with which it comes in contact.
+
+[familiar-things--30] [multi-turn]
+  Q: What produces the difference between Green and Bohea, or Black?
+  A: There are varieties of the plant, and the difference of the tea arises from the mode of preparation.
+  Q: What nation first introduced it into Europe?
+  A: The Dutch in 1610; it was introduced into England in 1650
+
+[seeleys--526]
+  Q: Give the divisions in the government of the colonies?
+  A: (1) The charter colonies (Connecticut, Massachusetts, Rhode Island). (2) Proprietary colonies (Delaware, Pennsylvania, Maryland). (3) Royal or provincial colonies (New Hampshire, New York, New Jersey, Virginia, the Carolinas, Georgia).
+
+[civil-war--263]
+  Q: Is a knot the same as a mile?
+  A: No. A knot is a nautical mile, and is 6,080 feet. The mile, as known to landsmen, is the statute mile, 5,280 feet. A ship steaming 30 knots an hour would cover 34½ of our land-miles in that hour. For rough calculation it is customary to figure a knot as equalling 1 1/7 land-miles.
+
+[brewers-guide--858]
+  Q: Why is it said “A dry cold March never begs bread?”
+  A: Because the dry cold winds of March prepare the soil for seeds, which germinate, and produce fruit in the autumn.
+
+[electricity--318]
+  Q: What is a lodestone?
+  A: The lodestone was the first magnet known. It is a piece of magnetic iron ore, sometimes called magnetic oxide, or magnetite, composed of three parts of iron and four parts of oxygen and represented by the chemical formula Fe3 O4. It was found near Magnesia in Asia Minor, whence came the name magnet. The name Lodestone seems to come from a Saxon word meaning to lead, from the use of the stone as a compass.
+
+[common-core--1271]
+  Q: What is ratio?
+  A: Define each kind. Ratio is the comparison of two numbers with each other. Arithmetical ratio is the difference between two numbers. Geometrical ratio is one divided by the other.
+
+[civil-war--675]
+  Q: Where is Korea?
+  A: Korea is, geographically, a part of Manchuria, being a southern extension that thrusts an enormous peninsula between the Sea of Japan and the Yellow or China Sea, and almost touches the southernmost islands of Japan with its extremity. The island group that has the famous Japanese port of Nagasaki on it is just across the Korean Straits from the Korean extremity.
