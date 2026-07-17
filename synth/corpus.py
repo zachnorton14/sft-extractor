@@ -198,6 +198,36 @@ def sample_documents(n, seed=0):
     return out
 
 
+_BARE_NUM = re.compile(r"^[\d.,;:\-—\s]+$")
+_ROMAN = re.compile(r"^[ivxlcdm]{1,8}$", re.I)
+
+
+def strip_lines(text):
+    """Remove structural/boilerplate lines OCR leaves embedded in body text:
+    bare page numbers, all-caps running headers (optionally with a page number),
+    and footnote/citation refs. Conservative — only strong structural signals,
+    so running prose is left intact. Run before sentence-splitting."""
+    out = []
+    for raw in text.split("\n"):
+        s = raw.strip()
+        if not s:
+            out.append(raw)
+            continue
+        letters = [c for c in s if c.isalpha()]
+        words = s.split()
+        drop = False
+        if _BARE_NUM.match(s) or _ROMAN.match(s) or not letters:
+            drop = True                                   # page number / all digits
+        elif s[0] in "*†‡" and len(words) <= 12:
+            drop = True                                   # footnote / citation ref
+        elif len(words) <= 10 and len(s) <= 80 and \
+                sum(c.isupper() for c in letters) / len(letters) > 0.7:
+            drop = True                                   # all-caps running header
+        if not drop:
+            out.append(raw)
+    return "\n".join(out)
+
+
 def _split_sentences(text):
     """Split into sentences on .!? boundaries (whitespace normalized). OCR makes
     this imperfect, but the region-quality score rejects the spans where it fails
@@ -232,7 +262,7 @@ def prose_excerpt(text, n_words=150, rng=None, tries=12, floor=0.6):
     scores each with region_quality, and returns the first above `floor` — or the
     best seen. Skips the first 10% of sentences (front matter). Returns (text, score)."""
     rng = rng or random
-    sents = _split_sentences(text)
+    sents = _split_sentences(strip_lines(text))
     if not sents:
         return "", 0.0
     wc = [len(s.split()) for s in sents]
