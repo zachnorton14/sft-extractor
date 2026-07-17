@@ -255,6 +255,56 @@ def region_quality(text):
     return score, {"alpha": alpha, "digit": digit, "stop": stop, "msl": msl}
 
 
+# Opening words that signal the excerpt continues from text it doesn't contain:
+# demonstratives, third-person pronouns, and continuation connectives. Existential
+# "it/there/here" are excluded — they open self-contained sentences too often.
+_REF_OPENERS = {
+    "this", "that", "these", "those", "he", "she", "they", "him", "her", "his",
+    "their", "them", "such", "thus", "hence", "therefore", "however", "moreover",
+    "nevertheless", "besides", "furthermore", "accordingly", "consequently",
+    "meanwhile", "likewise", "which", "who", "whom", "whose",
+}
+_DOT_LEADER = re.compile(r"\.{2,}|_{2,}")             # form blanks / TOC dot leaders
+_ORDINAL = re.compile(r"\b(1st|2nd|3rd|\d+th|firstly|secondly|thirdly)\b", re.I)
+_OPINION = re.compile(r"\b(pleasant\w*|best|worst|admirable|agreeable|beautiful|"
+                      r"ought|should|prefer\w*|delightful|charming|excellent|finest|noble)\b", re.I)
+_REASON = re.compile(r"\b(because|therefore|thus|hence|since|consequently|inasmuch)\b", re.I)
+
+
+def _first_word(text):
+    m = re.match(r"\s*([A-Za-z]+)", text)
+    return m.group(1).lower() if m else ""
+
+
+def is_self_contained(text):
+    """False if the excerpt opens on an unresolved reference (dangling pronoun,
+    demonstrative, or continuation connective) — no question can be answered
+    without the missing antecedent."""
+    return _first_word(text) not in _REF_OPENERS
+
+
+def has_affordance(text):
+    """False for structurally dead spans — fill-in forms and dot-leader tables —
+    that no question can be answered from."""
+    return len(_DOT_LEADER.findall(text)) < 2
+
+
+def affordance_label(text):
+    """Coarse routing tag for a surviving excerpt (low-stakes: mislabels only
+    misroute, they don't drop data)."""
+    fp = len(re.findall(r"\b(i|we|my|our|me|us)\b", text, re.I))
+    past = len(re.findall(r"\b\w+ed\b", text))
+    if _ORDINAL.search(text) and past < 6:
+        return "procedural"
+    if fp >= 2 and _OPINION.search(text):
+        return "opinion"
+    if _REASON.search(text):
+        return "argument"
+    if past >= 8 and re.search(r"\b1[5-9]\d\d\b", text):
+        return "narrative"
+    return "expository"
+
+
 def prose_excerpt(text, n_words=150, rng=None, tries=16, floor=0.7):
     """Cut a sentence-bounded excerpt of ~n_words that clears the prose bar.
 
@@ -264,7 +314,7 @@ def prose_excerpt(text, n_words=150, rng=None, tries=16, floor=0.7):
     rng = rng or random
     sents = _split_sentences(strip_lines(text))
     if not sents:
-        return "", 0.0
+        return "", 0.0, ""
     wc = [len(s.split()) for s in sents]
     n = len(sents)
     lo = min(n // 10, n - 1)
@@ -276,12 +326,17 @@ def prose_excerpt(text, n_words=150, rng=None, tries=16, floor=0.7):
             words += wc[j]
             j += 1
         ex = " ".join(sents[i:j])
+        if not is_self_contained(ex) or not has_affordance(ex):
+            continue                              # hard-drop: resample another window
         score = region_quality(ex)[0]
         if score > best[1]:
             best = (ex, score)
         if score >= floor:
             break
-    return best
+    ex, score = best
+    if not ex:
+        return "", 0.0, ""                        # no window survived the gate
+    return ex, score, affordance_label(ex)
 
 
 def _stats(values):
@@ -320,8 +375,11 @@ def report(n=10, seed=0, excerpt_words=(60, 120, 240), show=3):
               f"{len(t.split()):,} words")
         print(f"  title: {str(m.get('title_src',''))[:90]}")
         for nw in excerpt_words:
-            ex, score = prose_excerpt(t, nw, rng)
-            print(f"\n--- excerpt ~{nw} words ({len(ex.split())} actual, prose {score:.2f}) ---")
+            ex, score, label = prose_excerpt(t, nw, rng)
+            if not ex:
+                print(f"\n--- excerpt ~{nw} words: (dropped — no self-contained window) ---")
+                continue
+            print(f"\n--- excerpt ~{nw} words ({len(ex.split())} actual, {label}, prose {score:.2f}) ---")
             print(textwrap.fill(ex, width=78))
 
 
@@ -392,10 +450,13 @@ def sample_excerpts(n=20, alpha=0.5, min_conf=0.5, n_words=150, seed=0):
             text = _fetch_text(con, shard, local)
             if not text:
                 continue
-            ex, score = prose_excerpt(text, n_words, rng)
+            ex, score, label = prose_excerpt(text, n_words, rng)
+            if not ex:
+                continue                          # every window hit a hard-drop
             m = audit[gi]
             out.append({
                 "category": cat,
+                "affordance": label,
                 "confidence": m.get("topic_or_subject_score_gen"),
                 "year": m.get("resolved_year"),
                 "title": m.get("title_src"),
@@ -412,14 +473,16 @@ def report_excerpts(n=20, alpha=0.5, min_conf=0.5, n_words=150, seed=0):
     from collections import Counter
     recs = sample_excerpts(n, alpha=alpha, min_conf=min_conf, n_words=n_words, seed=seed)
     tally = Counter(r["category"] for r in recs)
+    aff = Counter(r["affordance"] for r in recs)
     print(f"sampled {len(recs)} excerpts  (alpha={alpha}, min_conf={min_conf}, "
           f"~{n_words} words each)")
+    print("  by affordance: " + "  ".join(f"{a}={k}" for a, k in aff.most_common()))
     for cat, k in tally.most_common():
         print(f"    {k:>3}  {cat}")
     for r in recs:
         print("\n" + "=" * 78)
-        print(f"[{r['category']}]  conf {r['confidence']:.2f}  {r['year']}  "
-              f"prose {r['prose_score']:.2f}  {r['n_words']}w")
+        print(f"[{r['category']} / {r['affordance']}]  conf {r['confidence']:.2f}  "
+              f"{r['year']}  prose {r['prose_score']:.2f}  {r['n_words']}w")
         print(f"  {str(r['title'])[:88]}")
         print(textwrap.fill(r["excerpt"], width=78))
 
@@ -479,8 +542,11 @@ def report_by_category(category, n_text=3, seed=0, excerpt_words=(120, 240)):
         print("\n" + "-" * 78)
         print(f"[{m.get('title_src','')[:70]}]  {len(t.split()):,} words")
         for nw in excerpt_words:
-            ex, score = prose_excerpt(t, nw, ewin)
-            print(f"\n  --- excerpt ~{nw} words ({len(ex.split())} actual, prose {score:.2f}) ---")
+            ex, score, label = prose_excerpt(t, nw, ewin)
+            if not ex:
+                print(f"\n  --- excerpt ~{nw} words: (dropped — no self-contained window) ---")
+                continue
+            print(f"\n  --- excerpt ~{nw} words ({len(ex.split())} actual, {label}, prose {score:.2f}) ---")
             print(textwrap.fill(ex, width=76, initial_indent="  ", subsequent_indent="  "))
 
 
