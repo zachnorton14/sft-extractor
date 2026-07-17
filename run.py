@@ -240,6 +240,18 @@ def cmd_synthq(args):
     print("Done.")
 
 
+def cmd_sample_corpus(args):
+    from synth import corpus
+    ewords = [int(x) for x in args.excerpt_words.split(",")]
+    if args.list_categories:
+        corpus.list_categories()
+    elif args.category:
+        corpus.report_by_category(args.category, n_text=args.show, seed=args.seed,
+                                  excerpt_words=ewords)
+    else:
+        corpus.report(n=args.size, seed=args.seed, excerpt_words=ewords, show=args.show)
+
+
 def cmd_sample(args):
     directory = OUTPUT_DIRS[args.stage]
     if not directory.exists():
@@ -336,12 +348,29 @@ def main():
                               help="Generate synthetic questions from authentic answers (matched pairs)")
     # Keep in sync with synth.questions.STYLES (not imported here — that would pull
     # in anthropic on every CLI invocation, not just synth-questions).
-    p_synthq.add_argument("--style", choices=["naive", "period", "cold", "examiner", "all"],
-                          default="all", help="Prompt style to generate (default: all)")
+    p_synthq.add_argument("--style", choices=["naive", "period", "cold", "examiner", "working", "all"],
+                          default="working",
+                          help="Prompt style to generate (default: working, the living prompt; "
+                               "the named styles are the frozen experiment)")
     p_synthq.add_argument("--test", action="store_true", help="Sample and print pairs without writing output")
     p_synthq.add_argument("--seed", type=int, default=42)
     p_synthq.add_argument("--count", type=int, default=None, dest="size", metavar="N",
                           help="Limit to N answers (default: all)")
+
+    # sample-corpus
+    p_sc = sub.add_parser("sample-corpus",
+                          help="Sample the pretrain corpus and preview excerpt windows (needs duckdb)")
+    p_sc.add_argument("--count", type=int, default=10, dest="size", metavar="N",
+                      help="documents to sample")
+    p_sc.add_argument("--category", type=str, default=None,
+                      help="sample within one LoC category (see --list-categories)")
+    p_sc.add_argument("--list-categories", action="store_true",
+                      help="print the taxonomy with per-category document counts")
+    p_sc.add_argument("--seed", type=int, default=0)
+    p_sc.add_argument("--excerpt-words", type=str, default="60,120,240",
+                      help="comma-separated excerpt lengths to preview")
+    p_sc.add_argument("--show", type=int, default=3,
+                      help="documents to show excerpt windows for")
 
     # sample
     p_sample = sub.add_parser("sample", help="Sample conversations from any pipeline stage")
@@ -367,6 +396,8 @@ def main():
         cmd_score(args)
     elif args.cmd == "synth-questions":
         cmd_synthq(args)
+    elif args.cmd == "sample-corpus":
+        cmd_sample_corpus(args)
     elif args.cmd == "sample":
         cmd_sample(args)
 
