@@ -223,6 +223,23 @@ def cmd_pair(args):
 
 
 
+def cmd_synthq(args):
+    from synth import questions
+    pairs = questions.load_authentic_pairs()
+    styles = questions.STYLES if args.style == "all" else (args.style,)
+    if args.size and not args.test:
+        pairs = questions.sample_pairs(pairs, args.size, args.seed)
+    for style in styles:
+        if args.test:
+            asyncio.run(questions.test_run(pairs, style, args.seed, args.size))
+            continue
+        state = questions.load_state(style)
+        print(f"Total: {len(pairs)}  Resolved: {sum(1 for d, i, *_ in pairs if f'{d}--{i}' in state)}")
+        asyncio.run(questions.run_async(pairs, style, state))
+        questions.write_output(pairs, style, state)
+    print("Done.")
+
+
 def cmd_sample(args):
     directory = OUTPUT_DIRS[args.stage]
     if not directory.exists():
@@ -307,12 +324,24 @@ def main():
     p_filter.add_argument("--count", type=int, default=20, dest="size", metavar="N")
 
     # score
-    p_score = sub.add_parser("score", help="Score conversations and filter bottom N% (pass 4)")
+    p_score = sub.add_parser("score", help="Score conversations and filter bottom N%% (pass 4)")
     p_score.add_argument("--test", action="store_true", help="Sample and test without full run")
     p_score.add_argument("--seed", type=int, default=42)
     p_score.add_argument("--count", type=int, default=20, dest="size", metavar="N")
     p_score.add_argument("--filter-pct", type=float, default=0.05, metavar="F",
                          help="Fraction to drop (default 0.05 = bottom 5%%)")
+
+    # synth-questions
+    p_synthq = sub.add_parser("synth-questions",
+                              help="Generate synthetic questions from authentic answers (matched pairs)")
+    # Keep in sync with synth.questions.STYLES (not imported here — that would pull
+    # in anthropic on every CLI invocation, not just synth-questions).
+    p_synthq.add_argument("--style", choices=["naive", "period", "cold", "examiner", "all"],
+                          default="all", help="Prompt style to generate (default: all)")
+    p_synthq.add_argument("--test", action="store_true", help="Sample and print pairs without writing output")
+    p_synthq.add_argument("--seed", type=int, default=42)
+    p_synthq.add_argument("--count", type=int, default=None, dest="size", metavar="N",
+                          help="Limit to N answers (default: all)")
 
     # sample
     p_sample = sub.add_parser("sample", help="Sample conversations from any pipeline stage")
@@ -336,6 +365,8 @@ def main():
         cmd_filter(args)
     elif args.cmd == "score":
         cmd_score(args)
+    elif args.cmd == "synth-questions":
+        cmd_synthq(args)
     elif args.cmd == "sample":
         cmd_sample(args)
 
