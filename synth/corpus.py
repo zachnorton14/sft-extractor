@@ -255,7 +255,7 @@ def region_quality(text):
     return score, {"alpha": alpha, "digit": digit, "stop": stop, "msl": msl}
 
 
-def prose_excerpt(text, n_words=150, rng=None, tries=12, floor=0.6):
+def prose_excerpt(text, n_words=150, rng=None, tries=16, floor=0.7):
     """Cut a sentence-bounded excerpt of ~n_words that clears the prose bar.
 
     Builds candidates from runs of whole sentences (so no cut lands mid-sentence),
@@ -325,29 +325,33 @@ def report(n=10, seed=0, excerpt_words=(60, 120, 240), show=3):
             print(textwrap.fill(ex, width=78))
 
 
+def _tempered_targets(eligible, total, alpha):
+    """target_c ∝ eligible_c ** alpha, normalized to `total`, capped at eligible_c."""
+    W = sum(n ** alpha for n in eligible.values() if n > 0)
+    return {c: (min(round(total * n ** alpha / W), n) if n > 0 else 0)
+            for c, n in eligible.items()}
+
+
+def _eligible_by_category(audit, idx, min_conf):
+    """{category: [global_index, ...]} of docs whose label confidence >= min_conf."""
+    return {
+        c: [g for g in gis if (audit[g].get("topic_or_subject_score_gen") or 0) >= min_conf]
+        for c, gis in idx.items() if c != "UNKNOWN"
+    }
+
+
 def plan_targets(total, alpha=0.5, min_conf=0.5):
     """Compute per-category excerpt quotas via a tempered distribution.
 
-    target_c ∝ eligible_c ** alpha, normalized to `total`, capped at the number
-    of confidence-passing docs in the class. alpha=1 mirrors the corpus skew,
-    alpha=0 is uniform, alpha≈0.5 flattens skew while keeping big fields larger.
-    Returns (targets, eligible_counts, corpus_counts, audit, index).
+    alpha=1 mirrors the corpus skew, alpha=0 is uniform, alpha≈0.5 flattens skew
+    while keeping big fields larger. Returns (targets, eligible_counts,
+    corpus_counts, audit, index).
     """
     _, audit, _ = _load_index()
     idx = _category_index(audit)
     corpus = {c: len(g) for c, g in idx.items() if c != "UNKNOWN"}
-    eligible = {
-        c: sum((audit[g].get("topic_or_subject_score_gen") or 0) >= min_conf for g in gis)
-        for c, gis in idx.items() if c != "UNKNOWN"
-    }
-    W = sum(n ** alpha for n in eligible.values() if n > 0)
-    targets = {}
-    for c, n in eligible.items():
-        if n <= 0:
-            targets[c] = 0
-            continue
-        targets[c] = min(round(total * n ** alpha / W), n)  # cap at eligible supply
-    return targets, eligible, corpus, audit, idx
+    elig = {c: len(g) for c, g in _eligible_by_category(audit, idx, min_conf).items()}
+    return _tempered_targets(elig, total, alpha), elig, corpus, audit, idx
 
 
 def report_coverage(total, alpha=0.5, min_conf=0.5):
@@ -363,6 +367,61 @@ def report_coverage(total, alpha=0.5, min_conf=0.5):
         cap = "  (capped)" if targets[c] == eligible[c] and eligible[c] else ""
         print(f"  {c:44} {100*corpus[c]/corpus_total:7.1f}% "
               f"{100*targets[c]/max(plan_total,1):7.1f}% {targets[c]:7} {eligible[c]:9,}{cap}")
+
+
+def sample_excerpts(n=20, alpha=0.5, min_conf=0.5, n_words=150, seed=0):
+    """Draw ~n excerpts across categories weighted by the tempered coverage plan.
+
+    Allocates n across categories via the same tempering as plan_targets, then
+    pulls that many confidence-passing docs per category and cuts a prose excerpt
+    from each. Returns a list of excerpt records. Loads the index once.
+    """
+    _, audit, con = _load_index()
+    idx = _category_index(audit)
+    starts, _ = _shard_starts()
+    elig = _eligible_by_category(audit, idx, min_conf)
+    targets = _tempered_targets({c: len(g) for c, g in elig.items()}, n, alpha)
+    rng = random.Random(seed)
+    out = []
+    for cat in sorted(targets, key=lambda c: -targets[c]):
+        k, gis = targets[cat], elig[cat]
+        if k <= 0 or not gis:
+            continue
+        for gi in rng.sample(gis, min(k, len(gis))):
+            shard, local = _locate(gi, starts)
+            text = _fetch_text(con, shard, local)
+            if not text:
+                continue
+            ex, score = prose_excerpt(text, n_words, rng)
+            m = audit[gi]
+            out.append({
+                "category": cat,
+                "confidence": m.get("topic_or_subject_score_gen"),
+                "year": m.get("resolved_year"),
+                "title": m.get("title_src"),
+                "doc_index": gi,
+                "n_words": len(ex.split()),
+                "prose_score": round(score, 3),
+                "excerpt": ex,
+            })
+    return out
+
+
+def report_excerpts(n=20, alpha=0.5, min_conf=0.5, n_words=150, seed=0):
+    """Sample plan-weighted excerpts and print them for inspection."""
+    from collections import Counter
+    recs = sample_excerpts(n, alpha=alpha, min_conf=min_conf, n_words=n_words, seed=seed)
+    tally = Counter(r["category"] for r in recs)
+    print(f"sampled {len(recs)} excerpts  (alpha={alpha}, min_conf={min_conf}, "
+          f"~{n_words} words each)")
+    for cat, k in tally.most_common():
+        print(f"    {k:>3}  {cat}")
+    for r in recs:
+        print("\n" + "=" * 78)
+        print(f"[{r['category']}]  conf {r['confidence']:.2f}  {r['year']}  "
+              f"prose {r['prose_score']:.2f}  {r['n_words']}w")
+        print(f"  {str(r['title'])[:88]}")
+        print(textwrap.fill(r["excerpt"], width=78))
 
 
 def list_categories():
@@ -431,6 +490,8 @@ def main():
     ap.add_argument("--category", type=str, default=None, help="sample within one LoC category")
     ap.add_argument("--list-categories", action="store_true", help="print taxonomy with counts")
     ap.add_argument("--coverage", action="store_true", help="print the coverage plan (targets)")
+    ap.add_argument("--excerpts", action="store_true",
+                    help="sample plan-weighted excerpts across categories and print them")
     ap.add_argument("--total", type=int, default=2000, help="excerpt budget for the coverage plan")
     ap.add_argument("--alpha", type=float, default=0.5, help="tempering: 1=corpus, 0=uniform")
     ap.add_argument("--min-conf", type=float, default=0.5, help="label-confidence floor")
@@ -444,6 +505,9 @@ def main():
         list_categories()
     elif args.coverage:
         report_coverage(args.total, alpha=args.alpha, min_conf=args.min_conf)
+    elif args.excerpts:
+        report_excerpts(n=args.docs, alpha=args.alpha, min_conf=args.min_conf,
+                        n_words=ewords[0], seed=args.seed)
     elif args.category:
         report_by_category(args.category, n_text=args.show, seed=args.seed, excerpt_words=ewords)
     else:

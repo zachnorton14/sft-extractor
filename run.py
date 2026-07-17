@@ -247,6 +247,9 @@ def cmd_sample_corpus(args):
         corpus.list_categories()
     elif args.coverage:
         corpus.report_coverage(args.total, alpha=args.alpha, min_conf=args.min_conf)
+    elif args.excerpts:
+        corpus.report_excerpts(n=args.size, alpha=args.alpha, min_conf=args.min_conf,
+                               n_words=ewords[0], seed=args.seed)
     elif args.category:
         corpus.report_by_category(args.category, n_text=args.show, seed=args.seed,
                                   excerpt_words=ewords)
@@ -350,7 +353,8 @@ def main():
                               help="Generate synthetic questions from authentic answers (matched pairs)")
     # Keep in sync with synth.questions.STYLES (not imported here — that would pull
     # in anthropic on every CLI invocation, not just synth-questions).
-    p_synthq.add_argument("--style", choices=["naive", "period", "cold", "examiner", "working", "all"],
+    p_synthq.add_argument("--style", choices=["naive", "period", "cold", "examiner", "working",
+                                              "scoped", "noblind", "pronoun", "paired", "combo", "all"],
                           default="working",
                           help="Prompt style to generate (default: working, the living prompt; "
                                "the named styles are the frozen experiment)")
@@ -370,6 +374,8 @@ def main():
                       help="print the taxonomy with per-category document counts")
     p_sc.add_argument("--coverage", action="store_true",
                       help="print the coverage plan (per-category excerpt quotas)")
+    p_sc.add_argument("--excerpts", action="store_true",
+                      help="sample plan-weighted excerpts across categories and print them")
     p_sc.add_argument("--total", type=int, default=2000, help="excerpt budget for the coverage plan")
     p_sc.add_argument("--alpha", type=float, default=0.5, help="tempering: 1=corpus, 0=uniform")
     p_sc.add_argument("--min-conf", type=float, default=0.5, help="label-confidence floor")
