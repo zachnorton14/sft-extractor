@@ -245,6 +245,8 @@ def cmd_sample_corpus(args):
     ewords = [int(x) for x in args.excerpt_words.split(",")]
     if args.list_categories:
         corpus.list_categories()
+    elif args.coverage:
+        corpus.report_coverage(args.total, alpha=args.alpha, min_conf=args.min_conf)
     elif args.category:
         corpus.report_by_category(args.category, n_text=args.show, seed=args.seed,
                                   excerpt_words=ewords)
@@ -366,6 +368,11 @@ def main():
                       help="sample within one LoC category (see --list-categories)")
     p_sc.add_argument("--list-categories", action="store_true",
                       help="print the taxonomy with per-category document counts")
+    p_sc.add_argument("--coverage", action="store_true",
+                      help="print the coverage plan (per-category excerpt quotas)")
+    p_sc.add_argument("--total", type=int, default=2000, help="excerpt budget for the coverage plan")
+    p_sc.add_argument("--alpha", type=float, default=0.5, help="tempering: 1=corpus, 0=uniform")
+    p_sc.add_argument("--min-conf", type=float, default=0.5, help="label-confidence floor")
     p_sc.add_argument("--seed", type=int, default=0)
     p_sc.add_argument("--excerpt-words", type=str, default="60,120,240",
                       help="comma-separated excerpt lengths to preview")

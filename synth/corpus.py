@@ -325,6 +325,46 @@ def report(n=10, seed=0, excerpt_words=(60, 120, 240), show=3):
             print(textwrap.fill(ex, width=78))
 
 
+def plan_targets(total, alpha=0.5, min_conf=0.5):
+    """Compute per-category excerpt quotas via a tempered distribution.
+
+    target_c ∝ eligible_c ** alpha, normalized to `total`, capped at the number
+    of confidence-passing docs in the class. alpha=1 mirrors the corpus skew,
+    alpha=0 is uniform, alpha≈0.5 flattens skew while keeping big fields larger.
+    Returns (targets, eligible_counts, corpus_counts, audit, index).
+    """
+    _, audit, _ = _load_index()
+    idx = _category_index(audit)
+    corpus = {c: len(g) for c, g in idx.items() if c != "UNKNOWN"}
+    eligible = {
+        c: sum((audit[g].get("topic_or_subject_score_gen") or 0) >= min_conf for g in gis)
+        for c, gis in idx.items() if c != "UNKNOWN"
+    }
+    W = sum(n ** alpha for n in eligible.values() if n > 0)
+    targets = {}
+    for c, n in eligible.items():
+        if n <= 0:
+            targets[c] = 0
+            continue
+        targets[c] = min(round(total * n ** alpha / W), n)  # cap at eligible supply
+    return targets, eligible, corpus, audit, idx
+
+
+def report_coverage(total, alpha=0.5, min_conf=0.5):
+    """Print corpus share vs. target share so the rebalance is visible before
+    any excerpt is fetched."""
+    targets, eligible, corpus, _, _ = plan_targets(total, alpha, min_conf)
+    corpus_total = sum(corpus.values())
+    plan_total = sum(targets.values())
+    print(f"coverage plan: total≈{plan_total} (asked {total}), alpha={alpha}, "
+          f"min_conf={min_conf}")
+    print(f"  {'category':44} {'corpus%':>8} {'target%':>8} {'target':>7} {'eligible':>9}")
+    for c in sorted(targets, key=lambda c: -targets[c]):
+        cap = "  (capped)" if targets[c] == eligible[c] and eligible[c] else ""
+        print(f"  {c:44} {100*corpus[c]/corpus_total:7.1f}% "
+              f"{100*targets[c]/max(plan_total,1):7.1f}% {targets[c]:7} {eligible[c]:9,}{cap}")
+
+
 def list_categories():
     """Print the taxonomy with per-category document counts (metadata only)."""
     _, audit, _ = _load_index()
@@ -390,6 +430,10 @@ def main():
     ap.add_argument("--docs", type=int, default=10, help="number of documents to sample")
     ap.add_argument("--category", type=str, default=None, help="sample within one LoC category")
     ap.add_argument("--list-categories", action="store_true", help="print taxonomy with counts")
+    ap.add_argument("--coverage", action="store_true", help="print the coverage plan (targets)")
+    ap.add_argument("--total", type=int, default=2000, help="excerpt budget for the coverage plan")
+    ap.add_argument("--alpha", type=float, default=0.5, help="tempering: 1=corpus, 0=uniform")
+    ap.add_argument("--min-conf", type=float, default=0.5, help="label-confidence floor")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--excerpt-words", type=str, default="60,120,240",
                     help="comma-separated excerpt lengths to preview")
@@ -398,6 +442,8 @@ def main():
     ewords = [int(x) for x in args.excerpt_words.split(",")]
     if args.list_categories:
         list_categories()
+    elif args.coverage:
+        report_coverage(args.total, alpha=args.alpha, min_conf=args.min_conf)
     elif args.category:
         report_by_category(args.category, n_text=args.show, seed=args.seed, excerpt_words=ewords)
     else:
