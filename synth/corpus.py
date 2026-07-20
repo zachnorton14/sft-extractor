@@ -44,6 +44,32 @@ _SENT_SPLIT = re.compile(r'(?<=[.!?])\s+(?=["\'(]?[A-Z0-9])')
 
 ROOT = Path(__file__).parent.parent
 CACHE = ROOT / ".cache"
+# The 20 Library of Congress main classes used as the subject taxonomy (the
+# `topic_or_subject_gen` values, minus "UNKNOWN"). Book-level in the metadata;
+# used here as the fixed label set for content-level classification too.
+LOC_CLASSES = [
+    "LANGUAGE AND LITERATURE",
+    "PHILOSOPHY. PSYCHOLOGY. RELIGION",
+    "LAW",
+    "SCIENCE",
+    "HISTORY OF THE AMERICAS",
+    "SOCIAL SCIENCES",
+    "AUXILIARY SCIENCES OF HISTORY",
+    "AGRICULTURE",
+    "POLITICAL SCIENCE",
+    "EDUCATION",
+    "TECHNOLOGY",
+    "GEOGRAPHY. ANTHROPOLOGY. RECREATION",
+    "FINE ARTS",
+    "MEDICINE",
+    "MUSIC AND BOOKS ON MUSIC",
+    "WORLD HISTORY AND HISTORY OF EUROPE, ASIA, AFRICA, AUSTRALIA, NEW ZEALAND, ETC.",
+    "NAVAL SCIENCE",
+    "GENERAL WORKS",
+    "MILITARY SCIENCE",
+    "BIBLIOGRAPHY. LIBRARY SCIENCE. INFORMATION RESOURCES (GENERAL)",
+]
+
 DATASET = "jbduran/think-dataset"
 BASE = f"https://huggingface.co/datasets/{DATASET}/resolve/main"
 SHARD_URL = BASE + "/shard_{:05d}.parquet"

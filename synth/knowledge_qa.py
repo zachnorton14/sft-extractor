@@ -16,9 +16,15 @@ Only the passage grounds the answer — no outside facts — so a fiction or opi
 passage would produce ungrounded claims; those route elsewhere and are excluded
 here by taking only `expository` excerpts.
 
+The model also classifies each passage's ACTUAL subject (content-level), since the
+metadata category is book-level and any subject can appear in any book. Rows carry
+both: `category` (content, from the model) and `book_category` (from the metadata),
+with `category_moved` flagging divergence.
+
 Input:  sampled via corpus.sample_excerpts (coverage-weighted across categories)
 Output: synth/output/knowledge_qa.json
-        [{"doc_index","category","year","prose_score","excerpt","question","answer"}]
+        [{"doc_index","category","book_category","category_moved","year",
+          "prose_score","excerpt","question","answer"}]
 
 Set environment before running (same as the other model passes):
     export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
@@ -44,23 +50,32 @@ CONCURRENCY = 20
 TOKEN_BUDGET = 1200              # chars/4 per batch; excerpts are ~150 words each
 ROUTE = "expository"             # this generator handles the knowledge-QA route
 
-SYSTEM = """\
-You are given a short passage from a pre-1930s book. Write ONE question-and-answer
-pair that tests a single fact, definition, or explanation found in the passage.
+_CLASS_LIST = "\n".join(f"  - {c}" for c in corpus.LOC_CLASSES)
 
-Rules:
-- The answer must be fully supported by the passage. Do not add any fact that is
-  not stated or directly implied there.
-- The answer is concise: one to three sentences, and self-contained — a reader who
-  never saw the passage should understand it on its own.
-- The question is in the plain register of a period schoolbook: direct, often
-  beginning "What", "Why", "How", "Of what". No modern or conversational phrasing,
-  no meta-language ("summarize", "explain to me").
-- Write the question from outside the answer — do not reuse the answer's
-  distinctive wording; ask for the fact, don't restate it.
+SYSTEM = f"""\
+You are given a short passage from a pre-1930s book. Do two things.
 
-Input: JSON array [{"i": 0, "text": "..."}, ...]
-Output JSON only: [{"i": 0, "q": "the question", "a": "the answer"}, ...]
+1. Write ONE question-and-answer pair that tests a single fact, definition, or
+   explanation found in the passage.
+   - The answer must be fully supported by the passage. Do not add any fact that
+     is not stated or directly implied there.
+   - The answer is concise: one to three sentences, and self-contained — a reader
+     who never saw the passage should understand it on its own.
+   - The question is in the plain register of a period schoolbook: direct, often
+     beginning "What", "Why", "How", "Of what". No modern or conversational
+     phrasing, no meta-language ("summarize", "explain to me").
+   - The question MUST STAND ALONE. Never refer to the source — no "the passage",
+     "the text", "according to the passage", "described above", "referred to",
+     "mentioned". Ask about the subject directly, as if from general knowledge.
+   - Write the question from outside the answer — do not reuse the answer's
+     distinctive wording; ask for the fact, don't restate it.
+
+2. Classify the passage's ACTUAL subject — what it is about, NOT the kind of book
+   it may come from — into exactly one of these classes (copy the label verbatim):
+{_CLASS_LIST}
+
+Input: JSON array [{{"i": 0, "text": "..."}}, ...]
+Output JSON only: [{{"i": 0, "q": "the question", "a": "the answer", "category": "ONE CLASS"}}, ...]
 """
 
 
@@ -131,8 +146,9 @@ async def _generate_batch(client, semaphore, batch, state):
                     idx = r.get("i")
                     q = (r.get("q") or "").strip()
                     a = (r.get("a") or "").strip()
+                    cat = (r.get("category") or "").strip()
                     if isinstance(idx, int) and 0 <= idx < len(keys) and q and a:
-                        state[keys[idx]] = {"q": q, "a": a}
+                        state[keys[idx]] = {"q": q, "a": a, "category": cat}
                 return
             except anthropic.RateLimitError:
                 await asyncio.sleep(2 ** attempt)
@@ -182,9 +198,12 @@ def write_output(excerpts, state):
         r = state.get(str(e["doc_index"]))
         if not r:
             continue
+        content_cat = r.get("category") or e["category"]
         rows.append({
             "doc_index": e["doc_index"],
-            "category": e["category"],
+            "category": content_cat,              # content-level, from the model
+            "book_category": e["category"],       # book-level, from audit metadata
+            "category_moved": content_cat != e["category"],
             "year": e["year"],
             "prose_score": e["prose_score"],
             "excerpt": e["excerpt"],
@@ -207,7 +226,11 @@ async def test_run(excerpts):
     for e in excerpts:
         r = state.get(str(e["doc_index"]))
         print("=" * 78)
-        print(f"[{e['category']}]  {e['year']}  prose {e['prose_score']:.2f}")
+        if r and r.get("category") and r["category"] != e["category"]:
+            head = f"[{r['category']}]  (book said {e['category']})"
+        else:
+            head = f"[{e['category']}]"
+        print(f"{head}  {e['year']}  prose {e['prose_score']:.2f}")
         print(f"  excerpt : {e['excerpt'][:200]}...")
         if r:
             print(f"  Q       : {r['q']}")
