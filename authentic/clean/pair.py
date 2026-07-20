@@ -17,9 +17,10 @@ from pathlib import Path
 import anthropic
 
 ROOT = Path(__file__).parent.parent
+(ROOT / "state").mkdir(parents=True, exist_ok=True)
 INPUT_DIR = ROOT / "output" / "ocr"
 OUTPUT_DIR = ROOT / "output" / "paired"
-STATE_FILE = ROOT / ".pair_state.json"
+STATE_FILE = ROOT / "state" / "pair.json"
 MODEL = "claude-haiku-4-5"
 MAX_TOKENS = 8192
 CONCURRENCY = 10

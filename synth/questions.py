@@ -29,8 +29,9 @@ from pathlib import Path
 import anthropic
 
 ROOT = Path(__file__).parent.parent
-INPUT_DIR = ROOT / "output" / "filtered"
-OUTPUT_DIR = ROOT / "output" / "synth"
+INPUT_DIR = ROOT / "authentic" / "output" / "filtered"   # authentic pairs feed the register comparison
+OUTPUT_DIR = ROOT / "synth" / "output"
+STATE_DIR = ROOT / "synth" / "state"
 MODEL = "claude-haiku-4-5"  # maps to deepseek via ANTHROPIC_BASE_URL
 # The model behind this alias is a reasoning model: it emits thinking blocks that
 # count against max_tokens. At 4096 the longer `period` prompt spent the entire
@@ -306,7 +307,7 @@ def load_authentic_pairs():
 
 
 def state_file(style):
-    return ROOT / f".synthq_{style}_state.json"
+    return STATE_DIR / f"synthq_{style}.json"
 
 
 def load_state(style):
@@ -315,6 +316,7 @@ def load_state(style):
 
 
 def save_state(style, state):
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
     state_file(style).write_text(json.dumps(state))
 
 

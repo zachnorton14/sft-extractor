@@ -5,13 +5,13 @@ Builds a supervised fine-tuning (SFT) dataset from public-domain textbooks and c
 ## Pipeline
 
 ```
-data/*.txt
-  → run.py extract   → output/extracted/*.json   (19,284 pairs)
-  → run.py bleed     → output/bleed/*.json        (19,473 pairs)
-  → run.py ocr       → output/ocr/*.json          (18,382 pairs)
-  → run.py pair      → output/paired/*.json       (13,157 conversations)
-  → run.py enrich    → output/enriched/*.json     (12,264 conversations)
-  → run.py filter    → output/filtered/*.json     (12,257 conversations)
+authentic/data/*.txt
+  → run.py extract   → authentic/output/extracted/*.json   (19,284 pairs)
+  → run.py bleed     → authentic/output/bleed/*.json        (19,473 pairs)
+  → run.py ocr       → authentic/output/ocr/*.json          (18,382 pairs)
+  → run.py pair      → authentic/output/paired/*.json       (13,157 conversations)
+  → run.py enrich    → authentic/output/enriched/*.json     (12,264 conversations)
+  → run.py filter    → authentic/output/filtered/*.json     (12,257 conversations)
 ```
 
 1. **Extract** — parse raw OCR text into Q&A pairs per dataset (regex-based, no model)
@@ -239,7 +239,7 @@ python3 run.py <command> [options]
 ### Extract
 
 ```bash
-python3 run.py extract <name> data/<file>.txt output/extracted/<file>.json
+python3 run.py extract <name> authentic/data/<file>.txt authentic/output/extracted/<file>.json
 ```
 
 Available extractors: `advanced_questions`, `common_core`, `brewers_guide`, `familiar_things`, `1001_questions`, `logic`, `seeleys`, `stokers`, `symbological`, `agriculture`, `astronomy`, `botany`, `chemistry`, `civil_war`, `constitution`, `electricity`, `engineering`, `ethics`, `grammar`, `mythology`, `new_york_bar`, `patriotism`, `school_bulletin`, `investors`, `music`, `laborers`, `world_history`
@@ -249,7 +249,7 @@ Available extractors: `advanced_questions`, `common_core`, `brewers_guide`, `fam
 ```bash
 python3 run.py bleed                        # full run (resumable)
 python3 run.py bleed --test --count 10      # test sample
-python3 run.py bleed --retry-bleed          # second pass on output/ocr/
+python3 run.py bleed --retry-bleed          # second pass on authentic/output/ocr/
 ```
 
 ### OCR pass
@@ -277,7 +277,7 @@ python3 run.py enrich --test --count 20     # test sample
 ### Filter pass
 
 ```bash
-python3 run.py filter                       # run and write output/filtered/
+python3 run.py filter                       # run and write authentic/output/filtered/
 python3 run.py filter --sample --count 20   # preview what would be dropped
 ```
 

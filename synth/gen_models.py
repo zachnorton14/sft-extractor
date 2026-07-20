@@ -30,7 +30,8 @@ from synth.questions import (
 )
 
 ROOT = Path(__file__).parent.parent
-OUTPUT_DIR = ROOT / "output" / "synth"
+OUTPUT_DIR = ROOT / "synth" / "output"
+STATE_DIR = ROOT / "synth" / "state"
 BASE_URL = "https://opencode.ai/zen/go"
 STYLE = "working"
 CONCURRENCY = 16
@@ -71,7 +72,8 @@ def _safe(model):
 
 
 def _state_file(model):
-    return ROOT / f".synthq_model_{_safe(model)}_state.json"
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    return STATE_DIR / f"synthq_model_{_safe(model)}.json"
 
 
 def _load_state(model):

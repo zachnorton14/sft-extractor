@@ -21,9 +21,10 @@ from pathlib import Path
 import anthropic
 
 ROOT = Path(__file__).parent.parent
+(ROOT / "state").mkdir(parents=True, exist_ok=True)
 INPUT_DIR = ROOT / "output" / "enriched"
 OUTPUT_DIR = ROOT / "output" / "scored"
-STATE_FILE = ROOT / ".score_state.json"
+STATE_FILE = ROOT / "state" / "score.json"
 MODEL = "claude-haiku-4-5"
 MAX_TOKENS = 8192
 CONCURRENCY = 20

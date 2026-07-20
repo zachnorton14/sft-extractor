@@ -129,7 +129,7 @@ def report(path):
 
 if __name__ == "__main__":
     paths = sys.argv[1:] or sorted(
-        (Path(__file__).parent.parent / "output" / "synth").glob("questions_*.json")
+        (Path(__file__).parent / "output").glob("questions_*.json")
     )
     for p in paths:
         report(p)

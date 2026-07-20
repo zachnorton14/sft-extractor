@@ -13,9 +13,10 @@ from pathlib import Path
 import anthropic
 
 ROOT = Path(__file__).parent.parent
+(ROOT / "state").mkdir(parents=True, exist_ok=True)
 INPUT_DIR = ROOT / "output" / "bleed"
 OUTPUT_DIR = ROOT / "output" / "ocr"
-STATE_FILE = ROOT / ".ocr_state.json"
+STATE_FILE = ROOT / "state" / "ocr.json"
 MODEL = "claude-haiku-4-5"  # maps to deepseek-v4-flash via ANTHROPIC_BASE_URL
 MAX_TOKENS = 2048
 CONCURRENCY = 20

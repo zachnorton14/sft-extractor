@@ -18,11 +18,12 @@ from pathlib import Path
 import anthropic
 
 ROOT = Path(__file__).parent.parent
+(ROOT / "state").mkdir(parents=True, exist_ok=True)
 INPUT_DIR = ROOT / "output" / "extracted"
 OUTPUT_DIR = ROOT / "output" / "bleed"
 OCR_DIR = ROOT / "output" / "ocr"
-STATE_FILE = ROOT / ".bleed_state.json"
-RETRY_STATE_FILE = ROOT / ".bleed_retry_state.json"
+STATE_FILE = ROOT / "state" / "bleed.json"
+RETRY_STATE_FILE = ROOT / "state" / "bleed_retry.json"
 MODEL = "claude-haiku-4-5"  # maps to deepseek-v4-flash via ANTHROPIC_BASE_URL
 MAX_TOKENS = 8192
 CONCURRENCY = 20

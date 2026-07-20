@@ -25,7 +25,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 
-from extractors.base import (
+from authentic.extractors.base import (
     AdvancedQuestionsExtractor,
     AgricultureExtractor,
     AstronomyExtractor,
@@ -86,13 +86,13 @@ EXTRACTORS = {
 }
 
 OUTPUT_DIRS = {
-    "extracted": ROOT / "output" / "extracted",
-    "bleed":     ROOT / "output" / "bleed",
-    "ocr":       ROOT / "output" / "ocr",
-    "paired":    ROOT / "output" / "paired",
-    "enriched":  ROOT / "output" / "enriched",
-    "filtered":  ROOT / "output" / "filtered",
-    "scored":    ROOT / "output" / "scored",
+    "extracted": ROOT / "authentic" / "output" / "extracted",
+    "bleed":     ROOT / "authentic" / "output" / "bleed",
+    "ocr":       ROOT / "authentic" / "output" / "ocr",
+    "paired":    ROOT / "authentic" / "output" / "paired",
+    "enriched":  ROOT / "authentic" / "output" / "enriched",
+    "filtered":  ROOT / "authentic" / "output" / "filtered",
+    "scored":    ROOT / "authentic" / "output" / "scored",
 }
 
 
@@ -104,7 +104,7 @@ def cmd_extract(args):
 
 
 def cmd_bleed(args):
-    from clean import bleed
+    from authentic.clean import bleed
     if args.retry_bleed:
         pairs = bleed.load_ocr_pairs()
         state = bleed.load_retry_state()
@@ -130,7 +130,7 @@ def cmd_bleed(args):
 
 
 def cmd_ocr(args):
-    from clean import ocr
+    from authentic.clean import ocr
     pairs = ocr.load_all_pairs()
     if args.test and args.retry_flagged:
         state = ocr.load_state()
@@ -160,7 +160,7 @@ def cmd_ocr(args):
 
 
 def cmd_filter(args):
-    from clean import filter as f
+    from authentic.clean import filter as f
     if args.sample:
         f.sample_dropped(n=args.size, seed=args.seed)
         return
@@ -168,7 +168,7 @@ def cmd_filter(args):
 
 
 def cmd_score(args):
-    from clean import score
+    from authentic.clean import score
     datasets = score.load_all_conversations()
     if args.test:
         asyncio.run(score.test_run(datasets, args.seed, args.size))
@@ -188,7 +188,7 @@ def cmd_score(args):
 
 
 def cmd_enrich(args):
-    from clean import enrich
+    from authentic.clean import enrich
     datasets = enrich.load_all_conversations()
     if args.test:
         asyncio.run(enrich.test_run(datasets, args.seed, args.size))
@@ -201,7 +201,7 @@ def cmd_enrich(args):
 
 
 def cmd_pair(args):
-    from clean import pair
+    from authentic.clean import pair
     datasets = pair.load_all_pairs()
     if args.test:
         asyncio.run(pair.test_run(datasets, args.seed, args.size))
