@@ -1,0 +1,217 @@
+"""Knowledge-QA route: turn expository excerpts into grounded Q/A rows.
+
+The first content-bound generator. It sources gated excerpts from the pretrain
+corpus (synth/corpus.py), keeps the ones the affordance gate tagged `expository`,
+and for each one makes a single model call that distills the passage into a
+focused question-answer pair:
+
+  - the ANSWER is concise (1-3 sentences), self-contained, and fully supported by
+    the passage — the "trim" of a rambling 150-word window down to something
+    usable, done by the model because heuristics can't;
+  - the QUESTION is in period-schoolbook register and written from *outside* the
+    answer, so it doesn't just echo the answer's vocabulary (the lesson from the
+    register experiments).
+
+Only the passage grounds the answer — no outside facts — so a fiction or opinion
+passage would produce ungrounded claims; those route elsewhere and are excluded
+here by taking only `expository` excerpts.
+
+Input:  sampled via corpus.sample_excerpts (coverage-weighted across categories)
+Output: synth/output/knowledge_qa.json
+        [{"doc_index","category","year","prose_score","excerpt","question","answer"}]
+
+Set environment before running (same as the other model passes):
+    export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
+    export ANTHROPIC_API_KEY=<your deepseek key>
+"""
+
+import asyncio
+import json
+from pathlib import Path
+
+import anthropic
+
+from synth import corpus
+
+ROOT = Path(__file__).parent.parent
+OUTPUT_DIR = ROOT / "synth" / "output"
+STATE_DIR = ROOT / "synth" / "state"
+STATE_FILE = STATE_DIR / "knowledge_qa.json"
+
+MODEL = "claude-haiku-4-5"       # maps to deepseek via ANTHROPIC_BASE_URL
+MAX_TOKENS = 16384               # reasoning model: needs room for thinking + JSON
+CONCURRENCY = 20
+TOKEN_BUDGET = 1200              # chars/4 per batch; excerpts are ~150 words each
+ROUTE = "expository"             # this generator handles the knowledge-QA route
+
+SYSTEM = """\
+You are given a short passage from a pre-1930s book. Write ONE question-and-answer
+pair that tests a single fact, definition, or explanation found in the passage.
+
+Rules:
+- The answer must be fully supported by the passage. Do not add any fact that is
+  not stated or directly implied there.
+- The answer is concise: one to three sentences, and self-contained — a reader who
+  never saw the passage should understand it on its own.
+- The question is in the plain register of a period schoolbook: direct, often
+  beginning "What", "Why", "How", "Of what". No modern or conversational phrasing,
+  no meta-language ("summarize", "explain to me").
+- Write the question from outside the answer — do not reuse the answer's
+  distinctive wording; ask for the fact, don't restate it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only: [{"i": 0, "q": "the question", "a": "the answer"}, ...]
+"""
+
+
+def source_excerpts(n, alpha=0.5, min_conf=0.7, n_words=150, seed=0):
+    """Sample coverage-weighted excerpts and keep only the knowledge-QA route."""
+    recs = corpus.sample_excerpts(n, alpha=alpha, min_conf=min_conf,
+                                  n_words=n_words, seed=seed)
+    return [r for r in recs if r["affordance"] == ROUTE]
+
+
+def load_state():
+    return json.loads(STATE_FILE.read_text()) if STATE_FILE.exists() else {}
+
+
+def save_state(state):
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    STATE_FILE.write_text(json.dumps(state))
+
+
+def _estimate_tokens(text):
+    return len(text) // 4
+
+
+def _pack_batches(items, token_budget=TOKEN_BUDGET):
+    batches, cur, cur_tok = [], [], 0
+    for it in items:
+        tok = _estimate_tokens(it["excerpt"])
+        if cur and cur_tok + tok > token_budget:
+            batches.append(cur)
+            cur, cur_tok = [], 0
+        cur.append(it)
+        cur_tok += tok
+    if cur:
+        batches.append(cur)
+    return batches
+
+
+def _strip_fence(text):
+    if text.startswith("```"):
+        text = text.split("```", 2)[1]
+        if text.startswith("json"):
+            text = text[4:]
+        text = text.rstrip("`").strip()
+    return text
+
+
+async def _generate_batch(client, semaphore, batch, state):
+    keys = [str(it["doc_index"]) for it in batch]
+    payload = json.dumps([{"i": idx, "text": it["excerpt"]} for idx, it in enumerate(batch)])
+    async with semaphore:
+        for attempt in range(5):
+            try:
+                msg = await client.messages.create(
+                    model=MODEL,
+                    max_tokens=MAX_TOKENS,
+                    system=SYSTEM,
+                    messages=[{"role": "user", "content": payload}],
+                )
+                text = next((b.text for b in msg.content if b.type == "text"), "").strip()
+                if not text:
+                    raise ValueError(
+                        f"empty response (stop_reason={msg.stop_reason}, "
+                        f"blocks={[b.type for b in msg.content]})"
+                    )
+                if msg.stop_reason == "max_tokens":
+                    raise ValueError(f"truncated at max_tokens ({len(batch)} excerpts in batch)")
+                for r in json.loads(_strip_fence(text)):
+                    idx = r.get("i")
+                    q = (r.get("q") or "").strip()
+                    a = (r.get("a") or "").strip()
+                    if isinstance(idx, int) and 0 <= idx < len(keys) and q and a:
+                        state[keys[idx]] = {"q": q, "a": a}
+                return
+            except anthropic.RateLimitError:
+                await asyncio.sleep(2 ** attempt)
+            except (anthropic.AuthenticationError, anthropic.PermissionDeniedError) as e:
+                raise SystemExit(f"\nAPI auth failed: {e}\n"
+                                 f"Check ANTHROPIC_API_KEY matches ANTHROPIC_BASE_URL.")
+            except json.JSONDecodeError as e:
+                if attempt == 4:
+                    print(f"  batch of {len(batch)} failed: unparseable response: "
+                          f"{e}\n    raw[:200]: {text[:200]!r}")
+                    return
+                await asyncio.sleep(2 ** attempt)
+            except Exception as e:
+                if attempt == 4:
+                    print(f"  batch of {len(batch)} failed after 5 attempts: "
+                          f"{type(e).__name__}: {str(e)[:200]}")
+                    return
+                await asyncio.sleep(2 ** attempt)
+
+
+async def run_async(excerpts, state):
+    pending = [e for e in excerpts if str(e["doc_index"]) not in state]
+    if not pending:
+        print("  nothing pending")
+        return
+    batches = _pack_batches(pending)
+    print(f"  {len(pending)} excerpts, {len(batches)} batches...")
+    done = [0]
+    async with anthropic.AsyncAnthropic() as client:
+        semaphore = asyncio.Semaphore(CONCURRENCY)
+
+        async def tracked(batch):
+            await _generate_batch(client, semaphore, batch, state)
+            done[0] += len(batch)
+            if done[0] % 100 < len(batch):
+                save_state(state)
+                print(f"  {done[0]}/{len(pending)}", flush=True)
+
+        await asyncio.gather(*[asyncio.create_task(tracked(b)) for b in batches])
+    save_state(state)
+
+
+def write_output(excerpts, state):
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    rows = []
+    for e in excerpts:
+        r = state.get(str(e["doc_index"]))
+        if not r:
+            continue
+        rows.append({
+            "doc_index": e["doc_index"],
+            "category": e["category"],
+            "year": e["year"],
+            "prose_score": e["prose_score"],
+            "excerpt": e["excerpt"],
+            "question": r["q"],
+            "answer": r["a"],
+        })
+    out = OUTPUT_DIR / "knowledge_qa.json"
+    out.write_text(json.dumps(rows, indent=2, ensure_ascii=False))
+    print(f"  wrote {len(rows)} knowledge-QA rows -> {out}")
+    return out
+
+
+async def test_run(excerpts):
+    """Generate for a small sample and print each Q/A beside its source excerpt."""
+    state = {}
+    batches = _pack_batches(excerpts)
+    async with anthropic.AsyncAnthropic() as client:
+        semaphore = asyncio.Semaphore(CONCURRENCY)
+        await asyncio.gather(*[_generate_batch(client, semaphore, b, state) for b in batches])
+    for e in excerpts:
+        r = state.get(str(e["doc_index"]))
+        print("=" * 78)
+        print(f"[{e['category']}]  {e['year']}  prose {e['prose_score']:.2f}")
+        print(f"  excerpt : {e['excerpt'][:200]}...")
+        if r:
+            print(f"  Q       : {r['q']}")
+            print(f"  A       : {r['a']}")
+        else:
+            print("  (failed)")
+        print()

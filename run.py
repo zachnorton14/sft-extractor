@@ -240,6 +240,22 @@ def cmd_synthq(args):
     print("Done.")
 
 
+def cmd_knowledge(args):
+    from synth import knowledge_qa as kq
+    excerpts = kq.source_excerpts(args.size, alpha=args.alpha, min_conf=args.min_conf,
+                                  seed=args.seed)
+    print(f"Sourced {len(excerpts)} expository excerpts (route={kq.ROUTE})")
+    if args.test:
+        asyncio.run(kq.test_run(excerpts))
+        return
+    state = kq.load_state()
+    resolved = sum(1 for e in excerpts if str(e["doc_index"]) in state)
+    print(f"Excerpts: {len(excerpts)}  Resolved: {resolved}")
+    asyncio.run(kq.run_async(excerpts, state))
+    kq.write_output(excerpts, state)
+    print("Done.")
+
+
 def cmd_sample_corpus(args):
     from synth import corpus
     ewords = [int(x) for x in args.excerpt_words.split(",")]
@@ -363,6 +379,16 @@ def main():
     p_synthq.add_argument("--count", type=int, default=None, dest="size", metavar="N",
                           help="Limit to N answers (default: all)")
 
+    # knowledge-qa
+    p_kq = sub.add_parser("knowledge-qa",
+                          help="Generate grounded Q/A from expository excerpts (knowledge-QA route)")
+    p_kq.add_argument("--count", type=int, default=100, dest="size", metavar="N",
+                      help="excerpts to sample before keeping the expository ones")
+    p_kq.add_argument("--test", action="store_true", help="sample a few and print Q/A without writing")
+    p_kq.add_argument("--alpha", type=float, default=0.5, help="tempering: 1=corpus, 0=uniform")
+    p_kq.add_argument("--min-conf", type=float, default=0.7, help="label-confidence floor")
+    p_kq.add_argument("--seed", type=int, default=0)
+
     # sample-corpus
     p_sc = sub.add_parser("sample-corpus",
                           help="Sample the pretrain corpus and preview excerpt windows (needs duckdb)")
@@ -409,6 +435,8 @@ def main():
         cmd_score(args)
     elif args.cmd == "synth-questions":
         cmd_synthq(args)
+    elif args.cmd == "knowledge-qa":
+        cmd_knowledge(args)
     elif args.cmd == "sample-corpus":
         cmd_sample_corpus(args)
     elif args.cmd == "sample":
