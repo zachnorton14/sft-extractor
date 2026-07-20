@@ -17,7 +17,7 @@ SAME matched pairs, so authentic is the built-in target — a synthetic number i
                  baseline to compare against; the authentic question IS the target.)
   template     — share of questions opening "What is/are". Catechism openers are
                  varied (Why, How, Of what, Have, Can...); a high share means the
-                 generator collapsed onto one frame.
+                 generator collapsed onto onhoie frame.
   len_ratio    — mean question length in chars. Terse synthetic questions strip
                  down to the answer's key terms; the gap tracks over-compression
                  that echo alone misses.

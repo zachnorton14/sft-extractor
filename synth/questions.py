@@ -6,12 +6,11 @@ question and generate a synthetic one from the *same* answer, so the two differ
 only in provenance — topic and content are held constant. That removes the topic
 confound from any downstream authenticity/anachronism filter.
 
-Two prompt styles are generated so the effect of prompting can be measured rather
-than assumed:
-  naive  — a plain "write the question this answers" instruction; shows the
-           generator's untreated register.
-  period — few-shot with real catechism questions, asking for period register;
-           shows how much of the gap prompting actually closes.
+The frozen styles (naive, period, cold, examiner) are the prompting experiment —
+each kept exactly as it generated its output file so results stay reproducible.
+`working` is the living prompt: the culmination of what the experiments showed,
+iterated in place. Generate with it by default; regenerate after each revision by
+deleting .synthq_working_state.json first.
 
 Input:  output/filtered/*.json
 Output: output/synth/questions_<style>.json
@@ -42,7 +41,8 @@ MAX_TOKENS = 16384
 CONCURRENCY = 20
 TOKEN_BUDGET = 800
 
-STYLES = ("naive", "period", "cold", "examiner")
+STYLES = ("naive", "period", "cold", "examiner", "working",
+          "scoped", "noblind", "pronoun", "paired", "combo")
 
 NAIVE_PROMPT = """\
 You receive answers from educational texts. For each one, write the question that
@@ -136,11 +136,158 @@ Input: JSON array [{"i": 0, "a": "..."}, ...]
 Output JSON only: [{"i": 0, "q": "the question"}, ...]
 """
 
+# working: the living prompt — the culmination of what the style experiments showed,
+# updated and iterated in place (the styles above are frozen so they keep matching
+# the outputs they generated). Lineage:
+#   - base is cold, the best performer (echo gap +3.8% vs authentic 33.9%, template
+#     below authentic, length 96%); examiner framing and varied-opener register kept.
+#   - cold's "do not reuse the answer's distinctive words" ban REMOVED: when the
+#     distinctive word IS the subject (stearine, split infinitive), the ban made the
+#     model guess the referent and sometimes guess wrong (camphor, comma), producing
+#     pairs where the answer doesn't answer the question.
+#   - fact-leak rule ADDED: cold planted the answer's dates/names/numbers as givens
+#     ("What battle was fought in 1346 in which Philip VI was defeated?") — echo
+#     metrics miss this because dates and proper nouns slip the content-word filter.
+#   - no-retrospection ADDED: period texts are inside their moment ("What gas used
+#     in World War I..." is impossible in a pre-1930s catechism).
+# If wrong-referent questions persist, the "has NOT seen this particular answer"
+# sentence is the next candidate for removal — same pressure direction as the old
+# ban, just weaker.
+WORKING_PROMPT = """\
+You receive answers from pre-1930s educational catechisms. For each one, write the
+question that the answer answers.
+
+Write as an examiner who knows the subject but has NOT seen this particular answer.
+The question should make sense to someone who cannot see the answer. Do not state
+the answer's facts — its dates, names, and numbers — as given information in the
+question; those are what the pupil must supply.
+
+Match the register of the period catechism exactly: plain, direct, often short. Vary
+the opening — not every question begins "What is." Use "Why...", "How...", "Of what...",
+"When...", "Have...", "Can...", "What are..." as the fact demands. No modern phrasing,
+no conversational framing, no meta-language, no retrospective framing — write from
+within the period, as a contemporary would.
+
+Examples of the target register:
+  Do winds never blow regularly?
+  Why are they called trade winds?
+  How long does an induced current last?
+  Of what use is the gastric juice?
+  Have the terms Money and Coin the same signification?
+  What countries had glass windows first?
+
+Input: JSON array [{"i": 0, "a": "..."}, ...]
+Output JSON only: [{"i": 0, "q": "the question"}, ...]
+"""
+
+# ---------------------------------------------------------------------------
+# Experiment round 2: five variants of `working`, each isolating one change, so
+# metric movement is attributable. Frozen once generated, like round 1.
+#
+# The trade-off they probe: cold's anti-echo ban gave the best echo (+3.8%) but
+# caused wrong-referent hallucinations; working removed the ban, fixed the
+# hallucinations that were fixable, and echo shot back to +17.8%. The residual
+# wrong-referent cases all have answers that never name their subject ("Its use
+# is...", "They exhibit movement..."), which no prompt can recover.
+#   scoped   — working + anti-echo scoped to the description: naming the subject
+#              is allowed, borrowing the answer's descriptive wording is not.
+#   noblind  — working MINUS the "examiner who has NOT seen this answer" framing;
+#              isolates whether that sentence does anything on its own.
+#   pronoun  — working + rule for subjectless answers: don't guess the referent,
+#              write the follow-up question a catechism would ask ("Of what use
+#              is it?"), keeping the answer's pronoun.
+#   paired   — working but the few-shot examples are full answer->question pairs
+#              instead of bare questions, showing the mapping rather than the
+#              register alone.
+#   combo    — scoped + pronoun + paired together: the everything-that-might-work
+#              candidate, read against the isolating variants.
+# ---------------------------------------------------------------------------
+
+_REGISTER_PARA = """\
+Match the register of the period catechism exactly: plain, direct, often short. Vary
+the opening — not every question begins "What is." Use "Why...", "How...", "Of what...",
+"When...", "Have...", "Can...", "What are..." as the fact demands. No modern phrasing,
+no conversational framing, no meta-language, no retrospective framing — write from
+within the period, as a contemporary would.
+"""
+
+_QUESTION_EXAMPLES = """\
+Examples of the target register:
+  Do winds never blow regularly?
+  Why are they called trade winds?
+  How long does an induced current last?
+  Of what use is the gastric juice?
+  Have the terms Money and Coin the same signification?
+  What countries had glass windows first?
+"""
+
+_PAIRED_EXAMPLES = """\
+Examples (answer -> the question it answers):
+  A: Because too much of the carbonic acid gas (produced by fermentation) is suffered to escape.
+  Q: Why is beer flat, if the cask be open too long?
+
+  A: Hartshorn, derived from the circumstance of obtaining it from the horn of the hart.
+  Q: What is the old name for ammonia?
+
+  A: The rotation of the earth upon its axis.
+  Q: What is the cause of the equatorial current?
+
+  A: Modulation is the variation of sounds in speaking, caused by the proper use of tone,
+     pitch, force, emphasis, and inflection.
+  Q: What is modulation?
+"""
+
+_IO_SPEC = """\
+Input: JSON array [{"i": 0, "a": "..."}, ...]
+Output JSON only: [{"i": 0, "q": "the question"}, ...]
+"""
+
+_HEADER = """\
+You receive answers from pre-1930s educational catechisms. For each one, write the
+question that the answer answers.
+"""
+
+_BLIND_PARA = """\
+Write as an examiner who knows the subject but has NOT seen this particular answer.
+The question should make sense to someone who cannot see the answer. Do not state
+the answer's facts — its dates, names, and numbers — as given information in the
+question; those are what the pupil must supply.
+"""
+
+_FACTLEAK_ONLY_PARA = """\
+Do not state the answer's facts — its dates, names, and numbers — as given
+information in the question; those are what the pupil must supply.
+"""
+
+_SCOPED_PARA = """\
+If the answer names its subject, name it plainly in the question — but do not borrow
+the answer's descriptive wording. Ask for the description; never restate it.
+"""
+
+_PRONOUN_PARA = """\
+If the answer does not name its subject (it begins "It is...", "They are...", "Its
+use is..."), do not guess what the subject might be. Write the follow-up question a
+catechism would ask, keeping the answer's own pronoun: "Of what use is it?", "What
+are they?", "How is it obtained?".
+"""
+
+SCOPED_PROMPT = "\n".join([_HEADER, _BLIND_PARA, _SCOPED_PARA, _REGISTER_PARA, _QUESTION_EXAMPLES, _IO_SPEC])
+NOBLIND_PROMPT = "\n".join([_HEADER, _FACTLEAK_ONLY_PARA, _REGISTER_PARA, _QUESTION_EXAMPLES, _IO_SPEC])
+PRONOUN_PROMPT = "\n".join([_HEADER, _BLIND_PARA, _PRONOUN_PARA, _REGISTER_PARA, _QUESTION_EXAMPLES, _IO_SPEC])
+PAIRED_PROMPT = "\n".join([_HEADER, _BLIND_PARA, _REGISTER_PARA, _PAIRED_EXAMPLES, _IO_SPEC])
+COMBO_PROMPT = "\n".join([_HEADER, _BLIND_PARA, _SCOPED_PARA, _PRONOUN_PARA, _REGISTER_PARA, _PAIRED_EXAMPLES, _IO_SPEC])
+
 PROMPTS = {
     "naive": NAIVE_PROMPT,
     "period": PERIOD_PROMPT,
     "cold": COLD_PROMPT,
     "examiner": EXAMINER_PROMPT,
+    "working": WORKING_PROMPT,
+    "scoped": SCOPED_PROMPT,
+    "noblind": NOBLIND_PROMPT,
+    "pronoun": PRONOUN_PROMPT,
+    "paired": PAIRED_PROMPT,
+    "combo": COMBO_PROMPT,
 }
 
 
