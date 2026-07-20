@@ -67,8 +67,15 @@ You are given a short passage from a pre-1930s book. Do two things.
    - The question MUST STAND ALONE. Never refer to the source — no "the passage",
      "the text", "according to the passage", "described above", "referred to",
      "mentioned". Ask about the subject directly, as if from general knowledge.
-   - Write the question from outside the answer — do not reuse the answer's
-     distinctive wording; ask for the fact, don't restate it.
+   - Make the question SPECIFIC. If the answer would be ambiguous without knowing a
+     particular person, place, time, or situation, name that context in the
+     question, drawn from the passage, so a reader knows exactly what is asked
+     without seeing the passage. (e.g. not "What caused horror in Italy?" but "When
+     Totila's Goths had taken Naples and were marching on Rome, what had filled
+     Italy with horror?") Definitional questions need no added context.
+   - Put context in the question, but keep the ANSWER out of it — do not state or
+     restate the fact you are asking for, and do not reuse the answer's distinctive
+     wording.
 
 2. Classify the passage's ACTUAL subject — what it is about, NOT the kind of book
    it may come from — into exactly one of these classes (copy the label verbatim):
