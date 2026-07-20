@@ -271,6 +271,48 @@ _OPINION = re.compile(r"\b(pleasant\w*|best|worst|admirable|agreeable|beautiful|
 _REASON = re.compile(r"\b(because|therefore|thus|hence|since|consequently|inasmuch)\b", re.I)
 
 
+_VOWEL = re.compile(r"[aeiouy]", re.I)
+
+
+def _foreign_count(text):
+    """Count characters from scripts that shouldn't appear in pre-1930 English
+    OCR — CJK/kana/Hangul/fullwidth, plus replacement and zero-width chars. Their
+    presence signals OCR mode-confusion. Latin-1 accents and typographic symbols
+    (é, æ, °, £, §) are intentionally NOT counted; Greek is left alone too (it
+    appears legitimately in period scientific/classical texts)."""
+    n = 0
+    for ch in text:
+        o = ord(ch)
+        if o == 0xFFFD or o in (0x200B, 0x200C, 0x200D, 0xFEFF):
+            n += 1
+        elif (0x3000 <= o <= 0x30FF or 0x3400 <= o <= 0x9FFF
+              or 0xAC00 <= o <= 0xD7A3 or 0xF900 <= o <= 0xFAFF
+              or 0xFF00 <= o <= 0xFFEF):
+            n += 1
+    return n
+
+
+def _gibberish_ratio(text):
+    """Fraction of tokens that are OCR nonsense: digit-letter mashes ("97en") or
+    length>=4 with no vowel (consonant runs)."""
+    toks = re.findall(r"[A-Za-z0-9]+", text)
+    if not toks:
+        return 0.0
+    bad = 0
+    for t in toks:
+        has_d = any(c.isdigit() for c in t)
+        has_a = any(c.isalpha() for c in t)
+        if (has_d and has_a) or (len(t) >= 4 and not _VOWEL.search(t)):
+            bad += 1
+    return bad / len(toks)
+
+
+def is_garbage(text):
+    """True for OCR-garbled spans that read as prose to the region score but are
+    unusable: foreign-script contamination or heavy nonsense-token density."""
+    return _foreign_count(text) >= 2 or _gibberish_ratio(text) > 0.10
+
+
 def _first_word(text):
     m = re.match(r"\s*([A-Za-z]+)", text)
     return m.group(1).lower() if m else ""
@@ -326,7 +368,7 @@ def prose_excerpt(text, n_words=150, rng=None, tries=16, floor=0.7):
             words += wc[j]
             j += 1
         ex = " ".join(sents[i:j])
-        if not is_self_contained(ex) or not has_affordance(ex):
+        if not is_self_contained(ex) or not has_affordance(ex) or is_garbage(ex):
             continue                              # hard-drop: resample another window
         score = region_quality(ex)[0]
         if score > best[1]:
