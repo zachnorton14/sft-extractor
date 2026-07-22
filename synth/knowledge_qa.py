@@ -66,6 +66,11 @@ You are given a short passage from a pre-1930s book. Do two things.
      (For "...what had filled Italy with horror?" answer "The exactions the Emperor
      had sanctioned and encouraged" — not "The exactions ... had filled all Italy
      with horror and hatred.")
+   - Brevity means cutting restatement and padding, NOT substance. For a
+     definitional or explanatory question (what is X, why, how), give the
+     distinction, reason, or qualification that makes the answer informative — not
+     a bare label. (For the meaning of díkaia: "That which is morally right, as
+     opposed to merely formal or legal righteousness" — not just "moral".)
    - The question is in the plain register of a period schoolbook: direct, often
      beginning "What", "Why", "How", "Of what". No modern or conversational
      phrasing, no meta-language ("summarize", "explain to me").
