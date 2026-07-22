@@ -55,44 +55,34 @@ _CLASS_LIST = "\n".join(f"  - {c}" for c in corpus.LOC_CLASSES)
 SYSTEM = f"""\
 You are given a short passage from a pre-1930s book. Do two things.
 
-1. Write ONE question-and-answer pair that tests a single fact, definition, or
-   explanation found in the passage.
-   - The answer must be fully supported by the passage. Do not add any fact that
-     is not stated or directly implied there.
-   - The answer is a direct, concise response to the question — give only the new
-     fact, as briefly as fully answering allows (often a phrase or a single
-     sentence). Do NOT restate the question's words or setup; the answer is read
-     together with the question, so it need not repeat it to stand on its own.
-     (For "...what had filled Italy with horror?" answer "The exactions the Emperor
-     had sanctioned and encouraged" — not "The exactions ... had filled all Italy
-     with horror and hatred.")
-   - Brevity means cutting restatement and padding, NOT substance. For a
-     definitional or explanatory question (what is X, why, how), give the
-     distinction, reason, or qualification that makes the answer informative — not
-     a bare label. (For the meaning of díkaia: "That which is morally right, as
-     opposed to merely formal or legal righteousness" — not just "moral".)
-   - The question is in the plain register of a period schoolbook: direct, often
-     beginning "What", "Why", "How", "Of what". No modern or conversational
-     phrasing, no meta-language ("summarize", "explain to me").
-   - The question MUST STAND ALONE. Never refer to the source — no "the passage",
-     "the text", "according to the passage", "described above", "referred to",
-     "mentioned". Ask about the subject directly, as if from general knowledge.
-   - Make the question SPECIFIC. If the answer would be ambiguous without knowing a
-     particular person, place, time, or situation, name that context in the
-     question, drawn from the passage, so a reader knows exactly what is asked
-     without seeing the passage. (e.g. not "What caused horror in Italy?" but "When
-     Totila's Goths had taken Naples and were marching on Rome, what had filled
-     Italy with horror?") Definitional questions need no added context.
-   - Put context in the question, but keep the ANSWER out of it — do not state or
-     restate the fact you are asking for, and do not reuse the answer's distinctive
-     wording.
+1. Write ONE question-answer pair testing a single fact, definition, or explanation
+   in the passage.
 
-2. Classify the passage's ACTUAL subject — what it is about, NOT the kind of book
-   it may come from — into exactly one of these classes (copy the label verbatim):
+   Question:
+   - Plain period-schoolbook register: direct, often "What/Why/How/Of what". No
+     modern or conversational phrasing, no meta-language.
+   - Stands alone. Never mention the source — no "the passage", "the text",
+     "according to", "described", "mentioned". Ask as if from general knowledge.
+   - Self-situating: a reader who cannot see the passage must know exactly what is
+     asked. Name the era, place, people, or work involved. Take this framing from
+     the passage, or from your own knowledge of the subject when the passage
+     assumes it (name the war, country, ruler, or period). Never leave a bare "the
+     capital", "the assembly", "the expedition".
+   - Do not put the answer, or the answer's distinctive wording, in the question.
+
+   Answer:
+   - Only from the passage — add no fact not stated or directly implied there. (The
+     question may be framed with outside knowledge; the answer may not.)
+   - Direct and concise: give only the new fact, never restating the question. A
+     factual answer may be a phrase; a definitional or explanatory answer gives the
+     key distinction or reason, not a bare label.
+
+2. Classify the passage's ACTUAL subject (what it is about, not the kind of book it
+   came from) into exactly one of these classes, copied verbatim:
 {_CLASS_LIST}
 
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
-Output JSON only: [{{"i": 0, "q": "the question", "a": "the answer", "category": "ONE CLASS"}}, ...]
+Output JSON only: [{{"i": 0, "q": "...", "a": "...", "category": "ONE CLASS"}}, ...]
 """
 
 
