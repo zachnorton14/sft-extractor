@@ -29,6 +29,7 @@ import random
 import re
 import textwrap
 import urllib.request
+from collections import Counter
 from pathlib import Path
 
 import duckdb
@@ -199,6 +200,118 @@ def sample_by_category(category, n_text=3, seed=0):
         shard, local = _locate(gi, starts)
         docs.append((_fetch_text(con, shard, local), audit[gi]))
     return docs
+
+
+EXCERPTS_FILE = ROOT / "synth" / "output" / "excerpts.jsonl"
+HARVEST_STATE = ROOT / "synth" / "state" / "harvest.json"
+
+
+def load_excerpts(affordance=None, min_prose=0.0):
+    """Read the materialized excerpt corpus (one JSON object per line), optionally
+    filtered to a single affordance / a prose floor. This is what every generation
+    route consumes — sourced once by harvest(), never re-fetched per row."""
+    if not EXCERPTS_FILE.exists():
+        return []
+    out = []
+    for line in EXCERPTS_FILE.read_text().splitlines():
+        if not line.strip():
+            continue
+        r = json.loads(line)
+        if affordance and r.get("affordance") != affordance:
+            continue
+        if r.get("prose_score", 0) < min_prose:
+            continue
+        out.append(r)
+    return out
+
+
+def _load_harvest_state():
+    if HARVEST_STATE.exists():
+        s = json.loads(HARVEST_STATE.read_text())
+        return set(s.get("processed", [])), Counter(s.get("counts", {}))
+    return set(), Counter()
+
+
+def _save_harvest_state(processed, counts):
+    HARVEST_STATE.parent.mkdir(parents=True, exist_ok=True)
+    HARVEST_STATE.write_text(json.dumps(
+        {"processed": sorted(processed), "counts": dict(counts)}))
+
+
+def harvest(total, alpha=0.5, min_conf=0.7, n_words=150, seed=0, max_shards=N_SHARDS):
+    """Shard-major sweep: read each shard's text column ONCE and cut gated
+    excerpts to fill the tempered coverage quotas, tagging every affordance.
+
+    Far cheaper than per-row OFFSET fetches (one sequential scan per shard vs. one
+    range read per excerpt) and resumable: processed shards and per-category counts
+    persist in the harvest state, excerpts append to EXCERPTS_FILE as JSONL.
+    """
+    offs, audit, con = _load_index()
+    starts, _ = _shard_starts()
+    idx = _category_index(audit)
+    elig = {c: len(g) for c, g in _eligible_by_category(audit, idx, min_conf).items()}
+    quotas = _tempered_targets(elig, total, alpha)
+
+    processed, got = _load_harvest_state()
+    seen = {r["doc_index"] for r in load_excerpts()}  # dedup backstop
+    EXCERPTS_FILE.parent.mkdir(parents=True, exist_ok=True)
+    rng = random.Random(seed)
+    order = list(range(N_SHARDS))
+    rng.shuffle(order)
+
+    def _done():
+        return all(got[c] >= quotas.get(c, 0) for c in quotas)
+
+    swept = 0
+    with open(EXCERPTS_FILE, "a", encoding="utf-8") as fh:
+        for s in order:
+            if _done() or swept >= max_shards:
+                break
+            if s in processed:
+                continue
+            base = offs.get(s)
+            rows = con.execute(
+                f"SELECT text FROM read_parquet('{SHARD_URL.format(s)}')"
+            ).fetchall()
+            new = 0
+            for r, (t,) in enumerate(rows):
+                gi = base + r
+                if gi in seen:
+                    continue
+                m = audit[gi]
+                cat = m.get("topic_or_subject_gen") or "UNKNOWN"
+                if cat not in quotas or got[cat] >= quotas[cat]:
+                    continue
+                if (m.get("topic_or_subject_score_gen") or 0) < min_conf:
+                    continue
+                ex, score, label = prose_excerpt(t, n_words, rng)
+                if not ex:
+                    continue
+                fh.write(json.dumps({
+                    "doc_index": gi, "shard": s,
+                    "category": cat, "affordance": label,
+                    "confidence": m.get("topic_or_subject_score_gen"),
+                    "year": m.get("resolved_year"), "title": m.get("title_src"),
+                    "prose_score": round(score, 3), "n_words": len(ex.split()),
+                    "excerpt": ex,
+                }, ensure_ascii=False) + "\n")
+                got[cat] += 1
+                seen.add(gi)
+                new += 1
+            fh.flush()
+            processed.add(s)
+            swept += 1
+            _save_harvest_state(processed, got)
+            filled = sum(min(got[c], quotas[c]) for c in quotas)
+            print(f"  shard {s:>3}: +{new:>3}  ({filled}/{sum(quotas.values())} quota, "
+                  f"{swept} shards swept)", flush=True)
+
+    total_have = sum(got.values())
+    print(f"harvest: {total_have} excerpts across {len([c for c in got if got[c]])} "
+          f"categories -> {EXCERPTS_FILE}")
+    aff = Counter(r["affordance"] for r in load_excerpts())
+    print("  by affordance: " + "  ".join(f"{a}={k}" for a, k in aff.most_common()))
+    return total_have
 
 
 def sample_documents(n, seed=0):

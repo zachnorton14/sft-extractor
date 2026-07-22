@@ -87,7 +87,14 @@ Output JSON only: [{{"i": 0, "q": "...", "a": "...", "category": "ONE CLASS"}}, 
 
 
 def source_excerpts(n, alpha=0.5, min_conf=0.7, n_words=150, seed=0):
-    """Sample coverage-weighted excerpts and keep only the knowledge-QA route."""
+    """Return expository excerpts for the knowledge-QA route.
+
+    Prefers the materialized corpus (synth/output/excerpts.jsonl from `harvest`) —
+    read once, no per-row fetch. Falls back to live coverage-weighted sampling when
+    nothing has been harvested yet (handy for a quick --test)."""
+    mat = corpus.load_excerpts(affordance=ROUTE)
+    if mat:
+        return mat[:n] if n else mat
     recs = corpus.sample_excerpts(n, alpha=alpha, min_conf=min_conf,
                                   n_words=n_words, seed=seed)
     return [r for r in recs if r["affordance"] == ROUTE]

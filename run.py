@@ -240,6 +240,12 @@ def cmd_synthq(args):
     print("Done.")
 
 
+def cmd_harvest(args):
+    from synth import corpus
+    corpus.harvest(args.total, alpha=args.alpha, min_conf=args.min_conf,
+                   seed=args.seed, max_shards=args.max_shards)
+
+
 def cmd_knowledge(args):
     from synth import knowledge_qa as kq
     excerpts = kq.source_excerpts(args.size, alpha=args.alpha, min_conf=args.min_conf,
@@ -379,6 +385,15 @@ def main():
     p_synthq.add_argument("--count", type=int, default=None, dest="size", metavar="N",
                           help="Limit to N answers (default: all)")
 
+    # harvest
+    p_hv = sub.add_parser("harvest",
+                          help="Shard-major sweep: materialize gated, tagged excerpts to synth/output/excerpts.jsonl")
+    p_hv.add_argument("--total", type=int, default=2000, help="excerpt budget across the coverage plan")
+    p_hv.add_argument("--alpha", type=float, default=0.5, help="tempering: 1=corpus, 0=uniform")
+    p_hv.add_argument("--min-conf", type=float, default=0.7, help="label-confidence floor")
+    p_hv.add_argument("--seed", type=int, default=0)
+    p_hv.add_argument("--max-shards", type=int, default=473, help="cap shards swept per run (resumable)")
+
     # knowledge-qa
     p_kq = sub.add_parser("knowledge-qa",
                           help="Generate grounded Q/A from expository excerpts (knowledge-QA route)")
@@ -435,6 +450,8 @@ def main():
         cmd_score(args)
     elif args.cmd == "synth-questions":
         cmd_synthq(args)
+    elif args.cmd == "harvest":
+        cmd_harvest(args)
     elif args.cmd == "knowledge-qa":
         cmd_knowledge(args)
     elif args.cmd == "sample-corpus":
