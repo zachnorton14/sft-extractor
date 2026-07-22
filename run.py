@@ -246,6 +246,21 @@ def cmd_harvest(args):
                    seed=args.seed, max_shards=args.max_shards)
 
 
+def cmd_reasoning(args):
+    from synth import reasoning_qa as rq
+    excerpts = rq.source_excerpts(args.size)
+    print(f"Sourced {len(excerpts)} argument excerpts (route={rq.ROUTE})")
+    if args.test:
+        asyncio.run(rq.test_run(excerpts))
+        return
+    state = rq.load_state()
+    resolved = sum(1 for e in excerpts if str(e["doc_index"]) in state)
+    print(f"Excerpts: {len(excerpts)}  Resolved: {resolved}")
+    asyncio.run(rq.run_async(excerpts, state))
+    rq.write_output(excerpts, state)
+    print("Done.")
+
+
 def cmd_knowledge(args):
     from synth import knowledge_qa as kq
     excerpts = kq.source_excerpts(args.size, alpha=args.alpha, min_conf=args.min_conf,
@@ -394,6 +409,13 @@ def main():
     p_hv.add_argument("--seed", type=int, default=0)
     p_hv.add_argument("--max-shards", type=int, default=473, help="cap shards swept per run (resumable)")
 
+    # reasoning-qa
+    p_rq = sub.add_parser("reasoning-qa",
+                          help="Generate step-showing Q/A from argument excerpts (reasoning route)")
+    p_rq.add_argument("--count", type=int, default=100, dest="size", metavar="N",
+                      help="max argument excerpts to process")
+    p_rq.add_argument("--test", action="store_true", help="generate a few and print without writing")
+
     # knowledge-qa
     p_kq = sub.add_parser("knowledge-qa",
                           help="Generate grounded Q/A from expository excerpts (knowledge-QA route)")
@@ -452,6 +474,8 @@ def main():
         cmd_synthq(args)
     elif args.cmd == "harvest":
         cmd_harvest(args)
+    elif args.cmd == "reasoning-qa":
+        cmd_reasoning(args)
     elif args.cmd == "knowledge-qa":
         cmd_knowledge(args)
     elif args.cmd == "sample-corpus":
