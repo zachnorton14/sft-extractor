@@ -59,8 +59,13 @@ You are given a short passage from a pre-1930s book. Do two things.
    explanation found in the passage.
    - The answer must be fully supported by the passage. Do not add any fact that
      is not stated or directly implied there.
-   - The answer is concise: one to three sentences, and self-contained — a reader
-     who never saw the passage should understand it on its own.
+   - The answer is a direct, concise response to the question — give only the new
+     fact, as briefly as fully answering allows (often a phrase or a single
+     sentence). Do NOT restate the question's words or setup; the answer is read
+     together with the question, so it need not repeat it to stand on its own.
+     (For "...what had filled Italy with horror?" answer "The exactions the Emperor
+     had sanctioned and encouraged" — not "The exactions ... had filled all Italy
+     with horror and hatred.")
    - The question is in the plain register of a period schoolbook: direct, often
      beginning "What", "Why", "How", "Of what". No modern or conversational
      phrasing, no meta-language ("summarize", "explain to me").
