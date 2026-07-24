@@ -87,9 +87,19 @@ this reasoning chain answers, as if setting an exercise.
 - Pose a problem that must be reasoned through, not a fact to recall: "Why does
   ...", "How does it follow that ...", "Why must ...?", "If ..., what happens and
   why?".
-- Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use no
-  word, term, or idiom that came into use after 1930, and no modern conversational
-  or academic phrasing — it must read as a question a period examiner would pose.
+- Speak in the register of a pre-1930s examiner, in pre-1930s language only. Period
+  vocabulary, spelling, and phrasing throughout; use no word, term, or idiom that
+  entered the language after 1930, and none of the modern analytic-exam idiom — no
+  "in terms of", "as a function of", "derive an expression for", "calculate the value
+  of", "with respect to", "the relationship between", "how is X expressed". A period
+  examiner writes "Show why ...", "Explain how it comes to pass that ...", "By what
+  reasoning does it appear that ...", "Wherefore must ...". Match the era of the
+  subject — plain and direct for a nineteenth-century schoolbook, never mock-archaic
+  beyond it. (Not "Given the reaction CuSO₄ + Zn → ZnSO₄ + Cu, how is the cell's
+  electrical energy expressed in terms of its electromotive force?" but "A voltaic
+  cell is formed in which zinc displaces copper from its sulphate. Show by what
+  reasoning the electrical energy the cell yields may be found from the heat that the
+  same reaction gives out.")
 - The question must STAND ALONE and betray no awareness of a source. Never refer to
   the passage or to whoever wrote it — no "the passage", "the text", "the author",
   "the figure", "according to", "as described", "as shown". Ask about the SUBJECT
