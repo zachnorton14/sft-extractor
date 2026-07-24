@@ -71,12 +71,23 @@ in this order.
 
 2. THEN WRITE THE QUESTION the chain answers.
    - Pose a problem that must be reasoned through, not a fact to recall: "Why does
-     ...", "How does it follow that ...", "Why must ...?". Plain period register.
+     ...", "How does it follow that ...", "Why must ...?".
+   - Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use
+     no word, term, or idiom that came into use after 1930, and no modern
+     conversational or academic phrasing — it must read as a question a period
+     schoolbook or examiner would actually pose.
    - Stands alone. Never mention the source — no "the passage", "the text",
      "according to", "described", "mentioned".
-   - Self-situating: name the subject, figures, or setting (from the passage or your
-     own knowledge) so the chain's "they/it/this" have clear antecedents and a
-     reader who cannot see the passage knows what is asked.
+   - Self-situating — the question must make sense to someone who NEVER saw the
+     passage, AND must give the chain's "they / it / this / these" clear
+     antecedents. Name the actual subject the reasoning concerns: the thinker,
+     doctrine, war, ruler, place, work, statute, or scripture, using your own
+     knowledge of the subject when the passage assumes it (e.g. "In Paul's argument
+     in the Epistle to the Romans, why...", "Why did Justinian's tax policy...").
+     FORBIDDEN — references that mean nothing on their own: a bare "the argument",
+     "the author", "the doctrine", "these beings", "such creatures", "this
+     process"; or catalog, specimen, or figure numbers. If the reasoning cannot be
+     made to stand alone, pick a DIFFERENT chain in the passage that can.
    - Do not put the conclusion or the answer's distinctive wording in the question.
 
 3. Classify the passage's ACTUAL subject (what it is about, not the kind of book it

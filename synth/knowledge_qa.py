@@ -100,6 +100,9 @@ You are given a short passage from a pre-1930s book. Work in this order.
 2. THEN WRITE THE QUESTION that this answer answers.
    - Plain period-schoolbook register: direct, often "What/Why/How/Of what". No
      modern or conversational phrasing, no meta-language.
+   - Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use
+     no word, term, or idiom that came into use after 1930 — it must read as a
+     question a period schoolbook or examiner would actually pose.
    - Stands alone. Never mention the source — no "the passage", "the text",
      "according to", "described", "mentioned". Ask as if from general knowledge.
    - Self-situating — the question must make sense to someone who NEVER saw the
