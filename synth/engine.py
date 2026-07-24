@@ -22,6 +22,7 @@ import asyncio
 import json
 import re
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 from typing import Callable
 
@@ -302,10 +303,9 @@ def write_output(route, excerpts, state):
     return out
 
 
-async def test_run(route, excerpts):
-    """Generate for a small sample (no state saved) and print each Q/A."""
-    state = {}
-    await run_async(route, excerpts, state, save=False)
+def _pair_lines(route, excerpts, state, excerpt_chars=200):
+    """Format generated Q/A pairs beside their excerpts, as a list of lines."""
+    out = []
     for e in excerpts:
         r = state.get(str(e["doc_index"]))
         complete = r and r.get("q") and r.get("a")
@@ -315,12 +315,49 @@ async def test_run(route, excerpts):
             head = f"[{r['category']}]  (book said {e['category']})"
         else:
             head = f"[{e['category']}]"
-        print("=" * 78)
-        print(f"{head}  {e.get('year')}  {scores}")
-        print(f"  excerpt : {e['excerpt'][:200]}...")
+        out.append("=" * 78)
+        out.append(f"{head}  {e.get('year')}  {scores}")
+        out.append(f"  excerpt : {e['excerpt'][:excerpt_chars]}...")
         if complete:
-            print(f"  Q       : {r['q']}")
-            print(f"  A       : {r['a']}")
+            out.append(f"  Q       : {r['q']}")
+            out.append(f"  A       : {r['a']}")
         else:
-            print("  (failed)")
-        print()
+            out.append("  (failed)")
+        out.append("")
+    return out
+
+
+async def test_run(route, excerpts):
+    """One-off preview: generate a small sample, print it, save nothing."""
+    state = {}
+    await run_async(route, excerpts, state, save=False)
+    print("\n".join(_pair_lines(route, excerpts, state)))
+
+
+async def sample_run(route, excerpts, seed=0):
+    """Prompt-testing record: generate, print, AND write a timestamped file to
+    samples/<route>/ capturing the prompt(s) used + the pairs, so runs can be
+    compared and old prompts recovered. Mirrors the authentic pipeline's `sample`."""
+    state = {}
+    await run_async(route, excerpts, state, save=False)
+    kept = sum(1 for e in excerpts
+               if (state.get(str(e["doc_index"])) or {}).get("q")
+               and (state.get(str(e["doc_index"])) or {}).get("a"))
+    header = [
+        f"route: {route.name}", f"model: {route.model}", f"seed:  {seed}",
+        f"n:     {len(excerpts)}", f"kept:  {kept}/{len(excerpts)}", "",
+    ]
+    if route.question_system:
+        header += ["--- EXTRACT SYSTEM PROMPT ---", route.system, "",
+                   "--- QUESTION SYSTEM PROMPT ---", route.question_system, ""]
+    else:
+        header += ["--- SYSTEM PROMPT ---", route.system, ""]
+    body = _pair_lines(route, excerpts, state, excerpt_chars=400)
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    d = ROOT / "samples" / route.name
+    d.mkdir(parents=True, exist_ok=True)
+    path = d / f"{ts}_seed{seed}_n{len(excerpts)}.txt"
+    path.write_text("\n".join(header + body), encoding="utf-8")
+    print("\n".join(body))
+    print(f"wrote sample ({kept}/{len(excerpts)} kept) -> {path}")
+    return path

@@ -253,6 +253,9 @@ def cmd_stem(args):
     if args.test:
         asyncio.run(sr.test_run(excerpts))
         return
+    if args.sample:
+        asyncio.run(sr.sample_run(excerpts, seed=args.seed))
+        return
     state = sr.load_state()
     asyncio.run(sr.run_async(excerpts, state))
     sr.write_output(excerpts, state)
@@ -265,6 +268,9 @@ def cmd_reasoning(args):
     print(f"Sourced {len(excerpts)} argument excerpts (route={rq.AFFORDANCE})")
     if args.test:
         asyncio.run(rq.test_run(excerpts))
+        return
+    if args.sample:
+        asyncio.run(rq.sample_run(excerpts, seed=args.seed))
         return
     state = rq.load_state()
     resolved = sum(1 for e in excerpts if str(e["doc_index"]) in state)
@@ -281,6 +287,9 @@ def cmd_knowledge(args):
     print(f"Sourced {len(excerpts)} expository excerpts (route={kq.AFFORDANCE})")
     if args.test:
         asyncio.run(kq.test_run(excerpts))
+        return
+    if args.sample:
+        asyncio.run(kq.sample_run(excerpts, seed=args.seed))
         return
     state = kq.load_state()
     resolved = sum(1 for e in excerpts if str(e["doc_index"]) in state)
@@ -429,6 +438,7 @@ def main():
                       help="target STEM excerpts to source")
     p_sr.add_argument("--seed", type=int, default=0)
     p_sr.add_argument("--test", action="store_true", help="generate a few and print without writing")
+    p_sr.add_argument("--sample", action="store_true", help="generate a few, print, AND save a dated record (prompt + Q/A) to samples/")
 
     # reasoning-qa
     p_rq = sub.add_parser("reasoning-qa",
@@ -437,6 +447,7 @@ def main():
     p_rq.add_argument("--count", type=int, default=100, dest="size", metavar="N",
                       help="max argument excerpts to process")
     p_rq.add_argument("--test", action="store_true", help="generate a few and print without writing")
+    p_rq.add_argument("--sample", action="store_true", help="generate a few, print, AND save a dated record (prompt + Q/A) to samples/")
 
     # knowledge-qa
     p_kq = sub.add_parser("knowledge-qa",
@@ -444,6 +455,7 @@ def main():
     p_kq.add_argument("--count", type=int, default=100, dest="size", metavar="N",
                       help="excerpts to sample before keeping the expository ones")
     p_kq.add_argument("--test", action="store_true", help="sample a few and print Q/A without writing")
+    p_kq.add_argument("--sample", action="store_true", help="generate a few, print, AND save a dated record (prompt + Q/A) to samples/")
     p_kq.add_argument("--alpha", type=float, default=0.5, help="tempering: 1=corpus, 0=uniform")
     p_kq.add_argument("--min-conf", type=float, default=0.7, help="label-confidence floor")
     p_kq.add_argument("--seed", type=int, default=0)

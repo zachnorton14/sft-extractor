@@ -141,3 +141,7 @@ def write_output(excerpts, state):
 
 def test_run(excerpts):
     return engine.test_run(ROUTE, excerpts)
+
+
+def sample_run(excerpts, seed=0):
+    return engine.sample_run(ROUTE, excerpts, seed)
