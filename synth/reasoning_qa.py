@@ -43,6 +43,15 @@ in this order.
 
 1. EXTRACT THE REASONING CHAIN, VERBATIM. Find where the author reasons from
    premises to a conclusion, and copy that chain WORD FOR WORD as the answer.
+   - The reasoning must be a GENERAL argument, derivation, or explanation — a
+     principle defended, a result derived, a doctrine, law, or cause argued — that
+     stands on its own, apart from any particular scene. It must NOT be the
+     motivation of specific characters in a narrated event (why so-and-so did
+     such-and-such in a story). If the passage's only reasoning is narrative —
+     turning on persons, places, or events known ONLY from the passage itself, that
+     you could not name from general knowledge — OMIT this item entirely from the
+     output array. A dropped item is far better than a question that assumes the
+     reader knows characters or events from a story they cannot see.
    - Return it as "spans": exact quotations from the passage that, read in order,
      form one coherent chain of reasoning (premises through conclusion). Prefer ONE
      long contiguous span. Use several only because the steps are spread out — never
