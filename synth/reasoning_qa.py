@@ -29,6 +29,8 @@ Env (same as the other model passes):
     export ANTHROPIC_API_KEY=<your deepseek key>
 """
 
+import random
+
 from synth import corpus, engine
 
 AFFORDANCE = "argument"          # affordance this generator handles
@@ -98,10 +100,16 @@ Output JSON only: [{"i": 0, "q": "..."}, ...]
 """
 
 
-def source_excerpts(n, **_):
-    """Reasoning excerpts from the materialized corpus (affordance == argument)."""
+def source_excerpts(n, seed=0, **_):
+    """Reasoning excerpts from the materialized corpus (affordance == argument).
+
+    n falsy or >= pool size returns the whole pool (full run); otherwise a seeded
+    random sample, so a --test with a given --count/--seed varies across seeds
+    instead of always taking the first n in file order."""
     mat = corpus.load_excerpts(affordance=AFFORDANCE)
-    return mat[:n] if n else mat
+    if not n or n >= len(mat):
+        return mat
+    return random.Random(seed).sample(mat, n)
 
 
 ROUTE = engine.Route(

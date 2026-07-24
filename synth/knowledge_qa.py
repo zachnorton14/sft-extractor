@@ -33,6 +33,8 @@ Set environment before running (same as the other model passes):
     export ANTHROPIC_API_KEY=<your deepseek key>
 """
 
+import random
+
 from synth import corpus, engine
 # re-exported for routes that still import these from here
 from synth.engine import verbatim_answer, _pack_batches, _strip_fence  # noqa: F401
@@ -104,7 +106,9 @@ def source_excerpts(n, alpha=0.5, min_conf=0.7, n_words=150, seed=0):
     nothing has been harvested yet (handy for a quick --test)."""
     mat = corpus.load_excerpts(affordance=AFFORDANCE)
     if mat:
-        return mat[:n] if n else mat
+        if not n or n >= len(mat):
+            return mat
+        return random.Random(seed).sample(mat, n)
     recs = corpus.sample_excerpts(n, alpha=alpha, min_conf=min_conf,
                                   n_words=n_words, seed=seed)
     return [r for r in recs if r["affordance"] == AFFORDANCE]

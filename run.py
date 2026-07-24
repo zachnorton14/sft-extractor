@@ -261,7 +261,7 @@ def cmd_stem(args):
 
 def cmd_reasoning(args):
     from synth import reasoning_qa as rq
-    excerpts = rq.source_excerpts(args.size)
+    excerpts = rq.source_excerpts(args.size, seed=args.seed)
     print(f"Sourced {len(excerpts)} argument excerpts (route={rq.AFFORDANCE})")
     if args.test:
         asyncio.run(rq.test_run(excerpts))
@@ -433,6 +433,7 @@ def main():
     # reasoning-qa
     p_rq = sub.add_parser("reasoning-qa",
                           help="Generate step-showing Q/A from argument excerpts (reasoning route)")
+    p_rq.add_argument("--seed", type=int, default=0)
     p_rq.add_argument("--count", type=int, default=100, dest="size", metavar="N",
                       help="max argument excerpts to process")
     p_rq.add_argument("--test", action="store_true", help="generate a few and print without writing")
