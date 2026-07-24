@@ -262,7 +262,7 @@ def cmd_stem(args):
 def cmd_reasoning(args):
     from synth import reasoning_qa as rq
     excerpts = rq.source_excerpts(args.size)
-    print(f"Sourced {len(excerpts)} argument excerpts (route={rq.ROUTE})")
+    print(f"Sourced {len(excerpts)} argument excerpts (route={rq.AFFORDANCE})")
     if args.test:
         asyncio.run(rq.test_run(excerpts))
         return
@@ -278,7 +278,7 @@ def cmd_knowledge(args):
     from synth import knowledge_qa as kq
     excerpts = kq.source_excerpts(args.size, alpha=args.alpha, min_conf=args.min_conf,
                                   seed=args.seed)
-    print(f"Sourced {len(excerpts)} expository excerpts (route={kq.ROUTE})")
+    print(f"Sourced {len(excerpts)} expository excerpts (route={kq.AFFORDANCE})")
     if args.test:
         asyncio.run(kq.test_run(excerpts))
         return

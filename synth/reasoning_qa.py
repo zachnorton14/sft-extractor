@@ -43,15 +43,6 @@ in this order.
 
 1. EXTRACT THE REASONING CHAIN, VERBATIM. Find where the author reasons from
    premises to a conclusion, and copy that chain WORD FOR WORD as the answer.
-   - The reasoning must be a GENERAL argument, derivation, or explanation — a
-     principle defended, a result derived, a doctrine, law, or cause argued — that
-     stands on its own, apart from any particular scene. It must NOT be the
-     motivation of specific characters in a narrated event (why so-and-so did
-     such-and-such in a story). If the passage's only reasoning is narrative —
-     turning on persons, places, or events known ONLY from the passage itself, that
-     you could not name from general knowledge — OMIT this item entirely from the
-     output array. A dropped item is far better than a question that assumes the
-     reader knows characters or events from a story they cannot see.
    - Return it as "spans": exact quotations from the passage that, read in order,
      form one coherent chain of reasoning (premises through conclusion). Prefer ONE
      long contiguous span. Use several only because the steps are spread out — never
@@ -75,16 +66,22 @@ in this order.
      schoolbook or examiner would actually pose.
    - Stands alone. Never mention the source — no "the passage", "the text",
      "according to", "described", "mentioned".
-   - Self-situating — the question must make sense to someone who NEVER saw the
-     passage, AND must give the chain's "they / it / this / these" clear
-     antecedents. Name the actual subject the reasoning concerns: the thinker,
-     doctrine, war, ruler, place, work, statute, or scripture, using your own
-     knowledge of the subject when the passage assumes it (e.g. "In Paul's argument
-     in the Epistle to the Romans, why...", "Why did Justinian's tax policy...").
-     FORBIDDEN — references that mean nothing on their own: a bare "the argument",
-     "the author", "the doctrine", "these beings", "such creatures", "this
-     process"; or catalog, specimen, or figure numbers. If the reasoning cannot be
-     made to stand alone, pick a DIFFERENT chain in the passage that can.
+   - Self-situating — SUPPLY ALL THE CONTEXT THE READER NEEDS. The question must
+     make sense to someone who NEVER saw the passage, and must give the chain's
+     "they / it / this / these" clear antecedents. Introduce whatever the reasoning
+     turns on:
+       · for a matter of general record (a thinker, doctrine, war, ruler, work,
+         statute, scripture), name it from your own knowledge — "In Paul's argument
+         in the Epistle to the Romans, why...", "Why, under Justinian's tax policy...";
+       · for particular persons, places, or events described ONLY in the passage,
+         INTRODUCE them in the question itself — state briefly who they are and the
+         situation, drawn from the passage — so the reader can follow ("A Quaker
+         brought before an Irish governor on a false charge — why did the governor
+         commit him to an officer's keeping?").
+     Add as much context as it takes; a longer question that stands on its own is
+     far better than a short one that assumes the reader knows the story. Never
+     leave a bare "the argument", "the author", "these beings", "this process", or
+     an unexplained name.
    - Do not put the conclusion or the answer's distinctive wording in the question.
 
 3. Classify the passage's ACTUAL subject (what it is about, not the kind of book it
