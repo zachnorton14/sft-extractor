@@ -1,17 +1,23 @@
-"""Reasoning route: turn argument excerpts into step-showing Q/A rows.
+"""Reasoning route: extract the author's reasoning chain, verbatim.
 
 The second content-bound generator. It reads the materialized excerpt corpus
 (synth/output/excerpts.jsonl from `harvest`) and keeps the ones the affordance gate
 tagged `argument` — passages that make a case, derive a result, or reason from
-premises. For each, one model call produces a Q/A that exercises the REASONING:
+premises. These are passages that CONTAIN reasoning (the author does the reasoning),
+not passages that can merely be reasoned about — so the answer is *extracted*, not
+generated: the same anachronism guarantee as knowledge-QA, and no reliance on the
+model to compose vintage-sounding logic.
 
-  - the QUESTION poses a problem that must be reasoned through (why, how it
-    follows, prove that, if-then), not a fact to recall;
-  - the ANSWER reconstructs the reasoning STEP BY STEP along the passage's own
-    logic, ending in the conclusion — showing the work, not just the result.
-
-The chain of reasoning is grounded in the passage (no premises from outside it);
-only the question's framing may use general knowledge, as in the knowledge route.
+  - the ANSWER is the author's reasoning chain, copied VERBATIM. Prefer one long
+    contiguous span; but because a chain is naturally spread across a passage, the
+    model MAY splice several verbatim spans (up to MAX_SPANS) into one coherent
+    chain. Splicing is anachronism-safe: every span is verified as a literal
+    substring and spans join with an ellipsis, so the model may only select and
+    order — never write a connecting word. Capped, and told to prefer the fewest,
+    longest spans, so it can't cherry-pick a disjointed chain.
+  - the QUESTION stands alone (no passage attached — a visible passage would make
+    extraction a degenerate echo), self-situating, "why does .../ how does it
+    follow ...". Answer-first: find the chain, then write the question for it.
 
 Input:  synth/output/excerpts.jsonl (affordance == argument)
 Output: synth/output/reasoning_qa.json
@@ -30,7 +36,7 @@ from pathlib import Path
 import anthropic
 
 from synth import corpus
-from synth.knowledge_qa import _estimate_tokens, _pack_batches, _strip_fence
+from synth.knowledge_qa import _pack_batches, _strip_fence, verbatim_answer
 
 ROOT = Path(__file__).parent.parent
 OUTPUT_DIR = ROOT / "synth" / "output"
@@ -42,37 +48,44 @@ MAX_TOKENS = 16384
 CONCURRENCY = 20
 TOKEN_BUDGET = 1200
 ROUTE = "argument"               # affordance this generator handles
+MAX_SPANS = 4                    # a chain is spread out; more than knowledge-QA's 2
 
 _CLASS_LIST = "\n".join(f"  - {c}" for c in corpus.LOC_CLASSES)
 
 SYSTEM = f"""\
 You are given a short passage from a pre-1930s book that argues a point, derives a
-result, or reasons from premises. Do two things.
+result, or reasons from premises. The author's own reasoning is in the text. Work
+in this order.
 
-1. Write ONE question-answer pair that exercises the REASONING in the passage.
+1. EXTRACT THE REASONING CHAIN, VERBATIM. Find where the author reasons from
+   premises to a conclusion, and copy that chain WORD FOR WORD as the answer.
+   - Return it as "spans": exact quotations from the passage that, read in order,
+     form one coherent chain of reasoning (premises through conclusion). Prefer ONE
+     long contiguous span. Use several only because the steps are spread out — never
+     more than {MAX_SPANS}, and always the fewest, longest spans that hold the chain
+     together.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder within a span, or add any word not in the passage — including
+     connecting words between spans. You may only select and order the author's own
+     sentences.
 
-   Question:
+2. THEN WRITE THE QUESTION the chain answers.
    - Pose a problem that must be reasoned through, not a fact to recall: "Why does
-     ...", "How does it follow that ...", "Show that ...", "If ..., what follows and
-     why?". Plain period register, no modern or conversational phrasing.
+     ...", "How does it follow that ...", "Why must ...?". Plain period register.
    - Stands alone. Never mention the source — no "the passage", "the text",
      "according to", "described", "mentioned".
-   - Self-situating: name the subject, figures, or setting so a reader who cannot
-     see the passage knows what is asked. Framing may use your own knowledge; the
-     reasoning in the answer may not.
+   - Self-situating: name the subject, figures, or setting (from the passage or your
+     own knowledge) so the chain's "they/it/this" have clear antecedents and a
+     reader who cannot see the passage knows what is asked.
+   - Do not put the conclusion or the answer's distinctive wording in the question.
 
-   Answer:
-   - Reconstruct the reasoning STEP BY STEP along the passage's own logic, ending in
-     the conclusion. Show the intermediate steps, not just the result.
-   - Use only premises stated or directly implied in the passage — introduce no
-     outside facts. Do not restate the question.
-
-2. Classify the passage's ACTUAL subject (what it is about, not the kind of book it
+3. Classify the passage's ACTUAL subject (what it is about, not the kind of book it
    came from) into exactly one of these classes, copied verbatim:
 {_CLASS_LIST}
 
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
-Output JSON only: [{{"i": 0, "q": "...", "a": "...", "category": "ONE CLASS"}}, ...]
+Output JSON only:
+  [{{"i": 0, "spans": ["...", "..."], "q": "...", "category": "ONE CLASS"}}, ...]
 """
 
 
@@ -109,10 +122,15 @@ async def _generate_batch(client, semaphore, batch, state):
                     raise ValueError(f"truncated at max_tokens ({len(batch)} in batch)")
                 for r in json.loads(_strip_fence(text)):
                     idx = r.get("i")
+                    if not (isinstance(idx, int) and 0 <= idx < len(keys)):
+                        continue
                     q = (r.get("q") or "").strip()
-                    a = (r.get("a") or "").strip()
                     cat = (r.get("category") or "").strip()
-                    if isinstance(idx, int) and 0 <= idx < len(keys) and q and a:
+                    spans = r.get("spans")
+                    if spans is None and r.get("a"):
+                        spans = [r["a"]]
+                    a = verbatim_answer(spans, batch[idx]["excerpt"], MAX_SPANS)
+                    if q and a:                          # a is None if not verbatim -> drop
                         state[keys[idx]] = {"q": q, "a": a, "category": cat}
                 return
             except anthropic.RateLimitError:
