@@ -116,10 +116,12 @@ def composed_answer(r, excerpt):
 @dataclass
 class Route:
     name: str                     # basename for state/output files
-    system: str                   # SYSTEM prompt
+    system: str                   # SYSTEM prompt (extraction, or the whole call if one-phase)
     source: Callable              # (n, seed) -> list[excerpt dict]
     answer_fn: Callable           # (result_dict, excerpt_str) -> answer str | None
     passthrough: tuple = ("prose_score",)   # excerpt fields to copy into rows
+    question_system: str = None   # if set, generate the question in a SECOND call
+                                  # (given passage + answer); else Q and A in one call
     model: str = MODEL
     max_tokens: int = MAX_TOKENS
     concurrency: int = CONCURRENCY
@@ -142,32 +144,22 @@ def save_state(route, state):
 
 # --- generation loop -----------------------------------------------------------
 
-async def _generate_batch(client, semaphore, batch, state, route):
-    keys = [str(it["doc_index"]) for it in batch]
-    payload = json.dumps([{"i": i, "text": it["excerpt"]} for i, it in enumerate(batch)])
+async def _call(client, semaphore, route, system, payload, n):
+    """One model call with retry; returns the parsed JSON list or None."""
     async with semaphore:
         for attempt in range(5):
             try:
                 msg = await client.messages.create(
                     model=route.model, max_tokens=route.max_tokens,
-                    system=route.system, messages=[{"role": "user", "content": payload}],
+                    system=system, messages=[{"role": "user", "content": payload}],
                 )
                 text = next((b.text for b in msg.content if b.type == "text"), "").strip()
                 if not text:
                     raise ValueError(f"empty response (stop_reason={msg.stop_reason}, "
                                      f"blocks={[b.type for b in msg.content]})")
                 if msg.stop_reason == "max_tokens":
-                    raise ValueError(f"truncated at max_tokens ({len(batch)} in batch)")
-                for r in json.loads(_strip_fence(text)):
-                    idx = r.get("i")
-                    if not (isinstance(idx, int) and 0 <= idx < len(keys)):
-                        continue
-                    q = (r.get("q") or "").strip()
-                    cat = (r.get("category") or "").strip()
-                    a = route.answer_fn(r, batch[idx]["excerpt"])
-                    if q and a:                          # a is None -> drop this item
-                        state[keys[idx]] = {"q": q, "a": a, "category": cat}
-                return
+                    raise ValueError(f"truncated at max_tokens ({n} in batch)")
+                return json.loads(_strip_fence(text))
             except anthropic.RateLimitError:
                 await asyncio.sleep(2 ** attempt)
             except (anthropic.AuthenticationError, anthropic.PermissionDeniedError) as e:
@@ -175,38 +167,112 @@ async def _generate_batch(client, semaphore, batch, state, route):
                                  f"Check ANTHROPIC_API_KEY matches ANTHROPIC_BASE_URL.")
             except json.JSONDecodeError as e:
                 if attempt == 4:
-                    print(f"  batch of {len(batch)} failed: unparseable: {e}\n"
+                    print(f"  batch of {n} failed: unparseable: {e}\n"
                           f"    raw[:200]: {text[:200]!r}")
-                    return
+                    return None
                 await asyncio.sleep(2 ** attempt)
             except Exception as e:
                 if attempt == 4:
-                    print(f"  batch of {len(batch)} failed after 5 attempts: "
+                    print(f"  batch of {n} failed after 5 attempts: "
                           f"{type(e).__name__}: {str(e)[:200]}")
-                    return
+                    return None
                 await asyncio.sleep(2 ** attempt)
+    return None
 
 
-async def run_async(route, excerpts, state):
-    pending = [e for e in excerpts if str(e["doc_index"]) not in state]
-    if not pending:
-        print("  nothing pending")
-        return
-    batches = _pack_batches(pending, route.token_budget)
-    print(f"  {len(pending)} excerpts, {len(batches)} batches...")
-    done = [0]
+async def _single_batch(client, semaphore, batch, state, route):
+    """One-phase: Q, A, and category in a single call (knowledge, stem)."""
+    keys = [str(it["doc_index"]) for it in batch]
+    payload = json.dumps([{"i": i, "text": it["excerpt"]} for i, it in enumerate(batch)])
+    parsed = await _call(client, semaphore, route, route.system, payload, len(batch))
+    for r in parsed or []:
+        idx = r.get("i")
+        if not (isinstance(idx, int) and 0 <= idx < len(keys)):
+            continue
+        q = (r.get("q") or "").strip()
+        cat = (r.get("category") or "").strip()
+        a = route.answer_fn(r, batch[idx]["excerpt"])
+        if q and a:                                  # a is None -> drop this item
+            state[keys[idx]] = {"q": q, "a": a, "category": cat}
+
+
+async def _extract_batch(client, semaphore, batch, state, route):
+    """Two-phase call 1: extract the answer (spans) + category from the passage."""
+    keys = [str(it["doc_index"]) for it in batch]
+    payload = json.dumps([{"i": i, "text": it["excerpt"]} for i, it in enumerate(batch)])
+    parsed = await _call(client, semaphore, route, route.system, payload, len(batch))
+    for r in parsed or []:
+        idx = r.get("i")
+        if not (isinstance(idx, int) and 0 <= idx < len(keys)):
+            continue
+        cat = (r.get("category") or "").strip()
+        a = route.answer_fn(r, batch[idx]["excerpt"])
+        if a:
+            state[keys[idx]] = {"a": a, "category": cat}   # question filled in phase 2
+
+
+async def _question_batch(client, semaphore, batch, state, route):
+    """Two-phase call 2: write the question given the passage + its extracted answer."""
+    keys = [str(it["doc_index"]) for it in batch]
+    payload = json.dumps([{"i": i, "passage": it["excerpt"], "answer": state[keys[i]]["a"]}
+                          for i, it in enumerate(batch)])
+    parsed = await _call(client, semaphore, route, route.question_system, payload, len(batch))
+    for r in parsed or []:
+        idx = r.get("i")
+        if not (isinstance(idx, int) and 0 <= idx < len(keys)):
+            continue
+        q = (r.get("q") or "").strip()
+        if q:
+            state[keys[idx]]["q"] = q
+
+
+async def run_async(route, excerpts, state, save=True):
     async with anthropic.AsyncAnthropic() as client:
         semaphore = asyncio.Semaphore(route.concurrency)
 
+        if route.question_system:
+            # phase 1 — extract answers for excerpts that don't have one yet
+            need_a = [e for e in excerpts if "a" not in state.get(str(e["doc_index"]), {})]
+            if need_a:
+                batches = _pack_batches(need_a, route.token_budget)
+                print(f"  extract: {len(need_a)} excerpts, {len(batches)} batches...")
+                await asyncio.gather(*[_extract_batch(client, semaphore, b, state, route)
+                                       for b in batches])
+                if save:
+                    save_state(route, state)
+            # phase 2 — write questions for extracted answers that lack one
+            need_q = [e for e in excerpts
+                      if state.get(str(e["doc_index"]), {}).get("a")
+                      and not state[str(e["doc_index"])].get("q")]
+            if need_q:
+                # payload carries passage + answer, so halve the budget
+                batches = _pack_batches(need_q, max(1, route.token_budget // 2))
+                print(f"  question: {len(need_q)} answers, {len(batches)} batches...")
+                await asyncio.gather(*[_question_batch(client, semaphore, b, state, route)
+                                       for b in batches])
+                if save:
+                    save_state(route, state)
+            return
+
+        # one-phase
+        pending = [e for e in excerpts if str(e["doc_index"]) not in state]
+        if not pending:
+            print("  nothing pending")
+            return
+        batches = _pack_batches(pending, route.token_budget)
+        print(f"  {len(pending)} excerpts, {len(batches)} batches...")
+        done = [0]
+
         async def tracked(batch):
-            await _generate_batch(client, semaphore, batch, state, route)
+            await _single_batch(client, semaphore, batch, state, route)
             done[0] += len(batch)
-            if done[0] % 100 < len(batch):
+            if done[0] % 100 < len(batch) and save:
                 save_state(route, state)
                 print(f"  {done[0]}/{len(pending)}", flush=True)
 
         await asyncio.gather(*[asyncio.create_task(tracked(b)) for b in batches])
-    save_state(route, state)
+        if save:
+            save_state(route, state)
 
 
 def write_output(route, excerpts, state):
@@ -214,7 +280,7 @@ def write_output(route, excerpts, state):
     rows = []
     for e in excerpts:
         r = state.get(str(e["doc_index"]))
-        if not r:
+        if not (r and r.get("q") and r.get("a")):    # both halves required
             continue
         content = r.get("category") or e["category"]
         row = {
@@ -237,25 +303,22 @@ def write_output(route, excerpts, state):
 
 
 async def test_run(route, excerpts):
-    """Generate for a small sample and print each Q/A beside its source excerpt."""
+    """Generate for a small sample (no state saved) and print each Q/A."""
     state = {}
-    batches = _pack_batches(excerpts, route.token_budget)
-    async with anthropic.AsyncAnthropic() as client:
-        semaphore = asyncio.Semaphore(route.concurrency)
-        await asyncio.gather(*[_generate_batch(client, semaphore, b, state, route)
-                               for b in batches])
+    await run_async(route, excerpts, state, save=False)
     for e in excerpts:
         r = state.get(str(e["doc_index"]))
+        complete = r and r.get("q") and r.get("a")
         scores = "  ".join(f"{f} {e[f]:.2f}" for f in route.passthrough
                            if isinstance(e.get(f), (int, float)))
-        if r and r.get("category") and r["category"] != e["category"]:
+        if complete and r.get("category") and r["category"] != e["category"]:
             head = f"[{r['category']}]  (book said {e['category']})"
         else:
             head = f"[{e['category']}]"
         print("=" * 78)
         print(f"{head}  {e.get('year')}  {scores}")
         print(f"  excerpt : {e['excerpt'][:200]}...")
-        if r:
+        if complete:
             print(f"  Q       : {r['q']}")
             print(f"  A       : {r['a']}")
         else:
