@@ -225,7 +225,9 @@ async def _single_batch(client, semaphore, batch, state, route):
     keys = [str(it["doc_index"]) for it in batch]
     payload = json.dumps([{"i": i, "text": it["excerpt"]} for i, it in enumerate(batch)])
     parsed = await _call(client, semaphore, route, route.system, payload, len(batch))
-    for r in parsed or []:
+    for r in parsed if isinstance(parsed, list) else []:
+        if not isinstance(r, dict):                  # model returned a bare value
+            continue
         idx = r.get("i")
         if not (isinstance(idx, int) and 0 <= idx < len(keys)):
             continue
@@ -241,7 +243,9 @@ async def _extract_batch(client, semaphore, batch, state, route):
     keys = [str(it["doc_index"]) for it in batch]
     payload = json.dumps([{"i": i, "text": it["excerpt"]} for i, it in enumerate(batch)])
     parsed = await _call(client, semaphore, route, route.system, payload, len(batch))
-    for r in parsed or []:
+    for r in parsed if isinstance(parsed, list) else []:
+        if not isinstance(r, dict):                  # model returned a bare value
+            continue
         idx = r.get("i")
         if not (isinstance(idx, int) and 0 <= idx < len(keys)):
             continue
@@ -257,7 +261,9 @@ async def _question_batch(client, semaphore, batch, state, route):
     payload = json.dumps([{"i": i, "passage": it["excerpt"], "answer": state[keys[i]]["a"]}
                           for i, it in enumerate(batch)])
     parsed = await _call(client, semaphore, route, route.question_system, payload, len(batch))
-    for r in parsed or []:
+    for r in parsed if isinstance(parsed, list) else []:
+        if not isinstance(r, dict):                  # model returned a bare value
+            continue
         idx = r.get("i")
         if not (isinstance(idx, int) and 0 <= idx < len(keys)):
             continue
