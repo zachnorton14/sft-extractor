@@ -246,6 +246,19 @@ def cmd_harvest(args):
                    seed=args.seed, max_shards=args.max_shards)
 
 
+def cmd_stem(args):
+    from synth import stem_reasoning as sr
+    excerpts = sr.source_excerpts(args.size, seed=args.seed)
+    print(f"Sourced {len(excerpts)} STEM-reasoning excerpts")
+    if args.test:
+        asyncio.run(sr.test_run(excerpts))
+        return
+    state = sr.load_state()
+    asyncio.run(sr.run_async(excerpts, state))
+    sr.write_output(excerpts, state)
+    print("Done.")
+
+
 def cmd_reasoning(args):
     from synth import reasoning_qa as rq
     excerpts = rq.source_excerpts(args.size)
@@ -409,6 +422,14 @@ def main():
     p_hv.add_argument("--seed", type=int, default=0)
     p_hv.add_argument("--max-shards", type=int, default=473, help="cap shards swept per run (resumable)")
 
+    # stem-reasoning
+    p_sr = sub.add_parser("stem-reasoning",
+                          help="Generate step-showing STEM Q/A from SCIENCE/TECHNOLOGY reasoning windows")
+    p_sr.add_argument("--count", type=int, default=20, dest="size", metavar="N",
+                      help="target STEM excerpts to source")
+    p_sr.add_argument("--seed", type=int, default=0)
+    p_sr.add_argument("--test", action="store_true", help="generate a few and print without writing")
+
     # reasoning-qa
     p_rq = sub.add_parser("reasoning-qa",
                           help="Generate step-showing Q/A from argument excerpts (reasoning route)")
@@ -474,6 +495,8 @@ def main():
         cmd_synthq(args)
     elif args.cmd == "harvest":
         cmd_harvest(args)
+    elif args.cmd == "stem-reasoning":
+        cmd_stem(args)
     elif args.cmd == "reasoning-qa":
         cmd_reasoning(args)
     elif args.cmd == "knowledge-qa":

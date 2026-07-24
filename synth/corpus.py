@@ -83,6 +83,7 @@ META_FIELDS = ("topic_or_subject_gen", "topic_or_subject_score_gen",
 def _connect():
     con = duckdb.connect()
     con.execute("INSTALL httpfs; LOAD httpfs;")
+    con.execute("SET enable_progress_bar=false;")
     return con
 
 
@@ -486,7 +487,31 @@ def affordance_label(text):
     return "expository"
 
 
-def prose_excerpt(text, n_words=150, rng=None, tries=16, floor=0.7):
+# STEM reasoning lives in windows that combine reasoning connectives with
+# quantitative/physical vocabulary. Both are required (their product scores it):
+# vocabulary alone is a description, connectives alone are rhetoric.
+_REASON_CONN = re.compile(
+    r"\b(therefore|hence|thus|since|because|consequently|whence|accordingly|"
+    r"it follows|for this reason|so that|if|then|let|suppose|assume|given)\b", re.I)
+_STEM_VOCAB = re.compile(
+    r"\b(equal|equals|angle|triangle|square|circle|ratio|proportion|multiply|"
+    r"divide|product|quotient|sum|difference|root|velocity|force|pressure|weight|"
+    r"mass|volume|density|temperature|heat|energy|current|voltage|resistance|"
+    r"equation|formula|theorem|proposition|proof|quantity|degrees?|per\s*cent)\b"
+    r"|[=×÷]", re.I)
+
+
+def stem_signal(text):
+    """0-1 score for STEM-reasoning density: reasoning structure AND quantitative
+    vocabulary, as a product so both must be present."""
+    if len(text.split()) < 20:
+        return 0.0
+    conn = min(len(_REASON_CONN.findall(text)), 5) / 5
+    vocab = min(len(_STEM_VOCAB.findall(text)), 8) / 8
+    return conn * vocab
+
+
+def prose_excerpt(text, n_words=150, rng=None, tries=16, floor=0.7, prefer="prose"):
     """Cut a sentence-bounded excerpt of ~n_words that clears the prose bar.
 
     Builds candidates from runs of whole sentences (so no cut lands mid-sentence),
@@ -499,14 +524,38 @@ def prose_excerpt(text, n_words=150, rng=None, tries=16, floor=0.7):
     wc = [len(s.split()) for s in sents]
     n = len(sents)
     lo = min(n // 10, n - 1)
-    best = ("", -1.0)
-    for _ in range(tries):
-        i = rng.randint(lo, n - 1)
+
+    def window(i):
         j, words = i, 0
         while j < n and words < n_words:
             words += wc[j]
             j += 1
-        ex = " ".join(sents[i:j])
+        return " ".join(sents[i:j])
+
+    if prefer == "stem":
+        # STEM reasoning is sparse (~few % of sentences), so random windows miss it.
+        # Anchor the search on sentences carrying a reasoning connective, window
+        # around each, and keep the gated window with the highest stem signal.
+        anchors = [i for i in range(lo, n) if _REASON_CONN.search(sents[i])]
+        best = ("", -1.0)
+        for i in anchors[:200]:
+            ex = window(max(lo, i - 1))
+            if not is_self_contained(ex) or not has_affordance(ex) or is_garbage(ex):
+                continue
+            if region_quality(ex)[0] < 0.5:       # looser floor: math lowers region
+                continue
+            sig = stem_signal(ex)
+            if sig > best[1]:
+                best = (ex, sig)
+        ex, sig = best
+        if not ex or sig <= 0:
+            return "", 0.0, ""
+        return ex, round(sig, 3), "stem_reasoning"
+
+    best = ("", -1.0)
+    for _ in range(tries):
+        i = rng.randint(lo, n - 1)
+        ex = window(i)
         if not is_self_contained(ex) or not has_affordance(ex) or is_garbage(ex):
             continue                              # hard-drop: resample another window
         score = region_quality(ex)[0]
@@ -606,6 +655,49 @@ def report_coverage(total, alpha=0.5, min_conf=0.5):
         cap = "  (capped)" if targets[c] == eligible[c] and eligible[c] else ""
         print(f"  {c:44} {100*corpus[c]/corpus_total:7.1f}% "
               f"{100*targets[c]/max(plan_total,1):7.1f}% {targets[c]:7} {eligible[c]:9,}{cap}")
+
+
+STEM_CATEGORIES = ["SCIENCE", "TECHNOLOGY"]
+
+
+def sample_stem(n=20, seed=0, min_signal=0.4, min_conf=0.7, n_words=170,
+                categories=STEM_CATEGORIES):
+    """Draw ~n STEM-reasoning excerpts by seeking the reasoning-dense window in
+    each doc from the STEM categories, keeping those above `min_signal`.
+
+    Fetch-based for now (the reasoning window differs from the harvest's prose
+    window, so it needs its own selection); materialize via the harvest later.
+    """
+    _, audit, con = _load_index()
+    idx = _category_index(audit)
+    starts, _ = _shard_starts()
+    rng = random.Random(seed)
+    per = max(1, n // len(categories))
+    out = []
+    for cat in categories:
+        gis = [g for g in idx.get(cat, [])
+               if (audit[g].get("topic_or_subject_score_gen") or 0) >= min_conf]
+        if not gis:
+            continue
+        # oversample docs (many yield no strong stem window) and keep the hits
+        for gi in rng.sample(gis, min(per * 4, len(gis))):
+            if len([r for r in out if r["category"] == cat]) >= per:
+                break
+            shard, local = _locate(gi, starts)
+            text = _fetch_text(con, shard, local)
+            if not text:
+                continue
+            ex, sig, label = prose_excerpt(text, n_words, rng, prefer="stem")
+            if not ex or sig < min_signal:
+                continue
+            m = audit[gi]
+            out.append({
+                "doc_index": gi, "category": cat, "affordance": "stem_reasoning",
+                "stem_signal": sig, "confidence": m.get("topic_or_subject_score_gen"),
+                "year": m.get("resolved_year"), "title": m.get("title_src"),
+                "prose_score": sig, "n_words": len(ex.split()), "excerpt": ex,
+            })
+    return out
 
 
 def sample_excerpts(n=20, alpha=0.5, min_conf=0.5, n_words=150, seed=0):
