@@ -36,16 +36,13 @@ from synth import corpus, engine
 AFFORDANCE = "argument"          # affordance this generator handles
 MAX_SPANS = 4                    # a chain is spread out; more than knowledge-QA's 2
 
-_CLASS_LIST = "\n".join(f"  - {c}" for c in corpus.LOC_CLASSES)
-
 # CALL 1 — extract the reasoning chain verbatim (this part has always been good).
 EXTRACT_SYSTEM = f"""\
 You are given a short passage from a pre-1930s book that argues a point, derives a
-result, or reasons from premises. The author's own reasoning is in the text. Do two
-things.
+result, or reasons from premises. The author's own reasoning is in the text.
 
-1. EXTRACT THE REASONING CHAIN, VERBATIM. Find where the author reasons from
-   premises to a conclusion, and copy that chain WORD FOR WORD.
+EXTRACT THE REASONING CHAIN, VERBATIM. Find where the author reasons from premises to
+a conclusion, and copy that chain WORD FOR WORD.
    - Return it as "spans": exact quotations from the passage that, read in order,
      form one coherent chain of reasoning (premises through conclusion). Prefer ONE
      long contiguous span. Use several only because the steps are spread out — never
@@ -62,12 +59,8 @@ things.
      that carry the reasoning WITHOUT such references; skip a sentence that leans on
      one. If the chain cannot be formed without them, omit this item.
 
-2. Classify the passage's ACTUAL subject (what it is about, not the kind of book it
-   came from) into exactly one of these classes, copied verbatim:
-{_CLASS_LIST}
-
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
-Output JSON only: [{{"i": 0, "spans": ["..."], "category": "ONE CLASS"}}, ...]
+Output JSON only: [{{"i": 0, "spans": ["..."]}}, ...]
 """
 
 # CALL 2 — write the question, given the passage and the extracted chain (ANSWER).
