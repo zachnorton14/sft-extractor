@@ -226,6 +226,30 @@ def load_excerpts(affordance=None, min_prose=0.0):
     return out
 
 
+def relabel_excerpts():
+    """Re-tag the affordance of every excerpt in EXCERPTS_FILE in place, using the
+    current affordance_label — for when the routing rules change (a new affordance,
+    a tuned gate) without re-harvesting. Rewrites the file and reports the delta."""
+    if not EXCERPTS_FILE.exists():
+        print("no excerpts file")
+        return
+    recs = [json.loads(l) for l in EXCERPTS_FILE.read_text().splitlines() if l.strip()]
+    changed = Counter()
+    for r in recs:
+        new = affordance_label(r["excerpt"])
+        if new != r.get("affordance"):
+            changed[f"{r.get('affordance')} -> {new}"] += 1
+            r["affordance"] = new
+    with EXCERPTS_FILE.open("w", encoding="utf-8") as fh:
+        for r in recs:
+            fh.write(json.dumps(r, ensure_ascii=False) + "\n")
+    print(f"relabeled {sum(changed.values())}/{len(recs)} excerpts")
+    for k, v in changed.most_common():
+        print(f"  {k}: {v}")
+    aff = Counter(r["affordance"] for r in recs)
+    print("  by affordance: " + "  ".join(f"{a}={k}" for a, k in aff.most_common()))
+
+
 def _load_harvest_state():
     if HARVEST_STATE.exists():
         s = json.loads(HARVEST_STATE.read_text())
@@ -412,6 +436,33 @@ _REASON = re.compile(r"\b(because|therefore|thus|hence|since|consequently|inasmu
 _DIALOGUE = re.compile(r'["“”‘’]|\b(said|asked|replied|cried|answered|exclaimed|'
                        r'demanded|told|spoke|quoth)\b', re.I)
 
+# Formal composed-document markers. An excerpt that IS such a document (statute,
+# legal pleading, letter, oration/resolution, devotion, instrument) is feedstock for
+# the generative route: the answer is the verbatim artifact, the question asks to
+# compose one. Two tiers so ordinary prose that merely says "whereas" or "the said
+# man" isn't swept in — a STRONG phrase qualifies alone; WEAK markers need three hits.
+_DOC_STRONG = re.compile(
+    r"\b(be it enacted|be it ordained|by the authority of the same|"
+    r"in this present parliament|know all men by these presents|in witness whereof|"
+    r"this indenture|given under my hand|resolved,? that|be it resolved|"
+    r"your obedient servant|yours (faithfully|truly|sincerely|obediently)|"
+    r"i have the honour|we beseech thee|vouchsafe)\b", re.I)
+_DOC_WEAK = re.compile(
+    r"\b(whereas|provided,? that|an act (to|for)|enacting|plaintiff|defendant|"
+    r"aforesaid|hereinbefore|hereinafter|the said |to wit|whereof|indictment|"
+    r"complainant|dear sir|my dear \w+|i beg to|i am, sir|mr\.? president|"
+    r"fellow[- ]citizens|gentlemen of the|o lord|almighty god|thy servant)\b", re.I)
+
+
+def is_composition(text):
+    """True when the excerpt reads as a formal composed document — statute, pleading,
+    letter, oration, devotion, or legal instrument — rather than narration or
+    exposition. A strong, unambiguous phrase qualifies alone; otherwise three weak
+    genre markers must fire, so prose that merely says 'whereas' isn't caught."""
+    if _DOC_STRONG.search(text):
+        return True
+    return len(_DOC_WEAK.findall(text)) >= 3
+
 
 def narrative_signal(text):
     """0-1 score for story/dialogue prose. Dialogue is the strong cue (past tense
@@ -489,6 +540,10 @@ def has_affordance(text):
 def affordance_label(text):
     """Coarse routing tag for a surviving excerpt (low-stakes: mislabels only
     misroute, they don't drop data)."""
+    # Checked first: a formal document can carry past tense, quotes, and opinion
+    # words that would otherwise misroute it to narrative/argument/opinion.
+    if is_composition(text):
+        return "composition"
     fp = len(re.findall(r"\b(i|we|my|our|me|us)\b", text, re.I))
     past = len(re.findall(r"\b\w+ed\b", text))
     if _ORDINAL.search(text) and past < 6:

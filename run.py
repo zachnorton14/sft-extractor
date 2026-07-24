@@ -242,6 +242,9 @@ def cmd_synthq(args):
 
 def cmd_harvest(args):
     from synth import corpus
+    if args.relabel:
+        corpus.relabel_excerpts()
+        return
     corpus.harvest(args.total, alpha=args.alpha, min_conf=args.min_conf,
                    seed=args.seed, max_shards=args.max_shards)
 
@@ -277,6 +280,24 @@ def cmd_reasoning(args):
     print(f"Excerpts: {len(excerpts)}  Resolved: {resolved}")
     asyncio.run(rq.run_async(excerpts, state))
     rq.write_output(excerpts, state)
+    print("Done.")
+
+
+def cmd_composition(args):
+    from synth import composition_qa as cq
+    excerpts = cq.source_excerpts(args.size, seed=args.seed)
+    print(f"Sourced {len(excerpts)} composition excerpts (route={cq.AFFORDANCE})")
+    if args.test:
+        asyncio.run(cq.test_run(excerpts))
+        return
+    if args.sample:
+        asyncio.run(cq.sample_run(excerpts, seed=args.seed))
+        return
+    state = cq.load_state()
+    resolved = sum(1 for e in excerpts if str(e["doc_index"]) in state)
+    print(f"Excerpts: {len(excerpts)}  Resolved: {resolved}")
+    asyncio.run(cq.run_async(excerpts, state))
+    cq.write_output(excerpts, state)
     print("Done.")
 
 
@@ -448,6 +469,8 @@ def main():
     p_hv.add_argument("--min-conf", type=float, default=0.7, help="label-confidence floor")
     p_hv.add_argument("--seed", type=int, default=0)
     p_hv.add_argument("--max-shards", type=int, default=473, help="cap shards swept per run (resumable)")
+    p_hv.add_argument("--relabel", action="store_true",
+                      help="re-tag affordances of the existing excerpts in place (no fetch)")
 
     # stem-reasoning
     p_sr = sub.add_parser("stem-reasoning",
@@ -466,6 +489,15 @@ def main():
                       help="max argument excerpts to process")
     p_rq.add_argument("--test", action="store_true", help="generate a few and print without writing")
     p_rq.add_argument("--sample", action="store_true", help="generate a few, print, AND save a dated record (prompt + Q/A) to samples/")
+
+    # composition-qa
+    p_cq = sub.add_parser("composition-qa",
+                          help="Generate compose-this-document Q/A from formal documents (generative route)")
+    p_cq.add_argument("--seed", type=int, default=0)
+    p_cq.add_argument("--count", type=int, default=100, dest="size", metavar="N",
+                      help="max composition excerpts to process")
+    p_cq.add_argument("--test", action="store_true", help="generate a few and print without writing")
+    p_cq.add_argument("--sample", action="store_true", help="generate a few and save a dated record (prompt + Q/A) to samples/")
 
     # narrative-qa
     p_nq = sub.add_parser("narrative-qa",
@@ -541,6 +573,8 @@ def main():
         cmd_reasoning(args)
     elif args.cmd == "narrative-qa":
         cmd_narrative(args)
+    elif args.cmd == "composition-qa":
+        cmd_composition(args)
     elif args.cmd == "knowledge-qa":
         cmd_knowledge(args)
     elif args.cmd == "sample-corpus":
