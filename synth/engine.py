@@ -21,10 +21,13 @@ Env (same as before):
 import asyncio
 import json
 import re
+import textwrap
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Callable
+
+WRAP = 88   # column cap for printed / written sample lines
 
 import anthropic
 
@@ -303,8 +306,14 @@ def write_output(route, excerpts, state):
     return out
 
 
-def _pair_lines(route, excerpts, state, excerpt_chars=200):
-    """Format generated Q/A pairs beside their excerpts, as a list of lines."""
+def _wrap(label, text):
+    """Wrap `text` to WRAP columns under a `label` prefix, hanging-indented."""
+    return textwrap.fill(str(text), width=WRAP, initial_indent=label,
+                         subsequent_indent=" " * len(label))
+
+
+def _pair_lines(route, excerpts, state, excerpt_chars=400):
+    """Format generated Q/A pairs beside their excerpts, wrapped to WRAP cols."""
     out = []
     for e in excerpts:
         r = state.get(str(e["doc_index"]))
@@ -315,12 +324,12 @@ def _pair_lines(route, excerpts, state, excerpt_chars=200):
             head = f"[{r['category']}]  (book said {e['category']})"
         else:
             head = f"[{e['category']}]"
-        out.append("=" * 78)
-        out.append(f"{head}  {e.get('year')}  {scores}")
-        out.append(f"  excerpt : {e['excerpt'][:excerpt_chars]}...")
+        out.append("=" * WRAP)
+        out.append(_wrap("", f"{head}  {e.get('year')}  {scores}"))
+        out.append(_wrap("  excerpt : ", e["excerpt"][:excerpt_chars] + "..."))
         if complete:
-            out.append(f"  Q       : {r['q']}")
-            out.append(f"  A       : {r['a']}")
+            out.append(_wrap("  Q       : ", r["q"]))
+            out.append(_wrap("  A       : ", r["a"]))
         else:
             out.append("  (failed)")
         out.append("")
@@ -335,9 +344,11 @@ async def test_run(route, excerpts):
 
 
 async def sample_run(route, excerpts, seed=0):
-    """Prompt-testing record: generate, print, AND write a timestamped file to
+    """Prompt-testing record: generate and write a timestamped file to
     samples/<route>/ capturing the prompt(s) used + the pairs, so runs can be
-    compared and old prompts recovered. Mirrors the authentic pipeline's `sample`."""
+    compared and old prompts recovered. Mirrors the authentic pipeline's `sample`.
+    Writes only the file (lines wrapped to WRAP cols); nothing goes to stdout but
+    the path confirmation."""
     state = {}
     await run_async(route, excerpts, state, save=False)
     kept = sum(1 for e in excerpts
@@ -358,6 +369,5 @@ async def sample_run(route, excerpts, seed=0):
     d.mkdir(parents=True, exist_ok=True)
     path = d / f"{ts}_seed{seed}_n{len(excerpts)}.txt"
     path.write_text("\n".join(header + body), encoding="utf-8")
-    print("\n".join(body))
     print(f"wrote sample ({kept}/{len(excerpts)} kept) -> {path}")
     return path
