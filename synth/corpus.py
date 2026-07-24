@@ -409,6 +409,21 @@ _ORDINAL = re.compile(r"\b(1st|2nd|3rd|\d+th|firstly|secondly|thirdly)\b", re.I)
 _OPINION = re.compile(r"\b(pleasant\w*|best|worst|admirable|agreeable|beautiful|"
                       r"ought|should|prefer\w*|delightful|charming|excellent|finest|noble)\b", re.I)
 _REASON = re.compile(r"\b(because|therefore|thus|hence|since|consequently|inasmuch)\b", re.I)
+_DIALOGUE = re.compile(r'["“”‘’]|\b(said|asked|replied|cried|answered|exclaimed|'
+                       r'demanded|told|spoke|quoth)\b', re.I)
+
+
+def narrative_signal(text):
+    """0-1 score for story/dialogue prose. Dialogue is the strong cue (past tense
+    alone appears in historical argument too, so it's weighted lightly). High score
+    = a scene with speakers and events, which has no general reasoning to extract
+    and reads as context-bare in a standalone question."""
+    w = text.split()
+    if len(w) < 20:
+        return 0.0
+    past = len(re.findall(r"\b\w+ed\b", text)) / len(w)
+    dlg = len(_DIALOGUE.findall(text)) / len(w)
+    return min(1.0, dlg * 12 + past * 2)
 
 
 _VOWEL = re.compile(r"[aeiouy]", re.I)
@@ -480,6 +495,10 @@ def affordance_label(text):
         return "procedural"
     if fp >= 2 and _OPINION.search(text):
         return "opinion"
+    # dialogue-heavy scenes are narrative, not argument — checked BEFORE `argument`
+    # because narration is full of causal "because/since/for" that _REASON matches.
+    if narrative_signal(text) >= 0.3:
+        return "narrative"
     if _REASON.search(text):
         return "argument"
     if past >= 8 and re.search(r"\b1[5-9]\d\d\b", text):
