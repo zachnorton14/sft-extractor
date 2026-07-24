@@ -55,6 +55,12 @@ things.
      reorder within a span, or add any word not in the passage — including
      connecting words between spans. You may only select and order the author's own
      sentences.
+   - Do NOT choose spans that refer to a figure, plate, diagram, table, page,
+     section, or note number ("Fig. 36", "as shown in the figure", "see page 466",
+     "§ 4", "the note on p. 22") — these point to something the reader cannot see and
+     are meaningless on their own. Since you select and order the spans, pick ones
+     that carry the reasoning WITHOUT such references; skip a sentence that leans on
+     one. If the chain cannot be formed without them, omit this item.
 
 2. Classify the passage's ACTUAL subject (what it is about, not the kind of book it
    came from) into exactly one of these classes, copied verbatim:
@@ -80,9 +86,13 @@ answers.
 - Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use no
   word, term, or idiom that came into use after 1930, and no modern conversational
   or academic phrasing — it must read as a question a period examiner would pose.
-- The question must STAND ALONE. Never mention the source — no "the passage", "the
-  text", "according to", "described", "mentioned". It must make sense to someone who
-  NEVER saw the passage or the answer.
+- The question must STAND ALONE and betray no awareness of a source. Never refer to
+  the passage or to whoever wrote it — no "the passage", "the text", "the author",
+  "the writer", "the speaker", "the narrator", "the argument", "according to", "as
+  described", "as mentioned". Ask about the SUBJECT ITSELF, as a matter of fact in
+  the world, to someone who never saw the passage. (Not "Why does the author hold
+  that finite beings are on probation?" but "Why must finite beings be on
+  probation?")
 - SUPPLY THE CONTEXT THE READER NEEDS so the chain's "they / it / this / these" have
   clear antecedents:
     · for a matter of general record (a thinker, doctrine, war, ruler, work,
@@ -90,8 +100,11 @@ answers.
     · for particular persons, places, or events described only in the passage,
       introduce them briefly in the question — who they are and the situation.
   Give just enough to make the question unambiguous — do not restate the whole
-  scene, and never leave a bare "the argument", "the author", "these beings", or an
-  unexplained name.
+  scene, and never leave a bare "these beings", "such creatures", or "this process".
+- Every proper noun must be one the reader can place: either widely recognizable on
+  its own, or introduced with a short descriptor of who or what it is (not a bare
+  "Skobeleff" but "the Russian general Skobeleff"). When in doubt, describe by role
+  instead of naming.
 - Do NOT reveal the answer: do not state the conclusion, and do not reuse the
   chain's distinctive wording. Ask for the reasoning; make the reader supply it.
 
