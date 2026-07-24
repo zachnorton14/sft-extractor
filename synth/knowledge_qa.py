@@ -5,12 +5,14 @@ corpus (synth/corpus.py), keeps the ones the affordance gate tagged `expository`
 and for each one makes a single model call that distills the passage into a
 focused question-answer pair:
 
-  - the ANSWER is concise (1-3 sentences), self-contained, and fully supported by
-    the passage — the "trim" of a rambling 150-word window down to something
-    usable, done by the model because heuristics can't;
-  - the QUESTION is in period-schoolbook register and written from *outside* the
-    answer, so it doesn't just echo the answer's vocabulary (the lesson from the
-    register experiments).
+  - the ANSWER is a VERBATIM quotation (1-2 exact spans) lifted straight from the
+    passage — never composed or paraphrased. This is the anachronism guarantee: an
+    answer built only from period text cannot contain modern phrasing. Each span is
+    verified as a literal substring of the excerpt (verbatim_answer); anything not
+    found verbatim is dropped, not repaired. Spans join with an ellipsis, so no
+    model-written word ever enters the answer.
+  - the QUESTION is in period-schoolbook register, model-composed and self-situating
+    (question-side anachronism is handled by a separate filter, not here).
 
 Only the passage grounds the answer — no outside facts — so a fiction or opinion
 passage would produce ungrounded claims; those route elsewhere and are excluded
@@ -33,11 +35,42 @@ Set environment before running (same as the other model passes):
 
 import asyncio
 import json
+import re
 from pathlib import Path
 
 import anthropic
 
 from synth import corpus
+
+
+def verbatim_answer(spans, excerpt, max_spans=2):
+    """Return the answer built ONLY from exact substrings of `excerpt`, or None.
+
+    Each model-proposed span is located in the excerpt (whitespace-normalized,
+    case-insensitive) and the excerpt's own text for that range is used — so the
+    result is verbatim by construction, not by trusting what the model typed. Any
+    span not found verbatim, or more than max_spans, rejects the whole answer. Spans
+    are joined by an ellipsis (a separator, never a word), so no model-written text
+    enters the answer.
+    """
+    if not spans or len(spans) > max_spans:
+        return None
+    norm = re.sub(r"\s+", " ", excerpt)
+    low = norm.lower()
+    out = []
+    for s in spans:
+        if not isinstance(s, str):
+            return None
+        ns = re.sub(r"\s+", " ", s).strip()
+        i = low.find(ns.lower())
+        if i == -1:                                  # allow model-appended trailing punct
+            ns = ns.rstrip('.,;:"\'')
+            i = low.find(ns.lower())
+            if i == -1:
+                return None                          # not verbatim -> reject
+        out.append(norm[i:i + len(ns)])              # store the EXCERPT's exact text
+    ans = " … ".join(out).strip()
+    return ans[:1].upper() + ans[1:] if ans else None  # capitalize first letter only
 
 ROOT = Path(__file__).parent.parent
 OUTPUT_DIR = ROOT / "synth" / "output"
@@ -70,20 +103,28 @@ You are given a short passage from a pre-1930s book. Do two things.
      capital", "the assembly", "the expedition".
    - Do not put the answer, or the answer's distinctive wording, in the question.
 
-   Answer:
-   - Only from the passage — add no fact not stated or directly implied there. (The
-     question may be framed with outside knowledge; the answer may not.)
-   - Direct and concise: give only the new fact, never restating the question. A
-     factual answer may be a phrase; a definitional or explanatory answer gives the
-     key distinction or reason, not a bare label.
+   Answer — VERBATIM QUOTATION ONLY:
+   - The answer is copied WORD FOR WORD from the passage. Do NOT paraphrase,
+     summarize, rewrite, correct, modernize, reorder, or add any word that is not
+     in the passage. Every word must appear, in order, exactly as in the passage.
+   - Return it as "spans": a list of ONE exact quotation from the passage that
+     answers the question — or, only if the answer genuinely lies in two separate
+     places, TWO. Never more than two. Choose the SHORTEST span(s) that fully
+     answer.
+   - Put no words of your own between or around the spans, and do not include the
+     question's words. If the passage has no short, quotable answer to your
+     question, ask a different question that it does answer verbatim.
 
 2. Classify the passage's ACTUAL subject (what it is about, not the kind of book it
    came from) into exactly one of these classes, copied verbatim:
 {_CLASS_LIST}
 
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
-Output JSON only: [{{"i": 0, "q": "...", "a": "...", "category": "ONE CLASS"}}, ...]
+Output JSON only:
+  [{{"i": 0, "q": "...", "spans": ["exact quotation"], "category": "ONE CLASS"}}, ...]
 """
+
+MAX_SPANS = 2
 
 
 def source_excerpts(n, alpha=0.5, min_conf=0.7, n_words=150, seed=0):
@@ -158,10 +199,15 @@ async def _generate_batch(client, semaphore, batch, state):
                     raise ValueError(f"truncated at max_tokens ({len(batch)} excerpts in batch)")
                 for r in json.loads(_strip_fence(text)):
                     idx = r.get("i")
+                    if not (isinstance(idx, int) and 0 <= idx < len(keys)):
+                        continue
                     q = (r.get("q") or "").strip()
-                    a = (r.get("a") or "").strip()
                     cat = (r.get("category") or "").strip()
-                    if isinstance(idx, int) and 0 <= idx < len(keys) and q and a:
+                    spans = r.get("spans")
+                    if spans is None and r.get("a"):        # tolerate single-string form
+                        spans = [r["a"]]
+                    a = verbatim_answer(spans, batch[idx]["excerpt"], MAX_SPANS)
+                    if q and a:                             # a is None if not verbatim -> drop
                         state[keys[idx]] = {"q": q, "a": a, "category": cat}
                 return
             except anthropic.RateLimitError:
