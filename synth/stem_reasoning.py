@@ -5,20 +5,20 @@ TECHNOLOGY texts (engineering derivations, geometry/surveying exercises, physica
 and chemical reasoning). corpus.sample_stem seeks those windows — the ones dense
 in reasoning connectives plus quantitative vocabulary — rather than a random one.
 
-Like the other content-bound routes, the answer is *extracted*, not generated: the
-same anachronism guarantee, and no reliance on the model to compose vintage-sounding
-logic. The wrinkle is STEM's OCR — it mangles equations, exponents, symbols, and
-bleeds page/figure numbers into formulas — so a verbatim span that carries any of
-that would drag corruption into the dataset. The route therefore extracts only the
-reasoning the author stated IN WORDS and rejects, whole, any span bearing a math
-symbol, a letter-and-number expression, a fraction, or a figure/page reference
-(engine.verbal_spans_answer). What survives is the qualitative principle-and-
-consequence prose a period scientist wrote out ("the pressure varies inversely as
-the volume"). This is path A: if too few passages yield prose-only chains, the
-fallback is to let STEM compose (engine.composed_answer) as the documented exception.
+Like the other content-bound routes, the answer is *extracted*, not generated — but
+with one licensed exception for STEM's OCR. This text mangles equations, exponents,
+subscripts, and symbols, and a strictly verbatim answer would either drag that
+corruption in or, if such spans were dropped, throw away the quantitative reasoning
+that is the whole point. So the model returns each span TWICE — `verbatim` (the exact
+OCR text) and `refurbished` (the same span with only its formulas repaired) — and the
+engine verifies the verbatim is a true substring of the passage and that the
+refurbished form adds no LETTER the verbatim lacked (engine.refurbished_spans_answer).
+Only non-letters — digits, subscripts, operators, spacing — may change, so a formula
+can be rebuilt but no prose can be invented. What survives is the author's own
+reasoning with its equations made clean and readable.
 
 Two calls, as in reasoning_qa:
-  - call 1 extracts the verbatim prose chain (spans);
+  - call 1 extracts the reasoning chain (verbatim + refurbished spans);
   - call 2 writes the standalone question the chain answers.
 
 Input:  corpus.sample_stem (SCIENCE + TECHNOLOGY, stem-seeking windows)
@@ -34,36 +34,44 @@ Env (same as the other model passes):
 from synth import corpus, engine
 
 AFFORDANCE = "stem_reasoning"    # affordance this generator handles
-MAX_SPANS = 4                    # a chain threads between equations; spread out
+MAX_SPANS = 6                    # a chain threads between equations; spread out
 
-# CALL 1 — extract the reasoning chain verbatim, but only where stated in words.
+# CALL 1 — extract the reasoning chain verbatim, repairing only mangled formulas.
 EXTRACT_SYSTEM = f"""\
 You are given a short passage from a pre-1930s science or engineering text that
 reasons quantitatively or physically. The author's own reasoning is in the text.
 
-EXTRACT THE REASONING CHAIN, STATED IN WORDS, VERBATIM. Find where the author reasons
-from a principle to a conclusion, and copy that chain WORD FOR WORD.
-  - Return it as "spans": exact quotations from the passage that, read in order,
-    form one coherent chain (principle → application → conclusion). Prefer ONE long
-    contiguous span. Use several only because the steps are spread out — never more
-    than {MAX_SPANS}, and always the fewest, longest spans that hold the chain
-    together.
-  - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
-    reorder within a span, or add any word not in the passage — including connecting
-    words between spans. You may only select and order the author's own sentences.
-  - CHOOSE SPANS STATED IN WORDS. The OCR has mangled this text's equations,
-    exponents, symbols, and numbers, and page and figure numbers bleed into the
-    formulas. A span that carries a formula, an equation, a bare math symbol
-    (=, ×, ÷, an exponent), a letter-and-number expression (x2, P1V1, H2O), a
-    fraction, or a reference to a figure, plate, table, equation, section, or page
-    is USELESS on its own and WILL BE DISCARDED. Pick the sentences that state the
-    reasoning verbally — the principle and its consequence in prose ("the product of
-    two powers of the same base adds their exponents", "the pressure varies inversely
-    as the volume", "heat added at constant volume raises the temperature"). If the
-    chain cannot be formed from prose alone, omit this item.
+EXTRACT THE REASONING CHAIN. Find where the author reasons from a principle to a
+conclusion, and copy that chain out.
+  - Return it as "spans": the quotations from the passage that, read in order, form
+    one coherent chain (principle → application → conclusion). Use as many as the
+    reasoning needs — up to {MAX_SPANS}, and always the fewest, longest spans that
+    hold the chain together. Extract as much of the reasoning as you can.
+  - Give EACH span as an object with two fields:
+      "verbatim"    — the span copied EXACTLY as it appears in the passage, character
+                      for character, including any garbled formula.
+      "refurbished" — the SAME span with only its mathematical or chemical formulas
+                      restored to correct standard form. If the span has no formula,
+                      make "refurbished" identical to "verbatim".
+  - REPAIR ONLY FORMULAS. The OCR has mangled this text's equations, exponents,
+    subscripts, symbols, and numbers, and page numbers bleed into the formulas. In
+    "refurbished" you MAY fix a corrupted expression back to what it plainly must be
+    (e.g. "CuSO,+ZnZnSO,+ Cu" → "CuSO₄ + Zn → ZnSO₄ + Cu"; "9X2" → "9 × 2";
+    "P₁ = pressure" kept clean). You MAY change only digits, symbols, operators,
+    subscripts/superscripts, and spacing.
+  - ADD NO NEW CONTENT. Do NOT paraphrase, summarize, rewrite, reorder, translate, or
+    add, remove, or alter any WORD of the prose — not a connecting word, not a gloss,
+    not a clarification. Every word in "refurbished" must already stand in "verbatim".
+    Repair the formulas; leave the author's prose exactly as written, misspellings and
+    all. Only select and order the author's own sentences.
+  - Do not build the chain out of a span that hinges on a figure, plate, table, or
+    page the reader cannot see ("as in Fig. 36", "see p. 466") — those cannot be
+    refurbished into anything meaningful; choose spans that carry the reasoning
+    without them.
 
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
-Output JSON only: [{{"i": 0, "spans": ["..."]}}, ...]
+Output JSON only:
+  [{{"i": 0, "spans": [{{"verbatim": "...", "refurbished": "..."}}]}}, ...]
 """
 
 # CALL 2 — write the question, given the passage and the extracted chain (ANSWER).
@@ -112,7 +120,7 @@ ROUTE = engine.Route(
     system=EXTRACT_SYSTEM,                       # call 1: extract prose chain + classify
     question_system=QUESTION_SYSTEM,             # call 2: write the question
     source=source_excerpts,
-    answer_fn=engine.verbal_spans_answer(MAX_SPANS),   # verbatim, prose-only extraction
+    answer_fn=engine.refurbished_spans_answer(MAX_SPANS),   # verbatim spans, repaired formulas
     passthrough=("stem_signal",),
 )
 

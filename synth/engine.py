@@ -115,39 +115,72 @@ def composed_answer(r, excerpt):
     return (r.get("a") or "").strip() or None
 
 
-# STEM answers must read as prose. This text's OCR has corrupted the equations,
-# exponents, and symbols, and page/figure numbers bleed into the formulas — so any
-# extracted span carrying a math symbol, a letter-and-number expression, a fraction,
-# or a figure/page/equation reference is rejected WHOLE. The reasoning survives only
-# where the author stated it in words; that is the only part safe to lift verbatim.
-_MATH_SYMBOL = re.compile(r"[=×÷√∴±∓≤≥≠∑∏∫°^_|~<>]|[²³¹⁰⁴-⁹₀-₉]")
-_FORMULA_TOKEN = re.compile(r"\b(?!\d+(?:st|nd|rd|th)\b)\w*(?:\d[a-zA-Z]|[a-zA-Z]\d)\w*\b")
-_FRACTION = re.compile(r"\d\s*/\s*\d")
-_SOURCE_REF = re.compile(
-    r"\b(fig(?:ure)?|plate|diagram|eq(?:uation)?|§|sec(?:tion)?|art(?:icle)?|"
-    r"p(?:p|age|g)?)\b\.?\s*\(?\d", re.I)
+# STEM's OCR corrupts equations, exponents, subscripts, and symbols, so a strictly
+# verbatim answer would either drag that corruption in or (if such spans are dropped)
+# throw away the quantitative reasoning that is the whole point. Instead the model may
+# REFURBISH a mangled formula back to standard form — but must add no new content. It
+# returns each span twice: `verbatim` (the exact OCR text, our proof the span is real
+# and located) and `refurbished` (the same span with only its formulas repaired). We
+# verify `verbatim` is a true substring of the excerpt, then verify `refurbished` adds
+# no LETTER the verbatim did not have — its letters must be a subsequence of the
+# verbatim's. Only non-letters (digits, subscripts, operators, punctuation, spacing)
+# may be introduced or changed, so a formula can be rebuilt but no prose can be
+# invented. Digit-level correctness is the model's judgment under "repair, don't add".
+def _letters(s):
+    return re.sub(r"[^a-z]", "", s.lower())
 
 
-def verbal_answer(spans, excerpt, max_spans=2):
-    """verbatim_answer, then reject the whole answer if it carries symbolic math, a
-    formula fragment, a fraction, or a figure/page reference — leaving only reasoning
-    the author stated in clean prose (for STEM, whose equations the OCR mangled)."""
-    ans = verbatim_answer(spans, excerpt, max_spans)
-    if not ans:
+def _is_subsequence(a, b):
+    """True if every char of a appears in b in order (a is a subsequence of b)."""
+    it = iter(b)
+    return all(c in it for c in a)
+
+
+def _span_pair(s):
+    """Normalize a span into (verbatim, refurbished); tolerate a bare string form."""
+    if isinstance(s, str):
+        return s, s
+    if isinstance(s, dict):
+        v = s.get("verbatim") or s.get("v") or ""
+        f = s.get("refurbished") or s.get("r") or v
+        return v, f
+    return "", ""
+
+
+def refurbished_answer(spans, excerpt, max_spans=2):
+    """Answer built from spans whose formulas the model may repair but whose prose it
+    may not touch. Each span's `verbatim` must be an exact substring of the excerpt,
+    and its `refurbished` form may add no letter absent from the verbatim (see above).
+    Returns the joined refurbished text, or None if any span fails either check."""
+    if not spans or len(spans) > max_spans:
         return None
-    if (_MATH_SYMBOL.search(ans) or _FORMULA_TOKEN.search(ans)
-            or _FRACTION.search(ans) or _SOURCE_REF.search(ans)):
-        return None
-    return ans
+    norm = re.sub(r"\s+", " ", excerpt)
+    low = norm.lower()
+    out = []
+    for s in spans:
+        v, f = _span_pair(s)
+        if not isinstance(v, str) or not isinstance(f, str) or not v.strip():
+            return None
+        nv = re.sub(r"\s+", " ", v).strip()
+        if nv.lower() not in low:                    # verbatim must be located verbatim
+            nv = nv.rstrip('.,;:"\'')
+            if not nv or nv.lower() not in low:
+                return None
+        f = re.sub(r"\s+", " ", f).strip() or nv
+        if not _is_subsequence(_letters(f), _letters(nv)):   # no new letters => no new prose
+            return None
+        out.append(f)
+    ans = " … ".join(out).strip()
+    return ans[:1].upper() + ans[1:] if ans else None
 
 
-def verbal_spans_answer(max_spans):
-    """answer_fn for the STEM route: verbatim spans, prose only (see verbal_answer)."""
+def refurbished_spans_answer(max_spans):
+    """answer_fn for the STEM route: verbatim-anchored spans with repaired formulas."""
     def fn(r, excerpt):
         spans = r.get("spans")
         if spans is None and r.get("a"):
             spans = [r["a"]]
-        return verbal_answer(spans, excerpt, max_spans)
+        return refurbished_answer(spans, excerpt, max_spans)
     return fn
 
 
