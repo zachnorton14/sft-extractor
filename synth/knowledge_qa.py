@@ -41,8 +41,6 @@ from synth.engine import verbatim_answer, _pack_batches, _strip_fence  # noqa: F
 
 AFFORDANCE = "expository"         # this generator handles the knowledge-QA route
 
-_CLASS_LIST = "\n".join(f"  - {c}" for c in corpus.LOC_CLASSES)
-
 SYSTEM = f"""\
 You are given a short passage from a pre-1930s book. Work in this order.
 
@@ -86,13 +84,9 @@ You are given a short passage from a pre-1930s book. Work in this order.
    - Do NOT put the answer, or the answer's distinctive wording, in the question.
      Ask for the fact; do not reveal it.
 
-3. Classify the passage's ACTUAL subject (what it is about, not the kind of book it
-   came from) into exactly one of these classes, copied verbatim:
-{_CLASS_LIST}
-
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
 Output JSON only:
-  [{{"i": 0, "spans": ["exact quotation"], "q": "...", "category": "ONE CLASS"}}, ...]
+  [{{"i": 0, "spans": ["exact quotation"], "q": "..."}}, ...]
 """
 
 MAX_SPANS = 3
