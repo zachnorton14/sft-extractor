@@ -115,6 +115,42 @@ def composed_answer(r, excerpt):
     return (r.get("a") or "").strip() or None
 
 
+# STEM answers must read as prose. This text's OCR has corrupted the equations,
+# exponents, and symbols, and page/figure numbers bleed into the formulas — so any
+# extracted span carrying a math symbol, a letter-and-number expression, a fraction,
+# or a figure/page/equation reference is rejected WHOLE. The reasoning survives only
+# where the author stated it in words; that is the only part safe to lift verbatim.
+_MATH_SYMBOL = re.compile(r"[=×÷√∴±∓≤≥≠∑∏∫°^_|~<>]|[²³¹⁰⁴-⁹₀-₉]")
+_FORMULA_TOKEN = re.compile(r"\b(?!\d+(?:st|nd|rd|th)\b)\w*(?:\d[a-zA-Z]|[a-zA-Z]\d)\w*\b")
+_FRACTION = re.compile(r"\d\s*/\s*\d")
+_SOURCE_REF = re.compile(
+    r"\b(fig(?:ure)?|plate|diagram|eq(?:uation)?|§|sec(?:tion)?|art(?:icle)?|"
+    r"p(?:p|age|g)?)\b\.?\s*\(?\d", re.I)
+
+
+def verbal_answer(spans, excerpt, max_spans=2):
+    """verbatim_answer, then reject the whole answer if it carries symbolic math, a
+    formula fragment, a fraction, or a figure/page reference — leaving only reasoning
+    the author stated in clean prose (for STEM, whose equations the OCR mangled)."""
+    ans = verbatim_answer(spans, excerpt, max_spans)
+    if not ans:
+        return None
+    if (_MATH_SYMBOL.search(ans) or _FORMULA_TOKEN.search(ans)
+            or _FRACTION.search(ans) or _SOURCE_REF.search(ans)):
+        return None
+    return ans
+
+
+def verbal_spans_answer(max_spans):
+    """answer_fn for the STEM route: verbatim spans, prose only (see verbal_answer)."""
+    def fn(r, excerpt):
+        spans = r.get("spans")
+        if spans is None and r.get("a"):
+            spans = [r["a"]]
+        return verbal_answer(spans, excerpt, max_spans)
+    return fn
+
+
 # --- route config --------------------------------------------------------------
 
 @dataclass
