@@ -433,8 +433,9 @@ _ORDINAL = re.compile(r"\b(1st|2nd|3rd|\d+th|firstly|secondly|thirdly)\b", re.I)
 _OPINION = re.compile(r"\b(pleasant\w*|best|worst|admirable|agreeable|beautiful|"
                       r"ought|should|prefer\w*|delightful|charming|excellent|finest|noble)\b", re.I)
 _REASON = re.compile(r"\b(because|therefore|thus|hence|since|consequently|inasmuch)\b", re.I)
-_DIALOGUE = re.compile(r'["“”‘’]|\b(said|asked|replied|cried|answered|exclaimed|'
-                       r'demanded|told|spoke|quoth)\b', re.I)
+_SPEECH = re.compile(r'\b(said|asked|replied|cried|answered|exclaimed|'
+                     r'demanded|told|spoke|quoth)\b', re.I)
+_QUOTE = re.compile(r'["“”‘’]')
 
 # Formal composed-document markers. An excerpt that IS such a document (statute,
 # legal pleading, letter, oration/resolution, devotion, instrument) is feedstock for
@@ -465,15 +466,21 @@ def is_composition(text):
 
 
 def narrative_signal(text):
-    """0-1 score for story/dialogue prose. Dialogue is the strong cue (past tense
-    alone appears in historical argument too, so it's weighted lightly). High score
-    = a scene with speakers and events, which has no general reasoning to extract
-    and reads as context-bare in a standalone question."""
+    """0-1 score for story/dialogue prose. Reported speech is the strong cue (past
+    tense alone appears in historical argument too, so it's weighted lightly). High
+    score = a scene with speakers and events, which has no general reasoning to
+    extract and reads as context-bare in a standalone question.
+
+    Quotation marks count as dialogue ONLY alongside a speech verb: scare-quotes on
+    single terms fill expository prose too ("the child is a 'visualizer'"), and were
+    pulling exposition into the narrative pool."""
     w = text.split()
     if len(w) < 20:
         return 0.0
+    speech = len(_SPEECH.findall(text))
+    quotes = len(_QUOTE.findall(text)) if speech else 0
     past = len(re.findall(r"\b\w+ed\b", text)) / len(w)
-    dlg = len(_DIALOGUE.findall(text)) / len(w)
+    dlg = (speech + quotes) / len(w)
     return min(1.0, dlg * 12 + past * 2)
 
 

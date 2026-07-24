@@ -43,8 +43,18 @@ AFFORDANCE = "narrative"          # this generator handles the narrative route
 MAX_SPANS = 3                     # prefer one long span; splice only a spread account
 
 SYSTEM = f"""\
-You are given a short passage from a pre-1930s book that narrates events — a scene, an
-episode, an account of what happened. Work in this order.
+You are given a short passage from a pre-1930s book that is MEANT to narrate events — a
+scene, an episode, an account of what happened.
+
+FIRST, judge whether it actually does. A narrated episode has actors doing or
+undergoing things in sequence. If instead the passage is exposition or analysis, a
+biographical or catalog entry ("APPLETON, Nathan, manufacturer, was born..."), a list,
+table, or section heading, an examination paper, a definition, an argument, or a formal
+document, then it has no episode to recount — emit NO item for it (omit that index).
+Only proceed when there is a real episode. Better to skip than to force a question the
+passage does not narrate.
+
+When there IS an episode, work in this order.
 
 1. FIND THE ANSWER FIRST. Choose the account the passage gives — the narrated episode,
    or the salient action, outcome, or turn within it — and copy it VERBATIM as the
