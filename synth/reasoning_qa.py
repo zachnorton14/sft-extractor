@@ -70,6 +70,10 @@ in this order.
      sentences.
 
 2. THEN WRITE THE QUESTION the chain answers.
+   - The chain must CORRECTLY AND COMPLETELY answer your question — ask exactly what
+     this reasoning concludes or explains. Do not ask for a step, result, or
+     identity the chain does not actually reach. Read the chain as the answer: if it
+     does not fully answer, rewrite the QUESTION to fit the chain.
    - Pose a problem that must be reasoned through, not a fact to recall: "Why does
      ...", "How does it follow that ...", "Why must ...?".
    - Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use

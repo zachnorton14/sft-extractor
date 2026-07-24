@@ -98,6 +98,15 @@ You are given a short passage from a pre-1930s book. Work in this order.
      quotable fact, so a short exact quotation suffices.
 
 2. THEN WRITE THE QUESTION that this answer answers.
+   - The span must CORRECTLY AND COMPLETELY answer your question. Ask precisely the
+     question the span answers — never demand a name, number, or identity the span
+     does not supply. If the span only characterizes something ("It was the first
+     which the army had lost"), ask what was true or notable about it, not WHICH
+     specific thing it was. Before finishing, read the span as the answer to your
+     question: if it does not fully and correctly answer, rewrite the QUESTION to
+     fit the span.
+   - Frame the reader: supply the context that makes the span the natural, correct
+     answer — the era, place, subject, or situation it belongs to.
    - Plain period-schoolbook register: direct, often "What/Why/How/Of what". No
      modern or conversational phrasing, no meta-language.
    - Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use
