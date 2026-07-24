@@ -90,9 +90,9 @@ You are given a short passage from a pre-1930s book. Work in this order.
 
 1. FIND THE ANSWER FIRST. Choose the single most salient fact, definition, or
    explanation the passage states, and copy it VERBATIM as the answer.
-   - Return it as "spans": a list of ONE exact quotation from the passage — or,
-     only if the answer genuinely lies in two separate places, TWO. Never more than
-     two. Choose the SHORTEST span(s) that carry the whole fact.
+   - Return it as "spans": a list of ONE exact quotation from the passage — or up
+     to THREE, only if the answer genuinely lies in separate places. Prefer one;
+     never more than three. Choose the SHORTEST span(s) that carry the whole fact.
    - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
      reorder, or add any word not in the passage. Pick a span that reads as a clean,
      quotable fact, so a short exact quotation suffices.
@@ -119,7 +119,7 @@ Output JSON only:
   [{{"i": 0, "spans": ["exact quotation"], "q": "...", "category": "ONE CLASS"}}, ...]
 """
 
-MAX_SPANS = 2
+MAX_SPANS = 3
 
 
 def source_excerpts(n, alpha=0.5, min_conf=0.7, n_words=150, seed=0):
