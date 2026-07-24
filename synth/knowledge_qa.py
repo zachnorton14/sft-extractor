@@ -86,42 +86,37 @@ ROUTE = "expository"             # this generator handles the knowledge-QA route
 _CLASS_LIST = "\n".join(f"  - {c}" for c in corpus.LOC_CLASSES)
 
 SYSTEM = f"""\
-You are given a short passage from a pre-1930s book. Do two things.
+You are given a short passage from a pre-1930s book. Work in this order.
 
-1. Write ONE question-answer pair testing a single fact, definition, or explanation
-   in the passage.
+1. FIND THE ANSWER FIRST. Choose the single most salient fact, definition, or
+   explanation the passage states, and copy it VERBATIM as the answer.
+   - Return it as "spans": a list of ONE exact quotation from the passage — or,
+     only if the answer genuinely lies in two separate places, TWO. Never more than
+     two. Choose the SHORTEST span(s) that carry the whole fact.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder, or add any word not in the passage. Pick a span that reads as a clean,
+     quotable fact, so a short exact quotation suffices.
 
-   Question:
+2. THEN WRITE THE QUESTION that this answer answers.
    - Plain period-schoolbook register: direct, often "What/Why/How/Of what". No
      modern or conversational phrasing, no meta-language.
    - Stands alone. Never mention the source — no "the passage", "the text",
      "according to", "described", "mentioned". Ask as if from general knowledge.
    - Self-situating: a reader who cannot see the passage must know exactly what is
-     asked. Name the era, place, people, or work involved. Take this framing from
-     the passage, or from your own knowledge of the subject when the passage
-     assumes it (name the war, country, ruler, or period). Never leave a bare "the
-     capital", "the assembly", "the expedition".
-   - Do not put the answer, or the answer's distinctive wording, in the question.
+     asked. Name the era, place, people, or work involved — from the passage, or
+     from your own knowledge of the subject when the passage assumes it (name the
+     war, country, ruler, or period). Never leave a bare "the capital", "the
+     assembly", "the expedition".
+   - Do NOT put the answer, or the answer's distinctive wording, in the question.
+     Ask for the fact; do not reveal it.
 
-   Answer — VERBATIM QUOTATION ONLY:
-   - The answer is copied WORD FOR WORD from the passage. Do NOT paraphrase,
-     summarize, rewrite, correct, modernize, reorder, or add any word that is not
-     in the passage. Every word must appear, in order, exactly as in the passage.
-   - Return it as "spans": a list of ONE exact quotation from the passage that
-     answers the question — or, only if the answer genuinely lies in two separate
-     places, TWO. Never more than two. Choose the SHORTEST span(s) that fully
-     answer.
-   - Put no words of your own between or around the spans, and do not include the
-     question's words. If the passage has no short, quotable answer to your
-     question, ask a different question that it does answer verbatim.
-
-2. Classify the passage's ACTUAL subject (what it is about, not the kind of book it
+3. Classify the passage's ACTUAL subject (what it is about, not the kind of book it
    came from) into exactly one of these classes, copied verbatim:
 {_CLASS_LIST}
 
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
 Output JSON only:
-  [{{"i": 0, "q": "...", "spans": ["exact quotation"], "category": "ONE CLASS"}}, ...]
+  [{{"i": 0, "spans": ["exact quotation"], "q": "...", "category": "ONE CLASS"}}, ...]
 """
 
 MAX_SPANS = 2
