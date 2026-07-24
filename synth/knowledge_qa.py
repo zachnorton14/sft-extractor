@@ -102,11 +102,17 @@ You are given a short passage from a pre-1930s book. Work in this order.
      modern or conversational phrasing, no meta-language.
    - Stands alone. Never mention the source — no "the passage", "the text",
      "according to", "described", "mentioned". Ask as if from general knowledge.
-   - Self-situating: a reader who cannot see the passage must know exactly what is
-     asked. Name the era, place, people, or work involved — from the passage, or
-     from your own knowledge of the subject when the passage assumes it (name the
-     war, country, ruler, or period). Never leave a bare "the capital", "the
-     assembly", "the expedition".
+   - Self-situating — the question must make sense to someone who NEVER saw the
+     passage. Name the actual subject: the war, battle, place, ruler, work,
+     statute, or scripture involved, using your own knowledge of the subject when
+     the passage assumes it (e.g. "the Revised Statutes of the United States", "at
+     the Battle of Williamsburg", "in the Gospel of Luke"). FORBIDDEN — references
+     that mean nothing on their own: catalog, specimen, or figure numbers
+     ("specimen 167"); a bare "the statute", "the act", "the gun", "the assembly",
+     "the expedition"; or "two specific verses" / "a certain scholar" without
+     naming which. If the chosen fact simply cannot be made to stand alone (it
+     hinges on an item known only from the passage), pick a DIFFERENT fact from the
+     passage that can.
    - Do NOT put the answer, or the answer's distinctive wording, in the question.
      Ask for the fact; do not reveal it.
 
