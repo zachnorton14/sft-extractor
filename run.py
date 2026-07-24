@@ -280,6 +280,24 @@ def cmd_reasoning(args):
     print("Done.")
 
 
+def cmd_narrative(args):
+    from synth import narrative_qa as nq
+    excerpts = nq.source_excerpts(args.size, seed=args.seed)
+    print(f"Sourced {len(excerpts)} narrative excerpts (route={nq.AFFORDANCE})")
+    if args.test:
+        asyncio.run(nq.test_run(excerpts))
+        return
+    if args.sample:
+        asyncio.run(nq.sample_run(excerpts, seed=args.seed))
+        return
+    state = nq.load_state()
+    resolved = sum(1 for e in excerpts if str(e["doc_index"]) in state)
+    print(f"Excerpts: {len(excerpts)}  Resolved: {resolved}")
+    asyncio.run(nq.run_async(excerpts, state))
+    nq.write_output(excerpts, state)
+    print("Done.")
+
+
 def cmd_knowledge(args):
     from synth import knowledge_qa as kq
     excerpts = kq.source_excerpts(args.size, alpha=args.alpha, min_conf=args.min_conf,
@@ -449,6 +467,15 @@ def main():
     p_rq.add_argument("--test", action="store_true", help="generate a few and print without writing")
     p_rq.add_argument("--sample", action="store_true", help="generate a few, print, AND save a dated record (prompt + Q/A) to samples/")
 
+    # narrative-qa
+    p_nq = sub.add_parser("narrative-qa",
+                          help="Generate comprehension/retell Q/A from narrative excerpts (narrative route)")
+    p_nq.add_argument("--seed", type=int, default=0)
+    p_nq.add_argument("--count", type=int, default=100, dest="size", metavar="N",
+                      help="max narrative excerpts to process")
+    p_nq.add_argument("--test", action="store_true", help="generate a few and print without writing")
+    p_nq.add_argument("--sample", action="store_true", help="generate a few and save a dated record (prompt + Q/A) to samples/")
+
     # knowledge-qa
     p_kq = sub.add_parser("knowledge-qa",
                           help="Generate grounded Q/A from expository excerpts (knowledge-QA route)")
@@ -512,6 +539,8 @@ def main():
         cmd_stem(args)
     elif args.cmd == "reasoning-qa":
         cmd_reasoning(args)
+    elif args.cmd == "narrative-qa":
+        cmd_narrative(args)
     elif args.cmd == "knowledge-qa":
         cmd_knowledge(args)
     elif args.cmd == "sample-corpus":
