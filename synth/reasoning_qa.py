@@ -40,10 +40,6 @@ _CLASS_LIST = "\n".join(f"  - {c}" for c in corpus.LOC_CLASSES)
 
 # CALL 1 — extract the reasoning chain verbatim (this part has always been good).
 EXTRACT_SYSTEM = f"""\
-Your goal is to build a question-and-answer example for a fine-tuning dataset for a
-language model whose knowledge and language are confined to the world before 1930.
-This step produces the ANSWER — it must read like genuine period text.
-
 You are given a short passage from a pre-1930s book that argues a point, derives a
 result, or reasons from premises. The author's own reasoning is in the text. Do two
 things.
@@ -77,11 +73,6 @@ Output JSON only: [{{"i": 0, "spans": ["..."], "category": "ONE CLASS"}}, ...]
 # CALL 2 — write the question, given the passage and the extracted chain (ANSWER).
 # Isolated so the framing rules can be tuned without touching extraction.
 QUESTION_SYSTEM = """\
-Your goal is to build a question-and-answer example for a fine-tuning dataset for a
-language model whose knowledge and language are confined to the world before 1930.
-This step writes the QUESTION for a given answer — it must read like a question a
-period examiner would pose, and stand entirely on its own.
-
 You are given a passage from a pre-1930s book and a REASONING CHAIN quoted verbatim
 from it — this is the ANSWER. Write the single question that this reasoning chain
 answers.

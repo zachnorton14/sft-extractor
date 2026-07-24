@@ -333,7 +333,7 @@ def cmd_sample(args):
     sample = random.sample(convs_list, min(args.size, len(convs_list)))
 
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    samples_dir = ROOT / "samples" / args.stage
+    samples_dir = ROOT / "authentic" / "samples" / args.stage
     samples_dir.mkdir(parents=True, exist_ok=True)
     out_path = samples_dir / f"{ts}_seed{args.seed}_n{args.size}.txt"
 

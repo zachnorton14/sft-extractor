@@ -354,7 +354,7 @@ async def sample_run(route, excerpts, seed=0):
         header += ["--- SYSTEM PROMPT ---", route.system, ""]
     body = _pair_lines(route, excerpts, state, excerpt_chars=400)
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    d = ROOT / "samples" / route.name
+    d = ROOT / "synth" / "samples" / route.name
     d.mkdir(parents=True, exist_ok=True)
     path = d / f"{ts}_seed{seed}_n{len(excerpts)}.txt"
     path.write_text("\n".join(header + body), encoding="utf-8")
