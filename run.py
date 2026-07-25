@@ -283,6 +283,29 @@ def cmd_reasoning(args):
     print("Done.")
 
 
+def cmd_classify(args):
+    from synth import classify, corpus
+    records = corpus.load_excerpts()
+    state = classify.load_state()
+    if args.report:
+        classify.report(records, state)
+        return
+    if args.test:
+        sample = random.Random(args.seed).sample(records, min(args.size, len(records)))
+        tmp = {}
+        asyncio.run(classify.run_async(sample, tmp, save=False))
+        for r in sample:
+            cl = tmp.get(str(r["doc_index"]))
+            print(f"[aff={r.get('affordance'):11}] -> {cl}  :: {r['excerpt'][:64].strip()}")
+        return
+    pool = records
+    if args.limit:
+        pool = random.Random(args.seed).sample(records, min(args.limit, len(records)))
+    asyncio.run(classify.run_async(pool, state))
+    classify.write_back(records, state)
+    classify.report(records, state)
+
+
 def cmd_composition(args):
     from synth import composition_qa as cq
     excerpts = cq.source_excerpts(args.size, seed=args.seed)
@@ -490,6 +513,19 @@ def main():
     p_rq.add_argument("--test", action="store_true", help="generate a few and print without writing")
     p_rq.add_argument("--sample", action="store_true", help="generate a few, print, AND save a dated record (prompt + Q/A) to samples/")
 
+    # classify
+    p_cls = sub.add_parser("classify",
+                           help="Model-classify harvested excerpts into route classes (writes classes/primary)")
+    p_cls.add_argument("--limit", type=int, default=None,
+                       help="classify only N excerpts (sampled) — a cheap trial run")
+    p_cls.add_argument("--count", type=int, default=12, dest="size", metavar="N",
+                       help="excerpts to show for --test")
+    p_cls.add_argument("--seed", type=int, default=0)
+    p_cls.add_argument("--test", action="store_true",
+                       help="classify a small sample and print model labels vs regex, no write")
+    p_cls.add_argument("--report", action="store_true",
+                       help="print the distribution + regex-agreement report from existing labels")
+
     # composition-qa
     p_cq = sub.add_parser("composition-qa",
                           help="Generate compose-this-document Q/A from formal documents (generative route)")
@@ -575,6 +611,8 @@ def main():
         cmd_narrative(args)
     elif args.cmd == "composition-qa":
         cmd_composition(args)
+    elif args.cmd == "classify":
+        cmd_classify(args)
     elif args.cmd == "knowledge-qa":
         cmd_knowledge(args)
     elif args.cmd == "sample-corpus":
