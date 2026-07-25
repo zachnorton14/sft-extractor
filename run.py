@@ -290,6 +290,9 @@ def cmd_classify(args):
     if args.report:
         classify.report(records, state)
         return
+    if args.sample:
+        asyncio.run(classify.sample_run(records, seed=args.seed, n=args.size))
+        return
     if args.test:
         sample = random.Random(args.seed).sample(records, min(args.size, len(records)))
         tmp = {}
@@ -519,10 +522,12 @@ def main():
     p_cls.add_argument("--limit", type=int, default=None,
                        help="classify only N excerpts (sampled) — a cheap trial run")
     p_cls.add_argument("--count", type=int, default=12, dest="size", metavar="N",
-                       help="excerpts to show for --test")
+                       help="excerpts to show for --test / --sample")
     p_cls.add_argument("--seed", type=int, default=0)
     p_cls.add_argument("--test", action="store_true",
-                       help="classify a small sample and print model labels vs regex, no write")
+                       help="classify a small sample and print model labels vs regex (truncated), no write")
+    p_cls.add_argument("--sample", action="store_true",
+                       help="classify a sample and save a dated record with FULL excerpts + labels to samples/")
     p_cls.add_argument("--report", action="store_true",
                        help="print the distribution + regex-agreement report from existing labels")
 

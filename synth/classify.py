@@ -25,6 +25,7 @@ import asyncio
 import json
 import random
 from collections import Counter
+from datetime import datetime
 from types import SimpleNamespace
 
 import anthropic
@@ -140,6 +141,31 @@ async def run_async(records, state, save=True):
         await asyncio.gather(*[asyncio.create_task(tracked(b)) for b in batches])
     if save:
         save_state(state)
+
+
+async def sample_run(records, seed=0, n=20):
+    """Classify a seeded sample and write a dated record with the FULL excerpt beside
+    its labels, so a human can verify the classification. Writes to
+    synth/samples/classify/; nothing goes to stdout but the path confirmation."""
+    sample = random.Random(seed).sample(records, min(n, len(records)))
+    state = {}
+    await run_async(sample, state, save=False)
+    lines = ["classify sample", f"model: {MODEL}", f"seed:  {seed}",
+             f"n:     {len(sample)}", ""]
+    for r in sample:
+        cl = state.get(str(r["doc_index"]))
+        head = f"[aff={r.get('affordance')}]  primary={primary(cl) if cl else None}  classes={cl}"
+        lines.append("=" * engine.WRAP)
+        lines.append(engine._wrap("", head))
+        lines.append(engine._wrap("  ", r["excerpt"]))
+        lines.append("")
+    d = engine.ROOT / "synth" / "samples" / "classify"
+    d.mkdir(parents=True, exist_ok=True)
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    path = d / f"{ts}_seed{seed}_n{len(sample)}.txt"
+    path.write_text("\n".join(lines), encoding="utf-8")
+    print(f"wrote classify sample ({len(sample)}) -> {path}")
+    return path
 
 
 def write_back(records, state):
