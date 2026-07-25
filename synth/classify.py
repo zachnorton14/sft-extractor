@@ -70,8 +70,12 @@ it could source. Choose from these classes ONLY, copied verbatim:
 {_LABEL_LIST}
 
 Rules:
-- List EVERY class the passage genuinely supports, best fit first. Most passages fit ONE
-  or TWO. Do not pad the list.
+- Excerpts are MULTIPURPOSE — one passage often supports several tasks. List EVERY class
+  that applies; there is no limit, best fit first.
+- But the bar is CONVICTION, not possibility. Include a class only when you are
+  absolutely convinced the passage would make a GENUINELY GOOD source for that task — not
+  merely a passage the task could be forced onto. When in any doubt about a class, LEAVE
+  IT OUT. A short, precise list of certain classes beats a long list of maybes.
 - "composition" is a GENUINE-document tag, not a fallback — do not add it just because
   any prose could be imitated. A rare, specific class (stem_reasoning, how_to, verse,
   conversational) must be tagged whenever it truly applies; never omit it in favour of a
@@ -79,8 +83,8 @@ Rules:
 - narrative splits by whether the events are real: "narrative_grounded" for real events
   or real persons you can place in the world, "narrative_fiction" for invented or
   unplaceable personal scenes.
-- If nothing yields a usable task — OCR soup, a bare list or heading, a form, an index
-  entry, a fragment — return ["drop"].
+- "drop" is exclusive: return ["drop"] ONLY when no class applies — OCR soup, a bare
+  list or heading, a form, an index entry, a fragment. Never combine it with a class.
 
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
 Output JSON only: [{{"i": 0, "classes": ["class", ...]}}, ...]
