@@ -39,7 +39,7 @@ from synth import corpus, engine
 # re-exported for routes that still import these from here
 from synth.engine import verbatim_answer, _pack_batches, _strip_fence  # noqa: F401
 
-AFFORDANCE = "expository"         # this generator handles the knowledge-QA route
+CLASSES = ("knowledge",)          # classifier classes this route sources
 
 SYSTEM = f"""\
 You are given a short passage from a pre-1930s book. Work in this order.
@@ -92,20 +92,14 @@ Output JSON only:
 MAX_SPANS = 3
 
 
-def source_excerpts(n, alpha=0.5, min_conf=0.7, n_words=150, seed=0):
-    """Return expository excerpts for the knowledge-QA route.
-
-    Prefers the materialized corpus (synth/output/excerpts.jsonl from `harvest`) —
-    read once, no per-row fetch. Falls back to live coverage-weighted sampling when
-    nothing has been harvested yet (handy for a quick --test)."""
-    mat = corpus.load_excerpts(affordance=AFFORDANCE)
-    if mat:
-        if not n or n >= len(mat):
-            return mat
-        return random.Random(seed).sample(mat, n)
-    recs = corpus.sample_excerpts(n, alpha=alpha, min_conf=min_conf,
-                                  n_words=n_words, seed=seed)
-    return [r for r in recs if r["affordance"] == AFFORDANCE]
+def source_excerpts(n, seed=0, **_):
+    """Knowledge-QA excerpts from the materialized corpus, selected by the classifier
+    (classes contains "knowledge"). n falsy or >= pool returns the whole pool;
+    otherwise a seeded random sample. Requires `classify` write-back to have run."""
+    mat = corpus.load_excerpts(cls=CLASSES)
+    if not n or n >= len(mat):
+        return mat
+    return random.Random(seed).sample(mat, n)
 
 
 ROUTE = engine.Route(

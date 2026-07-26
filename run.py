@@ -272,7 +272,7 @@ def cmd_stem(args):
 def cmd_reasoning(args):
     from synth import reasoning_qa as rq
     excerpts = rq.source_excerpts(args.size, seed=args.seed)
-    print(f"Sourced {len(excerpts)} argument excerpts (route={rq.AFFORDANCE})")
+    print(f"Sourced {len(excerpts)} reasoning excerpts (classes={rq.CLASSES})")
     if args.test:
         asyncio.run(rq.test_run(excerpts))
         return
@@ -316,7 +316,7 @@ def cmd_classify(args):
 def cmd_composition(args):
     from synth import composition_qa as cq
     excerpts = cq.source_excerpts(args.size, seed=args.seed)
-    print(f"Sourced {len(excerpts)} composition excerpts (route={cq.AFFORDANCE})")
+    print(f"Sourced {len(excerpts)} composition excerpts (classes={cq.CLASSES})")
     if args.test:
         asyncio.run(cq.test_run(excerpts))
         return
@@ -334,7 +334,7 @@ def cmd_composition(args):
 def cmd_narrative(args):
     from synth import narrative_qa as nq
     excerpts = nq.source_excerpts(args.size, seed=args.seed)
-    print(f"Sourced {len(excerpts)} narrative excerpts (route={nq.AFFORDANCE})")
+    print(f"Sourced {len(excerpts)} narrative excerpts (classes={nq.CLASSES})")
     if args.test:
         asyncio.run(nq.test_run(excerpts))
         return
@@ -351,9 +351,8 @@ def cmd_narrative(args):
 
 def cmd_knowledge(args):
     from synth import knowledge_qa as kq
-    excerpts = kq.source_excerpts(args.size, alpha=args.alpha, min_conf=args.min_conf,
-                                  seed=args.seed)
-    print(f"Sourced {len(excerpts)} expository excerpts (route={kq.AFFORDANCE})")
+    excerpts = kq.source_excerpts(args.size, seed=args.seed)
+    print(f"Sourced {len(excerpts)} knowledge excerpts (classes={kq.CLASSES})")
     if args.test:
         asyncio.run(kq.test_run(excerpts))
         return

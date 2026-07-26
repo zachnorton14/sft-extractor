@@ -208,18 +208,26 @@ HARVEST_STATE = ROOT / "synth" / "state" / "harvest.json"
 STEM_HARVEST_STATE = ROOT / "synth" / "state" / "harvest_stem.json"
 
 
-def load_excerpts(affordance=None, min_prose=0.0):
+def load_excerpts(affordance=None, cls=None, min_prose=0.0):
     """Read the materialized excerpt corpus (one JSON object per line), optionally
-    filtered to a single affordance / a prose floor. This is what every generation
-    route consumes — sourced once by harvest(), never re-fetched per row."""
+    filtered to a classifier class / regex affordance / prose floor. This is what
+    every generation route consumes — sourced once by harvest(), never re-fetched.
+
+    `cls` (a class name or an iterable of them) selects by the model classifier's
+    `classes` — the routes' real filter. An excerpt matches if any wanted class is in
+    its `classes`, so unclassified excerpts (no `classes` yet) never match: run
+    `classify` write-back before sourcing by class."""
     if not EXCERPTS_FILE.exists():
         return []
+    want = ({cls} if isinstance(cls, str) else set(cls)) if cls is not None else None
     out = []
     for line in EXCERPTS_FILE.read_text().splitlines():
         if not line.strip():
             continue
         r = json.loads(line)
         if affordance and r.get("affordance") != affordance:
+            continue
+        if want is not None and not want & set(r.get("classes") or []):
             continue
         if r.get("prose_score", 0) < min_prose:
             continue

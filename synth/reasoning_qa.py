@@ -33,7 +33,7 @@ import random
 
 from synth import corpus, engine
 
-AFFORDANCE = "argument"          # affordance this generator handles
+CLASSES = ("reasoning",)         # classifier classes this route sources
 MAX_SPANS = 4                    # a chain is spread out; more than knowledge-QA's 2
 
 # CALL 1 — extract the reasoning chain verbatim (this part has always been good).
@@ -107,12 +107,10 @@ Output JSON only: [{"i": 0, "q": "..."}, ...]
 
 
 def source_excerpts(n, seed=0, **_):
-    """Reasoning excerpts from the materialized corpus (affordance == argument).
-
-    n falsy or >= pool size returns the whole pool (full run); otherwise a seeded
-    random sample, so a --test with a given --count/--seed varies across seeds
-    instead of always taking the first n in file order."""
-    mat = corpus.load_excerpts(affordance=AFFORDANCE)
+    """Reasoning excerpts from the materialized corpus, selected by the classifier
+    (classes contains "reasoning"). n falsy or >= pool returns the whole pool;
+    otherwise a seeded random sample. Requires `classify` write-back to have run."""
+    mat = corpus.load_excerpts(cls=CLASSES)
     if not n or n >= len(mat):
         return mat
     return random.Random(seed).sample(mat, n)

@@ -31,9 +31,11 @@ Env (same as the other model passes):
     export ANTHROPIC_API_KEY=<your deepseek key>
 """
 
+import random
+
 from synth import corpus, engine
 
-AFFORDANCE = "stem_reasoning"    # affordance this generator handles
+CLASSES = ("stem_reasoning",)    # classifier classes this route sources
 MAX_SPANS = 6                    # a chain threads between equations; spread out
 
 # CALL 1 — extract the reasoning chain verbatim, repairing only mangled formulas.
@@ -87,19 +89,9 @@ this reasoning chain answers, as if setting an exercise.
 - Pose a problem that must be reasoned through, not a fact to recall: "Why does
   ...", "How does it follow that ...", "Why must ...?", "If ..., what happens and
   why?".
-- Speak in the register of a pre-1930s examiner, in pre-1930s language only. Period
-  vocabulary, spelling, and phrasing throughout; use no word, term, or idiom that
-  entered the language after 1930, and none of the modern analytic-exam idiom — no
-  "in terms of", "as a function of", "derive an expression for", "calculate the value
-  of", "with respect to", "the relationship between", "how is X expressed". A period
-  examiner writes "Show why ...", "Explain how it comes to pass that ...", "By what
-  reasoning does it appear that ...", "Wherefore must ...". Match the era of the
-  subject — plain and direct for a nineteenth-century schoolbook, never mock-archaic
-  beyond it. (Not "Given the reaction CuSO₄ + Zn → ZnSO₄ + Cu, how is the cell's
-  electrical energy expressed in terms of its electromotive force?" but "A voltaic
-  cell is formed in which zinc displaces copper from its sulphate. Show by what
-  reasoning the electrical energy the cell yields may be found from the heat that the
-  same reaction gives out.")
+- Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use no
+  word, term, or idiom that came into use after 1930, and no modern conversational
+  or academic phrasing — it must read as a question a period examiner would pose.
 - The question must STAND ALONE and betray no awareness of a source. Never refer to
   the passage or to whoever wrote it — no "the passage", "the text", "the author",
   "the figure", "according to", "as described", "as shown". Ask about the SUBJECT
@@ -121,8 +113,14 @@ Output JSON only: [{"i": 0, "q": "..."}, ...]
 
 
 def source_excerpts(n, seed=0, **_):
-    """STEM-reasoning excerpts, sought from SCIENCE + TECHNOLOGY."""
-    return corpus.sample_stem(n or 20, seed=seed)
+    """STEM-reasoning excerpts from the materialized corpus, selected by the classifier
+    (classes contains "stem_reasoning") — the classifier-confirmed windows the STEM
+    harvest overlay (`harvest --stem`) put into the pool. n falsy or >= pool returns
+    the whole pool; otherwise a seeded random sample. Requires `classify` write-back."""
+    mat = corpus.load_excerpts(cls=CLASSES)
+    if not n or n >= len(mat):
+        return mat
+    return random.Random(seed).sample(mat, n)
 
 
 ROUTE = engine.Route(

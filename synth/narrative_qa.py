@@ -39,7 +39,7 @@ import random
 
 from synth import corpus, engine
 
-AFFORDANCE = "narrative"          # this generator handles the narrative route
+CLASSES = ("narrative_grounded", "narrative_fiction")   # both; the prompt branches on kind
 MAX_SPANS = 3                     # prefer one long span; splice only a spread account
 
 SYSTEM = f"""\
@@ -100,12 +100,11 @@ Output JSON only:
 
 
 def source_excerpts(n, seed=0, **_):
-    """Narrative excerpts from the materialized corpus (affordance == narrative).
-
-    n falsy or >= pool size returns the whole pool (full run); otherwise a seeded
-    random sample, so a --test/--sample with a given --count/--seed varies across
-    seeds instead of always taking the first n in file order."""
-    mat = corpus.load_excerpts(affordance=AFFORDANCE)
+    """Narrative excerpts from the materialized corpus, selected by the classifier
+    (classes contains narrative_grounded or narrative_fiction). n falsy or >= pool
+    returns the whole pool; otherwise a seeded random sample. Requires `classify`
+    write-back to have run."""
+    mat = corpus.load_excerpts(cls=CLASSES)
     if not n or n >= len(mat):
         return mat
     return random.Random(seed).sample(mat, n)
