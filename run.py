@@ -245,6 +245,10 @@ def cmd_harvest(args):
     if args.relabel:
         corpus.relabel_excerpts()
         return
+    if args.stem:
+        corpus.harvest_stem(args.total, min_conf=args.min_conf, seed=args.seed,
+                            max_shards=args.max_shards)
+        return
     corpus.harvest(args.total, alpha=args.alpha, min_conf=args.min_conf,
                    seed=args.seed, max_shards=args.max_shards)
 
@@ -497,6 +501,9 @@ def main():
     p_hv.add_argument("--max-shards", type=int, default=473, help="cap shards swept per run (resumable)")
     p_hv.add_argument("--relabel", action="store_true",
                       help="re-tag affordances of the existing excerpts in place (no fetch)")
+    p_hv.add_argument("--stem", action="store_true",
+                      help="targeted STEM overlay: sweep quantitative categories into "
+                           "excerpts.jsonl via multi-window (uses --total as the STEM target)")
 
     # stem-reasoning
     p_sr = sub.add_parser("stem-reasoning",

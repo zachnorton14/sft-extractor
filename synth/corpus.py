@@ -205,6 +205,7 @@ def sample_by_category(category, n_text=3, seed=0):
 
 EXCERPTS_FILE = ROOT / "synth" / "output" / "excerpts.jsonl"
 HARVEST_STATE = ROOT / "synth" / "state" / "harvest.json"
+STEM_HARVEST_STATE = ROOT / "synth" / "state" / "harvest_stem.json"
 
 
 def load_excerpts(affordance=None, min_prose=0.0):
@@ -337,6 +338,92 @@ def harvest(total, alpha=0.5, min_conf=0.7, n_words=150, seed=0, max_shards=N_SH
     aff = Counter(r["affordance"] for r in load_excerpts())
     print("  by affordance: " + "  ".join(f"{a}={k}" for a, k in aff.most_common()))
     return total_have
+
+
+def _load_stem_state():
+    if STEM_HARVEST_STATE.exists():
+        s = json.loads(STEM_HARVEST_STATE.read_text())
+        return set(s.get("processed", [])), s.get("count", 0)
+    return set(), 0
+
+
+def _save_stem_state(processed, count):
+    STEM_HARVEST_STATE.parent.mkdir(parents=True, exist_ok=True)
+    STEM_HARVEST_STATE.write_text(json.dumps({"processed": sorted(processed), "count": count}))
+
+
+def harvest_stem(target, min_conf=0.7, n_words=170, per_doc=4, min_signal=0.3,
+                 seed=0, max_shards=N_SHARDS):
+    """Targeted STEM overlay for the harvest: sweep the quantitative/physical
+    categories shard by shard, cut up to per_doc reasoning-dense windows per doc via
+    stem_windows, and append them to EXCERPTS_FILE tagged affordance="stem_reasoning".
+
+    The affordance tag is only the heuristic guess; the classifier's `classes` is the
+    truth downstream, so these windows go through the same classify -> route-by-class
+    path as everything else. Separate from harvest() because the quota differs: this
+    fills the STEM ROUTE `target` as a priority overlay, NOT the tempered LoC-category
+    coverage. Shares the shard-major scan and resumes from its own state; both passes
+    append to the one excerpts pool. Each window gets a unique `<gi>-s<w>` doc_index.
+    """
+    offs, audit, con = _load_index()
+    stem_cats = set(STEM_CATEGORIES)
+    EXCERPTS_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+    processed, have = _load_stem_state()
+    seen = {r["doc_index"] for r in load_excerpts()}       # dedup backstop
+    rng = random.Random(seed)
+    order = list(range(N_SHARDS))
+    rng.shuffle(order)
+
+    swept = 0
+    with open(EXCERPTS_FILE, "a", encoding="utf-8") as fh:
+        for s in order:
+            if have >= target or swept >= max_shards:
+                break
+            if s in processed:
+                continue
+            base = offs.get(s)
+            rows = con.execute(
+                f"SELECT text FROM read_parquet('{SHARD_URL.format(s)}')"
+            ).fetchall()
+            new = 0
+            for r, (t,) in enumerate(rows):
+                if have >= target:
+                    break
+                gi = base + r
+                m = audit[gi]
+                if (m.get("topic_or_subject_gen") or "UNKNOWN") not in stem_cats:
+                    continue
+                if (m.get("topic_or_subject_score_gen") or 0) < min_conf:
+                    continue
+                for w, (ex, sig) in enumerate(
+                        stem_windows(t, n_words, rng, per_doc, min_signal)):
+                    uid = f"{gi}-s{w}"
+                    if uid in seen:
+                        continue
+                    fh.write(json.dumps({
+                        "doc_index": uid, "doc": gi, "shard": s,
+                        "category": m.get("topic_or_subject_gen"),
+                        "affordance": "stem_reasoning",
+                        "confidence": m.get("topic_or_subject_score_gen"),
+                        "year": m.get("resolved_year"), "title": m.get("title_src"),
+                        "prose_score": sig, "stem_signal": sig,
+                        "n_words": len(ex.split()), "excerpt": ex,
+                    }, ensure_ascii=False) + "\n")
+                    seen.add(uid)
+                    have += 1
+                    new += 1
+                    if have >= target:
+                        break
+            fh.flush()
+            processed.add(s)
+            swept += 1
+            _save_stem_state(processed, have)
+            print(f"  shard {s:>3}: +{new:>3}  ({have}/{target} stem, "
+                  f"{swept} shards swept)", flush=True)
+
+    print(f"harvest_stem: {have} STEM windows -> {EXCERPTS_FILE}")
+    return have
 
 
 def sample_documents(n, seed=0):
