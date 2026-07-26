@@ -575,11 +575,19 @@ _REASON_CONN = re.compile(
     r"\b(therefore|hence|thus|since|because|consequently|whence|accordingly|"
     r"it follows|for this reason|so that|if|then|let|suppose|assume|given)\b", re.I)
 _STEM_VOCAB = re.compile(
-    r"\b(equal|equals|angle|triangle|square|circle|ratio|proportion|multiply|"
-    r"divide|product|quotient|sum|difference|root|velocity|force|pressure|weight|"
-    r"mass|volume|density|temperature|heat|energy|current|voltage|resistance|"
-    r"equation|formula|theorem|proposition|proof|quantity|degrees?|per\s*cent)\b"
-    r"|[=×÷]", re.I)
+    r"\b(equals?|angle|triangle|rectangle|square|squared|circle|ratio|proportion|"
+    r"multiply|multiplied|divide|divided|product|quotient|sum|difference|subtract|"
+    r"factor|exponent|logarithm|sine|cosine|tangent|root|radius|diameter|"
+    r"circumference|perpendicular|parallel|hypotenuse|axis|"
+    r"velocity|force|pressure|weight|mass|volume|density|temperature|heat|energy|"
+    r"momentum|gravity|gravitation|acceleration|friction|lever|fulcrum|inertia|"
+    r"coefficient|current|voltage|resistance|ampere|volt|ohm|calorie|"
+    r"acid|alkali|oxygen|hydrogen|carbon|nitrogen|compound|element|reaction|"
+    r"solution|atom|molecule|combustion|oxide|"
+    r"equation|formula|theorem|proposition|proof|quantity|degrees?|per\s*cent|"
+    r"foot|feet|inch(?:es)?|pound|ounce|gallon|cubic|"
+    r"calculate|computed?|measure[ds]?)\b"
+    r"|[=×÷√°]", re.I)
 
 
 def stem_signal(text):
@@ -648,6 +656,49 @@ def prose_excerpt(text, n_words=150, rng=None, tries=16, floor=0.7, prefer="pros
     if not ex:
         return "", 0.0, ""                        # no window survived the gate
     return ex, score, affordance_label(ex)
+
+
+def stem_windows(text, n_words=170, rng=None, k=4, min_signal=0.3):
+    """Up to k non-overlapping STEM-reasoning windows from ONE document, each above
+    min_signal, highest-signal first. STEM docs are window-rich, so taking several
+    per doc multiplies yield over prose_excerpt's single-best pick — a RECALL net that
+    the classifier confirms downstream. Returns [(excerpt, signal), ...]."""
+    rng = rng or random
+    sents = _split_sentences(strip_lines(text))
+    if not sents:
+        return []
+    wc = [len(s.split()) for s in sents]
+    n = len(sents)
+    lo = min(n // 10, n - 1)
+
+    def window(i):
+        j, words = i, 0
+        while j < n and words < n_words:
+            words += wc[j]
+            j += 1
+        return " ".join(sents[i:j]), j            # text, end sentence index
+
+    cands = []
+    for i in [i for i in range(lo, n) if _REASON_CONN.search(sents[i])][:300]:
+        start = max(lo, i - 1)
+        ex, end = window(start)
+        if not is_self_contained(ex) or not has_affordance(ex) or is_garbage(ex):
+            continue
+        if region_quality(ex)[0] < 0.5:           # looser floor: math lowers region
+            continue
+        sig = stem_signal(ex)
+        if sig >= min_signal:
+            cands.append((sig, start, end, ex))
+    cands.sort(key=lambda c: c[0], reverse=True)  # highest signal first
+    out, used = [], []
+    for sig, start, end, ex in cands:
+        if any(start < ue and end > us for us, ue in used):   # overlaps a kept window
+            continue
+        used.append((start, end))
+        out.append((ex, round(sig, 3)))
+        if len(out) >= k:
+            break
+    return out
 
 
 def _stats(values):
@@ -738,13 +789,27 @@ def report_coverage(total, alpha=0.5, min_conf=0.5):
               f"{100*targets[c]/max(plan_total,1):7.1f}% {targets[c]:7} {eligible[c]:9,}{cap}")
 
 
-STEM_CATEGORIES = ["SCIENCE", "TECHNOLOGY"]
+# Quantitative/physical categories where STEM reasoning lives. Wider than just the
+# two pure-science classes: surveying/chronology (auxiliary sciences), navigation and
+# ballistics (naval/military), soil chemistry (agriculture), physiology (medicine),
+# astronomy/cartography (geography). Logic stays with the reasoning route, not here.
+STEM_CATEGORIES = [
+    "SCIENCE", "TECHNOLOGY", "AGRICULTURE", "MEDICINE",
+    "AUXILIARY SCIENCES OF HISTORY", "GEOGRAPHY. ANTHROPOLOGY. RECREATION",
+    "NAVAL SCIENCE", "MILITARY SCIENCE",
+]
 
 
-def sample_stem(n=20, seed=0, min_signal=0.4, min_conf=0.7, n_words=170,
-                categories=STEM_CATEGORIES):
-    """Draw ~n STEM-reasoning excerpts by seeking the reasoning-dense window in
-    each doc from the STEM categories, keeping those above `min_signal`.
+def sample_stem(n=20, seed=0, min_signal=0.3, min_conf=0.7, n_words=170,
+                categories=STEM_CATEGORIES, per_doc=4):
+    """Draw ~n STEM-reasoning excerpts from the quantitative/physical categories,
+    taking up to `per_doc` non-overlapping reasoning-dense windows from each doc
+    (STEM docs are window-rich) and keeping those above `min_signal`.
+
+    A RECALL net: the classifier is the precision layer, so this over-sources
+    candidate windows (wide categories, several per doc, a low signal floor) and lets
+    the model confirm which are truly STEM. Each window gets a unique doc_index
+    (`<gi>-<w>`) so several from one doc don't collide in the per-excerpt state.
 
     Fetch-based for now (the reasoning window differs from the harvest's prose
     window, so it needs its own selection); materialize via the harvest later.
@@ -760,24 +825,27 @@ def sample_stem(n=20, seed=0, min_signal=0.4, min_conf=0.7, n_words=170,
                if (audit[g].get("topic_or_subject_score_gen") or 0) >= min_conf]
         if not gis:
             continue
-        # oversample docs (many yield no strong stem window) and keep the hits
-        for gi in rng.sample(gis, min(per * 4, len(gis))):
-            if len([r for r in out if r["category"] == cat]) >= per:
+        got = 0
+        for gi in rng.sample(gis, len(gis)):      # scan docs until this cat's quota met
+            if got >= per:
                 break
             shard, local = _locate(gi, starts)
             text = _fetch_text(con, shard, local)
             if not text:
                 continue
-            ex, sig, label = prose_excerpt(text, n_words, rng, prefer="stem")
-            if not ex or sig < min_signal:
-                continue
             m = audit[gi]
-            out.append({
-                "doc_index": gi, "category": cat, "affordance": "stem_reasoning",
-                "stem_signal": sig, "confidence": m.get("topic_or_subject_score_gen"),
-                "year": m.get("resolved_year"), "title": m.get("title_src"),
-                "prose_score": sig, "n_words": len(ex.split()), "excerpt": ex,
-            })
+            for w, (ex, sig) in enumerate(
+                    stem_windows(text, n_words, rng, k=per_doc, min_signal=min_signal)):
+                out.append({
+                    "doc_index": f"{gi}-{w}", "doc": gi, "shard": shard,
+                    "category": cat, "affordance": "stem_reasoning",
+                    "stem_signal": sig, "confidence": m.get("topic_or_subject_score_gen"),
+                    "year": m.get("resolved_year"), "title": m.get("title_src"),
+                    "prose_score": sig, "n_words": len(ex.split()), "excerpt": ex,
+                })
+                got += 1
+                if got >= per:
+                    break
     return out
 
 
