@@ -259,7 +259,7 @@ def cmd_harvest(args):
         corpus.harvest_conversational(target, seed=args.seed, max_shards=args.max_shards)
         return
     corpus.harvest(args.total, alpha=args.alpha, min_conf=args.min_conf,
-                   seed=args.seed, max_shards=args.max_shards)
+                   n_words=args.words, seed=args.seed, max_shards=args.max_shards)
 
 
 def cmd_stem(args):
@@ -577,6 +577,9 @@ def main():
     p_hv.add_argument("--min-conf", type=float, default=0.7, help="label-confidence floor")
     p_hv.add_argument("--seed", type=int, default=0)
     p_hv.add_argument("--max-shards", type=int, default=473, help="cap shards swept per run (resumable)")
+    p_hv.add_argument("--words", type=int, default=None,
+                      help="fixed excerpt length; default (unset) varies length per excerpt "
+                           "(40%% short, 35%% medium, 25%% long) for answer-length diversity")
     p_hv.add_argument("--relabel", action="store_true",
                       help="re-tag affordances of the existing excerpts in place (no fetch)")
     p_hv.add_argument("--stem", action="store_true",

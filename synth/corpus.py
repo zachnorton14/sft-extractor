@@ -296,7 +296,23 @@ def _save_harvest_state(processed, counts):
         {"processed": sorted(processed), "counts": dict(counts)}))
 
 
-def harvest(total, alpha=0.5, min_conf=0.7, n_words=150, seed=0, max_shards=N_SHARDS):
+# Excerpt length is sampled per-document from these bands, not fixed — a dataset whose
+# answers all top out near one length teaches the model a length CEILING. Because the
+# answer is a span, a long excerpt only *enables* a long answer; the route/question
+# decides (a fact pulls a short span from any excerpt, "Recount ..." a long one). So a
+# spread of excerpt lengths yields answers whose length matches the task.
+_WORD_BANDS = ((0.40, 120, 180), (0.75, 300, 450), (1.00, 550, 800))
+
+
+def _sample_words(rng):
+    r = rng.random()
+    for cum, lo, hi in _WORD_BANDS:
+        if r < cum:
+            return rng.randint(lo, hi)
+    return rng.randint(550, 800)
+
+
+def harvest(total, alpha=0.5, min_conf=0.7, n_words=None, seed=0, max_shards=N_SHARDS):
     """Shard-major sweep: read each shard's text column ONCE and cut gated
     excerpts to fill the tempered coverage quotas, tagging every affordance.
 
@@ -349,7 +365,8 @@ def harvest(total, alpha=0.5, min_conf=0.7, n_words=150, seed=0, max_shards=N_SH
                     continue
                 if (m.get("topic_or_subject_score_gen") or 0) < min_conf:
                     continue
-                ex, score, label = prose_excerpt(t, n_words, rng)
+                words = _sample_words(rng) if n_words is None else n_words
+                ex, score, label = prose_excerpt(t, words, rng)
                 if not ex:
                     continue
                 fh.write(json.dumps({
