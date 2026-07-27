@@ -365,6 +365,39 @@ def cmd_narrative(args):
     print("Done.")
 
 
+def _run_extractive_route(args, module, label):
+    """Shared driver for the simple one/two-phase routes (source, test/sample, run)."""
+    excerpts = module.source_excerpts(args.size, seed=args.seed)
+    print(f"Sourced {len(excerpts)} {label} excerpts (classes={module.CLASSES})")
+    if args.test:
+        asyncio.run(module.test_run(excerpts))
+        return
+    if args.sample:
+        asyncio.run(module.sample_run(excerpts, seed=args.seed))
+        return
+    state = module.load_state()
+    resolved = sum(1 for e in excerpts if str(e["doc_index"]) in state)
+    print(f"Excerpts: {len(excerpts)}  Resolved: {resolved}")
+    asyncio.run(module.run_async(excerpts, state))
+    module.write_output(excerpts, state)
+    print("Done.")
+
+
+def cmd_howto(args):
+    from synth import how_to_qa
+    _run_extractive_route(args, how_to_qa, "how-to")
+
+
+def cmd_opinion(args):
+    from synth import opinion_qa
+    _run_extractive_route(args, opinion_qa, "opinion")
+
+
+def cmd_verse(args):
+    from synth import verse_qa
+    _run_extractive_route(args, verse_qa, "verse")
+
+
 def cmd_knowledge(args):
     from synth import knowledge_qa as kq
     excerpts = kq.source_excerpts(args.size, seed=args.seed)
@@ -575,6 +608,19 @@ def main():
     p_cq.add_argument("--test", action="store_true", help="generate a few and print without writing")
     p_cq.add_argument("--sample", action="store_true", help="generate a few and save a dated record (prompt + Q/A) to samples/")
 
+    # how-to-qa / opinion-qa / verse-qa (same simple arg set)
+    for _name, _help in [
+        ("how-to-qa", "Generate method Q/A from how_to excerpts"),
+        ("opinion-qa", "Generate view-and-ground Q/A from opinion excerpts"),
+        ("verse-qa", "Generate compose-a-verse Q/A from verse excerpts"),
+    ]:
+        _p = sub.add_parser(_name, help=_help)
+        _p.add_argument("--seed", type=int, default=0)
+        _p.add_argument("--count", type=int, default=100, dest="size", metavar="N",
+                        help="max excerpts to process")
+        _p.add_argument("--test", action="store_true", help="generate a few and print without writing")
+        _p.add_argument("--sample", action="store_true", help="generate a few and save a dated record to samples/")
+
     # narrative-qa
     p_nq = sub.add_parser("narrative-qa",
                           help="Generate comprehension/retell Q/A from narrative excerpts (narrative route)")
@@ -651,6 +697,12 @@ def main():
         cmd_narrative(args)
     elif args.cmd == "composition-qa":
         cmd_composition(args)
+    elif args.cmd == "how-to-qa":
+        cmd_howto(args)
+    elif args.cmd == "opinion-qa":
+        cmd_opinion(args)
+    elif args.cmd == "verse-qa":
+        cmd_verse(args)
     elif args.cmd == "classify":
         cmd_classify(args)
     elif args.cmd == "knowledge-qa":
