@@ -23,6 +23,7 @@ import os
 import re
 import sys
 import textwrap
+from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -118,6 +119,15 @@ class _GoClient:
     def __init__(self, http, key):
         self.http = http
         self.key = key
+
+
+@asynccontextmanager
+async def open_client():
+    """Open a Go-API client handle. Use in any custom run loop that calls `_call`
+    directly (e.g. classify): `async with engine.open_client() as client: ...`."""
+    key = _api_key()
+    async with httpx.AsyncClient(timeout=HTTP_TIMEOUT) as http:
+        yield _GoClient(http, key)
 
 
 def verbatim_answer(spans, excerpt, max_spans=2):
@@ -274,8 +284,9 @@ async def _call(client, semaphore, route, system, payload, n):
     body = {"model": route.model, "max_tokens": route.max_tokens,
             "messages": [{"role": "system", "content": system},
                          {"role": "user", "content": payload}]}
-    if route.extra_body:
-        body.update(route.extra_body)                # e.g. provider flags to disable thinking
+    extra = getattr(route, "extra_body", None)       # tolerate configs without the field
+    if extra:
+        body.update(extra)                           # e.g. provider flags to disable thinking
     headers = {"Authorization": f"Bearer {client.key}"}
     async with semaphore:
         text = ""
@@ -366,9 +377,7 @@ async def _question_batch(client, semaphore, batch, state, route):
 
 
 async def run_async(route, excerpts, state, save=True):
-    key = _api_key()
-    async with httpx.AsyncClient(timeout=HTTP_TIMEOUT) as http:
-        client = _GoClient(http, key)
+    async with open_client() as client:
         semaphore = asyncio.Semaphore(route.concurrency)
 
         if route.question_system:

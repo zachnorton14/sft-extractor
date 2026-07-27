@@ -16,9 +16,8 @@ can be compared. Routes migrate from `affordance` to `primary` afterwards.
 dialogue) claim an excerpt before the elastic catch-alls (knowledge, composition), so a
 scarce class is never strip-mined by a class that fits almost anything.
 
-Env (same as the model passes):
-    export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
-    export ANTHROPIC_API_KEY=<your key>          # a NON-reasoning model is cheapest here
+Env:
+    export OPENCODE_API_KEY=<your opencode Go key>   # or put it in ROOT/.env
 """
 
 import asyncio
@@ -27,8 +26,6 @@ import random
 from collections import Counter
 from datetime import datetime
 from types import SimpleNamespace
-
-import anthropic
 
 from synth import corpus, engine
 
@@ -134,7 +131,7 @@ async def run_async(records, state, save=True):
     batches = engine._pack_batches(pending, TOKEN_BUDGET)
     print(f"  {len(pending)} excerpts, {len(batches)} batches...")
     done = [0]
-    async with anthropic.AsyncAnthropic() as client:
+    async with engine.open_client() as client:
         semaphore = asyncio.Semaphore(CONCURRENCY)
 
         async def tracked(batch):
