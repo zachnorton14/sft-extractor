@@ -40,17 +40,17 @@ STATE_FILE = engine.STATE_DIR / "classify.json"
 
 # The routing taxonomy. Order here is documentation; CLAIM_ORDER sets priority.
 LABELS = {
-    "knowledge":          "states facts, definitions, or explanations about the world; answers what/why/how from general knowledge (expository).",
-    "reasoning":          "argues from premises to a conclusion; the author works through an inference chain.",
-    "stem_reasoning":     "quantitative or physical reasoning: mathematics, mechanics, engineering, chemistry, a worked physical argument.",
-    "narrative_grounded": "recounts REAL events or real persons — history, memoir, biography, travel of record — placeable in the actual world.",
-    "narrative_fiction":  "an invented or purely personal scene with no external anchor: a novel, a tale, an unplaceable first-person incident.",
-    "opinion":            "advances a judgment, preference, or persuasive stance — what is good, right, or best.",
-    "how_to":             "tells how to DO or MAKE something: the steps of a method, recipe, procedure, technique, or drill.",
+    "knowledge":          "states a self-contained fact, definition, or explanation about a subject that stands on its own in the world (a place, person, event, concept, law, or process) — answerable without seeing the passage. Expository: tells what is so or why, not narrating, arguing a chain, or urging a view. The broad fallback class.",
+    "reasoning":          "works a CHAIN of inference — from premises through steps to a conclusion — that could be lifted whole as the answer to 'why does it follow that...?'. A real argument the author reasons out, not a single causal aside or a bare assertion.",
+    "stem_reasoning":     "DERIVES, proves, or shows WHY a scientific or technical result holds — a worked argument in any exact or applied science (mathematics, physics, astronomy, mechanics, engineering, electricity, chemistry, physiology, and the like). Not a table of measurements, a bare formula, or a description of apparatus.",
+    "narrative_grounded": "recounts a REAL episode — a scene or sequence of events that actually happened (a battle, a voyage, an incident from history or memoir) and could be retold. Events unfold in it; not a catalog entry or expository facts about a real person.",
+    "narrative_fiction":  "an invented SCENE where events happen — a passage from a novel or tale with action unfolding. Not a character's static reflection, description, or interior monologue.",
+    "opinion":            "asserts a defensible STANCE on a debatable question — a judgment the writer holds or argues about what is right, good, wise, or best. Not a passing evaluative word or a plain fact.",
+    "how_to":             "gives the ordered STEPS for doing or making something — a method, recipe, process, technique, or drill the reader could follow. Not a description of how a thing works or what it is.",
     "conversational":     "a genuine TWO-party BACK-AND-FORTH whose turns can be lifted cleanly for training — a catechism, a Socratic dialogue, a question-and-answer lesson, where each spoken turn stands on its own. NOT dialogue buried in narrative prose with attributions ('\"...,\" said John' — that is narrative), NOT a play or scene with 3+ speakers, NOT a lone Q/A pair or a monologue. Ask: could these turns become alternating user/assistant messages verbatim? If not, it is not conversational.",
-    "composition":        "IS a formal composed document: statute/act, legal pleading, letter, speech/oration/resolution, prayer/devotion, proclamation, contract/instrument. Tag ONLY a genuine document — never merely because prose could be imitated.",
+    "composition":        "a specimen of a nameable, producible FORM — whole or a self-contained part — that a model could be told to write: a document (statute, letter, oration, prayer, contract), an exam question, a definition, a preface, a review, a story's conclusion, a toast, an epitaph, a caption, and the like. The answer is that verbatim specimen; the goal is training the model to generate text on demand in whatever form is asked. Tag a genuine instance of a recognizable form, not ordinary prose with no particular shape.",
     "verse":              "poetry or metrical verse — lines, meter, or rhyme.",
-    "drop":               "not usable: OCR gibberish, a bare list/table/index/heading, a fill-in form, a catalog or dictionary index entry, or too fragmentary to answer anything.",
+    "drop":               "yields no good Q/A for ANY class. OCR gibberish, a bare list/table/index/heading/form, a fragment — AND ALSO otherwise-readable prose with nothing worth extracting: no self-contained fact, episode, argument, procedure, stance, document, verse, or exchange. When unsure a passage is genuinely useful, drop it; on a broad regex-sourced pool this is a substantial share.",
 }
 
 # Priority: rarest & most specific first; elastic catch-alls (knowledge, composition)
@@ -75,15 +75,15 @@ Rules:
   absolutely convinced the passage would make a GENUINELY GOOD source for that task — not
   merely a passage the task could be forced onto. When in any doubt about a class, LEAVE
   IT OUT. A short, precise list of certain classes beats a long list of maybes.
-- "composition" is a GENUINE-document tag, not a fallback — do not add it just because
-  any prose could be imitated. A rare, specific class (stem_reasoning, how_to, verse,
-  conversational) must be tagged whenever it truly applies; never omit it in favour of a
-  broader one.
-- narrative splits by whether the events are real: "narrative_grounded" for real events
-  or real persons you can place in the world, "narrative_fiction" for invented or
-  unplaceable personal scenes.
-- "drop" is exclusive: return ["drop"] ONLY when no class applies — OCR soup, a bare
-  list or heading, a form, an index entry, a fragment. Never combine it with a class.
+- "composition" is a producible-FORM tag, not a catch-all — add it only for a genuine
+  specimen of a nameable form (whole or part), never just because prose could be
+  reworded. A rare, specific class (stem_reasoning, how_to, verse, conversational) must
+  be tagged whenever it truly applies; never omit it in favour of a broader one.
+- narrative splits by whether the events are real: "narrative_grounded" for a real
+  episode, "narrative_fiction" for an invented one.
+- PREFER "drop" over forcing a weak class. If no class is a genuinely good fit — garbage,
+  or readable prose with nothing worth extracting — return ["drop"] alone (never combined
+  with a class). On a broad pool a substantial share should drop; that is correct.
 
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
 Output JSON only: [{{"i": 0, "classes": ["class", ...]}}, ...]
