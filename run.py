@@ -296,6 +296,9 @@ def cmd_classify(args):
         classify.MODEL = args.model
     records = corpus.load_excerpts()
     state = classify.load_state()
+    if args.coverage:
+        classify.coverage(records)
+        return
     if args.report:
         classify.report(records, state)
         return
@@ -544,6 +547,8 @@ def main():
                        help="classify a sample and save a dated record with FULL excerpts + labels to samples/")
     p_cls.add_argument("--report", action="store_true",
                        help="print the distribution + regex-agreement report from existing labels")
+    p_cls.add_argument("--coverage", action="store_true",
+                       help="print per-class confirmed supply vs. row target (the harvest dashboard)")
     p_cls.add_argument("--concurrency", type=int, default=None,
                        help="in-flight requests (default 40; raise until the API rate-limits)")
     p_cls.add_argument("--model", type=str, default=None,

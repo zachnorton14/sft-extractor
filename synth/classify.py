@@ -189,6 +189,44 @@ def write_back(records, state):
     print(f"wrote labels for {n}/{len(records)} excerpts -> {corpus.EXCERPTS_FILE}")
 
 
+# Row targets per class toward the ~300k goal. Rare classes are take-all / supply-
+# capped (we source every one we can); knowledge is the elastic filler that absorbs
+# the remainder. Rough starting values — retune against real coverage.
+QUOTAS = {
+    "knowledge": 90000, "reasoning": 45000, "stem_reasoning": 24000,
+    "narrative_grounded": 24000, "narrative_fiction": 24000, "opinion": 24000,
+    "how_to": 24000, "conversational": 18000, "composition": 18000, "verse": 9000,
+}
+
+
+def coverage(records):
+    """Per-class confirmed supply vs. row target — the harvest-loop dashboard. `have`
+    counts any-label membership (an excerpt counts toward every class it carries), so
+    it's the pool a route could draw from; `gap` is how much more to source."""
+    have = Counter()
+    n = 0
+    for r in records:
+        cl = r.get("classes")
+        if not cl:
+            continue
+        n += 1
+        for c in cl:
+            have[c] += 1
+    if not n:
+        print("nothing classified yet")
+        return
+    goal = sum(QUOTAS.values())
+    print(f"coverage over {n:,} classified excerpts (goal {goal:,} rows)\n")
+    print(f"  {'class':20} {'have':>7} {'target':>8} {'filled':>7} {'gap':>8}")
+    for c in CLAIM_ORDER:
+        if c == "drop":
+            continue
+        t, h = QUOTAS.get(c, 0), have.get(c, 0)
+        pct = f"{h*100//t}%" if t else "-"
+        print(f"  {c:20} {h:7} {t:8} {pct:>7} {max(t-h,0):8}")
+    print(f"\n  drop: {have.get('drop', 0):,}   (unusable)")
+
+
 # regex affordance -> the model primary it should roughly correspond to, for scoring
 _AFF_TO_PRIMARY = {
     "expository": "knowledge", "argument": "reasoning", "opinion": "opinion",
