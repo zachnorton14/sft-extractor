@@ -33,9 +33,11 @@ import anthropic
 from synth import corpus, engine
 
 MODEL = engine.MODEL              # override with a cheap non-reasoning model if available
-MAX_TOKENS = 8192                 # headroom if the model emits a thinking block
+MAX_TOKENS = 4096                 # no thinking block (disabled below) — labels are tiny
 CONCURRENCY = 40                  # I/O-bound: raise freely until the API rate-limits
 TOKEN_BUDGET = 2000               # ~9 excerpts/batch; output is tiny, input dominates
+# Classification needs no reasoning trace; disabling it is the big speedup (DeepSeek).
+DISABLE_THINKING = {"thinking": {"type": "disabled"}}
 
 STATE_FILE = engine.STATE_DIR / "classify.json"
 
@@ -124,7 +126,7 @@ async def _classify_batch(client, semaphore, batch, state, cfg):
 
 
 async def run_async(records, state, save=True):
-    cfg = SimpleNamespace(model=MODEL, max_tokens=MAX_TOKENS)
+    cfg = SimpleNamespace(model=MODEL, max_tokens=MAX_TOKENS, extra_body=DISABLE_THINKING)
     pending = [r for r in records if str(r["doc_index"]) not in state]
     if not pending:
         print("  nothing pending")

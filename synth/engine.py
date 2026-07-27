@@ -199,6 +199,7 @@ class Route:
     max_tokens: int = MAX_TOKENS
     concurrency: int = CONCURRENCY
     token_budget: int = TOKEN_BUDGET
+    extra_body: dict = None       # passed to messages.create (e.g. disable thinking)
 
 
 def state_file(route):
@@ -222,9 +223,11 @@ async def _call(client, semaphore, route, system, payload, n):
     async with semaphore:
         for attempt in range(5):
             try:
+                extra = getattr(route, "extra_body", None)
                 msg = await client.messages.create(
                     model=route.model, max_tokens=route.max_tokens,
                     system=system, messages=[{"role": "user", "content": payload}],
+                    **({"extra_body": extra} if extra else {}),
                 )
                 text = next((b.text for b in msg.content if b.type == "text"), "").strip()
                 if not text:
@@ -266,9 +269,10 @@ async def _single_batch(client, semaphore, batch, state, route):
             continue
         q = (r.get("q") or "").strip()
         cat = (r.get("category") or "").strip()
+        kind = (r.get("kind") or "").strip()         # optional sub-type tag (narrative)
         a = route.answer_fn(r, batch[idx]["excerpt"])
         if q and a:                                  # a is None -> drop this item
-            state[keys[idx]] = {"q": q, "a": a, "category": cat}
+            state[keys[idx]] = {"q": q, "a": a, "category": cat, "kind": kind}
 
 
 async def _extract_batch(client, semaphore, batch, state, route):
