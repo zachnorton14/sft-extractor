@@ -1,11 +1,12 @@
-"""Opinion route: turn opinion excerpts into view-and-ground Q/A rows.
+"""Opinion route: turn opinion excerpts into stance-taking Q/A rows.
 
-Sources excerpts the classifier tagged `opinion` — passages advancing a judgment,
-preference, or stance. Extractive: the ANSWER is the verbatim view together with the
-ground it rests on; the QUESTION asks what was held or urged. Because an opinion is a
-held position, not a fact, the question attributes it — to the thinker/school when that
-is on record and nameable, otherwise as a position on the subject — so it stands alone
-without ever saying "the author".
+Sources excerpts the classifier tagged `opinion`. The goal is to teach the model to
+TAKE A STANCE, not to recall who held one: the QUESTION asks for a judgment on the
+subject ("Ought ...?", "Is it right that ...?"), and the ANSWER is the period view
+itself, delivered as the answerer's own opinion — extracted VERBATIM, ground and all.
+No attribution (no holder, author, or "the passage"); the opinion answers directly.
+Content is kept RAW — period views stand as written even where later knowledge judges
+them wrong.
 
 Input:  synth/output/excerpts.jsonl (classes contains "opinion")
 Output: synth/output/opinion_qa.json
@@ -22,32 +23,36 @@ CLASSES = ("opinion",)            # classifier classes this route sources
 MAX_SPANS = 3
 
 SYSTEM = f"""\
-You are given a short passage from a pre-1930s book that advances an OPINION — a
-judgment, preference, or stance the writer argues for. Work in this order.
+You are given a short passage from a pre-1930s book that voices an OPINION — a
+judgment, preference, or stance. Build a pair in which the ANSWERER takes the stance:
+a question asking for a judgment, answered by the period view itself.
 
-1. FIND THE VIEW FIRST. Choose the opinion the passage advances together with the
-   ground it rests on, and copy it VERBATIM as the answer.
-   - Return it as "spans": exact quotations that state the view and (where the passage
-     gives it) the reason for it. Prefer ONE span; use up to {MAX_SPANS} only if the
-     view and its ground lie apart. Fewest, longest spans.
-   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
-     reorder, or add any word not in the passage.
-   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
-     terminal punctuation, so several spans read as continuous prose when joined.
+1. FIND THE STANCE. Choose the judgment the passage advances, with the ground it rests
+   on where the passage gives it, and copy it VERBATIM as the answer.
+   - Return it as "spans": exact quotations stating the view (and its reason). Prefer
+     ONE; use up to {MAX_SPANS} only if view and ground lie apart. Fewest, longest.
+   - Copy WORD FOR WORD — no paraphrase, summary, correction, or added word.
+   - The span must read as a DIRECT assertion of the view — the answer speaks the
+     opinion outright. Do NOT take third-person reportage of who held it ("the
+     committee found ...", "it was urged that ...", "critics held ..."); take the
+     asserted view itself.
+   - Take WHOLE sentences: begin and end at a sentence boundary, keep terminal
+     punctuation, so several spans read as continuous prose when joined.
+   - SUBSTANCE: only a genuine, defensible stance qualifies. If the passage merely
+     touches a topic, drops a throwaway remark, or states a plain fact with no
+     judgment, return NO span for it.
+   - Keep it RAW: period opinions stand as written even where later knowledge judges
+     them wrong — do not soften, hedge, or correct.
 
-2. THEN WRITE THE QUESTION the view answers.
-   - Ask what was held or urged, NOT a matter of fact: "What did ... hold concerning
-     ...?", "What was urged for (or against) ...?", "On what ground was ... defended?".
-     The spans must fully give the view (and its ground) that you ask for.
-   - ATTRIBUTE the view so the question stands alone: to the thinker, school, party, or
-     tradition that held it when that is a matter of record you can name (e.g. "the
-     Stoics", "the Free-Trade party", "Dr. Johnson"); otherwise frame it as a position
-     on the subject ("What was urged against a standing army in time of peace?"). Do
-     NOT say "the author", "the writer", "the passage", "according to".
+2. WRITE THE QUESTION as a request for JUDGMENT on the subject — the answer is the
+   opinion given as the answerer's OWN.
+   - Solicit a stance, not a fact: "Ought ...?", "Is it right (wise, best) that ...?",
+     "What is to be thought of ...?", "Is ... justified?", "Should ...?".
+   - NO attribution, NO source: never name a holder, speaker, author, school, or say
+     "the passage", "the text", "according to". Ask about the SUBJECT ITSELF.
+   - Name the subject so the question stands alone to someone who never saw the passage.
    - Plain period register, pre-1930s English — no word or idiom that came into use
      after 1930, no modern or conversational phrasing.
-   - Self-situating — name the actual subject of the opinion so the question makes sense
-     to someone who never saw the passage.
    - Do NOT put the view's distinctive wording in the question; ask for it.
 
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
