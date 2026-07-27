@@ -250,6 +250,14 @@ def cmd_harvest(args):
         corpus.harvest_stem(target, min_conf=args.min_conf, seed=args.seed,
                             max_shards=args.max_shards)
         return
+    if args.verse:
+        target = float("inf") if args.exhaust else args.total
+        corpus.harvest_verse(target, seed=args.seed, max_shards=args.max_shards)
+        return
+    if args.conversational:
+        target = float("inf") if args.exhaust else args.total
+        corpus.harvest_conversational(target, seed=args.seed, max_shards=args.max_shards)
+        return
     corpus.harvest(args.total, alpha=args.alpha, min_conf=args.min_conf,
                    seed=args.seed, max_shards=args.max_shards)
 
@@ -511,9 +519,13 @@ def main():
     p_hv.add_argument("--stem", action="store_true",
                       help="targeted STEM overlay: sweep quantitative categories into "
                            "excerpts.jsonl via multi-window (uses --total as the STEM target)")
+    p_hv.add_argument("--verse", action="store_true",
+                      help="targeted verse overlay: line-based windows from poetry/hymn books")
+    p_hv.add_argument("--conversational", action="store_true",
+                      help="targeted conversational overlay: dialogue/catechism/Q&A windows")
     p_hv.add_argument("--exhaust", action="store_true",
-                      help="with --stem: ignore the count target and sweep ALL remaining "
-                           "shards, filling the bucket to the brim")
+                      help="with --stem/--verse/--conversational: ignore the count target "
+                           "and sweep ALL remaining shards, filling the bucket to the brim")
 
     # stem-reasoning
     p_sr = sub.add_parser("stem-reasoning",

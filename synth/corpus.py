@@ -207,6 +207,8 @@ def sample_by_category(category, n_text=3, seed=0):
 EXCERPTS_FILE = ROOT / "synth" / "output" / "excerpts.jsonl"
 HARVEST_STATE = ROOT / "synth" / "state" / "harvest.json"
 STEM_HARVEST_STATE = ROOT / "synth" / "state" / "harvest_stem.json"
+VERSE_HARVEST_STATE = ROOT / "synth" / "state" / "harvest_verse.json"
+CONVERSATIONAL_HARVEST_STATE = ROOT / "synth" / "state" / "harvest_conversational.json"
 
 
 def load_excerpts(affordance=None, cls=None, min_prose=0.0):
@@ -468,6 +470,104 @@ def harvest_stem(target, min_conf=0.7, n_words=170, per_doc=4, min_signal=0.3,
 
     print(f"harvest_stem: {have} STEM windows -> {EXCERPTS_FILE}")
     return have
+
+
+def _load_overlay_state(path):
+    if path.exists():
+        s = json.loads(path.read_text())
+        return set(s.get("processed", [])), s.get("count", 0)
+    return set(), 0
+
+
+def _save_overlay_state(path, processed, count):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"processed": sorted(processed), "count": count}))
+
+
+def _harvest_overlay(tag, key, window_fn, categories, target, state_path,
+                     min_conf=0.7, seed=0, max_shards=N_SHARDS):
+    """Generic targeted overlay (cf. harvest_stem): sweep `categories` shard by shard,
+    cut windows via window_fn(text, rng) -> [(excerpt, score), ...], and append them to
+    EXCERPTS_FILE tagged affordance=tag with unique `<gi>-<key><w>` keys. Fills the
+    ROUTE `target` as a priority overlay (not LoC-category coverage); resumes from
+    state_path. The tag is a heuristic guess — the classifier's `classes` is the truth
+    downstream. Isolated read failures skip; three in a row abort (connection down)."""
+    offs, audit, con = _load_index()
+    cats = set(categories)
+    EXCERPTS_FILE.parent.mkdir(parents=True, exist_ok=True)
+    processed, have = _load_overlay_state(state_path)
+    seen = {r["doc_index"] for r in load_excerpts()}
+    rng = random.Random(seed)
+    order = list(range(N_SHARDS))
+    rng.shuffle(order)
+
+    swept = 0
+    fails = 0
+    with open(EXCERPTS_FILE, "a", encoding="utf-8") as fh:
+        for s in order:
+            if have >= target or swept >= max_shards:
+                break
+            if s in processed:
+                continue
+            base = offs.get(s)
+            rows = _read_shard(con, s)
+            if rows is None:
+                fails += 1
+                if fails >= 3:
+                    print("  aborting: 3 shards failed in a row (connection likely "
+                          "down). Nothing lost; rerun to resume.", flush=True)
+                    break
+                continue
+            fails = 0
+            new = 0
+            for r, (t,) in enumerate(rows):
+                if have >= target:
+                    break
+                gi = base + r
+                m = audit[gi]
+                if (m.get("topic_or_subject_gen") or "UNKNOWN") not in cats:
+                    continue
+                if (m.get("topic_or_subject_score_gen") or 0) < min_conf:
+                    continue
+                for w, (ex, sc) in enumerate(window_fn(t, rng)):
+                    uid = f"{gi}-{key}{w}"
+                    if uid in seen:
+                        continue
+                    fh.write(json.dumps({
+                        "doc_index": uid, "doc": gi, "shard": s,
+                        "category": m.get("topic_or_subject_gen"),
+                        "affordance": tag,
+                        "confidence": m.get("topic_or_subject_score_gen"),
+                        "year": m.get("resolved_year"), "title": m.get("title_src"),
+                        "prose_score": sc, "n_words": len(ex.split()), "excerpt": ex,
+                    }, ensure_ascii=False) + "\n")
+                    seen.add(uid)
+                    have += 1
+                    new += 1
+                    if have >= target:
+                        break
+            fh.flush()
+            processed.add(s)
+            swept += 1
+            _save_overlay_state(state_path, processed, have)
+            print(f"  shard {s:>3}: +{new:>3}  ({have}/{target} {tag}, "
+                  f"{swept} shards swept)", flush=True)
+
+    print(f"harvest {tag}: {have} windows -> {EXCERPTS_FILE}")
+    return have
+
+
+def harvest_verse(target, seed=0, max_shards=N_SHARDS):
+    """Targeted verse overlay — poetry/hymn/psalm books, line-based windows."""
+    return _harvest_overlay("verse", "v", verse_windows, VERSE_CATEGORIES, target,
+                            VERSE_HARVEST_STATE, seed=seed, max_shards=max_shards)
+
+
+def harvest_conversational(target, seed=0, max_shards=N_SHARDS):
+    """Targeted conversational overlay — dialogue/catechism/Q&A windows."""
+    return _harvest_overlay("conversational", "c", conversational_windows,
+                            CONVERSATIONAL_CATEGORIES, target,
+                            CONVERSATIONAL_HARVEST_STATE, seed=seed, max_shards=max_shards)
 
 
 def sample_documents(n, seed=0):
@@ -826,6 +926,119 @@ def stem_windows(text, n_words=170, rng=None, k=4, min_signal=0.3):
         if any(start < ue and end > us for us, ue in used):   # overlaps a kept window
             continue
         used.append((start, end))
+        out.append((ex, round(sig, 3)))
+        if len(out) >= k:
+            break
+    return out
+
+
+# Verse lives in poetry/hymn/psalm books; it is line-structured and fails the prose
+# gates the general harvest uses, so it needs its own line-based window search.
+VERSE_CATEGORIES = [
+    "LANGUAGE AND LITERATURE", "MUSIC AND BOOKS ON MUSIC",
+    "PHILOSOPHY. PSYCHOLOGY. RELIGION",
+]
+
+
+def verse_windows(text, rng=None, k=3, min_score=0.55, win=14):
+    """Windows of consecutive verse-like lines — short and capital-initial. Scans raw
+    lines (not sentences), keeps the line breaks in the excerpt, and returns the
+    densest non-overlapping runs. A RECALL net; the classifier confirms downstream.
+    Returns [(excerpt, score), ...]."""
+    lines = [l.rstrip() for l in text.split("\n")]
+    n = len(lines)
+    if n < win:
+        return []
+
+    def verselike(l):
+        s = l.strip()
+        return bool(s) and len(s) <= 55 and s[:1].isupper()
+
+    flags = [verselike(l) for l in lines]
+    cands = []
+    for i in range(0, n - win + 1, 4):
+        block = lines[i:i + win]
+        nb = sum(1 for l in block if l.strip())
+        if nb < win * 0.6:                        # mostly blank -> not a verse block
+            continue
+        score = sum(flags[i:i + win]) / nb
+        if score < min_score:
+            continue
+        ex = "\n".join(l for l in block if l.strip())
+        if len(ex.split()) < 20 or is_garbage(ex):
+            continue
+        cands.append((score, i, i + win, ex))
+    cands.sort(key=lambda c: c[0], reverse=True)
+    out, used = [], []
+    for sc, a, b, ex in cands:
+        if any(a < ue and b > us for us, ue in used):
+            continue
+        used.append((a, b))
+        out.append((ex, round(sc, 3)))
+        if len(out) >= k:
+            break
+    return out
+
+
+# Conversational = dialogue / catechism / Q&A. Prose-like (has sentences), so it reuses
+# the sentence-window search, anchored on speech turns and questions.
+CONVERSATIONAL_CATEGORIES = [
+    "LANGUAGE AND LITERATURE", "PHILOSOPHY. PSYCHOLOGY. RELIGION", "EDUCATION",
+]
+_QA_MARK = re.compile(r"(?:^|\n)\s*(?:Q\.|A\.|Ques\b|Ans\b|Question\b|Answer\b)", re.I)
+
+
+def conversational_signal(text):
+    """0-1 score for dialogue/catechism/Q&A prose: reported speech (speech verbs with
+    quotes) plus explicit question-answer structure."""
+    w = len(text.split())
+    if w < 20:
+        return 0.0
+    speech = len(_SPEECH.findall(text))
+    quotes = len(_QUOTE.findall(text))
+    qmarks = text.count("?")
+    qa = len(_QA_MARK.findall(text))
+    dlg = (speech * 2 + quotes) / w               # true reported speech
+    qad = (qmarks + qa * 5) / w                    # Q&A / catechism structure
+    return min(1.0, dlg * 6 + qad * 5)
+
+
+def conversational_windows(text, rng=None, k=3, min_signal=0.4, n_words=170):
+    """Windows dense in dialogue or Q&A, sentence-bounded — anchors on sentences with a
+    speech verb or a question, windows around each, keeps the densest non-overlapping.
+    Returns [(excerpt, score), ...]."""
+    rng = rng or random
+    sents = _split_sentences(strip_lines(text))
+    if not sents:
+        return []
+    wc = [len(s.split()) for s in sents]
+    n = len(sents)
+    lo = min(n // 10, n - 1)
+
+    def window(i):
+        j, words = i, 0
+        while j < n and words < n_words:
+            words += wc[j]
+            j += 1
+        return " ".join(sents[i:j]), j
+
+    anchors = [i for i in range(lo, n)
+               if _SPEECH.search(sents[i]) or "?" in sents[i] or _QA_MARK.search(sents[i])]
+    cands = []
+    for i in anchors[:300]:
+        start = max(lo, i - 1)
+        ex, end = window(start)
+        if not is_self_contained(ex) or not has_affordance(ex) or is_garbage(ex):
+            continue
+        sig = conversational_signal(ex)
+        if sig >= min_signal:
+            cands.append((sig, start, end, ex))
+    cands.sort(key=lambda c: c[0], reverse=True)
+    out, used = [], []
+    for sig, a, b, ex in cands:
+        if any(a < ue and b > us for us, ue in used):
+            continue
+        used.append((a, b))
         out.append((ex, round(sig, 3)))
         if len(out) >= k:
             break
