@@ -290,6 +290,10 @@ def cmd_reasoning(args):
 
 def cmd_classify(args):
     from synth import classify, corpus
+    if args.concurrency:
+        classify.CONCURRENCY = args.concurrency
+    if args.model:
+        classify.MODEL = args.model
     records = corpus.load_excerpts()
     state = classify.load_state()
     if args.report:
@@ -540,6 +544,10 @@ def main():
                        help="classify a sample and save a dated record with FULL excerpts + labels to samples/")
     p_cls.add_argument("--report", action="store_true",
                        help="print the distribution + regex-agreement report from existing labels")
+    p_cls.add_argument("--concurrency", type=int, default=None,
+                       help="in-flight requests (default 40; raise until the API rate-limits)")
+    p_cls.add_argument("--model", type=str, default=None,
+                       help="override the classifier model (use a non-reasoning model for speed)")
 
     # composition-qa
     p_cq = sub.add_parser("composition-qa",

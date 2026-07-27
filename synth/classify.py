@@ -34,7 +34,7 @@ from synth import corpus, engine
 
 MODEL = engine.MODEL              # override with a cheap non-reasoning model if available
 MAX_TOKENS = 8192                 # headroom if the model emits a thinking block
-CONCURRENCY = 20
+CONCURRENCY = 40                  # I/O-bound: raise freely until the API rate-limits
 TOKEN_BUDGET = 2000               # ~9 excerpts/batch; output is tiny, input dominates
 
 STATE_FILE = engine.STATE_DIR / "classify.json"
