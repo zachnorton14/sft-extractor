@@ -47,7 +47,7 @@ LABELS = {
     "narrative_fiction":  "an invented or purely personal scene with no external anchor: a novel, a tale, an unplaceable first-person incident.",
     "opinion":            "advances a judgment, preference, or persuasive stance — what is good, right, or best.",
     "how_to":             "tells how to DO or MAKE something: the steps of a method, recipe, procedure, technique, or drill.",
-    "conversational":     "a dialogue, catechism, or question-and-answer exchange — two or more voices, or an explicit Q/A structure.",
+    "conversational":     "a genuine TWO-party BACK-AND-FORTH whose turns can be lifted cleanly for training — a catechism, a Socratic dialogue, a question-and-answer lesson, where each spoken turn stands on its own. NOT dialogue buried in narrative prose with attributions ('\"...,\" said John' — that is narrative), NOT a play or scene with 3+ speakers, NOT a lone Q/A pair or a monologue. Ask: could these turns become alternating user/assistant messages verbatim? If not, it is not conversational.",
     "composition":        "IS a formal composed document: statute/act, legal pleading, letter, speech/oration/resolution, prayer/devotion, proclamation, contract/instrument. Tag ONLY a genuine document — never merely because prose could be imitated.",
     "verse":              "poetry or metrical verse — lines, meter, or rhyme.",
     "drop":               "not usable: OCR gibberish, a bare list/table/index/heading, a fill-in form, a catalog or dictionary index entry, or too fragmentary to answer anything.",
