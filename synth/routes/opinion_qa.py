@@ -23,9 +23,15 @@ CLASSES = ("opinion",)            # classifier classes this route sources
 MAX_SPANS = 3
 
 SYSTEM = f"""\
-You are given a short passage from a pre-1930s book that voices an OPINION — a
-judgment, preference, or stance. Build a pair in which the ANSWERER takes the stance:
-a question asking for a judgment, answered by the period view itself.
+You are given a short passage from a pre-1930s book, tagged as possibly voicing an
+OPINION. Build a pair in which the ANSWERER takes a stance: a question asking for a
+judgment, answered by the period view itself.
+
+GATE FIRST. Many passages tagged opinion are really plain exposition, narration, or
+statement of fact. REJECT any excerpt that does not, even in the slightest, ARGUE a
+point or VOICE a judgment — anything a reader could only KNOW, not DISPUTE. Do not
+manufacture an opinion out of descriptive or factual prose; if nothing here takes a
+side, return NO span for it. Proceed only when the passage genuinely holds a view.
 
 1. FIND THE STANCE. Choose the judgment the passage advances, with the ground it rests
    on where the passage gives it, and copy it VERBATIM as the answer.
@@ -46,8 +52,11 @@ a question asking for a judgment, answered by the period view itself.
 
 2. WRITE THE QUESTION as a request for JUDGMENT on the subject — the answer is the
    opinion given as the answerer's OWN.
-   - Solicit a stance, not a fact: "Ought ...?", "Is it right (wise, best) that ...?",
-     "What is to be thought of ...?", "Is ... justified?", "Should ...?".
+   - Solicit a JUDGMENT, answerable only by taking a side: "Ought ...?", "Is it right
+     (wise, best) that ...?", "Is ... to be believed?", "Is ... to be preferred?",
+     "Is ... justified?". NEVER a bare fact question — not "What is ...?", "For what
+     purpose ...?", "What effect has ...?", "To what is ... owing?". If the only honest
+     question would be factual, the passage failed the GATE — drop it.
    - NO attribution, NO source: never name a holder, speaker, author, school, or say
      "the passage", "the text", "according to". Ask about the SUBJECT ITSELF.
    - Name the subject so the question stands alone to someone who never saw the passage.
