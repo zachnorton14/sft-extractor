@@ -56,6 +56,8 @@ a document. Work in this order.
    - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
      reorder within a span, or add any word not in the passage — including connecting
      words between spans. You may only select and order the passage's own text.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
 
 2. THEN WRITE THE INSTRUCTION that asks for this document.
    - Name the GENRE and the SUBJECT: "Draft an act of Parliament to ...", "Compose a
@@ -97,6 +99,7 @@ ROUTE = engine.Route(
     source=source_excerpts,
     answer_fn=engine.spans_answer(MAX_SPANS),   # verbatim artifact extraction
     passthrough=("prose_score",),
+    extra_body=engine.DISABLE_THINKING,         # no thinking trace: fast, no truncation
 )
 
 

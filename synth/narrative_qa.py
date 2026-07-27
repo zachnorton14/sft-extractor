@@ -66,6 +66,8 @@ When there IS an episode, work in this order.
    - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
      reorder within a span, or add any word not in the passage — including connecting
      words between spans. You may only select and order the passage's own sentences.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
 
 2. THEN WRITE THE QUESTION that this account answers. Use whichever shape fits:
    - RETELL — if the episode is a matter of record you can recognize (a known event,
@@ -116,6 +118,7 @@ ROUTE = engine.Route(
     source=source_excerpts,
     answer_fn=engine.spans_answer(MAX_SPANS),   # verbatim extraction
     passthrough=("prose_score",),
+    extra_body=engine.DISABLE_THINKING,         # no thinking trace: fast, no truncation
 )
 
 

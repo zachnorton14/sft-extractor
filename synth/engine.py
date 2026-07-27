@@ -39,10 +39,15 @@ STATE_DIR = ROOT / "synth" / "state"
 
 BASE_URL = "https://opencode.ai/zen/go"   # opencode Go API (OpenAI-style /v1/chat/completions)
 HTTP_TIMEOUT = 180                # seconds per request
-MODEL = "deepseek-v4-flash"       # opencode Go model id; routes inherit unless they override
+MODEL = "deepseek-v4-pro"         # opencode Go model id; routes inherit unless they override
 MAX_TOKENS = 16384                # reasoning model: room for thinking + JSON
 CONCURRENCY = 20
 TOKEN_BUDGET = 1200               # chars/4 per batch
+
+# deepseek-v4-flash thinks by default; extraction/QA needs no reasoning trace, and on
+# long dense inputs the trace overruns max_tokens -> truncation -> retry storm (minutes
+# per batch). Routes set extra_body=DISABLE_THINKING to turn it off (as classify does).
+DISABLE_THINKING = {"thinking": {"type": "disabled"}}
 
 
 # --- shared parsing / extraction helpers ---------------------------------------

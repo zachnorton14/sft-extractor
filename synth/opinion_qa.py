@@ -32,6 +32,8 @@ judgment, preference, or stance the writer argues for. Work in this order.
      view and its ground lie apart. Fewest, longest spans.
    - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
      reorder, or add any word not in the passage.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
 
 2. THEN WRITE THE QUESTION the view answers.
    - Ask what was held or urged, NOT a matter of fact: "What did ... hold concerning
@@ -70,6 +72,7 @@ ROUTE = engine.Route(
     source=source_excerpts,
     answer_fn=engine.spans_answer(MAX_SPANS),   # verbatim extraction
     passthrough=("prose_score",),
+    extra_body=engine.DISABLE_THINKING,         # no thinking trace: fast, no truncation
 )
 
 

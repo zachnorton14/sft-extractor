@@ -52,6 +52,8 @@ a conclusion, and copy that chain WORD FOR WORD.
      reorder within a span, or add any word not in the passage — including
      connecting words between spans. You may only select and order the author's own
      sentences.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
    - Do NOT choose spans that refer to a figure, plate, diagram, table, page,
      section, or note number ("Fig. 36", "as shown in the figure", "see page 466",
      "§ 4", "the note on p. 22") — these point to something the reader cannot see and
@@ -123,6 +125,7 @@ ROUTE = engine.Route(
     source=source_excerpts,
     answer_fn=engine.spans_answer(MAX_SPANS),    # verbatim chain extraction
     passthrough=("prose_score",),
+    extra_body=engine.DISABLE_THINKING,         # no thinking trace: fast, no truncation
 )
 
 

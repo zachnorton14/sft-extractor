@@ -52,6 +52,8 @@ You are given a short passage from a pre-1930s book. Work in this order.
    - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
      reorder, or add any word not in the passage. Pick a span that reads as a clean,
      quotable fact, so a short exact quotation suffices.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
 
 2. THEN WRITE THE QUESTION that this answer answers.
    - The span must CORRECTLY AND COMPLETELY answer your question. Ask precisely the
@@ -108,6 +110,7 @@ ROUTE = engine.Route(
     source=source_excerpts,
     answer_fn=engine.spans_answer(MAX_SPANS),   # verbatim extraction
     passthrough=("prose_score",),
+    extra_body=engine.DISABLE_THINKING,         # no thinking trace: fast, no truncation
 )
 
 # Thin delegates so run.py (and tests) keep the familiar module-level API.

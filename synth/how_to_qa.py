@@ -33,6 +33,8 @@ made — a method, recipe, process, or technique. Work in this order.
    - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
      reorder, or add any word not in the passage — including connecting words between
      spans. Only select and order the author's own sentences.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
    - Do NOT choose spans that lean on a figure, plate, table, or page the reader cannot
      see ("as in Fig. 4", "see p. 20"); pick steps that stand without them, or omit.
 
@@ -71,6 +73,7 @@ ROUTE = engine.Route(
     source=source_excerpts,
     answer_fn=engine.spans_answer(MAX_SPANS),   # verbatim extraction
     passthrough=("prose_score",),
+    extra_body=engine.DISABLE_THINKING,         # no thinking trace: fast, no truncation
 )
 
 

@@ -98,6 +98,7 @@ ROUTE = engine.Route(
     source=source_excerpts,
     answer_fn=verse_answer(MAX_SPANS),          # verbatim verse, line breaks preserved
     passthrough=("prose_score",),
+    extra_body=engine.DISABLE_THINKING,         # no thinking trace: fast, no truncation
 )
 
 
