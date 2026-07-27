@@ -13,29 +13,32 @@ here, once.
     await engine.run_async(ROUTE, excerpts, state)
     engine.write_output(ROUTE, excerpts, state)
 
-Env (same as before):
-    export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
-    export ANTHROPIC_API_KEY=<your deepseek key>
+Env:
+    export OPENCODE_API_KEY=<your opencode Go key>   # or put it in ROOT/.env
 """
 
 import asyncio
 import json
+import os
 import re
+import sys
 import textwrap
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Callable
 
-WRAP = 88   # column cap for printed / written sample lines
+import httpx
 
-import anthropic
+WRAP = 88   # column cap for printed / written sample lines
 
 ROOT = Path(__file__).parent.parent
 OUTPUT_DIR = ROOT / "synth" / "output"
 STATE_DIR = ROOT / "synth" / "state"
 
-MODEL = "claude-haiku-4-5"        # maps to deepseek via ANTHROPIC_BASE_URL
+BASE_URL = "https://opencode.ai/zen/go"   # opencode Go API (OpenAI-style /v1/chat/completions)
+HTTP_TIMEOUT = 180                # seconds per request
+MODEL = "deepseek-v4-flash"       # opencode Go model id; routes inherit unless they override
 MAX_TOKENS = 16384                # reasoning model: room for thinking + JSON
 CONCURRENCY = 20
 TOKEN_BUDGET = 1200               # chars/4 per batch
@@ -68,6 +71,53 @@ def _strip_fence(text):
             text = text[4:]
         text = text.rstrip("`").strip()
     return text
+
+
+_THINK_RE = re.compile(r"<think>.*?</think>", re.S)
+
+
+def _parse_json_array(text):
+    """Extract the JSON array from a reply that may carry <think> blocks, code fences,
+    or leading prose — reasoning models over chat/completions do all three."""
+    text = _THINK_RE.sub("", text)
+    text = _strip_fence(text).strip()
+    if not text.startswith("["):
+        i, j = text.find("["), text.rfind("]")
+        if i != -1 and j != -1:
+            text = text[i:j + 1]
+    return json.loads(text)
+
+
+# --- opencode Go API transport -------------------------------------------------
+
+def _from_dotenv(name):
+    """Read NAME from ROOT/.env (KEY=value or `export KEY=value`), else None."""
+    f = ROOT / ".env"
+    if not f.exists():
+        return None
+    for line in f.read_text().splitlines():
+        line = line.strip()
+        if line.startswith("export "):
+            line = line[len("export "):]
+        if line.startswith(name + "="):
+            return line.split("=", 1)[1].strip().strip('"').strip("'")
+    return None
+
+
+def _api_key():
+    """The opencode Go key (env or .env) — NOT ANTHROPIC_API_KEY."""
+    key = os.environ.get("OPENCODE_API_KEY") or _from_dotenv("OPENCODE_API_KEY")
+    if not key:
+        sys.exit("Set OPENCODE_API_KEY (env or .env) to the opencode Go key.")
+    return key
+
+
+class _GoClient:
+    """Minimal handle carrying the shared httpx client and the opencode key, so the
+    batch handlers keep passing a single `client` object as they did with the SDK."""
+    def __init__(self, http, key):
+        self.http = http
+        self.key = key
 
 
 def verbatim_answer(spans, excerpt, max_spans=2):
@@ -219,28 +269,34 @@ def save_state(route, state):
 # --- generation loop -----------------------------------------------------------
 
 async def _call(client, semaphore, route, system, payload, n):
-    """One model call with retry; returns the parsed JSON list or None."""
+    """One model call to the opencode Go API (chat/completions) with retry; returns
+    the parsed JSON list or None."""
+    body = {"model": route.model, "max_tokens": route.max_tokens,
+            "messages": [{"role": "system", "content": system},
+                         {"role": "user", "content": payload}]}
+    if route.extra_body:
+        body.update(route.extra_body)                # e.g. provider flags to disable thinking
+    headers = {"Authorization": f"Bearer {client.key}"}
     async with semaphore:
+        text = ""
         for attempt in range(5):
             try:
-                extra = getattr(route, "extra_body", None)
-                msg = await client.messages.create(
-                    model=route.model, max_tokens=route.max_tokens,
-                    system=system, messages=[{"role": "user", "content": payload}],
-                    **({"extra_body": extra} if extra else {}),
-                )
-                text = next((b.text for b in msg.content if b.type == "text"), "").strip()
+                resp = await client.http.post(f"{BASE_URL}/v1/chat/completions",
+                                              json=body, headers=headers)
+                if resp.status_code == 429:
+                    await asyncio.sleep(2 ** attempt)
+                    continue
+                if resp.status_code in (401, 403):
+                    raise SystemExit(f"\nAPI auth failed ({resp.status_code}). "
+                                     f"Check OPENCODE_API_KEY (env or .env).")
+                resp.raise_for_status()
+                choice = resp.json()["choices"][0]
+                text = (choice["message"]["content"] or "").strip()
                 if not text:
-                    raise ValueError(f"empty response (stop_reason={msg.stop_reason}, "
-                                     f"blocks={[b.type for b in msg.content]})")
-                if msg.stop_reason == "max_tokens":
+                    raise ValueError(f"empty response (finish={choice.get('finish_reason')})")
+                if choice.get("finish_reason") == "length":
                     raise ValueError(f"truncated at max_tokens ({n} in batch)")
-                return json.loads(_strip_fence(text))
-            except anthropic.RateLimitError:
-                await asyncio.sleep(2 ** attempt)
-            except (anthropic.AuthenticationError, anthropic.PermissionDeniedError) as e:
-                raise SystemExit(f"\nAPI auth failed: {e}\n"
-                                 f"Check ANTHROPIC_API_KEY matches ANTHROPIC_BASE_URL.")
+                return _parse_json_array(text)
             except json.JSONDecodeError as e:
                 if attempt == 4:
                     print(f"  batch of {n} failed: unparseable: {e}\n"
@@ -310,7 +366,9 @@ async def _question_batch(client, semaphore, batch, state, route):
 
 
 async def run_async(route, excerpts, state, save=True):
-    async with anthropic.AsyncAnthropic() as client:
+    key = _api_key()
+    async with httpx.AsyncClient(timeout=HTTP_TIMEOUT) as http:
+        client = _GoClient(http, key)
         semaphore = asyncio.Semaphore(route.concurrency)
 
         if route.question_system:

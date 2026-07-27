@@ -26,9 +26,8 @@ Output: synth/output/stem_reasoning.json
         [{"doc_index","category","book_category","category_moved","year",
           "stem_signal","excerpt","question","answer"}]
 
-Env (same as the other model passes):
-    export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
-    export ANTHROPIC_API_KEY=<your deepseek key>
+Env:
+    export OPENCODE_API_KEY=<your opencode Go key>   # or put it in ROOT/.env
 """
 
 import random
