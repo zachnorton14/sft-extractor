@@ -757,6 +757,36 @@ def is_garbage(text):
     return _foreign_count(text) >= 2 or _gibberish_ratio(text) > 0.10
 
 
+_SUPERSUB = "²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉"
+_MATH_SYM = re.compile(r"[=×÷√°∴±≤≥≠∑∏∫]")
+
+
+def ocr_score(text):
+    """Fraction of whitespace tokens that look like OCR-mangled math or fragments:
+    digit-letter mashes (P2, SD2), sub/superscript fragments (P₁, D₁2), bare math
+    symbols, or long vowelless runs. High = a garbled span no route can extract
+    cleanly. Deliberately conservative — flags the worst offenders (mangled equations),
+    not ordinary prose that merely mentions a number."""
+    toks = text.split()
+    if len(toks) < 20:
+        return 0.0
+    bad = 0
+    for raw in toks:
+        t = raw.strip(".,;:()[]\"'")
+        if not t:
+            continue
+        if _MATH_SYM.search(t):
+            bad += 1
+            continue
+        has_d = any(c.isdigit() or c in _SUPERSUB for c in t)
+        core = re.sub(r"[^A-Za-z]", "", t)
+        if has_d and any(c.isalpha() for c in t):
+            bad += 1                                   # P2, SD2, D₁2, 45cos
+        elif len(core) >= 4 and not re.search(r"[aeiouy]", core, re.I):
+            bad += 1                                   # consonant run
+    return round(bad / len(toks), 3)
+
+
 def _first_word(text):
     m = re.match(r"\s*([A-Za-z]+)", text)
     return m.group(1).lower() if m else ""

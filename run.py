@@ -296,6 +296,31 @@ def cmd_reasoning(args):
     print("Done.")
 
 
+def cmd_filter_pool(args):
+    from synth import corpus
+    recs = corpus.load_excerpts()
+    scored = [(corpus.ocr_score(r["excerpt"]), r) for r in recs]
+    over = [(s, r) for s, r in scored if s > args.threshold]
+    ss = sorted(s for s, _ in scored)
+    def pct(q):
+        return ss[min(int(len(ss) * q), len(ss) - 1)] if ss else 0.0
+    print(f"pool: {len(recs)}   over threshold {args.threshold}: {len(over)} "
+          f"({len(over) * 100 // max(len(recs), 1)}%)")
+    print(f"  ocr_score  p50={pct(.5):.3f}  p90={pct(.9):.3f}  p99={pct(.99):.3f}  "
+          f"max={ss[-1] if ss else 0:.3f}")
+    print("  worst offenders:")
+    for s, r in sorted(over, key=lambda x: -x[0])[:8]:
+        print(f"   [{s:.3f}] {r['excerpt'][:96].strip()}")
+    if args.apply:
+        keep = [r for s, r in scored if s <= args.threshold]
+        with corpus.EXCERPTS_FILE.open("w", encoding="utf-8") as fh:
+            for r in keep:
+                fh.write(json.dumps(r, ensure_ascii=False) + "\n")
+        print(f"  REMOVED {len(over)}; pool now {len(keep)} -> {corpus.EXCERPTS_FILE}")
+    else:
+        print("  (dry-run — pass --apply to remove; --threshold to tune)")
+
+
 def cmd_classify(args):
     from synth import classify, corpus
     if args.concurrency:
@@ -578,6 +603,14 @@ def main():
     p_rq.add_argument("--test", action="store_true", help="generate a few and print without writing")
     p_rq.add_argument("--sample", action="store_true", help="generate a few, print, AND save a dated record (prompt + Q/A) to samples/")
 
+    # filter-pool
+    p_fp = sub.add_parser("filter-pool",
+                          help="Flag/remove the worst OCR-garbled excerpts (mangled equations) from the pool")
+    p_fp.add_argument("--threshold", type=float, default=0.12,
+                      help="ocr_score above which an excerpt is removed (default 0.12)")
+    p_fp.add_argument("--apply", action="store_true",
+                      help="actually rewrite excerpts.jsonl without the offenders (default: dry-run)")
+
     # classify
     p_cls = sub.add_parser("classify",
                            help="Model-classify harvested excerpts into route classes (writes classes/primary)")
@@ -703,6 +736,8 @@ def main():
         cmd_opinion(args)
     elif args.cmd == "verse-qa":
         cmd_verse(args)
+    elif args.cmd == "filter-pool":
+        cmd_filter_pool(args)
     elif args.cmd == "classify":
         cmd_classify(args)
     elif args.cmd == "knowledge-qa":
