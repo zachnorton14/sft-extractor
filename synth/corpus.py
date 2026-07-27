@@ -28,6 +28,7 @@ import json
 import random
 import re
 import textwrap
+import time
 import urllib.request
 from collections import Counter
 from pathlib import Path
@@ -259,6 +260,27 @@ def relabel_excerpts():
     print("  by affordance: " + "  ".join(f"{a}={k}" for a, k in aff.most_common()))
 
 
+def _read_shard(con, s, retries=5):
+    """Read a shard's text column, retrying transient remote failures (HF network
+    hiccups, ZSTD decompression errors on a truncated download) with backoff. Returns
+    the rows, or None if it keeps failing — the caller skips the shard, leaving it
+    unprocessed so a later run retries it. Keeps a long --exhaust sweep from dying on a
+    single flaky read."""
+    for attempt in range(retries):
+        try:
+            return con.execute(
+                f"SELECT text FROM read_parquet('{SHARD_URL.format(s)}')"
+            ).fetchall()
+        except Exception as e:
+            if attempt == retries - 1:
+                print(f"  shard {s:>3}: read failed after {retries} tries "
+                      f"({type(e).__name__}: {str(e)[:80]}); skipping, retry next run",
+                      flush=True)
+                return None
+            time.sleep(2 ** attempt)
+    return None
+
+
 def _load_harvest_state():
     if HARVEST_STATE.exists():
         s = json.loads(HARVEST_STATE.read_text())
@@ -304,9 +326,9 @@ def harvest(total, alpha=0.5, min_conf=0.7, n_words=150, seed=0, max_shards=N_SH
             if s in processed:
                 continue
             base = offs.get(s)
-            rows = con.execute(
-                f"SELECT text FROM read_parquet('{SHARD_URL.format(s)}')"
-            ).fetchall()
+            rows = _read_shard(con, s)
+            if rows is None:
+                continue                          # transient read failure: retry next run
             new = 0
             for r, (t,) in enumerate(rows):
                 gi = base + r
@@ -391,9 +413,9 @@ def harvest_stem(target, min_conf=0.7, n_words=170, per_doc=4, min_signal=0.3,
             if s in processed:
                 continue
             base = offs.get(s)
-            rows = con.execute(
-                f"SELECT text FROM read_parquet('{SHARD_URL.format(s)}')"
-            ).fetchall()
+            rows = _read_shard(con, s)
+            if rows is None:
+                continue                          # transient read failure: retry next run
             new = 0
             for r, (t,) in enumerate(rows):
                 if have >= target:
