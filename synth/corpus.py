@@ -319,6 +319,7 @@ def harvest(total, alpha=0.5, min_conf=0.7, n_words=150, seed=0, max_shards=N_SH
         return all(got[c] >= quotas.get(c, 0) for c in quotas)
 
     swept = 0
+    fails = 0
     with open(EXCERPTS_FILE, "a", encoding="utf-8") as fh:
         for s in order:
             if _done() or swept >= max_shards:
@@ -328,7 +329,13 @@ def harvest(total, alpha=0.5, min_conf=0.7, n_words=150, seed=0, max_shards=N_SH
             base = offs.get(s)
             rows = _read_shard(con, s)
             if rows is None:
-                continue                          # transient read failure: retry next run
+                fails += 1
+                if fails >= 3:                    # not one bad shard — connection is down
+                    print("  aborting: 3 shards failed in a row (connection likely "
+                          "down). Nothing lost; rerun to resume.", flush=True)
+                    break
+                continue                          # isolated failure: retry next run
+            fails = 0
             new = 0
             for r, (t,) in enumerate(rows):
                 gi = base + r
@@ -406,6 +413,7 @@ def harvest_stem(target, min_conf=0.7, n_words=170, per_doc=4, min_signal=0.3,
     rng.shuffle(order)
 
     swept = 0
+    fails = 0
     with open(EXCERPTS_FILE, "a", encoding="utf-8") as fh:
         for s in order:
             if have >= target or swept >= max_shards:
@@ -415,7 +423,13 @@ def harvest_stem(target, min_conf=0.7, n_words=170, per_doc=4, min_signal=0.3,
             base = offs.get(s)
             rows = _read_shard(con, s)
             if rows is None:
-                continue                          # transient read failure: retry next run
+                fails += 1
+                if fails >= 3:                    # not one bad shard — connection is down
+                    print("  aborting: 3 shards failed in a row (connection likely "
+                          "down). Nothing lost; rerun to resume.", flush=True)
+                    break
+                continue                          # isolated failure: retry next run
+            fails = 0
             new = 0
             for r, (t,) in enumerate(rows):
                 if have >= target:
