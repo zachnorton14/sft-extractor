@@ -940,31 +940,28 @@ VERSE_CATEGORIES = [
 ]
 
 
-def verse_windows(text, rng=None, k=3, min_score=0.55, win=14):
-    """Windows of consecutive verse-like lines — short and capital-initial. Scans raw
-    lines (not sentences), keeps the line breaks in the excerpt, and returns the
-    densest non-overlapping runs. A RECALL net; the classifier confirms downstream.
-    Returns [(excerpt, score), ...]."""
-    lines = [l.rstrip() for l in text.split("\n")]
+def verse_windows(text, rng=None, k=6, min_score=0.6, win=12):
+    """Windows of consecutive verse-like lines — short and capital-initial. Blank lines
+    are dropped FIRST (verse is often double-spaced, which would otherwise look "mostly
+    blank"), then a window of `win` consecutive non-blank lines is kept when most are
+    verse-like. Line breaks are preserved in the excerpt. A RECALL net; the classifier
+    confirms downstream. Returns [(excerpt, score), ...]."""
+    lines = [l.strip() for l in text.split("\n") if l.strip()]
     n = len(lines)
     if n < win:
         return []
+    lo = n // 10                                   # skip front matter
 
-    def verselike(l):
-        s = l.strip()
-        return bool(s) and len(s) <= 55 and s[:1].isupper()
+    def verselike(s):
+        return len(s) <= 55 and s[:1].isupper()
 
     flags = [verselike(l) for l in lines]
     cands = []
-    for i in range(0, n - win + 1, 4):
-        block = lines[i:i + win]
-        nb = sum(1 for l in block if l.strip())
-        if nb < win * 0.6:                        # mostly blank -> not a verse block
-            continue
-        score = sum(flags[i:i + win]) / nb
+    for i in range(lo, n - win + 1, 3):
+        score = sum(flags[i:i + win]) / win
         if score < min_score:
             continue
-        ex = "\n".join(l for l in block if l.strip())
+        ex = "\n".join(lines[i:i + win])
         if len(ex.split()) < 20 or is_garbage(ex):
             continue
         cands.append((score, i, i + win, ex))
