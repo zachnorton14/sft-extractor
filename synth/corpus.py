@@ -1064,31 +1064,36 @@ def verse_windows(text, rng=None, k=6, min_score=0.6, win=12):
 
 # Conversational = dialogue / catechism / Q&A. Prose-like (has sentences), so it reuses
 # the sentence-window search, anchored on speech turns and questions.
+# Catechisms / didactic Q&A live in education and religion texts. LANGUAGE AND
+# LITERATURE is dropped on purpose: its "dialogue" is novels and plays, where speech is
+# wrapped in narration/attribution ('"...," said X') and can't be split into clean
+# verbatim turns, and plays carry >2 speakers.
 CONVERSATIONAL_CATEGORIES = [
-    "LANGUAGE AND LITERATURE", "PHILOSOPHY. PSYCHOLOGY. RELIGION", "EDUCATION",
+    "PHILOSOPHY. PSYCHOLOGY. RELIGION", "EDUCATION",
 ]
 _QA_MARK = re.compile(r"(?:^|\n)\s*(?:Q\.|A\.|Ques\b|Ans\b|Question\b|Answer\b)", re.I)
 
 
 def conversational_signal(text):
-    """0-1 score for dialogue/catechism/Q&A prose: reported speech (speech verbs with
-    quotes) plus explicit question-answer structure."""
+    """0-1 score for CATECHISM / didactic Q&A: dense in questions and Q./A. markers and
+    LOW in narrative attribution. Reported-speech verbs (said/replied/asked) mark
+    fiction dialogue — which does NOT split into clean verbatim turns — so they PENALIZE
+    the score rather than raise it. Fiction and plays score near zero."""
     w = len(text.split())
     if w < 20:
         return 0.0
-    speech = len(_SPEECH.findall(text))
-    quotes = len(_QUOTE.findall(text))
     qmarks = text.count("?")
     qa = len(_QA_MARK.findall(text))
-    dlg = (speech * 2 + quotes) / w               # true reported speech
-    qad = (qmarks + qa * 5) / w                    # Q&A / catechism structure
-    return min(1.0, dlg * 6 + qad * 5)
+    attribution = len(_SPEECH.findall(text))       # said/replied/asked -> fiction
+    struct = (qmarks + qa * 4) / w                  # question + Q&A-marker density
+    return max(0.0, min(1.0, struct * 9 - (attribution / w) * 12))
 
 
-def conversational_windows(text, rng=None, k=3, min_signal=0.4, n_words=170):
-    """Windows dense in dialogue or Q&A, sentence-bounded — anchors on sentences with a
-    speech verb or a question, windows around each, keeps the densest non-overlapping.
-    Returns [(excerpt, score), ...]."""
+def conversational_windows(text, rng=None, k=3, min_signal=0.35, n_words=220):
+    """Windows dense in CATECHISM / didactic Q&A, sentence-bounded — anchors on
+    questions and Q./A. markers (NOT speech verbs, which mark fiction narration), scores
+    with conversational_signal, keeps the densest non-overlapping. A longer window than
+    the recall routes, to capture several Q/A turns. Returns [(excerpt, score), ...]."""
     rng = rng or random
     sents = _split_sentences(strip_lines(text))
     if not sents:
@@ -1105,7 +1110,7 @@ def conversational_windows(text, rng=None, k=3, min_signal=0.4, n_words=170):
         return " ".join(sents[i:j]), j
 
     anchors = [i for i in range(lo, n)
-               if _SPEECH.search(sents[i]) or "?" in sents[i] or _QA_MARK.search(sents[i])]
+               if "?" in sents[i] or _QA_MARK.search(sents[i])]
     cands = []
     for i in anchors[:300]:
         start = max(lo, i - 1)
