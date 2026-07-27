@@ -130,6 +130,14 @@ async def open_client():
         yield _GoClient(http, key)
 
 
+# How spliced verbatim spans are joined into the answer. A plain space (not an ellipsis
+# or any distinctive mark), so a multi-span answer reads as continuous period prose and
+# the fine-tuned model never learns a splice marker as a stylistic tic. The routes'
+# prompts already tell the model to pick fewest/longest spans that read in order, so the
+# seam falls at a sentence boundary.
+SPAN_JOIN = " "
+
+
 def verbatim_answer(spans, excerpt, max_spans=2):
     """Return the answer built ONLY from exact substrings of `excerpt`, or None.
 
@@ -156,7 +164,7 @@ def verbatim_answer(spans, excerpt, max_spans=2):
             if i == -1:
                 return None                          # not verbatim -> reject
         out.append(norm[i:i + len(ns)])              # store the EXCERPT's exact text
-    ans = " … ".join(out).strip()
+    ans = SPAN_JOIN.join(out).strip()
     return ans[:1].upper() + ans[1:] if ans else None  # capitalize first letter only
 
 
@@ -230,7 +238,7 @@ def refurbished_answer(spans, excerpt, max_spans=2):
         if not _is_subsequence(_letters(f), _letters(nv)):   # no new letters => no new prose
             return None
         out.append(f)
-    ans = " … ".join(out).strip()
+    ans = SPAN_JOIN.join(out).strip()
     return ans[:1].upper() + ans[1:] if ans else None
 
 
