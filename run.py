@@ -259,7 +259,8 @@ def cmd_harvest(args):
         corpus.harvest_conversational(target, seed=args.seed, max_shards=args.max_shards)
         return
     corpus.harvest(args.total, alpha=args.alpha, min_conf=args.min_conf,
-                   n_words=args.words, seed=args.seed, max_shards=args.max_shards)
+                   n_words=args.words, per_doc=args.per_doc, seed=args.seed,
+                   max_shards=args.max_shards)
 
 
 def cmd_stem(args):
@@ -580,6 +581,9 @@ def main():
     p_hv.add_argument("--words", type=int, default=None,
                       help="fixed excerpt length; default (unset) varies length per excerpt "
                            "(40%% short, 35%% medium, 25%% long) for answer-length diversity")
+    p_hv.add_argument("--per-doc", type=int, default=3, dest="per_doc",
+                      help="prose windows to cut per document (default 3); raises the pool "
+                           "ceiling from the eligible-doc count to docs x per-doc")
     p_hv.add_argument("--relabel", action="store_true",
                       help="re-tag affordances of the existing excerpts in place (no fetch)")
     p_hv.add_argument("--stem", action="store_true",

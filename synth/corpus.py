@@ -312,7 +312,43 @@ def _sample_words(rng):
     return rng.randint(550, 800)
 
 
-def harvest(total, alpha=0.5, min_conf=0.7, n_words=None, seed=0, max_shards=N_SHARDS):
+def prose_windows(text, rng, k=3, n_words=None, floor=0.7, tries_per=10):
+    """Up to k non-overlapping, quality-gated prose windows from ONE document, each a
+    per-document sampled length. Lets the general harvest take several excerpts per doc
+    (more, more-diverse data — different parts of the same book) instead of one, which
+    matters because every downstream stage sheds rows. Same in-cut gate as
+    prose_excerpt (self-contained, has-affordance, not-garbage, region floor). Returns
+    [(excerpt, score, affordance), ...]."""
+    sents = _split_sentences(strip_lines(text))
+    n = len(sents)
+    if not sents:
+        return []
+    wc = [len(s.split()) for s in sents]
+    lo = min(n // 10, n - 1)
+    used, out, attempts = [], [], 0
+    while len(out) < k and attempts < k * tries_per:
+        attempts += 1
+        nw = _sample_words(rng) if n_words is None else n_words
+        i = rng.randint(lo, n - 1)
+        j, words = i, 0
+        while j < n and words < nw:
+            words += wc[j]
+            j += 1
+        if any(i < ue and j > us for us, ue in used):   # overlaps a kept window
+            continue
+        ex = " ".join(sents[i:j])
+        if not is_self_contained(ex) or not has_affordance(ex) or is_garbage(ex):
+            continue
+        score = region_quality(ex)[0]
+        if score < floor:
+            continue
+        used.append((i, j))
+        out.append((ex, round(score, 3), affordance_label(ex)))
+    return out
+
+
+def harvest(total, alpha=0.5, min_conf=0.7, n_words=None, per_doc=3, seed=0,
+            max_shards=N_SHARDS):
     """Shard-major sweep: read each shard's text column ONCE and cut gated
     excerpts to fill the tempered coverage quotas, tagging every affordance.
 
@@ -324,7 +360,8 @@ def harvest(total, alpha=0.5, min_conf=0.7, n_words=None, seed=0, max_shards=N_S
     starts, _ = _shard_starts()
     idx = _category_index(audit)
     elig = {c: len(g) for c, g in _eligible_by_category(audit, idx, min_conf).items()}
-    quotas = _tempered_targets(elig, total, alpha)
+    # per_doc windows per document raise each category's ceiling from its doc count.
+    quotas = _tempered_targets({c: n * per_doc for c, n in elig.items()}, total, alpha)
 
     processed, got = _load_harvest_state()
     seen = {r["doc_index"] for r in load_excerpts()}  # dedup backstop
@@ -357,29 +394,30 @@ def harvest(total, alpha=0.5, min_conf=0.7, n_words=None, seed=0, max_shards=N_S
             new = 0
             for r, (t,) in enumerate(rows):
                 gi = base + r
-                if gi in seen:
-                    continue
                 m = audit[gi]
                 cat = m.get("topic_or_subject_gen") or "UNKNOWN"
                 if cat not in quotas or got[cat] >= quotas[cat]:
                     continue
                 if (m.get("topic_or_subject_score_gen") or 0) < min_conf:
                     continue
-                words = _sample_words(rng) if n_words is None else n_words
-                ex, score, label = prose_excerpt(t, words, rng)
-                if not ex:
-                    continue
-                fh.write(json.dumps({
-                    "doc_index": gi, "shard": s,
-                    "category": cat, "affordance": label,
-                    "confidence": m.get("topic_or_subject_score_gen"),
-                    "year": m.get("resolved_year"), "title": m.get("title_src"),
-                    "prose_score": round(score, 3), "n_words": len(ex.split()),
-                    "excerpt": ex,
-                }, ensure_ascii=False) + "\n")
-                got[cat] += 1
-                seen.add(gi)
-                new += 1
+                for w, (ex, score, label) in enumerate(
+                        prose_windows(t, rng, per_doc, n_words)):
+                    if got[cat] >= quotas[cat]:
+                        break
+                    uid = f"{gi}-w{w}"
+                    if uid in seen:
+                        continue
+                    fh.write(json.dumps({
+                        "doc_index": uid, "doc": gi, "shard": s,
+                        "category": cat, "affordance": label,
+                        "confidence": m.get("topic_or_subject_score_gen"),
+                        "year": m.get("resolved_year"), "title": m.get("title_src"),
+                        "prose_score": round(score, 3), "n_words": len(ex.split()),
+                        "excerpt": ex,
+                    }, ensure_ascii=False) + "\n")
+                    seen.add(uid)
+                    got[cat] += 1
+                    new += 1
             fh.flush()
             processed.add(s)
             swept += 1
