@@ -129,6 +129,7 @@ ROUTE = engine.Route(
     source=source_excerpts,
     answer_fn=engine.refurbished_spans_answer(MAX_SPANS),   # verbatim spans, repaired formulas
     passthrough=("stem_signal",),
+    extra_body=engine.DISABLE_THINKING,         # no thinking trace: fast, no truncation/timeout
 )
 
 
