@@ -1,0 +1,451 @@
+route: narrative_qa
+model: claude-haiku-4-5
+seed:  0
+n:     20
+kept:  19/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that narrates events — a scene, an
+episode, an account of what happened. Work in this order.
+
+1. FIND THE ANSWER FIRST. Choose the account the passage gives — the narrated episode,
+   or the salient action, outcome, or turn within it — and copy it VERBATIM as the
+   answer.
+   - Return it as "spans": prefer ONE long contiguous quotation that carries the whole
+     account. Use several exact quotations only when the answer is genuinely spread out
+     — never more than 3, always the fewest, longest spans that hold it
+     together.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder within a span, or add any word not in the passage — including connecting
+     words between spans. You may only select and order the passage's own sentences.
+
+2. THEN WRITE THE QUESTION that this account answers. Use whichever shape fits:
+   - RETELL — if the episode is a matter of record you can recognize (a known event,
+     campaign, voyage, or life — "Washington's crossing of the Delaware", "the retreat
+     from Moscow"), NAME it from your own knowledge and ask the reader to recount it:
+     "Recount how ...", "Tell how ... came about", "Describe what befell ...".
+   - COMPREHEND — otherwise ask what happens in the episode: "What did ... do when
+     ...?", "How did ... meet ...?", "What became of ...?". The span must CORRECTLY
+     AND COMPLETELY answer it — ask exactly what the account tells; never demand a
+     name, motive, or detail it does not supply.
+   - Plain period register: direct, no modern or conversational phrasing, no
+     meta-language. Write it in pre-1930s English — period vocabulary, spelling, and
+     phrasing; use no word, term, or idiom that came into use after 1930.
+   - Stands alone. Never mention the source — no "the passage", "the text", "the
+     story", "the author", "the narrator", "according to", "described", "mentioned".
+     Ask as if of the episode itself.
+   - Self-situating — the reader has NOT seen this passage. For a RETELL, the named
+     event carries the context. For a COMPREHEND question about a particular scene, SET
+     IT UP inside the question: briefly establish the actors and circumstance the
+     answer depends on (introduce them by role or name — "a besieged garrison", "the
+     young woman Naomi", "a sea-captain pursued by a Spanish squadron") and give just
+     enough that the question is unambiguous. Never leave a bare "he", "she", "they",
+     "it", or "this" whose antecedent the question itself has not supplied, and do not
+     retell the whole scene.
+   - Do NOT put the answer, or its distinctive wording, in the question. Ask what
+     happened; do not reveal it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[AGRICULTURE]  1900  prose_score 1.00
+  excerpt : If I did it I would cease being a chief. Lad, you are her cousin, do it
+            yourself." "I am no chief," the young fellow said, "and have no power to
+            flog. If I could I would." "Well," I said, "I can't, and I won't, so go
+            forward now and endure it as I do." An hour afterwards we came to a low sand
+            island. It was absolutely bare of vegetation, and probably covered by the
+            sea at high tides. Here I made u...
+  Q       : A chief and his companion came to a low sand island. What did the chief do
+            there?
+  A       : An hour afterwards we came to a low sand island. It was absolutely bare of
+            vegetation, and probably covered by the sea at high tides. Here I made up my
+            mind to anchor, and if the wind did not change, to try and make the land by
+            moonlight. At the other end of the little island, half a mile off, was a
+            solitary white crane, and seizing the gun with hungry intent I stalked that
+            wretched bird, for an hour crawling and wriggling over the soft glittering
+            sand, all to no purpose, as he flew before I got within a hundred yards, and
+            I don't know when I felt more disappointed.
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1881  prose_score 0.99
+  excerpt : On Lake Erie the superior force of the enemy destroyed our flotilla; and the
+            Americans, obtaining the command of the lake, became masters of Upper
+            Canada. Ten thousand men then marched from different points upon Lower
+            Canada, where the action near Chrystler's Farm took place, and the American
+            army, totally routed, precipitately crossed the St. Lawrence. General Hull
+            sustained another severe defeat...
+  Q       : During the War of 1812, the American general evacuated Fort St. George. What
+            did he do by order of his government, and what was the consequence?
+  A       : When the American general evacuated Fort St. George, by the express orders
+            of his government he burnt the Canadian village of Newark. The order said,
+            "The exposed part of the frontier must be protected by destroying such of
+            the Canadian villages in its front as would best shelter the enemy during
+            the winter." When the British troops under colonel Murray defeated the
+            Americans at Buffalo, that village was burnt as well as the village of Black
+            Rock; and the Indians were let loose on the surrounding country to take
+            vengeance for the conflagration of Newark.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1861  prose_score 0.95
+  excerpt : A revival also commenced in the latter part of the year 1804, and cont.nued
+            during the whole of the year 1805." Not long after the church was formed,
+            Paul Menona, a native Indian, whose wife was a daughter of the celebrated
+            Sampson Occum, preached for them two or three years, and received his
+            support from voluntary contributions of the people. They built a house for
+            him in the valley a little nort...
+  Q       : After the church was formed, what provisions were made for Paul Menona, and
+            what were his characteristics as a preacher?
+  A       : Not long after the church was formed, Paul Menona, a native Indian, whose
+            wife was a daughter of the celebrated Sampson Occum, preached for them two
+            or three years, and received his support from voluntary contributions of the
+            people. They built a house for him in the valley a little north of Penn
+            Frost's dwelling house, where he lived some time. He is said to have
+            possessed superior powers of native eloquence; had a ready command of
+            language, a sweet, melodious voice; was sometimes agitated to tears in his
+            addresses, and more frequently drew tears from his auditors.
+
+========================================================================================
+[SCIENCE]  1855  prose_score 0.98
+  excerpt : Swedenborg were in this water, which was not to bear the word magnetized;
+            consequently the water caused it to disappear." -"You affirm that it was not
+            M. Swedenborg, nor any spirit, that effaced this word ?" "It was the water
+            itself."-"To perform such a work this water, then, has a will? It is alive,
+            then?" 66 It had the will and the fluid of M. Swedenborg, that sufficed
+            it."" Then this is as much...
+  Q       : A man possessed a water reputed to have powers. What did his friend report
+            after applying it to his ailments?
+  A       : My friend wrote word to me that he was cured in two hours; he applied it,
+            also, to a contusion, the consequence of a fall he had had; at the lapse of
+            a few instants he felt nothing more of it.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1840  prose_score 0.99
+  excerpt : "It shall be the duty of the Council to admit to membership adults, who make
+            application, and whom on mature examination, they shall judge to be
+            possessed of the qualifications hereafter specified. They shall be obedient
+            subjects of divine grace, that is, they must either be genuine Christians,
+            or satisfy the Church Council that they are sincerely endeavoring to become
+            such. Also to admit to commu...
+  Q       : What did the Church Council require for the admission of adults to
+            membership and for the confirmation of those who had been baptised in
+            infancy?
+  A       : "It shall be the duty of the Council to admit to membership adults, who make
+            application, and whom on mature examination, they shall judge to be
+            possessed of the qualifications hereafter specified. They shall be obedient
+            subjects of divine grace, that is, they must either be genuine Christians,
+            or satisfy the Church Council that they are sincerely endeavoring to become
+            such. Also to admit to communion of the church, all those who are admitted
+            to church-membership in their infancy, and whom on like examination, they
+            shall judge possessed of the above mentioned qualification. No one shall be
+            considered a fit subject for confirmation, who has not previously attended a
+            course of religious lectures, delivered by the pastor on the most important
+            doctrines and principles of religion; unless the pastor should be satisfied
+            that the applicant's attainments are adequate without this attendance."
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1897  prose_score 0.98
+  excerpt : Joe was delighted to see his "brother" of the "Peking Family," as he
+            introduced him to "Tanny "—his "Chief of Staff;”—and they were soon
+            comparing notes as to what they had seen in Japan. Both anxious to talk,
+            while Kosaku sat by listening.-Doubtless comparing these two types of
+            different nationality, speaking in a tongue that did not seem to him to
+            belong to either. Nor yet was it his own. In fac...
+  Q       : What occurred when Joe introduced his brother to the Doctor in Japan, and
+            what did the Doctor say about having seen Joe the previous night?
+  A       : Joe was delighted to see his "brother" of the "Peking Family," as he
+            introduced him to "Tanny "—his "Chief of Staff;”—and they were soon
+            comparing notes as to what they had seen in Japan. Both anxious to talk,
+            while Kosaku sat by listening.-Doubtless comparing these two types of
+            different nationality, speaking in a tongue that did not seem to him to
+            belong to either. Nor yet was it his own. In fact they seemed to be talking
+            in different languages, though they undoubtedly understood each other
+            perfectly. 'It is odd, Doctor, we did not run up against each other
+            before,—we have been in so many of the same places." Said Joe. "I saw you
+            once." Was the reply. "When was that?" "Last night." Said the Doctor. (6 66
+            Why were you at the fireworks ? ” 'No.-But I saw you all the same walking
+            along the street with a party." "O; ho!" said Saxton. where you were, old
+            fellow.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1894  prose_score 1.00
+  excerpt : If the Church were to take the position demanded, identify itself with the
+            cause of organized labor, and so secure the victory of that cause, it would
+            only make confusion worse confounded. A Church that was a laborer's union
+            would be as unjust, as evil, as productive of mischief, as one that was a
+            rich man's club. The business of the Church with the labor question is
+            higher than partisanship, and ...
+  Q       : What argument did the writer present concerning the Church's relation to the
+            labour question and the proper means of solving it?
+  A       : If the Church were to take the position demanded, identify itself with the
+            cause of organized labor, and so secure the victory of that cause, it would
+            only make confusion worse confounded. A Church that was a laborer's union
+            would be as unjust, as evil, as productive of mischief, as one that was a
+            rich man's club. The business of the Church with the labor question is
+            higher than partisanship, and any descent to partisanship would inevitably
+            destroy its power for good as regards the final settlement. The Church has
+            work of help, instruction and admonition to be done equally with both the
+            capitalist and the laborer. The key to the whole problem lies in the one
+            word "character." Faults of human character originated it, faults of human
+            character have made the errors which have disfigured and obstructed the
+            methods so far used for its solution, and only by the removal of those
+            faults can it be finally solved.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1896  prose_score 0.88
+  excerpt : Eliezer ben Jacob made the same rejoinder as R. Aqiba to R. Johanan ben
+            Nouri, and the conclusion was, that) R. Eliezer Hasma said: "The priest can
+            make use of such leavened heave-offering as food for his dog or as fuel for
+            his stove." Abayi said: "R. Eliezer ben Jacob, R. Aqiba, and R. Johanan ben
+            Nouri all agree, that no benefit may be derived from leaven on Passover, and
+            R. Aqiba differs with R...
+  Q       : What did the rabbis conclude concerning the use of leavened heave-offering
+            on the Passover, and what was the point of dispute between R. Aqiba and R.
+            Johanan ben Nouri?
+  A       : Eliezer ben Jacob made the same rejoinder as R. Aqiba to R. Johanan ben
+            Nouri, and the conclusion was, that) R. Eliezer Hasma said: "The priest can
+            make use of such leavened heave-offering as food for his dog or as fuel for
+            his stove." Abayi said: "R. Eliezer ben Jacob, R. Aqiba, and R. Johanan ben
+            Nouri all agree, that no benefit may be derived from leaven on Passover, and
+            R. Aqiba differs with R. Johanan ben Nouri only as follows: R. Aqiba holds,
+            that restitution for holy things must be made in accordance with the value
+            of the article consumed, while R. Johanan ben Nouri maintains, that
+            restitution must be made in accordance with the quantity thereof." Is this
+            not self-evident? We might assume, that their point of variance does not
+            concern the value or the quantity of the article consumed, but whether any
+            benefit may be derived from leaven on the Passover or not; hence we are told
+            by Abayi that such is not the case.
+
+========================================================================================
+[GENERAL WORKS]  1910  prose_score 0.90
+  excerpt : Christian Slavs from the neighbouring lands now thronged to the towns,
+            outnumbering the Italian population and introducing their own language, but
+            falling under the influence of the Roman Catholic Church. The pirate
+            community of the Uskoks (q.v.) had originally been a band of these
+            fugitives; its exploits contributed to a renewal of war between Venice and
+            Turkey (1571-1573). An extremely curious p...
+  Q       : Recount the part taken by the Dalmatian squadron at the battle of Lepanto.
+  A       : Many of these troops served abroad; at Lepanto, for example, in 1571, a
+            Dalmatian squadron assisted the allied fleets of Spain, Venice, Austria and
+            the Papal States to crush the Turkish navy.
+
+========================================================================================
+[BIBLIOGRAPHY. LIBRARY SCIENCE. INFORMATION RESOURCES (GENERAL)]  1922  prose_score 0.86
+  excerpt : Balance and rule the Cash Book and bring down the cash balance. Post the
+            entries for these transactions to the same ledger and accounts to which the
+            entries for the above transactions were posted. Take a trial balance which
+            includes all the first, second, and third postings. a. Explain how to find
+            the cash balance from debit and credit entries. b. From a previous cash
+            balance, with added debit and...
+  Q       : What is the first operation to be performed upon the Cash Book after the
+            transactions have been entered?
+  A       : Balance and rule the Cash Book and bring down the cash balance.
+
+========================================================================================
+[SOCIAL SCIENCES]  1880  prose_score 1.00
+  excerpt : Hitherto all efforts to crush the new movement had not only proved
+            unsuccessful, but actually aided in fanning the excitement. The South was
+            full of rage and fury, and the apologists of slavery at the North were
+            growing more and more reckless and unscrupulous. The air was full of
+            misrepresentations of the principles and designs of the Abolitionists, who
+            were pelted by the pro-slavery press everywh...
+  Q       : What was the effect of the attempts to suppress the new movement, and how
+            did the pro-slavery party and press behave toward the Abolitionists?
+  A       : Hitherto all efforts to crush the new movement had not only proved
+            unsuccessful, but actually aided in fanning the excitement. The South was
+            full of rage and fury, and the apologists of slavery at the North were
+            growing more and more reckless and unscrupulous. The air was full of
+            misrepresentations of the principles and designs of the Abolitionists, who
+            were pelted by the pro-slavery press everywhere with the most odious
+            epithets, such as "fanatics," "disorganizers," "amalgamationists," trai-
+            tors," "jacobins," "incendiaries," "cut-throats," "infidels" the latter term
+            being directed especially against those who were so bold as to deny that the
+            Bible sanctioned slavery. This tide of abuse, issuing from political and
+            religious journals of wide influence, had a powerful effect upon the lower
+            stratum of society in the cities and large towns, and indeed in smaller
+            places as well. Anti-slavery meetings were often interrupted, and in some
+            instances broken up by mobs; and instead of condemning these outrages,
+            popular newspapers apologized for them, throwing the blame not upon those
+            who organized and took part in them, but upon the Abolitionists, who, it was
+            alleged, persisted in discussing a subject with which they had no right to
+            intermeddle.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1824  prose_score 0.89
+  excerpt : O how unprepared for this important station! O how much I need clearer views
+            of the Saviour, more unshaken faith in the great and precious promises. It
+            gives me great consolation to remember that my mother prays for me every
+            day. You know not how much our mission may be advanced by interceding with
+            him who hears prayer. I need many things, but especially humility. This is
+            the brightest ornament of...
+  Q       : What account did the missionary give of his first Sabbath in Asia?
+  A       : Sabbath evening, January 30.--This is our first Sabbath in Asia; it has been
+            a good day; went to the house of God.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1917  prose_score 0.99
+  excerpt : En M. Hellen Thomas J. Jackson had shown his quality in part at Manassas.
+            There he had held his men unshaken against charge after charge of the
+            federal regiments, and had been dubbed "Stonewall" Jackson from that day.
+            Now he showed gifts of another kind. He was oddly compounded of Covenanter
+            and strategist; showed in all things a steadfastness, a stiffness of
+            character and principle which seemed s...
+  Q       : Tell how Thomas J. Jackson came by the name 'Stonewall' at the Battle of
+            Manassas, and what part he played there.
+  A       : There he had held his men unshaken against charge after charge of the
+            federal regiments, and had been dubbed "Stonewall" Jackson from that day.
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1893  prose_score 0.98
+  excerpt : Young Girdlestone, who had been on the look-out from a club window, ran
+            across and intercepted him. "How are you, my dear major?" he cried, advan
+            Icing upon him with outstretched hand and as much show of geniality as his
+            nature permitted. "How d'ye do? How d'ye do?" said the other somewhat
+            pompously. He had made up his mind that nothing was to be done with the
+            young man, and yet he was reluctant t...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1890  prose_score 1.00
+  excerpt : On the first point, I shall read to you at the start, as a fair summary of
+            facts, two or three sentences "C from the article 'Jesus Christ" in the last
+            edition of that great work, the Encyclopædia Britannica :- "From the scanty
+            notices of heathens even, we can derive a confirmation of the main external
+            facts in the life of Christ, His miracles, His parables, His crucifixion,
+            and His claim to Divin...
+  Q       : What does the speaker do on the first point, and what does he announce that
+            he will next present?
+  A       : On the first point, I shall read to you at the start, as a fair summary of
+            facts, two or three sentences "C from the article 'Jesus Christ" in the last
+            edition of that great work, the Encyclopædia Britannica :- "From the scanty
+            notices of heathens even, we can derive a confirmation of the main external
+            facts in the life of Christ, His miracles, His parables, His crucifixion,
+            and His claim to Divine honor; the devotion, the innocence, the heroic
+            constancy and mutual affection of His followers, and the progressive
+            victories won by His religion in despite of overwhelming opposition, alike
+            physical and intellectual. It is remarkable that from intensely embittered
+            Jewish sources, we derive an absolute confirmation of-His miracles-His
+            crucifixion-and even of His innocence-for not a single crime but that of
+            working miracles by magic, and claiming Divine honor, is even in these
+            sources laid to His charge." And again:-"Even the most advanced sceptic
+            cannot deny that by His life and teaching He has altered the entire current
+            of human history, and has raised the standard of human morality." I shall
+            give you now some illustrations which I have noted of what is thus asserted,
+            from the testimony of modern sceptics and unbelievers of eminence; and later
+            on I shall say something of the testimony of heathens and Jews.
+
+========================================================================================
+[SCIENCE]  1834  prose_score 0.97
+  excerpt : 66 It was stated in the last chapter, that the rocks usually termed
+            "primary" are divisible into two natural classes, the stratified and the
+            unstratified. The propriety of the term stratified, as applied to the first-
+            mentioned class, will not be questioned when the rocks so designated are
+            carefully compared with strata known to result from aqueous deposition. Mode
+            of stratification.—If we examine ...
+  Q       : What does the author recount concerning the division of primary rocks and
+            the mode of stratification observed in them?
+  A       : It was stated in the last chapter, that the rocks usually termed "primary"
+            are divisible into two natural classes, the stratified and the unstratified.
+            The propriety of the term stratified, as applied to the first-mentioned
+            class, will not be questioned when the rocks so designated are carefully
+            compared with strata known to result from aqueous deposition. Mode of
+            stratification.—If we examine gneiss, which consists of the same materials
+            as granite, or micaschist, which is a binary compound of quartz and mica, or
+            clay-slate, or any other member of the so-called primary division, we find
+            that it is made up of a succession of beds, the planes of which are, to a
+            certain extent, parallel to each other in a manner analogous to that
+            exhibited by sedimentary formations of all ages. 279 The resemblance is
+            often carried farther; for in the crystalline series we find beds composed
+            of a great number of layers placed diagonally, as I have shown to be the
+            case in the Crag and other formations.* This No.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1822  prose_score 0.98
+  excerpt : On the morrow, being the eve of St Bartholomew, he was brought on horseback
+            to Westminster. John Legrave and Geffrey, knights, the mayor, sheriffs, and
+            aldermen of London, and many others, both on horseback and on foot,
+            accompanying him; and in the great hall at Westminster, he being placed on
+            the south bench, crowned with laurel, for that he had said in times past
+            that he ought to bear a crown in...
+  Q       : Recount how William Wallace was brought to Westminster on the eve of St
+            Bartholomew, and what there befell him.
+  A       : On the morrow, being the eve of St Bartholomew, he was brought on horseback
+            to Westminster. John Legrave and Geffrey, knights, the mayor, sheriffs, and
+            aldermen of London, and many others, both on horseback and on foot,
+            accompanying him; and in the great hall at Westminster, he being placed on
+            the south bench, crowned with laurel, for that he had said in times past
+            that he ought to bear a crown in that hall, as it was commonly reported; and
+            being appeached for a traitor by Sir Peter Malorie, the king's justice, he
+            answered, that he was never traitor to the King of England; but for other
+            things whereof he was accused he confessed them; and was after headed and
+            quartered.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1874  prose_score 0.95
+  excerpt : Zulu lang.' Pietermaritzburg, 1870, p. 22. 'Remarks on slaves, riches, and
+            health, and that I may be brisk and swift!" the fetish-man will often in the
+            morning take water in his mouth and say, "Heaven! grant that I may have
+            something to eat to-day;" and when giving medicine shown him by the fetish,
+            he will hold it up to heaven first, and say, "Ata Nyongmo! (Father Heaven!)
+            bless this medicine that...
+  Q       : Describe how the fetish-man, the Yebu, and the Manganja of Lake Nyassa offer
+            their prayers to Heaven.
+  A       : The fetish-man will often in the morning take water in his mouth and say,
+            "Heaven! grant that I may have something to eat to-day;" and when giving
+            medicine shown him by the fetish, he will hold it up to heaven first, and
+            say, "Ata Nyongmo! (Father Heaven!) bless this medicine that I now give."
+            The Yebu would say, "God in heaven, protect me from sickness and death. God
+            give me happiness and wisdom!" When the Manganja of Lake Nyassa were
+            offering to the Supreme Deity a basketful of meal and a pot of native beer,
+            that he might give them rain, the priestess dropped the meal handful by
+            handful on the ground, each time calling, in a high-pitched voice, "Hear
+            thou, O God, and send rain!" and the assembled people responded, clapping
+            their hands softly and intoning (they always intone their prayers)" Hear
+            thou, O God!"
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1886  prose_score 0.86
+  excerpt : We only now want to have a collection of all the ancient inscriptions extant
+            to the eastward, to decide, on Prinsep's system, the various periods when
+            Buddhists and Hindus migrated there. It seems to me at present that most if
+            not all of these came from Orissa or Kalinga. I cannot get Mr. Stirling's
+            "Orissa." These and the deficient pages of the "Journal" will be highly
+            acceptable when procurable....
+  Q       : How was the ancient inscription on the rock at the jetty of Singapore dealt
+            with by Dr. Bland, and what did James Prinsep conclude concerning it?
+  A       : IN the sixth volume of the "Journal," p. 680, there is an interesting
+            account of an ancient and much weather-worn inscription on a rock at the
+            jetty of Singapore. A facsimile was prepared by Dr. Bland, of H.M.S. Wolf,
+            and forwarded by him to James Prinsep, who pronounced the character to be
+            Pali, and though unable to connect sentences or even words, easily
+            recognized many of the letters, and conjectured the inscription to record
+            the extension of Buddhism to the Malayan promontory.
+
+========================================================================================
+[GENERAL WORKS]  1890  prose_score 1.00
+  excerpt : The merit of Strange's style was acknowledged on the continent; he was
+            elected a member of the academies of Florence, Bologna, Parma, and Rome. At
+            the end of last century, art had fallen very low on the continent, but a
+            regeneration was beginning; and in Italy, engravers were then arising, such
+            as Volpato and Cunego, who studied and imitated the softness and,
+            technically speaking, fleshiness of te...
+  Q       : Recount the revival of engraving on the continent after the example of
+            Strange, and name the engravers and their chefs-d'œuvres that are mentioned.
+  A       : The merit of Strange's style was acknowledged on the continent; he was
+            elected a member of the academies of Florence, Bologna, Parma, and Rome. At
+            the end of last century, art had fallen very low on the continent, but a
+            regeneration was beginning; and in Italy, engravers were then arising, such
+            as Volpato and Cunego, who studied and imitated the softness and,
+            technically speaking, fleshiness of texture that distinguished the works of
+            the British engraver; those, again, were followed by Raphael Morghen,
+            Longhi, Mercurii, and others, in Italy; by Boucher Desnoyers, Forster, etc.,
+            in France; and by Müller, Keller, Gruner, and numerous other engravers in
+            Germany. By them, engraving has been carried to the highest pitch. Amongst
+            their works, the following are chefs-d'œuvres: The Last Supper." after Da
+            Vinci, by R. Morghen; the "Sposalizia," after Raphael, by Longhi: "La Belle
+            Jardinière," and other works, after Raphael, by Boucher Desnoyers, who has
+            engraved the works of Raphael perhaps on the whole better than any other
+            engraver; "The Madonna de San Sisto," by Müller, and "The Dispute on the
+            Sacrament," after Raphael, of Keller.

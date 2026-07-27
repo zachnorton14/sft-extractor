@@ -1,0 +1,311 @@
+route: opinion_qa
+model: deepseek-v4-pro
+seed:  0
+n:     20
+kept:  16/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that advances an OPINION — a
+judgment, preference, or stance the writer argues for. Work in this order.
+
+1. FIND THE VIEW FIRST. Choose the opinion the passage advances together with the
+   ground it rests on, and copy it VERBATIM as the answer.
+   - Return it as "spans": exact quotations that state the view and (where the passage
+     gives it) the reason for it. Prefer ONE span; use up to 3 only if the
+     view and its ground lie apart. Fewest, longest spans.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder, or add any word not in the passage.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
+
+2. THEN WRITE THE QUESTION the view answers.
+   - Ask what was held or urged, NOT a matter of fact: "What did ... hold concerning
+     ...?", "What was urged for (or against) ...?", "On what ground was ... defended?".
+     The spans must fully give the view (and its ground) that you ask for.
+   - ATTRIBUTE the view so the question stands alone: to the thinker, school, party, or
+     tradition that held it when that is a matter of record you can name (e.g. "the
+     Stoics", "the Free-Trade party", "Dr. Johnson"); otherwise frame it as a position
+     on the subject ("What was urged against a standing army in time of peace?"). Do
+     NOT say "the author", "the writer", "the passage", "according to".
+   - Plain period register, pre-1930s English — no word or idiom that came into use
+     after 1930, no modern or conversational phrasing.
+   - Self-situating — name the actual subject of the opinion so the question makes sense
+     to someone who never saw the passage.
+   - Do NOT put the view's distinctive wording in the question; ask for it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1915  prose_score 1.00
+  excerpt : I do not know the meaning of grief, affliction, or weariness. I speak
+            seriously, I am beginning to doubt." "Why?" asked the monk in an astonished
+            tone. "Then you think joy is a supernatural feeling? You think it is not the
+            normal condition of things? No! The higher a man has climbed in mental and
+            moral development the freer he is, the greater satisfaction he draws from
+            life. Socrates, Diogenes, Ma...
+  Q       : What was the monk's doctrine concerning the normal condition of man?
+  A       : The higher a man has climbed in mental and moral development the freer he
+            is, the greater satisfaction he draws from life.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1883  prose_score 1.00
+  excerpt : If Flake paints Marie as Lady Macbeth, he will give us neither her nor Lady
+            Macbeth; but only the single point at which their characters, too, can
+            coincide." "How rude!" said Sabina, laughing; "what is he doing but hinting
+            that Marie's conception of Lady Macbeth is a very partial and imperfect
+            one?" "And why should it not be?" asked the actress, humbly enough. "I
+            meant," he answered warmly, "that ...
+  Q       : On what ground was it urged that Marie ought not to be painted as Lady
+            Macbeth?
+  A       : There was more, far more in her than in any character which she assumes; and
+            I do not want a painter to copy only one aspect, and let a part go down to
+            posterity as a representation of the whole.
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1904  prose_score 0.38
+  excerpt : Morgan for the government since the said sixth day of September, that the
+            cost of those thus purchased by him amounts in the aggregate to the
+            $1,736,992. If he has received the same rate of compensation since that he
+            did before that date, there must be added to the sum of $51,581 paid him
+            before that date, the further compensation of $43,424 for services rendered
+            since, making the enormous sum of ...
+  Q       : How did the Committee judge the relation of the Secretary of the Navy to Mr.
+            Morgan with respect to the propriety of the arrangement?
+  A       : The committee do not find in the transaction the less to censure in the fact
+            that this arrangement between the Secretary of the Navy and Mr. Morgan was
+            one between brothers-in law.
+
+========================================================================================
+[NAVAL SCIENCE]  1889  prose_score 0.80
+  excerpt : Now, the reader may say, "What is then the use of all this palaver, if we
+            only arrive at the point from which we started, that there is safety only in
+            constant observation? If I have to observe, I may as well observe four
+            points as four degrees? 29 There is some degree of force in this view of the
+            question, although it is not altogether correct, as a boat will obviously
+            make a better course when s...
+  Q       : On what ground was the view rejected that observation must be equally
+            painstaking whatever the compass error?
+  A       : It is not altogether correct, as a boat will obviously make a better course
+            when steering by a compass with a small error than when steering a course
+            with a large error on one side, and a small one on the other.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1810  prose_score 0.67
+  excerpt : And "though I bestow all my goods to feed the poor, and though I "give my
+            body to be burned, and have not charity, it profiteth "me nothing. Is this
+            the language of enthusiasm? Did ever an "enthusiast prefer that universal
+            benevolence which comprehendeth "all moral virtues, and which, as appeareth
+            by the following verses, "is meant by charity here? Did ever enthusiast, I
+            say, prefer that "benevole...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1895  prose_score 0.58
+  excerpt : Jesus once told this man that Satan had desired to sift him as wheat; now he
+            told him as plainly as he could that he was sifting him himself. This must
+            be the meaning of those repetitions of that searching question, "Lovest thou
+            me?" Thus also we find our safe interpretation of the change of words he
+            employed. From one kind of "love" to another he shifted his ground, until he
+            had passed from the h...
+  Q       : What interpretation was offered of our Lord's change of words in his
+            threefold question to St. Peter?
+  A       : From one kind of "love" to another he shifted his ground, until he had
+            passed from the highest to the lowest degree of affection; and there now he
+            made his final stand.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1873  prose_score 1.00
+  excerpt : Don't you think so, Mrs. Struggles?" "I don't know what Christianity has to
+            do with it,” simpered Mrs. Struggles. "Don't you? I am afraid you don't read
+            your Bible, my dear Mrs. Struggles, as closely as you ought. The good book
+            has many fine examples." "Oh, Mr. Boggs, how absurd.” “There is one,”
+            continued Mr. Boggs, unheeding the interruption, "I have always admired. Ah,
+            Mrs. Struggles, if you co...
+  Q       : What was urged by Mr. Boggs in support of the practice of snubbing?
+  A       : The good book has many fine examples.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1851  prose_score 0.67
+  excerpt : See Milne's Essay on Comets. Even in modern times, many foolish and
+            preposterous opinions have been entertained respecting these anomalous
+            bodies. In a late periodical publication, the writer of an article on
+            comets, when alluding to the comet of 1811, proceeds to state some singular
+            changes and circumstances," which its influence occasioned. "The winter,"
+            says he, "was very mild, the spring was w...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1858  prose_score 0.73
+  excerpt : Evelyn says, that "the Rump parliament was so called, as containing some few
+            rotten members of the other." Roger Coke describes it thus; "You must now be
+            content with a piece of the Commons, called 'the Rump.'" And Carte calls the
+            Rump, "the carcass of a House," and seems not precisely aware of the
+            contemptuous allusion. But how do "rotten members," and "a carcass," agree
+            with the notion of "a Rum...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1920  prose_score 0.76
+  excerpt : 'If I were a man, I would be a soldier,' she said. And if you had only seen
+            the look she gave when she said it!" Lubimoff smiled a bit scornfully at the
+            woman's words. "In her opinion," Castro went on saying, "every man ought to
+            work at something, produce something, be a hero. She adored her poor
+            husband, gentle as a sick lamb, because he painted a few pale, washed-out
+            pictures, and had been rewar...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1835  prose_score 0.50
+  excerpt : Dennis, we may presume, received some improvement from education, but it did
+            not render him equal to Pope, much less to Shakspeare or Milton: therefore,
+            if we take two individuals whose brains are equally healthy, but whose
+            organs differ in size, and educate them alike, the advantages in power and
+            attainment will be greatest in the direct ratio of the size, in favor of the
+            largest brain. Thus the ...
+  Q       : What doctrine did phrenologists maintain respecting size and mental power?
+  A       : This is not in opposition to the doctrine that, cæteris paribus, size
+            determines power.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1916  prose_score 1.00
+  excerpt : Instead of saying, "I am afraid it will rain," say, "I hope it will not
+            rain;" instead of "I am sorry," say, "I would have been glad had it been so
+            and so;" instead of saying, "I am weak and cannot accomplish," say, "I Am,
+            because Thou art; I can accomplish, because I Am." You will be astonished at
+            the result. The Christ, speaking through Jesus, said to the Jews who were
+            boasting of being descenda...
+  Q       : What was urged concerning the utterance of the 'I Am'?
+  A       : Let everyone who speaks the I Am keep it separated from iniquity, or from
+            false speaking. Let it be spoken always upward, never downward.
+
+========================================================================================
+[SCIENCE]  1921  prose_score 1.00
+  excerpt : An average sized head upon a tall or stout man would be considered small,
+            while upon one of short or slight build, it would be regarded as large. If
+            tall men possessed heads in proportion to their height, they would appear
+            top-heavy. If the body is disproportionately large in comparison with the
+            head, it attracts too much blood to itself so that the brain suffers for
+            nourishment and mental activit...
+  Q       : On what ground was proportion between head and body commended?
+  A       : If the head and body are proportional, the entire physical organization will
+            be harmoniously nourished so that activity and endurance, both mental and
+            physical, will be present.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1855  prose_score 0.83
+  excerpt : NO. 12. 179 TATLER. ADVERTISEMENT. * * Any Ladies who have any particular
+            stories of their acquaintance, which they are willing privately to make
+            public, may send them by the pennypost to Isaac Bickerstaff, Esq., inclosed
+            to Mr. John Morphew, near Stationers Hall. No. 12. SATURDAY, MAY 7, 1709.
+            Quicquid agunt homines- Our motley paper seizes for its theme. POPE. MAY 5.
+            WHEN a man has engaged to ke...
+  Q       : What did Isaac Bickerstaff hold concerning the relation between the nation's
+            glory and its public diversions?
+  A       : The present grandeur of the British nation might make us expect, that we
+            should rise in our public diversions, and manner of enjoying life, in
+            proportion to our advancement in glory and power.
+
+========================================================================================
+[NAVAL SCIENCE]  1870  prose_score 0.60
+  excerpt : My height, by rough measure, is five feet seven and a quarter inches. I want
+            to grow two and three-quarter inches more, and then I shall be content. Five
+            feet ten inches would be a very fair height. More would be uncomfortable on
+            board a ship between decks." At Honolulu, which he reached on 7th May, 1852,
+            he was delighted with the walks, the rides, the bathing in a river, the
+            scenery of the hills,...
+  Q       : What was urged concerning the conduct of those who profess to be Christians?
+  A       : I cannot help feeling more and more that we who 'profess to be Christians'
+            (what an awful amount of meaning is expressed in the word 'profess!') ought
+            to be very particular in the consistency of our conduct, as every little
+            thing is brought up against us which we do that is wrong; and although it is
+            a great help to breaking ourselves of the different faults-and we ought to
+            be thankful, and I trust we are, for this-yet for myself, for instance, who
+            am fearfully inconsistent and careless, I find that I am very often led to
+            do many things wrong for fear of being laughed at, and then am open to all
+            sorts of ridicule, which though I ought to bear patiently, I very often
+            cannot.
+
+========================================================================================
+[SCIENCE]  1857  prose_score 0.75
+  excerpt : Pressure in any direction may thus exist without any motion whatever. But
+            the causes which produce such pressure are capable of producing motion, and
+            are generally seen producing motion, as in the above instance of the
+            wrestlers, or in a pair of scales employed in weighing; and thus men come to
+            consider pressure as the exception, and motion as the rule; or perhaps they
+            image to themselves the moti...
+  Q       : What was urged against the habit of considering motion rather than pressure
+            in the science of bodies at rest?
+  A       : Now this arbitrary and capricious evasion of the question we consider as
+            opposed to the introduction of the distinct and proper Idea of Pressure, by
+            means of which the true principles of this subject can be apprehended.
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1878  prose_score 0.30
+  excerpt : Meantime, it is just possible that not a few of the foremost among the
+            English Aristocracy who are proud of tracing their descent from a "Norman
+            Origin" must be allowed to be, in fact, neither English nor Norman, but
+            authentic CELTS from Brittany, Poitou, Anjou, Normandie, and, through
+            previous emigration, from Wales itself. Then it must be remembered that as
+            the old Neustrians, over whom Rollo ha...
+  Q       : What was urged concerning the origin of many of the English Aristocracy who
+            boast a Norman descent?
+  A       : It is just possible that not a few of the foremost among the English
+            Aristocracy who are proud of tracing their descent from a "Norman Origin"
+            must be allowed to be, in fact, neither English nor Norman, but authentic
+            CELTS from Brittany, Poitou, Anjou, Normandie, and, through previous
+            emigration, from Wales itself.
+
+========================================================================================
+[TECHNOLOGY]  1918  prose_score 0.38
+  excerpt : I promptly readjusted the territorial divisions. "Then I learned what
+            proportion of the entire consumption of the product we sold in each
+            territory each man covered. This is not exactly the same thing as the first
+            test, proportion of the total number of possible customers. Then came the
+            question as to the net profit to the firm on each man's sales. This served
+            to show up the men who overlooked pro...
+  Q       : On what principle was it urged that salesmen should be remunerated?
+  A       : Now our men are paid in accordance with their ability and value to the
+            house, not merely upon the basis of results figured from a haphazard
+            allotment of territories.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1889  prose_score 0.75
+  excerpt : IV. "The rich man's painted windows Hide the concerts of the quality; The
+            poor can but share A crack'd fiddle in the air, Which offends all sound
+            morality. V. "The rich man has a cellar, And a ready butler by him; The poor
+            must steer For his pint of beer Where the saint can't choose but spy him. 66
+            VI. "The rich man is invisible In the crowd of his gay society; But the poor
+            man's delight Is a sore...
+  Q       : What complaint was made concerning the unequal treatment of rich and poor by
+            the guardians of morality and piety?
+  A       : The rich man's painted windows Hide the concerts of the quality; The poor
+            can but share A crack'd fiddle in the air, Which offends all sound morality.
+            The rich man has a cellar, And a ready butler by him; The poor must steer
+            For his pint of beer Where the saint can't choose but spy him. The rich man
+            is invisible In the crowd of his gay society; But the poor man's delight Is
+            a sore in the sight And a stench in the nose of piety.
+
+========================================================================================
+[TECHNOLOGY]  1882  prose_score 0.30
+  excerpt : Kiepert's 'Atlas of Ancient Geography' is highly esteemed in this country. .
+            . And this volume, which is intended to serve as an explanatory text, will
+            be welcomed accordingly. Any one who will compare it with the text-books
+            that have been commonly in use will see a greater precision and fulness
+            given to the nonclassical portion of the subject-a difference that
+            corresponds to the recent developmen...
+  Q       : What merits were urged in favour of Kiepert's explanatory text to his 'Atlas
+            of Ancient Geography' as a schoolbook?
+  A       : Any one who will compare it with the text-books that have been commonly in
+            use will see a greater precision and fulness given to the nonclassical
+            portion of the subject-a difference that corresponds to the recent
+            development of our knowledge in this direction. He will also perceive that
+            the distinctions and affinities of race are treated, not exhaustively of
+            course, but adequately; that natural features have given to them a prominent
+            place; the continuity of the present with the past, or, in rarer cases, the
+            interruption of the two being noted; that, generally, the geography of the
+            ancient world is made to assume its proper place as the first part, so to
+            speak, of the geography of the world in which we moderns are living. All
+            this will make the volume very useful as a text-book for learners.

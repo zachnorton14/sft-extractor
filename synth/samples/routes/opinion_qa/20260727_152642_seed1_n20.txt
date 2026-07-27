@@ -1,0 +1,315 @@
+route: opinion_qa
+model: deepseek-v4-pro
+seed:  1
+n:     20
+kept:  15/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that voices an OPINION — a
+judgment, preference, or stance. Build a pair in which the ANSWERER takes the stance:
+a question asking for a judgment, answered by the period view itself.
+
+1. FIND THE STANCE. Choose the judgment the passage advances, with the ground it rests
+   on where the passage gives it, and copy it VERBATIM as the answer.
+   - Return it as "spans": exact quotations stating the view (and its reason). Prefer
+     ONE; use up to 3 only if view and ground lie apart. Fewest, longest.
+   - Copy WORD FOR WORD — no paraphrase, summary, correction, or added word.
+   - The span must read as a DIRECT assertion of the view — the answer speaks the
+     opinion outright. Do NOT take third-person reportage of who held it ("the
+     committee found ...", "it was urged that ...", "critics held ..."); take the
+     asserted view itself.
+   - Take WHOLE sentences: begin and end at a sentence boundary, keep terminal
+     punctuation, so several spans read as continuous prose when joined.
+   - SUBSTANCE: only a genuine, defensible stance qualifies. If the passage merely
+     touches a topic, drops a throwaway remark, or states a plain fact with no
+     judgment, return NO span for it.
+   - Keep it RAW: period opinions stand as written even where later knowledge judges
+     them wrong — do not soften, hedge, or correct.
+
+2. WRITE THE QUESTION as a request for JUDGMENT on the subject — the answer is the
+   opinion given as the answerer's OWN.
+   - Solicit a stance, not a fact: "Ought ...?", "Is it right (wise, best) that ...?",
+     "What is to be thought of ...?", "Is ... justified?", "Should ...?".
+   - NO attribution, NO source: never name a holder, speaker, author, school, or say
+     "the passage", "the text", "according to". Ask about the SUBJECT ITSELF.
+   - Name the subject so the question stands alone to someone who never saw the passage.
+   - Plain period register, pre-1930s English — no word or idiom that came into use
+     after 1930, no modern or conversational phrasing.
+   - Do NOT put the view's distinctive wording in the question; ask for it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[TECHNOLOGY]  1865  prose_score 0.50
+  excerpt : No defined character can be given to these fugitive sensations, and there is
+            no scale to judge whether a codfish, a sole, or turbot, is better than a
+            salmon-trout or a tench of six or seven pounds. It has been generally agreed
+            that fish contains less nourishment than meat, either because it does not
+            contain any osmazome, or because, being lighter in weight, it contains less
+            volume in the same spac...
+  Q       : Is fish, and more particularly shell-fish, less nourishing than meat, and
+            what makes it so?
+  A       : Fish contains less nourishment than meat, either because it does not contain
+            any osmazome, or because, being lighter in weight, it contains less volume
+            in the same space. Shell-fish, especially oysters, contain very little
+            nutritious matter; this is why a large quantity may be eaten before dinner
+            without interfering with the repast which follows immediately.
+
+========================================================================================
+[MEDICINE]  1898  prose_score 0.30
+  excerpt : Officers, merchants, and physicians make up the largest contingent;
+            theologians and teachers the smallest. The cause was, in 28 per cent.,
+            onanism; in 38 per cent., gonorrhea; in 13 per cent., both of these factors;
+            10 per cent. were given to great excess in venery. In accordance with these
+            figures, 89 per cent. of cases of impotence occurred in patients who
+            attributed their malady to onanism, 1 C...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1918  prose_score 0.62
+  excerpt : The total number of cases in which a good anatomic result was obtained is
+            1,736, and in no less than 1,576 of these the functional result was also
+            good. In other words, if the anatomic result is good, the functional result
+            is good in 90.7 per cent. If the anatomic result is moderate or bad, the
+            functional result is good in 29.7 per cent (i. e., 380 out of 1,279). If the
+            anatomic result is bad, the...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1865  prose_score 0.50
+  excerpt : The book of talk is printed only because its author cannot speak to
+            thousands of people at once; if he could, he would-the volume is mere
+            multiplication of his voice. You cannot talk to your friend in India; if you
+            could, you would; you write instead: that is mere conveyance of voice. But a
+            book is written, not to multiply the voice merely, not to carry it merely,
+            but to preserve it. The author ha...
+  Q       : What is the true purpose and sacred duty of writing?
+  A       : But a book is written, not to multiply the voice merely, not to carry it
+            merely, but to preserve it. The author has something to say which he
+            perceives to be true and useful, or helpfully beautiful. So far as he knows,
+            no one has yet said it; so far as he knows, no one else can say it. He is
+            bound to say it, clearly and melo diously if he may; clearly, at all events.
+            In the sum of his life he finds this to be the thing, or group of things,
+            manifest to him ;-this the piece of true knowledge, or sight, which his
+            share of sunshine and earth has permitted him to seize. He would fain set it
+            down for ever; engrave it on rock, if he could; saying, "This is the best of
+            me; for the rest, I ate, and drank, and slept, loved, and hated, like
+            another; my life was as the vapour, and is not; but this I saw and knew:
+            this, if anything of mine, is worth your memory." That is his "writing;" it
+            is, in his small human way, and with whatever degree of true inspiration is
+            in him, his inscription, or scripture.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1860  prose_score 0.52
+  excerpt : When I was a child, I spake as a child-I understood as a child-I thought as
+            a child; but when I became a man, I put away childish things." Every gift
+            and grace, even of the Christian character, excepting only love, which is of
+            the nature of the eternal God, is only a temporary quality to be thrown
+            aside, when we reach our "being's end and aim," as a child throws off at the
+            threshold of his majorit...
+  Q       : Is it rightly held that faith and hope, though precious now, are but
+            provisional graces to be put away when we attain our final state?
+  A       : Every gift and grace, even of the Christian character, excepting only love,
+            which is of the nature of the eternal God, is only a temporary quality to be
+            thrown aside, when we reach our "being's end and aim," as a child throws off
+            at the threshold of his majority the habits of his youth.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1890  prose_score 0.46
+  excerpt : The result was the same after forty as before. In "Edipus" (1679) we find,
+            "Not one bolt Shall err from Thebes, but more be called for, more, New-
+            moulded thunder of a larger size !" This play was written in conjunction
+            with Lee, of whom Dryden relates that, when some one said to him, "It is
+            easy enough to write like a madman," he replied, "No, it is hard to write
+            like a madman, but easy enough to ...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1844  prose_score 0.52
+  excerpt : One day he had business with a merchant, who begged pardon for making him
+            wait, because, said he, I have been occupied with selling that wench there
+            (pointing to a little girl some ten years old), and have just had to finish
+            up the bargain and take the money. "And how much did you get?" "Four hundred
+            and fifty dollars." "And do you think this traffic is right?" "Oh, 'tis the
+            custom of the country....
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1885  prose_score 0.66
+  excerpt : Our Lord had said, "I am the Way, the Truth, and the Life;" He had explained
+            the sense of this last word "Life" by saying that " as the Father hath Life
+            in Himself, so hath He given to the Son to have Life in Himself."d He had
+            complained to the men of His time, "Ye will not come unto Me that ye might
+            have life." And St. John said of Him that "in Him was Life:"f and St. Paul,
+            in a Rom. i. 4. d St. ...
+  Q       : What is life?
+  A       : We do not know what life is in itself.
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1907  prose_score 0.30
+  excerpt : The extraordinary force with which he sums up both sets of convictions casts
+            into the shade all the feebler repetitions of similar combinations of faith
+            and scepticism. The halfhearted unbelievers who turn sentimental over the
+            charms of decayed superstition, and the halfhearted believers who flirt with
+            scepticism to prove that a lie is as good as a truth, may equally derive
+            inspiration from Pascal...
+  Q       : With what temper ought Pascal's philosophy to be read?
+  A       : Every line indicates a consuming desire for a genuine standing-ground which
+            at least commands respect.
+
+========================================================================================
+[SCIENCE]  1917  prose_score 0.53
+  excerpt : At any rate, I am not in a position to deny it. If, then, this is the theory
+            that underlies these baths, and the marked improvements of condition, and if
+            time shall prove this theory to be sound, there can be little doubt that the
+            bath treatment will be placed on a solid foundation. There are, however,
+            modifications of the bath treatment which it is worth our while to discuss.
+            Typically, a patient...
+  Q       : Is any modification of the Brand treatment to be preferred?
+  A       : There is a modification of the Brand treatment which, in its clinical
+            results, is as good, and which, in its practical results, is much better.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1919  prose_score 0.54
+  excerpt : Think of the long row of discarded divinities! "Where are the gods of Hamath
+            and of Arpad? where are the gods of Sepharvaim, of Hena, and Ivvah?" Apollo,
+            Pallas, Jove and Mars Held undisturb'd their ancient reign In the solemn
+            midnight Centuries ago. The Christian image of God in Jesus is combating
+            today other images of Deity on mission fields and among nominally Christian
+            nations. Through which i...
+  Q       : By what measure is a representation of the Deity to be judged?
+  A       : That image will prevail; and that which the image succeeds in conveying is
+            the only criterion of what is behind it and to which it corresponds.
+
+========================================================================================
+[AGRICULTURE]  1833  prose_score 0.50
+  excerpt : Archibald courteously permitted us to see the apparatus, but the opportunity
+            admitted of only a partial view of the operations. We believe, however, that
+            there was nothing which requires additional details beyond those that have
+            been already given. For a single day's work, the day in which we were there,
+            the following were the times and the temperatures: Times. Minutes 30. 30..
+            Temperature. •100° ...
+  Q       : What is to be thought of Mr. Howard's plan for refining sugar by steam and
+            vacuum, in comparison with the old system?
+  A       : The per centage of refined sugar produced upon Mr. Howard's plan, is not so
+            great as upon the old system, and that its principal advantage is, that of
+            producing sugar of a much superior quality, from raw sugar of the same kind.
+            It has also the additional advantage of affording a larger quantity of
+            bastard sugar, and consequently less molasses, while both of these are of a
+            superior quality, and, consequently, all the products are better, although
+            differently proportioned
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1907  prose_score 0.65
+  excerpt : "Hanc amplissimam omnium artium bene vivendi disciplinam, vita magis quàm
+            litteris persecuuti sunt" (Cic., Tusc. Qu., iv.): "This discipline of living
+            well, which is the amplest of all other arts, they followed rather in their
+            lives, than in their learning or writing." Leo Prince of the Phliasians,
+            enquiring of Heraclides Ponticus, what art he professed, he answered, "Sir,
+            I profess neither art no...
+  Q       : Ought philosophy to be pursued more in writing and in books, or in the
+            conduct of one's life?
+  A       : This discipline of living well, which is the amplest of all other arts, they
+            followed rather in their lives, than in their learning or writing.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1831  prose_score 0.48
+  excerpt : I would only know if you belong to the church of Christ, and possess his
+            spirit? You are born of water; but are you born of God and of the spirit,
+            according to the gospel sense of such expressions? Are you renewed in the
+            temper of your mind? Are you created anew in Christ Jesus unto good works?
+            In what sense may it be said of you, that you are a new creature? In what
+            way, and to what degree have y...
+  Q       : How may a man know whether he truly belongs to the church of Christ and
+            possesses His spirit?
+  A       : Are you renewed in the temper of your mind? Are you created anew in Christ
+            Jesus unto good works? Do you keep your heart and conscience? Do you control
+            your appetites and passions? Are you alive to God?
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1907  prose_score 1.00
+  excerpt : The images in some people's minds are clearly defined and full of detail; in
+            others they are blurred and vague, or are mere diagram- matic outlines; but
+            such differences are no criterion of the individual's power of forming
+            general ideas. It may well be that the person whose mind is full of
+            definite, detailed images has less power of apprehending those aspects of
+            the objects presented which are re...
+  Q       : Is the clearness and fullness of one's mental imagery a sure measure of
+            one's ability to form general ideas?
+  A       : Such differences are no criterion of the individual's power of forming
+            general ideas. a clear detailed image might very well be a hindrance by
+            suggesting what is irrelevant.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1845  prose_score 1.00
+  excerpt : Escot, "that the deterioration of man is accelerated by his blindnessin many
+            respects wilful blindness-to the truth of the fact itself, and to the causes
+            which produce it; that there is no hope whatever of ameliorating his
+            condition but in a total and radical change of the whole scheme of human
+            life, and that the advocates of his indefinite perfectibility are in reality
+            the greatest enemies. to th...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1916  prose_score 0.75
+  excerpt : The law says, Pay me that thou owest. The law says, Make you a new heart and
+            a new spirit. The gospel says, Live, and then thou shalt do. The gospel
+            says, I frankly forgive thee all. The gospel says, A new heart will I give
+            you, and a new spirit will I put within you. The law says, Thou shalt love
+            the Lord thy God with all thy heart, and with all thy soul, and with all thy
+            mind. all of The law say...
+  Q       : Wherein do the law and the gospel truly differ in what they require of man
+            and how they address him?
+  A       : The law says, Pay me that thou owest. The law says, Make you a new heart and
+            a new spirit. The gospel says, Live, and then thou shalt do. The gospel
+            says, I frankly forgive thee all. The gospel says, A new heart will I give
+            you, and a new spirit will I put within you. The law says, Thou shalt love
+            the Lord thy God with all thy heart, and with all thy soul, and with all thy
+            mind. The law says, Cursed is every one who continueth not in things written
+            in the book the law to do them. The law says, The wages of sin is death. The
+            law demands holiness. The law says, Do. The law extorts the unwilling
+            service of a bondman. The law makes blessings the result of obedience.
+
+========================================================================================
+[AGRICULTURE]  1899  prose_score 0.80
+  excerpt : Value of Soil Analysis. - Opinions differ as to the value of soil analysis.
+            It is claimed by some that a chemical analysis of a soil is of no practical
+            value because it fails to give the amount of available plant food. A soil
+            may have, for example, o.4 per cent. of potash soluble in hydrochloric acid
+            and still not contain sufficient available potash to produce a good crop,
+            while another soil may c...
+  Q       : Is a chemical analysis of the soil by hydrochloric acid to be accounted of
+            any real utility?
+  A       : The figures obtained by the use of hydrochloric acid are valuable inasmuch
+            as they indicate whenever an element is present in amounts which are too
+            limited to admit of crop production. Suppose an ordinary soil contains 0.05
+            per cent. of acid-soluble potash, this would be too small an amount to
+            produce good crops.
+
+========================================================================================
+[SCIENCE]  1904  prose_score 0.30
+  excerpt : 130 The poet discovereth that the "personal realm" hath a mysterious
+            sanctity, and to pass the bounderies of that realm by word, or by touch and
+            caress, is occasion for great conscience and awe. I would not love thee with
+            a common term, As "sweetheart," "lady-love," or other chimes Of little
+            syllables and pretty rhymes Wherewith love's loud protesters do affirm: I do
+            perceive therein but windy ger...
+  Q       : What manner of spirit ought to govern the approach to the inner sanctuary of
+            another person?
+  A       : The poet discovereth that the "personal realm" hath a mysterious sanctity,
+            and to pass the bounderies of that realm by word, or by touch and caress, is
+            occasion for great conscience and awe.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1850  prose_score 0.83
+  excerpt : Que de son sang a voulu racheter En desboutant guerre, qui tout desvoye. De
+            prierez ne vous vueilliez lasser ; Priez pour paix, le vray trésor de joye.
+            Priez, prelats et gens de sainte vie, Religieux, ne dormez en peresse !
+            Priez, maistres et tous saivans clergie, Car par guerre fault que l'estude
+            cesse. Moustiers destruis sont, sans qu'on les redresse, Le service de Dieu
+            vous fault laissier Quant...
+  Q       : For what ought all Christian folk to pray most earnestly?
+  A       : Priez pour paix, le vray trésor de joye.

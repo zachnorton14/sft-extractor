@@ -264,7 +264,7 @@ def cmd_harvest(args):
 
 
 def cmd_stem(args):
-    from synth import stem_reasoning as sr
+    from synth.routes import stem_reasoning as sr
     excerpts = sr.source_excerpts(args.size, seed=args.seed)
     print(f"Sourced {len(excerpts)} STEM-reasoning excerpts")
     if args.test:
@@ -280,7 +280,7 @@ def cmd_stem(args):
 
 
 def cmd_reasoning(args):
-    from synth import reasoning_qa as rq
+    from synth.routes import reasoning_qa as rq
     excerpts = rq.source_excerpts(args.size, seed=args.seed)
     print(f"Sourced {len(excerpts)} reasoning excerpts (classes={rq.CLASSES})")
     if args.test:
@@ -356,7 +356,7 @@ def cmd_classify(args):
 
 
 def cmd_composition(args):
-    from synth import composition_qa as cq
+    from synth.routes import composition_qa as cq
     excerpts = cq.source_excerpts(args.size, seed=args.seed)
     print(f"Sourced {len(excerpts)} composition excerpts (classes={cq.CLASSES})")
     if args.test:
@@ -374,7 +374,7 @@ def cmd_composition(args):
 
 
 def cmd_narrative(args):
-    from synth import narrative_qa as nq
+    from synth.routes import narrative_qa as nq
     excerpts = nq.source_excerpts(args.size, seed=args.seed)
     print(f"Sourced {len(excerpts)} narrative excerpts (classes={nq.CLASSES})")
     if args.test:
@@ -410,27 +410,27 @@ def _run_extractive_route(args, module, label):
 
 
 def cmd_howto(args):
-    from synth import how_to_qa
+    from synth.routes import how_to_qa
     _run_extractive_route(args, how_to_qa, "how-to")
 
 
 def cmd_opinion(args):
-    from synth import opinion_qa
+    from synth.routes import opinion_qa
     _run_extractive_route(args, opinion_qa, "opinion")
 
 
 def cmd_verse(args):
-    from synth import verse_qa
+    from synth.routes import verse_qa
     _run_extractive_route(args, verse_qa, "verse")
 
 
 def cmd_conversational(args):
-    from synth import conversational_qa
+    from synth.routes import conversational_qa
     _run_extractive_route(args, conversational_qa, "conversational")
 
 
 def cmd_knowledge(args):
-    from synth import knowledge_qa as kq
+    from synth.routes import knowledge_qa as kq
     excerpts = kq.source_excerpts(args.size, seed=args.seed)
     print(f"Sourced {len(excerpts)} knowledge excerpts (classes={kq.CLASSES})")
     if args.test:

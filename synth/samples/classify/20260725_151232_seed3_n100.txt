@@ -1,0 +1,1526 @@
+classify sample
+model: claude-haiku-4-5
+seed:  3
+n:     100
+
+========================================================================================
+[aff=expository]  primary=knowledge  classes=['knowledge']
+  78841 O.-Top curve of last "D" not complete; lower Limb of "E" detached. R. As 7882.
+  7885 O-As 7884, with two indented Flaws only, from Coil to Bow. R. As last, except no
+  outline or Flaw. 7885A O-Last Colon perfect; Wreath as 7862; no Flaws. R.-As 7883.
+  7885B As 7885A. Cast. 7886 O.-Similar to 7822; full Rose in front; fourteen Leaves and
+  five Berries in the Wreath; last Colon perfect; no Flaws. R.-The Prongs of Trident on
+  a lower line than on others of this Date. Ex.: but no small "H" under the Date, and
+  the Figures are 13 "1875 larger. 7886A As 7886. Fine Cast. 7887 O.-As last, with faint
+  trace of the curved Flaw under the Chin, as so often shown; Flaw through "F'; the
+  upper Riband very faint, with a continuous Flaw from "F" to the Coil. R.--As last,
+  with lower portion of the Plume detached; the lower curve of "5" joined to exergue
+  line.
+
+========================================================================================
+[aff=expository]  primary=knowledge  classes=['composition', 'knowledge']
+  No estate of inheritance or freehold, or any declaration or limitation of use, or any
+  estate for above seven years, shall pass or take effect unless the deed conveying the
+  same shall be executed, acknowledged and recorded as herein provided, and all such
+  deeds shall be acknowledged before some one of the following officers. 2. If
+  acknowledged in the county or city within which the real estate or any part of it
+  lies, the acknowledgment may be made before: 1st. Some one justice of the peace for
+  said county or city. 2d. A judge of the Orphan's Court for said county or city. 3d.
+  The judge of the Circuit Court for the county. 4th. The judge of the Superior Court,
+  Court of Common Pleas, or Circuit Court for Baltimore city. 3. If acknowledged within
+  the State, but out of the county or city in which the real estate or any part of it
+  lies, the acknowledgment may be made before: 1st.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded']
+  By Colonel Lee I received a letter from Colonel Pickering, stating more particularly
+  the causes, which prevented his accepting the office when it was offered, and assuring
+  me that he would in a little time accommodate his affairs in such a manner as to come
+  into any military post, in which he might be serviceable, and thought equal to. Here I
+  am to mark with peculiar satisfaction, in justice to Colonel Lee, who has deservedly
+  acquired the reputation of a good officer, that he expressed a distrust. of his
+  abilities to fill the appointment intended for him; and, on hearing that Colonel
+  Pickering would accept it, he not only offered but wished to relinquish his claim to
+  it in favor of him, whom he declared he considered, from a very intimate and friendly
+  acquaintance, as a first-rate military character; and that he knew no gentleman better
+  or so well qualified for the post among us.
+
+========================================================================================
+[aff=narrative]  primary=conversational  classes=['narrative_fiction', 'conversational']
+  "You would be surer of it, my dear," returned Bob, "if you saw and spoke to him. I
+  shouldn't be at all surprised, mark what I say, if he got Peter a better situation."
+  "Only hear that, Peter," said Mrs. Cratchit. "And then," cried one of the girls,
+  "Peter will be keeping company with some one, and setting up for himself." "Get along
+  with you!" retorted Peter, grinning. "It's just as likely as not," said Bob, "one of
+  these days; though there's plenty of time for that, my dear. But however and whenever
+  we part from one another, I am sure we shall none of us forget poor Tiny Tim-shall
+  weor this first parting that there was among us?" "Never, father!" cried they all.
+  "And I know," said Bob, "I know, my dears, that when we recollect how patient and how
+  mild he was; although he was a little, little child; we shall not quarrel easily among
+  ourselves, and forget poor Tiny Tim in doing it." “No, never, father!" they all cried
+  again.
+
+========================================================================================
+[aff=opinion]  primary=narrative_grounded  classes=['narrative_grounded']
+  I am sure that nothing turned up in evidence, to shew that the General ever carried up
+  my men, to Fortify as Reproposed. As to the charges brought against me by Capt Carnes,
+  for which I was Arrested by the Council; I expected, he would have endeavored, to have
+  proved, one by one; But when he found his witness failed He was suffered to appear as
+  an evidence Himself; I say suffered; for it was the first instance, I ever heard off,
+  in Matters of this sort; (in Millatary affairs,) that a man should be accuser, and
+  evidence. After all, what does he swear to; First that I staid on the Beach with my
+  men, and did not go up the Steep till the Marines and Militia had got possesion of the
+  Heights. 2ª That I carried all my men on board the Transport and that they lodged
+  there. And that the Sailors got my Cannon on Shore.
+
+========================================================================================
+[aff=argument]  primary=narrative_grounded  classes=['narrative_grounded', 'knowledge']
+  The Alps lay between him and Italy: they were steep and rocky, and almost impassable
+  in many parts, from the snow which covered them; but Hannibal was not to be kept back
+  by any difficulties. He gave the command of Spain to his brother, and set forth with a
+  large army. Many of his soldiers became frightened after they had gone some way, and
+  several thousands returned home; but Hannibal still proceeded, with 50,000 foot-
+  soldiers and 9,000 horsemen. The Romans heard of his intentions, and they sent an army
+  and a fleet, commanded by one of their best gen- erals, Cornelius Scipio, to stop him;
+  but they do not seem to have imagined that Hannibal could ever really succeed in
+  reaching Italy. It appeared almost impossible for such an army to cross the barren
+  cold Alps, where there were no roads, and no houses to shelter them. Scipio,
+  therefore, did not make the haste which he should have done; and before he reached
+  Spain, Hannibal was far on his way to Italy.
+
+========================================================================================
+[aff=composition]  primary=knowledge  classes=['composition', 'knowledge']
+  In any case where the subject of litigation shall be the right of any alleged slave to
+  his or her freedom, the amount of the security for the performance of the judgment or
+  sentence to be pronounced and made upon any such appeal shall in no case exceed the
+  pecuniary value of such alleged slave, and shall be given either by such surety or
+  sureties, or by such mortgage or voluntary condemnation as aforesaid: * Tenth. The
+  security to be given by the party or parties appellant for the prosecution of the
+  appeal, and for the payment of costs, shall in no case exceed the sum of 300l.
+  sterling, and shall be given either by such surety or sureties or by such mortgage or
+  voluntary condemnation as aforesaid : Eleventh. If the security to be given by the
+  party or parties appellant, for the prosecution of the appeal and for the payment of
+  such costs as may be awarded, shall, in manner aforesaid, be * See Slavery Abolition
+  Act, 1833 (3 & 4 Will.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['knowledge',
+'narrative_grounded', 'opinion']
+  By and by, the illuminations of the resorts on North point excite attention. Rounding
+  the point, the great flare of the Steelton furnaces rises in red torrents again and
+  again into the sky, and all the way up the great Harbor the lights along each shore
+  are speeding by, and gay excursion boats or lonely ocean steamers are giving the
+  harbor salute as they pass. Whoever is capable of happiness may find it in these
+  excur- sions, to which the Baltimorean looks forward confidently as the great treat of
+  the summer season. The boats to Tolchester and to Love Point on historic Kent Island*
+  are little more than carriers of excursion-crowds to waterside resorts. The same is
+  true of the boat to Annapolis on the Severn River, "the Ancient City," described in
+  our Seventh Trail. All of the river sites between Baltimore and Annapolis are
+  undergoing development into cottage settlements of various types.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded']
+  Unfortunately he was not at home, and his deputy refused my request, nor could I
+  persuade him, by any considerations, or arguments, or expostulations to accede to it.
+  To get up a makeshift was objectionable. A man had been recently hanged at a distant
+  station; the rope broke with him three times, and he suffered terribly whilst being
+  slowly strangled. The same might occur here. The bare thought was horrible; so I wrote
+  direct to the Lieutenant-Governor, Mr. Thomason, expressing my hope that on the score
+  of humanity he would order us to be supplied with all we required. As I anticipated,
+  this request was attended to without loss of time, and in the course of two hours the
+  jail people, with every requi- site for the melancholy ceremony that was to take
+  place, were with me. The necessary arrangements were soon made, and the condemned man
+  was executed next morning, and died without a struggle.
+
+========================================================================================
+[aff=expository]  primary=how_to  classes=['how_to', 'knowledge']
+  7. The Absorption Test shall be made as follows: The sample is first thoroughly dried
+  to a constant weight, at not to exceed 1 1 212 degrees F. The weight must be carefully
+  recorded. It is then placed in a pan or tray of water, face downward, immersing it to
+  a depth of at least two inches. It is again carefully weighed at the following
+  periods: Thirty minutes, four hours, and forty-eight hours, respectively, from the
+  time of immersion, being replaced in the water in each case as soon as the weight is
+  taken. Its compressive strength while still wet, is then determined at the end of the
+  forty-eight hours period, in the manner specified in section 6. 8. The Freezing Test
+  shall be made as follows: The sample is immersed, as de scribed in section 7, for at
+  least four hours, and then weighed. It is then placed in a Fig.
+
+========================================================================================
+[aff=opinion]  primary=verse  classes=['verse']
+  Let him appear In his bright sphere Like Cynthia in her pride, With starlike troops on
+  every side; For number and clear light Such as may soon o'erwhelm him quite, And blend
+  them both in one dead night. Welcome, sad night, Grief's sole delight, Thy mourning
+  best agrees With honor's funeral obsequies! In Thetis' lap he lies, Mantled with soft
+  securities, Whose too much sunshine dims his eyes. Was he too bold, Who needs would
+  hold With curbing reins the Day, And make Sol's fiery steeds obey? Then, sure, as rash
+  was I, Who with ambitious wings did fly In Charles's Wain too loftily. I fall, I fall!
+  Whom shall I call? Alas! can he be heard, Who now is neither loved nor feared? You who
+  have vowed the ground To kiss, where my blest steps were found, Come, catch me at my
+  last rebound. How each admires Heaven's twinkling fires, Whilst from their glorious
+  seat Their influence gives light and heat; But O, how few there are, Though danger
+  from the act be far, Will run to catch a falling star.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded', 'opinion',
+'knowledge']
+  We entered into conversation with the chief, who spoke Hindostani. He said they had
+  left Lassa in the preceding autumn, and had wintered at Leh to await the opening of
+  the Zoji La. This brick tea is not very palatable to Europeans, but is held in high
+  estimation by the Kashmiris, for it fetches two rupees or so a pound in the bazaar at
+  Srinagur; whereas Indian tea of inferior quality can be purchased there for a few
+  annas a pound. The Chinese levy a duty on Indian tea. It is, however, often smuggled
+  across the frontier, fifty horseloads at a time. Our commercial arrangements with
+  China in this part of the world are, by the way, in a somewhat unsatisfactory
+  condition, and the presence of a British Consul at Yarkand is much needed. I believe
+  that a bit of red-tapeism at home stands in the way of our having a representative in
+  Chinese Turkestan.
+
+========================================================================================
+[aff=expository]  primary=opinion  classes=['knowledge', 'opinion']
+  1 Buff Bedford Indiana Limestone [350 carloads] FURNISHED BY Maynicke & Franke,
+  Architects Perry-Matthews-Buskirk Stone Co. GENERAL OFFICES, CHICAGO NEW YORK OFFICES,
+  200 FIFTH AVE. QUARRIES, BEDFORD, IND. A few other prominent buildings for which we
+  furnished limestone are New Gimbel Dept. Store, New York City New Hoffman House Hotel,
+  New York City Singer Building, New York City New Masonic Hall, New York City New Ritz-
+  Carlton Hotel, New York City Manhattan Life Bldg., New York City Library and Hall of
+  Fame, New York City New Geo. Gould Res., New York City Reed & Barton Building
+  Knickerbocker Trust Co., New York City A Desired Reform in Specifications ¶Among the
+  inherited routine customs of American architects is that of specifying for interior
+  decorations "French Zinc," "French White Zinc," "Imported French Zinc," etc.; the
+  object being, of course, to secure the use of a certain quality or kind of zinc oxide
+  rather than to secure zinc oxide from a specific source.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['knowledge',
+'narrative_grounded']
+  34 In the palace of the Signoria at Siena, Giovan Antonio painted numerous little
+  tabernacles in one of the large halls, decorating the same with clusters of columns,
+  angels in the form of little children, and other ornaments. Within these tabernacles
+  also there are various figures; one of these is San Vittorio armed after the manner of
+  the antique, and holding his sword in his hand near him, and depicted in like manner
+  is Sant' Ansaldo * baptizing certain catechumens; and in a third is San Benedetto, all
+  very beautiful figures.36 In the lower part of the same palace, and where the salt is
+  sold, Giovan Antonio painted a picture the subject of which was Christ rising from the
+  sepulchre, with soldiers standing around the tomb and two little Angels, the heads
+  *Ansano, not Ansaldo. 34 These frescoes are still in place. They were begun in 1518
+  and the Assumption was not finished until 1532.
+
+========================================================================================
+[aff=opinion]  primary=narrative_grounded  classes=['narrative_grounded', 'opinion',
+'knowledge']
+  I hear some new Concordat has been agreed to between the Pope and Buonaparte, as to
+  the French clergy, very much upon the basis of the old Concordat. I should like to see
+  this instrument. We hear Lewins has sent word that the French will come early in
+  September: M'Cabe is said to have brought the news. It is probable. I hear Dr. Browne
+  has been offered the Treasury-a suggestion of Littlehales-by the by, he is going to
+  England, to arrange military business; for he is not reconciled to the Lord-
+  Lieutenant losing the patronage and direction of the army. The fact is that the Duke
+  of York sends his orders here as he would into Scotland, and so does Lord Chatham; and
+  the change is not relished. It diminishes importance. Most truly and faithfully,
+  ABSTRACT OF THE RETURNS OF THE SEVERAL ROMAN CATHOLIC BISHOPS OF IRELAND, RELATIVE TO
+  THE STATE OF THEIR CHURCH.
+
+========================================================================================
+[aff=argument]  primary=narrative_grounded  classes=['narrative_grounded', 'opinion']
+  "Accept my thanks," writes Mr. Pratt, "for your late Charge. Your highly seasonable
+  and effective rebuke of the more than semi-Popish errors of the Oxford schismatics God
+  will bless in His mercy, I trust, to the staying of the progress of that plague." And
+  again, a few months later: "You will see my cordial acquiescence in your views of
+  Tradition, by the insertion of them in the July 'Missionary Register.' We are much
+  indebted to you for them. You are thus helping us at home, while you are standing at
+  the front of the battle in India." Nor did he lose any opportunity himself of entering
+  his solemn protest in public against these innovations. "To-morrow fortnight," he
+  writes to his son, Sept. 28, 1839, "I am appointed by the Bishop of London to preach
+  at St. Paul's. I intend, as our Lord shall be pleased to enable me, to 'contend
+  earnestly for the faith which was once delivered to the saints,' (which I purpose to
+  make the text,) by showing: (1) The Supreme authority of that Book in which the Faith
+  is delivered to us: (2) The One and Only Method of Restoration to the favor of God,
+  revealed to us therein: and (3) The only Method of Restoration to His Image.
+
+========================================================================================
+[aff=expository]  primary=reasoning  classes=['knowledge', 'reasoning']
+  2, taken in connection with the Act of 1864, an insolvent might validly make a
+  voluntary assignment of his estate and effects to any official assignee, whether
+  resident within the district or county wherein such insolvent had his place of
+  business or not (Brown v. Douglas, 13 L. C. J. 29; ex parte Smith, 12 Under the
+  Insolvent Act of 1869, section 2, assignments in insolvency could be made only to an
+  official assignee resident within the county where the insolvent had his domicile.
+  Where an official assignee, resident within the City of Montreal, was, under the Act
+  of 1864, appointed such “ for the judicial district of Montreal," and continued in
+  office under section 31 (last clause) of the Act of '69, the Court held that he had
+  not, under the latter Act, the right to receive an assignment from an insolvent
+  domiciled in a county being part of the district of Montreal, if there was an official
+  assignee appointed under the Act for that county and resident therein (Gravel and
+  Stewart, 17 L.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded']
+  From early childhood, the church and religion were a very vital part of my
+  environment. At the age of nineteen I followed my cousins, the Maurers, to Beloit,
+  where I graduated from college six years later. Contact with earnest Christian
+  teachers and the widening horizons of college life convinced me that a life of service
+  to my fellows was my only choice. I had entered college with no definite goal except
+  the rather hazy one of becoming a teacher. I do not know when I first heard the call
+  to the ministry. I do know that I fought against the call for several years. I
+  purposely stayed out of the college Y.M.C.A., the only voluntary organization for the
+  expression of a college man's religion at Beloit. After college, I taught in a high
+  school for a year. During that year the call became so clear and insistent that, the
+  next fall, I entered the Yale Divinity School.
+
+========================================================================================
+[aff=opinion]  primary=conversational  classes=['narrative_fiction', 'conversational']
+  "What like were they?" said my grandfather in a simple manner. "Ane of them was o' his
+  Grace's guard," replied the man, "but the other, curse tak me gin I ken what he was
+  like, but he's the bailie or provost of a burrough's town, and should by rights hae a
+  big belly.” To this my grandfather answered briskly, "Nae sic twa hae past me; but as
+  I was coming along whistling, thinking o' naething, twa sturdy loons, ane o' them no
+  unlike the hempies of the castle, ran skirring along, and I hae a thought that they
+  took the road to Crail or Dysart." "That was my thought too," cried the horseman, as
+  he turned his beast, and the rest that were with him doing the same, bidding my
+  grandfather good-night, away they scampered back; by which a blessed deliverance was
+  there wrought to him and his companion, on that spot, in that night.
+
+========================================================================================
+[aff=expository]  primary=opinion  classes=['knowledge', 'opinion']
+  The frontispiece is a remarkably good likeness of Hon. Henry Wolfer, the warden, under
+  whose guidance during the past eighteen years the Minnesota State Prison has made its
+  remarkable penological and financial success. To one unacquainted with the modus
+  operandi of dealing with prisoners in a penitentiary, "Convict Life at the Minnesota
+  State Prison" affords an accurate and sustained story from start to finish. In this
+  book is given a detailed description of the reception of the prisoner, the manner in
+  which he is handled, clothed, fed, assigned to duty and governed by the resident
+  officials, with excellent sidelights upon the situation. The illustrations are
+  numerous and give interior views of buildings, shops, departments and hospital,
+  together with interesting scenes of parades, drills and other matters of moment to the
+  reader. Citizens-even those who have visited penal institutionsobtain but a very scant
+  conception of the method and manner in which they are conducted by a casual observance
+  upon the occasion of a visit.
+
+========================================================================================
+[aff=narrative]  primary=conversational  classes=['narrative_fiction', 'conversational']
+  Not a person was to be seen, and as the three men looked down upon the ruins 239
+  everyone instantly was aware of what had befallen the house of Mr. Mills. "We must
+  stop there," said Mr. White grimly. Both of his companions nodded their heads in
+  acquiescence to the suggestion and without a further word all three turned and began
+  to make their way down the side of the hill along which they had been moving. As they
+  came to the border of the clearing suddenly they saw approaching from the woods on the
+  opposite side a man whom they instantly recognized as the owner of the place. In his
+  hands he was carrying a long-barreled rifle, and his aspect was that of a man who was
+  almost beside himself with excitement or terror. "Hi, Charlie Mills!" called Timothy
+  across the clearing. At the sound of a man's voice Mr.
+
+========================================================================================
+[aff=opinion]  primary=verse  classes=['verse']
+  1. Praise ye the Lord! my heart 2. Praise shall employ my 3. Why should I make a no
+  man shall join blest pow'rs my trust? In Prin · ces work While im mormust 80 pleas tal
+  ant, 80 ty di - vine, en dures; Now, while the flesh is die and turn to dust; My days
+  of Their breath de parts, praise shall their my ne'er a- bode, And when be past, While
+  life pomp my soul and thought and pow'r And thoughts, all van as - cends and be ish in
+  to God. ing last. an hour. 4 Happy the man whose hopes rely On Israel's God! He made
+  the sky And earth and seas, with all their train; And none shall find His promise
+  vain. 5 His truth forever stands secure; He saves th'oppressed, He feeds the poor; He
+  sends the troubled conscience peace, And grants the captive sweet release.
+
+========================================================================================
+[aff=narrative]  primary=narrative_grounded  classes=['narrative_grounded', 'knowledge']
+  Dr. Andrew Wiesenthall is ap pointed one of the Judges of the Orphans' Court. The
+  Charitable Marine Society was formed and incorporated in the name of Thomas Elliott,
+  David Porter, Thomas Cole, Daniel Howland, and others, masters of vessels, or their
+  friends. At length, on the last day of the year 1796, a law is passed to constitute
+  the town a city, and incorporate the inhabitants by the name of "The Mayor and City
+  Council of Baltimore"; and that the best means were sought by our legislators to
+  restrain the errors and promote the happiness of a numerous and mixed society, is
+  proved by the enlightened views which they have concisely expressed in the following
+  preamble: "Whereas, it is found by experience that the good order, health and safety
+  of large towns and cities cannot be preserved, nor the evils and accidents to which
+  they are subject avoided or remedied, without an internal power competent to establish
+  a police, and regulations fitted to their particular circumstances, wants and
+  exigencies." It required no little exertion of the talents and influence of Messrs.
+
+========================================================================================
+[aff=expository]  primary=reasoning  classes=['reasoning', 'opinion']
+  In the boys and girls of to-day we not only have a more complex, delicate, sensitive
+  organization to deal with, as compared with a century ago, but we have created a set
+  of external conditions for them to live in, which is full of influences calculated to
+  injure even a strong nervous constitution, much more a weak one. That the difficulty
+  of which I speak is a serious one, demanding our most earnest attention, no thoughtful
+  person will deny. There are two ways of meeting it. The first will not find favor with
+  any of us here. It consists in shielding the child or youth from every trial, and in
+  carrying him over every hard place; in making everything easy for him, on the ground
+  that he is not yet strong enough for the fight. The second foresees. the struggles of
+  life, and prepares the tender child, even, for them, by strengthening him in every
+  possible way to meet and conquer them rather than evade them; at least, to carry
+  life's successes with steadiness, or bear its reverses with equanimity.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded', 'opinion']
+  And when he went to or from the palace in his big green sedan chair with extra bearers
+  following behind, or in his closed Peking cart with a handsome mule and red or purple
+  harness according to his rank, surrounded by outriders shrieking to clear the way for
+  their master, no wonder the simple folk looked on him with respectful 63 awe as he
+  passed! How the whole patchwork of idlersthe bent old men and the pretty children with
+  their slanting eyes and miniature pig-tails sticking out to the four points of the
+  compass, made haste to press themselves flat against a wall or slip into a sheltering
+  doorway to watch his procession go by! The sight of his grandeur was an event in their
+  dull lives-a kind of Lord Mayor's Show, pleasantly frequent and arousing not envy but
+  pride. Alas, many of these Manchus, shorn of their fine feathers, are now in actual
+  want.
+
+========================================================================================
+[aff=narrative]  primary=conversational  classes=['narrative_fiction', 'conversational']
+  But who could have done it, Miss Milly? Who could have done such a dreadful deed ?"
+  She shook her head piteously, but made no reply. It was now for the first time that On
+  entering the room he had taken the precaution of locking the door, so' that they were
+  sure of being undisturbed, but they could hear the voices of the agitated servants and
+  the innkeeper, loud and confused below. Mrs. Pecker occupied herself in taking off
+  Millicent's wet shoes, and bathing her forehead with water and some reviving essence.
+  "Blood on her forehead!" she said, "blood on her hand, blood on her clothes! Poor
+  dear, poor dear! what can they have been doing to her ?" Darrell Markham laid his hand
+  upon her shoulder, and the innkeeper's wife could feel that the strong man trembled
+  violently. "Listen to me, Sarah," he said; "something horrible has happened at the
+  Hall.
+
+========================================================================================
+[aff=expository]  primary=verse  classes=['verse']
+  3 Lord, ere our feet retire From this devoted place, Our feeble purposes inspire With
+  thine awakening grace. 4 O shed through every heart A glow of love divine; Nor let thy
+  grace from us depart, Till we are wholly thine. HYMN 362. C. M. [# or b ] Comforts of
+  Religion. 1 WHEN gloomy thoughts and boding fears The trembling heart invade, And all
+  the face of nature wears A universal shade,— 2 Religion's dictates can assuage The
+  tempest of the soul; And every fear shall cease to rage, At her divine control. 3
+  Through life's bewildered, darksome way, Her hand unerring leads, And o'er the path
+  her heavenly ray A cheering lustre sheds. 4 When feeble reason, tired and blind, Sinks
+  helpless and afraid, This blest supporter of the mind Affords a powerful aid. 50 may
+  our hearts confess her power, And find a sweet relief, To brighten every gloomy hour,
+  And soften every grief!
+
+========================================================================================
+[aff=opinion]  primary=conversational  classes=['conversational', 'knowledge']
+  A. Nearly everybody sold in those towns where there was no prohibition; whether they
+  were licensed or not, I do not know. 435 Q. What would be the relative difficulty of
+  executing the license law, whatever might be its condition, in towns where the sale of
+  liquor was not prohibited by the refusal of the license? A. If a majority of the
+  people in the State preferred prohibition, outright, I think they would have no more
+  difficulty in executing that than they would on the other principle. I think there
+  would be less complication because it would be a general principle everywhere. Q. (By
+  Mr. JEWELL.) In these towns in Illinois where the licenses were not allowed by the
+  authorities, how did the state of temperance compare with the state of temperance in
+  our towns where the law is enforced? A. I have but little knowledge of the condition
+  of things in our towns here.
+
+========================================================================================
+[aff=expository]  primary=how_to  classes=['how_to', 'knowledge']
+  Specific reference should be made in the distribution book to each voucher or various
+  persons bill canceled, and the reason for cancellation given. Notice should be given
+  by the accounting officer monthly of all vouchers and bills to be canceled, and no
+  cancellation entries should be made on the distribution books other than for the
+  vouchers or bills reported by the accounting officer. TAKING RECEIPTS - HOW
+  INDORSEMENTS SHOULD BE MADE AND RECEIPTS SIGNED.-Receipts to vouchers, acknowledgments
+  for money, property, or other consideration, and all indorsements on the back of time.
+  tickets, orders, drafts, checks, etc., should correspond in every particular with the
+  name of the principal or person or persons in whose favor the instrument is made. For
+  instance, if a document is made in favor of "James Carcliff," a receipt or indorsement
+  cannot be accepted signed by "James Carkliff." The practice of the United States
+  Government in the case of vouchers, drafts and checks is founded on correct methods,
+  and should be observed in connection with all such docu ments.
+
+========================================================================================
+[aff=argument]  primary=reasoning  classes=['knowledge', 'reasoning']
+  Transitory, and yet eternal: transitory, since all its relations of a special and
+  individual kind have come to an end; eternal in a double sense-the sense of
+  Platonismsince it was connected with a past of which there was no beginning, and
+  continues in a future to which there is no end. An (4.) Of the possibility of a
+  criterion of truth. absolute criterion of truth must at once accredit criterion of As
+  to the itself, as well as other things. At a very early truth-sense- period in
+  philosophy the senses were detected as delusions. being altogether untrustworthy. On
+  numberless occasions, instead of accrediting, they discredit themselves. A stick,
+  having a spark of fire at one end, gives rise to the appearance of a circle of light
+  when it is turned round quickly. The rainbow seems to be an actually existing arch
+  until the delusion is detected by our going to the place over which it seems to rest.
+
+========================================================================================
+[aff=expository]  primary=knowledge  classes=['knowledge']
+  Trochaic verse, with an additional long syllable at the end, is the same as Iambic
+  verse, wanting a short syllable at the beginning. 1097. Anapastic verse, consists
+  chiefly of anapasts, and, when pure, has the accent on every third syllable. It has
+  different metres, 1. One foot, or Monometer; as— But too far, Each proud star. 2. Two
+  feet, or Dimeter; as- But his cour! ǎge 'găn fail, For no arts could avail. 3. Three
+  feet, or Trimeter; as— O ye woods! | spread your branch | és ǎpace, To your deep | est
+  recess | es I fly; I would hide | with the beasts of the chase, I would vanish from
+  every eye. 4. Four feet, or Tetrameter; as Măy I gōv | ĕrn my pass | ions with ab |
+  sölute sway, And grow wiser and bet | ter as life wears away. 1098. Of these, the
+  first is ambiguous, for by placing an accent an the first syllable, it becomes a
+  trochaic monometer hypermeter.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded',
+'knowledge', 'opinion']
+  Though there is no central peak, there is a great breadth above the height of 4500
+  feet; while Harteigen, though of scarcely less elevation than Jokelen, being a single
+  point, is, as may be easily understood, comparatively bare. Few of the Norwegian
+  mountains would repay the toil of ascending them so well as the Jokelen. "But to
+  return to the Folgefond. The depth of snow and ice on it is supposed to be many
+  hundred feet. The mountain rising abruptly from the fjord in irregular cliffs and
+  buttresses, at once attains a height of 3500 feet. From the crests of these com-
+  mences a sweep of snow, which extends in a beautiful curve, fourteen miles across, and
+  is scarcely less than forty miles in unbroken length. The effect of such a scene is
+  marvellous. It is more impressive than the terrible ruggedness of the wild peaks of
+  the Hurungerne. There the eye takes in the whole at once clearly defined.
+
+========================================================================================
+[aff=expository]  primary=conversational  classes=['conversational', 'reasoning',
+'opinion']
+  Does not a divine spark dwell likewise in every human breast? Finally, I will freely
+  grant you that God is all in all, and is the cause of all actions; for he creates the
+  powers by which men act, and they themselves are only his work. But survey the history
+  of nations, and see whether it be any thing but the development of the character of
+  each particular people. That, for instance, which the Greeks did and suffered, that
+  was the manifestation of the Greeks themselves, just as the plant, with its branches,
+  leaves, and flowers, is nothing but the plant itself." "Good! But without sunlight,
+  and the nourishing soil, it would scarcely be unfolded." "Yes; to God be the glory.
+  Whatever is, exists through him. He alone operates, whether men act themselves, or
+  whether they receive influences more directly from him. So we see things when we look
+  at them from the highest point of view.
+
+========================================================================================
+[aff=expository]  primary=opinion  classes=['opinion']
+  Edited and Rearranged by LOUIS STARR, M.D., Clinical Prof. of Dis. of Children in the
+  Hospital of the Univ. of Pennsylvania, and Physician to the Children's Hospital,
+  Phila. Containing many new Prescriptions, a list of over 50 Formulæ, conforming to the
+  U. S. Pharma copoeia, and Directions for making Artificial Human Milk, for the
+  Artificial Digestion of Milk, etc. Illus. "The merits of the book are many. Aside from
+  the praiseworthy work of the printer and binder, which gives us a print and page that
+  delights the eye, there is the added charm of a style of writing that is not
+  wearisome, that makes its statements clearly and forcibly, and that knows when to stop
+  when it has said enough. The insertion of typical temperature charts certainly
+  enhances the value of the book. It is rare, too, to find in any text-book so many
+  topics treated of. All the rarer and out-of-the-way diseases are given consideration.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded']
+  Billeted in shacks that had been occupied by the native troops from Africa as well as
+  labor troops composed mostly of coolies from the East Indies, the men yet remained
+  remarkably free from vermin and most of them managed to bathe at least once in a while
+  in the area. Part of the good health may be attributed to the fact that canteens
+  operated by English women afforded several of the towns a place for writing letters,
+  reading and refreshments. A great number of letters were written each day, every man
+  making an effort to describe to the people at home what his surroundings were and the
+  impressions made by the artillery fire. When the general assault by the French Armies
+  had been launched against the Hindenburg line in the Champagne late in September, they
+  had succeeded in breaking through that defense in practically all places where the
+  assault was made, but they had been unable to force the Germans any great distance
+  beyond.
+
+========================================================================================
+[aff=argument]  primary=stem_reasoning  classes=['knowledge', 'stem_reasoning']
+  A colourless gas, possessing the odour of garlic. Exceedingly poisonous. It is even
+  dangerous to smell it. It is produced by putting zinc and hydrochloric acid into a
+  solution containing arsenious acid, or any arsenite. The nascent hydrogen combines
+  with the arsenic, and produces gaseous arseniuretted hydrogen. This gas is decomposed
+  when burnt at a jet, or when passed through a red-hot tube, in both cases depositing
+  metallic arsenic. If the formula of this gas is tripled, and we write it ASH, H, like
+  an ammonia, then its atomic measure becomes 2 volumes, also like that of an ammonia.
+  1. Detection of Arsenic in Sulphuric Acid.-When oil of vitriol is made from sulphur,
+  distilled from iron pyrites, it frequently contains arsenic. That result is to be
+  lamented, because it is impossible to say where the sulphuric acid may spread the
+  poison. It goes, for example, into superphosphate of lime; thence into turnips grown
+  with that manure; and thence, as food, into animals or human beings.
+
+========================================================================================
+[aff=argument]  primary=knowledge  classes=['composition', 'knowledge']
+  Ineffable indeed on account of their greatness, but innumerable on account of their
+  abundance." Since this book was found lying at hand by me, I have quoted this to you
+  from it. If it had not been so, as I said before, one may find similar constructions
+  like showers of rain in every book. Not the end. IX. Ninth section. About baptisms
+  performed in 518-8. time of necessity by deacons or by laymen; and about men as to
+  whom there is doubt whether they have been baptized or not. 1. Of the same to the
+  fathers. (From those during episcopacy, from the 6th book the 4th letter.) Eneas and
+  Zacharias the devout deacons, and Elijah the devout monk, who have obtained a
+  testimonial from you, of which I also was not unaware, have been admitted by the Holy
+  Spirit, the two former to the honour and second seat of the presbyterate, the last to
+  the rank of the deacons, and to the status of the diaconate.
+
+========================================================================================
+[aff=argument]  primary=narrative_grounded  classes=['narrative_grounded']
+  The Charity, at her departure in October, left them provisions enough for the winter,
+  had they been properly husbanded; but wastefulness and extravagance soon reduced them
+  to want. They were compelled, therefore, to resort to Plymouth for aid, and proposed
+  forming a partnership to trade for corn, offering the use of the Swan in procuring
+  supplies. This proposition, as the Pilgrims themselves were in want, was cheerfully
+  accepted; and the chief places to which their attention was turned were "to the
+  southward of Cape Cod." Before any thing decisive was accomplished, however, their
+  agent, Mr. Richard Green, the brother-in-law of Weston, died at Plymouth; and
+  Standish, who had twice started on a voyage to the south, was both times driven back
+  by the wind, and was now sick of a violent fever. Thus the Nov. prosecution of the
+  voyage devolved on Governor Bradford; and taking with him Tisquantum, he went to
+  Monamoycke, now Chatham, where eight hogsheads of corn and beans were obtained.
+
+========================================================================================
+[aff=opinion]  primary=opinion  classes=['knowledge', 'opinion']
+  The several Dispensaries report the number of in-door and out-door patients for 1848
+  as follows: City Dispensary, . Eastern 35,904 patients. 20,982 Northern 16,737 "( New-
+  York Hospital, 3,579 College of Physicians and Surgeons, 1,440 University Medical
+  College (about), 2,000 Homœopathic Dispensary, 407 Total,. 81,109 From this number a
+  deduction of five thousand six hundred and twelve should be made, of persons 71
+  vaccinated. Of the rest it may be said, that they belong to a class which, beyond all
+  others, are most blindly and stupidly under the dominion of intemperance. The
+  statistics of pauperism have before disclosed something of the unutterable
+  wretchedness which this vice brings upon the condition of the poor. The records now
+  before us' afford a glimpse, in another and not less appalling aspect, of its
+  frightful destruction of health and life. That such are its effects cannot, I think,
+  be questioned, after being universally established by facts as innumerable as
+  irrefutable.
+
+========================================================================================
+[aff=expository]  primary=knowledge  classes=['knowledge']
+  Amblyrhynchus cristatus, Bell. Length varying from 3 to 4 ft. The only existing marine
+  lizard now known. a Tooth of same of natural size, and magnified. Of named from their
+  obtusely truncated head and short snout.* these lizards, one is terrestrial in its
+  habits, and burrows in the * apbλus, amblys, blunt, and Suyxos, rhynchus, snout.
+  Living Marine Saurian. ground, swarming everywhere on the land, having a round tail,
+  and a mouth somewhat resembling in form that of the tortoise. The other is aquatic,
+  and has its tail flattened laterally for swimming (see Fig. 229.). "This marine
+  saurian," says Mr. Darwin, "is extremely common on all the islands throughout the
+  archipelago. It lives exclusively on the rocky sea-beaches, and I never saw one even
+  ten yards inshore. The usual length is about a yard, but there are some even four feet
+  long. It is of a dirty black colour, sluggish in its movements on the land; but, when
+  in the water, it swims with perfect ease and quickness by a serpentine movement of its
+  body and flattened tail, the legs during this time being motionless, and closely
+  collapsed on its sides.
+
+========================================================================================
+[aff=narrative]  primary=conversational  classes=['narrative_fiction', 'conversational']
+  Come along, Tommy; come along, Smith. We shall find out who the young Count is, I'll
+  be bound: I hope he'll sleep in my room. Mary's always vicious first week." As the
+  boys turned to leave the room, the matron touched Tom's arm, and said, “Master Brown,
+  please stop a minute, I want to speak to you." 66 Very well, Mary. I'll come in a
+  minute: East, don't finish the pickles-" 66 Oh, Master Brown," went on the little
+  matron, when the rest had gone, "you're to have Gray's study, Mrs. Arnold says. And
+  she wants you to take in this young gentleman. He's a new boy, and thirteen years old,
+  though he don't look it. He's very delicate, and has never been from home before. And
+  I told Mrs. Arnold I thought you'd be kind to him, and see that they don't bully him
+  at first. He's put into your form, and I've given him the bed next to yours in Number
+  4; so East can't sleep there this half." Tom was rather put about by this speech.
+
+========================================================================================
+[aff=opinion]  primary=how_to  classes=['narrative_grounded', 'how_to']
+  Nearly all of us had read "Robinson Crusoe" and "Swiss Family Robinson." We would tell
+  riddles and ghost stories also until all of us were of a shiver. Then there were
+  famous nights when we played "Blank Lie Low" and hunted coon and 'possums, and, best
+  of all, camping on the banks of the Wabash all night keeping up a fire big enough for
+  a lion country, while those of us who were bigger baited and ran 66 trot " lines. We
+  used liver for bait and sometimes we had a thousand hooks out. They were fine fish,
+  those channel cats (siluridae), but they would sort of gurgle and squawk when we slit
+  them just through the skin behind their horns, and then holding them between the
+  fingers of the left hand would pull off the skin with pincers in the right hand. The
+  niggers used to say that the catfish were trying to tell what they would do to us when
+  they were men and we were catfish, and their strange metempsychosis folk lore made a
+  deep impression.
+
+========================================================================================
+[aff=narrative]  primary=conversational  classes=['narrative_fiction', 'conversational']
+  Now let's see you do it." "You don't want me to sob, do you?" Jean looked over her
+  shoulder to inquire. "Because if I were going to save my lover, I don't believe I'd
+  want to waste time weeping around all over the place." Burns chuckled. "You can cut
+  out the sob," he permitted. "Just go ahead like it was real stuff." Jean was standing
+  by the rock, ready to start. She looked at Burns speculatively. "Oh, well, if it were
+  real, I'd run!" "Go ahead and run then!" Burns commanded. Run she did, and startled
+  the sorrel so that it took quick work to catch him. "Camera! She might not do it like
+  that again, ever!" cried Burns. She was up in the saddle and gone in a flurry of dust,
+  while Robert Grant Burns stood with his hands on his hips and watched her gloatingly.
+  "Lord! But that girl's a find!" he ejaculated, and this time he did not seem to care
+  who heard him.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['knowledge',
+'narrative_grounded']
+  Joitabaee Settanee, the younger widow, was enceinte at the time of her husband's
+  death, and gave birth to a son in the following month of December. The child, whether
+  genuine, as proved by evidence afterwards, or spurious, as Baba Nafra a year
+  subsequently and then first alleged, was at least treated as the true posthumous child
+  of the wealthy banker; it was named and soon after betrothed in the presence of the
+  prince, and with all the ceremonies of the caste, observed in the costly manner
+  befitting an affluent parentage. The unquestioning concurrence in these ceremonies of
+  the relations of Becher Samuldass' other widow, the fortune of whose son was so
+  seriously affected by the advent of this equal sharer, seems to testify still more
+  strongly to the 323-2. referred to in Grant Duff's "History of the Mahrattas," iii.
+  215, as one of the two banks in Baroda which had gained great wealth by advances, made
+  at exorbitant interest, to the Arabs and other mercenaries of the Gaekwar, paid as
+  they were, like all other native soldiery, with miserable irregularity.
+
+========================================================================================
+[aff=procedural]  primary=narrative_grounded  classes=['narrative_grounded', 'opinion']
+  Gibbon last Westminster election. Admitting Buonaparte is lingering from poison,
+  another general may verify an old proverb, viz. : Out of the frying pan, into the
+  fire. With pleasure I hear Mr. Cooper is going to Bristol; the Jew Rabbis, I hear, are
+  offended with him in London. Earl Spencer. June 14th. It would have been better if the
+  Widow Parker had let her husband's body rest where it was first laid in the earth. I
+  rejoice that she recovered it for her peace of mind, though to have saved herself the
+  fatigue she underwent I wish she had demanded it from the executioners after his
+  death. Could she 1. For the speeches in Parliament to which reference is made here,
+  see Parl. Hist., vol. xxxiii, 644-776. The last allusion is to Lough. borough's
+  measures against the Gordon Riots. 2. The toast of the evening. Marmontel, the French
+  publicist, was at this time in his old age (b.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['knowledge',
+'narrative_grounded']
+  1701. 1700. Perhaps he died of sheer disappointment and mortification, for he knew how
+  he was maligned in England; and the King's ministers, who should have been his
+  vindicators, had given him recently no sort of attention. A week before his departure
+  from Boston, he wrote thence July 9. in the anguish of his soul: ""There came hither
+  two ships from London, the last week in May, which brought me not a letter from any of
+  the ministers, and another ship four days ago, but not a letter by that neither. What
+  must the people here and in New York think, but that either the King and his ministers
+  have no sort of care or value for these plantations, not minding whether they 4 sires
+  and affections of these people beyond all other things in this world; for, as they
+  have an extraordinary zeal and fondness for their religion, so any thing that disturbs
+  them in that touches them in their tenderest part." (British Colonial Papers.) 1
+  November 19, the Board of Trade considered a letter from Sir Henry Ashurst, "together
+  with the draft of a charter, desired by that government of the Massachusetts Bay, for
+  Harvard College, in New England." (Journal of the Board of Trade.) But no action on
+  the subject is recorded.
+
+========================================================================================
+[aff=argument]  primary=reasoning  classes=['knowledge', 'reasoning']
+  But still a certain regard for historic truth, as contained in the traditions, was
+  required by the Grecian taste. Subjects altogether fictitious were unknown. The
+  consequences of this deserve to be illustrated at large. If the tragic drama was thus
+  limited to the traditions respecting the heroes, it at the same time obtained a
+  certain solemn support which gave it dignity. interest was the greatest; the
+  catastrophe the most tremendous; the effect least uncertain. A tragic issue suited
+  best the whole character of the kind of poetry. The tragic drama could have but few
+  points of relation with the state. The political world which was here exhibited, was
+  entirely different from the actual one of the times; the forms of monarchy alone were
+  introduced on the stage. The same remark, therefore, which has been made respecting
+  the epic,* is true also of the tragic poetry of the Greeks. The violent commotions in
+  the ancient royal families and their extinction, were not represented to make them
+  objects of contempt or hatred, and to quicken the spirit of republicanism; but solely
+  because no other actions equally possessed the sublimity of the tragic character.
+
+========================================================================================
+[aff=narrative]  primary=conversational  classes=['narrative_fiction', 'conversational',
+'opinion']
+  It appears to me, my dear Mr. Copperfield," said Mrs. Micawber, forcibly, "that what
+  Mr. Micawber has to do, is to throw down the gauntlet to society, and say, in
+  effect,Show me who will take that up. Let the party immediately step forward.'" I
+  ventured to ask Mrs. Micawber how this was to be done. "By advertising," said Mrs.
+  Micawber—“in all the papers. It appears to me, that what Mr. Micawber has to do, in
+  justice to himself, in justice to his family, and I will even go so far as to say in
+  justice to society, by which he has been hitherto overlooked, is to advertise in all
+  the papers; to describe himself plainly as so and so, with such and such
+  qualifications, and to put it thus: 'Now employ me, on remunerative terms, and
+  address, post-paid, to W. M., Post Office, Camden Town.'" 66 "9 "This idea of Mrs.
+
+========================================================================================
+[aff=expository]  primary=how_to  classes=['knowledge', 'how_to']
+  The difference consists in the following: Ziller causes the historical unity under
+  consideration to be simply related (in the upper grades read) by the teacher, and
+  after that follows the discussion, with a view to getting a more detailed
+  understanding. Dörpfeld, on the contrary, requires that in all grades the living word
+  of the teacher, not the book, shall tell the story; and further, that this relating
+  shall from the beginning be a precise and detailed story, yet such that discussion is
+  combined with this statement, step by step. tration: If the pupil is to acquire the
+  concept "Labiates," we must show him several plants (from the various genera) of this
+  family. If now, unintentionally or guided by the teacher, the attention is directed to
+  the fact that those plants have many characteristics in common, in this instance
+  square stems, opposite leaves, axillary position of flowers, irregular calyx,
+  irregular corolla, etc., and if these common characteristics are fastened in the mind
+  correctly, the concept of Labiates is complete, even though the name be yet wanting.
+
+========================================================================================
+[aff=argument]  primary=opinion  classes=['knowledge', 'opinion']
+  But now, as man he can see this glory no longer; yet in the season of May, when the
+  heavens laugh and the earth adorns herself with joy, he recovers something of the
+  recollections of childhood, he remembers at least that there was a visionary gleam, a
+  glory and a dream that now are fled. And he explains it thus by the main ideas of the
+  Platonic opinion: Our birth is but a sleep and a forgetting: The Soul that rises with
+  us, our life's Star, Hath had elsewhere its setting, And cometh from afar : Not in
+  entire forgetfulness, And not in utter nakedness, But trailing clouds of glory do we
+  come From God, who is our home: Heaven lies about us in our infancy! But soon the
+  sensible world begins to do its work and drags us away from the vision of beauty and
+  life. The growing boy feels the shades of the prison-house closing In Wordsworth.
+
+========================================================================================
+[aff=narrative]  primary=narrative_fiction  classes=['narrative_fiction']
+  The first time all went well, for the people bought of the Princess, because she was
+  so pretty-looking, and not only gave her what she asked, but some even laid down their
+  money and left the pots behind. On her earnings this day they lived for some time as
+  long as they lasted; and then the husband purchased a fresh stock of pots. With these
+  she placed her stall at a corner of the market, offering them for sale. All at once a
+  drunken hussar came plunging down the street on his horse, and rode right into the
+  midst of her earthenware, and shattered it into a thousand pieces. The accident, as
+  well it might, set her a weeping, and in her trouble, not knowing what to do, she ran
+  home crying, “Ah, what will become of me, what will my good man say?" When she had
+  told her husband he cried out, "Whoever would have thought of sitting at the corner of
+  the market to sell earthenware? but well, I see you are not accustomed to any ordinary
+  work.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['knowledge',
+'narrative_grounded']
+  What width was this to be? The gauge of the first tramroad laid down, had virtually
+  settled the point. The gauge of wheels of the common vehicles of the country of the
+  carts and waggons employed on common roads, which were first used on the tramrods-was
+  4 feet 81 inches. And so the first tramroads were laid down of this gauge. The tools
+  and machinery for constructing coalwaggons and locomotives were formed with this gauge
+  in view. The Wylam waggon-way, afterwards the Wylam plate-way, the Killingworth
+  railroad, and the Hetton railroad, were all laid down on this gauge. Some of the
+  earthwaggons used to form the Stockton and Darlington road were brought from the
+  Hetton railway; and others which were specially constructed were formed of the same
+  dimensions, these being intended afterwards to be employed in the working of the
+  traffic. As the time for the opening of the line approached, the question of the
+  Tractive Power to be employed was warmly discussed.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded', 'opinion']
+  Yet it is a strange thing to consider that in so evident a matter, touching as
+  virtuous and sovereign a princess as ever the world did enjoy, we are loath, in
+  reverent regard of the name and title of royal and supreme dignity, to have him named,
+  otherwise than cannot be avoided in the simple narration of the cause, and indeed, if
+  I may utter my conceit, a greater indignity nor breach of honor never was given to
+  that high degree, 325 Early in the spring of this same year, a certain Renichon,
+  priest and schoolmaster of Namur, was summoned from his school to a private interview
+  with Count Berlaymont. That nobleman very secretly informed the priest that the King
+  of Spain wished to make use of him in an affair of great importance, and one which
+  would be very profitable to himself. The pair then went together to Brussels, and
+  proceeded straightway to the palace.
+
+========================================================================================
+[aff=argument]  primary=narrative_grounded  classes=['knowledge', 'narrative_grounded']
+  HERTFORD, earl of. (See Seymour, Sir Edward.) HERTFORD, earl of.-(See Seymour, eldest
+  son of Sir Edward Seymour.) HEVENINGHAM, Sir John.-One of five gentlemen who were
+  imprisoned by Charles I for refusing to loan money to the crown, and encouraging
+  others to a like course. They had spirit enough boldly to defend their liberties, and
+  to demand their releasement, not as a favor, but as their due, under the laws of
+  England. It was urged that the command of the king and council was sufficient reason
+  for their confinement, which was not admitted by the commons. This was one of the
+  arbitrary measures of Charles which, at last, provoked the free spirits of the times
+  into revolution. HEWSON, Colonel.-Rose from the humble profession of cobbler to a high
+  rank in the Cromwell army. When, in the latter days of the commonwealth, a popular
+  movement was gotten up in London in favor of a free parliament, he was employed to
+  resist it by military force, and thus, after fighting for the people's liberties,
+  practically opposed every form of legislation, or government, save martial law.
+
+========================================================================================
+[aff=procedural]  primary=narrative_grounded  classes=['narrative_grounded']
+  Lawson among others, and his lady and his daughter; but to see how Sir W. Pen imitates
+  me in everything, even in having his chimney-piece in his dining-room the same with
+  that in my wife's closet, and in everything else I perceive wherein he can. But to see
+  again how he was out in one compliment: he lets alone drinking any of the ladies'
+  healths that were there, my Lady Batten and Lawson, till he had begun with my Lady
+  Carteret, who was absent, and that was well enough, and then Mr. Coventry's mistress,
+  at which he was ashamed, and would not have had him have drunk it, at least before the
+  ladies present, but his policy, as he thought, was such, that he would do it. 8th. By
+  appointment, took Luellin, Mount, and W. Symons, and Mr. Pierce, the surgeon, home to
+  dinner with me, and were merry. We spent all the afternoon together, and then to cards
+  with my wife, who this day put on her Indian blue gown, which is very pretty.
+
+========================================================================================
+[aff=expository]  primary=knowledge  classes=['knowledge']
+  When startled, it goes madly forward like a bison, charging right and left through
+  everything which happens to be in the way, be it a span of oxen, a wagon, or a
+  caravan. The hide of this great brute is so thick that it makes good whips, shields,
+  and even canes. Hippopotamus. In the rivers and some lakes in the eastern part of
+  Africa is found a huge and unwieldy creature, called a hippopotamus, a name which
+  means Rhinoceros Hippopotamus neck are both long, so he sometimes stands nineteen feet
+  high. His skin is beautifully marked in patches of all shades from common fawn to
+  tawny orange upon a creamy ground. This curious animal has a long tail, which ends in
+  a tuft of wiry hairs. His tongue is very long, as well as his neck, to enable him to
+  feed on the leaves and twigs of trees. It is a beautiful sight to see a herd of
+  giraffes feeding.
+
+========================================================================================
+[aff=argument]  primary=how_to  classes=['knowledge', 'how_to']
+  As Queen she can give check on twelve squares. No. 143. When a Pawn by reaching the
+  eighth line can be exchanged into a new piece with this immense power, the result of
+  the game is at once decided, unless the other player has a Pawn so far advanced that
+  he also can make a queen, or unless he can manipulate his pieces so as to secure a
+  defensive position strong enough to guard his King and remaining pieces from the many
+  sided attack which can be brought to bear upon them. It is thus essential that every
+  Chess player should know how to treat both attack and defence, in order that having
+  the Queen he may be able to force the game against the best defence, or having the
+  defence he may be able to draw the game against the Queen. We commence with the Pawns
+  as the simplest and most frequent endings, and work up to the more complicated and
+  less frequent end-games in which the Queen has to contend with one or more inferior
+  pieces.
+
+========================================================================================
+[aff=expository]  primary=opinion  classes=['opinion', 'knowledge']
+  Let him sit idle, and alone,-if necessary in a dungeon, till he perceives by contrast
+  how much he has lost. FEW parents seem to consider how much trouble they give
+  teachers, and to what a loss they subject their chil dren by allowing them to be
+  absent from school two or three days of every week, and sometimes longer at a time.
+  Not only important, but even the most trivial occurrences, are deemed a sufficient
+  excuse for detaining them. This school is not entirely free from the evil. Parents,
+  and especially masters are here, as elsewhere, often neglectful on this subject. It is
+  due to both parents and teachers, however, to say that great effort is made, when the
+  scholar does attend, to see that he is there punctually at the hour. When the school
+  opens in the First Department, either in the morning or the afternoon, a pupil is
+  appointed to record the names of all who are absent, with the number of minutes too
+  late they are.
+
+========================================================================================
+[aff=argument]  primary=reasoning  classes=['opinion', 'reasoning']
+  Every man is a consumer, and ought to be a producer. He fails to make his place good
+  in the world, unless he not only pays his debt, but also adds something to the common
+  wealth. Nor can he do justice to his genius without making some larger demand on the
+  world than a bare subsistence. He is by constitution expensive, and needs to be rich.
+  Wealth has its source in applications of the mind to nature, from the rudest strokes
+  of spade and axe, up to the last secrets of art. Intimate ties subsist between thought
+  and all production; because a better order is equivalent to vast amounts of brute
+  labour. The forces and the resistances are Nature's, but the mind acts in bringing
+  things from where they abound to where they are wanted; in wise combining; in
+  directing the practice of the useful arts, and in the creation of finer values, by
+  fine art, by eloquence, by song, or the reproductions of memory.
+
+========================================================================================
+[aff=opinion]  primary=narrative_grounded  classes=['narrative_grounded']
+  When Pompey received the letters which notified his high promotion, and his friends
+  who happened to be present, congratulated him on the occasion, he knit his brows (we
+  are told,) smote his thigh, and expressed himself as if he was already overburthened
+  and wearied with the weight of power;†"Alas! and is there then no end of my conflicts?
+  How much better would it have been to remain one of the undistinguished many, than to
+  be perpetually engaged in war? Shall I never be able to fly from envy to a rural
+  retreat, and conjugal endearments?" Even his friends were unable to bear the
+  dissimulation of this speech. They knew that the flame of his native ambition and lust
+  of power was blown up to a greater height by the difference between himself and
+  Lucullus, and that he rejoiced the more in the present preference upon that account.
+  His actions soon unmasked the man.
+
+========================================================================================
+[aff=expository]  primary=how_to  classes=['knowledge', 'how_to']
+  Gynäk., xliii., 333, 1893. 849 protrusion of the spinal meninges through a fissure in
+  the spinal column, the result of imperfect development. It contains a varying amount
+  of cerebro-spinal fluid, and may reach the size of a foetal head. Spina bifida rarely
+  reaches such a size as to offer an obstacle to delivery. If it does, it will retard or
+  prevent the descent of the back. Its existence will then be ascertained by passing the
+  hand upwards along the back or limbs of the foetus, as the case may be. In such cases,
+  it must be punctured and the fluid allowed to escape. SACRO - COCCYGEAL TUMOUrs.
+  Solid, semi-solid, or cystic tumours are sometimes met with attached to the sacro-
+  coccygeal region of the foetus. These tumours are of three different classes. One
+  class is due to the inclusion of portions of a second fœtus-a teratoma. A second class
+  is cystic and communicates with the spinal canal, and so is akin to a spina bifida.
+
+========================================================================================
+[aff=expository]  primary=knowledge  classes=['knowledge']
+  Flushes of heat, especially in the evening, with slight feverish restlessness and
+  burning heat in the palms of the hands. General heat in the evening, with absence of
+  thirst, without any previous chill. Heat in the forenoon for two hours, with thirst
+  for beer, preceded by a chill and followed by chilliness; all these symptoms were
+  experienced while in a state of slumber full of dreams, and making many movements with
+  the hands. Febrile heat in the afternoon especially in the face, (a. 14 d.)
+  Afternoonfever for many days, heat with or without any previous chilliness. Frequent
+  attacks of heat, especially in the face, with dry mouth, without thirst. Warmth of the
+  whole body, with internal itching. Anguish and heat. General heat and sweat. Heat and
+  sweat of the head and hands, and the feet, every day for half an hour. Fever with
+  small, hard, quick pulse. Fever with thickly coated tongue.
+
+========================================================================================
+[aff=expository]  primary=how_to  classes=['knowledge', 'how_to']
+  The hexaedron or cube, is a solid, bounded by six equal squares. 3. The octaedrin, is
+  a solid, bounded by eight equal equi lateral triangles. Appendix. 4. The dodecaedron,
+  is a solid bounded by twelve equal pentagons. 5. The icosaedron, is a solid, bounded
+  by twenty equa equilateral triangles. My 6. The regular solids may easily be made of
+  pastebcard. Draw the figures of the regular solids accurately on pasieboard, and then
+  cut through the bounding lines: this will give figures of pasteboard similar to the
+  diagrams. Then, cut the other lines half through the pasteboard, after which, turn up
+  the parts, and glue them together, and you will form the bodies which have been
+  described. 1. The logarithm of a number is the exponent of the power to which it is
+  necessary to raise a fixed number, in order to produce the first number. This fixed
+  number is called the base of the system, and may be any number except 1: in the common
+  system 10 is assumed as the base.
+
+========================================================================================
+[aff=narrative]  primary=narrative_grounded  classes=['knowledge', 'narrative_grounded']
+  But after me, in the second week great wickedness shall arise, and fraud shall spring
+  forth. In that week the end of the first shall take place, in which mankind shall be
+  safe. But when it is completed, iniquity shall grow up, and he shall execute the
+  decree upon sinners. GENESIS V. 18. "And Jared lived an hundred and sixty two years,
+  and he begat Enoch." Genesis vi. 5. "And God saw that the wickedness of man was great
+  in the earth, and that every imagination of the thoughts of his heart, was only evil
+  continually." Genesis vi. 3. "And the Lord said; my spirit shall not always strive
+  with man." Genesis vi. 11, 12. "The earth also was corrupt before God, and the earth
+  was filled with violence. Afterwards in the third week, during its completion, a man
+  of the plant of righteous judgment shall be selected; and after him the plant of
+  righteousness shall come for ever.
+
+========================================================================================
+[aff=narrative]  primary=reasoning  classes=['knowledge', 'reasoning',
+'narrative_grounded']
+  If it be said that the representatives in the popular branch of Congress are chosen
+  directly by the people, it is answered the people elect the President. If the two
+  Houses represent respectively the States and the people, so does the President. The
+  President represents in the executive department the whole people of the United
+  States, as each member of the legislative department represents portions of them. That
+  this is the popular voice is proven by the enormous vote cast in each presidential
+  election when compared with that of intervening years. The ever-growing influence of
+  the Executive was not alone evident in this convincing argument and the circumstances
+  which called it forth. What Tyler had done in forcing legislation upon Congress, Polk
+  continued to do in unprecedented measure. It was he who devised the details,
+  reiterated the 177 principle, and forced upon a country protectionist at heart a
+  purely revenue-tariff bill, that of 1846, and thereby assumed the risk of reading a
+  vast number of protectionist Democrats out of the party.
+
+========================================================================================
+[aff=opinion]  primary=how_to  classes=['how_to', 'verse']
+  We see it against the lighter grays. Paint a "ship on the sea, sailing to-night." Have
+  you seen you seen how sunset light over snow warms the white to a violet glow? Have
+  you seen an evergreen tree against a sunset sky? The green looks very dark. Have you
+  noticed the beautiful shape of Christmas trees? Paint a winter sunset, with an
+  evergreen against the sunset sky. Words make us see pictures. paint the same pictures
+  with the brush. We can Paint what the next lines make you see. "A little swerve; a
+  tricky curve, — And such a tumble! A whirl; a stop; the sled on top; A merry
+  laugh,-yet this is not half The fun of sliding!" Here is Susan in the rain again! Now
+  there are sky and trees in the picture. Think how the little girl is placed to show
+  that she is walking on the ground.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded',
+'knowledge']
+  The deed of sale referred to set forth that C. A. Haupt was indebted to P. J. Haupt &
+  Co. on a bond for £250 with interest, which had been called up, and on a promissory
+  note for £31, and to other persons, the debts amounting in all to £394; that he was
+  unable to pay these debts, that in con sideration of P. J. Haupt & Co. discharging
+  claims of other persons, amounting to about £94, C. A. Haupt should pay P. J. Haupt &
+  Co. their promissory note and make over to them certain moveables specified in the
+  annexed schedule, of value £207, in part payment of their bond, they agreeing to give
+  time for the remainder, and that delivery of the goods was made by delivering a cart,
+  waggon, ox and chair, in the name of the whole in the presence of witnesses. The lease
+  referred to set forth that the whole of the farm "Bethlehem," 1852 Dec.
+
+========================================================================================
+[aff=expository]  primary=how_to  classes=['composition', 'how_to', 'knowledge']
+  1 of 1907.) 243. The commanding officers of arsenals and ordnance depots, inspectors
+  of ordnance, and inspectors of powder are required to submit such statements of
+  property, inspection reports, progress reports, etc., on ordnance property as may be
+  required by the Chief of Ordnance. Ordnance property will not be described on these
+  reports as obsolete without authority of the Chief of Ordnance. APPENDIX TO THE
+  ORDNANCE PROPERTY REGULATIONS, GIVING THE LISTS OF FORMS REQUIRED IN ACCOUNTING FOR
+  ORDNANCE PROPERTY. DESIGNATIONS OF THE FORMS REQUIRED BY COMMANDING OFFICERS OF
+  ARSENALS IN ACCOUNTING FOR ORDNANCE PROPERTY. Form No. 15. This form is for use in
+  accounting for property for which special forms with printed headings are not provided
+  and constitutes, when executed, part of the inside sheets of the return. Form No.
+  15-Cover, front. Form No. 15-Cover, back. These two forms, when properly prepared,
+  constitute the cover of the semiannual return of the first division of ordnance
+  property.
+
+========================================================================================
+[aff=expository]  primary=reasoning  classes=['knowledge', 'opinion', 'reasoning']
+  S. 13. The River Systems of the U. S.; their Military and Commercial capacities; their
+  steam transportation, their physical features; the practicable improvements in their
+  navigation. 14. The Rail Road System of the U. S.; its capacities and Military
+  relations; new Military lines needed; Rail Road professional data. 15. General study
+  of Military Roads in the U. S. It is important to mature our ideas on this group of
+  subjects, by the study of the theater of operations, and of the course of movements
+  during this war. Whatever events may be impending, the thoughtful investigation of
+  these great strategic elements, is essential to our wise and prompt action in
+  emergencies To collect and methodize the information essential to a correct and full
+  understanding of the strategic capacities of our country in all possible
+  contingencies, and to keep this information always up to date, will be a great and
+  habitual labor; but it is of urgent obligation, and its faithful performance will
+  greatly influence any future military operations in our domain. to come.
+
+========================================================================================
+[aff=argument]  primary=reasoning  classes=['knowledge', 'reasoning',
+'narrative_grounded', 'opinion']
+  It has been the fashion to consider these professions as instances of the hypocrisy
+  which is vulgarly imputed to him. But even those who pronounce him a hypocrite will
+  scarcely venture to call him a fool. They are therefore bound to show that he had some
+  purpose to serve by secretly stimulating the army to take that course which he did not
+  venture openly to recommend. It would be absurd to suppose that he who was never by
+  his respectable enemies represented as wantonly cruel or implacably vindictive, would
+  have taken the most important step of his life under the influence of mere
+  malevolence. He was far too wise a man not to know, when he consented to shed that
+  august blood, that he was doing a deed which was inexpiable, and which would move the
+  grief and horror, not only of the Royalists, but of ninetenths of those who had stood
+  by the Parliament.
+
+========================================================================================
+[aff=expository]  primary=verse  classes=['verse']
+  The sun, the gorgeous sun, is thine, The pomp that brings and shuts the day, The
+  clouds that round him change and shine, The airs that fan his way. Thence look the
+  thoughtful stars, and there The meek moon walks the silent air. The sunny Italy may
+  boast The beauteous tints that flush her skies, And lovely, round the Grecian coast,
+  May thy blue pillars rise. I only know how fair they stand, Around my own beloved
+  land. And they are fair-a charm is theirs, That earth, the proud green earth, has not-
+  With all the forms, and hues, and airs, That haunt her sweetest spot. We gaze upon thy
+  calm pure sphere, And read of Heaven's eternal year. Oh, when, am the throng of men,
+  The heart grows sick of hollow mirth, How willingly we turn us then Away from this
+  cold earth, And look into thy azure breast, For seats of innocence and rest.
+
+========================================================================================
+[aff=argument]  primary=stem_reasoning  classes=['knowledge', 'reasoning',
+'stem_reasoning']
+  When inhaled it combines with the hæmoglobin, forming a bright red compound which
+  cannot collect and distribute oxygen; less than one per cent of carbon monoxid in the
+  atmosphere gives rise to headaches and giddiness, and if inhaled for any considerable
+  time, insensibility and death quickly follow. The extremely poisonous nature of the
+  "choke damp" resulting from a colliery explosion is due to the presence of carbon
+  monoxid with the carbon dioxid formed as a product of the combustion. A pan of
+  smouldering charcoal gives off this gas, and in certain countries is a frequent means
+  of suicide. As carbon monoxid is odorless, coal gas could not be detected in the air
+  were it not that carbon monoxid is usually accompanied by other gases having peculiar
+  odors. Carbon monoxid is an important constituent of water gas. The chief objection to
+  the use of water gas for the illumination of dwellings arose from the fact that while
+  the water gas was more poisonous than the ordinary illuminating gas, it was odorless,
+  and therefore leaks could not be detected except by the illness of persons.
+
+========================================================================================
+[aff=expository]  primary=reasoning  classes=['narrative_grounded', 'reasoning']
+  Endd. Pp. 3. 1. Yesterday he received a letter from Lethington and in it a letter to
+  the Queen from his Sovereign. Has sent them to the Queen. The occasion perchance of
+  their writing may proceed upon this. Some of her own people have said that the writer
+  is but fostered with fair words, far from the heart, which in time may turn his
+  Sovereign to scaith and evil hap to him, for that nothing is meant as it is spoken. If
+  he were as hasty to believe, or as sudden in his reports as they are unadvised in
+  their judgments, he might soon overthrow a well laid foundation to the continuance of
+  a perpetual amity between two great countries; for of late suspicion is risen between
+  this Queen and her people of her part, that in all things she has not her will upon
+  their side and that some great matter is brewing against England that has done them
+  good, to work something that might be an overthrow to religion.
+
+========================================================================================
+[aff=opinion]  primary=conversational  classes=['narrative_fiction', 'conversational']
+  But what I've got to show you chiefly is this little piece of beastly joking. Just you
+  look at that.' Hocking slapped down the parchment titledeed of the Venezuela estate,
+  and a translation of Appadacca's letter to Campos. Then there was silence for five
+  minutes. The President's eye ran eagerly through the words. 'This means mischief, I
+  calculate,' he muttered. 'It meant,' said Hocking; it can't mean any more. That
+  parchment is now in the pockets of the United States, and so is the piece of land it
+  represents.' It isn't, Dick P. Hocking,' replied McKinley. 'Look here, don't you fancy
+  that you are going to get us into any hot places more than we are in already. That
+  parchment will come in handy later; it won't go rotten in your drawers, may be. Right
+  now I beg to decline it with best thanks.' 'Well, I am not saying that you don't know
+  your business.' 'No; you are too cute a man.
+
+========================================================================================
+[aff=opinion]  primary=narrative_grounded  classes=['narrative_grounded', 'opinion',
+'knowledge']
+  It made sad havoc amongst the wild boar; it was almost equal to a rifle in this
+  respect but the Dover Street guns are renowned for this qualification. I am bound,
+  however, in justice to Mr. Westley Richards, to say, that for fur and feather (I have
+  never tried it at bristles) the last on my list, No. 8, the gun I now possess, is the
+  very best I certainly ever owned or ever saw. In point of workmanship and finish it
+  never was surpassed, if equalled, and its powers of throwing shot are wonderful-
+  strength, concentration, and that rare quality, an equi-distant distribution of the
+  pellets, being all combined in this invaluable weapon. The Reader may form some idea
+  of its extraordinary excellence when I state that I have killed hares and rabbits at
+  sixtyfive and seventy yards, partridges at seventysix, seventy-seven, and seventy-nine
+  yards, the distances all measured, and last season I killed a jack-snipe at the almost
+  incredible distance of eighty-five yards, measured also; but it was with one of Cley's
+  wire-cartridges; the others were loose shot.
+
+========================================================================================
+[aff=narrative]  primary=narrative_grounded  classes=['knowledge', 'narrative_grounded']
+  From the time of the first foreign loan, more than a hundred years before, the Royal
+  Exchange had been the mart; the dealers had not followed the Stock Exchange proper
+  from the Royal Exchange through Change Alley and Sweet ing's Rents to Capel Court. But
+  now, on the first day of the year 1823, they made the movein one step. A Foreign Stock
+  Exchange wasestablished in a building adjoining and connected with the Stock Exchange
+  proper. This Foreign Stock Exchange was, however, a distinct organisation. It had its
+  own committee, with a chairman and deputy-chairman, its own rules, and its own price
+  list. The number of members seems to have varied a good deal. At one time it reached a
+  thousand, descending to four hundred, and then recovering again. The subscription was
+  five guineas a year, and the institution differed vitally from the Stock Exchange in
+  that outside merchants and traders were admitted.
+
+========================================================================================
+[aff=expository]  primary=verse  classes=['verse']
+  The world will still Paint Nature's face, and bastardise the truth With blazoned lies
+  and meretricious skill; But, while they fed their gaze with gilded shows, Ye ploughed
+  and delved, and sowed the loamy lea With germing seed that gentle-bladed grows Into
+  the branchy firmness of a tree Dropping rich fruit, from whose rare fulness Fame
+  Weaves leafy crowns to grace each honoured name. (An academy for young ladies at
+  Clapham, under the able superintendence of Miss Pipe.) BEAUTIFUL Laleham! of most
+  lovely things Named with few lovelier, and of things most pure With purest; angels,
+  might they drop their wings, And live as earth-born men on earth, be sure, Would find
+  meet home and entertainment here, With health and innocence, and joy and beauty, And
+  love and chaste regard, and godly cheer To oil the wheels of gently-driving duty. Oh!
+  if there wh on the barren waste Of speculation feed, or through the gray Routine of
+  business fret from day to day, For such there's balm in Laleham, here to taste From
+  fresh young lives rare wealth of easy graces, Bright eyes, warm hearts, smooth brows,
+  and shining faces.
+
+========================================================================================
+[aff=expository]  primary=reasoning  classes=['reasoning', 'knowledge']
+  Even if we adopt the favorite socialist conception of society as an organism, it is to
+  be remembered that the chief organic movements of the human body are carried on
+  without conscious volition or reflection. If every breath, every heart-beat, had to be
+  consciously and separately willed, neither the bodily nor the mental functions would
+  be performed with much success.¹ The mechanism by which equilibrium is secured between
+  1 Cf. Leroy-Beaulieu, Le Collectivisme, p. 318. the demand of widely scattered
+  consumers and the supply forthcoming from independent producers is simply price
+  variation. The oscillations of the money price of commodities act as a barometer for
+  the producers' guidance. If an insufficient proportion of the productive forces of a
+  country is engaged in cotton manufacture, the rise of price of cotton goods, or rather
+  the increase of the margin between cost and sale price, indicates an opportunity for
+  more than average gain, and new capital pours in until the equilibrium is restored.
+
+========================================================================================
+[aff=argument]  primary=narrative_grounded  classes=['narrative_grounded', 'knowledge']
+  We have now to record a second and more serious effort made by the Admiral in the same
+  direction, and to tell how Florida was nearly wrested from the hands of the Spaniard.
+  This attempt belongs to the reign of Charles IX. Its history is inserted here because
+  it is a separate chapter in the life of Coligny; because it has never before, I
+  believe, been told in English; and because it has nothing to do with the history of
+  the twelve years' civil war which makes up the melancholy conclusion of this volume.
+  If things looked threatening on the accession of Francis II., they looked no less
+  black at his death. True, the Guises were for a time out of power, and Catherine was
+  Regent. Yet there was no obedience anywhere, and no authority. After the slaughter of
+  Amboise, a stream of blood separated the two religions. Every town was divided into
+  hostile camps.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded',
+'knowledge', 'opinion']
+  As Obaid Allah knew that it would be impossible to conceal from the khalif who were
+  the authors of the document, he mentioned them to him with commendation, and they were
+  taken into favour. Ibn al-Furât had in his palace a room for the preparation of
+  beverages (hujra sharåb), to which persons of all classes sent their servant boys to
+  bring home whatever sherbets, beer, and sirops they required. He pensioned five
+  thousand persons chosen from among the learned, the pious, the persons of respectable
+  family, and the poor; most of them received one hundred dinars a month, and a few only
+  five dinars or intermediate sums. " And one merito- “ torious part of his conduct,
+  wherein no one had as yet set the example, was, “ that when papers were received by
+  him containing accusations against any “individual, one of his pages came into the
+  antechamber and called out : " • Where is such a one, the informer (meaning the author
+  of the paper)?' When “ people discovered this to be his regular custom, they abstained
+  from all such secret accusations.” One day, in a burst of anger, he ordered a hundred
+  519 lashes of a whip to be inflicted on a man with whom he was displeased; he then
+  sent word to give him fifty lashes only; and then he sent again to forbid the flogging
+  and to give him twenty pieces of gold.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded', 'opinion',
+'knowledge']
+  One small party of these dragoons acted with courage. It was kept together, and led to
+  the charge, by Lieutenant-colonel Whitney, a brave officer, who had remained behind
+  his retreating cavalry at Preston, though wounded in the sword-arm. As he was going
+  forward at the head of his little troop to the attack, he recognised John Roy Stuart,
+  a former friend, and cried out: 'Ha! are you there? We shall soon be up with you.'
+  Stuart exclaimed in reply: 'You shall be welcome when you comeyou shall have a warm
+  reception !'2 Almost at that moment the unfortunate leader received a shot, which
+  tumbled him lifeless from the saddle. His party rushed resistlessly through the front
+  line of the enemy, trampling down all that opposed them. But their bravery was
+  unavailing. The Highlanders, taught to fight in all postures, and under every variety
+  of circumstances, though thrown upon their backs beneath the feet of the cavalry, used
+  their dirks in stabbing the horses under the belly, or, dragging down the men by their
+  long-skirted coats, engaged with them in mortal struggles, during which they seldom
+  failed to poniard their antagonists.
+
+========================================================================================
+[aff=procedural]  primary=reasoning  classes=['reasoning', 'knowledge']
+  2 Ed. II. Cantabr. Rot. 77 in the Placit. Abbrev. p. 306.) A similar case occurs of an
+  endeavour to withdraw a glebe land from the common pasturage in the fallow year (32
+  Edw. I. Nott. rot. 74 in the Placit. Abbrev. p. 251), in which the parson brings his
+  complaint against thirty persons of a village on account of depastura bladi sui; and
+  they make reply that on the land in question, "quod sunt tenentes domini ejusdem villæ
+  et quod debent ibi communicare quolibet tertio anno." It is a peculiar pleading, that
+  of the inhabitants of a village who have been complained of for depastura bladi, that
+  they, on the land in question, "debent communicare quolibet secundo anno a festo
+  Nativitatis S. Johannis B. (24 June) usque ad festum Annunc." (25 March). We might be
+  tempted to consider this as pointing to a two-field husbandry; but the required
+  pasture time does not tally, either with the fallow year (for there would be no space
+  for cultivating the winter corn), or with the wheat year, for the harvest, on the 24th
+  June, could not be gathered by that time.
+
+========================================================================================
+[aff=narrative]  primary=narrative_grounded  classes=['narrative_grounded', 'knowledge',
+'opinion']
+  461. 5 State Papers, Finance, I. 29. 6 Tenth Census, VII. 327. "On this subject see
+  Belknap, II. 461–477; Barstow, 269–272; Hildreth, III. 473; Libby, 7-11, 52-54. 271
+  formerly issued was in circulation that the depreciation was sixty per cent on the
+  notes and twenty per cent on certificates of indebtedness.¹ As a remedy for the
+  discontent, the legislature of the state passed a law that enabled debtors to offer
+  real or personal property "at a fair valuation" in satisfaction of their engagements.
+  But this act, which remained in operation for five years, did not quiet the agitation
+  for more paper money. On the contrary, it simply made specie more scarce than before.
+  A paper-money party was formed in 1786, and the newspapers teemed with discussions of
+  the necessity of issuing more currency in order to stimulate industry and relieve the
+  poor. Concerning these fulminations, the New Hampshire Mercury observed that "there is
+  no single trace of any idea of redemption, or any one attempt to give the currency a
+  foundation; but the whole seems predicated on a supposition that the general court by
+  a mere act of legislation . . . could impress an intrinsic value upon paper." The
+  inflationists claimed that "Paper money, or even leather buttons, when stamped by
+  authority and funded with realities, will answer for internal commerce as well as
+  silver and gold." 3 Finally, Belknap wrote: 4 "The same party who were so zealous in
+  favor of paper currency, and against laws which obliged 1 Belknap, II.
+
+========================================================================================
+[aff=expository]  primary=narrative_fiction  classes=['narrative_fiction']
+  Distinctly through the panel of the door, which was much thinner, no doubt, than the
+  old fox imagined, I heard one of the men present shout out: "Well, that makes the
+  number less by one!" The murmur which followed this remark came plainly to my ears,
+  and, greatly rejoicing over what I considered my good luck, I settled myself on the
+  lowest step of the stairs in the hope of catching some word 33 which would reveal to
+  me the mystery of this scene. It was not long in coming. Old Smead had now his
+  audience before him in good shape, and his next words were of a character to make
+  evident the purpose of this meeting. "Heirs of Anthony Westonhaugh, deceased," he
+  began in a sing-song voice strangely unmusical, "I congratulate you upon your good
+  fortune at being at this especial moment on the inner rather than outer side of your
+  amiable relative's front door.
+
+========================================================================================
+[aff=expository]  primary=reasoning  classes=['opinion', 'reasoning']
+  Can he declare martial law? Can those measures be insisted on? Can the judiciary be
+  required to lend their aid to them? That is the question on which the discharge of Mr.
+  Cook depends, and I proceed to its examination. The Constitution of the United States
+  has been generally thought to be levelled to the intelligence of any educated mind.
+  Every pains was taken to make it so. It is as perspicuous as consists with brevity,
+  its language is popular, its arrangement and order seem perfect. It was written to be
+  understood by everybody; to be laid before the whole population of the country for
+  their approval and ratification. To leave the States to doubt and pause on its meaning
+  was to hand it over to swift condemnation. If, to the jealousy which everywhere
+  abounded of any central power at all, which diminished their sovereignty, was added
+  the hesitation, which must attend the adoption of a charter, the meaning of which was
+  not clear, the way was barred and bolted against all chance of obtaining the votes of
+  the nine States required to organize a government under it.
+
+========================================================================================
+[aff=expository]  primary=opinion  classes=['knowledge', 'opinion']
+  Arabic, Syriac, Persian and Ethiopic: 18. The Evidences of Revealed Religion. Here are
+  five professors for four modern languages; and three for the Latin, Greek and Hebrew.
+  Eight altogether for the usual undergraduate course, exclusive of modern languages.
+  This University, according to its original plan, embraces four Faculties, namely: 1. A
+  Faculty of Letters and the Fine Arts. 2. A Faculty of Science and the Arts. 3. A
+  Faculty of Law. 4. A Faculty of Medicine. There are two General Departments in the
+  University. The first embraces the usual collegiate course of instruction which has
+  obtained in our country: and the second is designed to embrace instruction in the
+  higher branches of literature and science, and in professional studies. The latter
+  Department will probably resemble the European universities more closely than any
+  other in our country. The beginning augurs well for the liberality of the great
+  commercial metropolis of the Western hemisphere.
+
+========================================================================================
+[aff=opinion]  primary=how_to  classes=['knowledge', 'opinion', 'how_to']
+  The object to be secured by treatment is the consolidation of the tissues of the
+  symphysis. This can only be attained by making the articulations of the pelvis fixed
+  and immovable. That compression of tissues promotes absorption has long been a settled
+  axiom in medicine. During the puerperal period, I think that the patient should be
+  kept in the recumbent position; but, after this time, it is my belief that absorption
+  and consolidation will be promoted by frequently allowing the weight of the body to
+  rest upon the pelvis, and such exercise as the ability of the patient will permit,
+  provided that the articulations be made firm by proper sup port. In all the cases that
+  I have seen, this has been accomplished by a little ingenuity, in making and adjusting
+  a hip-binder of very strong, coarse cloth. What is known as Martin's girdle is
+  strongly recommended by several authors.
+
+========================================================================================
+[aff=expository]  primary=narrative_fiction  classes=['narrative_fiction']
+  The fragrance of the woods was less marked than that produced during warm waves of
+  reflected light would break up suddenly into a kind of beaten foam, and again, after
+  chasing one another in regular order, they would seem to bend forward in concentric
+  curves, and disappear 5 rain, when so many balsamic buds and on some hillsides, like
+  sea-waves on a shelving shore. The quantity of light reflected from the bent needles
+  was so great as to make whole groves appear as if covered with snow, while the black
+  shadows 10 very tonic degree. And besides the frabeneath the trees greatly enhanced
+  the effect of the silvery splendor. Excepting only the shadows there was nothing
+  somber in all this wild sea of leaves are steeped like tea; but, from the chafing of
+  resiny branches against each other, and the incessant attrition of myriads of needles,
+  the gale was spiced to a grance from these local sources there were traces of scents
+  brought from afar.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded',
+'knowledge']
+  Portrait of a Princess of the Royal Family of France. Half-figure; life-size. See
+  historical note to No. 2081. Canvas : 2 ft. 9 in. by 3 ft. 8 in. 283 Antoine was son
+  of a tiler, and was born at Valenciennes in 1684. While a mere boy his father refused
+  to support him any longer, and the lad journeyed to Paris. There he managed to exist
+  on the profits of painting cheap pictures for dealers, but in the meantime was
+  studying on his own account in his spare moments, acquiring in this way a great
+  facility in drawing. In 1701-3 he was in the studio of Claude Gillot, from whom he
+  acquired a taste for modern subjects. Having surpassed this master, he left him to
+  assist Andran at the Luxembourg. Andran he also left soon and returned to
+  Valenciennes, where he remained but a short time, and again came to Paris.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded', 'opinion']
+  We three started at Five for Luib, in high glee. What! in face of my prediction? Did I
+  not tell you that in that dull, dingy, dirty, ochre sunset-in that wan moon and those
+  tallow-candle stars- I saw the morning's Deluge. But did you not also quote Sir David
+  Brewster? "In the atmosphere in which he lives and breathes, and the phenomena of
+  which he daily sees, and feels, and describes, and measures, the philosopher stands in
+  acknowledged ignorance of the laws which govern it. He has ascertained, indeed, its
+  extent, its weight, and its composition; but though he has mastered the law of heat
+  and moisture, and studied the electric agencies which influence its condition, he
+  cannot predict, or even approximate to a prediction, whether on the morrow the sun
+  shall shine, or the rain fall, or the wind blow, or the lightning descend." And all
+  that is perfectly true.
+
+========================================================================================
+[aff=opinion]  primary=how_to  classes=['composition', 'how_to', 'opinion', 'knowledge']
+  And again in the Gospel ye find that it is written, how that our Lord girded Himself
+  with a towel, and poured water into a bason of washing, as we sat at meat; and drew
+  near and washed the feet of all of us, and wiped them with the towel. Now this He did
+  that He should shew us charity and love of the brethren, that we also should do so to
+  one another. If then our Lord did so, ye Deacons, do ye doubt to do so to those that
+  are sick and infirm, ye who are workers of truth, and hold the likeness of Christ?
+  wherefore be ye ministering in love, and be not murmuring or doubting: otherwise ye
+  minister as for men, and not for God; and your reward, according to your ministration,
+  shall ye receive in the day of judgment. It is necessary therefore for you Deacons
+  that ye visit all those that are in need, and concerning those that are distressed
+  that ye make known to the Bishop; and that ye be his soul and his mind, and in
+  everything be toiling and obedient unto him.
+
+========================================================================================
+[aff=expository]  primary=knowledge  classes=['composition', 'knowledge']
+  The council may also provide for the erection, purchase, or renting of a city hall,
+  workhouses, houses of correction, prisons, engine houses, and any and all other
+  necessary buildings for the city; and may sell, lease, olish, or otherwise dispose of
+  the same and may inclose, improve, regulate, purchase, or sell all public parks or
+  other public grounds belonging to the city and may purchase and hold grounds for
+  public parks within the city, or within 3 miles thereof. SEC. 5842. The council shall
+  have power, by ordinance, to secure the general health of the inhabitants of the city
+  by any measure to regulate, suppress, or abate slaughterhouses, slaughtering animals,
+  stockyards, soap and other factories, pigpens, cow stables, and other stables and
+  dairies, coal-oil tanks, and factories, and to remove the same; and to regulate or
+  prevent the carrying on of any business which may be dangerous or detrimental to the
+  public health, or the manufacturing or vending of articles obnoxious to the health of
+  the inhabitants; to prevent, abate, and remove nuisances in a summary manner at the
+  cost of the occupant or owner of the premises where the nuisance or the cause thereof
+  may be: Provided, That the same was caused by the occupant or owner of the premises or
+  his agent; and all costs and expenses incurred by the city in removing or abating any
+  nuisance on private property within the city limits may be assessed against the
+  occupant or owner, if caused by them or either of them or their agent, and the same
+  shall be assessed by the council as a special tax bill against such private property,
+  which shall be a special lien against such property in the same manner and with the
+  same effect that special tax bills are for paving; or the cost of removing or abating
+  such nuisance may be made a part of the judgment by the police judge; in addition to
+  the fine imposed, in case of conviction in the police judge's court of the person
+  causing or maintaining any such nuisance; and the power is hereby given the city
+  council to provide punishments for persons causing or maintaining nuisances in the
+  city, or within 1 mile thereof.
+
+========================================================================================
+[aff=argument]  primary=narrative_fiction  classes=['narrative_fiction']
+  Leave my tents, I command you.' Abiram laughed, and said something about the tamarisk
+  trees being plentiful; but this was too absurd to need an answer, since no tamarisk
+  gum could account for the regular supply of manna nor for the Sabbath omission. Dathan
+  called out rudely and defiantly to the young men, 'We reckon upon you! You will see
+  to-morrow, and will stand with us.' Korah only tarried to say a few words to his
+  sister, and the four ringleaders passed on, while Ulim clasped his hands, raised them
+  to heaven, and exclaimed: 'O God, be merciful to us, and to this perverse generation.'
+  For, as he told Sherah, disaffection was widely spread among the congregation. The
+  defeat at Hormah was forgotten, and the younger men, who had been recently acquiring
+  some dexterity in the use of their weapons, fancied that nothing need restrain them
+  from going on to conquer save Moses' timidity; and that wandering in the desert would
+  merely be dropping all the civilisation they had learnt in Egypt: while others were
+  not unwilling to lead the wild nomadic life, only not under the strict regulations
+  that Moses was constantly promulgating and enforcing; and some would have given up all
+  hope and returned to the ease and plenty of Egypt, forgetting all the slavery.
+
+========================================================================================
+[aff=expository]  primary=opinion  classes=['opinion']
+  We shall not appreciate this until we are sitting, tired and dusty after supper,
+  before the tavern fire, or, still more likely, after we are back at our desks and are
+  madly twisting our hands in our hair as we think there shall be no more holiday for
+  the present. I guess the trouble is that it takes a long time for good impressions to
+  leach through our slow minds. Walk in reverence, yet in triumph, through October's
+  cathedral woods to the coronation of your soul. Look Look up and hold your heart high.
+  There is no to-morrow and no past. The present is sublime. Yet, to-morrow you Would it
+  were yeswill say, "Ah, me! Gold, Blue, and Crimson 179 terday !" So make the most of
+  the time, if only that this tramp may go on through memory in many to-morrows. many
+  to-morrows. Range over with larger Please your the hills like a bee,-a bee faculties
+  for use and delight. eyes with flowers and maples, your body with a couch of turf,
+  your throat with airbright water of the springs, your palate with fruits, honey, and
+  breads first handed out of the earth, your hearing with wood songs, wind songs, your
+  nose with pine, spruce, yarrow, bay, sweet fern, and air.
+
+========================================================================================
+[aff=argument]  primary=reasoning  classes=['knowledge', 'reasoning']
+  Newton, 289 Fed. 1013. The final paragraph of the amendment of 1925 provides that if
+  the segregation of a corporation's assets as shown by this report does not properly
+  reflect the corporate activity or business done or income earned from corporate
+  activity or from business done in this state because of the character of the
+  corporation's business and the character or location of its assets, the Tax Commission
+  may adjust the tax upon the basis of the corporation activity or the business done
+  within and without the state rather than upon capital or assets employed. This last
+  paragraph of subdivision 9, Section 211, appears to be general and would seem to
+  permit a different method for the computation of the state franchise tax than that
+  required by Section 214 of the Tax Law. The method of computation under Section 214 of
+  the Tax Law has not been changed by the Legislature of 1925.
+
+========================================================================================
+[aff=argument]  primary=reasoning  classes=['reasoning', 'knowledge', 'opinion',
+'composition']
+  Inasmuch as the average cost of such repairs is now in excess of $500 a mile, the
+  commission has suggested that a greater amount should be assessed upon the cities and
+  towns. It is therefore recommended by this committee that one-half the cost of such
+  repairs shall be assessed in the State tax to those cities and towns in which the
+  repairs have been made; but in order that such assessment shall not create undue
+  burdens on small towns, a maximum amount per mile has been fixed, based on the
+  valuation of the city or town. It has been shown that cities and towns which have been
+  assisted in the construction or improvement of their own roads by money received from
+  the State have neglected in some instances to make necessary repairs after the
+  construction or improvement has been completed, and the commission has suggested to
+  this committee the passage of a law which would give to the commission, in the event
+  of a municipality's failure to make proper provision for the maintenance of such
+  roads, the authority to make the repairs and charge the cost thereof to the city or
+  town.
+
+========================================================================================
+[aff=narrative]  primary=stem_reasoning  classes=['stem_reasoning', 'knowledge']
+  A mercurial thermometer d was placed in the syphon to measure the temperature of water
+  entering the inner vessel. 99400 Steam Lassage To Condenser The furnace for heating
+  the plate was formed of a hollow iron hemisphere on which the boiler rested with an
+  asbestos washer between. This was surrounded by a firebrick cylinder and two Fletcher
+  burners were arranged to project the flames on to the outside of the iron hemisphere
+  tangentially so as to * "On the Thermal Condition of Iron, Steel, and Copper when
+  acting as Boiler Plate," Proc. Inst. Civil Engs., Vol. CXXXII, 1897-98, Part II. heat
+  it uniformly. The hot-iron hemisphere then radiated heat to the plate under test. The
+  temperature of the plate was measured by means of thermo-junctions embedded in the
+  metal. The particular arrangement finally adopted so as to cause the least disturbance
+  to the flow of heat through the metal is described on p.
+
+========================================================================================
+[aff=composition]  primary=composition  classes=['composition']
+  Take notice that this action is discontinued. Dated the day of 18 (Signed) A.B.,
+  Plaintiff. No. 52. [Title of court and action.] Take notice that I apply to have
+  judgment entered for my costs in this action. Dated the day of 18 (Signed) C.D.,
+  Defendant. No. 53. In the Exchequer Court of Canada. In Admiralty. Between A.B.,
+  Plaintiff; and C.D., Defendant. on Take notice that this Honourable Court will be
+  moved the day of 18 or SO soon thereafter as counsel can be heard, on behalf of the
+  above named Plaintiff A.B. [or Defendant C.D.], that the judgment [or order] of the
+  Local Judge in Admiralty for the Admiralty District of made herein and dated the 18
+  [or if only part of the judgment or order is appealed from say that so much of the
+  judgment (or order) of the Local Judge in Admiralty for the Admiralty District of made
+  herein and dated the day of day of 18 as adjudges (or directs or orders as the case
+  may be) that There set out the part or parts of the judgment or order which are
+  appealed from] may be reversed [or rescinded] and that-[here set out the relief or
+  remedy, if any, sought] and that the costs of this appeal, and before the Local Judge
+  in Admiralty, may be paid by the to the Dated, &c.
+
+========================================================================================
+[aff=expository]  primary=verse  classes=['verse', 'narrative_grounded', 'knowledge',
+'reasoning']
+  The Mithridatium received its name from the great Mithridates, king of Pontus, who had
+  a strange affectation of superior skill in the powers of simples. He tried the effects
+  of these upon condemned malefactors, and, finding that different drugs counteracted
+  different poisons, he thought that, by putting all of them together, he should be able
+  to make a compound that would render him secure against any poison that could be given
+  him. (Galen, De Antid., p. 2.) Accordingly he is commonly said to have so fortified
+  his own body by the constant use of this antidote, that he afterwards tried in vain to
+  put an end to his life; but this, if true, was probably,' as Dr. Heberden says
+  (Antither., p. 10), less owing to the strength of his antidote than to the weakness of
+  his 345 Antidotus vero multis Mithridatica fertur Consociata modis: sed Magnus,
+  scrinia regis Quum raperet victor, vilem deprendit in illis Synthesin, et vulgata
+  satis medicamina risit: Bis denum rutae folium, salis et breve granum, Juglandesque
+  duas, totidem cum corpore ficus: Haec oriente die parco conspersa Lyaeo Sumebat,
+  metuens dederat quae pocula mater.' poison.' However, Pompey seems to have been
+  possessed | time (Hist.
+
+========================================================================================
+[aff=expository]  primary=reasoning  classes=['reasoning', 'knowledge', 'opinion']
+  96. Matter 65 being once expelled out of nature drags with it so many sceptical and
+  impious notions, such an incredible number of disputes and puzzling questions, which
+  have been thorns in the sides of divines as well as philosophers, and made so much
+  fruitless work for mankind, that if the arguments we have produced against it are not
+  found equal to demonstration (as to me they evidently seem), yet I am sure all friends
+  to knowledge, peace, and religion have reason to wish they were. 66 97. Beside the
+  external 6 existence of the objects of perception, another great source of errors and
+  difficulties with regard to ideal knowledge is the doctrine of abstract ideas, such as
+  it hath been set forth in the Introduction. The plainest things in the world, those we
+  are most intimately acquainted with and perfectly know, when they are considered in an
+  abstract way, appear strangely difficult and incomprehensible.

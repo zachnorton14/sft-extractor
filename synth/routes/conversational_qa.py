@@ -207,7 +207,7 @@ async def sample_run(excerpts, seed=0):
     header = [f"route: conversational_qa", f"model: {ROUTE.model}", f"seed:  {seed}",
               f"n:     {len(excerpts)}", f"kept:  {kept}/{len(excerpts)}", "",
               "--- SYSTEM PROMPT ---", SYSTEM, ""]
-    d = engine.ROOT / "synth" / "samples" / "conversational_qa"
+    d = engine.ROOT / "synth" / "samples" / "routes" / "conversational_qa"
     d.mkdir(parents=True, exist_ok=True)
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     path = d / f"{ts}_seed{seed}_n{len(excerpts)}.txt"

@@ -1,0 +1,300 @@
+route: how_to_qa
+model: deepseek-v4-pro
+seed:  0
+n:     20
+kept:  11/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that tells how something is done or
+made — a method, recipe, process, or technique. Work in this order.
+
+1. FIND THE PROCEDURE FIRST. Choose the sequence of steps the passage gives for doing
+   or making ONE thing, and copy it VERBATIM as the answer.
+   - Return it as "spans": exact quotations from the passage that, read in order, give
+     the steps of the method from start to finish. Prefer ONE contiguous span; use up
+     to 4 only because the steps are spread out, always the fewest, longest
+     spans that hold the procedure together.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder, or add any word not in the passage — including connecting words between
+     spans. Only select and order the author's own sentences.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
+   - Do NOT choose spans that lean on a figure, plate, table, or page the reader cannot
+     see ("as in Fig. 4", "see p. 20"); pick steps that stand without them, or omit.
+
+2. THEN WRITE THE QUESTION the procedure answers.
+   - Ask how the thing is done or made: "How is ... made?", "How does one ...?", "By
+     what process is ... prepared?", "What are the steps in ...?". The spans must give
+     the COMPLETE method your question asks for.
+   - Plain period register, pre-1930s English — no word, term, or idiom that came into
+     use after 1930, no modern or conversational phrasing.
+   - Stands alone. Never mention the source — no "the passage", "the text", "described",
+     "above". Ask as if setting a practical exercise.
+   - Self-situating — name the actual thing made or done (the process, dish, material,
+     or operation) so the question makes sense to someone who never saw the passage.
+     Never leave a bare "this preparation" or "the process".
+   - Do NOT put the steps, or their distinctive wording, in the question.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[AGRICULTURE]  1900  prose_score 0.80
+  excerpt : One other point may be observed as the approach grows longer. So far no
+            mention has been made of the weight of the body, because in the shorter
+            strokes the body is hardly employed at all. Gradually, however, as greater
+            distance has to be covered, the weight of the body begins to be called into
+            use. There is very little difference in the length of the The Weight of the
+            Body. 99 swing, and the posit...
+  Q       : How is the weight of the body employed in the half shot and the drive?
+  A       : The weight is thrown first on the right leg as club goes back, and then on
+            the left as it comes forward.
+
+========================================================================================
+[NAVAL SCIENCE]  1916  prose_score 0.75
+  excerpt : From Galveston to Liverpool the rates have been increased on grain 174 per
+            cent; on cotton 361 per cent; to Bremen the rates have been increased on
+            cotton 1,061 to 1,150 per cent. Since this report was written, gentlemen,
+            freight rates have in many instances been still further increased. Now, it
+            is stated that marine insurance and war risk insurance have added very
+            greatly to these costs. Let me s...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1907  prose_score 0.30
+  excerpt : When one of these is set up, several long poles are erected sloping inward
+            and upward to the centre, where a kind of hoop holds the tops together. This
+            leaves an opening to let in the light and let out the smoke from their
+            fires. Small rods, four to six feet long, are laid across the poles and tied
+            fast to them, making a kind of open network. Then great pieces of felt, made
+            of coarse wool and hair...
+  Q       : How is a Kalmuck tent constructed?
+  A       : When one of these is set up, several long poles are erected sloping inward
+            and upward to the centre, where a kind of hoop holds the tops together. This
+            leaves an opening to let in the light and let out the smoke from their
+            fires. Small rods, four to six feet long, are laid across the poles and tied
+            fast to them, making a kind of open network. Then great pieces of felt, made
+            of coarse wool and hair, are laid over this framework.
+
+========================================================================================
+[SCIENCE]  1904  prose_score 1.00
+  excerpt : The student should never fail to use this rule to test the distribution of a
+            product of homogeneous functions. If he finds any term in his result of a
+            higher or lower degree than that indicated by the rule, he has certainly
+            made some mistake. He should also see whether all possible terms of the
+            right degree are present, and satisfy himself that, if any are wanting, it
+            is owing to some peculiarity ...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1875  prose_score 1.00
+  excerpt : Adding the two partial products we have for the entire product 151616.
+            Therefore, the product of 736 by 206 is 151616. RULE. Write the multiplier
+            under the multiplicand, so that units may stand under units, tens under
+            tens, etc. If the multiplier contains but one order of units, beginning at
+            the right multiply each order of the multiplicand by it, writing the right-
+            hand figure of each product unde...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1862  prose_score 0.40
+  excerpt : There are other species, more delicate, which have but a single series of
+            cells, all opening on the same side of the leaf. Each individual cell is
+            shaped like a child's cradle; and if you will imagine 20,000 wicker cradles
+            stuck together side by side in one plane, after the quincunx pattern I have
+            just mentioned; and then the whole broad array turned over, and 20,000 more
+            glued on to these, bottom...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1922  prose_score 0.40
+  excerpt : C., which has a winter climate about the same as St. Louis, the umbrella
+            sheds have given entire satisfaction. Midway The midway can be widened and
+            additional space added to the waiting rooms, ticket offices and other
+            station facilities, by cutting off the ends of the present station tracks,
+            which, however, will not be feasible until some means be found to lengthen
+            those tracks. At such time as th...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1894  prose_score 0.53
+  excerpt : Outside this is a single layer of cells somewhat elongated radially, and
+            with a thick outer wall: this is the dermatogen, or formative tissue of the
+            piliferous layer. If the section be accurately median it will be possible to
+            trace (2) and (3) upwards, till, immediately above the apex of the plerome,
+            they merge into a single layer of cells: thus the formative tissue, from
+            which the piliferous laye...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1903  prose_score 1.00
+  excerpt : Solve the two equations- (1) x+m+y+m' = a (2) m+m'=b Replace m and m' in
+            terms of x and y as given. Then by the usual algebraic methods we get the
+            following values for x and y- x= [b(Q+ R) - aR] R(Q-P) y= [aR − b(R+P)]
+            R(Q-P) Replacing P, Q and R by the values given we obtain-x= =·09024(296 –
+            16a) 2.617b-1.444a y=05078(48a - 71b) = 2.437a - 3.605b If many estimations
+            of this nature are to be made,...
+  Q       : How does one construct and use a diagram for estimating the composition of
+            mixed sodium and potassium sulphates from their sulphate content?
+  A       : Plot these distances as shown on the vertical lines. Join the various points
+            as shown. Suppose analysis shows that one gram of the mixed sulphates gives
+            624 gm. SO. Slide the rule along parallel to the vertical lines till the
+            6.24 mark on the rule meets the upper diagonal.
+
+========================================================================================
+[SCIENCE]  1889  prose_score 0.88
+  excerpt : If, however, we lay a freshly-prepared section in a drop of watery chloride
+            or sulphate of iron solution, we see that it colours throughout its entire
+            mass of a dark-blue colour. This coloration is, moreover, communicated to
+            the surrounding fluid, and produces for us, therefore, the iron reaction for
+            tannin, in its iron-blue form, while there is also an iron-green form. If
+            the action is observed u...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1873  prose_score 1.00
+  excerpt : By means of the telescope read them as they hang in the air, estimating the
+            fractions of a degree in tenths. Do the same when their bulbs are immersed
+            in water, then cool them with ice and read again. This observation is
+            important, as it shows the absolute error of each instrument. Next heat the
+            water a few 33 degrees with the burner, and then remove the latter. The
+            temperature will still rise for...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1888  prose_score 0.38
+  excerpt : 3 ij. These preparations may be used in a more diluted state if the patient
+            young. In some cases a diluted solution of nitric acid (ten drops to two
+            ounces of water), used inside the putrid cavities, will destroy the ani mal
+            deposit. Hydrochloric acid (fifteen drops of the diluted preparation to half
+            an ounce of water) may be applied to the incrustations of tartar. This is
+            done by dipping a piece ...
+  Q       : How are incrustations of tartar on the teeth dissolved by the application of
+            hydrochloric acid?
+  A       : Hydrochloric acid (fifteen drops of the diluted preparation to half an ounce
+            of water) may be applied to the incrustations of tartar. This is done by
+            dipping a piece of match or splinter of wood, prepared for the purpose, in
+            the solution, and then rubbing it over the tartar until it is dissolved.
+
+========================================================================================
+[MILITARY SCIENCE]  1865  prose_score 0.38
+  excerpt : At the second command, the companies designated file to the right and left
+            until the second 109 and third sides of the square are formed. The companies
+            are then faced to the front. The first division marches to the rear until
+            its flanks touch the flanks of the second and third sides of the square,
+            when it is halted and faced to the front by its chief. Each captain aligns
+            his own company if necessa...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1896  prose_score 0.40
+  excerpt : The white church at Cobija is, however, a conspicuous object, and in clear
+            weather will be a good guide. If bound here from Cobija, stand along the
+            coast, about 800 yards distant, until the pier opens, then round Rocky point
+            at 300 yards distant, or as convenient, and anchor as above. If bound from
+            the northward, after making Cobija church steer for it on a S. 23° E. (S.
+            34° E. mag.) bearing, unti...
+  Q       : How does a vessel coming from Cobija make the anchorage at this cove?
+  A       : If bound here from Cobija, stand along the coast, about 800 yards distant,
+            until the pier opens, then round Rocky point at 300 yards distant, or as
+            convenient, and anchor as above.
+
+========================================================================================
+[SCIENCE]  1924  prose_score 0.45
+  excerpt : The brave "westerly" will come along by-and-by and release you, and, with a
+            staggering press of sail carried to the reliable gale, away you go for the
+            long stretch of a hundred degrees or so eastward. You will very likely sight
+            Tristan d'Acunha or Gough Island; but, if not, the course will keep you
+            fairly well informed of your longitude, since most ships make more or less
+            of a great circle track. ...
+  Q       : How is the great circle track run during the long easterly run?
+  A       : Instead of steering due East for the whole distance, they make for some
+            southerly latitude by running along the arc of a great circle, then run due
+            east for a thousand miles or so before gradually working north again.
+
+========================================================================================
+[MILITARY SCIENCE]  1916  prose_score 1.00
+  excerpt : The back step is used for short distances only and is not executed in double
+            time. If at order arms, the back step is executed at trail without command.
+            To Halt. 70. To arrest the march in quick or double time: 1. Squad, 2. HALT.
+            At the command halt, given as either foot strikes the ground, plant the
+            other foot as in marching; raise and place the first foot by the side of the
+            other. If in double t...
+  Q       : How is a squad halted from quick or double time?
+  A       : To arrest the march in quick or double time: 1. Squad, 2. HALT. At the
+            command halt, given as either foot strikes the ground, plant the other foot
+            as in marching; raise and place the first foot by the side of the other. If
+            in double time, drop the hands by the sides.
+
+========================================================================================
+[AGRICULTURE]  1903  prose_score 0.60
+  excerpt : When boiling begins set over the cauldron a white hollow wooden cylinder,
+            about 3 feet high and 2 feet in diameter, with 165 a perforated bottom and
+            open at the top. Arrange in this cylinder round baskets three-fourths filled
+            with cocoons; then cover the cylinder with a perforated lid. In about thirty
+            minutes the operation will be completed, after which remove the cylinder,
+            take out the baskets, a...
+  Q       : How are silk-worm cocoons prepared for storage by steaming?
+  A       : When boiling begins set over the cauldron a white hollow wooden cylinder,
+            about 3 feet high and 2 feet in diameter, with 165 a perforated bottom and
+            open at the top. Arrange in this cylinder round baskets three-fourths filled
+            with cocoons; then cover the cylinder with a perforated lid. In about thirty
+            minutes the operation will be completed, after which remove the cylinder,
+            take out the baskets, and spread out the cocoons to dry before storing, to
+            prevent them from spoiling.
+
+========================================================================================
+[AGRICULTURE]  1908  prose_score 0.60
+  excerpt : In practice we aim to secure these conditions as follows: A piece of well-
+            drained, rather sandy soil in an airy place is selected and laid out in beds
+            four feet wide. In May the seeds are sown rather thickly (about three good
+            seeds to a square inch), either broadcast or in rows, and covered with about
+            one-fourth inch of sandy loam and then with about one-fourth inch of clear
+            sand. Some of the smal...
+  Q       : By what method are evergreen seedlings raised from seed in prepared beds?
+  A       : A piece of well-drained, rather sandy soil in an airy place is selected and
+            laid out in beds four feet wide. In May the seeds are sown rather thickly
+            (about three good seeds to a square inch), either broadcast or in rows, and
+            covered with about one-fourth inch of sandy loam and then with about one-
+            fourth inch of clear sand. Before the seedlings break the ground, a
+            framework at least three feet above the beds is made and covered with laths,
+            laid about one and one-half inches apart, running north and south, or with
+            sufficient brush to shut out about one-half the sunlight. If the bed is very
+            much exposed to the winds it should have similar protection on all sides.
+
+========================================================================================
+[MEDICINE]  1905  prose_score 0.60
+  excerpt : And, moreover, such straightening is readily capable of proof. For if a
+            patient's height be carefully taken by a measuring standard before the
+            appliance is first put on, and if the height is again taken immediately
+            after the appliance has been put on and after extension has thereby been
+            effected, a notable increase in bodily height will be at once discernible,
+            an increase which in an oldstanding a...
+  Q       : How is the straightening effect of a spinal appliance proved by measurement?
+  A       : If a patient's height be carefully taken by a measuring standard before the
+            appliance is first put on, and if the height is again taken immediately
+            after the appliance has been put on and after extension has thereby been
+            effected, a notable increase in bodily height will be at once discernible
+
+========================================================================================
+[TECHNOLOGY]  1904  prose_score 0.30
+  excerpt : Braised Eels (Royal Style) Skin and wash an eel, and cut in 2-inch pieces;
+            sprinkle with salt and allow them to stand an hour or two. Put into cold
+            water for ten minutes; then dry, and put in a buttered saucepan, season with
+            salt and pepper and a suspicion of nutmeg; over the whole put a little
+            scraped parsley root, a few whole white peppers, and a few slices of lemon
+            and shallots. Put the saucepa...
+  Q       : How are Braised Eels prepared after the Royal Style?
+  A       : Skin and wash an eel, and cut in 2-inch pieces; sprinkle with salt and allow
+            them to stand an hour or two. Put into cold water for ten minutes; then dry,
+            and put in a buttered saucepan, season with salt and pepper and a suspicion
+            of nutmeg; over the whole put a little scraped parsley root, a few whole
+            white peppers, and a few slices of lemon and shallots. Put the saucepan over
+            a moderate fire, with hot ashes on the lid, and braise till the fish is
+            done. Take out the pieces of eel and keep hot while you add to the saucepan
+            a cupful of stock; boil a few minutes, then thicken with a white roux; take
+            from the fire, add the slightly beaten yolks of 3 eggs. Let it come to a
+            boil, and strain this into a saucepan with twice the quantity of German
+            sauce; let it boil once; pour over the eel, and serve.

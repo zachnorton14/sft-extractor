@@ -1,0 +1,531 @@
+route: composition_qa
+model: claude-haiku-4-5
+seed:  0
+n:     20
+kept:  15/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that IS, or contains, a formal
+COMPOSED DOCUMENT — a statute or act, a legal pleading, a letter, a speech or
+resolution, a prayer or devotion, a proclamation, a contract or like instrument. Turn
+it into an instruction-and-completion pair in which the reader is asked to COMPOSE such
+a document. Work in this order.
+
+1. FIND THE ARTIFACT FIRST. Identify the composed document in the passage and copy it
+   VERBATIM as the answer.
+   - Return it as "spans": prefer ONE long contiguous quotation that is the document,
+     or a self-contained part of it (a whole clause, a whole letter, a whole stanza of
+     the oration). Use several exact quotations only when it is genuinely split — never
+     more than 3, always the fewest, longest spans. Begin at a natural start
+     (a heading, salutation, "Whereas", "Resolved, that", "O Lord") and end at a
+     natural close.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder within a span, or add any word not in the passage — including connecting
+     words between spans. You may only select and order the passage's own text.
+
+2. THEN WRITE THE INSTRUCTION that asks for this document.
+   - Name the GENRE and the SUBJECT: "Draft an act of Parliament to ...", "Compose a
+     letter ...", "Frame a resolution ...", "Write a prayer for ...", "Set out a
+     plaintiff's plea that ...". It must call for exactly the kind of document the
+     answer is, on its actual subject and occasion.
+   - Give the instruction the substance the document needs to be a fitting answer — its
+     purpose, parties, or occasion — but do NOT copy the document's wording or dictate
+     its phrasing. Ask for the thing; let the answer supply the words.
+   - Plain period register: direct, no modern or conversational phrasing, no
+     meta-language. Write it in pre-1930s English — period vocabulary, spelling, and
+     phrasing; use no word, term, or idiom that came into use after 1930.
+   - Stands alone. Never mention the source — no "the passage", "the text", "the
+     author", "as given", "above", "described". Phrase it as a task set from scratch.
+   - Do NOT reproduce the document's distinctive wording in the instruction.
+
+If the passage is NOT actually a composed document of a recognizable genre — it is
+ordinary narration, exposition, or argument — emit NO item for it (omit that index).
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[LAW]  1896  prose_score 0.94
+  excerpt : 2. For the formal parts of a petition in a particular jurisdiction see the
+            title This is the form of petition in 855 Volume 16. had made and presented
+            to the clerk of said board an affidavit, of which the following is a copy:
+            (Here was set out the affidavit). Eighth. Thereupon and on behalf of your
+            petitioner the said draft was presented to James W. Coffey, Comptroller of
+            the city of Troy, to be c...
+  Q       : Compose a petition in the nature of a mandamus to be exhibited in the court,
+            wherein it shall be shewn that a certain draft, after due audit, was
+            presented to James W. Coffey, Comptroller of the city of Troy, for his
+            countersignature; that he refused and still refuses to countersign the same;
+            and that the petitioner therefore prays that a writ of peremptory mandamus
+            may issue out of the said court, directing and commanding the said
+            Comptroller to countersign the said draft.
+  A       : Eighth. Thereupon and on behalf of your petitioner the said draft was
+            presented to James W. Coffey, Comptroller of the city of Troy, to be
+            countersigned by him, such countersignature being, as your petitioner is
+            informed, necessary in order to enable the Chamberlain of the city of Troy
+            to pay the amount of the said audit and draft. Ninth. Thereupon the said
+            comptroller refused to countersign the said draft, and has ever since
+            refused, and still refuses, to countersign the same. Wherefore your
+            petitioner prays that a writ of peremptory mandamus issue out of this court,
+            directing and commanding the said James W.
+
+========================================================================================
+[LAW]  1898  prose_score 0.96
+  excerpt : Amendment of sec. 22 of 17 & 18 Vict. c. 91, as to stations, etc.— . . .¹
+            The twenty-second section of the first recited Act shall be read and
+            construed as if the words "five pounds per centum" were substituted for the
+            words "three pounds per centum" wherever these latter words occur in the
+            said section of the said first-recited Act. 1 Recital of previous Act
+            omitted by 56 Vict. c. 14. V. Separate...
+  Q       : Draft a clause in an Act of Parliament to amend the twenty-second section of
+            the first-recited Act (17 & 18 Vict. c. 91) by substituting the words 'five
+            pounds per centum' for the words 'three pounds per centum' wherever they
+            occur in that section; and to provide further that the assessor of railways
+            and canals, when required before the first day of April in each year by the
+            town clerk or clerk of the commissioners or trustees of police of any burgh,
+            town, or populous place in which a general or local Police Act is in force,
+            shall specify and assign separately the value of the portions of railways
+            within such limits, and on completion of the valuation roll shall transmit a
+            certified copy thereof to the said clerk.
+  A       : Amendment of sec. 22 of 17 & 18 Vict. c. 91, as to stations, etc.— . . .¹
+            The twenty-second section of the first recited Act shall be read and
+            construed as if the words "five pounds per centum" were substituted for the
+            words "three pounds per centum" wherever these latter words occur in the
+            said section of the said first-recited Act. 1 Recital of previous Act
+            omitted by 56 Vict. c. 14. V. Separate valuation to be assigned if required
+            before 1st April in each year to towns and populous places in which a
+            general or local police Act is in force. The assessor of railways and canals
+            shall, if required as hereinafter provided, specify and assign separately
+            the value of those portions of railways included within the limits of
+            burghs, towns, or populous places (not being burghs in the sense of the
+            twenty-seventh section of the first-recited Act, which section shall remain
+            in full force and effect) which have adopted or shall hereafter adopt the
+            provisions of the Acts of the thirteenth and fourteenth Victoria, chapter
+            thirty-three, or of the twenty-fifth and twenty-sixth Victoria, chapter one
+            hundred and one, or in which any local Police Act is or may hereafter be in
+            force: Provided always, that it shall not be necessary for the said assessor
+            to assign separately the value of the portions of railways included within
+            the limits of any burgh, town, or populous place, in terms of this section,
+            unless on or before the first day of April in each year the town clerk or
+            clerk of the commissioners or trustees of police thereof, as the case may
+            be, shall have required him so to assign the same; and such town clerk or
+            clerk of the commissioners or trustees of police, when making such
+            requisition, shall be bound to state the lineal measurement of the portions
+            of the railway or railways belonging to or leased by any railway company,
+            and forming part of the undertaking thereof, situated within the limits of
+            such burgh, town, or populous place, and the assessor shall satisfy himself
+            as to the correctness of such measurement; and the said assessor,
+            immediately on the completion of the valuation roll made up by him under the
+            recited Acts and this Act, shall transmit to each town clerk or clerk of the
+            commissioners or trustees of police so requiring him as aforesaid a
+            certified copy of the valuation, taken from such valuation roll, of the
+            lands and heritages within such burgh, town, or populous place, as the case
+            may be, belonging to or leased by and forming part of the undertaking of
+            such company; and such valuation relating to such company shall be engrossed
+            by such town clerk or clerk of the commissioners 1867.
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1910  prose_score 1.00
+  excerpt : I rather guess you wish now you'd let me got at you and made this meeting
+            impossible. And in parting I tell you and the snobs and aristocrats like you
+            that an honest Arkansas farmer is as good as you and far too smart to be
+            fooled by you, if you did graduate from Harvard College. But you've got a
+            chance to try.” The chairman announced to his fellow-citizens that they
+            would now hear from Mr. Danfor...
+  (failed)
+
+========================================================================================
+[LAW]  1894  prose_score 0.75
+  excerpt : Mr. Chairman. Mr. G. Mr. G. I offer the following resolution, Resolved that
+            in the judgment of this meeting the present provisions made for protection
+            against fire in this city are inadequate. The Chairman. Is the resolution
+            seconded? Mr. H. I second the resolution. The Chairman. Mr. G. offers the
+            following resolution, namely,―That in the judgment of this meeting the
+            present provisions for protect...
+  Q       : Frame a resolution to be proposed at a meeting, to the effect that the
+            present provisions for protection against fire in this city are inadequate.
+  A       : Resolved that in the judgment of this meeting the present provisions made
+            for protection against fire in this city are inadequate.
+
+========================================================================================
+[WORLD HISTORY AND HISTORY OF EUROPE, ASIA, AFRICA, AUSTRALIA, NEW ZEALAND, ETC.]  1895
+prose_score 1.00
+  excerpt : Resolved, That it is with feelings of sadness and regret, that we learn of
+            the death of our friend and brother, Robert M. Browning, late an honored and
+            respected member of the bar. Resolved, That we acknowledge his ability as a
+            lawyer, his culture and classical attainments as a student, his devotion as
+            a friend and his uniform courtesy as a gentleman. Resolved, That not only as
+            members of the prof...
+  Q       : Draft memorial resolutions to be adopted by the bar upon the death of a
+            brother attorney, expressing grief at his decease, acknowledging his
+            professional ability and personal virtues, and directing that the
+            resolutions be published in the newspapers, entered in the court minutes,
+            and a copy sent to his family with an expression of sympathy.
+  A       : Resolved, That it is with feelings of sadness and regret, that we learn of
+            the death of our friend and brother, Robert M. Browning, late an honored and
+            respected member of the bar. Resolved, That we acknowledge his ability as a
+            lawyer, his culture and classical attainments as a student, his devotion as
+            a friend and his uniform courtesy as a gentleman. Resolved, That not only as
+            members of the profession, but as his friends in the social circle, where he
+            was the delight of his companions, do we this day assemble to pay our
+            heartfelt tribute to the memory of his character and worth. Resolved, That
+            these resolutions be published in each of the Camden papers, and entered in
+            the minutes of the Court, and that a copy be presented to the family of our
+            dead brother, with the expressions of the deep sympathy of this bar. R. M.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1884  prose_score 0.97
+  excerpt : 4. I enclose an amended Regulation, which will be substituted in the
+            Colonial Regulations for the present Regulation No. 404, in Chapter XIV.;
+            and also an amended Form of Passport, which will be inserted in the
+            Appendix, in place of the Form and Memorandum now in use. I have the honour
+            to be, Sir, Governor (Lieutenant-Governor, or Officer Administering the
+            Govern ment) of the (Colony, Island, or P...
+  Q       : Compose a form of passport for a naturalized British subject, containing a
+            condition that the bearer shall not be entitled to British protection when
+            within the territory of the foreign state of which he was formerly a
+            subject, unless he has ceased to be a subject of that state in accordance
+            with its laws or a treaty.
+  A       : This Passport is granted to A. B., naturalized as him to travel in foreign
+            parts. British subject in this Colony, to enable This Passport is granted
+            with the qualification that the bearer shall not, when within the limits of
+            the Foreign State of which he was a subject previously to obtaining his
+            Colonial Certificate of Naturalization, be entitled to British protection,
+            unless he has ceased to be a subject of that State in pursuance of the laws
+            thereof, or in pursuance of a Treaty to that effect.
+
+========================================================================================
+[LAW]  1870  prose_score 1.00
+  excerpt : The plaintiff represents himself as an alien, and as the only heir at law of
+            the deceased. Some time after the defendant had answered the petition,
+            Johann Stein, and others, filed their petition of intervention, denying the
+            statements in the plaintiff's petition, and representing themselves to be
+            the true heirs of the deceased. The cause was submitted to a jury, and on
+            the trial, to sustain his ca...
+  Q       : Write a certificate of authentication to be appended to depositions, stating
+            that the depositions were read to the deponents, who gave their assent and
+            approbation, and that the certificate is sealed and signed by the attesting
+            officer.
+  A       : After the preceding depositions were read to the deponents, they gave their
+            assent to them and approbation. [Seal.] (Signed) Seen, for attestation of
+            the preceding signature, of the Royal Amtsvagtey Burgwedel.
+
+========================================================================================
+[LAW]  1916  prose_score 0.89
+  excerpt : 1909 of liquors, evidence that the sale was made by an agent of the party to
+            be charged is prima facie sufficient. Amerman v. Kall, (1884) 34 F An action
+            under the Revised Statutes for a penalty for an illegal liquor, could be
+            maintained where the sale was by an agent; and ea rendered the defendant
+            liable for the penalty, the penalties being cun in the case of more than one
+            sale. Hall v. McKechnie...
+  (failed)
+
+========================================================================================
+[LAW]  1888  prose_score 0.97
+  excerpt : III. c. 8; 3 Ed. I. c. 39; 32 H. VIII. c. 2; 1 Ma. I. Sess. 2, c. 5. 87 King
+            or others, or by knights-service in capite, or socage in capite of the King,
+            and the consequents upon the same, have been much more burdensome, grievous
+            and prejudicial to the kingdom, than they have been beneficial to the King:
+            (2) And whereas since the intermission of the said court, which hath been
+            from the four and tw...
+  Q       : Draft an Act of Parliament to abolish the Court of Wards and Liveries, and
+            to discharge all wardships, liveries, primer seisins, ousterlemains, and
+            other incidents of tenure by knight-service, and to convert all tenures into
+            free and common socage, with effect from the twenty-fourth day of February
+            one thousand six hundred forty and five.
+  A       : III. c. 8; 3 Ed. I. c. 39; 32 H. VIII. c. 2; 1 Ma. I. Sess. 2, c. 5. 87 King
+            or others, or by knights-service in capite, or socage in capite of the King,
+            and the consequents upon the same, have been much more burdensome, grievous
+            and prejudicial to the kingdom, than they have been beneficial to the King:
+            (2) And whereas since the intermission of the said court, which hath been
+            from the four and twentieth day of February which was in the year of our
+            Lord one thousand six hundred forty and five, many persons have by will and
+            otherwise made disposal of their lands held by knights-service, whereupon
+            divers questions might possibly arise, unless some seasonable remedy be
+            taken to prevent the same; (3) be it therefore enacted by the King our
+            sovereign lord, with the assent of the lords and commons in parliament
+            assembled, and by the authority of the same, and it is hereby enacted, That
+            the court of wards and liveries, and all wardships, liveries, primerseisins,
+            and ousterlemains, values and forfeitures of marriages, by reason of any
+            tenure of the King's Majesty, or of any other by knightsservice, and all
+            mean rates, and all other gifts, grants, charges incident or arising, for or
+            by reason of wardships, liveries, primer-seisins, or ousterlemains be taken
+            away and discharged, and are hereby enacted to be taken away and discharged,
+            from the said twenty-fourth day of February one thousand six hundred forty-
+            five; any law, statute, custom or usage to the contrary hereof in any wise
+            notwithstanding: (4) And that all fines for alienations, seizures and
+            pardons for alienations, tenure by homage, and all charges incident or
+            arising, for or by reason of wardship, livery, primer-seisin, or
+            ousterlemain, or tenure by knights-service, escuage, and also, aid pur file
+            marrier, and pur fair fitz chivalier, all other charges incident thereunto,
+            be likewise taken away and discharged, from the said twenty-fourth day of
+            February one thousand six hundred forty and five; any law, statute, custom
+            or usage to the contrary hereof in any wise notwithstanding: (5) And that
+            all tenures by knights-service of the King, or of any other person, and by
+            knights-service in capite, and by socage in capite of the King, and the
+            fruits and consequents thereof, happened or which shall or may hereafter
+            happen or arise thereupon or thereby, be taken away and discharged, any law,
+            statute, custom or usage to the contrary hereof in anywise notwithstanding;
+            (6) and all tenures of any honours, manors, lands, tenements or
+            hereditaments, or any estate of any inheritance at the common law, held
+            either of the King, or of any other person or persons, bodies politick or
+            corporate are hereby enacted to be turned into free and common socage, to
+            all intents and purposes, from the said twenty-fourth day of February one
+            thousand six hundred forty-five, and shall be so construed, adjudged and
+            deemed to be from the said twenty-fourth day of February one thousand six
+            hundred forty-five, and forever thereafter turned into free and common
+            socage; any law, statute, custom or usage to the contrary hereof in any wise
+            notwithstanding.
+
+========================================================================================
+[BIBLIOGRAPHY. LIBRARY SCIENCE. INFORMATION RESOURCES (GENERAL)]  1892  prose_score 0.97
+  excerpt : Section 2. Section 5 of the said Act, except so much thereof as relates to
+            keeping distinct accounts, shall be repealed; and the expenses incurred in
+            calling and holding the meeting (2), whether the said Act shall be adopted
+            or not, and the expenses of carrying the said Act into execution in any
+            Municipal Borough, may be paid out of the Borough Rate of such Borough, or
+            by and out of a rate to be m...
+  Q       : Draft the second section of an Act to amend the Public Libraries Acts,
+            repealing Section 5 of the prior Act except as to distinct accounts, and
+            providing for the payment of expenses of meetings and of carrying the Act
+            into execution out of the Borough Rate, not exceeding one penny in the pound
+            per annum, with a proviso saving the operation of the Act 28 & 29 Victoria,
+            Chapter 108, as to the city of Oxford.
+  A       : Section 2. Section 5 of the said Act, except so much thereof as relates to
+            keeping distinct accounts, shall be repealed; and the expenses incurred in
+            calling and holding the meeting (2), whether the said Act shall be adopted
+            or not, and the expenses of carrying the said Act into execution in any
+            Municipal Borough, may be paid out of the Borough Rate of such Borough, or
+            by and out of a rate to be made and recovered in such Borough in like manner
+            as a Borough Rate may be made and recovered therein, but the amount so paid
+            in such Borough in any one year shall not exceed the sum of one penny in the
+            pound upon the annual value of the property in such Borough ratable to a
+            Borough Rate (3); provided always that nothing in this Act shall interfere
+            with the operation of the Act Twenty-eighth and Twenty-ninth Victoria,
+            Chapter one hundred and eight, so far as it relates to the collection of a
+            rate for a Public Library in the city of Oxford.
+
+========================================================================================
+[LAW]  1890  prose_score 0.91
+  excerpt : 4. Be it further enacted that any Justice of the First meeting. peace in the
+            said County of Oxford, is hereby authorized to issue his Warrant, directed
+            to some suitable member of said Baptist Society, requiring him to notify and
+            warn the Members thereof, to meet at such time and place as shall be
+            appointed in said Warrant to choose such Officers as parishes in this
+            Commonwealth are by law authoris...
+  Q       : Draft an act of the General Court empowering any Justice of the Peace in the
+            County of Oxford to issue his Warrant to a suitable member of the Baptist
+            Society, requiring him to notify and warn the Members thereof to meet at
+            such time and place as shall be appointed in the said Warrant, for the
+            purpose of choosing such Officers as Parishes in this Commonwealth are by
+            Law authorised to choose in the Month of March or April Annually.
+  A       : Be it further enacted that any Justice of the First meeting. peace in the
+            said County of Oxford, is hereby authorized to issue his Warrant, directed
+            to some suitable member of said Baptist Society, requiring him to notify and
+            warn the Members thereof, to meet at such time and place as shall be
+            appointed in said Warrant to choose such Officers as parishes in this
+            Commonwealth are by law authorised to choose in the month of March or April
+            Annually.
+
+========================================================================================
+[SOCIAL SCIENCES]  1908  prose_score 0.95
+  excerpt : Item, that, in the distribution of the said Treasure, a special regard be
+            had of the said Students that be poor: first, for that they be poor; and
+            again, for that they be destinate to be Workmen in the Lord's Vineyard, and
+            so [are] 173 1557. worthy members in the body. And that as they be studious,
+            of the Scriptures specially; and yet withal of other Liberal Arts also, as
+            ministers and handmaids t...
+  Q       : Frame a decree of the Congregation ordaining that in the distribution of the
+            Treasure a special regard be had of poor Students destined to be Workmen in
+            the Lord's Vineyard, and that as they be studious of the Scriptures and
+            Liberal Arts they be liberally handled; and further decreeing that the
+            Deacons do monthly visit the said poor Students and others that are poor,
+            examining their estates charitably and offering to each according to his
+            necessity, with an obtestation that if they have no need they receive it
+            not, lest they rob the needy.
+  A       : Item, that, in the distribution of the said Treasure, a special regard be
+            had of the said Students that be poor: first, for that they be poor; and
+            again, for that they be destinate to be Workmen in the Lord's Vineyard, and
+            so [are] 173 1557. worthy members in the body. And that as they be studious,
+            of the Scriptures specially; and yet withal of other Liberal Arts also, as
+            ministers and handmaids to the setting forth of GOD's Word: so they may be
+            liberally handled; and receive GOD's blessing, which is the liberality of
+            the godly, without the shame and abashment; as the gift of GOD, who giveth
+            to all men, and upbraideth no man. 23. Item, it is decreed, and also the
+            whole Congregation desireth, the Deacons monthly to visit and speak
+            privately with the said Students that be poor; and other poor also: and to
+            examine their states friendly and charitably, and, according to every man's
+            necessity, as the Treasure of the Church will bear, to offer to every one of
+            them; with obtestation [calling God to witness] to them, That if they have
+            no need thereof, they receive it not: for that were nothing else but to rob
+            the needy.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1860  prose_score 0.97
+  excerpt : Not to interrupt my narrative too much, I transfer that and other original
+            communications to the Appendix. I translate one cheering communication: MY
+            DEAR READE, 6th August, 1857. YOUR courageous attitude in the coming trial
+            has called forth from the Committee of Dramatic Authors and Composers, a
+            lively acknowledgment. If the cause of literature is to triumph, the triumph
+            ought to be due to the wr...
+  Q       : Compose a letter from the President of the Society of Dramatic Authors and
+            Composers to Mr. Reade, acknowledging his courageous attitude in the coming
+            trial, informing him that the Society has resolved to defray the costs of
+            the trial, and pledging their sympathies and energetic co-operation.
+  A       : MY DEAR READE, 6th August, 1857. YOUR courageous attitude in the coming
+            trial has called forth from the Committee of Dramatic Authors and Composers,
+            a lively acknowledgment. If the cause of literature is to triumph, the
+            triumph ought to be due to the writers themselves appealing to their rights,
+            and to the good faith of the English nation. Wherefore the Society, of which
+            I have the honour to be President, has decided that the costs of the trial
+            shall be defrayed by the French authors, and the part you offer to take in
+            the affair will be a new title to the esteem and gratitude of your brethren
+            on this side the Channel. We accept, therefore, both your tribute and your
+            aid. Count on being followed to the field of battle by all our sympathies,
+            and by our energetic co-operation.
+
+========================================================================================
+[LAW]  1853  prose_score 0.90
+  excerpt : What that is, can only be ascertained by an account and settlement of the
+            affairs of the concern; collecting the debts due to it, and paying those due
+            by it. If there were a certain stated capital employed by the testator, and
+            a surplus regarded as profits, I should think the debts ought to be paid out
+            of the profits; or, if these were not sufficient, out of the capital. It is,
+            therefore, ordered ...
+  Q       : Draft a decree of the Court ordering that it be referred to the Commissioner
+            to inquire of and report the residue of the estate of Samuel Todd, deceased,
+            undisposed of by his will, in the hands of the defendant Samuel B. Lewers,
+            and also the stock in trade, notes and book accounts bequeathed by the said
+            testator to his nephew Samuel R. Todd, and that costs be paid out of the
+            said undisposed residue.
+  A       : It is, therefore, ordered and decreed, that it be referred to the
+            Commissioner to inquire of and report the residue of the estate of Samuel
+            Todd, deceased, undisposed of by his will, in the hands of the defendant
+            Samuel B. Lewers, and also what are the stock in trade, notes and book
+            accounts, bequeathed by the said testator to his nephew, Samuel R. Todd.
+            Costs to be paid out of the said undisposed residue.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1910  prose_score 0.99
+  excerpt : "And whereas it may be some considerable time before the members of the said
+            English Church will have established the Forms of their future church
+            Government, and in the mean time there may be among the present Incumbents
+            of their parishes, some who are disaffected to the Commonwealth, or immoral
+            characters, or inattentive to the Duties of their Function, who ought to be
+            immediately removed, Be it...
+  Q       : Draft an act of the Legislature providing that whenever twenty members of
+            any parish of the English Church shall in writing signed by themselves
+            exhibit any Charge or complaint against the Incumbent, and require of the
+            church warden or vestryman to call a meeting of the parishioners, such
+            church warden or vestryman shall within ten Days after the Requisition
+            delivered furnish the Incumbent with a true copy thereof.
+  A       : "And whereas it may be some considerable time before the members of the said
+            English Church will have established the Forms of their future church
+            Government, and in the mean time there may be among the present Incumbents
+            of their parishes, some who are disaffected to the Commonwealth, or immoral
+            characters, or inattentive to the Duties of their Function, who ought to be
+            immediately removed, Be it therefore enacted, that whenever in any parish,
+            any twenty members thereof of the said English Church shall in writing
+            signed by themselves exhibit any Charge or complaint against the Incumbent,
+            and require of either church warden of the said Parish, or if there be no
+            Church warden, then of any vestryman to call a meeting of the parishioners
+            of the English Church, such Church warden or vestryman is hereby impowered
+            and required, within ten Days after the Requisition delivered, to furnish
+            the Incumbent with a true copy of the 73
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1895  prose_score 0.93
+  excerpt : The African Association was merged in the Geographical Society in 1833,
+            adding a sum of three hundred and eighty pounds to the funds; and Mr. Bartle
+            Frere, as its representative, became a member of the Council. The Palestine
+            Association, which had been formed early in the century, also resolved that
+            its funds, amounting to one hundred and thirty-five pounds, papers, and
+            books, should be made over ...
+  (failed)
+
+========================================================================================
+[LAW]  1860  prose_score 0.98
+  excerpt : Plead. 718, and approved precedents in pleading are to be followed. It was
+            defective too in not traversing the facts stated in avoidance of the plea of
+            son assault demesne. It is, if it alleges anything properly, a mere
+            reiteration of the plea, and cannot therefore be an answer to that which
+            confesses and avoids it. I am, therefore, satisfied that the judgment below
+            ought to have been in favor of ...
+  (failed)
+
+========================================================================================
+[LAW]  1898  prose_score 0.73
+  excerpt : Mannar, 8 Mad., 175). The person who publishes, and the person who makes, an
+            imputation are alike guilty of defamation (Queen-Empress v. Janardhan
+            Damodhar Dikohit, 19 Bom., 703). Actual injury need not be proved.-It is not
+            necessary to prove that the complainant actually suffered directly or
+            indirectly from the scandalous imputation alleged; it is sufficient to show
+            that the accused intended to h...
+  (failed)
+
+========================================================================================
+[LAW]  1913  prose_score 0.96
+  excerpt : 332. SEC. 3209. Whenever a collector has on any list duly returned to him
+            the name of any person not within his collection-district who is liable to
+            tax, or of any person so liable who has, in the collection-district in which
+            he resides, no sufficient property subject to seizure or distraint, from
+            which the money due for tax can be collected, such collector shall transmit
+            a statement containing th...
+  Q       : Draft a section of a statute prescribing the procedure to be followed by a
+            collector of taxes when the person liable to tax is not within his
+            collection-district or has no sufficient property subject to seizure or
+            distraint within the same, requiring the transmission of a certified
+            statement to another collector and the collection of the tax by that
+            collector as if the person were in his district.
+  A       : 332. SEC. 3209. Whenever a collector has on any list duly returned to him
+            the name of any person not within his collection-district who is liable to
+            tax, or of any person so liable who has, in the collection-district in which
+            he resides, no sufficient property subject to seizure or distraint, from
+            which the money due for tax can be collected, such collector shall transmit
+            a statement containing the name of the person liable to such tax, with the
+            amount and nature thereof, duly certified under his hand, to the collector
+            of any district to which said person shall have removed, or in which he
+            shall have property, real or personal, liable to be seized and sold for tax.
+            And the collector to whom the said certified statement is transmitted shall
+            proceed to collect the said tax in the same way as if the name of the person
+            and objects of tax contained in the said certified statement were on any
+            list of his own collection-district; and he shall, upon receiving said
+            certified statement as aforesaid, transmit his receipt for it to the
+            collector sending the same to him.
+
+========================================================================================
+[LAW]  1898  prose_score 0.86
+  excerpt : Adopted in Convention, at Austin, on the 18th day of March, A. D. 1861.
+            Relating to the Expenses, Debts, and Liabilities of this Convention. Section
+            1. Be it ordained by the People of the State of Texas in Convention
+            assembled, That the Legislature be and it is hereby authorized and empowered
+            to make provision for the payment of the mileage and per diem of the members
+            of this Convention, and to ma...
+  Q       : Draft two ordinances of the Convention of the People of the State of Texas:
+            the first, touching the expenses, debts, and liabilities of the Convention,
+            authorizing the Legislature to make provision for the payment of the
+            members' mileage and per diem and to appropriate moneys for the debts and
+            liabilities incurred; the second, to confer jurisdiction over the forts,
+            navy yards, arsenals, and light-houses within the State upon the Government
+            of the Confederate States, and to authorize the said Government to use,
+            occupy, and hold possession thereof, and to repair, rebuild, and construct
+            the same.
+  A       : Adopted in Convention, at Austin, on the 18th day of March, A. D. 1861.
+            Relating to the Expenses, Debts, and Liabilities of this Convention. Section
+            1. Be it ordained by the People of the State of Texas in Convention
+            assembled, That the Legislature be and it is hereby authorized and empowered
+            to make provision for the payment of the mileage and per diem of the members
+            of this Convention, and to make the necessary appropriations to meet the
+            expenses, debts, and liabilities incurred by authority of said Convention. …
+            Adopted in Convention, at Austin, on the 19th day of March, A. D. 1861. To
+            confer jurisdiction over the Forts, Navy Yards, Arsenals, and Light-houses
+            in the State of Texas, upon the Ordinances. Section 1. Be it ordained by the
+            People of the State of Texas in Convention assembled, That the Government of
+            the Confederate States is hereby authorized to use, occupy, and hold
+            possession of all Forts, Navy Yards, Arsenals, and Light-houses and their
+            appurtenances, in this State, and shall repair and rebuild said Forts, Navy
+            Yards, Arsenals, and Light-houses, and construct others in accordance with
+            existing laws of this State, while this State shall continue a member of
+            said Confederacy.

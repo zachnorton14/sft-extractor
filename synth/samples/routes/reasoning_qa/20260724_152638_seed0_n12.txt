@@ -1,0 +1,280 @@
+route: reasoning_qa
+model: claude-haiku-4-5
+seed:  0
+n:     12
+kept:  11/12
+
+--- EXTRACT SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that argues a point, derives a
+result, or reasons from premises. The author's own reasoning is in the text.
+
+EXTRACT THE REASONING CHAIN, VERBATIM. Find where the author reasons from premises to
+a conclusion, and copy that chain WORD FOR WORD.
+   - Return it as "spans": exact quotations from the passage that, read in order,
+     form one coherent chain of reasoning (premises through conclusion). Prefer ONE
+     long contiguous span. Use several only because the steps are spread out — never
+     more than 4, and always the fewest, longest spans that hold the chain
+     together.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder within a span, or add any word not in the passage — including
+     connecting words between spans. You may only select and order the author's own
+     sentences.
+   - Do NOT choose spans that refer to a figure, plate, diagram, table, page,
+     section, or note number ("Fig. 36", "as shown in the figure", "see page 466",
+     "§ 4", "the note on p. 22") — these point to something the reader cannot see and
+     are meaningless on their own. Since you select and order the spans, pick ones
+     that carry the reasoning WITHOUT such references; skip a sentence that leans on
+     one. If the chain cannot be formed without them, omit this item.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only: [{"i": 0, "spans": ["..."]}, ...]
+
+
+--- QUESTION SYSTEM PROMPT ---
+My goal is to create a dataset of finetuning questions for a model that is based only
+on pre-1930s text. I'm providing you with a short passage from a pre-1930s book, and an
+answer extracted from it. Your goal is to generate the question that the provided answer
+answers. Keep your language and vocabulary in the style of a pre-1930s schoolbook and avoid
+anachronism at all cost. Remember that the reader will not see the passage, so the question
+must make sense and stand alone without the passage. 
+
+
+Input: JSON array [{"i": 0, "passage": "...", "answer": "..."}, ...]
+Output JSON only: [{"i": 0, "q": "..."}, ...]
+
+
+========================================================================================
+[LAW]  1920  prose_score 0.83
+  excerpt : 559. [Chap. v be benefitted are not specified and tho the income is to be
+            applied perpetually. In fact, it is one of the essential features of a
+            charity that the persons to be ultimately benefitted thereby should not be
+            specified because it must be for the benefit of the public. If a charitable
+            corporation is named as the immediate cestui, it is the proper party to
+            enforce the trust; otherwise the...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1880  prose_score 0.75
+  excerpt : The 20th July Leaves developed. Concentric zones of the root. 9 to 10 9th
+            August 31st August 1518 5 to 7 18" 28 1 Many of these 15th September 18" 28
+            66 leaves were yel- 30th September 18" 28 low and were 16th October 89
+            partly gone. 2 The experiments of Champignon and Pellet are even more
+            interesting. These gentlemen suppose that each zone is subdivided in two.
+            Per cent. of sugar. No. of leaves. ...
+  Q       : What do certain authors declare concerning the number of zones in mature
+            beets and in those which will go to seed the following year, and why is this
+            declaration not accepted?
+  A       : Some authors contend that the number of zones in matured beets is limited to
+            7; to those going to seed the following year 10; but we cannot indorse this
+            statement, as it seems to vary greatly, and consequently no rule can be
+            given.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1904  prose_score 0.78
+  excerpt : Is this play an actual evening's entertainment? Is there any money in it?
+            You know very well there is not. The author of this play has none of the
+            true artistic spirit that recognizes without a chemical test on which side
+            its bread is buttered. Further, there is no part for you in it. You could of
+            course play the hero-you can play anything; but it is clear that this play
+            was not written for you. A...
+  Q       : How does A answer P's objections that the play is not intended for an
+            evening's entertainment and that there is no part for him in it?
+  A       : On the contrary the author intended it for an evening's entertainment, and
+            wrote it for me upon my commission. … In some respects I do—a gesture, a
+            tone, a thought; because the mistake the author made was this; instead of
+            writing a part for me, consciously or unconsciously he tried to write me
+            into the part.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1859  prose_score 1.00
+  excerpt : Nor can the formularies of public worship be correctly modelled on any other
+            principal than that now apparent in them. The outward profession is the
+            testimony to the church, and the warrant for all her declarations: the
+            inward experience is left to the eye and judgment of God; and, thus
+            presuming that her worshippers mean what their presence and profession are
+            supposed to imply, she charitably app...
+  Q       : Upon what principles are the formularies of public worship correctly
+            modelled, and how does the church regard the worshipper's inward experience
+            and outward profession, especially in the administration of the Lord's
+            Supper?
+  A       : The outward profession is the testimony to the church, and the warrant for
+            all her declarations: the inward experience is left to the eye and judgment
+            of God; and, thus presuming that her worshippers mean what their presence
+            and profession are supposed to imply, she charitably appropriates to each
+            the language of promise and privilege; leaving to every man's conscience to
+            perform the faithful office of an approving or condemning monitor. There
+            are, however, beacons held out to guard against the consequences of self-
+            delusion. In the administration of the Lord's Supper, a possibility is
+            admitted of the communicant being an unworthy partaker, so as to forfeit the
+            promised blessing, and to incur the threatened guilt. … Why then is the
+            blessing to be considered as revocable in the one sacrament and irrevocable
+            in the other: and not, rather in both instances, dependent on the quo animo
+            of the receiver, and on the sincerity of faith by which he is actuated in
+            the performance of the duty?
+
+========================================================================================
+[AGRICULTURE]  1891  prose_score 1.00
+  excerpt : But is not A protected as well as C? When C secured the law putting a tax on
+            all wool brought into the valley, he was careful to have a clause put in the
+            bill protecting wheat as well. What could be fairer ? But protection can
+            take effect only on that class of articles used by the people, of which a
+            part is produced in the country and a part imported from abroad, or sought
+            to be imported, and whea...
+  Q       : Why does the clause protecting wheat in the law taxing imported wool fail to
+            protect the farmer A, and how is the price of his wheat determined?
+  A       : But is not A protected as well as C? When C secured the law putting a tax on
+            all wool brought into the valley, he was careful to have a clause put in the
+            bill protecting wheat as well. What could be fairer ? But protection can
+            take effect only on that class of articles used by the people, of which a
+            part is produced in the country and a part imported from abroad, or sought
+            to be imported, and wheat does not belong to this class of articles. By the
+            supposition, the valley has exceptional natural advantages in the production
+            of wheat; wheat will, therefore, be one of its exports, if it has any. If
+            wheat is not imported but, on the contrary, is exported, this cunningly
+            devised clause in the bill will have no effect, and the price of A's wheat,
+            whether used at home or abroad, will be fixed in the open unprotected market
+            of the world, where it comes in competition with wheat produced "by the
+            cheap pauper labor of Europe" and the cheaper pauper labor of India.
+
+========================================================================================
+[MEDICINE]  1904  prose_score 1.00
+  excerpt : The basis of the diet for obesity consists of lean meat and dry food, but no
+            strict diet should be undertaken without the personal observation and
+            direction of a physician, for there are often other indications which would
+            not allow such a regimen to be followed with benefit. Fats should not be
+            entirely cut off, because they are needed to a certain extent to aid
+            digestion. It must be remembered th...
+  Q       : Of what does the diet for obesity consist, and why must it not be undertaken
+            without the observation of a physician?
+  A       : The basis of the diet for obesity consists of lean meat and dry food, but no
+            strict diet should be undertaken without the personal observation and
+            direction of a physician, for there are often other indications which would
+            not allow such a regimen to be followed with benefit.
+
+========================================================================================
+[SCIENCE]  1901  prose_score 0.99
+  excerpt : In the famous antique glasses of Cyprus the layers seem to be multiple and
+            the effects are wonderfully brilliant. This is imitated with a certain
+            amount of success in modern glass, by exposing the material to corrosive
+            vapors at high temperatures. If a piece of polished steel is exposed to the
+            air when heated, the surface is oxidized to a varying degree of depth,
+            depending primarily on the tempera...
+  Q       : How does the oxidation of heated polished steel aid the mechanic in judging
+            the proper temperature for tempering?
+  A       : If a piece of polished steel is exposed to the air when heated, the surface
+            is oxidized to a varying degree of depth, depending primarily on the
+            temperature. This thin sheet of 51 oxide reflects light as a thin plate, and
+            affords a valuable aid to the mechanic in judging the proper temperature for
+            tempering.
+
+========================================================================================
+[SCIENCE]  1873  prose_score 0.93
+  excerpt : New Edition, with Memoir. Fcap. 8vo. 6s. Also see Golden Treasury Series.
+            These "Guesses at Truth" are not intended to tell the reader what to think.
+            They are rather meant to serve the purpose of a quarry in which, if one is
+            building up his opinions for himself, and only wants to be provided with
+            materials, he may meet with many things to suit him. To very many, since its
+            publication, has this wor...
+  Q       : What is asserted concerning the influence of the work 'Guesses at Truth'
+            upon the current of thinking during the forty years following its
+            publication?
+  A       : To very many, since its publication, has this work proved a stimulus to
+            earnest thought and noble action; and thus, to no small extent, it is
+            believed, has it influenced the general current of thinking during the last
+            forty years.
+
+========================================================================================
+[AGRICULTURE]  1868  prose_score 0.98
+  excerpt : Perpetual watchfulness, anxiety, and work throughout the dairy season,
+            frequently beyond her physical endurance, has been her destiny-over the
+            cheese tub, and shelf, the churn, and butter bowl-to say nothing of her
+            labors in the milking yard, over the wash kettle, and scrubbing brush. No
+            relaxation whatever is permitted. Necessity knows no law, nor mercy for
+            those patient, over-worked solaces of t...
+  Q       : Describe the condition of the dairy woman as depicted in the passage, and
+            state what remedy is proposed.
+  A       : Perpetual watchfulness, anxiety, and work throughout the dairy season,
+            frequently beyond her physical endurance, has been her destiny-over the
+            cheese tub, and shelf, the churn, and butter bowl-to say nothing of her
+            labors in the milking yard, over the wash kettle, and scrubbing brush. No
+            relaxation whatever is permitted. Necessity knows no law, nor mercy for
+            those patient, over-worked solaces of the household. Even hired female labor
+            is impatient of the task, and shirks it, except at the highest wages, and
+            for a limited period. We trust that dairy factories may soon become the
+            rule, and the household thus relieved of an intolerable drudgery. In
+            factories, the strength and ingenuity of man is employed almost solely, and
+            the female assistance required is so mitigated in its 411 toil, as to be
+            easily and cheerfully accomplished. In the spirit of drowsy Sancho, who
+            invoked blessings on the man who invented sleep, we utter unbounded thanks
+            to the benign brain of him who contrived the cheese and butter factory!
+
+========================================================================================
+[TECHNOLOGY]  1891  prose_score 1.00
+  excerpt : All these steps of braking are under the most perfect control, but if
+            necessary the braking can be so sudden as to cause the wheels to have a
+            continuous skidding rotation; not such a skidding as is caused when an air
+            brake is put on too hard, but a rotating slip which will be just enough to
+            relieve the armature when the strain on it has come to a certain point. This
+            is the most perfect method poss...
+  Q       : Describe the method of braking wherein the wheels undergo a continuous
+            skidding rotation that relieves the armature at a certain strain, and
+            explain why it is considered the most perfect method, noting also the
+            behavior of the car when the switch is set for the last step of braking.
+  A       : All these steps of braking are under the most perfect control, but if
+            necessary the braking can be so sudden as to cause the wheels to have a
+            continuous skidding rotation; not such a skidding as is caused when an air
+            brake is put on too hard, but a rotating slip which will be just enough to
+            relieve the armature when the strain on it has come to a certain point. This
+            is the most perfect method possible of braking, because fixed skidding is an
+            impossibility, and the wheels will turn until the train comes to a dead
+            stop, although where the braking power is put on too suddenly and exceeds
+            the grip of the wheels, they will relieve themselves by slipping just enough
+            to keep the braking at the maximum limit. With the switch in position for
+            the last step of braking, the car can be allowed to creep down the maximum
+            grades at a snail's pace with a movement so slow as to be almost
+            imperceptible.
+
+========================================================================================
+[NAVAL SCIENCE]  1899  prose_score 0.91
+  excerpt : For further examples see the works referred to above. Fig. 74 gives an
+            interesting curve of stability for a vessel -I.FT. 20 30. 40. which is
+            unstable in the upright condition, but stable at a moderate angle of heel.
+            This vessel has a negative metacentric height, and would not remain in the
+            upright position, but on heeling to an angle of 25° she will resist further
+            inclination, and consequently, i...
+  Q       : What is the condition of a vessel that has a negative metacentric height,
+            and how does it behave upon heeling to 25°, and under what circumstances
+            does this condition commonly arise in steamships?
+  A       : This vessel has a negative metacentric height, and would not remain in the
+            upright position, but on heeling to an angle of 25° she will resist further
+            inclination, and consequently, if left to herself, the vessel will loll over
+            to this angle, and there be perfectly stable. Such a condition is quite
+            likely to occur in a steamship which starts on a voyage with a small
+            metacentric height, loaded with a homogeneous cargo. Towards the end of the
+            voyage the coal is nearly all burnt out abreast the boilers, and this
+            weight, low down in the ship, being removed, causes the C.G. of the ship to
+            rise, and thus possibly be above the transverse metacentre.
+
+========================================================================================
+[SOCIAL SCIENCES]  1858  prose_score 0.92
+  excerpt : Did the siege of Rome shake his soul? Did the Austrian gallows warn him off
+            the territory of the Hapsburg? Did he ever beat a woman? Was he ever
+            horsewhipped on the Boulevards of Paris or elsewhere—a fact which Italian
+            journalism studiously suppressed? Ah! I see, Sir. You are brave, therefore
+            Mazzini, who is of a different order of beings, and is not like you, must be
+            cowardly. Was it necessary, t...
+  Q       : By what series of questions does the author seek to prove that Mazzini is
+            not a coward?
+  A       : Did the siege of Rome shake his soul? Did the Austrian gallows warn him off
+            the territory of the Hapsburg? Did he ever beat a woman? Was he ever
+            horsewhipped on the Boulevards of Paris or elsewhere—a fact which Italian
+            journalism studiously suppressed? Ah! I see, Sir. You are brave, therefore
+            Mazzini, who is of a different order of beings, and is not like you, must be
+            cowardly. Was it necessary, that the Emperor Napoleon should publish a
+            Letter No. II. from Mazzini, after martyrdom, dated from Mazas or La
+            Roquette, whose authenticity should be attested by two gaolers, together
+            with a will, of which the executioner should be sole executor, before you
+            could possibly admit the Italian patriot's soul into the Valhalla of your
+            selection? Suppose that Mazzini had never been under fire in his life, that
+            he had never chanced to be in the way of danger, have you, therefore, the
+            right to call him a coward?

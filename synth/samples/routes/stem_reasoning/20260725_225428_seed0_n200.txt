@@ -1,0 +1,2076 @@
+route: stem_reasoning
+model: claude-haiku-4-5
+seed:  0
+n:     200
+kept:  0/200
+
+--- EXTRACT SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s science or engineering text that
+reasons quantitatively or physically. The author's own reasoning is in the text.
+
+EXTRACT THE REASONING CHAIN. Find where the author reasons from a principle to a
+conclusion, and copy that chain out.
+  - Return it as "spans": the quotations from the passage that, read in order, form
+    one coherent chain (principle → application → conclusion). Use as many as the
+    reasoning needs — up to 6, and always the fewest, longest spans that
+    hold the chain together. Extract as much of the reasoning as you can.
+  - Give EACH span as an object with two fields:
+      "verbatim"    — the span copied EXACTLY as it appears in the passage, character
+                      for character, including any garbled formula.
+      "refurbished" — the SAME span with only its mathematical or chemical formulas
+                      restored to correct standard form. If the span has no formula,
+                      make "refurbished" identical to "verbatim".
+  - REPAIR ONLY FORMULAS. The OCR has mangled this text's equations, exponents,
+    subscripts, symbols, and numbers, and page numbers bleed into the formulas. In
+    "refurbished" you MAY fix a corrupted expression back to what it plainly must be
+    (e.g. "CuSO,+ZnZnSO,+ Cu" → "CuSO₄ + Zn → ZnSO₄ + Cu"; "9X2" → "9 × 2";
+    "P₁ = pressure" kept clean). You MAY change only digits, symbols, operators,
+    subscripts/superscripts, and spacing.
+  - ADD NO NEW CONTENT. Do NOT paraphrase, summarize, rewrite, reorder, translate, or
+    add, remove, or alter any WORD of the prose — not a connecting word, not a gloss,
+    not a clarification. Every word in "refurbished" must already stand in "verbatim".
+    Repair the formulas; leave the author's prose exactly as written, misspellings and
+    all. Only select and order the author's own sentences.
+  - Do not build the chain out of a span that hinges on a figure, plate, table, or
+    page the reader cannot see ("as in Fig. 36", "see p. 466") — those cannot be
+    refurbished into anything meaningful; choose spans that carry the reasoning
+    without them.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": [{"verbatim": "...", "refurbished": "..."}]}, ...]
+
+
+--- QUESTION SYSTEM PROMPT ---
+You are given a passage from a pre-1930s science or engineering text and a REASONING
+CHAIN quoted verbatim from it — this is the ANSWER. Write the single question that
+this reasoning chain answers, as if setting an exercise.
+
+- The chain must CORRECTLY AND COMPLETELY answer your question — ask exactly what
+  this reasoning concludes or explains. Do not ask for a step, a numeric result, or
+  an identity the chain does not reach. Read the chain as the answer: if it does not
+  fully answer, adjust the question to fit the chain.
+- Pose a problem that must be reasoned through, not a fact to recall: "Why does
+  ...", "How does it follow that ...", "Why must ...?", "If ..., what happens and
+  why?".
+- Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use no
+  word, term, or idiom that came into use after 1930, and no modern conversational
+  or academic phrasing — it must read as a question a period examiner would pose.
+- The question must STAND ALONE and betray no awareness of a source. Never refer to
+  the passage or to whoever wrote it — no "the passage", "the text", "the author",
+  "the figure", "according to", "as described", "as shown". Ask about the SUBJECT
+  ITSELF, as a matter of physical fact, to someone who never saw the passage.
+- SUPPLY THE PHYSICAL SETUP the reader needs so the problem is well-posed and the
+  chain's "it / this / these" have clear antecedents: name the bodies, quantities,
+  or conditions involved (the gas held at constant temperature, the beam loaded at
+  its centre, the current through the coil). Give just enough to make the question
+  unambiguous — do not restate the whole passage, and never leave a bare "this
+  quantity", "such a body", or "the system".
+- Every proper noun must be one the reader can place: either widely recognizable on
+  its own (Boyle's law, Carnot's cycle), or introduced with a short descriptor.
+- Do NOT reveal the answer: do not state the conclusion, and do not reuse the
+  chain's distinctive wording. Ask for the reasoning; make the reader supply it.
+
+Input: JSON array [{"i": 0, "passage": "...", "answer": "..."}, ...]
+Output JSON only: [{"i": 0, "q": "..."}, ...]
+
+
+========================================================================================
+[SCIENCE]  1925  stem_signal 1.00
+  excerpt : AN ACUTE ANGLE to the straight angle? What name is given to an angle that is
+            less than a straight angle and greater than a right angle? 7. Point to 5
+            acute angles in your classroom; to 3 obtuse angles. AN OBTUSE ANGLE 8. What
+            is the dictionary definition of acute? of ob tuse? 9. What kind of angle do
+            the hands of a clock make at 2 o'clock? at 3 o'clock? at 6 o'clock? at 8
+            o'clock ? How to Read Ang...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1925  stem_signal 1.00
+  excerpt : 2. If the sides of an angle are not long enough to reach the scale of the
+            protractor, it is necessary to the sides. one of 3. Measure the angle AOB.
+            Place the zero of the scale on OB. On which scale do you A read the size of
+            the angle? 4. Measure this angle by placing the zero of the scale on OA.
+            Now, which scale do you read? 5. Draw an angle and show that it is possible
+            to place the protractor so...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1925  stem_signal 1.00
+  excerpt : 5. In the equation x + y + z = 180°, if y is 50° and x is 80°, how large is
+            z? 6. What is x in the equation x + y + z = 50° and z is 70°? 180°, if y is
+            7. If two angles of a triangle are each 50°, how large is the third angle?
+            8. If the three angles of a triangle are all the same size, how large is
+            each? 9. One angle of a triangle is 90° and another is 30°. How large is the
+            third angle? How large ...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1925  stem_signal 1.00
+  excerpt : Our problem here is: Avenue A Avenue B St. John's Street How to draw through
+            a given point a line parallel to a given You will learn how to do this in
+            the exercises that line. follow. 1. Suppose that in the following figure, we
+            wish to draw a line through the point M so that it will be parallel to RS.
+            70° What angle will it have to make with AB? 2. Now suppose that we wish to
+            draw a line through p...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1915  stem_signal 0.80
+  excerpt : In what way does interest resemble the rent for a horse and carriage, or any
+            other form of rent? II Interest is reckoned in per cents, the given per cent
+            covering the rate of interest paid each year. In order to complete the
+            purchase of a home, I borrow $900 from a trust company charging 5% interest.
+            What sum must I return to the bank, if I return the loan at the end of 2
+            years? Int. for 1 yr. = 5...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1915  stem_signal 0.80
+  excerpt : 2. What would be the length of the base of the new figure, if the distance
+            from A to E is 8 in. and the distance from B to F is 12 in.? Why? 3. What
+            figure would be formed if the shaded portions in this trapezoid were fitted
+            into the spaces marked by the dotted lines? 4. Call the length of GK 6 in.
+            and HJ 12 in. What then is the base of the equivalent figure? How is it
+            found? 5. If the altitude of...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1915  stem_signal 0.80
+  excerpt : 47. Rectangular Prisms Cakes of ice, blocks of stone, and heavy timbers are
+            usually cut so that they have rectangular surfaces. All such solids are
+            called rectangular prisms. In measuring the contents or volume of a prism,
+            such cubic units as the cubic inch, the cubic foot, and the cubic yard are
+            used. Name a use for each of these measures. In finding the number of cubic
+            units in a prism, the leng...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1915  stem_signal 0.80
+  excerpt : 4. A board 2 in. thick will contain how many times as many board feet as a
+            board 1 in. thick, if the other dimensions are the same? 5. How many board
+            feet in a piece of timber 12 ft. long, if the stock used is 3" by 2"? If the
+            stock used is 3" by 2", the board is 12 ft. long, 3 in. ( ft.) wide, and 2
+            inches thick. The number of board feet it contains equals: 12 (length in
+            feet) × 1 (width in feet)...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1917  stem_signal 0.40
+  excerpt : 'See Bibliography, No. 93. careful investigation, even upon the authority of
+            "a scientific friend." Let us see, then, what basis, if any, really existed
+            for such sweeping charges. In the paper which caused the trouble Audubon had
+            described in great detail how he had seen a large rattlesnake pursue,
+            capture, kill by constriction, and devour a gray squirrel. Before quoting
+            his description of this si...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1907  stem_signal 1.00
+  excerpt : During that year such a theory was published by Grotthus. According to this
+            theory, the electric current charges one electrode positively and the other
+            negatively, and these charged electrodes then exert an electrical influence
+            upon the water molecules. Under this influence the water molecules (then
+            represented by HO) acquire a polarity, the hydrogen atom becoming charged
+            with positive, and the ox...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1907  stem_signal 1.00
+  excerpt : Since both solutions are in the same circuit, it is evident that this is in
+            contradiction to the law of electrochemical change (Faraday's law). In
+            agreement with this law, Daniell explained his experiment by assuming that
+            Na is the positive and SO, the negative ion, and that these ions give up
+            their electric charges at the electrodes and then react with water,
+            producing alkali and hydrogen, and ac...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1907  stem_signal 1.00
+  excerpt : The entire action thus consists merely in the transfer of silver from one
+            electrode to the other. It follows from what has just been said that Ohm's
+            law holds for all differences of potential, from the smallest upward, in the
+            case of electrolytic conduction. In order to show still more clearly the
+            incompatibility of the Grotthus theory and experimentally determined facts,
+            let us consider the follo...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1907  stem_signal 1.00
+  excerpt : When equivalent weights of the substances enter the reaction, it amounts to
+            25,050 calories. Hence the thermochemical equation, involving two
+            equivalents of the substances in question, is as follows:- CuSO,+ZnZnSO,+ Cu
+            + 2 x 25,050 calories. If now instead of heat this reaction produces
+            electrical energy, the quantity of the latter produced would be the
+            electrical equivalent of 25,050 calories. Th...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1900  stem_signal 1.00
+  excerpt : The chemical sources lie, as may be inferred from what has been already
+            said, in the oxidation processes due to the interaction between oxygen and
+            the living substances of the cells. Thus, when a muscle contracts, chemical
+            decompositions occur, and the energy resulting makes its appearance sooner
+            or later as heat. But in response to the needs of the body, the central
+            nervous system can stir up sim...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1900  stem_signal 0.60
+  excerpt : Three mechanical factors cooperate in causing this behaviour-the
+            intermittency of the heart's beat, the elasticity of the artery walls, and
+            the great resistance to the flow offered by the small arteries. If the
+            artery walls were rigid, at each heart-beat, a quantity of blood equal to
+            that thrust into the vessels would pass into the capillaries from the minute
+            arteries like the shot from a gun; or,...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1900  stem_signal 0.60
+  excerpt : In the course of a day a total quantity of from 700 to 750 grams (= nearly 2
+            ozs.) of oxygen gets into the body, while 850 to 900 grams of carbon
+            dioxide, which has a specific gravity greater than oxygen, leave it. The
+            amount of water given off by the body in repose varies considerably on
+            either side of 2700 grams per day, of which some 300 grams (about half a
+            pint) are given off from the lungs. T...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1900  stem_signal 0.53
+  excerpt : The percentage of alcohol is 7 to 15 per cent., and the danger therefore
+            considerably less than is the case with "spirits." Yet even with wine,
+            habitual excess leads to severe bodily sufferings. The heavy wines of the
+            South are mostly fortified by the addition of spirits of wine, and therefore
+            have a similar effect to brandy. Beer contains little alcohol (2 to 9 per
+            cent.), and, besides hops, 4 to...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1905  stem_signal 1.00
+  excerpt : Problem 20. Given a straight line in the second quadrant and oblique to H
+            and to V; required the supplementary projection of the line upon a plane
+            parallel to the horizontal projecting plane of the line and assumed on the
+            left of the line. 59. Problem 21. Given a straight line in the fourth
+            quadrant and oblique to H and to V; required the supplementary projection of
+            the line upon a plane parallel ...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1905  stem_signal 1.00
+  excerpt : It will be noticed in Fig. 44 that if the point O is so situated that its
+            horizontal projection falls on m,-n,, the base of the triangle will vanish
+            and the hypotenuse will be equal to the altitude. In such a case then the
+            distance of the point from the axis, or the radius of the arc in which the
+            point moves, will be equal to the distance of the vertical projection of the
+            point from G-L. 88. Probl...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1905  stem_signal 1.00
+  excerpt : Analysis. From what has been said in connection with Problem 25, it will be
+            evident that the vertical trace of the plane of revolution must pass through
+            the vertical projection of the given point and must be perpendicular to the
+            given line; also that the radius of the arc in which the point moves will be
+            equal to the hypotenuse of a right-angled triangle whose base is equal to
+            the distance of the ...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1905  stem_signal 1.00
+  excerpt : Problem 30. Given the straight line [M=-6, 0, -5; N=6,0, 4] and the point
+            0=0, 4, 6; required to revolve O about M-N into V. 93. Problem 31. Given the
+            straight line [M=-6, 0, -5; N = 6, 0,2] and the point 0 = 0, 4, 6; required
+            to revolve O about M-N into V. 94. Problem 32. Given the straight line [M6,
+            0, 6; N = 6, 0,2] and the point 0 0, 4, 6; required to revolve O about M-N
+            into V. = = 95. Proble...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1891  stem_signal 1.00
+  excerpt : Whenever the positive atom enters into combination with more than one
+            valence, this fact is indicated in the compound by changing the termination
+            of the name of this atom into ic or ous. If the positive substance acts with
+            but two valences, then in the higher one its name takes the termination ic,
+            and in the lower one the termination ous. Bivalent Mercury Univalent Mercury
+            Quadrivalent Tin Bivalen...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1891  stem_signal 1.00
+  excerpt : Classification of Ternary Molecules.-Ternary molecules are those whose
+            dissimilar atoms are united by the aid of some third atom. This third atom,
+            which performs a linking function, must evidently be a polyad, since no
+            monad can join other atoms together. Ternary molecules are divided into two
+            classes according to the valence of the uniting atom: 1st. Ternary molecules
+            united by bivalent atoms. 2d...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1891  stem_signal 1.00
+  excerpt : The general formula of a salt is R-O-R. As it con- tains no hydrogen it has
+            neither acid nor basic properties, and is therefore without action upon
+            vegetable colors. 70. Water Type.-A molecule of water consists of two atoms
+            of hydrogen linked together by oxygen, thus: H-O -H. By exchanging one of
+            these hydrogen-atoms for a negative monad, an acid, R—O—H, is produced. By a
+            similar exchange for a po...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1891  stem_signal 1.00
+  excerpt : Upon weighing now a liter of water-gas-steamits mass is found to be 0-8047
+            grams; whence its relative density is 0.80470-0896, or 9, and its molecular
+            mass is 9X2 or 18. Water therefore consists of 2 parts of hydrogen and 16
+            parts of oxygen in each molecule. Again, olefiant gas-a compound of carbon
+            and hydrogen-affords on analysis 85.71 per cent of carbon and 14-29 per cent
+            of hydrogen, which is t...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1861  stem_signal 0.50
+  excerpt : The writer thinks, from the source received, they must be good, but has no
+            knowledge of them from her own experience. Try a small soup at first if they
+            are used. French Veal Stock for Soups.—Cut up a knuckle of veal, of lean ham
+            one pound; add a peeled carrot, turnip, onion, celery, and one quart of
+            water. Put in a cut-up fowl, and as much beef soup as will cover the whole;
+            boil gently one hour, s...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1861  stem_signal 0.50
+  excerpt : X.) When the chicken is half done, take the dough, which should be light for
+            the third time, including the sponge, to the paste board. Cover the board
+            with plenty of flour, roll out the dough with the pin, about one-eighth of
+            an inch thick, cut it in cakes about three inches square; separate them from
+            each other so that they will not run together to form one mass in rising,
+            and let them remain in ...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1861  stem_signal 0.38
+  excerpt : Let the soup simmer for an hour, and add veal stock to make the whole about
+            three quarts. Take a teacup three-quarters full of butter, beat in it three
+            table-spoonfuls of sifted flour, add enough of the hot soup to it, to melt
+            and thicken it a little at a time; then stir the whole in the soup. Chop
+            some lean veal as fine as possible, rasp some bread, and beat up as many
+            eggs as will moisten the wh...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1861  stem_signal 0.38
+  excerpt : It takes the same length of time to boil a pound of fish as the same weight
+            of flesh. To try if the fish is done, run a thin sharp knife through it,
+            touching the back-bone; if it adheres, it is not done; do not let the fish
+            lie in the water a moment after it is done, as it will soon lose its flavor,
+            besides presenting a poor appearance. Drain the water through the strainer,
+            or if in a cloth, lay i...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1906  stem_signal 1.00
+  excerpt : There is no energy emitted along this axis. Let us suppose that the rods are
+            ultramicroscopic, so that they are enabled to emit waves short enough to
+            affect the eye, and that their energy of oscillation is somehow sustained.
+            Then the point o in Fig. 20 would be a luminous point, shining with one
+            particular color of the spectrum. The brightness of the point would,
+            however, be greatest in the equato...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1906  stem_signal 1.00
+  excerpt : It will evidently be but a very small fraction of the total energy of the
+            wave, when the receiver is far from the oscillator, since the area of the
+            wave which can come into contact with the receiving rod, or into its region
+            of influence, is so small. If we suppose that the receiver has a height of a
+            quarter wave-length, for resonance, and that the effective breadth of area
+            from which energy is dra...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1906  stem_signal 0.75
+  excerpt : CHAPTER X ELECTROMAGNETIC WAVE-DETECTORS, OR WIRE- LESS TELEGRAPH RECEIVERS
+            Voltage Detectors and Current Detectors SINCE the human eye is incapable of
+            responding to the long-wave flashes, or electromagnetic waves, given off by
+            a wireless telegraph antenna, an artificially constructed eye has to be used
+            in order to detect and respond to them. The plan followed is to place an
+            antenna at any suitabl...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1906  stem_signal 0.70
+  excerpt : The effect of bringing the two parallel wires into contact with the charged
+            electric system of Fig. 7, is, therefore, to let the charge escape over the
+            wires, and to set up thereby an electric current over the wires. The current
+            rush takes place in the form of a wave. Electric flux and its associated
+            energy move off the disk into the insulating air-space between the wires.
+            Creation of Magnetic Flu...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1883  stem_signal 0.40
+  excerpt : To increase to a considerable extent the workman's right to recover damages,
+            will it not be necessary to lighten the severity of the rule of contributory
+            negligence? From the estimates already given on page 94, it will be seen
+            that in only a small per cent of cases of death or injury can damages be
+            recovered. Mr. Moon, the chairman of the London and North Western Railway,
+            in a statement to his emp...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1886  stem_signal 0.62
+  excerpt : Make the top layer of cracker crumbs thicker than the intermediate ones.
+            Cover, and bake in a quick oven fifteen minutes; then remove the cover and
+            brown the top. A large dish will require longer cooking. A slow oven and too
+            long cooking will completely ruin them. BEANS AND OYSTERS. - Boil beans
+            until ready for baking; season plentifully with pepper, salt, butter, and
+            bits of pork if liked; put a ...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1886  stem_signal 0.50
+  excerpt : FISH HASH. —Prepare the fish as for fish-balls; chop fine, cold potatoes,
+            and mix with the fish. Fry brown six good slices of salt pork; take out the
+            pork and turn the hash into the frying pan; add half a cup of boiling water,
+            let this heat slowly, stirring often, then spread smoothly, and brown. When
+            brown, fold it as you would an omelet; dish, and garnish the dish with
+            slices of pork. If pork is...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1886  stem_signal 0.38
+  excerpt : If too thick, add boiling water. If not cooked enough, the thick part will
+            settle and the top will look watery. Have ready six slices of bread toasted
+            brown and cut into pieces an inch square; throw about a dozen of these
+            pieces into a tureen, and send the rest to the table dry. Strain the soup
+            through a sieve, and serve. IRISH STEW. Take six good-sized potatoes, two
+            carrots, four onions, and two ...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1886  stem_signal 0.38
+  excerpt : OMELETS.- Beat lightly two eggs, and stir in, one spoonful of milk and a
+            pinch of salt. Heat the omelet-pan hot, then put in a little butter; when
+            melted turn in the beaten eggs; set on the fire, shake the pan, and cook
+            until a light brown. Fold the omelet, and serve in a hot dish. Ham,
+            mushroom, lobster, chicken, and all kinds of omelets are made by chopping
+            the meat and laying it between the fol...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1896  stem_signal 0.80
+  excerpt : The gases are rapidly generated by driving a current of air through the
+            glowing coal, and combustion is thus stimulated. This furnishes what is
+            called producer gas, and sometimes Siemens' gas, because it was first
+            introduced by Sir William Siemens, as a fuel and substitute for solid coal.
+            This gas is often used for heating purposes, but is not rich enough to drive
+            a gas motor. The next kind is kno...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1896  stem_signal 0.62
+  excerpt : At that time the idea was prevalent that the failure of the Lenoir and Hugon
+            engines was due to the slow movement of the piston after ignition.
+            Scientific men were agreed that the energy generated by explosion was
+            rapidly diminished by the cooling action of the walls; if therefore
+            expansion was retarded, much of the force obtained was dissipated. In an
+            earlier patent taken out in 1863, the invento...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1896  stem_signal 0.60
+  excerpt : The usual operations of admission, compression, explosion with expansion,
+            and exhaust are gone through on one side of the piston. The exhaust gases,
+            instead of being discharged, then pass through ports uncovered by the piston
+            to a space on the other side containing compressed air, and the gases at a
+            high temperature and pressure and, according to the maker of the engine,
+            still in a state of flame,...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1896  stem_signal 0.60
+  excerpt : Though usually classed together, the two are not synonymous, and their
+            effect is by no means the same. If an engine be constructed, running at a
+            certain speed, with a small diameter of cylinder and a long stroke, the
+            speed of the piston will be considerable, and the speed of expansion
+            relatively small. On the other hand, if another engine, going at the same
+            speed, have a short stroke and a large d...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1919  stem_signal 0.40
+  excerpt : A quantity record is worse than useless, because production alone is not a
+            stimulus to good workmanship, but is in fact opposed to it; for it springs
+            from a desire to make money and not from a desire to do good work. A
+            concrete example of what quality records mean is also given by Mr. R. B.
+            Wolf out of his experience in wood-pulp paper-making in several factories.
+            An important operation is the "co...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1919  stem_signal 0.38
+  excerpt : Every one realizes after only a moment of thought that the real basis of
+            wages is service rendered and that this service is measured by the price of
+            the product. Suppose two men, each receiving two dollars a day, turn out
+            together a product that sells for eight dollars. If one man can turn out
+            that same product in a day he is worth at least four dollars. The decreased
+            amount of overhead expense th...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1919  stem_signal 0.38
+  excerpt : Strikes never raise wages. If the wages are already high enough, the strike
+            fails; if too low, it wins. But, in either case, it is some force outside
+            that has really settled the matter. In the present day it is the union and
+            not the individual worker that assumes the responsibility of holding the
+            increases; but the only rate they can hold is that which can be paid by the
+            least efficient manufactur...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1919  stem_signal 0.38
+  excerpt : The first step in any wage consideration, and the first step toward the new
+            idea in business, is to get the real values on wages. We all know that cheap
+            labor is not cheap; paid cotton-pickers have proved cheaper than slaves-
+            although it took a long time so to convince the South, because they never
+            reckoned the expense of idle slaves. In any operation in which the material
+            costs are high as compare...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1852  stem_signal 0.35
+  excerpt : Indeed the principal resistance arises from friction, which does not even
+            increase in a direct ratio with the velocity of the carriage. If, then, a
+            proa can be driven by the wind (the propulsive power of which is constantly
+            diminishing as the velocity of the proa increases), through so dense a fluid
+            as water, at the rate of twenty miles an hour, I can see nothing to hinder a
+            steam carriage from mo...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1852  stem_signal 0.30
+  excerpt : Armies could be conveyed in twenty-four hours a greater distance than it
+            would now take them weeks or even months to march. "Thus, then, this
+            improvement would afford us prompt and effectual means not only of guarding
+            against the attacks of foreign enemies, but of expeditiously quelling
+            internal commotions, and thus securing and preserving for ever internal
+            tranquillity." In the memorial to the Ne...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1904  stem_signal 1.00
+  excerpt : 3, perpendicular to the plane of the wheel and paper. Since there is contact
+            along a line at 4, which thus becomes an element of both wheel and track,
+            the wheel rotates about A relatively to the track for an instant. This is
+            the instantaneous motion of the wheel relatively to the track. The line of
+            contact at A is the instantaneous or virtual axis. When the engine has moved
+            forward a distance AB, ...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1904  stem_signal 1.00
+  excerpt : Linear velocity about a permanent centre.-1st method.-In Fig. 14 let H and N
+            be any two points in the link A, the velocity V-.H ad ab bc cd of H being
+            given and that of N required about the permanent centre ad. Lay off, in any
+            direction from H, a distance HK V-.H according to any convenient units and
+            scale of drawing. Draw (ad) KL,take (ad) N' (ad)N, and draw N'L parallel to
+            HK. By the similar tri...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1918  stem_signal 0.50
+  excerpt : If the oar moved alternately forward and backward while presenting the same
+            extent of surface to the water and driven with the same vigor, the recoil
+            would equal the advance and there would be no progress. Man, with all his
+            skill, does not yet know how to ply his oar so that it shall offer this
+            alternating maximum and minimum of surface. Therefore, in propelling a boat,
+            he is obliged to bring the ...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1918  stem_signal 0.50
+  excerpt : Is it not true that under these conditions the sum total of fatigue will be
+            the least possible?" "All that is obvious," Emile replied. "They could even,
+            if it were a long way through the brushwood, take turns in going ahead, and
+            then no one would be really tired out." "This device of Emile's has, as you
+            already know, been put in practice from time immemorial by ducks on their
+            long flights. Nor is ...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1918  stem_signal 0.30
+  excerpt : "It may not, perhaps, be out of place to attempt an estimate of the number
+            of pigeons contained in one of those mighty flocks, and of the quantity of
+            food daily consumed by its members. . . . Let us take a column of one mile
+            in breadth, which is far below the average size, and suppose it passing over
+            us without interruption for three hours, at the rate mentioned above of one
+            mile in the minute. Th...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1918  stem_signal 0.30
+  excerpt : Raw beets, cooked potatoes, crushed grain, curdled milk, barley, wheat,
+            maize, buckwheat, compose the menu in turn, so as to excite by variety and
+            choice of food an appetite that satiety daily makes more languishing. Thus
+            fed to repletion, the poor creature, with nothing to distract it from the
+            filling of its crop, eats to pass the time, falls asleep from sheer stupor,
+            awakes, and begins to eat ag...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1812  stem_signal 0.88
+  excerpt : Padova, 1796, p. 228. + The degrees of Reaumur may be easily converted into
+            those of Fahrenheit by the following rule: Multiply the given degrees by 9,
+            and divide by 4; if 32 be then added to the quotient, the result will be the
+            degrees according to Fahrenheit's scale. The accounts given by the ancients
+            of the climate of Ireland, appear in some respects contradictory. We are
+            told by Cæsar, that th...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1812  stem_signal 0.62
+  excerpt : The courts, the flight of steps, the terraces, are all involved in equal
+            ruin; and their limits only discoverable by tops of embattled walls, visible
+            amid hills of sand," p. 37. + Ibid. years, that the summers have become more
+            wet, and consequently colder, and the winters less frosty and more mild than
+            they were in former times. Mr. Williams ascribes this change to several
+            causes, the introduction...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1812  stem_signal 0.53
+  excerpt : Thompson, in his Survey of Meath, says "Bog is composed of a variety of
+            decayed aquatic vegetables, whose roots are so interwoven and matted
+            together, that they form a substance like a sponge. These vegetables are
+            produced each year in proportion to the quantity of water contained on its
+            surface, so that bog may be fairly considered as a mass of vegetable matter,
+            and, the more wet the bog, the mor...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1812  stem_signal 0.45
+  excerpt : The medium quantity in Ireland, at large, is from 24 to 28 inches. Taking
+            the annual quantity of rain that falls on the east coast of England, which
+            is rarely less than 18 inches, and the maximum of the west coast of that
+            country, the average will exceed 54 inches, and we cannot suppose that
+            Scotland would produce a lower. "The frequency of our showers in Ireland,
+            and not the quantity of rain, has...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1910  stem_signal 0.50
+  excerpt : The exploiters at the top can invest their money and keep it invested with
+            almost perfect safety, for it never passes out from their control. But the
+            common people's money is never safe because the moment that they invest it,
+            it passes completely into other hands-into the hands of the irresponsible
+            oligarchy whose deliberate purpose it is to plunder the people. The great
+            mass of the people are sim...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1910  stem_signal 0.40
+  excerpt : But in the Providence of God and the evolution of our industrial activities,
+            we have reached a condition when it is simply impossible to bring justice to
+            any one class without bringing it to all. If, therefore, we would cure
+            present evils, we must not only overthrow, root and branch, the power of a
+            despotic oligarchy, and make the people supreme, but we must aim to bring
+            justice, equal opportunity...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1910  stem_signal 0.38
+  excerpt : It may be that, as some pessimistic minds say, we could not earn more than
+            ten per cent, or eight, or even six per cent. And yet, I cannot but ask,-If
+            this is all that present capitalists make on their money invested, how does
+            it come about that they all so speedily become millionaires? If they do not
+            make money in the form of dividends, then they make it through graft. But in
+            either case the resu...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1910  stem_signal 0.38
+  excerpt : For we shall call upon each man individually to subscribe his quota of the
+            required capital. And if he will not subscribe, he will receive no
+            dividends. No capital subscribed, no dividends received," will be our law.
+            And we shall thus place the responsibility of raising the needed capital
+            where it properly belongs,-namely upon the individual. Men are crying out,
+            and justly crying out, today for eq...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1916  stem_signal 0.80
+  excerpt : Sometimes it rests the heel of the lame foot on the wall of the opposite
+            foot. If both feet are affected, the animal may rest them alternately, or
+            take a position with both feet well FIG. 39.-A case of navicular disease
+            involving one front foot. The diseased foot is the smaller. in front of the
+            normal position. The inflamed structures are so covered by other tissues
+            that it is difficult to detect ...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1916  stem_signal 0.53
+  excerpt : The degree of attention necessary depends on the surroundings, the crowded
+            condition of the poultry houses and runs, and the presence of disease in the
+            flock. If disease is present, we can not clean and disinfect the quarters
+            too often. The attendant can not overlook details in handling the incubator
+            or brooder and feeding the chicks and be uniformly successful. If the
+            disease is known to be prese...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1916  stem_signal 0.50
+  excerpt : It should be taught to eat grain as soon as possible. Because of the
+            irritated condition of the stomach and intestine, the animal suffering from
+            diarrhoea is unable to digest its feed. For this reason it is very important
+            to withhold all feed for at least twelve hours. Water should be provided.
+            The alimentary tract is relieved of the irritating material by giving the
+            animal a physic of castor or l...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1916  stem_signal 0.50
+  excerpt : When the foot of the sound limb comes to the ground, more weight than common
+            is placed on it. If the seat of the lameness is in a front limb, there is a
+            decided nodding or movement of the head downward when the weight is placed
+            on the well foot. If both forefeet are diseased, the animal steps shorter
+            and more quickly than common. Lameness in a hind limb is characterized by
+            more or less dropping of...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1908  stem_signal 1.00
+  excerpt : Included among them are some of the cheapest and most beautiful. beginning
+            their culture, the first important matter for consideration is the In
+            STRUCTURE in which they are to be grown: if a new one is to be built, the
+            most suitable dimensions for it; and if one already exists, the best use
+            that can be made of it. A span-roof structure in a good light position is
+            the most desirable; and if it is i...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1908  stem_signal 0.80
+  excerpt : Try to keep the soil in an even moist condition, neither too wet nor too
+            dry. Air must be given very cautiously at all times, and inside the house
+            should be sweet and buoyant. If artificial heat be given, a chink of air for
+            an hour in the morning when the weather is sunny will help the Roses. Avoid
+            a cold, cutting draught. The best temperature for pot Roses is one about 48°
+            to 50° by night and 58°...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1908  stem_signal 0.75
+  excerpt : Unless the land, in the first place, is efficiently drained, either
+            naturally or artificially, a beautiful lawn cannot be expected. If the soil
+            is shallow and resting on gravel or chalk, no artificial drainage is
+            necessary; but if on a deep soil of a marly or clayey In such land the
+            nature, then the land must be well drained. pipes must not be laid too
+            deeply. In stiff clay, 18 inches will be deep...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1908  stem_signal 0.75
+  excerpt : Go to a good nurseryman and pick ot the plants, preferably in early autumn.
+            If economy must be studied, purchase plants in five-inch or six-inch pots;
+            if not, those in seven-inch or eight-inch would be best. If in the former,
+            they should be transferred at once to the next larger size. The soil should
+            consist of a mixture of loam obtained from a meadow, just beneath the grass.
+            Three parts of this a...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1844  stem_signal 1.00
+  excerpt : The racks should be raised about two feet from the ground. The troughs may
+            be placed at the end of the hay racks, in a line, so as to be convenient to
+            the root house, or if there be a scarcity of room under cover, they may be
+            placed in the folding pen, in front of the shed. The troughs may be of any
+            convenient length, about a foot wide in the clear, and four inches deep. To
+            prevent the sheep from ...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1844  stem_signal 1.00
+  excerpt : I prefer the former, because it admits of easier and better cultivation, as
+            the plough can be used both ways. It is usual to plant five feet apart, each
+            way, and suffer four or five stalks to stand in a hill until the blossom
+            hemp is removed, and then reduce the number so as not to exceed two stalks
+            in a hill. Thus there would be two seed plants for each twenty-five square
+            feet. It would be a bett...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1844  stem_signal 0.62
+  excerpt : Hemp hooks are the most convenient instruments for cutting. It should be cut
+            about a foot from the ground, as it will stand much better in shocks, when
+            the ear is brought nearer to the ground than it would be if the corn were
+            cut close to the earth. There will also be less weight to handle in
+            shocking, hauling, ricking, feeding, &c., while nothing will be lost, that
+            is fit for fodder. From fourtee...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1844  stem_signal 0.50
+  excerpt : If large corn be planted, each hundred good ears, in ordinary seasons, will
+            be equivalent to a bushel; and, consequently, if each hill will average
+            three ears (the double cars will usually make up for the missing stalks) the
+            product will be 813 bushels per acre. If the season be favorable, the yield
+            may be still greater.* But if the ground has been much reduced by bad
+            husbandry, or the corn be pla...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1901  stem_signal 0.60
+  excerpt : 16. Eel pots must not exceed in length 56 inches, and in diameter not more
+            than 12 inches, if round or otherwise, and not more than 12 inches square,
+            it square in form; the aperture or mouth of all eel pots shall not be more
+            than one and one-half inches in diameter, if round in form or otherwise, and
+            not more than one and one-half inches square, if square in form; and there
+            shall be no fixtures or...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1899  stem_signal 0.62
+  excerpt : There are four important departments to be supplied, and Nature expects
+            every one of these to receive its proper proportion. If one uses too much,
+            there is not enough for the other three.-One source of supply, four avenues
+            of expenditure. ILLUSTRATING THE LOSS TO OTHER ORGANS WHEN TOO MUCH VITAL
+            FORCE IS EXPENDED IN ONE PART OF THE BODY. Let us suppose that a large water
+            tank is erected by the sid...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1899  stem_signal 0.60
+  excerpt : We can only state the facts here and you can secure the particulars from
+            your school physiologies.* It is the food which is digested that furnishes
+            vital force. If we eat food and can't digest it, we will starve, just as
+            surely as if we should eat none at all. Food that is eaten but not digested
+            can give us no force, just as fuel that is put in a stove but not burned,
+            can give no heat. Then we may...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1899  stem_signal 0.40
+  excerpt : In our own bodies the same principle applies. As long as force remains in
+            bread, and potatoes, and fruit we cannot use it to think out the solution of
+            a problem in arithmetic, nor to give us the ability to play a game of ball;
+            but when we have digested these foods, and the force from them has entered
+            our blood, then we can use it. Every physical and mental act that we perform
+            uses a part of this f...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1899  stem_signal 0.40
+  excerpt : From the first itself without steam. Neither can the lungs inhale and
+            exhale, the stomach digest, nor the skin, bowels, kidneys and lungs carry
+            waste material out of the body, without expending force. moment of our
+            existence to the time when we breathe cur last breath, we are constantly
+            expending force, and if it is not replenished, the reserve supply becomes
+            exhausted and death ensues. In chapter...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1887  stem_signal 1.00
+  excerpt : The fall there is about 1 in 5000, and never exceeds 1 in 3000. In such a
+            case the drain would have to be cleaned either by locks or valves (flushing-
+            gates) to retain a portion of the contents for a time, and then set them
+            free suddenly in order to flush the next section, or by special
+            arrangements, such as Field's flush-tank, or Shone's ejector. 2 Mr Baldwin
+            Latham joins the sewers in man-holes, ...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1887  stem_signal 1.00
+  excerpt : 1:194 1:92 1:53 1:34 1:24 292 137 80 51 36 389 183 106 69 48 437 206 119 77
+            54 10 486 229 133 86 60 12 583 275 159 103 72 In this table the velocity in
+            feet multiplied by the inclination equals the length of the sewer to which
+            the calculation applies. For example, if the velocity is 6 feet per second
+            in a pipe whose diameter is 4 inches, then 6×24=144 feet is the length of
+            the sewer. 1 This may be...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1887  stem_signal 0.75
+  excerpt : But in order that filtration shall be successful it is necessary that the
+            amount of filtering material shall be large; it must not be less than 1
+            cubic yard for 8 gallons of sewage in twenty-four hours, 3 and in the case
+            of some soils must be more. If the drains are 6 feet below the surface, then
+            an acre will contain 9680 cubic yards of filtering material, and at 8
+            gallons per yard an acre would s...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1887  stem_signal 0.62
+  excerpt : We have thus a kind of ball-and-socket joint, which is water-tight, and yet
+            permits considerable bending of the line of sewer without breaking and
+            leaking. Of course, this is better than a sewer that breaks with accidental
+            sinking of the ground, but it would certainly form deposit if allowed to
+            bend in that way permanently. Fall of Drain Pipes.-1 in 30 for 4-inch
+            drains, and 1 in 40 for 6-inch; or...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1908  stem_signal 0.50
+  excerpt : According to the best authenticated statistics and also as the result of
+            personal experience, one can safely assume that from 80 per cent to 96 per
+            cent of all persons are hypnotizable. These figures are not exaggerated, if
+            we consider how many of the human race are suggestible in the waking
+            condition. Some of the French investigators claim that only cases of
+            hysteria can be successfully hypnotize...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1908  stem_signal 0.30
+  excerpt : Here is to be found the secret of that new sense of power which has come
+            into so many lives to-day through the medium of Christian Science, Faith-
+            healing, Metaphysical Healing, the Raja Yoga of Indian theosophy and other
+            forms of mental gymnastics. These systems are so many aids to the training
+            of the will by auto-suggestion so that the reserves of mental and moral
+            energy within us may be made ava...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1908  stem_signal 0.30
+  excerpt : The pure ethical impulses are too weak to control the massive egoistical
+            instincts of men. Let us eat and drink for to-morrow we die is the logical
+            watchword. Struggle of all against all, and the conscienceless subjection of
+            the weak, must prevail in exact proportion as the mechanical theory of the
+            world prevails. "If we consider the effect of irreligion as increasing our
+            helplessness to resist th...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1912  stem_signal 0.50
+  excerpt : 34, 36, 43, 48, 57, 58. In the case of young children the temperature should
+            be regulated with water; if too high, by baths; if too low, by hot water
+            bags. The bath for reducing fever should last for ten or twenty minutes and
+            should be given often. An ice cap may be applied to the head. The pain and
+            colic may be relieved by strong continuous pressure above the small of the
+            back. See paragraph No. ...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1912  stem_signal 0.30
+  excerpt : Sick Headache 67 eral treatment. Pressure may be given in the upper dorsal
+            region. No. 67. The clavicles should be raised. Nos. 72, 73. The treatment
+            should be given deliberately, and is probably the longest that the Osteopath
+            gives. Great relief should be given during the first treatment. A very
+            general treatment will be helpful. See gen- Give particular attention to the
+            stomach and bowels. The p...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1912  stem_signal 0.30
+  excerpt : The knees are flexed on the thighs and the thighs are brought forcibly
+            against the abdomen. The pressure may be relaxed, then increased. This
+            movement relaxes the ligaments and muscles of the lumbar and sacroiliac
+            regions. See Fig. 65. 65. The fifth lumbar vertebra is frequently found
+            posterior. With the patient on his back, the clinched fist of the operator
+            is placed under the vertebræ and one li...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1912  stem_signal 0.30
+  excerpt : 114. Both internal and external rotation and circumduction of the limb may
+            be performed, flexing the calf of the leg on the thigh and the thigh on
+            Figure (130) Figure (131) Figure (132) Figure (133) Figure Figure (135)
+            Figure (136) Figure (137) Practice of Osteopathy the abdomen, then
+            straightening the limb out with the proper rotation, with more or less
+            force. See Fig. 89. 115. The sciatic nerve ...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1903  stem_signal 0.88
+  excerpt : For two days before the inoculation the patient's temperature should be
+            taken regularly every two hours, in order to ascertain what is the normal
+            condition. The patient is then inoculated with one milligram of tuberculin.
+            Most are agreed that the old tuberculin is preferable to the new. After
+            inoculation the temperature is again taken every two hours, and reaction
+            usually appears eight to sixteen ...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1903  stem_signal 0.60
+  excerpt : There is however a natural limit to the demands which may be made upon the
+            organism, and when this limit is exceeded the organism suffers. The body, or
+            generally that part of the body which is attacked, then undergoes a change
+            which leads to further changes-functional or anatomical. These changes are
+            accompanied by a temporary or permanent weakening of the body, and the
+            condition is then called mo...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1903  stem_signal 0.40
+  excerpt : For the same reason strong cheese, spices, asparagus and celery should be
+            forbidden. Spirits, also beer and heavy wines, should not be taken; light
+            moselle wine in small quantities may be allowed, if mixed with some suitable
+            mineral water, such as soda, seltzer, Biliner, Fachinger and Giesshübler.
+            With regard to the large number of articles of diet recommended or forbidden
+            in gout and in the gouty...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1903  stem_signal 0.40
+  excerpt : In this way the activity of the skin is stimulated, and it reacts promptly
+            to the stimuli of changes of temperature to which it may be exposed. If
+            children are fairly strong, one may begin a few weeks after birth, and pour
+            cool water over them after the daily warm bath. Children are generally
+            bathed in water which is much too hot the bath water should never be above
+            95° F. A bath thermometer is to...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1825  stem_signal 0.40
+  excerpt : I then kept him in that situation as much as possible, and it went down
+            gradually so as to hold a natural proportion of heat. My plan succeeded so
+            completely, that he was perfectly cured and has enjoyed good health ever
+            since. I attended upon his wife at the same time, who had been long in a
+            consumption, and had been given over. She was perfectly cured; and they are
+            now living in good health and a...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1825  stem_signal 0.30
+  excerpt : I had but little medicine with me and had to use such as I could procure at
+            this place. I found the cause of the disease to be coldness and canker; the
+            digestive powers being lost, the stomach became clogged so that it would not
+            hold the heat. I made use of red pepper steeped in a tea of sumach leaves,
+            sweetened, and sometimes the bark and berries, to raise the heat and clear
+            off the canker, which...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1825  stem_signal 0.30
+  excerpt : Soon recovered my strength and was able to be about. This satisfied me that
+            I had formed a correct idea of this fatal disease; that it was the
+            consequence of losing the inward heat of the body, and bringing it to a
+            balance with the surrounding air; and the only method by which a cure can be
+            effected, is by giving such medecine as will increase the fever or inward
+            heat, to such a degree as to get t...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1825  stem_signal 0.30
+  excerpt : My plan of treatment was followed with much attention and zeal for six
+            months, before I could raise an inward heat which would hold more than six
+            hours. She then had what was called a settled fever; and I gave her medicine
+            to get as great an internal heat as I possibly could; this caused much alarm
+            among her friends, as they thought she would certainly die. I told them that
+            the heat holding, which...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1914  stem_signal 0.80
+  excerpt : Comparing these figures with those obtained from the analyses of 100 cases
+            of clinical tetanus, he finds that while 74 per cent. of the cases with
+            tetanus bacilli in the wounds belong to Type 1, only 41 per cent. are found
+            with clinical tetanus. The mortality of these types in cases in which the
+            special group was established is given as: No. 1, 11 per cent.; No. 2, 25
+            per cent.; No. 3, 35 per cent...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1914  stem_signal 0.70
+  excerpt : Mills reports good results from the application of sublimed sulphur. A great
+            virtue of the sulphur treatment is the fact that this drug is not
+            spirocheticidal, and therefore does not interfere with the finding of
+            Spirochata pallida if perchance the sore is syphilitic. Argyrol crystals
+            applied directly to the sore for three or four minutes, followed by moist
+            dressing of 10 per cent. argyrol or 1 pe...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1867  stem_signal 0.40
+  excerpt : The diameters of the columns are three feet seven inches and three feet
+            eight inches, making their height, according to the proportions observed,
+            approach to thirty-six feet, about the size of the lower order of St. Paul's
+            cathedral, so that the whole height of the building was, including the
+            basement, about sixty feet. Without the walls its breadth was forty-three
+            feet, and its length a hundred t...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1867  stem_signal 0.40
+  excerpt : 515, seq. lowed to admit the heat. Vitruvius never mentions the laconicum as
+            being separated from the vapour-bath; it may therefore be presumed to have
+            been always connected with it in his time, although in the Therma
+            constructed by the later emperors it appears always to have formed a
+            separate apartment. In the baths of Pompeii they are united, and adjoin the
+            tepidarium, exactly agreeing with the...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1867  stem_signal 0.30
+  excerpt : Close to the furnace, at the distance of four inches, a round vacant space
+            still remains, in which was placed the copper (caldarium) for boiling water;
+            near which, with the same interval between them, was situated the copper for
+            warm water (tepidarium); and at the distance of two feet from this was the
+            receptacle (k) for cold water (frigidarium), which was square, and plastered
+            round the interior ...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1907  stem_signal 0.50
+  excerpt : In it Bonaparte had declared that "all men are equal in the sight of God."
+            This, to Mahomedan ears, was nothing short of rank and absolute blasphemy,
+            for the Koran, which to the Mahomedan is the veritable and literal "Word of
+            God," emphatically asserts, and in the plainest terms, the contrary. This
+            clause was, therefore, in itself sufficient to stamp the whole document with
+            impotency, and showed h...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1856  stem_signal 0.75
+  excerpt : There is also a wonderful experience, that every seventh son born to parents
+            who have not had daughters, is able to cure the king's evil by touch or word
+            alone. The Pythagoreans profess that they can discern many things in the
+            numbers of names; and if there did not lie herein a great mystery, St. John
+            had not said in the Revelations, "He that hath understanding let him compute
+            the number and name ...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1856  stem_signal 0.62
+  excerpt : But there are in all things occult virtues, and the consideration of these
+            opens up a new division of the subject. For the occult virtue does not
+            proceed from any element, but is a sequel of its species and form; so that,
+            unlike the operation of an element, its being little in quantity (hear this,
+            all homœopathists!) is of great efficacy, because these virtues, having much
+            form and little matter, ...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1856  stem_signal 0.50
+  excerpt : M 4. they say that a man's eyes being washed three times with the water
+            wherein he has washed his feet will never be sore. And a little frog
+            climbing up a tree, if any one shall spit in his mouth, and then let him
+            escape, is said to cure the cough. It is a wonderful thing, but easy to
+            experience, that Pliny speaks of, "If any one shall be sorry for any blow
+            that he hath given another afar off, or ...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1856  stem_signal 0.50
+  excerpt : Distrust and doubting dissipate and break the power of the worker's mind,
+            whence it comes that he is frustrated of the desired influence of the
+            superiors. Let, therefore, every one who would work in magic study to
+            conform himself in such manner to the outer universe as that he shall
+            assimilate to himself the powers he desires, and be in right union with
+            celestials, or with minds of other men; and ...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1872  stem_signal 0.40
+  excerpt : Alas, as if that were possible to us! Meanwhile, let afflicted readers,
+            looking before and after, readier to forget than to remember in such a case,
+            accept this Note, or Summary of all the Seven together, by way of help:
+            'Travail-throes of Nature for Baby Carlos's Italian Apanage; Seven in
+            Number. '1°. Triple Alliance, English, Dutch, French (4th January 1717),
+            ‘saying, “Peace, then! No Alberoni-p...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1872  stem_signal 0.30
+  excerpt : Crotchets that grew ever madder, the farther he followed them. This
+            Lifeguard Regiment of foot, for instance, in which the Crown-Prince now
+            is,-Friedrich Wilhelm got it in his Father's time, no doubt a regiment then
+            of fair qualities; and he has kept drilling it, improving it, as poets
+            polish stanzas, unweariedly ever since:-and see now what it has grown to! A
+            Potsdam Giant Regiment, such as the w...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1901  stem_signal 0.75
+  excerpt : Force, Force, everywhere Force; we ourselves a mysterious Force in the
+            centre of that. 'There is not a leaf rotting on the highway but has Force in
+            it: how else could it rot?' Nay surely, to 10 the Atheistic Thinker, if such
+            a one were possible, it must be a miracle too, this huge illimitable
+            whirlwind of Force, which envelops us here; never-resting whirlwind, high as
+            Immensity, old as Eternity. W...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1901  stem_signal 0.50
+  excerpt : For, in fact, I say the degree of vision that dwells in a man is a correct
+            measure of the man. If called to define Shakspeare's faculty, I should say
+            superiority of Intellect, and think I had included all under that. What
+            indeed are faculties? We talk of faculties as if they were distinct, things
+            separable; as if a man had intellect, imagination, fancy, &c., as he has
+            hands, feet and arms. That is...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1901  stem_signal 0.30
+  excerpt : Mahomet makes no apology for the one, no boast of the other. They were each
+            the free dictate of his heart; each called-for,' there and then. Not a
+            mealymouthed man! A candid ferocity, if the case call for it, is in him; he
+            does not mince matters! The War of Tabûc 20 is a thing he often speaks of:
+            his men refused, many of them, to march on that occasion; pleaded the heat
+            of the weather, the harvest...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1905  stem_signal 0.40
+  excerpt : Guelph became liable for $120,000, and Woodstock and Stratford for $100,000
+            each, and so in the case of many other municipalities. A period of financial
+            stringency having naturally followed the era of inflation, many of the
+            municipalities found themselves involved in obligations which it was
+            difficult, if not impossible, to discharge, and within a few years after the
+            establishment of the fund thes...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1915  stem_signal 0.30
+  excerpt : The terrific stress under which I labored, due to the great pressure, made
+            breathing so difficult that it was nothing short of torture. It seemed as if
+            I must die at any moment. "Suddenly the rope about my waist became still
+            tighter. I felt myself dangling and twisting clear of the bottom. A cloud of
+            mud filled the surrounding water, but as it cleared under the influence of
+            the tide, I could see a...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1883  stem_signal 0.38
+  excerpt : The lowest form is angular, or the terrestrial and corporeal. The second and
+            next higher form is the circular, which is also called the perpetualangular,
+            because the circumference of a circle is a perpetual angle. The form above
+            this is the spiral, parent and measure of circular forms: its diameters are
+            not rectilinear, but variously circular, and have a spherical surface for
+            centre; therefore it ...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1883  stem_signal 0.38
+  excerpt : The world is emblematic. Parts of speech are metaphors, because the whole of
+            nature is a metaphor of the human mind. The laws of moral nature answer to
+            those of matter as face to face in a glass. "The visible world and the
+            relation of its parts, is the dial plate of the invisible." The axioms of
+            physics translate the laws of ethics. Thus, "the whole is greater than its
+            part; ""reaction is equal to...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1883  stem_signal 0.30
+  excerpt : But Bonaparte superadded to this mineral and animal force, insight and
+            generalization, so that men saw in him combined the natural and the
+            intellectual power, as if the sea and land had taken flesh and begun to
+            cipher. Therefore the land and sea seem to presuppose him. He came unto his
+            own and they received him. This ciphering operative knows what he is working
+            with and what is the product. He kne...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1868  stem_signal 1.00
+  excerpt : The solution is made accurately of such strength that 1,000 cubic
+            centimetres of it will precipitate exactly one gramme of pure Silver,
+            neither more nor less. The Salt Solution, like the Silver Solution, thus
+            measures exactly one litre (equal to 1,000 cubic centimetres). The original
+            volume of the two so-called Standard or Normal Solutions is only 100 cubic
+            centimetres each; but when they are want...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1868  stem_signal 0.88
+  excerpt : A broad stroke, one to two inches long, is made upon it with a part of the
+            piece of metal to be tried. The stroke is then wetted with a few drops of
+            Nitric Acid, and the effect is carefully observed. If the line remains
+            entirely unchanged, looking quite as full and golden as beforeand if the
+            Acid drained off the stone looks as clear as before the Gold may be taken to
+            be very pure. But if the line ...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1868  stem_signal 0.88
+  excerpt : In order to adjust errors arising from these causes, Check Assays are 15
+            made, on the same system as explained under the head of Assays of Gold by
+            Acid. A piece of Standard Silver, of twelve grains weight, is Cupelled, in
+            the ordinary way, in the same Muffle, and simultaneously with the Assay
+            piece or pieces; it is thus exposed to exactly the same degree of heat as
+            the latter, and operated upon un...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1868  stem_signal 0.80
+  excerpt : 400,000 A cubic inch of Gold, which weighs about 10 oz. 97 Troy, might
+            accordingly cover 14 millions of square inches, or about 97,000 square feet;
+            one grain actually gilding 20 square feet! This extreme range of the Gilding
+            capacity may be attained by covering a bar of Silver with Gold, and then
+            drawing it into fine wire. A bar of Silver can thus be covered with one
+            ounce of Gold, and drawn into ...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1861  stem_signal 0.45
+  excerpt : On the 9th of August we examined the remains of a barrow which had been
+            raised upon a rocky mound near New Inns, Derbyshire, finding only broken
+            human bones, teeth of rats and other quadrupeds, with flakes of flint and
+            pieces of earthenware. We then proceeded towards Cold Eaton, where in a
+            pasture field, between Green Low and Net Low barrows, opened in 1845, are
+            two more large flat barrows, previo...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1861  stem_signal 0.30
+  excerpt : The urn was quite uninjured, and owed its preservation to a large mass of
+            limestone by its side, close to which lay a celt-shaped instrument 5 inches
+            long, with a cutting edge, made from part of the lower jaw of a large
+            quadruped rubbed down; and two phalanges of a human finger. Proceeding
+            further, we met with the skeleton of a small hog, then those of two
+            children, all interred in a simple manner...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1861  stem_signal 0.30
+  excerpt : On the 17th, 18th, and 19th of October, and 1st of November, some further
+            researches were made in the Flax Dale Barrow, near Middleton-by-Youlgrave,
+            where a large cinerary urn with its deposit of burnt bones was found, in
+            1846. Although the present more extensive excavation was not equally
+            successful, it afforded 63 us an opportunity of becoming acquainted with a
+            plan commonly adopted by the Brito...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1875  stem_signal 0.30
+  excerpt : But I'm told that the number does not so exceed The proportion of millions
+            the town has to feed; Emigration's been tried but has failed to reduce The
+            number of paupers the people produce. Population increases in wondrous
+            amount, As shown by the weekly statistic account, Hence lowness of price in
+            the wages they earn For the labour performed by those willing to learn How
+            to work and to husband, to s...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1913  stem_signal 0.30
+  excerpt : Believe me, it is the only thing to do. If the paper wants an interview, it
+            will have one somehow. If you don't see the reporter, somebody will invent a
+            story, so the only wise and safe thing to do is to write one out yourself
+            and hand it in.' I left the country feeling it was marvellous that I still
+            had a single friend on American shores. People are often given credit for
+            what they have never sai...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1885  stem_signal 0.30
+  excerpt : "Ghashím ": =a "Johnny Raw," from the root "Ghashm" iniquity. Builders apply
+            the word to an unhewn stone; addressed to a person it is considered
+            slighting, if not insulting. See vol. ii., night cxxiii. Supplemental
+            Nights. his customer's innocence of all such knowledge, and repented with
+            entire repentance that he had given him a golden dinar in lieu of a copper
+            carat, a bright-polished groat. Howe...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1900  stem_signal 0.38
+  excerpt : If we assume the mean period of 1450, as the approximate date of the
+            manuscript, we have an ex- tent of four and half centuries, during which we
+            know the reputation of the village has been current. Beyond this, as in
+            other cases, we can safely assume the tradition has been current long
+            anterior to the earliest recorded notice. One of the most important features
+            about this allusion in the Widkirk p...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1841  stem_signal 0.80
+  excerpt : In 59° N. lat. it is 950 miles wide. North of this parallel begin the Arctic
+            Highlands, the south-western border of which runs from Hudson's Bay, in a
+            westnorth-west direction, towards the mouth of the Mackenzie River: these
+            highlands contract the plain as it proceeds farther northwards, so that at
+            its most northern extremity it is hardly more than 30 miles wide. The
+            Appalachian Mountains occupy a...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1841  stem_signal 0.60
+  excerpt : Its ele- vation probably nowhere exceeds 2000 feet above the sea-level, and
+            the surface declines from it both towards the north and south in gentle and
+            long declivities, and sometimes with rather steep terraces. The southern
+            border of the depression begins near 88° W. long. on the shores of Lake
+            Superior, and runs southwards along, and close to, the western shores of
+            Lake Michigan, to the most sou...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1841  stem_signal 0.60
+  excerpt : Lawrence 120 miles below Lake Ontario. The line then follows the St.
+            Lawrence up to Lake Ontario; passes through that lake, the lakes Erie, St.
+            Clair, Huron, and Superior, as well as the straits which connect them to La
+            Pluie or Rainy Lake river; it then ascends that river to the 95th degree of
+            west longitude, and the 49th parallel of latitude; and follows that parallel
+            to the Rocky Mountains. The...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1841  stem_signal 0.40
+  excerpt : On the north, and partly on the east, Mexico borders on the United States of
+            North America. The boundary-line between these two Federal States begins on
+            the Pacific (42° N. lat.) and runs along that parallel to the Rocky
+            Mountains; on the east of which range it follows the course of the Arkansas
+            river to the 100th meridian, along which it extends south to the Red River.
+            The last-mentioned river fo...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1875  stem_signal 0.80
+  excerpt : From the river to the base of the lava-wall is 230 feet;* to top of sheet,
+            620 feet; to brink of chasm, 890 feet; and to top of first bench directly
+            back from the brink, 1,090 feet. The base of the lava sheet is given as 230
+            feet above the river-bed, but this is at the lowest point, and the bottom of
+            the mass is very irregular. When the lava flowed down the Mora the cañon had
+            been eroded to a dept...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1875  stem_signal 0.60
+  excerpt : Inches. 8 7 1 8 2 5 ∞∞∞040 19 02 16 10 Thus showing exact resemblance in
+            structure to the same bed as exposed at the mine of the Denver and Rio
+            Grande Company, though there is a material difference in the thickness of
+            the several divisions. In the little rider coal-bed the coal is poor. The
+            main coal is divided by two partings into three benches, respectively one
+            foot, two feet four inches, and on...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1875  stem_signal 0.50
+  excerpt : Orthoceras rushensis. Of the species given in these lists, Orthis resupinata
+            and Spirifer keokuk may be regarded as Lower Carboniferous forms, but all of
+            the rest are either Coal Measures species or forms which are common to the
+            Coal Measures and the Lower Carboniferous. Judging then from the fauna, the
+            only available means of comparison, it appears that the Lower Carboniferous
+            of the Mississippi ...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1875  stem_signal 0.40
+  excerpt : The Willow Creek coal-bed shows-coal, six inches; clay, one foot six inches;
+            coal, one foot six inches, and is of no value at the mouth of the cañon,
+            though at but a little way lower down the Purgatory the thickness is greater
+            and the bed has been opened. The interval between coal-beds C and D varies
+            abruptly, for at half a mile above the mouth of the cañon the relations are
+            as given in the sectio...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1822  stem_signal 0.60
+  excerpt : Among these are a variety of esculent plants and roots, acquired without
+            much difficulty, and yielding not only a nutritious, but a very agreeable
+            food. The air is pure and dry, the climate quite as mild, if not milder,
+            than the same parallels of latitude in the Atlantic states, and is healthy.
+            This general observation is of course to be qualified, since in the same
+            track of country, the degrees o...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1879  stem_signal 0.30
+  excerpt : Oblige me either to renounce my reason and the common principles which
+            distinguish truth from error, or to admit the proof thou shalt allege, which
+            proof, look thee, must be such as no imposture can lay claim to, otherwise
+            it proves thy doctrine to be an imposture. If thy religion be true, there
+            must be such a proof. For if the Being who gave this revelation which He
+            requires all men to receive, h...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1853  stem_signal 0.62
+  excerpt : "Tis best done either at the change, full, or quarters of the moon; or
+            otherwise, when the witch's significator is in square or opposition to the
+            moon. But if the witch's house be tiled, then take a tile from over the
+            door, heat him red hot, put salt into the patient's water, and dash it upon
+            the red-hot tile, until it be consumed, and let it smoak through a trivet or
+            frame of a skillet as aforesa...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1853  stem_signal 0.50
+  excerpt : Butl. Why he's made much as other men are, if it was not for his long grey
+            beard.-His beard is at least half a yard long; he's dressed in a strange
+            dark cloke, as black as a coal. He has a long white wand in his hand.
+            Coachm. I fancy 'tis made out of witch elm. Gardn. I warrant you if the
+            ghost appears he'll whisk you that wand before his eyes, and strike you the
+            drum-stick out of his hand. Butl. ...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1876  stem_signal 0.30
+  excerpt : "Ready, about! - Hard to leeward! - Bow and midships! Brace up fore and
+            aft!-Let go and haul-Steady!"-were the monotonous commands, whenever they
+            took a new tack, and at the same time they generally shipped huge seas, so
+            that the whole vessel shivered and staggered. The deck- cargo, consisting of
+            ponderous beams, was lifted by the shock and force of the water so that many
+            of them stood cast on end...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1852  stem_signal 0.38
+  excerpt : Then presently the devil began so great a rumor in the wood, as if heaven
+            and earth would have come together, with wind, and the trees bowed their
+            tops to the ground. Then fell the devil to roar, as if the whole wood had
+            been full of lions and suddenly about the circle run the devil, as if a
+            thousand wagons had been running together on paved stones. After this, at
+            the four corners of the wood it t...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1908  stem_signal 0.38
+  excerpt : Pearson advocates statistical methods in his Chances of Death, ii. 58,
+            75-77, and shows by examples the value of them. they are so far removed from
+            the European culture amidst which the folk-tales have lived, and because
+            these elements belong not to the accidentals of the stories but to the
+            essentials. Thus, if we divide the folk-tale into its components, we shall
+            find that it consists of three fe...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1908  stem_signal 0.30
+  excerpt : There is no one term which can properly be applied to all, and it will have
+            been noted that I have carefully avoided giving the human groups hitherto
+            dealt with any particular name, and only under protest have I admitted the
+            terms used by the authorities I have quoted. I think the term "tribe" is not
+            applicable to savage society, for it is used to denote peoples in all
+            degrees of social evolution,...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1908  stem_signal 0.30
+  excerpt : A given custom consists, say, of six elements, which by their constancy
+            among all the examples and by their special characteristics may be
+            considered as primary elements, in the form in which the custom has
+            survived. Let us call these primary elements by algebraical signs, a, b, c,
+            d, e, f. A second example of the same custom has four of these elements, a,
+            b, c, d, and two divergences, which may b...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1906  stem_signal 1.00
+  excerpt : The action of these two forces may be illustrated by the familiar example of
+            a weight attached at one end of an elastic cord and held at the other end by
+            the hand. If the weight be whirled round it flies out and away from the hand
+            that is holding the cord, representing the centrifugal force. Meanwhile as
+            it revolves the weight is continually being pulled in by the cord,
+            representing the centripeta...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1906  stem_signal 0.80
+  excerpt : If the speed of revolution were increased, the water would be thrown off the
+            earth in the same manner that it is dispersed from a twirled mop. If the
+            gravitation effect were reduced the tendency to fly off would be also
+            increased. The two forces, so long as they are not affected by any other
+            disturbing force, are in equilibrium. The action of the earth in its
+            revolution resembles a gigantic fly-wh...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1906  stem_signal 0.80
+  excerpt : There is, consequently, a mixing or diffusing action always going on between
+            the salt and the fresh water owing to the oscillation of the tides, and salt
+            may, therefore, be traced at a greater distance up a river than floats
+            indicate. The propagation of the tidal wave up the river does not,
+            therefore, result in a filling up of the space that exists between high and
+            low water with sea water, althou...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1906  stem_signal 0.62
+  excerpt : The crests follow one another at intervals of 12.66 hours, and as the
+            interval of the principal lunar tide is 12.42 hours, the elliptic tides fall
+            behind by 14 minutes each tide. They may, therefore, happen at new or full
+            moon and coincide with spring tides, or at the quarters and coincide with
+            neaps. If the moon is in perigee at new or full moon, the height of the
+            corresponding tides will be incr...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1918  stem_signal 1.00
+  excerpt : To lay out a single riveted lap joint for ½ inch plates, using 7/8 inch
+            rivets. Then %.645 ÷ ½ = 7X .645 X 2 = 1.13 And 1.13 + 1.00 2.13. And 2.13 X
+            % = 1.86 pitch. Take the nearest eighth inch above and pitch 17% inches.
+            Then taking the strength of the plate at 60,000 pounds per square inch:
+            Strength of plate in joint = (1% — %) X ½ X 60,000 30,000. Area of 8-inch
+            rivet = 2.60 square inch. Streng...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1918  stem_signal 1.00
+  excerpt : Again the strength of the furnace increases with the thickness and decreases
+            with the diameter. Hence for a given pressure and limit on the thickness,
+            the diameter will be limited as well. With modern pressures and a general
+            limit on the thickness as above, the limit on the diameter, therefore,
+            results. Rarely furnaces are met with up to 54 inches, but only with the
+            more moderate steam pressures. ...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1918  stem_signal 1.00
+  excerpt : The difference in pressure is then measured by the weight of a column of
+            water equal to the difference in height between the two legs. This is
+            usually read in inches, and hence draft pressures are usually expressed in
+            inches of water. With ordinary funnel draft the pressure is usually from 4
+            to 2 or 34 inch, with assisted or light forced draft from ½ inch to I inch,
+            with forced draft on large ship...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1918  stem_signal 1.00
+  excerpt : Pitch= (13/16) X.7854 X 2 1/2 In this case n = 2. Then- 13 2.886 inches. 16
+            23 X đ X .7854 Xin For steel plates and steel rivets : Example for single
+            riveted joint: Given, thickness of plate = ½ inch, diameter of rivet 15/16
+            inch. In this case n = 1. Pitch= 23 X (15/16) X .7854 X I 15 2.071 inches.
+            28 X 2 16 Given, thickness of plate = ½ inch, diameter of rivet = 8 inch.
+            Example for double riveted...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1873  stem_signal 0.80
+  excerpt : The nearest approach to the boiling-point is at A, a height of thirty feet
+            from the bottom; but even here the water is two degrees Centigrade, or more
+            than three and a half degrees Fahrenheit, below the temperature at which it
+            could boil. How, then, is it possible that an eruption could occur under
+            such circumstances? "Fix your attention upon the water at the point A, where
+            the temperature is with...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1873  stem_signal 0.40
+  excerpt : The mound itself is raised about forty feet above the sur- rounding slope.
+            We climbed up, - it is not very steep, and found ourselves standing on the
+            rim of a huge circular basin of brown rock, as smooth inside as if
+            sandpapered every day. This shoal basin is fifty-two feet in diameter from
+            north to south, and sixty from east to west; not quite circular, yet so
+            nearly so as to have that appearance...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1873  stem_signal 0.38
+  excerpt : "Goes up seventy feet," was the answer. "I wonder if he means Icelandic
+            feet," Wash queried. "My old geography said it went up eighty and ninety
+            feet." "Bet you we don't see it over sixty!" Kit offered. "But it will be a
+            joke if we should have to wait a week for it." "I mean to see it, now I've
+            come so far, if I have to stay here a fortnight," said Raed. "Of course."
+            "Do travellers ever have to go...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1873  stem_signal 0.35
+  excerpt : "Yas, sirs: many more times. at first time." "Is that so?" exclaimed Kit.
+            Heave up worse than "Then it will be all the easier managing to make 'em
+            both heave at once." A moment later, the same threatening roar made the
+            plateau tremble afresh; and up went the inky flood a second time, blacker
+            and more fearful than before. I have no doubt that some of the jets this
+            time leaped full seventy feet in t...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1884  stem_signal 0.45
+  excerpt : Anchors being scarce, stones of suitable weight, which would soon sink in
+            the soft muddy bottom and hold well, can be used, and timber being abundant,
+            the cost of such an obstruction will be moderate, and it will offer no
+            impediment to the current, while the drift timber will cant and pass between
+            the logs. When the attacking fleet enters the lower reaches of the river and
+            appears to be preparing ...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1911  stem_signal 0.40
+  excerpt : In other words, gentlemen, every yard of material that is dumped
+            promiscuously into the lake eight miles out, is wasting a property value of
+            over $7.00. I base this statement upon the fact, that within a few weeks
+            past in condemnation proceedings, the Sanitary District was forced to pay
+            $7.00 a square foot for property located on the Chicago River near
+            Fourteenth street, because it had that value ...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1911  stem_signal 0.40
+  excerpt : In other words, gentlemen, every yard of material that is dumped
+            promiscuously into the lake eight miles out, is wasting a property value of
+            over $7.00. I base this statement upon the fact, that within a few weeks
+            past in condemnation proceedings, the Sanitary District was forced to pay
+            $7.00 a square foot for property located on the Chicago River near
+            Fourteenth street, because it had that value ...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1911  stem_signal 0.35
+  excerpt : Ships exceeding 600 feet in length and 60 foot width await an incoming
+            confronted with a space to move on 6 or 7 miles long and in places 125 feet
+            in width. Many bridges draws less than the ship's width and few greater, and
+            some located on a bend on the river where if the draw was sufficient a hinge
+            in the ship would be needed to pass the bend. Compare this with the harbors
+            of Boston, New York, Ph...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1911  stem_signal 0.30
+  excerpt : We are informed by Mr. Johnson of the Anchor Line, who has given this matter
+            a great deal of study, and is perhaps as well versed in this particular
+            matter as anyone else, that for this purpose there are used in Chicago about
+            8,500 feet of dockage, and that each boat under the existing difficult
+            conditions can load only about 1,200 tons per day, while if we had modern
+            harbor facilities each boat s...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1888  stem_signal 1.00
+  excerpt : Here, however, we touch the main item in the increased economy of the later
+            forms, and which may be shortly referred to. Generally speaking, steam when
+            expanding may be represented as following what is known as Boyle's law of
+            gaseous expansion-that is, that the pressure varies inversely as the volume;
+            so that if, in the triple-expansion engine above referred to, we suppose
+            that the steam is cut of...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1888  stem_signal 1.00
+  excerpt : The whole question of economical working, in a word, depends upon the amount
+            of effective work which can be obtained from the coal consumed. So that, not
+            only is the engine subject to further improvement, but also the boiler and
+            furnace. Combustion by forced draught, &c., are all elements in the
+            question. From the combustion of 1 lb. of coal about 14,500 thermal units
+            should be obtained. Roughly s...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1888  stem_signal 1.00
+  excerpt : Froude discovered amounts to this-that for vessels of the same proportionate
+            dimensions, and of the same form, or, as we say, of the same lines, there
+            are speeds appropriate to these vessels which vary as the square root of the
+            ratio of their dimensions, and that at these appropriate speeds the
+            resistance will vary as the cubes of these dimensions." He then goes on to
+            illustrate this, and takes th...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1888  stem_signal 1.00
+  excerpt : Denny says: “What Mr. Froude would have predicted of these two steamers is
+            that if the speed of the smaller steamer were 10 knots, then the similar
+            appropriate speed of the larger steamer would be 20 knots." At these speeds
+            Mr. Froude proved that the resistance, with some allowance, would be as the
+            cube of the steamer's dimensions, which would give for comparative
+            resistance with these figures, as...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1871  stem_signal 0.88
+  excerpt : DRIFTING IN A TIDE-WAY.-As a vessel is deeper aft than forward, her stern
+            will always tend to drift faster than her head. If the current is setting
+            out of a river or harbour, and the wind the opposite way, or only partly
+            across the current, you may work out by tacking from shore to shore; or you
+            may let her drift out, broadside to the current; or, keeping her head to the
+            current by sufficient sail...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1871  stem_signal 0.38
+  excerpt : The fore or the main spencer (sails which are used very much now instead of
+            main and mizen staysails) may be used to advantage, according as a 65 ship
+            requires sail more before or abaft the centre of gravity. If a ship will
+            bear more than one sail, it is thought best to separate the pressure. Then
+            set the fore and main spencers; or (if she carries staysails instead) the
+            main and mizen staysail: or...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1871  stem_signal 0.30
+  excerpt : The rules above given are for a vessel in port, with squared yards. If you
+            are at sea and it is blowing fresh, and the topsail or course is reefed, to
+            send it down, you must cast off a few robands and reef-points, and pass good
+            stops around the sails; then secure the buntlines also around it, and cast
+            off all 29 the robands, reef-points, and reef-earings. Bend a line to the
+            lee head-earing and let...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1896  stem_signal 0.30
+  excerpt : "Keep her steady, Uncle Ben." Frank, looking through the two rows of
+            perpendicular oars, steered the Zephyr alongside her companion, and passed
+            within a very few inches of her. 66 Play Old Folks at Home,' if you please,"
+            said he, as the boat darted by the sluggish Sylph. "That was a little too
+            close, my son," said Mrs. Sedley. "We are perfectly safe, mother, are we
+            not?" "We are; but, Frank, you s...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1921  stem_signal 0.30
+  excerpt : In time of war the problem would, of course, be infinitely more complicated.
+            For one thing, a cruising speed of 10 knots would be out of the question,
+            especially when the fleet had left Hawaii and thus come within the radius of
+            Japanese submarines. It would, on the contrary, have to pursue a zigzag
+            course at a minimum speed of 16 knots, and would therefore reach Guam with
+            bunkers heavily depleted....
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1921  stem_signal 0.30
+  excerpt : Vessels of every type-battleships, cruisers, scouts, destroyers, submarines,
+            fuel ships, and auxiliaries -had been assigned in equal numbers of
+            divisional units to each Fleet, thus obviating confusion and doing away with
+            the necessity for reorganisation whenever the two Fleets come together.
+            Difficult as it may seem to reconcile such a division of force with the root
+            principles of strategy, the ci...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1918  stem_signal 0.50
+  excerpt : CUTHELL. The ship company will get back its ground; it will own the stock of
+            the subsidiary company and will be free to do what it pleases with it after
+            our loan is paid, which we contemplate will be 15 years, if the proposition
+            succeeds. Mr. EDMONDS. By owning the stock of the little ship company, they
+            will get a control over the ground. Mr. CUTHELL. Except such portions as are
+            sold to the employ...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1918  stem_signal 0.50
+  excerpt : HARDY. Do I understand you would oppose permitting any employee buying a
+            house and living in it, if he desired to do so, under the terms stated by
+            Mr. Cuthell? Mr. WHITAKER. Absolutely. Mr. HARDY. But don't you think that a
+            man of family who could buy his home for $2,400, or even, say, $3,600,
+            paying a small amount down and 4 per cent interest annually, running his
+            rental to about $100 a year-if h...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1916  stem_signal 0.50
+  excerpt : The cavalry should protect the advance guard from surprise by artillery
+            fire. 61 Patrolling is very fatiguing to foot soldiers, hence mounted men
+            are used where practicable. Parallel roads adjacent to the line of march
+            (not more than 1 to 2 miles distant) may be used for flank guards or
+            patrols. A flank guard of an advance guard should usually be of mounted men.
+            But if it is liable to encounter re...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1916  stem_signal 0.50
+  excerpt : Civilians, especially 63 if mounted or in automobiles, should not be allowed
+            to precede the advance guard or advance cavalry, either on the route of
+            march or any parallel route. If overtaken on the march they are compelled to
+            remain in rear. Neglect of this precaution, especially in hostile territory
+            or near the frontier, may result in information of the numbers and movements
+            of the troops being f...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1916  stem_signal 0.50
+  excerpt : (See "Position in Readiness.") Strength and Composition. No rules can be
+            given for the strength of a flank detachment, as this depends on
+            circumstances to a greater extent than in cases of advance and rear guards.
+            Its limiting strength is about 1/2 that of the body which sends it out,
+            which amounts to a movement in two columns, and it varies from this maximum
+            down to a mounted patrol, which of cou...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1916  stem_signal 0.30
+  excerpt : In making a change of direction the safety of the trains must be carefully
+            considered. If the detachment is joining the main body for battle, its
+            trains (if with it) may well be sent by the shortest practicable route,
+            escorted if necessary, to join those of the main body, or to some other safe
+            place. If danger is to be anticipated from the former front now become a
+            flank, the trains should prefera...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1862  stem_signal 0.75
+  excerpt : 600. The directing battalion being regarded as infallible by all the others,
+            and having thus the greatest influence on them, its march will be
+            superintended with the utmost care: consequently, the general, or the
+            officer deputed by him, placed in front of this battalion, will labor to
+            maintain its centre steadily on the perpendicular; to this end, he will
+            frequently throw himself from thirty to fo...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1862  stem_signal 0.40
+  excerpt : 180. If the general guides be on the flank of the column, the general will
+            first place himself behind the color-bearer of the leading battalion, to see
+            whether this color-bearer and the preceding general guide are accurately on
+            the prolongation of the two points in front upon which they had marched,
+            and, if necessary, to rectify their position; the general will then throw
+            himself in front, and fac...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1862  stem_signal 0.30
+  excerpt : 99. What has just been said in the two preceding numbers applies to all
+            changes of front, either perpendicular or oblique; but as, in the latter,
+            the distance between G and C is less than in the perpendicular changes, and
+            as it diminishes in proportion to the lessening of the angle formed by the
+            old and new positions, it follows that the number of battalions to be broken
+            by company ought also to b...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1832  stem_signal 0.38
+  excerpt : Brave men trained to close fight, will always press up to an enemy, even in
+            open field, as the Frasers did at Colloden; for their swords and shields
+            broke through the English bayonets in a moment, and if only one fourth of
+            the Highlanders had been pikemen, to have resisted the horse, the Pretender
+            would assuredly have gained the victory. The proposed Century, although so
+            united under one command, ...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1914  stem_signal 1.00
+  excerpt : If the general direction of the target is known, parallel lines in that
+            direction may be obtained by any convenient method. A round will be fired at
+            any convenient range to ensure the fall of the shell being observed, and the
+            line will then be corrected in the ordinary manner according to the
+            observation given by the aerial observer. 13. To change target. To do this
+            it is necessary to ascertain th...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1914  stem_signal 1.00
+  excerpt : When a target appears the battery commander can then proceed as just
+            described. Having ascertained the angle between the old and the new targets,
+            the battery commander orders "change target, all guns....more right (or
+            left)" (right if the new target is to the right of the old one and vice
+            versa). This change should be put on the main scale of the sight. When
+            changing target, if the angle between t...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1914  stem_signal 1.00
+  excerpt : For instance, if the two pieces of stick, previously mentioned as being
+            placed in line with the target, are placed about 19 yards apart, half
+            degrees can be marked by placing smaller pieces of stick in the ground right
+            and left of the further one at intervals of 6 inches. The observer then
+            places himself at the nearer of the two sticks previously referred to, and
+            has a rough means of estimating am...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1914  stem_signal 1.00
+  excerpt : Now, if the observers at L and R are provided with telescopes fitted with
+            graticules, they can each observe the number of minutes left and right
+            respectively of the target of the fall of the shell at S. And these minutes
+            may be regarded as an increase of the base angles T L R and TRL
+            respectively, and a consequent decrease of the apex angle by their combined
+            amount, resulting in a corresponding in...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1851  stem_signal 0.38
+  excerpt : But the citadel held out till four P.M., when it surrendered. Thus fell
+            Bhurtpore, the pride and glory of Hindostan. That fortress, which had
+            hitherto been considered impregnable, and had even bid defiance to British
+            power, now lay prostrate at the foot of British valour. Nothing, indeed,
+            could exceed the cool and steady courage of the troops, who seemed
+            invincible; but having been an eyewitness o...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1895  stem_signal 0.30
+  excerpt : It was decided to employ 1 See sketch map 2. almost the whole army (eight
+            and a half corps and the reserve corps, 278,000 men) against Austria and
+            Saxony, and to meet the rest of the German enemies with a scratch army
+            (48,000) made up of half the seventh corps and of the troops assembled in
+            Holstein and at Wetzlar. This force was destined first of all to disarm
+            Hesse and Hanover (capitulation of L...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1879  stem_signal 0.30
+  excerpt : The attempt, most unfortunately, failed. Then followed the battle of St.
+            Denys, fought against immense odds, which was perhaps the most skilful of
+            Coligny's battles. Nothing impressed the Parisians more than the spectacle
+            of 3000 men fighting against 18,000, holding their ground for two hours, and
+            retreating foot by foot. If these things could be done by so small a force,
+            what might not be expecte...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1899  stem_signal 0.50
+  excerpt : Beginning therefore with the infantry, the foot consisted of twelve
+            regiments, each divided into ten companies of one hundred and twenty men
+            apiece. As all the field-officers, even if they held the rank of general,
+            had companies of their own, the full number of officers to a regiment was
+            thirty colonel, lieutenant-colonel, major, seven captains, ten lieutenants
+            and ten ensigns. Each company includ...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1899  stem_signal 0.38
+  excerpt : The day of Winceby must for this reason remain memorable in the history of
+            the Army, not the less so because it brought Cromwell nearer to his death
+            than any action before or after it. By the close of the year Parliament
+            began to realise that if the war were to be carried to a successful issue,
+            some more effective force than mere trained bands must be called into
+            existence. It accordingly voted th...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1884  stem_signal 0.38
+  excerpt : It must therefore be a fixed principle not to assume the increased pace
+            until we are certain that the enemy cannot be reached at a slower pace, or
+            when we have approached him so closely as to be able to run him down by the
+            shock of a charge, or when, in the attack on infantry, we have entered the
+            sphere of most effective fire. 'For peace manoeuvres we may take as the rule
+            to begin the attack at th...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1884  stem_signal 0.38
+  excerpt : In order to obviate or to minimise such faults and shortcomings as these it
+            will be found a useful practice to place 2 or 3 men to represent the enemy
+            at such a distance apart as will exactly correspond to the front (including
+            intervals) of the force which is going to attack. For instance, if the
+            attack is to be made by 3 squadrons—say, of 36 filesthe normal breadth of
+            front of this force, includi...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1884  stem_signal 0.30
+  excerpt : If some of them were organised on a sound footing and maintained ready for
+            war there would be less chance of the chaos and disorganisation into which
+            the cavalry was thrown when 4 or 5 efficient regiments had to be furnished
+            for the Egyptian campaign. If we can only have a partial reform of the
+            organisation of our regiments, at least let that reform be in the right
+            direction, instead of adopting m...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1884  stem_signal 0.30
+  excerpt : It is natural that on the Continent, where military operations are on so
+            large a scale, and where the subject is of so much importance, great
+            attention should have been given to it. The English cavalry officer,
+            therefore, need be at no loss for trustworthy data to which he can refer if
+            he wishes to compare calculations made in England with those which obtain in
+            the armies of the great military Pow...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1862  stem_signal 0.50
+  excerpt : (Fig. 16.) If a column, formed by division, should find itself menaced by
+            cavalry, its colonel would cause it to form square, making it beforehand
+            close to half distance, Fig. 16. Column by division, ready to form square.
+            The square formed. by the commands and means already indicated; the second
+            division would close upon the first, and there would be no reserve; only, if
+            necessary, the two interio...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1862  stem_signal 0.38
+  excerpt : To form | square. The column being closed in mass, if the colonel should
+            wish to form square, woul cause it to take half distance, by the command..
+            2. Column, forward. 3. Guide left. At the command MARCH, the first company
+            stands fast. The file-closers come up to the distance of 14 inches. When the
+            second company has marched up to the same distance from the file-closers of
+            the first, the colonel w...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1862  stem_signal 0.38
+  excerpt : Rally of a battalion deployed as skirmishers. The colonel will arrange all
+            the company reserves as promptly as possible, in such manner as that each
+            will constitute the first front of a square, and will then command. Rally on
+            the reserve. The skirmishers will start back at a run, and come up on their
+            respective reserves to form successively the other fronts of the square of
+            which the reserve is th...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1862  stem_signal 0.30
+  excerpt : The remainder of the movement is executed exactly as in the preceding
+            movement. If the column should be formed by division, it would take company
+            distance; which would be stated in the command. The principles are the same.
+            4. To march in column at half distance, and change direction. This march and
+            these changes of direction are executed by the same commands and in the
+            manner explained for a colum...
+  (failed)

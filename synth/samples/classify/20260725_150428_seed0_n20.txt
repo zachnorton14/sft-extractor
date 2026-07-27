@@ -1,0 +1,306 @@
+classify sample
+model: claude-haiku-4-5
+seed:  0
+n:     20
+
+========================================================================================
+[aff=opinion]  primary=narrative_fiction  classes=['narrative_fiction']
+  If you knew how light I feel! Am I poised on wings? How sweet it is to sleep after
+  long wakefulness, to rest after great fatigue! How fair the day is! How brilliant the
+  light! How beautiful the sun! The very walls of the room seem to be smiling on me. Oh,
+  I have been very ill, a long time ill, have I not?" And with a sigh, while passing her
+  hand over her forehead still damp with perspiration, she continued, – << Oh, I have
+  suffered so much. Now, glory be to Allah! I am only weak; but I feel that this
+  exhaustion will very quickly pass away. One would think that a string of pearls was
+  coursing my veins. Oh, how strange it is! I see all that has happened as if through a
+  mist. I dreamed that I was plunged into an ice-cold sea and yet was burning with
+  thirst.
+
+========================================================================================
+[aff=narrative]  primary=reasoning  classes=['knowledge', 'reasoning']
+  Waugh and Kerr have studied this point with native plums for several years and their
+  judgment is united in a table of recommended pollinizers for plums (12th Report Vt.
+  Ag. Ex. Sta.). A few results from crosses made at Ithaca in 1899 will illustrate this
+  point. Fig. 81 shows the comparative size of Seckel when pollinated with Kieffer and
+  with Lawrence pollen. Clapp pollinated with Kieffer was also larger than Clapp
+  pollinated with Lawrence or Louise Bonne. Howell blossoms which received the pollen of
+  Clapp gave fruits of nearly twice the size of those which received Bartlett pollen.
+  Bartletts crossed with Angouleme were larger than Bartletts crossed with Sheldon. In
+  some cases no difference could be noticed, yet most of our standard commercial
+  varieties will be likely to yield enough better fruit when planted with some varieties
+  than with others, to make a study of this point worth the while.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded',
+'knowledge']
+  Joitabaee Settanee, the younger widow, was enceinte at the time of her husband's
+  death, and gave birth to a son in the following month of December. The child, whether
+  genuine, as proved by evidence afterwards, or spurious, as Baba Nafra a year
+  subsequently and then first alleged, was at least treated as the true posthumous child
+  of the wealthy banker; it was named and soon after betrothed in the presence of the
+  prince, and with all the ceremonies of the caste, observed in the costly manner
+  befitting an affluent parentage. The unquestioning concurrence in these ceremonies of
+  the relations of Becher Samuldass' other widow, the fortune of whose son was so
+  seriously affected by the advent of this equal sharer, seems to testify still more
+  strongly to the 323-2. referred to in Grant Duff's "History of the Mahrattas," iii.
+  215, as one of the two banks in Baroda which had gained great wealth by advances, made
+  at exorbitant interest, to the Arabs and other mercenaries of the Gaekwar, paid as
+  they were, like all other native soldiery, with miserable irregularity.
+
+========================================================================================
+[aff=expository]  primary=how_to  classes=['how_to', 'knowledge']
+  4. When? 5. By whom b. Lessons too short rather than too long. c. Instruction-how to
+  prepare. 4. Object. a. To gain knowledge. b. Mental development. THERE are three
+  elements to be considered in connection with every recitation, not including the
+  subjectmatter: First, the method of conducting the recitation; secondly, the pupils or
+  persons to be benefited by the recitation; and, thirdly, the teacher or person who
+  conducts the recitation. Under methods there are three divisions: recitations may be
+  entirely oral, entirely written, or a combination of the two methods. In advanced
+  classes it is well to have recitations about half oral and half written. There are
+  advantages in both oral and written recitations, but neither should be used to the
+  exclusion of the other. If a recitation be oral, it must be either individual or
+  concert, or both, the time occupied in recitation being divided between the two. If
+  the recitations are by individuals, the choice lies between the consecutive and
+  promiscuous methods.
+
+========================================================================================
+[aff=expository]  primary=how_to  classes=['how_to', 'knowledge']
+  (P. E.) Rhubarb in coarse powder 3v; canella (do.) 3ij; proof spirit f3v; sherry
+  f3xxxv; macerate for 7 days, press, and filter. Dose. As a stomachic fōj to f3iij; as
+  a purgative fss to fźj. WINE TEST. Prep. 1. (Hahnemann's.) Quicklime 3j, flowers of
+  sulphur 3iss; heat in a covered crucible for 5 or 6 minutes; of this take 3ij,
+  tartaric acid 3ij; powder, mix, and shake in a stopped bottle, with a pint of water;
+  let it settle, pour off the clear, and add tartaric acid 3iss.-2. (Dr. Paris's.)
+  Expose equal parts of sulphur and powdered oyster shells to a white heat for 15
+  minutes, and when cold, add an equal quantity of cream of tartar; these are to be put
+  into a strong bottle, with common water, to boil for an hour, and the solution is
+  afterwards to be decanted into ounce phials, adding twenty drops of muriatic acid to
+  each.
+
+========================================================================================
+[aff=narrative]  primary=conversational  classes=['narrative_fiction', 'conversational']
+  I replied, you must, you shall save me from the terrible damnation of seeing my wife
+  and infant perish before me.-GOD, said he, sends you this by my hands. He sees your
+  distress, but disapproves your conduct. But, Clement, beware the third time; another
+  offence like this would prove fatal to you. He spoke, and putting five guineas into my
+  hand, he instantly slipped away; for, such was my sudden astonishment and confusion,
+  that I neither remarked nor saw what became of him. At length, I awaked as from a
+  trance. I stepped up to a single lamp that glimmered before me: and, opening my hand,
+  I perceived that the money which I held was gold. I hurried it into my pocket; and
+  turning back, I began, slow and pensive, to move toward home. The fury with which I
+  was, so lately, exasperated against heaven and earth, again subsided; and my heart
+  began to feel a new infusion of compunction and humanity.
+
+========================================================================================
+[aff=expository]  primary=knowledge  classes=['knowledge']
+  2. Fucus platycarpus. 3. Ascophyllum nodosum with Polysiphonia fastigiata. 4. Fucus
+  vesiculosus. 5. Fucus serratus. 6. Laminaria digitata and L. saccharina. find
+  concealment and nourishment among them were able to colonise the canal. So far,
+  however, no Fucus or Zostera was present in the canal, and no Palamon or Nerophis. The
+  sea-urchin occurred, however, and in the absence of Zostera fed on Enteromorpha.
+  Species of Idothea, Rissoa, and Lit torina were present in small numbers. A few mud-
+  dwellers had put in an appearance in addition to several worms. The brittle-star
+  Ophioglypha entered the canal some eighteen months after the opening. Many mud-worms,
+  mud-frequenting Nematodes, and forms such as Scrobicularia, Mya truncata, Acera
+  bullata, Molgula, etc., were still absent in the autumn of 1896 and could not appear
+  in any numbers until a more copious deposit of mud had been formed by the
+  decomposition of the algae growing on the banks.
+
+========================================================================================
+[aff=argument]  primary=narrative_grounded  classes=['narrative_grounded', 'knowledge']
+  We have now to record a second and more serious effort made by the Admiral in the same
+  direction, and to tell how Florida was nearly wrested from the hands of the Spaniard.
+  This attempt belongs to the reign of Charles IX. Its history is inserted here because
+  it is a separate chapter in the life of Coligny; because it has never before, I
+  believe, been told in English; and because it has nothing to do with the history of
+  the twelve years' civil war which makes up the melancholy conclusion of this volume.
+  If things looked threatening on the accession of Francis II., they looked no less
+  black at his death. True, the Guises were for a time out of power, and Catherine was
+  Regent. Yet there was no obedience anywhere, and no authority. After the slaughter of
+  Amboise, a stream of blood separated the two religions. Every town was divided into
+  hostile camps.
+
+========================================================================================
+[aff=argument]  primary=narrative_grounded  classes=['narrative_grounded', 'knowledge']
+  In 1517, he had to defend the Pope's cause against the English realm regarding the
+  forfeiture of a papal ship. He argued so well that the star chamber decided in favor
+  of the Pope. Henry gladly returned the ship, and, far from being displeased with More,
+  sought only to win his valuable service for himself. As royal speaker, More had
+  frequently to make the Latin address; thus at the famous meeting of Henry VIII with
+  Francis I of France in the Field of the Cloth of Gold, and again two years later, at
+  the solemn entry of Emperor Charles V and Henry VIII in London. Though More enjoyed
+  the esteem and confidence of Cardinal Wolsey and in turn had great respect for the
+  Cardinal's eminent qualities, it happened that on one occasion he found it his duty
+  publicly to oppose him. Wolsey was peeved and exclaimed, "Are you not ashamed, Mr.
+
+========================================================================================
+[aff=argument]  primary=reasoning  classes=['opinion', 'reasoning']
+  "With a climate and soil peculiarly adapted to production of cotton, our country is
+  also equally favorable to the production of all the necessary cereals, and as
+  remarkably favorable to the perfect development of the animal economy, in fine horses,
+  fine active mules, good milch cows, superior sheep and hogs, and for fruit of every
+  variety (not tropical) it is eminently superior. If this condition of things be fact,
+  and I assert it to be such, why is it that we find so many wealthy cotton planters,
+  whose riches consist entirely of their slaves and worn-out plantations? "In every
+  other section of this country, north, east and west, the proceeds of the productive
+  industry of the people in the grand aggregate are retained at home, while we, the
+  planters of the South, producing annually, from a single one of our crops,
+  $150,000,000, pay out the grand aggregate to others for bread, bacon and mules, all of
+  which we may,. under a proper system of plantation economy, grow at home, and thus we
+  may also retain at home this large sum of gold, the substance of our fields, to be
+  expended in home improvements.
+
+========================================================================================
+[aff=expository]  primary=reasoning  classes=['reasoning', 'opinion']
+  The body is not competent to judge of qualification, if it wished to choose fairly;
+  and we know that the determining causes of its actions are quite foreign to the real
+  merits of the matter it has to deal with. Congregation has been suggested as a proper
+  body. I doubt its suitableness even if reformed. It seems to me that it would probably
+  have many of the faults of convocation, which are faults common to every large body,
+  and which make them unfit to exercise patronage. Nomination by a single person has one
+  great advantage-undivided responsibility, and if the single person is well chosen this
+  method would probably give good appointments. But that person must not be a grandee, a
+  prime minister, a chancellor of the university, or any such person-to him the
+  nomination is a small matter. An improper appointment does not fill him with shame or
+  subject him to the censure of those among whom he lives, and whose approbation he
+  values.
+
+========================================================================================
+[aff=expository]  primary=knowledge  classes=['knowledge']
+  "Where it commences rectum there is a valvular structure, and then a swell forming a
+  kind of reservoir for the fæces, in which there is a particular appearance or
+  structure: it is there flat, more firm in texture, and has two lateral conical bodies
+  on each side whose bases adhere to the side of the gut, and the whole body projects
+  into the cavity of the gut obliquely downwards. Into the base passes a dark vessel,
+  which is an air-vessel. We may suppose these so many glands opening at the apex into
+  the gut*. Then the gut becomes small, and opens into the anus behind, or rather above
+  the vagina. 'The bag belonging to the first-described canal is to be considered as a
+  craw or crop, viz. a reservoir for the food to be ready for digestion; and as the
+  abdomen contains almost every internal part of the animal, it is obliged to be
+  situated in this cavity but why it did not communicate with the oesophagus or true
+  stomach * The preparation which exhibits this structure is preserved in the series of
+  "Peculiarities" along with the anal glands from the higher classes of animals. lower
+  down, I do not know.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded',
+'knowledge']
+  From the third Earl Kilmarnock received a grant of the common greens of the town,
+  certain shops under the Tolbooth, the tron and weights, with the customs of the burgh,
+  including all connected with the fairs and weekly markets. When this grant was made
+  the Magistrates were elected by the Lord of the manor from a list presented to him
+  annually. So far as Parliamentary representation or municipal government was
+  concerned, Kilmarnock continued in this condition till 1832, when under the Reform
+  Bill of that year it was included among the fifteen towns in Scotland, not royal
+  burghs, which were to join with others in sending a member to the Commons. Gradually
+  increasing in enterprise and population, Kilmarnock came to be a place of considerable
+  importance in the West Country, and throughout the perilous times of the Covenant and
+  Rebellion lent a consistent and substantial support to the cause of religious and
+  civil 259 liberty.
+
+========================================================================================
+[aff=opinion]  primary=reasoning  classes=['narrative_grounded', 'reasoning', 'opinion']
+  The populace, alone, may perhaps rise in a few places; but some severe chastisement
+  will soon call them back to their duty! Believe me, canon, countries where there are a
+  great many monks are easy to subjugate! I know this by experience. This will happen in
+  Spain, particularly when the people shall I promise them the integrity and the
+  independence of their monarchy, a more liberal and rational constitution, and the
+  preservation of their religion and usages!" Escoiquiz said that if he placed a French
+  prince on the throne of Spain, the new dynasty would stand upon a volcano; and that it
+  would take an army of 200,000 Frenchmen to command a country of discontented slaves.
+  The conqueror said that he would carry his project into execution though it should
+  cost him the lives of 200,000 men; and he broke off this strange conference, in which
+  he had not made the least attempt to colour over his utterly selfish and unprincipled
+  policy, by telling the canon that he was sorry to see that they could not agree upon
+  their principles, and that he would let him know his irrevocable determination on the
+  morrow.
+
+========================================================================================
+[aff=narrative]  primary=knowledge  classes=['knowledge']
+  257; Hunter, ii. 344. Elrick. The lease expired at Whitsunday 1839, with power to the
+  tenant to reap the crop of that year, as the waygoing crop. The rent of 1839 was only
+  due at Martinmas 1839, and Whitsunday 1840. Mackie, on becoming tenant, took over the
+  stock and crop, including crop 1839, from Shand's trustees, who bound themselves by a
+  minute of agreement to relieve him " of all rents due for the said farm and mill, at
+  and prior to Whitsunday last, Mr Mackie freeing them of all rents subsequent to that
+  term, his entry being as at the said term.” The rent due at Martinmas 1839 and
+  Whitsunday 1840 was paid by the trustees, and this action was raised to obtain
+  repayment from Mackie. Held, that the outgoing tenant was liable for the rent due at
+  Martinmas 1839, and Whitsunday 1840, as these rents belonged to the period of his
+  possession.
+
+========================================================================================
+[aff=opinion]  primary=narrative_grounded  classes=['narrative_grounded', 'opinion']
+  The discharge of fire-arms was at once followed by a yell and a rush of feet, and at
+  least a hundred and fifty men ran off out of the grove, with all the rapidity with
+  which fear could inspire them. The old native officer said they would have made a rush
+  at us at daybreak, when all their number were collected. Three years before, an
+  officer with a treasure-party had been attacked at this village, and had lost his
+  treasure. I was subsequently robbed at this very place, when out on a shooting
+  excursion, though I had taken the precaution to hire a body of chokeydars from the
+  village. The thieves only got my medicinechest, and I hope they tasted the tartar
+  emetic. Seetapoor was a dull out-of-the-way station, apparently beyond the range of
+  inspecting-generals; but our colonel was always prepared for a visit from one, and he
+  took care that his captains and subs should be prepared also.
+
+========================================================================================
+[aff=expository]  primary=stem_reasoning  classes=['stem_reasoning', 'how_to',
+'conversational', 'knowledge']
+  W. S. 20 miles. seen at 6 in the The ship was lost on the rock at 11 P. M.: required
+  the setting and drift of the current.-Ans. Setting, S. 75° 10′ E., drift 3.11 miles
+  per hour. A journal is a register of transactions occurring on board a ship, and
+  should contain a particular detail of every thing relative to the navigation of the
+  vessel-as the courses, winds, currents, &c.—that her situation may be known at any
+  instant at which it may be required. The computations made to determine the place of a
+  ship from the courses and distances run in 24 hours, are called a day's work; and the
+  latitude and longitude of a ship deduced therefrom, are called the latitude and
+  longitude in, by account, or, by dead reckoning, in contradistinction to the latitude
+  and longitude as determined by observation. At the time of leaving land, the bearing
+  of some known place is to be observed, and its distance found, either by observation,
+  or by taking its bearing at two different times, from two different places, and
+  determining its distance accordingly.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded', 'opinion']
+  Alaric the Goth was now pouring his armed legions into Italy, and to meet this
+  overwhelming force, Germany, and Gaul, and Britain were drained of their troops, and
+  our island again left a prey to the old invaders, who no doubt reaped another rich
+  harvest; for the Britons, no longer able to defend themselves against these numerous
+  hordes of barbarians, were compelled to apply for assistance to Rome. Probably some
+  time elapsed before the required aid was sent, for we cannot conceive that Stilicho
+  would part with a single legion until after he had won the battle of Pollentia, and
+  seen the routed army of Alaric in full retreat. Such was the penalty Britain paid for
+  her progress in civilization,—the flower of her youth were carried off to fight and
+  fall in foreign wars,—and when she most needed the powerful arms of her native sons to
+  protect her, they were attacking the enemies of Rome in a distant land, and leaving
+  their own island-home a prey to new invaders.
+
+========================================================================================
+[aff=argument]  primary=reasoning  classes=['reasoning', 'knowledge', 'opinion']
+  If we except the absolutely necessary arts of life, which are in daily use and cannot
+  be forgotten, the existing generation seldom seems to possess any thing Historical
+  evidence on the negative side. derived from the past. Hence, the oldest man of the
+  tribe is always looked up to as the wisest ; simply because he has lived the longest;
+  it being felt that an individual has scarcely a chance of knowing any thing more than
+  his own experience has taught him. Accordingly the New-Zealanders, for example, seem
+  to have been in quite as advanced a state when Tasman discovered the country in 1642,
+  as they were when Cook visited it, 127 years after." ¹ It may be remarked, however,
+  with reference to, this statement, that the absence of written records is, though a
+  very important, rather a secondary than a primary obstacle. It is one branch of that
+  general characteristic of the savage, improvidence.
+
+========================================================================================
+[aff=argument]  primary=reasoning  classes=['opinion', 'reasoning']
+  Under such an arrangement its collection might be advantageously left to the municipal
+  authorities, inasmuch as they could levy it with less difficulty and expense than
+  would attend its collection by officials dependent upon the central Government. It is
+  a question which well deserves consideration, whether other taxes, such, for instance,
+  as a property tax, might not be collected in a more satisfactory manner by the
+  municipal authorities than by state officials, a certain percentage being allowed to
+  the municipality in consideration of its performance of this function. There is one
+  class of dealers, in favor of whom few would be disposed to claim exemption from
+  taxation. I allude to those who deal in spirituous liquors. To the exaction of a
+  graduated license fee from such dealers there would, probably, be little opposition in
+  any legislative body; but the practice which has prevailed in the United Kingdom of
+  granting spirit licenses to acceptable persons as a matter of favor, is open to much
+  objection.

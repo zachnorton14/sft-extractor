@@ -1,0 +1,459 @@
+route: stem_reasoning
+model: claude-haiku-4-5
+seed:  0
+n:     20
+kept:  13/20
+
+--- EXTRACT SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s science or engineering text that
+reasons quantitatively or physically. The author's own reasoning is in the text.
+
+EXTRACT THE REASONING CHAIN. Find where the author reasons from a principle to a
+conclusion, and copy that chain out.
+  - Return it as "spans": the quotations from the passage that, read in order, form
+    one coherent chain (principle → application → conclusion). Use as many as the
+    reasoning needs — up to 6, and always the fewest, longest spans that
+    hold the chain together. Extract as much of the reasoning as you can.
+  - Give EACH span as an object with two fields:
+      "verbatim"    — the span copied EXACTLY as it appears in the passage, character
+                      for character, including any garbled formula.
+      "refurbished" — the SAME span with only its mathematical or chemical formulas
+                      restored to correct standard form. If the span has no formula,
+                      make "refurbished" identical to "verbatim".
+  - REPAIR ONLY FORMULAS. The OCR has mangled this text's equations, exponents,
+    subscripts, symbols, and numbers, and page numbers bleed into the formulas. In
+    "refurbished" you MAY fix a corrupted expression back to what it plainly must be
+    (e.g. "CuSO,+ZnZnSO,+ Cu" → "CuSO₄ + Zn → ZnSO₄ + Cu"; "9X2" → "9 × 2";
+    "P₁ = pressure" kept clean). You MAY change only digits, symbols, operators,
+    subscripts/superscripts, and spacing.
+  - ADD NO NEW CONTENT. Do NOT paraphrase, summarize, rewrite, reorder, translate, or
+    add, remove, or alter any WORD of the prose — not a connecting word, not a gloss,
+    not a clarification. Every word in "refurbished" must already stand in "verbatim".
+    Repair the formulas; leave the author's prose exactly as written, misspellings and
+    all. Only select and order the author's own sentences.
+  - Do not build the chain out of a span that hinges on a figure, plate, table, or
+    page the reader cannot see ("as in Fig. 36", "see p. 466") — those cannot be
+    refurbished into anything meaningful; choose spans that carry the reasoning
+    without them.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": [{"verbatim": "...", "refurbished": "..."}]}, ...]
+
+
+--- QUESTION SYSTEM PROMPT ---
+You are given a passage from a pre-1930s science or engineering text and a REASONING
+CHAIN quoted verbatim from it — this is the ANSWER. Write the single question that
+this reasoning chain answers, as if setting an exercise.
+
+- The chain must CORRECTLY AND COMPLETELY answer your question — ask exactly what
+  this reasoning concludes or explains. Do not ask for a step, a numeric result, or
+  an identity the chain does not reach. Read the chain as the answer: if it does not
+  fully answer, adjust the question to fit the chain.
+- Pose a problem that must be reasoned through, not a fact to recall: "Why does
+  ...", "How does it follow that ...", "Why must ...?", "If ..., what happens and
+  why?".
+- Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use no
+  word, term, or idiom that came into use after 1930, and no modern conversational
+  or academic phrasing — it must read as a question a period examiner would pose.
+- The question must STAND ALONE and betray no awareness of a source. Never refer to
+  the passage or to whoever wrote it — no "the passage", "the text", "the author",
+  "the figure", "according to", "as described", "as shown". Ask about the SUBJECT
+  ITSELF, as a matter of physical fact, to someone who never saw the passage.
+- SUPPLY THE PHYSICAL SETUP the reader needs so the problem is well-posed and the
+  chain's "it / this / these" have clear antecedents: name the bodies, quantities,
+  or conditions involved (the gas held at constant temperature, the beam loaded at
+  its centre, the current through the coil). Give just enough to make the question
+  unambiguous — do not restate the whole passage, and never leave a bare "this
+  quantity", "such a body", or "the system".
+- Every proper noun must be one the reader can place: either widely recognizable on
+  its own (Boyle's law, Carnot's cycle), or introduced with a short descriptor.
+- Do NOT reveal the answer: do not state the conclusion, and do not reuse the
+  chain's distinctive wording. Ask for the reasoning; make the reader supply it.
+
+Input: JSON array [{"i": 0, "passage": "...", "answer": "..."}, ...]
+Output JSON only: [{"i": 0, "q": "..."}, ...]
+
+
+========================================================================================
+[SCIENCE]  1925  stem_signal 1.00
+  excerpt : AN ACUTE ANGLE to the straight angle? What name is given to an angle that is
+            less than a straight angle and greater than a right angle? 7. Point to 5
+            acute angles in your classroom; to 3 obtuse angles. AN OBTUSE ANGLE 8. What
+            is the dictionary definition of acute? of ob tuse? 9. What kind of angle do
+            the hands of a clock make at 2 o'clock? at 3 o'clock? at 6 o'clock? at 8
+            o'clock ? How to Read Ang...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1915  stem_signal 0.80
+  excerpt : In what way does interest resemble the rent for a horse and carriage, or any
+            other form of rent? II Interest is reckoned in per cents, the given per cent
+            covering the rate of interest paid each year. In order to complete the
+            purchase of a home, I borrow $900 from a trust company charging 5% interest.
+            What sum must I return to the bank, if I return the loan at the end of 2
+            years? Int. for 1 yr. = 5...
+  Q       : A man borrows $900 from a trust company at 5 per cent simple interest per
+            annum and returns the loan at the end of two years. What total sum must he
+            repay?
+  A       : Interest is reckoned in per cents, the given per cent covering the rate of
+            interest paid each year. … In order to complete the purchase of a home, I
+            borrow $900 from a trust company charging 5% interest. What sum must I
+            return to the bank, if I return the loan at the end of 2 years? Int. for 1
+            yr. = 5% of $900, or $45. Int. for 2 yr. = $45 × 2, or $90. … Am't due $900+
+            $90, or $990.
+
+========================================================================================
+[SCIENCE]  1907  stem_signal 1.00
+  excerpt : When equivalent weights of the substances enter the reaction, it amounts to
+            25,050 calories. Hence the thermochemical equation, involving two
+            equivalents of the substances in question, is as follows:- CuSO,+ZnZnSO,+ Cu
+            + 2 x 25,050 calories. If now instead of heat this reaction produces
+            electrical energy, the quantity of the latter produced would be the
+            electrical equivalent of 25,050 calories. Th...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1900  stem_signal 1.00
+  excerpt : The chemical sources lie, as may be inferred from what has been already
+            said, in the oxidation processes due to the interaction between oxygen and
+            the living substances of the cells. Thus, when a muscle contracts, chemical
+            decompositions occur, and the energy resulting makes its appearance sooner
+            or later as heat. But in response to the needs of the body, the central
+            nervous system can stir up sim...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1905  stem_signal 1.00
+  excerpt : It will be noticed in Fig. 44 that if the point O is so situated that its
+            horizontal projection falls on m,-n,, the base of the triangle will vanish
+            and the hypotenuse will be equal to the altitude. In such a case then the
+            distance of the point from the axis, or the radius of the arc in which the
+            point moves, will be equal to the distance of the vertical projection of the
+            point from G-L. 88. Probl...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1891  stem_signal 1.00
+  excerpt : Upon weighing now a liter of water-gas-steamits mass is found to be 0-8047
+            grams; whence its relative density is 0.80470-0896, or 9, and its molecular
+            mass is 9X2 or 18. Water therefore consists of 2 parts of hydrogen and 16
+            parts of oxygen in each molecule. Again, olefiant gas-a compound of carbon
+            and hydrogen-affords on analysis 85.71 per cent of carbon and 14-29 per cent
+            of hydrogen, which is t...
+  Q       : A litre of olefiant gas weighs 1.252 grammes, and a litre of hydrogen (taken
+            as the standard) weighs 0.0896 gramme. Analysis shows olefiant gas to
+            consist of 85.71 per cent carbon and 14.29 per cent hydrogen. What are the
+            numbers of parts by weight of carbon and hydrogen in a single molecule of
+            olefiant gas?
+  A       : Upon weighing now a liter of water-gas-steamits mass is found to be 0.8047
+            grams; whence its relative density is 0.8047 ÷ 0.0896, or 9, and its
+            molecular mass is 9 × 2 or 18. Water therefore consists of 2 parts of
+            hydrogen and 16 parts of oxygen in each molecule. Again, olefiant gas-a
+            compound of carbon and hydrogen-affords on analysis 85.71 per cent of carbon
+            and 14.29 per cent of hydrogen, which is the ratio of 6: 1. There may be
+            then 6 parts of carbon to one of hydrogen in the molecule, in which case the
+            molecular mass of olefiant gas will be 7; or 12 parts of carbon to two of
+            hydrogen, when it will be 14; or 18 to 3, giving 21; or 24 to 4, giving 28;
+            the ratio in all these cases being the same. By experiment the mass of one
+            liter of olefiant gas is 1.252 grams. Its relative density therefore, is
+            1.252 ÷ 0.0896, or 14, and its molecular mass 14 × 2 or 28. Hence one
+            molecule of olefiant gas contains 24 parts of carbon and 4 parts of
+            hydrogen.
+
+========================================================================================
+[SCIENCE]  1900  stem_signal 0.50
+  excerpt : It is highly important to know where these stones came from, and whether
+            they were already shaped to fit the building before they were fixed by
+            selection, or whether they were simply rough stones of indefinite shape, the
+            shape thus appearing in the structure only as the stones were put in place.
+            According to the first idea, variations are said to be determinate, since
+            the direction of the variatio...
+  Q       : Why is it that some naturalists deem natural selection a sufficient cause
+            for the origin of species, while others deem it no cause at all?
+  A       : It is highly important to know where these stones came from, and whether
+            they were already shaped to fit the building before they were fixed by
+            selection, or whether they were simply rough stones of indefinite shape, the
+            shape thus appearing in the structure only as the stones were put in place.
+            According to the first idea, variations are said to be determinate, since
+            the direction of the variations appears to be determined by some underlying
+            law. If such is the case, the real factor in evolution is not the survival
+            factor but that which determines the character of the variations. If,
+            however, the variations are purely hap-hazard, then the determining factor
+            in evolution is the force that selects the variations which are to survive
+            and become transmitted to future generations. In other "Beterminate
+            Variations ("frede bomona l'ariation: AB, words, the difference in view
+            which is most fundamental is whether the directive force lies in something
+            which produces the variations or only in the law which preserves them. It is
+            quite necessary to recognize this difference of view in order to understand
+            how some scientists can hold that natural selection is a sufficient cause
+            for the origin of species, while others hold that it is no cause at all.
+
+========================================================================================
+[SCIENCE]  1848  stem_signal 1.00
+  excerpt : 3 X 6= 18. It follows, therefore, that 3 and 6 are component parts of 18. 4
+            dollars, cost of 1 yard. 3 yards. 12 dollars, cost of 3 yards. 6 (3 × 6 =)
+            18 yards. 72 dollars, cost of 18 yards. SOLUTION.If 1 yard cost 4 dollars, 3
+            yards will cost 3 times 4 dollars, 12 dollars; and, if 3 yards cost 12
+            dollars, 18 yards (3×6= 18) will cost 6 times as much as 3 yards, that is, 6
+            times 12 dollars = 72 do...
+  Q       : If 1 yard of cloth cost 4 dollars, find the cost of 18 yards. Explain the
+            steps of your calculation, and from them deduce a general rule for
+            multiplication when the multiplier exceeds 12 and is a composite number.
+  A       : 3 × 6 = 18. It follows, therefore, that 3 and 6 are component parts of 18. 4
+            dollars, cost of 1 yard. 3 yards. 12 dollars, cost of 3 yards. 6 (3 × 6 =
+            18) yards. 72 dollars, cost of 18 yards. SOLUTION.If 1 yard cost 4 dollars,
+            3 yards will cost 3 times 4 dollars, 12 dollars; and, if 3 yards cost 12
+            dollars, 18 yards (3 × 6 = 18) will cost 6 times as much as 3 yards, that
+            is, 6 times 12 dollars = 72 dollars. Hence, To perform multiplication when
+            the multiplier exceeds 12, and is a composite number,— I. Separate the
+            multiplier into two or more component parts, or factors. II. Multiply the
+            multiplicand by one of the component parts, and the product thus obtained by
+            the other, and so on, if the component parts be more than two, till you have
+            multiplied by each one of them. The last product will be the product
+            required.
+
+========================================================================================
+[SCIENCE]  1898  stem_signal 1.00
+  excerpt : The conclusion was that there is no philosophical difference between the
+            different cases ; since the phenomena produced by the different kinds of
+            electricity differ not in their character but only in degree. "Electricity,
+            whatever may be its source, is identical in its nature." On comparing the
+            effects produced by different discharges, he concludes that "if the same
+            absolute quantity of electricit...
+  Q       : When a galvanometer of long period is employed to measure the discharges
+            from a voltaic battery and from a friction machine, and it is observed that
+            the same absolute quantity of electricity, irrespective of its intensity,
+            gives rise to the same deflection of the magnetic needle, and that the
+            chemical decomposition produced is in direct proportion to that absolute
+            quantity, what conclusions follow respecting the identity of electricity
+            from different sources and the laws connecting quantity, magnetic action,
+            and chemical action?
+  A       : The conclusion was that there is no philosophical difference between the
+            different cases ; since the phenomena produced by the different kinds of
+            electricity differ not in their character but only in degree. …
+            "Electricity, whatever may be its source, is identical in its nature." … "if
+            the same absolute quantity of electricity pass through the galvanometer,
+            whatever may be its intensity, the deflecting force upon the magnetic needle
+            is the same." … "the chemical power, like the magnetic force, is in direct
+            proportion to the absolute quantity of electricity which passes."
+
+========================================================================================
+[SCIENCE]  1843  stem_signal 0.40
+  excerpt : It will be perceived that inorganic matter, or that of the mineral kingdom,
+            possesses the same properties when divided or ground to powder that it does
+            in the mass; i. e. each particle possesses those properties in proportion to
+            its size; while the organic parts of animals or of vegetables, if thus
+            crushed or divided, are deprived by death of the vital forces which
+            distinguished them from inorgani...
+  Q       : By what principle does inorganic matter differ from organic matter when
+            subjected to division or crushing, and how does the history of a seed
+            planted in the earth illustrate this principle?
+  A       : It will be perceived that inorganic matter, or that of the mineral kingdom,
+            possesses the same properties when divided or ground to powder that it does
+            in the mass; i. e. each particle possesses those properties in proportion to
+            its size; while the organic parts of animals or of vegetables, if thus
+            crushed or divided, are deprived by death of the vital forces which
+            distinguished them from inorganic matter. … The seed of a plant, if placed
+            in the earth, forms a living plant, which, from its incipiency, opposes
+            inorganic laws, or those of decomposition. … The vital principle which it
+            has received from the seed and which the seed having parted with, together
+            with a portion of its substance for its support, continues to animate the
+            plant; while the remainder of the seed has thereby become subject to the
+            inorganic laws and rots, or is decomposed in the ground. … The plant lives
+            and flourishes, and by the force of its vital powers, thus obtained,
+            appropriates inorganic matter to its support and the development of its
+            organs, until by violence or the exhaustion of its vital energies at
+            maturity, it is at length, and in turn, subjected to the force of the
+            inorganic laws it dies and is decomposed, either in the ground or by being
+            consumed by animals.
+
+========================================================================================
+[TECHNOLOGY]  1905  stem_signal 0.40
+  excerpt : The three QUANTITY S'ZE on FIGURE XXVI. The Stock Ledger on which is kept
+            record of all gen delivery of all stores must be posted-the "Received" and
+            "Given Out" sides TO WHOM DELIVERED QUANTITY DELIVERED TO SHOP QUANTITY
+            DELIVERED TO FINISHED STOCK GIVEN OUT QUANTITY actly the same duty for
+            Finished Stores that Form XXIII does for rough ON HAND COST GIVEN OUT SIZE
+            OR SHOP OR QUALITY OFFICE RE- DEL...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1873  stem_signal 1.00
+  excerpt : Draw any straight line of considerable length on a flat sheet of paper or on
+            the board, and by a geometrical construction, according to any of the usual
+            methods in Elementary Geometry, lay out very accurately two lines
+            perpendicular to the line already drawn, and at a distance apart equal to
+            the width of the blade of the T square at any one point. Then if the edges
+            of the blade are parallel, they ...
+  Q       : Given a drawing triangle of which the right angle is to be tested, and a
+            T-square, how may one ascertain, by reversing the triangle against the edge
+            of the T-square, whether that angle is exactly right, acute, or obtuse?
+  A       : To test the right angle of either triangle place a side, as AC, adjacent to
+            the right angle, against the edge of the T rule, C, and draw a fine line
+            against the other side, CB, of the right angle; then reverse the triangle,
+            placing it in the position A'BC, and see if the line BC, drawn with the
+            triangle in this new position, coincides with the line BC, as first drawn.
+            If, instead of coinciding as in the figure, the lines BC diverge in going
+            from the edge of the T rule, C being the position of the vertex of the right
+            angle in both positions, the supposed right angle is a little acute; if the
+            same lines converge, the triangles being in contact at B, as they depart
+            from the edge of the T rule, the angle in question is obtuse.
+
+========================================================================================
+[TECHNOLOGY]  1880  stem_signal 1.00
+  excerpt : As to the amount of space to be warmed, it is assumed that at least two full
+            stories, say 100 feet deep by 15 feet high, on each side of the street, will
+            require steam, as in many blocks and hotels it will be used in the third and
+            fourth stories, and more or less in the basements. Then we have 100 × 15 =
+            1,500 × 2 = 3,000 × 2 = = 6,000 cubic feet of space for each lineal foot of
+            street, including ...
+  Q       : In a city where buildings on both sides of a street are at least two stories
+            high, each story 15 feet, and the buildings extend back 100 feet from the
+            street, and where cross streets and walls occupy 25 per cent. of the lineal
+            street length, estimate the total cubic space that must be warmed if there
+            be 10 miles of street per square mile.
+  A       : As to the amount of space to be warmed, it is assumed that at least two full
+            stories, say 100 feet deep by 15 feet high, on each side of the street, will
+            require steam, as in many blocks and hotels it will be used in the third and
+            fourth stories, and more or less in the basements. Then we have 100 × 15 =
+            1,500 × 2 = 3,000 × 2 = 6,000 cubic feet of space for each lineal foot of
+            street, including both sides. Then take say one mile of street, 5,280 feet,
+            deduct 25 per cent. for cross streets and walls between stories, and we have
+            about 4,000 feet left. Then 4,000 × 6,000 = 24,000,000 cubic feet of space
+            to be warmed for each mile of street. Then 24,000,000 × 10 = 240,000,000
+            cubic feet for the square mile, not including the cross streets, which would
+            add something more. Then, according to tests made at Lockport during the
+            winter, one cubic foot of steam at the pressure of the atmosphere will warm
+            one cubic foot of space in stores, offices, and dwellings in blocks for 16
+            hours, being about the average time per day that steam is used.
+
+========================================================================================
+[TECHNOLOGY]  1912  stem_signal 0.50
+  excerpt : The remaining 2/23rds, the last two of the twenty-three half-hours of every
+            day, produce the net profits of 10 per cent. If therefore (prices remaining
+            the same) the factory could be kept at work thirteen hours instead of eleven
+            and one-half, by an addition of about £2,000 to the circulating capital, the
+            net profit would be more than doubled. On the other hand, if the hours of
+            working were reduced...
+  Q       : If a factory works eleven and a half hours daily, and the whole net profit
+            of ten per cent is earned in the last hour, prices remaining unchanged, shew
+            how it follows that extending the day to thirteen hours (by adding £2000 to
+            circulating capital) would raise net profit to more than twice its present
+            amount, while reducing the day by one hour would cause net profit to vanish,
+            and by an hour and a half would wipe out even gross profit.
+  A       : The remaining 2/23rds, the last two of the twenty-three half-hours of every
+            day, produce the net profits of 10 per cent. If therefore (prices remaining
+            the same) the factory could be kept at work thirteen hours instead of eleven
+            and one-half, by an addition of about £2,000 to the circulating capital, the
+            net profit would be more than doubled. On the other hand, if the hours of
+            working were reduced by one hour per day (prices remaining the same) net
+            profits would be destroyed; if they were reduced by an hour and a half, even
+            gross profit would be destroyed. The circulating capital would be replaced,
+            but there would be no fund to compensate the progressive deterioration of
+            the fixed capital.
+
+========================================================================================
+[TECHNOLOGY]  1916  stem_signal 0.50
+  excerpt : If all bolts and screws intended especially for railways (including track
+            bolts) and all enameled ware be eliminated from consideration among the
+            imports, the items considered in this report would amount to about
+            $2,500,000, of which the United States sells about 28 per cent. If we
+            include the items first mentioned, the United States sells about 21 per
+            cent. In making an estimate of a possible inc...
+  Q       : If the total hardware imported into Chile (railway bolts and screws and
+            enameled ware being excluded) is valued at $2,500,000, of which the United
+            States supplies 28 per cent, and if the Valparaiso-Santiago district
+            transacts 40 per cent of the entire hardware business of Chile, how may one
+            arrive at a modest estimate of the annual increase in the American share of
+            that trade?
+  A       : If all bolts and screws intended especially for railways (including track
+            bolts) and all enameled ware be eliminated from consideration among the
+            imports, the items considered in this report would amount to about
+            $2,500,000, of which the United States sells about 28 per cent. If we
+            include the items first mentioned, the United States sells about 21 per
+            cent. In making an estimate of a possible increase the smaller sum is taken.
+            The amount of hardware sold in the Valparaiso-Santiago district is about 40
+            per cent of the total business in Chile, or, perhaps, a million dollars.
+            Local merchants say that it would be possible to double the American
+            business. It has been conservatively estimated by the writer that the
+            business could be increased, by a reasonable effort, at least $150,000 per
+            year.
+
+========================================================================================
+[TECHNOLOGY]  1915  stem_signal 1.00
+  excerpt : 395. fluid soils, such as quicksand, alluvium, etc., should be removed where
+            practicable or the foundation carried to a lower stratum. If in Fig. 36 we
+            let x=depth of ballast (from top of tie to subgrade); p=maximum supporting
+            power per sq. ft. of the subgrade; P₁ = pressure exerted on subgrade midway
+            between ties; y=weight of 1 cu. ft. of ballast; angle of repose of subgrade;
+            Ballast K....X------...
+  Q       : A railway track rests upon a subgrade of angle of repose φ. The ballast is
+            of depth x and its weight per cubic foot is y. It is assumed that the
+            vertical pressure upon the subgrade midway between the ties is double that
+            due to the weight of the ballast, and that when the roadbed immediately
+            under a tie is on the point of sinking, the part between the ties is on the
+            point of rising. Show that the supporting power p of the subgrade is given
+            by p = 2yx·(1-sin φ)/(1+sin φ).
+  A       : Xy will then equal the vertical intensity of the pressure caused by the
+            weight of the ballast on the subgrade midway between the ties. … If we
+            assume this extra pressure on the roadbed midway between the ties to equal
+            in amount that caused by the weight of the ballast, we can then write P₁ = 2
+            y x … Now when the ballast is about to sink: (1+sin φ)/(1-sin φ) (1-sin
+            φ)/(1+sin φ) (Rankine) But when the roadbed under the tie is on the point of
+            sinking, or q = p the part of the roadbed between the ties must be on the
+            point of rising, or q·(1+sin φ) = P₁·(1-sin φ) and the supporting power of
+            the subgrade or p is p = P₁·(1-sin φ)/(1+sin φ) = q = x; Φ.
+
+========================================================================================
+[TECHNOLOGY]  1908  stem_signal 0.45
+  excerpt : Section 7 of the act by which this railway company was incorporated runs as
+            follows: and the said company shall be entitled, and they are hereby
+            empowered, to demand and collect by way of freight or toll, on all goods,
+            wares, merchandise, and productions of the country and cars or vehicles of
+            any description, conveyed over and upon said railroad, such rates of toll or
+            freight as the board of direc...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1919  stem_signal 0.88
+  excerpt : The dark portions or solids will not show any wear. In marking out this
+            sheet, use the standard marks, so that any feeder can readily patch up your
+            sheets. These marks include a ring or a series of circles without any other
+            marks or letters, meaning tissue paper. Patch marks with the letter "F"
+            signify folio, which is twice as thick as tissue. If there is a series of
+            patch marks within a circle ma...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1919  stem_signal 0.45
+  excerpt : A serious menace to the wages of workingmen is the cut-throat competition of
+            the less competent. If 10 per cent of the workingmen are thriftless and
+            vicious, then the competition of that 10 per cent is a load on the neck of
+            the 90 per cent. They and their unfortunate families are thrown upon the
+            labor market, and it is one of the benefits of universal insurance that it
+            helps in some degree to take...
+  Q       : Explain how the competition of the thriftless and vicious among workingmen
+            comes to be a burden upon the honest and thrifty, and how a system of
+            universal health insurance, properly devised, might relieve that burden.
+  A       : If 10 per cent of the workingmen are thriftless and vicious, then the
+            competition of that 10 per cent is a load on the neck of the 90 per cent. …
+            The honest, thrifty worker is already paying a part of the cost of the
+            thriftless and vicious, but he is paying it through the invisible pressure
+            of competitive wages. … Health insurance, properly worked out, is a visible
+            payment designed to remove that invisible pressure.
+
+========================================================================================
+[TECHNOLOGY]  1916  stem_signal 0.80
+  excerpt : 12 per cent (3) To find a number when the rate per cent and the percentage
+            are known: Add two ciphers to the percentage and divide by the rate per
+            cent. Example: If 68 pounds is 15 per cent of the entire charge, how many
+            pounds in the total charge? Ans. 6800÷15-453.33 pounds (4) To find what
+            number is a certain per cent more or less than a given number: (a) When the
+            given number is more than the r...
+  Q       : If 68 pounds be 15 per cent of the entire charge, how many pounds are there
+            in the total charge?
+  A       : To find a number when the rate per cent and the percentage are known: Add
+            two ciphers to the percentage and divide by the rate per cent. … Example: If
+            68 pounds is 15 per cent of the entire charge, how many pounds in the total
+            charge? Ans. 6800÷15=453.33 pounds

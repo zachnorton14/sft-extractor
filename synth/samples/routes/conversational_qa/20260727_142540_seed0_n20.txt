@@ -1,0 +1,330 @@
+route: conversational_qa
+model: deepseek-v4-pro
+seed:  0
+n:     20
+kept:  6/20
+
+--- SYSTEM PROMPT ---
+You are given a passage of pre-1930s DIALOGUE — a conversation, catechism, or
+question-and-answer exchange between TWO voices. Turn it into a multi-turn conversation.
+
+1. Identify the two speakers. Assign one to the USER role — the voice that asks,
+   prompts, or leads — and the other to the ASSISTANT role — the voice that answers or
+   explains. In a catechism the questioner is the user.
+
+2. Return the exchange as "turns": an ordered list, each turn one speaker's utterance
+   copied VERBATIM from the passage, ALTERNATING user, assistant, user, assistant …,
+   beginning with the user. Keep the natural back-and-forth — several turns, not one
+   pair.
+   - Copy WORD FOR WORD. Do NOT paraphrase, rewrite, summarize, translate, or add any
+     word. Each turn is the spoken words themselves.
+   - Strip ONLY the speaker's label or attribution and the quotation marks that mark
+     who is speaking ("said John", "Q.", "A.", "Socrates.", "" ""). Keep a turn's own
+     wording exactly, punctuation and spelling included.
+   - Drop narration or stage directions that fall BETWEEN turns; keep only what is
+     spoken. Each turn's remaining words must appear verbatim and unbroken in the
+     passage (do not stitch across an interruption like '"I am," he said, "a
+     traveller"').
+   - Begin and end each turn at a natural utterance boundary.
+
+3. The exchange must have at least 4 turns (two full exchanges) and strictly
+   alternate the two roles. If the passage is not a genuine two-party spoken exchange —
+   it is narration, monologue, exposition, or a single Q&A pair — emit NO item for it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "turns": [{"role": "user", "content": "..."},
+                       {"role": "assistant", "content": "..."}, ...]}, ...]
+
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1889  turns=0
+  excerpt : "What is it, then?" asked the Duc de Guise, with hauteur, for like the rest
+            of the world, he behaved very rudely to the poor King of Navarre. "Why
+            should I not visit my sister-in-law; does not the Duc d'Alençon visit his ?"
+            Henri colored slightly. "What sister-in-law?" remarked Charles; "I do not
+            know of any he has but the Queen Elizabeth." "Your pardon, Sire; it was his
+            sister, I should have said...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1903  turns=0
+  excerpt : "If it is any point requiring reflection," observed Dupin, as he forbore to
+            enkindle the wick, "we shall examine it to better purpose in the dark."
+            "That is another of your odd notions," said the Prefect, who had a fashion
+            of calling everything "odd" that was beyond his comprehension, and thus
+            lived amid an absolute legion of "oddities." "Very true," said Dupin, as he
+            supplied his visitor with a p...
+  (dropped)
+
+========================================================================================
+[SCIENCE]  1832  turns=5
+  excerpt : A. Four times; because the multiplicand has been repeated four times. Could
+            the same be performed by addition? A. It might by setting down the
+            multiplicand as many times as the multiplier expresses a unit; and then
+            adding, the amount would be the same as the product in multiplication; but
+            it would be a tedious method to work by addition, especially when the
+            multiplier is large. If you multiply a n...
+  USER  : Four times; because the multiplicand has been repeated four times. Could the
+          same be performed by addition?
+  ASST  : It might by setting down the multiplicand as many times as the multiplier
+          expresses a unit; and then adding, the amount would be the same as the product
+          in multiplication; but it would be a tedious method to work by addition,
+          especially when the multiplier is large. If you multiply a number by five,
+          what part of the product is the multiplicand?
+  USER  : A fifth part; because the multiplicand has been repeated five times to produce
+          the product. How do you place the given numbers for work?
+  ASST  : The multiplier under the multiplicand, so that units stand under units, tens
+          under tens, &c. If your multiplier consists of but one figure, how do you
+          proceed in the work?
+  USER  : Multiply the right hand figure of the multiplicand by the multiplier, and if
+          the product should not exceed 9, place it directly under; but if the product
+          exceed 9, set down the right hand figure of the product, and add the left to
+          the product of the next figure, because it is of the same kind of the next at
+          the left; and thus proceed with all the figures of the multiplicand;
+          remembering to set down the whole product of the left hand figure.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1884  turns=0
+  excerpt : "You know Mrs. Belgrave," said Amanda, endeavoring to regain her composure.
+            "Know her!" repeated he, with an involuntary sigh, "oh, yes!" Then, after
+            the pause of a few minutes, turning to his father, "I believe I have already
+            informed you, sir," he said, "that she is the daughter of your brave old
+            friend, General Honeywood, who, I assure you, paid me no little attention on
+            your account; his house...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1836  turns=0
+  excerpt : We were once sitting in a beautiful recess in the Quantocks, when I said to
+            him, "Citizen John, this is a fine place to talk treason in !"—" Nay!
+            Citizen Samuel," replied he, “it is rather a place to make a man forget that
+            there is any necessity for treason!” Thelwall thought it very unfair to
+            influence a child's mind by inculcating any opinions before it should have
+            come to years of discretion, a...
+  (dropped)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1875  turns=0
+  excerpt : "Never," was the reply. "Then I almost wonder that you are not afraid to
+            go." "My life, sir," answered Ainslie, "is not mine, that I should give it,
+            or spare it, as may please me best. It is little enough that I have ever
+            done for Christ; and, if I can serve him better in my death than in my life,
+            I can wish nothing happier for myself than that I may die." At this moment
+            the youth whom Ainslie was...
+  (dropped)
+
+========================================================================================
+[EDUCATION]  1846  turns=12
+  excerpt : The meaning of occasions and the other unusual words. "What are the
+            seasons?" you may ask. "All who know may hold up their hands." All hands are
+            up. Some individual is told to answer, and says, "Spring, Summer, Autumn,
+            and Winter." "What is meant by the succession of the seasons?" "First comes
+            Spring; then Summer; then Autumn; then Winter." "What is the difference in
+            the seasons?" "In Summer it is...
+  USER  : What are the seasons?
+  ASST  : All who know may hold up their hands.
+  USER  : Spring, Summer, Autumn, and Winter.
+  ASST  : What is meant by the succession of the seasons?
+  USER  : First comes Spring; then Summer; then Autumn; then Winter.
+  ASST  : What is the difference in the seasons?
+  USER  : In Summer it is very hot.
+  ASST  : And what is it in Autumn ?
+  USER  : Then it begins to be cold. In Winter it is very in Spring it begins to be warm
+          again.
+  ASST  : What makes it hot in Summer?
+  USER  : The sun.
+  ASST  : Is it nearer to us in Summer?
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1899  turns=0
+  excerpt : Yet one woman, and not an altogether ugly one, confided to me that she hated
+            the idea of Salt Lake City being turned into a show-place for the amusement
+            of the Gentiles. "If we 'ave our own institutions, that ain't no reason why
+            people should come 'ere and stare at us, his it?" The dropped "h" betrayed
+            her. “And when did you leave England?” I said. "Summer of '84. I am Dorset,"
+            she said. "The Morm...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1900  turns=0
+  excerpt : "Oh, it is you, Maynard! Do you want Lady Cheverel?" "No, Caterina," he
+            answered gravely; "I want you. I have something very particular to say to
+            you. Will you let me sit down with you for half an hour?" "Yes, dear old
+            preacher," said Caterina, sitting down with an air of weariness; "what is
+            it?" Mr. Gilfil placed himself opposite to her, and said, “1 hope you will
+            not be hurt, Caterina, by what I...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1894  turns=21
+  excerpt : 31 Olivia. Wilt thou go to bed, Malvolio? Malvolio. To bed! Olivia. God
+            comfort thee! Why dost thou smile so and kiss thy hand so oft? Maria. How do
+            you, Malvolio? Malvolio. At your request! yes; nightingales answer daws.
+            Maria. Why appear you with this ridiculous boldness before my lady? 41
+            Malvolio. "Be not afraid of greatness :"-'twas well writ. Olivia. What
+            meanest thou by that, Malvolio? Malv...
+  USER  : Wilt thou go to bed, Malvolio?
+  ASST  : To bed!
+  USER  : God comfort thee! Why dost thou smile so and kiss thy hand so oft?
+  ASST  : At your request! yes; nightingales answer daws.
+  USER  : Why appear you with this ridiculous boldness before my lady?
+  ASST  : "Be not afraid of greatness :"-'twas well writ.
+  USER  : What meanest thou by that, Malvolio?
+  ASST  : "Some are born great,"-
+  USER  : Ha!
+  ASST  : 'Some achieve greatness,"
+  USER  : What sayest thou?
+  ASST  : "And some have greatness thrust upon them."
+  USER  : Heaven restore thee!
+  ASST  : "Remember who commended thy yellow stockings,"
+  USER  : Thy yellow stockings!
+  ASST  : "And wished to see thee cross-gartered."
+  USER  : Cross-gartered!
+  ASST  : "Go to, thou art made, if thou desirest to be so ;"-
+  USER  : Am I made?
+  ASST  : "If not, let me see thee a servant still."
+  USER  : Why, this is very midsummer madness.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1894  turns=7
+  excerpt : But from whence, replied my father, have you concluded so soon, Dr Slop,
+            that the -he -or writer is of our church?-for aught I can see yet,may be of
+            any church.- Because, answered Dr Slop, if he was of ours,—he durst no more
+            take such a licence, -than a bear by his beard:-If, in our communion, Sir, a
+            man was to insult an apostle,- -a saint,even the paring of a saint's nail,
+            he would have his eyes ...
+  USER  : But from whence, replied my father, have you concluded so soon, Dr Slop, that
+          the -he -or writer is of our church?-for aught I can see yet,may be of any
+          church.
+  ASST  : Because, answered Dr Slop, if he was of ours,—he durst no more take such a
+          licence, -than a bear by his beard:-If, in our communion, Sir, a man was to
+          insult an apostle,- -a saint,even the paring of a saint's nail, he would have
+          his eyes scratched out.—What, by the saint? quoth my uncle Toby. No, replied
+          Dr Slop, he would have an old house over his head.
+  USER  : Pray is the Inquisition an ancient building, answered my uncle Toby, or is it
+          a modern one?
+  ASST  : I know nothing of architecture, replied Dr Slop.
+  USER  : An' please your Honours, quoth Trim, the Inquisition is the vilest-
+  ASST  : Prithee spare thy description, Trim, I hate the very name of it, said my
+          father.
+  USER  : No matter for that, answered Dr Slop,-it has its uses; for tho' I'm no great
+          advocate for it, yet, in such a case as this, he would soon be taught better
+          manners; and I can tell him, if he went on at that rate, would be flung into
+          the Inquisition for his pains.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1900  turns=8
+  excerpt : The Master said, 'One virtue goes a great 'way. In a jar of chow-chow,
+            properly flavored with 'ginger, even a dead mouse is palatable.' On Wau
+            asking him if it were proper to put dead mice in chow-chow, he replied, 'It
+            is the custom.' When he heard that Chang had beheaded an entire province, he
+            remarked, 'This is carrying things to an 'excess.' On being asked his
+            opinion of impalement, he replied ...
+  USER  : On Wau asking him if it were proper to put dead mice in chow-chow, he replied,
+          'It is the custom.'
+  ASST  : When he heard that Chang had beheaded an entire province, he remarked, 'This
+          is carrying things to an 'excess.'
+  USER  : On being asked his opinion of impalement, he replied that 'the end did not
+          justify the means.'
+  ASST  : Hop Kee asked him how to tell the superior man. The Master replied, 'How
+          indeed!'
+  USER  : The Duke Shang asked him one day, 'What constitutes 'the State?' Confucius
+          replied, 'The question is asinine.'
+  ASST  : His Jokes. One day being handed a two-foot rule, Confucius opened it the wrong
+          way, whereupon it broke. The Master said quietly, that 'it was a poor rule
+          that 'wouldn't work both ways.'
+  USER  : Observing that Wau Sing was much addicted to opium, the Master said; 'Filial
+          regard is always beautiful.' 'Why?' asked his disciple.
+  ASST  : 'He loves his poppy,' replied the Master, changing countenance.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1926  turns=0
+  excerpt : 18. a. Who are saints? To whom may we pray privately? Publicly? b. How many
+            steps are there in canonization? What do we call one who is beatified? One
+            who is canonized? c. How long is the inquiry into the question whether a
+            person has practiced heroic virtue ordinarily delayed? Cite some remarkable
+            exceptions to this rule. d. What is one of the requirements for
+            beatification? For canonization? e. ...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1889  turns=0
+  excerpt : I'll have no speaking: I will have my bond. Salarino. It is the most
+            impenetrable cur That ever kept with men. Antonio. Amelt. Let him alone;
+            I'll follow him no more with bootless prayers. He seeks my life; his reason
+            well I know. I oft deliver'd from his forfeitures Many that have at times
+            made moan to me; Therefore he hates me. Salarino. I am sure the duke Will
+            never grant this forfeiture to hol...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1907  turns=0
+  excerpt : 185-186 a proper man of person] a man of comely person. 188-190 Will he give
+            you the nod? . . . have more] The word "nod" suggests to Cressida the slang
+            word "noddy," i. e., simpleton, and means that if Troilus give Pandarus a
+            nod (i. e., a fool's token), Pandarus will receive a new supply of
+            stupidity, in which he was rich before. Steevens doubtfully suggests that
+            "give the nod" was a technical t...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1856  turns=0
+  excerpt : Thou-Thou dost look within, and read How I have sought for love, and found
+            Reproach instead-how in its need My spirit bowed it to the ground,— E'en to
+            the dust-and deemed it nought Bore patiently, when pained and wronged And
+            smiled on sorrow, if it brought The priceless boon for which it longed. In
+            vain! in vain! and now I come- As to her nest the dove doth flee; Give Thou
+            my wandering heart a hom...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1904  turns=10
+  excerpt : Prince. A beggar, brother? But York. Of my kind uncle, that I know will
+            give; And being but a toy, which is no grief to give. Gloster. A greater
+            gift than that I'll give my cousin. York. A greater gift? O, that's the
+            sword to it. Gloster. Ay, gentle cousin, were it light enough. York. O,
+            then, I see, you'll part but with light gifts; In weightier things you 'll
+            say a beggar nay. Gloster. It is too...
+  USER  : A beggar, brother?
+  ASST  : Of my kind uncle, that I know will give; And being but a toy, which is no
+          grief to give.
+  USER  : A greater gift than that I'll give my cousin.
+  ASST  : A greater gift? O, that's the sword to it.
+  USER  : Ay, gentle cousin, were it light enough.
+  ASST  : O, then, I see, you'll part but with light gifts; In weightier things you 'll
+          say a beggar nay.
+  USER  : It is too weighty for your grace to wear.
+  ASST  : I weigh it lightly, were it heavier.
+  USER  : What! would you have my weapon, little lord?
+  ASST  : I would, that I might thank you as you call me.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1895  turns=0
+  excerpt : "Don't, Miss Hannah! please, ma'am, don't!" he said. "'Cause I ain't a-goin'
+            to let you git in, an' it's no use talkin'. "Stand back!" she exclaimed,
+            peremptorily. But William kept his place, protesting, "I don't want to
+            hinder you, Miss Hannah; but, 'fore God, you kyant go in dere as long as I'm
+            a livin' nigger!" "Gordon!" she called 66 Gordon, come, open the door! It is
+            I-Aunt Hannah; won't you ...
+  (dropped)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1862  turns=0
+  excerpt : Rut the same sentiments are to be found in the Medrash, though expressed in
+            different words; and conveyed, as was usual with the Jewish writers of
+            ancient days, in the form of a story. It runs thus:-A matron once asked
+            Rabbi Jose, "In how many days did God create the world?" "In six days,"
+            replied the Rabbi, as it is written, "In six days God made the heaven and
+            the earth." "But," continued she, "...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1871  turns=0
+  excerpt : Poor Olive! perhaps it was ill for her that Sara's "loveaffair" had aroused
+            prematurely these blind gropings af ter life's great mystery, so often "Too
+            early seen unknown, and known too late." "What! tired of dancing already?"
+            cried Sara, flitting to the corner where Olive sat. "I have not danced once
+            yet," Olive answered, rather. piteously. "Come-shall I get you a partner ?"
+            said Sara, carelessly...
+  (dropped)

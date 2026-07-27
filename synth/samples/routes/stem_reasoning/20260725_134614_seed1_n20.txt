@@ -1,0 +1,528 @@
+route: stem_reasoning
+model: claude-haiku-4-5
+seed:  1
+n:     20
+kept:  15/20
+
+--- EXTRACT SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s science or engineering text that
+reasons quantitatively or physically. The author's own reasoning is in the text.
+
+EXTRACT THE REASONING CHAIN. Find where the author reasons from a principle to a
+conclusion, and copy that chain out.
+  - Return it as "spans": the quotations from the passage that, read in order, form
+    one coherent chain (principle → application → conclusion). Use as many as the
+    reasoning needs — up to 6, and always the fewest, longest spans that
+    hold the chain together. Extract as much of the reasoning as you can.
+  - Give EACH span as an object with two fields:
+      "verbatim"    — the span copied EXACTLY as it appears in the passage, character
+                      for character, including any garbled formula.
+      "refurbished" — the SAME span with only its mathematical or chemical formulas
+                      restored to correct standard form. If the span has no formula,
+                      make "refurbished" identical to "verbatim".
+  - REPAIR ONLY FORMULAS. The OCR has mangled this text's equations, exponents,
+    subscripts, symbols, and numbers, and page numbers bleed into the formulas. In
+    "refurbished" you MAY fix a corrupted expression back to what it plainly must be
+    (e.g. "CuSO,+ZnZnSO,+ Cu" → "CuSO₄ + Zn → ZnSO₄ + Cu"; "9X2" → "9 × 2";
+    "P₁ = pressure" kept clean). You MAY change only digits, symbols, operators,
+    subscripts/superscripts, and spacing.
+  - ADD NO NEW CONTENT. Do NOT paraphrase, summarize, rewrite, reorder, translate, or
+    add, remove, or alter any WORD of the prose — not a connecting word, not a gloss,
+    not a clarification. Every word in "refurbished" must already stand in "verbatim".
+    Repair the formulas; leave the author's prose exactly as written, misspellings and
+    all. Only select and order the author's own sentences.
+  - Do not build the chain out of a span that hinges on a figure, plate, table, or
+    page the reader cannot see ("as in Fig. 36", "see p. 466") — those cannot be
+    refurbished into anything meaningful; choose spans that carry the reasoning
+    without them.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": [{"verbatim": "...", "refurbished": "..."}]}, ...]
+
+
+--- QUESTION SYSTEM PROMPT ---
+You are given a passage from a pre-1930s science or engineering text and a REASONING
+CHAIN quoted verbatim from it — this is the ANSWER. Write the single question that
+this reasoning chain answers, as if setting an exercise.
+
+- The chain must CORRECTLY AND COMPLETELY answer your question — ask exactly what
+  this reasoning concludes or explains. Do not ask for a step, a numeric result, or
+  an identity the chain does not reach. Read the chain as the answer: if it does not
+  fully answer, adjust the question to fit the chain.
+- Pose a problem that must be reasoned through, not a fact to recall: "Why does
+  ...", "How does it follow that ...", "Why must ...?", "If ..., what happens and
+  why?".
+- Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use no
+  word, term, or idiom that came into use after 1930, and no modern conversational
+  or academic phrasing — it must read as a question a period examiner would pose.
+- The question must STAND ALONE and betray no awareness of a source. Never refer to
+  the passage or to whoever wrote it — no "the passage", "the text", "the author",
+  "the figure", "according to", "as described", "as shown". Ask about the SUBJECT
+  ITSELF, as a matter of physical fact, to someone who never saw the passage.
+- SUPPLY THE PHYSICAL SETUP the reader needs so the problem is well-posed and the
+  chain's "it / this / these" have clear antecedents: name the bodies, quantities,
+  or conditions involved (the gas held at constant temperature, the beam loaded at
+  its centre, the current through the coil). Give just enough to make the question
+  unambiguous — do not restate the whole passage, and never leave a bare "this
+  quantity", "such a body", or "the system".
+- Every proper noun must be one the reader can place: either widely recognizable on
+  its own (Boyle's law, Carnot's cycle), or introduced with a short descriptor.
+- Do NOT reveal the answer: do not state the conclusion, and do not reuse the
+  chain's distinctive wording. Ask for the reasoning; make the reader supply it.
+
+Input: JSON array [{"i": 0, "passage": "...", "answer": "..."}, ...]
+Output JSON only: [{"i": 0, "q": "..."}, ...]
+
+
+========================================================================================
+[SCIENCE]  1843  stem_signal 1.00
+  excerpt : Thomson has concluded from many experiments, that the quantity of ice which
+            forms suddenly on the agitation of water, cooled down below the freezing
+            point, bears always a constant ratio to the coldness of the liquid before
+            agitation, and that from analogy it was probable, that for every five
+            degrees of diminution of temperature below the freezing point, without
+            congelation, one twenty-eighth of th...
+  Q       : From the observation that water cooled below 32° without freezing yields,
+            upon agitation, a fixed fraction of ice for each degree of cold, and from
+            the known quantity of heat required to convert ice into water, deduce why
+            the point of melting ice is invariable and why the disappearance of snow
+            after frost is gradual.
+  A       : That for every five degrees of diminution of temperature below the freezing
+            point, without congelation, one twenty-eighth of the liquid freezes suddenly
+            on agitation. … Therefore, if water could be cooled down twenty-eight times
+            five degrees below 32° without congelation, the whole would congeal
+            instantaneously on agitation, and the temperature of the ice would be 32°.
+            Now, observes Dr. Thomson, it deserves attention, that 5 × 28 = 140, gives
+            us precisely the quantity of heat which, according to Black's experiments
+            enters into the ice, in order to convert it into water. … Hence it follows,
+            that in all cases, when water is cooled down below 32°, it loses a portion
+            of the heat which is necessary to constitute liquidity. It is now seen why
+            the point from which the graduation of the thermometer is taken, is always
+            the same, the temperature of melting ice or snow never exceeding 32°
+            Fahrenheit, and it also appears why snow and ice remain on the ground so
+            long after the breaking up of a frost, for since water after being cooled
+            down to 32°, cannot freeze till it has parted with 140° of heat, so ice,
+            after being heated to 32°, cannot melt till it has absorbed 140° of heat,
+            and hence we are spared from those overwhelming visitations of water, which
+            would otherwise invariably attend the breaking up of severe frosts, attended
+            with heavy falls of snow.
+
+========================================================================================
+[SCIENCE]  1881  stem_signal 1.00
+  excerpt : It was pointed out, on page 2, that a change of volume is due to a
+            separation of the molecules or atoms, and not to any change in the volume of
+            the atoms themselves. It is a reasonable assumption that, if two gases
+            expand equally under the same conditions, it is because they contain the
+            same number of inter-spaces in which the expansion takes place. Hence a law
+            which is expressed thus: Equal volum...
+  Q       : Given that equal volumes of any two elementary gases, under the same
+            conditions of temperature and pressure, contain equal numbers of molecules;
+            that a given volume of oxygen is sixteen times heavier than an equal volume
+            of hydrogen; and that the molecules of both oxygen and hydrogen are each
+            composed of two atoms: by what reasoning may the relative atomic weights of
+            oxygen and hydrogen be found?
+  A       : It is a reasonable assumption that, if two gases expand equally under the
+            same conditions, it is because they contain the same number of inter-spaces
+            in which the expansion takes place. … Hence a law which is expressed thus:
+            Equal volumes of elementary gases contain equal numbers of molecules. The
+            weight of the atoms of each element may be determined by this law. If a
+            given volume of hydrogen contains, say 1,000 molecules, the same volume of
+            oxygen will contain the same number, and as the oxygen volume is 16 times as
+            heavy as the hydrogen, it is clear that the weight of each molecule of
+            oxygen will be 16 times that of each molecule of hydrogen. The molecules of
+            hydrogen and oxygen each contain two atoms, hence the atomic weights will
+            also be in the proportion of 16 to 1.
+
+========================================================================================
+[SCIENCE]  1904  stem_signal 1.00
+  excerpt : The Oxygen of the Blood.-It has been found that a very small proportion of
+            the oxygen which can be obtained, by the aid of the mercurial pump from the
+            blood, exists in a state of simple solution in the plasma (about 5 per
+            cent). If the gas were in simple solution, the amount of oxygen in any given
+            quantity of blood, exposed to any given atmosphere, ought to vary with the
+            amount of oxygen contained...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1899  stem_signal 1.00
+  excerpt : Multiply 6957 by 463. 463 If we wished to find the result by addition, it
+            would be necessary to write 463 numbers, each equal to 6957, under each
+            other, and find the sum of all these numbers. (The * Multiply first by 0.1,
+            then by 0.07, and add the results. necessity of abridging such an operation
+            has given rise to multiplication.) Or, we might make three additions, the
+            first of 3 numbers, each equ...
+  Q       : When multiplying 6957 by 463, the common method is to multiply by 3, by 60,
+            and by 400, and then to add the three products, omitting the zeros that
+            would otherwise appear at the right of the second and third products. What
+            reasoning shows the legitimacy of omitting these zeros, and how is the
+            correct position of each succeeding product determined?
+  A       : If we wished to find the result by addition, it would be necessary to write
+            463 numbers, each equal to 6957, under each other, and find the sum of all
+            these numbers. (The * Multiply first by 0.1, then by 0.07, and add the
+            results. necessity of abridging such an operation has given rise to
+            multiplication.) … Or, we might make three additions, the first of 3
+            numbers, each equal to 6957; the second of 60 numbers, each equal to 6957;
+            the third of 400 numbers, each equal to 6957; and then add together the
+            three sums. In other words, we might multiply 6957, first by 3, then by 60,
+            and then by 400, and find the sum of the three products obtained. Thus,
+            20871 417420 Partial Products. 2782800 463 times the multiplicand 3221091 …
+            It is evident that the zeros at the right of the second and third partial
+            products do not affect the result of the addition; we may, then, omit them,
+            if we observe to what place in respect to the next preceding product the
+            righthand figure of each succeeding product belongs.
+
+========================================================================================
+[SCIENCE]  1913  stem_signal 0.60
+  excerpt : Because of the manifest inaccuracy of the stature criterion, many eminent
+            anthropologists have prepared to estimate sexual differences in brain weight
+            by adopting the method based on the ratio of brain mass to body weight,
+            According to this method, women are found to possess brains which are equal
+            to or even somewhat larger than those of men. If the comparative excess of
+            non-vital tissue in the fo...
+  Q       : Why is it that, when the ratio of brain mass to body weight is adopted in
+            place of the stature criterion for estimating sexual differences in brain
+            weight, women are found to have brains equal to or larger than those of men;
+            and how is this result rendered still more marked when the excess of
+            non‑vital fatty tissue in the female body is eliminated from the estimate?
+  A       : Because of the manifest inaccuracy of the stature criterion, many eminent
+            anthropologists have prepared to estimate sexual differences in brain weight
+            by adopting the method based on the ratio of brain mass to body weight,
+            According to this method, women are found to possess brains which are equal
+            to or even somewhat larger than those of men. If the comparative excess of
+            non-vital tissue in the form of fat in woman be eliminated and estimates be
+            based only on the active organic mass of her body, as compared with the same
+            mass in man, the excess of brain weight in woman over that in man will be
+            still more marked. A careful study, then, of the brain as a whole, far from
+            proving woman's inferiority to man, rather proves her superiority.
+
+========================================================================================
+[SCIENCE]  1901  stem_signal 0.62
+  excerpt : It would presently strike the Gulf Stream. Floating on that sea current, it
+            would take a northerly direction until it reached the fortieth parallel, and
+            then would go due east, and, as many a helpless craft since, would come
+            within sight of Spain and Africa. But those coasts being submerged, there
+            could be nothing to deflect the current, but it would pass over the plateaus
+            of Spain into the Medite...
+  Q       : Assuming that the coasts of Spain and Africa were submerged during the
+            deluge, so that the Gulf Stream could flow unobstructed, how would the ark
+            have been carried from Charleston to Mount Ararat, and why would the
+            current's velocity off Cape Hatteras have been sufficient to effect the
+            journey within one hundred and fifty days?
+  A       : It would presently strike the Gulf Stream. Floating on that sea current, it
+            would take a northerly direction until it reached the fortieth parallel, and
+            then would go due east, and, as many a helpless craft since, would come
+            within sight of Spain and Africa. But those coasts being submerged, there
+            could be nothing to deflect the current, but it would pass over the plateaus
+            of Spain into the Mediterranean, across the lower part of Greece, then over
+            the plains of Asia Minor, and, still holding the same parallel, strike Mount
+            Ararat. The distance from Charleston to Mount Ararat is one hundred and
+            thirty-one degrees of latitude, say eight thousand five hundred and fifteen
+            miles. The time the ark was on the water was one hundred and fifty days, or
+            three thousand six hundred hours. Off Cape Hatteras the Gulf Stream has a
+            velocity of two and a half miles an hour; this would leave very little to be
+            overcome, if anything, when we allow for the uninterrupted flow which the
+            current then had.
+
+========================================================================================
+[SCIENCE]  1893  stem_signal 0.50
+  excerpt : Ships then took twelve months, and, in 1825, four to six months to make the
+            passage to England. Besides money in Bombay was then worth twenty per cent.
+            Civilians at this time, after paying natives 20 per cent., made large
+            profits, trading with China and other places. The two following extracts
+            show what profits were common. They are from the Company's Records :-
+            1675.-Pepper was 7d. per lb. in Eng...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1909  stem_signal 0.80
+  excerpt : Definition of lever.-A lever is a device for the application of force
+            (power) to overcome resistance (weight) by utilizing a third force or
+            support (fulcrum). Thus in every case there must be three forces acting at
+            different points on a lever. Law of leverage. The simplest form of lever is
+            that used by children in a see-saw. The weights of the two children are the
+            two forces acting downward upon t...
+  Q       : Explain the nature of a lever and the law which governs its action. Use the
+            instance of a see-saw to illustrate how the distances of two weights from
+            the fulcrum must be adjusted when the weights are equal and when they are
+            unequal, and deduce the general truth respecting the long arm and the short
+            arm of a lever.
+  A       : Definition of lever.-A lever is a device for the application of force
+            (power) to overcome resistance (weight) by utilizing a third force or
+            support (fulcrum). Thus in every case there must be three forces acting at
+            different points on a lever. Law of leverage. The simplest form of lever is
+            that used by children in a see-saw. The weights of the two children are the
+            two forces acting downward upon the ends of the board, and the support upon
+            which the middle of the board rests is the third force acting upward. It 53
+            will be found by careful measurement that, if the two children are of
+            exactly equal weight, they must sit at equal distances from the fulcrum. In
+            other words, the two arms of the lever must be of equal length. If, however,
+            one child is twice the weight of the other, the lighter must sit twice as
+            far from the fulcrum to balance the heavier. It is thus seen that the long
+            arm of a lever and a light weight are equal to a short arm and a heavy
+            weight.
+
+========================================================================================
+[SCIENCE]  1892  stem_signal 0.50
+  excerpt : If a current of Electricity be passed through a wire, having in it breaks,
+            at each of which a pinch of gunpowder is placed, then the ignition of that
+            gunpowder at each break is a simple and visible evidence of the passage of
+            the current. If those breaks are made up, so that the wire becomes
+            continuous, the passage of the current through it will lose these visible
+            manifestations of its presence; bu...
+  Q       : Consider an electric current passing through a wire in which there are
+            breaks, each containing a pinch of gunpowder. The gunpowder ignites at each
+            break, affording a visible proof of the current. If the breaks be closed,
+            this visible proof disappears, but the current may still be detected by
+            other means. In what way does this fact serve as an analogy to the evidence
+            for the existence of a Supreme Creative Will, and what conclusion may be
+            drawn respecting the foundation of that belief?
+  A       : If a current of Electricity be passed through a wire, having in it breaks,
+            at each of which a pinch of gunpowder is placed, then the ignition of that
+            gunpowder at each break is a simple and visible evidence of the passage of
+            the current. If those breaks are made up, so that the wire becomes
+            continuous, the passage of the current through it will lose these visible
+            manifestations of its presence; but it will not be the less real in itself,
+            and its reality can be ascertained by less obvious, but perhaps more
+            instructive, tests. … So it may be true that those breaks in our conception
+            of the Order of Creation serve to bring home vividly to the mind the
+            irresistible inference of the action of a Supreme Creative Will, and the
+            fulfilment of a Supreme Purpose; but the real fundamental grounds of belief
+            in that truth are independent of their existence, and would be absolutely
+            unshaken, if they ceased to exist for us.
+
+========================================================================================
+[SCIENCE]  1897  stem_signal 0.50
+  excerpt : It follows, therefore, that any clothing which interferes with this freedom
+            is strictly to be avoided. 1 "Our clothing is merely an equivalent for a
+            certain amount of food; the more warmly we are clad the less urgent becomes
+            the appetite for food, because the loss of heat by cooling and consequently
+            the amount of heat to be supplied by food is diminished."- LIEBIG. "Warm
+            clothes are as desirable i...
+  Q       : Why is it that a well-fed man may endure the cold with lighter raiment than
+            an ill-fed man, and in what manner are food and clothing interchangeable in
+            the conservation of bodily heat?
+  A       : It follows, therefore, that any clothing which interferes with this freedom
+            is strictly to be avoided. … 1 "Our clothing is merely an equivalent for a
+            certain amount of food; the more warmly we are clad the less urgent becomes
+            the appetite for food, because the loss of heat by cooling and consequently
+            the amount of heat to be supplied by food is diminished."- LIEBIG. … Warm
+            clothes are as desirable in winter as arè sufficient supplies of food, and
+            to a great extent these are interchangeable; the well-fed person withstands
+            cold well, and needs but light clothing compared to the ill-fed person, who
+            must be warmly clad..
+
+========================================================================================
+[TECHNOLOGY]  1876  stem_signal 0.40
+  excerpt : As the cloth is woven the weight is gradually drawn upwards, and the small
+            counterpoise falls. When this latter touches the ground it follows that the
+            rope becomes slackened, and thereby takes the friction off the rope and
+            allows the warp beam to move, although the tension caused by the heavier
+            weight is always acting upon the warp. See k and n, Fig. 21. This motion is
+            made in many different forms...
+  Q       : In a loom where the warp beam is tensioned by a weight acting at a constant
+            leverage, why does the tension of the warp increase as the cloth is woven
+            and the beam decreases in diameter, and why does a long warp therefore
+            require occasional adjustment of the tension?
+  A       : As the cloth is woven the weight is gradually drawn upwards, and the small
+            counterpoise falls. When this latter touches the ground it follows that the
+            rope becomes slackened, and thereby takes the friction off the rope and
+            allows the warp beam to move, although the tension caused by the heavier
+            weight is always acting upon the warp. … The tension, as the warp becomes
+            unwound, becomes greater, through the diameter of the beam being lessened,
+            whilst the weight remains working at the same leverage. … Thus it requires
+            occasional adjustment in weaving very long warps, where the diameter of the
+            warp beam may become lessened perhaps one half in size. This circumstance
+            has given rise to "let-off motions" being made to equalize the strains, but
+            they will be referred to in power-loom weaving, where their action must be
+            automatic.
+
+========================================================================================
+[TECHNOLOGY]  1889  stem_signal 0.50
+  excerpt : As long as the bonds are unpaid the plant is really owned by private
+            capital, but is operated by the city under a lease guaranteeing four per
+            cent per annum profit to the bondholders. To be logical, the scheme should
+            be to levy a tax 131 to raise the full amount necessary to pay for the plant
+            at once, so that the city might own it, and then to operate it without a
+            profit, thus saving $14,000 per a...
+  Q       : Why must it be considered illogical for a city to borrow the full purchase
+            price of a municipal plant at four per cent, rather than levy a tax for the
+            same amount in one year, when it is argued that money is worth more than
+            four per cent to the citizens in their private capacity?
+  A       : As long as the bonds are unpaid the plant is really owned by private
+            capital, but is operated by the city under a lease guaranteeing four per
+            cent per annum profit to the bondholders. To be logical, the scheme should
+            be to levy a tax 131 to raise the full amount necessary to pay for the plant
+            at once, so that the city might own it, and then to operate it without a
+            profit, thus saving $14,000 per annum more. … This suggestion will, of
+            course, be met with the statement that money is worth more than four per
+            cent to the citizens, therefore it is better policy to borrow the money with
+            which to pay for the plant at four per cent than to levy a tax for the full
+            amount at once. … This plea admits the plea that the interests of the
+            citizens, in their private capacity, is greater than their interests in
+            their municipal capacity. If money is worth more than four per cent to
+            citizens, why take any of their money with which to buy the plant?
+
+========================================================================================
+[TECHNOLOGY]  1901  stem_signal 0.60
+  excerpt : There are items under separate heads, such as "development and improvement
+            of railways," which in sum total equal fifteen per cent. additional. Then,
+            too, a big charge for the "purchase of rolling stock for the Siberian" and
+            "increase of rolling stock of other railways," without specifying the
+            proportion of the latter. If half the whole sum, it would be 243 equal to a
+            supplementary amplification o...
+  Q       : From the stated items in the Russian state railway accounts—namely, a
+            separate head for development and improvement amounting to fifteen per cent
+            of gross earnings, a charge for rolling stock which, if taken at half its
+            total, adds eight per cent, and further office expenses in two
+            Ministries—what is the least proportion of gross earnings that must be
+            consumed by operating outlay, and what conclusion follows as to the portion
+            left for paying the interest on capital?
+  A       : There are items under separate heads, such as "development and improvement
+            of railways," which in sum total equal fifteen per cent. additional. Then,
+            too, a big charge for the "purchase of rolling stock for the Siberian" and
+            "increase of rolling stock of other railways," without specifying the
+            proportion of the latter. If half the whole sum, it would be 243 equal to a
+            supplementary amplification of eight per cent. These appropriations are
+            rarely expended in full, it being a favorite method to carry a large
+            suspense account, seemingly to prove that the management could if it would,
+            but didn't. With the expenditures as indicated, not to speak of the large
+            items for office expenses in both Ministries, which again are separate from
+            the other charges, the operating outgo of the Russian governmental lines is
+            assuredly not under seventy per cent. of the gross earnings. How far the net
+            of thirty per cent., or less, as the case may be, goes toward paying the
+            interest charge on capital, few could tell, and they won't.
+
+========================================================================================
+[TECHNOLOGY]  1921  stem_signal 0.80
+  excerpt : The density and v of any glass of given PbO or Pb₂O content are indicated on
+            the plot (fig. 29) by the intersections of the PbO or Pb,O, ordinate with
+            the curves for density and respectively; thus in the foregoing example the
+            density of the flint glass n = 1.640 60r1.90 5041,80 40+1,70 X 1011 -30+1.60
+            no →→ -204.50 200 PbO 250 FIG. 29.-Batch-composition diagram for the series
+            of ordinary flint gla...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1916  stem_signal 0.62
+  excerpt : Heat one end about 1 inch, placing edge on anvil and letting it extend from
+            front edge of anvil on the face about 34 inch. Then hammer down, making a
+            shoulder. Round this end out to 1 inch. Bend to make eye, as shown, so that
+            it fits into shoulder. Draw out other end round about 2 inches, making it
+            slightly pointed. Bend to shape over horn of anvil. Heat center of hook.
+            Hold with two pairs of tong...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1906  stem_signal 0.62
+  excerpt : The Syndicate, which imposed this condition under the threat of no supply at
+            all, was strong enough further to protect itself by the "clause de hausse,"
+            so that if the iron market had gone up, the contract price would have
+            followed it; there was no "clause de baisse," the risk being therefore
+            unequally distributed. In some cases Syndicates have been further protected
+            by "clauses de grêve." The met...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1908  stem_signal 0.80
+  excerpt : A permanent gas, or the vapor from a liquid or solid substance, when exposed
+            to heat tends to expand, and, in expanding, exerts an active pressure in all
+            directions. Thus, if a gas, or a readily volatized liquid, like water or
+            alcohol, contained in a corked vessel, be exposed to heat, the expansion
+            will be exhibited in the expulsion of the cork. In this fact it demonstrated
+            the principle, on which...
+  Q       : By what chain of reasoning does the simple experiment of heating a corked
+            vessel containing a volatile liquid, such as water or alcohol, establish the
+            fundamental principle that heat may be converted into mechanical energy, and
+            that this principle underlies the operation of all heat engines?
+  A       : A permanent gas, or the vapor from a liquid or solid substance, when exposed
+            to heat tends to expand, and, in expanding, exerts an active pressure in all
+            directions. … Thus, if a gas, or a readily volatized liquid, like water or
+            alcohol, contained in a corked vessel, be exposed to heat, the expansion
+            will be exhibited in the expulsion of the cork. … In this fact it
+            demonstrated the principle, on which all forms of heat engine operate-that
+            heat may be transformed into mechanical energy through its effects on
+            liquids and gases, promoting the change from fluid to gaseous state and then
+            increasing the volume of the gas.
+
+========================================================================================
+[TECHNOLOGY]  1908  stem_signal 1.00
+  excerpt : On the other hand, we may estimate that the steel, placed in the work, costs
+            about three cents per pound. It will weigh 480 pounds per cubic foot;
+            therefore the steel costs $14.40 per cubic Fig. 35. foot, or 72 times as
+            much as an equal volume of concrete or an equal cross-section per unit of
+            length. But the steel can safely withstand a compressive stress of 16,000
+            pounds per square inch, which is...
+  Q       : Given that steel costs three cents per pound, weighs 480 pounds per cubic
+            foot, and can safely withstand a compressive stress of 16,000 pounds per
+            square inch, whilst the corresponding cost per cubic foot of concrete is
+            only one seventy-second of that of steel, and its safe compressive stress
+            but one thirty-second of that of steel, show by calculation that the cost of
+            providing a given compressive resistance is greater in steel than in
+            concrete, and determine the factor by which the steel cost exceeds the
+            concrete cost.
+  A       : We may estimate that the steel, placed in the work, costs about three cents
+            per pound. It will weigh 480 pounds per cubic foot; therefore the steel
+            costs $14.40 per cubic Fig. 35. foot, or 72 times as much as an equal volume
+            of concrete or an equal cross-section per unit of length. … But the steel
+            can safely withstand a compressive stress of 16,000 pounds per square inch,
+            which is 32 times the safe working load on concrete. … Since, however, a
+            given volume of steel costs 72 times an equal volume of concrete, the cost
+            of a given compressive resistance in steel is 3 (or 2.25) times the cost of
+            that resistance in concrete.
+
+========================================================================================
+[TECHNOLOGY]  1861  stem_signal 1.00
+  excerpt : 33. The rule for extracting the square root is this: First-Commencing at the
+            unit figure, point off periods of two figures each, till all the figures in
+            the given number are exhausted. The second point will be above hundreds in
+            whole numbers, and hundredths in decimals. Second-If the first period
+            towards the left be a complete square, then put its square root at the end
+            of the given number, by way...
+  Q       : What is the rule for extracting the square root of any number, both in whole
+            numbers and in decimals, and what are the successive steps to be followed?
+  A       : 33. The rule for extracting the square root is this: First-Commencing at the
+            unit figure, point off periods of two figures each, till all the figures in
+            the given number are exhausted. The second point will be above hundreds in
+            whole numbers, and hundredths in decimals. Second-If the first period
+            towards the left be a complete square, then put its square root at the end
+            of the given number, by way of quotient; and if the first period is not a
+            complete square, take the square root of the next less square. Third Square
+            this root now found, and subtract the square from the first period; to the
+            remainder annex the next period for a dividend, and for part of a divisor
+            double the root already obtained. Fourth-Try how often this part of the
+            divisor now found is contained in the dividend, omitting the last figure,
+            and annex the quotient thus found, not only to the root last found, but also
+            to the divisor, last used. Fifth-Then multiply and subtract, as in division;
+            to the remainder bring down the next period, and, adding to the divisor the
+            figure of the root last found, proceed as before Sixth-Continue this process
+            till all the figures in the given number have been used; and if any thing
+            remain, proceed in the same manner to find decimals-adding two ciphers to
+            find each figure.
+
+========================================================================================
+[TECHNOLOGY]  1864  stem_signal 1.00
+  excerpt : The particles separate from each other, and, falling from the mass by the
+            force of gravity alone, form a liquid. Now, as the thermometric temperature
+            of the ice was 32°, and that of the liquid also 32°, it follows that the
+            entire of the heat communicated, and by which the change was effected, must
+            be considered as in the latent state. If an atom of ice, then, be
+            represented by HO+C—namely, one equ...
+  Q       : According to the calorific theory, why does the heat imparted to ice at 32°
+            become latent, and in what manner may the atoms of ice, liquid water, and
+            vapour be represented symbolically, each in terms of its equivalents of
+            hydrogen, oxygen, and caloric?
+  A       : Now, as the thermometric temperature of the ice was 32°, and that of the
+            liquid also 32°, it follows that the entire of the heat communicated, and by
+            which the change was effected, must be considered as in the latent state. …
+            If an atom of ice, then, be represented by HO + C—namely, one equivalent of
+            hydrogen, one of oxygen, and one of caloric, or heat—the liquid atom will
+            consequently be HO + C₂, or HO, plus two of caloric. … If heat be continued,
+            such of the liquid atoms as may receive each an additional unit will then
+            assume the vaporous form, and, as it had previously received its full
+            complement of latent heat, this additional unit will consequently be
+            sensible, or available heat, and as such will act on the thermometer. … The
+            atom of vapor may then be symbolized thus: HOCC³, or, H, Hydrogen. O,
+            Oxygen. C C C, Caloric. Vapor atoms may then be stated as the union of one
+            atom of the liquid and three units of the heat-say two of latent, and one of
+            sensible.

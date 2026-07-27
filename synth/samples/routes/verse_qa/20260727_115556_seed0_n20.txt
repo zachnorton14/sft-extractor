@@ -1,0 +1,343 @@
+route: verse_qa
+model: deepseek-v4-flash
+seed:  0
+n:     20
+kept:  19/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage of pre-1930s VERSE. Turn it into an instruction-and-
+completion pair in which the reader is asked to COMPOSE such verse.
+
+1. FIND THE VERSE FIRST. Copy a self-contained run of the verse — a full stanza, or a
+   few consecutive lines that stand on their own — VERBATIM as the answer.
+   - Return it as "spans": prefer ONE contiguous quotation of the verse, kept line for
+     line; use up to 2 only if you take two separate stanzas.
+   - Copy WORD FOR WORD, line for line. Do NOT paraphrase, rewrite, correct, modernize,
+     reorder, or add or drop any word. Take the poet's own lines exactly.
+   - Skip a run that is garbled by OCR or that cannot stand on its own.
+
+2. THEN WRITE THE INSTRUCTION that asks for this verse.
+   - Name the SUBJECT or occasion and ask for verse on it: "Compose a verse upon ...",
+     "Write lines on ...", "Give a stanza in praise of ...", "Set down a verse lamenting
+     ...". The verse must be a fitting answer to the instruction.
+   - Do NOT quote or paraphrase the verse's own wording in the instruction; give only
+     its subject and, if apt, its mood or form (a lament, a hymn, a sonnet).
+   - Plain period register, pre-1930s English — no word or idiom that came into use
+     after 1930.
+   - Stands alone. Never mention the source — no "the passage", "the poem above", "the
+     poet". Phrase it as a task set from scratch.
+
+If the passage is NOT actually verse (it is prose, a table, an index, or OCR soup), emit
+NO item for it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact verse"], "q": "..."}, ...]
+
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1854  prose_score 0.92
+  excerpt : May set our steps: the Cross on Calvary Uplifted high Beams on the martyr
+            hosts, a beacon light In open fight. To the still wrestlings of the lonely
+            heart He doth impart The virtue of His midnight agony, When none was nigh,
+            Save God and one good angel, to assuage The tempest's rage. Mortal! if life
+            smile on thee, and thou find All to thy mind, Think, who did once from
+            Heaven to Hell descend Thee t...
+  Q       : Compose a verse upon the Cross of Calvary and the comfort it brings to those
+            who suffer.
+  A       : May set our steps: the Cross on Calvary Uplifted high Beams on the martyr
+            hosts, a beacon light In open fight. To the still wrestlings of the lonely
+            heart He doth impart The virtue of His midnight agony, When none was nigh,
+            Save God and one good angel, to assuage The tempest's rage. Mortal! if life
+            smile on thee, and thou find All to thy mind, Think, who did once from
+            Heaven to Hell descend Thee to befriend:
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1920  prose_score 0.92
+  excerpt : She did not make the least objection, Thinks I "Ha ha! When I'm grown up
+            I'll tell mamma.” And that's my earliest recollection. That is a poem by a
+            man pretending to infancy. Here is a genuine child-product, one of the
+            lyrics of a little American girl named Hilda Conklin. Don't you think it
+            rather beautiful? WATER The world turns softly Not to spill its lakes and
+            rivers, The water is held in its a...
+  Q       : Write a short verse on water, telling how it is gently held by the world and
+            how it holds the sky.
+  A       : WATER The world turns softly Not to spill its lakes and rivers, The water is
+            held in its arms [200] And the sky is held in the water. What is water, That
+            pours silver, And can hold the sky?
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1876  prose_score 1.00
+  excerpt : Old age! and hard it is, — hard to forget The sunshine of our youth, our
+            manhood's pride! But here, O aged men! ye may abide Secure, and see the last
+            light on the wave Of Time, which wafts you silent to your grave; Like the
+            calm evening ray, that smiles serene Upon the tranquil Thames, and cheers
+            the sinking scene. William Lisle Bowles. Greta, the River. TO THE RIVER
+            GRETA, NEAR KESWICK. GRETA, wh...
+  Q       : Write lines on old age, likening its tranquil close to a peaceful evening
+            upon a river.
+  A       : Old age! and hard it is, — hard to forget The sunshine of our youth, our
+            manhood's pride! But here, O aged men! ye may abide Secure, and see the last
+            light on the wave Of Time, which wafts you silent to your grave; Like the
+            calm evening ray, that smiles serene Upon the tranquil Thames, and cheers
+            the sinking scene.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1883  prose_score 0.75
+  excerpt : LET me tell thee, in characters still, that I am in a dreadful way just now.
+            My brain is all boiling like a cauldron over a fiery furnace. What a devil
+            is the matter with me, I wonder! I never was so strange in my life. In
+            truth, Jack, I have been a most execrable villain. And when I consider all
+            my actions to this angel of a woman, and in her the piety, the charity, the
+            wit, the beauty, I have he...
+  Q       : Compose a lament in verse for a beloved woman, describing the finality of
+            death in shutting her lips.
+  A       : But oh! She's out! The damp of death has quenched her quite! Those spicy
+            doors, her lips, are shut, close locked Which never gale of life shall open
+            more! And is it so? Is it indeed so?-Good God!—Good God!—
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1888  prose_score 1.00
+  excerpt : WO WIRD EINST DES WANDERMÜDEN. WHERE? WHERE will end my weary journey? What
+            last resting-place be mine? Under tropic palm-tree's shadow— Under lindens
+            by the Rhine? Shall I be in some far desert Laid to rest by stranger hand?
+            Shall I sleep upon a barren Sea-shore, underneath the sand? What heed I!
+            since God's fair heaven Will be o'er me there as here;...
+  Q       : Compose a verse on a weary traveler's search for his final rest and his hope
+            in heaven.
+  A       : WHERE? WHERE will end my weary journey? What last resting-place be mine?
+            Under tropic palm-tree's shadow— Under lindens by the Rhine? Shall I be in
+            some far desert Laid to rest by stranger hand? Shall I sleep upon a barren
+            Sea-shore, underneath the sand? What heed I! since God's fair heaven Will be
+            o'er me there as here;
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1848  prose_score 0.92
+  excerpt : Speak, for thy tears disturb me!-what art thou? Why dost thou hide thy face,
+            yet weeping on? Look up!-oh! is it that wan cheek and brow!- Is it-alas! yet
+            joy!-my son, my son! I MISS THEE, MY MOTHER. I MISS thee, my Mother! Thy
+            image is still The deepest impressed on my heart, And the tablet so faithful
+            in death must be chill Ere a line of that image depart. Thou wert torn from
+            my side when I treas...
+  Q       : Write a verse upon the loss of a mother, whose memory remains fixed in the
+            heart forever.
+  A       : I MISS THEE, MY MOTHER. I MISS thee, my Mother! Thy image is still The
+            deepest impressed on my heart, And the tablet so faithful in death must be
+            chill Ere a line of that image depart. Thou wert torn from my side when I
+            treasured thee most- When my reason could measure thy worth; When I knew but
+            too well that the idol I'd lost Could be never replaced upon earth.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1886  prose_score 0.67
+  excerpt : MEETING STREAMS. 133 fairer boy of five. When Lush incautiously expressed
+            some surprise at her having brought the children, she said, with a sharp-
+            toned intonation-- "Did you suppose I should come wandering about here by
+            myself? Why should I not bring all four if I liked?" "Oh, certainly," said
+            Lush, with his usual fluent nonchalance. He stayed an hour or so in
+            conference with her, and rode back t...
+  Q       : Write a stanza in which you refuse to clothe yourself in jewels taken from
+            drowned women and decline the inheritance of orphans, bidding your dead love
+            to marry its dead.
+  A       : I will not clothe myself in wreck-wear gems Sawed from cramped finger-bones
+            of women drowned; Feel chilly vaporous hands of ireful ghosts Clutching my
+            necklace; trick my maiden breast With orphans' heritage. Let your dead love
+            Marry its dead.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1890  prose_score 1.00
+  excerpt : ISM. Il tutto Scoprirti io non ricuso: mà egli è d'uopo Che qui t' arresti
+            per brev' ora: urgente Cura or mi chiama altrove. EGI. Io volontieri
+            T'attendo quanto vuoi. ISM. Mà non partire E non far sì, ch' io quà ritorni
+            indarno. EGI. Mia fè dò in pegno; e dove gir dovrei?— Atto IV. sc. 7. MER.
+            Ma quale, ô mio fedel, qual potrò io Darti già mai mercè, che i merti
+            agguagli?...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1861  prose_score 1.00
+  excerpt : Julia!-'tis pity, pity makes you kind; You know I love, and you would seem
+            to feel. But shall I still go seek within those arms A joy in which
+            affection takes no part? No, no, farewell! you give me but your charms, When
+            I had fondly thought you gave your heart. THE SHRINE. TO My fates had
+            destined me to rove A long, long pilgrimage of love; And many an altar on my
+            way Has lured my pious steps to s...
+  Q       : Write a verse in which a lover reproaches his beloved for granting only her
+            physical charms but withholding her heart, and so bids her farewell.
+  A       : Julia!-'tis pity, pity makes you kind; You know I love, and you would seem
+            to feel. But shall I still go seek within those arms A joy in which
+            affection takes no part? No, no, farewell! you give me but your charms, When
+            I had fondly thought you gave your heart.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1905  prose_score 1.00
+  excerpt : Lavish Honour shower'd all her stars, 190 And affluent Fortune emptied all
+            her horn. Yea, let all good things await Him who cares not to be great, But
+            as he saves or serves the state. Not once or twice in our rough island-
+            story, The path of duty was the way to glory: He that walks it, only
+            thirsting For the right, and learns to deaden Love of self, before his
+            journey closes, He shall find the stub...
+  Q       : Set down a verse upon the man who cares not for his own greatness but serves
+            the state, and how Honour and Fortune wait upon him.
+  A       : Lavish Honour shower'd all her stars, 190 And affluent Fortune emptied all
+            her horn. Yea, let all good things await Him who cares not to be great, But
+            as he saves or serves the state.
+
+========================================================================================
+[MUSIC AND BOOKS ON MUSIC]  1881  prose_score 0.83
+  excerpt : Sur des murs chauds encor du viol de son enfant. Que direz-vous alors? Ah!
+            vous croirez peut-être Que le monde a blessé ce cœur vaste et hautain, Que
+            c'est quelque Lara qui se sent méconnaître, Que l'homme a mal jugé, qui sait
+            ce qu'il peut être, Et qui, s'apercevant qu'il le serait en vain, Rend haine
+            contre haine et dédain pour dédain. Eh bien! vous vous trompez.-Jamais
+            personne au monde N'a pen...
+  Q       : Write a French verse in which you defend a man whom the world believes to be
+            harsh and proud, arguing that he has not been forgotten nor betrayed, and
+            that he still holds his place in the world.
+  A       : Sur des murs chauds encor du viol de son enfant. Que direz-vous alors? Ah!
+            vous croirez peut-être Que le monde a blessé ce cœur vaste et hautain, Que
+            c'est quelque Lara qui se sent méconnaître, Que l'homme a mal jugé, qui sait
+            ce qu'il peut être, Et qui, s'apercevant qu'il le serait en vain, Rend haine
+            contre haine et dédain pour dédain. Eh bien! vous vous trompez.-Jamais
+            personne au monde N'a pensé moins que lui qu'il était oublié. Jamais il n'a
+            frappé sans qu'on ne lui réponde ; Jamais il n'a senti l'inconstance de
+            l'onde, Et jamais il n'a vu se dresser sous son pié Le vivace serpent de la
+            fausse amitié. Que dis-je ? tel qu'il est, le monde l'aime encore; Il n'a
+            perdu chez lui ni ses biens ni son rang. Devant Dieu, devant tous, il
+            s'asseoit à son banc. Ce qu'il a fait de mal, personne ne l'ignore;
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1901  prose_score 0.83
+  excerpt : Yet lurks the sun when day is done Behind to-morrow's door. Gray grows the
+            dawn while men-folk sleep, Unseen spreads on the light, Till the thrush
+            sings to the colored things, And earth forgets the night. No otherwise wends
+            on our hope: E'en as a tale that's told Are fair lives lost, and all the
+            cost Of wise and true and bold. We've toiled and failed; we spake the word;
+            None hearkened; dumb we lie...
+  Q       : Compose a verse that moves from the dark hour before dawn, through the loss
+            of hope and the death of seed, to the sudden joy of the day of days when the
+            cause is crowned.
+  A       : Yet lurks the sun when day is done Behind to-morrow's door. Gray grows the
+            dawn while men-folk sleep, Unseen spreads on the light, Till the thrush
+            sings to the colored things, And earth forgets the night. No otherwise wends
+            on our hope: E'en as a tale that's told Are fair lives lost, and all the
+            cost Of wise and true and bold. We've toiled and failed; we spake the word;
+            None hearkened; dumb we lie; Our hope is dead, the seed we spread Fell o'er
+            the earth to die. What's this? For joy our hearts stand still, And life is
+            loved and dear, The lost and found the Cause hath crowned, The day of days
+            is here.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1897  prose_score 1.00
+  excerpt : Be off, or I'll kick you down stairs!" 99 YOUTH AND AGE. William
+            Shakespeare. CRABBED age and youth cannot live together: Youth is full of
+            pleasance, age is full of care; Youth like summer morn, age like winter
+            weather; Youth like summer brave, age like winter bare. Youth is full of
+            sport, age's breath is short; Youth is nimble, age is lame; Youth is hot and
+            bold, age is weak and cold; Youth is wi...
+  Q       : Compose a verse upon the difference between youth and age, showing the
+            contrast between them.
+  A       : CRABBED age and youth cannot live together: Youth is full of pleasance, age
+            is full of care; Youth like summer morn, age like winter weather; Youth like
+            summer brave, age like winter bare. Youth is full of sport, age's breath is
+            short; Youth is nimble, age is lame; Youth is hot and bold, age is weak and
+            cold; Youth is wild, and age is tame. Age, I do abhor thee; youth, I do
+            adore thee;
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1866  prose_score 0.75
+  excerpt : Rising, the triumph he completed; He lives! He reigns to save! Heaven's
+            happy myriads bow before him; He comes, -the Judge of men; These eyes shall
+            see him and adore him; Lord Jesus! own me then." JOSIAH CONder. 212 THE LAST
+            MORNING. "If thou art my Shepherd, then I am thy sheep; O Shepherd! I
+            falter; thy word with me keep; Thy crook hold me up, thy staff me defend,
+            Thy goodness and mercy fail not...
+  Q       : Compose a hymn upon the resurrection of our Lord, expressing the hope of
+            seeing Him.
+  A       : Rising, the triumph he completed; He lives! He reigns to save! Heaven's
+            happy myriads bow before him; He comes, -the Judge of men; These eyes shall
+            see him and adore him; Lord Jesus! own me then.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1858  prose_score 0.92
+  excerpt : Shall with a sorrowing tear repay The pity which you cast away. And when
+            thou breath'st, the winds are ready straight To filch it from thee; and do
+            therefore wait Close at thy lips, and snatching it from thence, Bear it to
+            heaven, where 'tis Jove's frankincense. Fair goddess, since thy feature
+            makes thee one, Yet be not such for these respects alone; But as you are
+            divine in outward view, So be wi...
+  Q       : Write lines to a fair goddess, entreating her to be as virtuous as she is
+            beautiful.
+  A       : Fair goddess, since thy feature makes thee one, Yet be not such for these
+            respects alone; But as you are divine in outward view, So be within as fair,
+            as good, as true.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1884  prose_score 0.92
+  excerpt : Heavy to bear, but let us remember It's no more than our share. We make but
+            one shadow, And that shadow will fall ; We make but one grave That covereth
+            all. ON MODERN POETRY. Give me Knight and give me Lady, The violet and the
+            rose; Give me the fruits of Autumn And the sights that Springs unclose; Give
+            me sweet Summer flowers And the days that Winters bring, And nature broadly
+            scattered...
+  Q       : Write a stanza upon the common lot of humankind, that all share the same
+            burden and the same grave.
+  A       : Heavy to bear, but let us remember It's no more than our share. We make but
+            one shadow, And that shadow will fall ; We make but one grave That covereth
+            all.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1914  prose_score 1.00
+  excerpt : Mediae noctis tempus est; Prophetica vox admonet; Dicamus laudes Deo Patri
+            semper et Filio, 2. Sancto quoque Spiritui, Perfecta enim Trinitas Uniusque
+            substantiae Laudanda nobis semper est. 3. Terrorem tempus hoc habet, Quocum
+            vastator angelus Aegypto mortem intulit, Delevit primogenita. 4. Haec justis
+            hora salus est, Et quos idem tunc angelus Ausus punire non erat, Signum
+            formidans sanguinis. 5. ...
+  Q       : Set down a Latin hymn for the midnight hour, giving praise to the Holy
+            Trinity.
+  A       : Mediae noctis tempus est; Prophetica vox admonet; Dicamus laudes Deo Patri
+            semper et Filio, 2. Sancto quoque Spiritui, Perfecta enim Trinitas Uniusque
+            substantiae Laudanda nobis semper est.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1859  prose_score 0.75
+  excerpt : Heaven and Earth. Oh, be Thou King over my whole heart! Thy Kingdom is an
+            Everlasting Kingdom; oh, make me a Subject of that Kingdom, that I may live
+            83 THE THIRTEENTH HOUR. 81 C% under Thy rule, and serve Thee in
+            Righteousness and Holiness! Thou saidst that for this cause Thou didst come
+            into the World, that Thou mightest bear witness to the Truth, and that
+            whosoever is of the Truth heareth Thy V...
+  Q       : Compose a hymn to the God of all grace, imploring Him to grant truth in the
+            inward parts.
+  A       : God of all grace! we come to Thee With broken, contrite hearts; Give what
+            Thine eye delights to see — Truth in the inward parts.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1892  prose_score 0.67
+  excerpt : Forsake "The Flaunting Town!" Alas! Be cells for saints, my own love! The
+            wine of life's a social glass, Nor may be quaffed alone, love. IV. Behold
+            the dead and solemn sea, To which our beings flow; Let waves that soon so
+            dark must be Catch every glory now. V. I would not chain that heart to this,
+            To sicken at the rest; The cage we close a prison is, The open cage a nest.
+            GODOLPHIN. THE CAREER OF ...
+  Q       : Write a couplet on the theme that a cage is a prison but an open cage is a
+            nest.
+  A       : I would not chain that heart to this, To sicken at the rest; The cage we
+            close a prison is, The open cage a nest.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1875  prose_score 0.92
+  excerpt : O Freedom! power of life and light! Sole nurse of truth and glory! Bright
+            dweller on the rocky cliff! Lone wanderer on the sea! Where'er the sunbeam
+            slumbers bright On snow-clad mountains hoary; Wherever flies the veering
+            skiff, O'er waves that breathe of thee! Be thou the guide of all my thought-
+            The source of all my being- The genius of my waking mind— The spirit of my
+            dreams! To me thy magic sp...
+  Q       : Compose a hymn to Freedom, calling upon it as the power of life and light,
+            and beseeching it to be the guide of all one's thought and being.
+  A       : O Freedom! power of life and light! Sole nurse of truth and glory! Bright
+            dweller on the rocky cliff! Lone wanderer on the sea! Where'er the sunbeam
+            slumbers bright On snow-clad mountains hoary; Wherever flies the veering
+            skiff, O'er waves that breathe of thee! Be thou the guide of all my thought-
+            The source of all my being- The genius of my waking mind— The spirit of my
+            dreams! To me thy magic spell be taught,

@@ -1,0 +1,301 @@
+route: knowledge_qa
+model: claude-haiku-4-5
+seed:  0
+n:     20
+kept:  20/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book. Work in this order.
+
+1. FIND THE ANSWER FIRST. Choose the single most salient fact, definition, or
+   explanation the passage states, and copy it VERBATIM as the answer.
+   - Return it as "spans": a list of ONE exact quotation from the passage — or up
+     to THREE, only if the answer genuinely lies in separate places. Prefer one;
+     never more than three. Choose the SHORTEST span(s) that carry the whole fact.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder, or add any word not in the passage. Pick a span that reads as a clean,
+     quotable fact, so a short exact quotation suffices.
+
+2. THEN WRITE THE QUESTION that this answer answers.
+   - The span must CORRECTLY AND COMPLETELY answer your question. Ask precisely the
+     question the span answers — never demand a name, number, or identity the span
+     does not supply. If the span only characterizes something ("It was the first
+     which the army had lost"), ask what was true or notable about it, not WHICH
+     specific thing it was. Before finishing, read the span as the answer to your
+     question: if it does not fully and correctly answer, rewrite the QUESTION to
+     fit the span.
+   - Frame the reader: supply the context that makes the span the natural, correct
+     answer — the era, place, subject, or situation it belongs to.
+   - Plain period-schoolbook register: direct, often "What/Why/How/Of what". No
+     modern or conversational phrasing, no meta-language.
+   - Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use
+     no word, term, or idiom that came into use after 1930 — it must read as a
+     question a period schoolbook or examiner would actually pose.
+   - Stands alone. Never mention the source — no "the passage", "the text",
+     "according to", "described", "mentioned". Ask as if from general knowledge.
+   - Self-situating — the question must make sense to someone who NEVER saw the
+     passage. Name the actual subject: the war, battle, place, ruler, work,
+     statute, or scripture involved, using your own knowledge of the subject when
+     the passage assumes it (e.g. "the Revised Statutes of the United States", "at
+     the Battle of Williamsburg", "in the Gospel of Luke"). FORBIDDEN — references
+     that mean nothing on their own: catalog, specimen, or figure numbers
+     ("specimen 167"); a bare "the statute", "the act", "the gun", "the assembly",
+     "the expedition"; or "two specific verses" / "a certain scholar" without
+     naming which. If the chosen fact simply cannot be made to stand alone (it
+     hinges on an item known only from the passage), pick a DIFFERENT fact from the
+     passage that can.
+   - Do NOT put the answer, or the answer's distinctive wording, in the question.
+     Ask for the fact; do not reveal it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[GENERAL WORKS]  1897  prose_score 0.76
+  excerpt : FOND, a. fond [OE. fonne, to be foolish: Icel. fani; Sw. fane, a fool: Gael.
+            faoin, vain, foolish; fonn, delight, pleasure]: foolishly attached to one;
+            tender and loving; much pleased with; partial to; used in the sense of
+            slightly foolish or silly: V. in OE., to be in love with. FOND'ING, imp.
+            FOND'ED, pp. FOND'LY, ad. -li, in a fond manner; foolishly. FOND'NESS, n.
+            tender interest; attachment; s...
+  Q       : What is the signification of the term 'Fond du Lac'?
+  A       : The furthest inland extremity of any great body of fresh water.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1921  prose_score 0.82
+  excerpt : Amen. 16 IV. The Christ Child CHRISTMAS Prelude 1. LEADER: Glory to God in
+            the highest, and on earth peace, good-will toward men. 2. LEADER: Behold, I
+            bring you good tidings of great joy, which shall be to all people. For unto
+            you is born this day in the city of David a Saviour, which is Christ the
+            Lord. 3. LEADER: Arise, shine; for thy light is come, and the glory of the
+            Lord is risen upon thee. ...
+  Q       : What tidings were brought to the shepherds on the night of the Nativity?
+  A       : For unto you is born this day in the city of David a Saviour, which is
+            Christ the Lord.
+
+========================================================================================
+[EDUCATION]  1928  prose_score 1.00
+  excerpt : While under detention care in a receiving home the child is given intensive
+            physical, mental, and social study and is later discharged to his own family
+            or to a boarding home or to a foster home where he may be cared for
+            permanently. Such receiving homes are study institutions. They permit a
+            large turnover and do not undertake custodial care for long periods of time.
+            If a child is to receive adequ...
+  Q       : What are receiving homes for children denominated?
+  A       : Such receiving homes are study institutions.
+
+========================================================================================
+[EDUCATION]  1903  prose_score 1.00
+  excerpt : All these are expensive desiderata. With better teachers, numerous other
+            improvements would come in, as, for instance, a better teaching of
+            literature and of history, and better biological and geographical
+            instruction, these natural history studies being pursued by the pupils in
+            the open air as well as in the schoolrooms. I have elsewhere urged that all
+            public open spaces -country parks, forests, ...
+  Q       : For what purpose should all public open spaces be employed in the education
+            of the young?
+  A       : All public open spaces -country parks, forests, beaches, city squares,
+            gardens, or parkways—should be utilized for the instruction of the children
+            of the public schools by teachers capable of interesting them in the
+            phenomena of plant and animal life.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1854  prose_score 0.89
+  excerpt : Seldom do people vex us on purpose, and yet prejudice very often makes us
+            think that they do. A. sense of one's own integrity will make one pass by
+            injuries more easily. Be not too much concerned to tell the injuries you
+            have received. Accustom yourself to silence, if you would learn to govern
+            your tongue. Nemo consilium cum clamore dat.-Seneca. Deliver me, O God, from
+            all violent and sinful passi...
+  Q       : What is the truth regarding the frequency with which people vex us
+            deliberately, and what leads us to think otherwise?
+  A       : Seldom do people vex us on purpose, and yet prejudice very often makes us
+            think that they do.
+
+========================================================================================
+[LAW]  1873  prose_score 1.00
+  excerpt : But once more: Passing over the absurdity of claiming a change in the law,
+            where there is no ability to produce the statute as amended, let us go back
+            from Sinai to Eden, along with the gentleman, and see if we cannot find,
+            independent of the commandment, evidence that the creation Sabbath was not a
+            portable institution, to be trundled about at the caprice of any and every
+            individual. Mark it, now...
+  Q       : What day did the Jewish Sabbath law require to be kept, and what did it
+            forbid as a substitute?
+  A       : What is called the Jewish Sabbath law enforced the keeping of the seventh
+            day, and admitted of no other as a substitute.
+
+========================================================================================
+[LAW]  1912  prose_score 0.98
+  excerpt : The council may also provide for the erection, purchase, or renting of a
+            city hall, workhouses, houses of correction, prisons, engine houses, and any
+            and all other necessary buildings for the city; and may sell, lease, olish,
+            or otherwise dispose of the same and may inclose, improve, regulate,
+            purchase, or sell all public parks or other public grounds belonging to the
+            city and may purchase and hol...
+  Q       : Against whom and under what condition may the city assess the costs of
+            removing a nuisance from private property?
+  A       : All costs and expenses incurred by the city in removing or abating any
+            nuisance on private property within the city limits may be assessed against
+            the occupant or owner, if caused by them or either of them or their agent
+
+========================================================================================
+[SOCIAL SCIENCES]  1921  prose_score 0.97
+  excerpt : Each Chapter has a headquarters town and each, with the exception of those
+            located in a few large cities, has Branches which cover one or more
+            communities. The Chapter organization consists of a chairman, vice-chairman,
+            secretary, treasurer, and executive committee. The Executive Committee is
+            elected by the Chapter members, and may appoint such subcommittees as are 45
+            called for. The Branches are ...
+  Q       : What independence does a Chapter of the Red Cross have in the choice of its
+            programme?
+  A       : Within the scope of Red Cross work the Chapter has autonomy in the choice of
+            its program.
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1869  prose_score 0.97
+  excerpt : For some years he was a constant opponent of the Melbourne policy; but he
+            was chiefly distinguished by his vindication of the Corn Laws. There was an
+            impression that he would be one of the young recruits engaged by the Tories
+            whenever they should come in again; and nobody was surprised when he became
+            Secretary to the Admiralty on Sir R. Peel's return to power in 1841. He did
+            not at first appear to...
+  Q       : For what was a constant opponent of the policy of Lord Melbourne chiefly
+            distinguished?
+  A       : He was chiefly distinguished by his vindication of the Corn Laws.
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1873  prose_score 1.00
+  excerpt : The features were the same in both; but in the captain of the corsair they
+            had a more settled and determined aspect, more the air of habitual command,
+            more of thoughtful self-control. Hassan marked the sensation his appearance
+            excited. Advancing with a courteous smile, he addressed them in tones that
+            almost made Isabel doubt whether she had not decided too readily against the
+            identity of the speak...
+  Q       : What was the nationality and age of the captain of the corsair?
+  A       : The young Moorish captain
+
+========================================================================================
+[GENERAL WORKS]  1830  prose_score 0.79
+  excerpt : PANNEL (among Masons). faces of a hewn stone. PANNEL (in the Manege). A
+            saddle used in carrying burdens. One of the PAPER. A vegetable substance
+            manufactured so as to be fit for writing upon. The Egyptian paper was made
+            of the rush papyrus, which gave its name to the substance. Paper is likewise
+            made of bark or the inner rind of trees, of cotton and other materials, but
+            more particularly of linen ...
+  Q       : What was paper understood to be?
+  A       : A vegetable substance manufactured so as to be fit for writing upon.
+
+========================================================================================
+[LAW]  1915  prose_score 0.98
+  excerpt : The Massachusetts management, government and care of all reformatory
+            institutions for juveniles, except the reformatory at Concord, supported by
+            the commonwealth for the custody, care and reformation of juvenile offenders
+            shall be vested in a board of nine trustees, two of whom shall be women, to
+            be appointed by the governor with the advice and consent of the council. Of
+            the trustees first appoint...
+  Q       : Of what number and sex were the trustees intrusted with the management of
+            the Massachusetts reformatory institutions for juveniles?
+  A       : A board of nine trustees, two of whom shall be women
+
+========================================================================================
+[MEDICINE]  1921  prose_score 0.32
+  excerpt : Tuberculosis. In: Am. Text-Bk. Dis. Child. (Starr), Phila., 1894, 94-126. In
+            his: Collect. repr., 1892-7, iii, no. 134. Diseases of the blood. In: Text-
+            book Theory & Pract. Med. (Pepper), Phila., 1894, ii, 182-233. In his:
+            Collect. repr., 1892-7, iii, no. 135. Diseases of the suprarenal capsules
+            and ductless glands. In: Text-book Theory & Pract. Med. (Pepper), Phila.,
+            1894, ii, 234-246. Toxæmia in...
+  Q       : What address was delivered at the closing exercises of the Army Medical
+            School in 1894?
+  A       : The army surgeon. An address delivered at the closing exercises of the Army
+            Medical School, Washington, D. C., Feb. 28, 1894.
+
+========================================================================================
+[SCIENCE]  1912  prose_score 0.82
+  excerpt : Preserve, and examine it after twenty-four hours. Describe the change, if
+            any. Define amorphous, and illustrate it by this experiment. Experiment 90.-
+            Crystallized Sulphur. 1 Materials: Sulphur (roll), folded filter paper,
+            funnel, carbon disulphide, evaporating dish. (a) Monoclinic. Fix a folded
+            filter paper firmly in a funnel, and place the funnel in a test tube which
+            stands in a rack. Fill anoth...
+  Q       : Into what two forms may crystallized sulphur be prepared?
+  A       : Monoclinic … Orthorhombic
+
+========================================================================================
+[LAW]  1900  prose_score 0.98
+  excerpt : The following form is one quite generally used in Pennsylvania. It
+            illustrates not only a judgment note, but also homestead exemption and
+            payment of collection fees. Judgment notes are not permitted in the State of
+            New York: NOTE APPOINTING HOLDER TO CONFESS JUDGMENT, WAIVING EXEMPTIONS AND
+            PAYMENT OF COLLECTION FEES. Philadelphia, Sept. 1, 190 Three months after
+            date I promise to pay to the order...
+  Q       : In what State are judgment notes not permitted?
+  A       : Judgment notes are not permitted in the State of New York
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1906  prose_score 0.75
+  excerpt : Distance by observation. Miles per Miles. Miles. hour. hour. The Gironde
+            6.16 26.88 4.25 31.11 32.22 The Loire The Seine 5.41 19.04 4.03 22.47 23.52
+            Applying this formula to the Thames, the salt water should not reach further
+            up the river than 19-42 miles, and in the Humber further than 21 miles. In
+            both these rivers, however, the distance to which the sea water reaches
+            exceeds these limits. THE a...
+  Q       : What is observed of a floating body when a wave passes, if it be situated at
+            a distance from the point where the wave breaks?
+  A       : If, however, a log of wood or any substance floats at sufficient distance
+            from the point where the wave actually breaks, it will be seen that it makes
+            no advance forward, but only rises and falls as the crest of the wave
+            passes.
+
+========================================================================================
+[SCIENCE]  1911  prose_score 0.94
+  excerpt : A new vista was thereupon opened up in electricity, and the study of steady
+            or continuous currents was eagerly pursued. These steady currents are
+            produced by means of voltaic or galvanic cells, as they are variously called
+            after the names of the two men, Volta and Galvani, who were instrumental in
+            their invention. ― - 559. Action of Sulphuric Acid on Zinc and on Copper.
+            When a strip cut from a she...
+  Q       : After whom are the cells that produce steady currents named?
+  A       : These steady currents are produced by means of voltaic or galvanic cells, as
+            they are variously called after the names of the two men, Volta and Galvani,
+            who were instrumental in their invention.
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1895  prose_score 0.90
+  excerpt : The Russians, astonished at the rapidity of our triumphs, proposed an
+            armistice. Murat accepted it on condition of its meeting with the Emperor's
+            sanction. Napoleon rejected it, and commanded the French army to pursue its
+            march. Presburg was occupied by Davoût's corps. While these events were
+            proceeding in Austria, the Army of Italy passed the Isonzo and took Gradisca
+            and Udine. Palma Nova, with i...
+  Q       : How did Napoleon respond to the Russian proposal for an armistice during the
+            campaign in Moravia?
+  A       : Napoleon rejected it, and commanded the French army to pursue its march.
+
+========================================================================================
+[SCIENCE]  1844  prose_score 0.75
+  excerpt : In a square there are four right angles, or 360°. 2. In every triangle, the
+            sum of the three angles is equal to two right angles. 3. In an isosceles
+            triangle, the angles opposite to the equal sides are equal. 4. The sum of
+            all the interior angles of a polygon, is equal to as many two right angles,
+            as there are units in the number of sides, less two. 5. Of two sides of a
+            triangle, that is the longe...
+  Q       : In an isosceles triangle, what is the relation between the angles at the
+            base?
+  A       : In an isosceles triangle, the angles opposite to the equal sides are equal.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1920  prose_score 0.87
+  excerpt : You may expect me to be more regular now. have announced to the lady where I
+            am staying now that I do not go out at all to visit, and I intend sticking
+            to it. I am sorry to have competition two days next week; Mr. Gough lectures
+            on Monday and Tuesday. The note you sent me from the Insurance Society is
+            not satisfactory in fixing me to pay £7 18:9; they have put me down, if I am
+            not mistaken, £100 m...
+  Q       : What error does the writer discover in the note from the Insurance Society
+            concerning the premium?
+  A       : They have put me down, if I am not mistaken, £100 more than the printed form
+            states.

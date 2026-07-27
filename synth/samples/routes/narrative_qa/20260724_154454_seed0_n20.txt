@@ -1,0 +1,450 @@
+route: narrative_qa
+model: claude-haiku-4-5
+seed:  0
+n:     20
+kept:  19/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that narrates events — a scene, an
+episode, an account of what happened. Work in this order.
+
+1. FIND THE ANSWER FIRST. Choose the account the passage gives — the narrated episode,
+   or the salient action, outcome, or turn within it — and copy it VERBATIM as the
+   answer.
+   - Return it as "spans": prefer ONE long contiguous quotation that carries the whole
+     account. Use several exact quotations only when the answer is genuinely spread out
+     — never more than 3, always the fewest, longest spans that hold it
+     together.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder within a span, or add any word not in the passage — including connecting
+     words between spans. You may only select and order the passage's own sentences.
+
+2. THEN WRITE THE QUESTION that this account answers. Use whichever shape fits:
+   - RETELL — if the episode is a matter of record you can recognize (a known event,
+     campaign, voyage, or life — "Washington's crossing of the Delaware", "the retreat
+     from Moscow"), NAME it from your own knowledge and ask the reader to recount it:
+     "Recount how ...", "Tell how ... came about", "Describe what befell ...".
+   - COMPREHEND — otherwise ask what happens in the episode: "What did ... do when
+     ...?", "How did ... meet ...?", "What became of ...?". The span must CORRECTLY
+     AND COMPLETELY answer it — ask exactly what the account tells; never demand a
+     name, motive, or detail it does not supply.
+   - Plain period register: direct, no modern or conversational phrasing, no
+     meta-language. Write it in pre-1930s English — period vocabulary, spelling, and
+     phrasing; use no word, term, or idiom that came into use after 1930.
+   - Stands alone. Never mention the source — no "the passage", "the text", "the
+     story", "the author", "the narrator", "according to", "described", "mentioned".
+     Ask as if of the episode itself.
+   - Self-situating — the reader has NOT seen this passage. For a RETELL, the named
+     event carries the context. For a COMPREHEND question about a particular scene, SET
+     IT UP inside the question: briefly establish the actors and circumstance the
+     answer depends on (introduce them by role or name — "a besieged garrison", "the
+     young woman Naomi", "a sea-captain pursued by a Spanish squadron") and give just
+     enough that the question is unambiguous. Never leave a bare "he", "she", "they",
+     "it", or "this" whose antecedent the question itself has not supplied, and do not
+     retell the whole scene.
+   - Do NOT put the answer, or its distinctive wording, in the question. Ask what
+     happened; do not reveal it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[MUSIC AND BOOKS ON MUSIC]  1890  prose_score 0.95
+  excerpt : (Loud cheers.) Forty-five out of the 60 resolutions were asking for State or
+            Municipal interference on behalf of the weak against the strong. "Old" trade
+            unionists from Lancashire, Northumberland, and Birmingham, asked for as many
+            of these resolutions as the delegates from London, but it is a remarkable
+            and significant fact that 19 out of 20 delegates were in favour of the " new
+            trades union ideas...
+  Q       : At a congress of trade-unionists where many resolutions for State
+            interference were put forward, what was the one resolution upon which the
+            assembly staked its existence, and in what manner was it discussed?
+  A       : We now come to the resolution the Congress met to fall or stand by. That was
+            the EIGHT HOURS' RESOLUTION, which was discussed with remarkable fairness-
+            generally speaking.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1918  prose_score 0.94
+  excerpt : The company then claims the right to charge enough to pay a "reasonable"
+            dividend of at least 6 per cent upon this "water," urging especially the
+            rights of "widows and orphans " who have acquired stock by innocent
+            purchase. Such dividends represent an unreasonable tax upon the community,
+            including multitudes of other widows and orphans, who are forced to pay
+            higher prices for almost all commoditie...
+  Q       : In the period after the financial panic of 1873, what became of a large
+            portion of the railway mileage, and what did this circumstance permit?
+  A       : In the five years following the panic of '73, half the railway mileage in
+            the country was sold under the hammer or passed into the hands of
+            "receivers." This condition gave special opportunity for strong lines to
+            absorb weak ones, and explains the rapid consolidation of that period
+
+========================================================================================
+[FINE ARTS]  1883  prose_score 0.72
+  excerpt : Length, 1 in.; diam., in. Babylonian workmanship. 36. Hæmatite or ironstone.
+            Deity and attendant in an attitude of adoration. The latter wears the long
+            flounced robe of a wavy pattern, and the horned cap, emblematic of divinity.
+            The three lines of inscription, which are very finely engraved, run as
+            follows: "Sin-lîdiš, son of Ura-naid, servant of the god Nir-și-gal.”
+            Length, 1 in.; diam., ship. in...
+  (failed)
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1851  prose_score 1.00
+  excerpt : Copeland was appointed surveyor for the whole distance from Cushing to
+            Union, and also to Waldoboro'. At an adjourned meeting, held at the school-
+            house near M. Cobb's, it was voted "that the hogs within the town may go at
+            large, in the commons, they being well yoked and ringed." This vote was
+            doubtless passed, not because the swine had not before made use of this
+            privilege, but because an attempt ...
+  Q       : At an adjourned town meeting held at the school-house, what was voted
+            concerning the hogs, and what decision was made regarding the Oyster river
+            bridge?
+  A       : At an adjourned meeting, held at the school-house near M. Cobb's, it was
+            voted "that the hogs within the town may go at large, in the commons, they
+            being well yoked and ringed." This vote was doubtless passed, not because
+            the swine had not before made use of this privilege, but because an attempt
+            was now made for the first time to deprive them of it. D. Dunbar was chosen
+            agent to answer to an indictment against Oyster river bridge, which being
+            out of repair, was, on the report of a committee appointed to examine the
+            locality and confer with a similar committee from Thomaston, built anew,
+            probably in connexion with that town, in its present situation.
+
+========================================================================================
+[SCIENCE]  1855  prose_score 0.98
+  excerpt : Swedenborg were in this water, which was not to bear the word magnetized;
+            consequently the water caused it to disappear." -"You affirm that it was not
+            M. Swedenborg, nor any spirit, that effaced this word ?" "It was the water
+            itself."-"To perform such a work this water, then, has a will? It is alive,
+            then?" 66 It had the will and the fluid of M. Swedenborg, that sufficed
+            it."" Then this is as much...
+  Q       : In a dialogue concerning water that had contained something of Swedenborg,
+            what explanation was given for the disappearance of a word written upon it,
+            and what effect did the water have upon a friend who applied it?
+  A       : Swedenborg were in this water, which was not to bear the word magnetized;
+            consequently the water caused it to disappear." -"You affirm that it was not
+            M. Swedenborg, nor any spirit, that effaced this word ?" "It was the water
+            itself."-"To perform such a work this water, then, has a will? It is alive,
+            then?" 66 It had the will and the fluid of M. Swedenborg, that sufficed
+            it."" Then this is as much as saying that it was M. Swedenborg himself who
+            effaced this word?" "He troubled himself no more about it; be content with
+            this explanation. I find myself forced to be so, let every one do as I.” My
+            friend wrote word to me that he was cured in two hours; he applied it, also,
+            to a contusion, the consequence of a fall he had had; at the lapse of a few
+            instants he felt nothing more of it.
+
+========================================================================================
+[LAW]  1912  prose_score 0.85
+  excerpt : B. and his wife respectively, she recognized them as and called them
+            "father" and "mother"; that while living in the home of said J. H. B., and
+            when she was in her sixteenth year, with the full knowledge and approval of
+            said J. H. B., she was baptized as S. M. B., in the church of which said J.
+            H. B. was a deacon; that during all the time from the said month of to the
+            time of her marriage, she wit...
+  Q       : What did the young woman who dwelt with J. H. B. do during her minority with
+            his knowledge and consent, and what did J. H. B. declare concerning her
+            inheritance?
+  A       : B. and his wife respectively, she recognized them as and called them
+            "father" and "mother"; that while living in the home of said J. H. B., and
+            when she was in her sixteenth year, with the full knowledge and approval of
+            said J. H. B., she was baptized as S. M. B., in the church of which said J.
+            H. B. was a deacon; that during all the time from the said month of to the
+            time of her marriage, she with the full knowledge, consent and direction of
+            the said J. H. B., went by the name of B. in the community where they
+            resided in the school which she attended, and among all the relatives and
+            neighbors of said J. H. B.; that between the month of and the time of his
+            death the said J. H. B., having in mind and referring to the contract
+            hereinbefore set out, stated and declared at divers and sundry times and to
+            divers and sundry persons that when he died plaintiff was to and would have
+            one-half of his estate, at said time referring to plaintiff as "my child,"
+            "my little girl," and "my daughter
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1917  prose_score 1.00
+  excerpt : BE EFORE the ways of civilization had changed the Valley of Vapors into the
+            modern city of Hot Springs, Arkansas, Indians made pilgrimages to the steam
+            clouded springs and thanked the Great Spirit for their healing powers. When
+            the white man came, cutting roadways through the primitive forest for the
+            stage-coaches which were to take the sick and afflicted to these wonderful
+            springs, they began to ...
+  Q       : What is recounted of the hot springs of the Valley of Vapors, particularly
+            of the spring known as the "Old Corn Hole"?
+  A       : BE EFORE the ways of civilization had changed the Valley of Vapors into the
+            modern city of Hot Springs, Arkansas, Indians made pilgrimages to the steam
+            clouded springs and thanked the Great Spirit for their healing powers. When
+            the white man came, cutting roadways through the primitive forest for the
+            stage-coaches which were to take the sick and afflicted to these wonderful
+            springs, they began to be named, these names varying in artistic merit from
+            the "Pool of Siloam" to the "Old Corn Hole" shown in the picture above. This
+            latter spring was indeed Nature's cure-all. Internal troubles were cured by
+            drinking from the stream which fed the pool. External pains and blemishes
+            were cured by one or many applications of hot mud while the magical
+            qualities of the pool used as a hot foot bath were told far and near.
+
+========================================================================================
+[SCIENCE]  1886  prose_score 0.94
+  excerpt : Now and again horses have been met with, with more than one toe, which must
+            not rashly be considered as a malformation; it is simply a proof of that
+            repetition of or reversion to the original form which in scientific language
+            is called atavism. This kind of Hipparion-horse, which is looked upon by the
+            common run of people as a curiosity and monstrosity, has, as Siebold¹ has
+            shown, been repeatedly ...
+  Q       : What is the scientific explanation for horses having more than one toe, and
+            what description does Frank give of the splint bones in such a horse?
+  A       : Now and again horses have been met with, with more than one toe, which must
+            not rashly be considered as a malformation; it is simply a proof of that
+            repetition of or reversion to the original form which in scientific language
+            is called atavism. This kind of Hipparion-horse, which is looked upon by the
+            common run of people as a curiosity and monstrosity, has, as Siebold¹ has
+            shown, been repeatedly exhibited at horse-markets. The following is a
+            description of an animal of this kind given by Frank, Principal of the
+            Veterinary College of Surgery at Munich: The so-called splint bones (the
+            metacarpals and metatarsals of the second and fifth toes) are not reduced to
+            the same extent. On the fore-foot the mediale (Mc 2) is the least 6 1
+            Siebold, Hipparion auf Jahrmärkten. München, 1881. reduced, on the hind-foot
+            the lateral (м c 4) is the least reduced, as even Hensel pointed out.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1928  prose_score 1.00
+  excerpt : And he said unto him, "Know, O emperor, that we were sailing in a ship to
+            come to thee, and as we were going along we saw a church, on the island, on
+            the day preceding the Sabbath, and we came into port, so that we might
+            receive the Holy Mysteries on the First Day of the week. And we found a
+            little monastery by the side of that church, with brethren and monks
+            therein. And, by the commandment of Go...
+  Q       : What did the traveller relate to the emperor concerning his landing at an
+            island church and the manuscripts he obtained there?
+  A       : And he said unto him, "Know, O emperor, that we were sailing in a ship to
+            come to thee, and as we were going along we saw a church, on the island, on
+            the day preceding the Sabbath, and we came into port, so that we might
+            receive the Holy Mysteries on the First Day of the week. And we found a
+            little monastery by the side of that church, with brethren and monks
+            therein. And, by the commandment of God, we went to them, and we said unto
+            them, 'O brethren, if ye have with you an old manuscript treating of the
+            days of the ancients, give it to us so that we may comfort ourselves
+            therewith.' And they answered and said unto me, 'Behold, we have many
+            manuscripts in the sanctuary, but we do not know how to translate them.' And
+            I said unto them, 'Bring them here that I may see them.' And when they
+            brought them to me, I searched through them, and I found that they treated
+            of the mighty deeds and miracles which our Lord Jesus Christ had performed
+            before His disciples, and also of the beginning of the heavens and [fol.
+
+========================================================================================
+[NAVAL SCIENCE]  1896  prose_score 0.96
+  excerpt : "Hello, Charley! We have been waiting for you," said Frank, as he
+            approached. "Hello, fellows! What's in the wind?" replied Charles. "What are
+            you going to do to-day?" "We were just thinking about something." "Has your
+            father gone to the city, Frank?" "Yes." “What did he say?" "Nothing."
+            "Didn't he look surprised?" "Not much. He only asked me the reason, and I
+            said I would tell him to-morrow. didn...
+  Q       : What discourse passed between Frank, Charles, and Tony upon Charles's
+            coming, and what was related of the old seaman Uncle Ben?
+  A       : "Hello, Charley! We have been waiting for you," said Frank, as he
+            approached. "Hello, fellows! What's in the wind?" replied Charles. "What are
+            you going to do to-day?" "We were just thinking about something." "Has your
+            father gone to the city, Frank?" "Yes." “What did he say?" "Nothing."
+            "Didn't he look surprised?" "Not much. He only asked me the reason, and I
+            said I would tell him to-morrow. didn't say any more about it. didn't I?" He
+            Got off nicely, "First-rate,” replied Charles coldly. “What are you talking
+            about?" asked Tony, to whom, of course, this conversation was
+            unintelligible. "Tell you some other time, Tony," replied Charles. "Now,
+            what shall we do to-day?" "I don't know. Here comes Uncle Ben; perhaps he
+            can give us an idea." Uncle Ben was an old seaman, who had sailed a great
+            many years in the employ of Captain Sedley. He was a rough, blunt old
+            fellow, but so honest, warm-hearted, and devoted to his employer, that when
+            the latter retired from the duties of his profession, he had given him a
+            home on his estate.
+
+========================================================================================
+[WORLD HISTORY AND HISTORY OF EUROPE, ASIA, AFRICA, AUSTRALIA, NEW ZEALAND, ETC.]  1904
+prose_score 0.99
+  excerpt : "At about 12, noon," says an eye-witness, "the combined army was arranged
+            and drawn up in two lines extending more than a mile in length. The
+            Americans were drawn up in a line on the right side of the road, and the
+            French occupied the left. At the head of the former the great American
+            commander, mounted on his noble courser, took his station, attended by his
+            aides. At the head of the latter was po...
+  Q       : What did an eye-witness recount concerning the disposition and aspect of the
+            combined American and French army at noon, and of the multitude of
+            spectators?
+  A       : "At about 12, noon," says an eye-witness, "the combined army was arranged
+            and drawn up in two lines extending more than a mile in length. The
+            Americans were drawn up in a line on the right side of the road, and the
+            French occupied the left. At the head of the former the great American
+            commander, mounted on his noble courser, took his station, attended by his
+            aides. At the head of the latter was posted the excellent Count Rochambeau
+            and his suite. The French troops, in complete uniform, displayed a martial
+            and noble appearance; their band of music, of which the timbrel formed a
+            part, was a delightful novelty, and produced while marching to the ground a
+            most enchanting effect. The Americans, though not all in uniform nor their
+            dress so neat, yet exhibited an erect, soldierly air, and every countenance
+            beamed with satisfaction and joy. The concourse of spectators from the
+            country was prodigious, in point of numbers probably equal to the military,
+            but universal silence and order prevailed
+
+========================================================================================
+[LAW]  1870  prose_score 0.85
+  excerpt : 52. Acts (Ireland) Amendment. AN ACT to amend "The Drainage and Improvement
+            of Lands Acts (Ireland)," and to afford further Facilities for the Purposes
+            thereof. [29th June 1865.] WHEREAS an Act was passed in the session of
+            Parliament holden in 26 & 27 Vict. c. 88. the twenty-sixth and twenty-
+            seventh years of Her Majesty, chapter eighty-eight: And whereas a further
+            Act was passed in the session of ...
+  Q       : What does the Act of Parliament entitled 'Acts (Ireland) Amendment' set
+            forth in its title, preamble, and enacting clause?
+  A       : 52. Acts (Ireland) Amendment. AN ACT to amend "The Drainage and Improvement
+            of Lands Acts (Ireland)," and to afford further Facilities for the Purposes
+            thereof. [29th June 1865.] WHEREAS an Act was passed in the session of
+            Parliament holden in 26 & 27 Vict. c. 88. the twenty-sixth and twenty-
+            seventh years of Her Majesty, chapter eighty-eight: And whereas a further
+            Act was passed in the session of Parliament holden in the twenty-seventh and
+            twenty-eighth years of Her Majesty, chapter seventy-two, intituled "An Act
+            to explain certain provisions contained 27 & 28 Vict. " in the Drainage and
+            Improvement of Lands Act (Ireland), 1863”: And c. 72. whereas it is
+            expedient that further facilities should be given for the purposes of the
+            said Acts, and that the said Acts should be amended: Be it enacted by the
+            Queen's most excellent Majesty, by and with the advice and consent of the
+            lords spiritual and temporal, and commons, in this present Parliament
+            assembled, and by the authority of the same, as follows: 1.
+
+========================================================================================
+[NAVAL SCIENCE]  1855  prose_score 0.86
+  excerpt : 98), have been adopted in the French navy, is not known; but they stand in
+            type as one of the weapons of the new French system of warfare. Rockets are
+            included in the category of projectiles adopted in the French navy for
+            incendiary purposes (Charpentier, p. 200). They are said to be
+            "particulièrement propres pour les navires à vapeur, qui ont la faculté de
+            s'approcher aussi près que possible des ...
+  Q       : What befell the French ship Vengeur in the battle of June 1, 1794, and what
+            was done to rescue her crew?
+  A       : The "Vengeur" was sunk in the battle of June 1, 1794, by the fire of the
+            "Brunswick," 74, Captain Harvey. When in a sinking state, all the boats of
+            the "Alfred," "Culloden," and "Rattler" cutter, that could swim, were sent
+            to save as many as they could of her people.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1921  prose_score 1.00
+  excerpt : "BOBOLINK, Talkative person." Such people may sometimes be called bobolinks,
+            perhaps, just as one might call them jackdaws or parrots; but the word
+            certainly has no such meaning. "BROOMSTICK (Canadian), A gun or rifle; no
+            word could more perfectly outline the peaceful character of the Canadian as
+            distinct from his American brother, when it is borne in mind that the latter
+            calls his gun, shooting i...
+  Q       : What is the old story concerning the member from the County of Buncombe and
+            his audience?
+  A       : The old story of "the member from the County of Buncombe" who was
+            indifferent to the gradual disappearance of his audience, because he was
+            making a speech intended for home circulation.
+
+========================================================================================
+[AGRICULTURE]  1908  prose_score 1.00
+  excerpt : Musæus and Emolpus made the reward of the virtuous in Hades to consist in
+            perpetual intoxication. Even Plato was of the opinion that a man ought to
+            become intoxicated at the Dionysia, as it was a well-known fact that
+            sobriety was in no case a prime virtue of the Athenians. It is commonly
+            supposed that the Greeks did not drink at all during their meals, but this
+            is an untenable opinion, for there a...
+  Q       : What was the Greek custom with regard to wine at the conclusion of their
+            dinners, and what was considered the paramount affair?
+  A       : At the conclusion of the meal, that is, dinner, unmixed wine was always
+            served and a draught was taken in honour of the "good genius." This was done
+            whether the meal was in private or public, and it was the only time in which
+            "neat" wine was allowed. The affair, par excellence, however, in the Greek
+            mind of these early days was the symposium.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1909  prose_score 0.77
+  excerpt : Plainly I could feel the vibration of the train I concluded I was riding on,
+            and stretching myself to a half-upright posture on my couch, I prepared to
+            view the scenery. Suddenly the train stopped. I hailed a man I thought I saw
+            passing. He appeared to be on the roof of a nearby building. "Where are we?"
+            I asked. "In Baltimore," I thought he answered. Baltimore Baltimore? I
+            ruminated! What was I d...
+  Q       : What occurred when the narrator, after his train stopped in Baltimore,
+            attempted to leave his compartment?
+  A       : Plainly I could feel the vibration of the train I concluded I was riding on,
+            and stretching myself to a half-upright posture on my couch, I prepared to
+            view the scenery. Suddenly the train stopped. I hailed a man I thought I saw
+            passing. He appeared to be on the roof of a nearby building. "Where are we?"
+            I asked. "In Baltimore," I thought he answered. Baltimore Baltimore? I
+            ruminated! What was I doing in Baltimore? I tried to recall what business
+            had brought me there. I had no mission in Baltimore; there must be some
+            mistake. So I arose and tapped with my knuckles upon the door. No answer. I
+            rapped more forcibly. Still there was no answer. pounded with both fists
+            until the noise must have awakened the dead. Yet no answer. Finally I
+            grasped the wooden chair and swung it against the door with a crash. The
+            slide disappeared and a face presented itself at the hole in the door.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1892  prose_score 0.93
+  excerpt : But many farmers refused to accept Confederate paper money for their
+            products save under compulsion and after the downscaling currency act of
+            February 17, 1864 was passed even Confederate Treasury notes were lacking to
+            pay for impressed supplies. On the one hand, Lee requested that coin or
+            foreign exchange be offered for provisions in order to stimulate private
+            enterprise to bring them forward; an...
+  Q       : What did General Kirby Smith report concerning the farmers' willingness to
+            accept payment for impressed articles?
+  A       : General Kirby Smith in the Trans Mississippi Department told a similar
+            story; the farmers would accept currency for the impressed articles but
+            would no longer take certified accounts of which they had large amounts.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1822  prose_score 0.98
+  excerpt : On the morrow, being the eve of St Bartholomew, he was brought on horseback
+            to Westminster. John Legrave and Geffrey, knights, the mayor, sheriffs, and
+            aldermen of London, and many others, both on horseback and on foot,
+            accompanying him; and in the great hall at Westminster, he being placed on
+            the south bench, crowned with laurel, for that he had said in times past
+            that he ought to bear a crown in...
+  Q       : Recount how William Wallace was brought to Westminster, there tried and
+            executed.
+  A       : On the morrow, being the eve of St Bartholomew, he was brought on horseback
+            to Westminster. John Legrave and Geffrey, knights, the mayor, sheriffs, and
+            aldermen of London, and many others, both on horseback and on foot,
+            accompanying him; and in the great hall at Westminster, he being placed on
+            the south bench, crowned with laurel, for that he had said in times past
+            that he ought to bear a crown in that hall, as it was commonly reported; and
+            being appeached for a traitor by Sir Peter Malorie, the king's justice, he
+            answered, that he was never traitor to the King of England; but for other
+            things whereof he was accused he confessed them; and was after headed and
+            quartered.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1853  prose_score 1.00
+  excerpt : And as they coincide in dogma at so many points, (including the famous
+            doctrine of election first invented by Augustine,) so do the two systems
+            meet in their practical workings, as we shall now discover. us; and I felt
+            myself in such close quarters, that I wished my new acquaintance of the
+            Socratic school had joined the tee-totallers before I met with him, or had
+            found such cause to ask, in the wo...
+  Q       : How did the writer respond when he found himself in close quarters?
+  A       : I felt myself in such close quarters, that I wished my new acquaintance of
+            the Socratic school had joined the tee-totallers before I met with him, or
+            had found such cause to ask, in the words of Scripture, "Who hath babbling
+            ?" This incident turned my attention to the subject;
+
+========================================================================================
+[MEDICINE]  1917  prose_score 0.98
+  excerpt : "Harry" ate oranges, smoked one cigarette a day, could sit up at length, and
+            month followed month until one day he was carried on board the hospital-ship
+            for England. That was a transformation, a solid proof of what care and
+            devotion could do. The doctors never treated him, never examined him even;
+            yet from the half-dead, lifeless thing they brought in evolved the bright-
+            eyed, rosy-tinted face, an...
+  Q       : Recount the course of events at the hospital respecting the patient Harry
+            and the outbreak of typhoid fever.
+  A       : "Harry" ate oranges, smoked one cigarette a day, could sit up at length, and
+            month followed month until one day he was carried on board the hospital-ship
+            for England. That was a transformation, a solid proof of what care and
+            devotion could do. The doctors never treated him, never examined him even;
+            yet from the half-dead, lifeless thing they brought in evolved the bright-
+            eyed, rosy-tinted face, and a stronger, though still pitifully weak, frame
+            that was sent to England. There, I regret to say, we lost sight of him;
+            solemn promise to let us know where he was sent was broken by someone, and
+            the work rolled on. "Harry" became a memorya name. Then the typhoid scourge
+            grew. We had one case the day we took over; a week later we had ten. A whole
+            building was given up to them, and all day long the typhoid staff worked. At
+            first the coffin-cart rolled in and out of the yard with daily regularity,
+            then its visits became less frequent, and gradually ceased altogether.

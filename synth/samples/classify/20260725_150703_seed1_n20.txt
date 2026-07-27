@@ -1,0 +1,315 @@
+classify sample
+model: claude-haiku-4-5
+seed:  1
+n:     20
+
+========================================================================================
+[aff=expository]  primary=conversational  classes=['narrative_fiction',
+'conversational']
+  Then was Venus like her mother; for her father is but grim. Boyet. Do you hear, my mad
+  wenches? Mar. No. What then, do you see? Boyet. Ros. Ay, our way to be gone. Boyet.
+  You are too hard for me. [Exeunt. Another Part of the same. Enter ARMADO and MOTH.
+  Arm. Warble, child; make passionate my sense of hearing. Moth. Concolinel ¹4-
+  [Singing. Arm. Sweet air!-Go, tenderness of years; take this key, give enlargement to
+  the swain, bring him festinately hither; I must employ him in a letter to my love.
+  Moth. Master, will you win your love with a French brawl 15? Arm. How mean'st thou?
+  brawling in French? Moth. No, my complete master: but to jig off a tune at the
+  tongue's end, canary to it with your feet, humour it with turning up your eye-lids;
+  sigh a note; and sing a note: sometime through the throat, as if you swallowed love
+  with singing love; sometime through the nose, as if you snuff'd up love by sinelling
+  love; with your hat penthouse-like, o'er the shop of your eyes; with your arms cross'd
+  on your thin belly-doublet, like a rabbit on a spit; or your hands in your pocket,
+  like a man after the old painting"; and keep not too long in one tune, but a snip and
+  away: These are complements, these are humours; these betray nice wenches-that would
+  be betray'd without these; and make them men of note, (do you note, men?) that most
+  are affected to these.
+
+========================================================================================
+[aff=argument]  primary=reasoning  classes=['knowledge', 'reasoning', 'opinion']
+  Now this disposition, this blessed, human, Christian disposition, (to express a thing
+  contrary to nature by words as contrary to itself,) is the very groundwork and first
+  foundation-stone of envy. 2. The second ground or cause of envy is an unreasonable
+  grasping ambition. For the design of the envious person is not only to obtain, but to
+  engross all honour and greatness to himself. He thinks he can never trade to his
+  advantage, unless he can have the monopoly of every thing he values. Other kinds of
+  ambition indeed will hardly brook any thing above them, but this envious ambition will
+  endure nothing considerable about it. It is remarked of Alexander as a very great
+  fault, and, in truth, of that nature, that one would wonder how it could fall upon so
+  great a spirit; namely, that he would sometimes carp at the valorous achievements of
+  his own captains. "Suæ demptum laudi existimans, quicquid cessisset alienæ," says the
+  historian: because he thought, that whatsoever praise was bestowed upon another, was
+  took from him.
+
+========================================================================================
+[aff=opinion]  primary=narrative_grounded  classes=['narrative_grounded', 'knowledge']
+  (Athens, National Museum.) preferred the godlike forms for which his beloved Phryne
+  furnished the incarnate beauty, seen in the goddesses of Knidos and Kos. All the
+  figures of Praxiteles are intensely Athenian and in contrast to what we know of
+  Skopas, who would perchance pass at Athens as somewhat of a stranger. Praxiteles is
+  known to have made at Mantineia, probably about 362 B.C., when Epaminondas restored
+  the city, a group of three statues, Leto, Apollo, and Artemis, as cultus statues. We
+  know that they were set up on a single elongated base in one half of a double temple.
+  Neither the temple nor the base has been found. But the excavations of the French
+  School at Mantineia brought to light in 1887 three marble slabs- the fourth is missing
+  - which once ornamented this base. A slab presenting Marsyas contending with Apollo
+  for victory in music, with a Phrygian between them ready to slay the audacious Satyr,
+  was on the front side (Fig.
+
+========================================================================================
+[aff=argument]  primary=narrative_grounded  classes=['narrative_grounded', 'knowledge']
+  A large portion of this, however, had fallen to those whose terms of service were
+  nearly expired, and their places had since been supplied by recruits in the extreme of
+  destitution. Half of them were without shoes. There was hardly a blanket to every ten
+  men. Many of them could hardly get together rags enough to enable them to appear on
+  parade. Every little strip of cloth, of any description, was eagerly picked up, and,
+  fastened together by thorns, supplied the place of clothing. Tufts of moss on the
+  loins and shoulders were their only protection from the chafing of their muskets and
+  cartouch-boxes. Small as the army was, there were three hundred men without arms, and
+  more than a thousand in such a state of nudity, that it was only in cases of the most
+  desperate necessity, that they could be put upon duty. Nor was their fare better than
+  their clothing.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded',
+'knowledge']
+  The Manitou and Rattler succeeded in capturing the rebel steamer Louisville, one of
+  the largest and perhaps the best steamer in the Western waters. Up the Tensas, or one
+  of its tributaries, the Forest Rose and Petrel captured the steamer Elmira, loaded
+  with stores, sugar, and rum, for the rebel army. Finding that the steamers which had
+  conveyed General Walker's army had returned up the Wachita, the expedition started up
+  that river, and came suddenly upon two rebel steamers; but the rebels set them on
+  fire, and they were consumed so rapidly that their names could not be ascertained. One
+  steamer, loaded with ammunition, escaped above the fort at Harrisonburg, which is a
+  very strong work, and unassailable with wooden gunboats. It is on an elevation over
+  one hundred feet high, which elevation covers what water batteries of heavy guns there
+  are. Lieutenant-Commander Selfridge was fortunate enough, however, to hear of a large
+  quantity of ammunition that had lately been hauled from Natchez, and deposited at or
+  near Trinity, nearly due west of Natchez, and from whence stores, provisions, cattle,
+  guns and ammunition are transported.
+
+========================================================================================
+[aff=expository]  primary=verse  classes=['verse']
+  Gladys Cromwell By the fond name that was his own and mine, The last upon his lips
+  that strove with doom, He called me and I saw the light assume A sudden glory and
+  around him shine; And nearer now I saw the laureled line Of the august of Song before
+  me loom, And knew the voices, erstwhile through the gloom, That whispered and forbade
+  me to repine. And with farewell, a shaft of splendor sank Out of the stars and faded
+  as a flame, And down the night, on clouds of glory, came The battle seraphs halting
+  rank on rank; And lifted heavenward to heroic peace, He passed and left me hope beyond
+  surcease. John Myers O'Hara 203 WITH all the fairest angels nearest God, The ineffable
+  true of heart around the throne, There shall I find you waiting when the flown Dream
+  leaves my heart insentient as the clod; And when the grief-retracing ways I trod
+  Become a shining path to thee alone, My weary feet, that seemed to drag as stone,
+  Shall once again, with wings of fleetness shod, Fare on, beloved, to find you!
+
+========================================================================================
+[aff=argument]  primary=conversational  classes=['narrative_fiction', 'conversational']
+  DUNSFORD. Upon my word there is. That is Roman-the face of some emperor, I do believe
+  -perhaps Probus, whose coins we have hereabouts. MILVERTON. It seems Roman certainly.
+  I knew there was such a thing here which would at least be something for you to see.
+  DUNSFORD. We will have a good look at it before we go. ELLESMERE. And some Edie
+  Ochiltree will come up to us and say he 'minds the bigging of it.' MILVERTON. No-it
+  came from an old place in the neighbourhood, and was then fixed in that wall. These
+  parts abound in Roman remains. I'always fancy that the faces of the peasantry have a
+  great deal of the Roman in them. I care much more about Roman antiquities than any
+  other to be found here. We seem to have so much in common with anything since William
+  the Conqueror's time. But a relic of these old Romans takes one into another world as
+  it were.
+
+========================================================================================
+[aff=expository]  primary=knowledge  classes=['knowledge']
+  Dyce]. It appears, however, from Holinshed, p. 664, that this circumstance has some
+  relation to the truth: The Lord Clifford, either for heat or paine, putting off his
+  gorget suddenlie, with an arrow (as some saie) without a head, was striken into the
+  throte, and immediately rendered his spirit.'" STEEVENS. "wounded." P. 269. (81) "that
+  tough commixture" So The True Tragedie, &c.—The folio has "Thy tough Commixtures." P.
+  269. (82) "The common people swarm like summer flies;" This line is found only in The
+  True Tragedie, &c., from which Theobald inserted it in the text, where it is obviously
+  necessary for the sense. P. 269. (83) "And who shine now but Henry's enemies?" So the
+  folio, except that it has "shines."-The True Tragedie, &c. has “And who shines now but
+  Henries enemie ?" In the folio this is followed by 66 "Giving no ground unto the house
+  of York," They neuer then had sprung like Sommer Flyes," which Capell (with good
+  reason) pronounced to be merely the line that occurs earlier in the original play,
+  "The common people swarm like summer flies,"-see note 82,-" altered by either a
+  publisher's or player's bêtise, and then crammed into a place where it has no concern
+  possible." P.
+
+========================================================================================
+[aff=opinion]  primary=knowledge  classes=['knowledge']
+  It is difficult to say what proportion of candidates for matriculation can translate a
+  new passage of a Latin or Greek author. At my own College, we consider such a test
+  much too severe the College would be left half empty, if it were insisted on. . . . Of
+  arithmetic and mathematics few of them know any thing more than the amount insisted on
+  by the University, and many of them barely that; the extent of their knowledge not
+  reaching beyond vulgar fractions and decimals. ... Their acquaintance with history is
+  very meagre, and so exceptional that, where it does exist, I should be induced to
+  attribute it more to domestic training and individual taste than to the systematic
+  teaching of schools. Much the same may be said of geography. (Vol. ii. p. 17.) The
+  Rev. W. H. Girdlestone, of Christ's College, Cambridge, says, "To the latter portion
+  of the question I consider myself to be a living answer.
+
+========================================================================================
+[aff=expository]  primary=how_to  classes=['knowledge', 'how_to']
+  Indian Island, a little distance away, is owned by the Indians, who Intercolonial
+  Route number about twenty-five families and have a reservation of 1,800 acres near the
+  village. Some of the farms make a good appearance. A mineral spring, which is claimed
+  to possess many virtues, is easy of access in the village. Good board can be secured
+  both at the hotel and in private houses owned by leading residents. A number of good
+  fishing rivers may be reached from Whycocomagh. The most distant are the famous pools
+  at Margaree, elsewhere mentioned. To go to these a drive of five miles is taken
+  through Ainslie Glen to the head of Lake Ainslie. Following the eastern side of this
+  lake, which is twelve miles long, the Southwest Margaree is reached and its course
+  followed to Margaree Forks, where the first 145 of the series of pools is found. There
+  is good fishing at a shorter distance, however, at Lake Ainslie itself and at Trout
+  River, only five miles from the village.
+
+========================================================================================
+[aff=argument]  primary=reasoning  classes=['narrative_grounded', 'knowledge',
+'reasoning']
+  The French soldier Ségur was asked by Polly Layton why France fought for America. 5"
+  The English have done thee no harm, and as for our liberty, what concern is it of
+  thine? It is always wrong to interfere in other people's concerns except to make
+  peace, and prevent 1 Kent's Commentaries, p. 1. 2 Lauzun's Memoirs (ed. 1896), ii.
+  144. 3 ibid, ii. 191. 4 ibid, ii. 142. 5 ibid, ii. 215. during the latter's France
+  spent over England's usual bloodshed." The genuine explanation lay in the general
+  desire to retaliate for the former triumphs of the British colonial system. The very
+  patriotism of that system had injured its efficiency by leading to the sacrifice of
+  colonial interests for an ideal of self-sufficiency, which no American appreciated,
+  and by leading at the same time to the alienation of every European state. Hence the
+  energy and spirit with which first France (after the surrender at Saratoga in 1777)
+  and afterwards other Continental powers embarked upon war with Great Britain struggle
+  with her revolted colonies. fifty millions sterling on the war. superiority over her
+  foes at sea, and the dissensions among the rebels themselves, enabled her to hold out
+  for several years against all comers.
+
+========================================================================================
+[aff=opinion]  primary=conversational  classes=['narrative_fiction', 'conversational']
+  "Yes, indeed, and was n't it lucky to get on this yacht?' Gad! "Molly presented all
+  the girls one by one. They were all good enough looking, were it not for the
+  unpleasantly trying colored ribbons they wore. Several of them kissed me. Just what
+  they did to 'Charlie's Aunt'! I said to myself. But I did n't enjoy it at all, because
+  I was all of a tremmer,' as Caddy Wilson says, lest they should get on to my fake
+  disguise. I pretended to be a little seasick, and retired to the cabin, and lay down
+  and got away from them, and every one went up forward on the bow. "Steward,' I said,
+  'I feel the need of a little trifle of stimulant.' 66 6 Brandy, ma'am?' he asked
+  respectfully. N-no, make me a Manhattan cocktail.' Oh, very well, ma'am,' he said
+  rather surprised. 66 6 "He was more surprised when I asked him for a second; but he
+  did n't peep!
+
+========================================================================================
+[aff=narrative]  primary=reasoning  classes=['knowledge', 'reasoning']
+  But the words in each of those statutes are "attest and subscribe:" the word in the
+  Indian enactment is "sign;" and where the Indian Legislature wished to authorize the
+  affixing of a mark, as in the case of the testator, it said so, using the words sign
+  or affix his mark." It is sufficient if the attesting witnesses hold the top of the
+  pen while the writer of the Will subscribes their names (Lewis v. Lewis, 2 Sw. & T.
+  153). It is immaterial in what part of the Will a witness signs; and where the Will is
+  written on several or even separate sheets, and the last alone is attested, the whole
+  Will is well executed, provided the whole be in the room, and although a part may not
+  have been seen by the witnesses. The presumption is that all the papers constituting
+  the Will were in the room (Wms.
+
+========================================================================================
+[aff=expository]  primary=reasoning  classes=['opinion', 'reasoning']
+  Others unionize to double their wages. Why not you? Save Mortgaging the Farm. The
+  business of wheat raising should be made to pay its own way without having to mortgage
+  the farm for improvements or anything the family needs, even to an automobile; and it
+  would do it if the price was high enough to cover skilled wages and interest on money
+  invested. The U. S. census shows a steady increase in number of farms mortgaged, until
+  over one-third of them were mortgaged in 1910. The big wheat States have the highest
+  per cent of mortgaged farms-48 per cent. There is something radically wrong with a
+  producing business when half the plants will not pay expenses and have to be
+  mortgaged. No wonder people leave such a condition for the city to seek work where
+  wages are better. Shout "Back to the farm" until you are hoarse, but people with good
+  sense who have been there are not going back until conditions are changed for the
+  better.
+
+========================================================================================
+[aff=opinion]  primary=verse  classes=['conversational', 'narrative_fiction', 'verse']
+  Sfor. Ha! pardon me, Marcelia, I am troubled; And stand uncertain, whether I am master
+  Of aught that's worth the owning. Marc. I am yours, sir; And I have heard you swear, I
+  being safe, There was no loss could move you. This day, sir, Is by your gift made
+  mine. Can you revoke A grant made to Marcelia? your Marcelia? For whose love, nay,
+  whose honour, gentle sir, All deep designs, and state affairs deferr'd, Be, as you
+  purpos'd, merry. Sfor. Out of my sight! [Throws away the Letter. And all thoughts that
+  may strangle mirth, forsake me. Fall what can fall, I dare the worst of fate: Though
+  the foundation of the earth should shrink, The glorious eye of heaven lose his
+  splendour, Supported thus, I'll stand upon the ruins, And seek for new life here. Why
+  are you sad? Some music there! by heaven he's not my friend, That wears one furrow in
+  his face.
+
+========================================================================================
+[aff=procedural]  primary=knowledge  classes=['knowledge']
+  All licensed teachers who did not avail themselves of the training school, were to
+  receive £20, subject to a reduction to £18, as teachers of the lowest class, should
+  they neglect, after a reasonable time to attend at that establishment. 6th. The
+  Trustees were given the same powers as under the former acts, except that of judging
+  of the teachers literary qualifications. This act continued in force until 1852, when
+  all former acts were repealed, and a measure substituted, the principal features of
+  which are:- 1st. The appointment of a Provincial Superintendant, and a local inspector
+  for each county. 2d. A clause providing for the voluntary adoption of the assessment
+  principle for the support of teachers, &c., wherever a majority of the rate payers
+  upon property of any parish or district shall decide upon such a course. 3d. A Board
+  of Education as before; the Superintendant, who is Secretary to the Board, being a
+  member also; such Superintendant to receive a salary of £200 per annum, and £50 for
+  travelling expenses, while visiting various parts of the Province once a year.
+
+========================================================================================
+[aff=argument]  primary=reasoning  classes=['reasoning', 'narrative_grounded',
+'knowledge']
+  Finally, the king pledged himself to employ his good offices and mediation with the
+  emperor of Morocco, and with the regencies of Algiers, Tripoli, Tunis, and other
+  powers of the coast of Barbary, in order that provision should be made in the best
+  possible mode for the accommodation and security of the citizens, ships, and
+  merchandise, of the United States of America.' It is to be observed, that this treaty,
+  besides the recognition made in it of American independence, was completely subversive
+  of the principles which the British government had uniformly attempted to establish as
+  well with respect to the commerce of neutrals, in time of war, as with regard to the
+  blockade of the ports of an enemy state by the British squadrons. Consequently, it was
+  easy to foresee that, although France had not contracted to furnish succors of any
+  sort to the United States, Great Britain, nevertheless, on being so wounded to the
+  quick in her pride, and in her most essential interests, would manifest a keen
+  resentment, and would probably declare war against France.
+
+========================================================================================
+[aff=argument]  primary=conversational  classes=['conversational']
+  Baptist. You mean church meetings. Reformer. Well, yes. The same as you call church
+  meetings-meetings held among the members for the business of the church. At these
+  meetings, Friends always have, or rather endeavour to have, a president. Baptist. So
+  do we. You must know that our minister always presides. Reformer. Aye, but I mean the
+  presence of the Minister of ministers; and therefore Friends commence with a deep and
+  solemn pause, in order that each individual might feel his awful responsibility, and
+  have an opportunity of secretly seeking a covering of good; in other words, as a brood
+  of chickens run to be gathered under the wings of the hen-this is our Saviour's own
+  expression*-so do Friends seek to gather themselves into an awful reverent covering of
+  the Divine wing of protection and guidance; and very often some member of the meeting
+  feels called on to desire it in solemn vocal supplication, and then—— Baptist.
+
+========================================================================================
+[aff=expository]  primary=reasoning  classes=['reasoning']
+  96. Matter 65 being once expelled out of nature drags with it so many sceptical and
+  impious notions, such an incredible number of disputes and puzzling questions, which
+  have been thorns in the sides of divines as well as philosophers, and made so much
+  fruitless work for mankind, that if the arguments we have produced against it are not
+  found equal to demonstration (as to me they evidently seem), yet I am sure all friends
+  to knowledge, peace, and religion have reason to wish they were. 66 97. Beside the
+  external 6 existence of the objects of perception, another great source of errors and
+  difficulties with regard to ideal knowledge is the doctrine of abstract ideas, such as
+  it hath been set forth in the Introduction. The plainest things in the world, those we
+  are most intimately acquainted with and perfectly know, when they are considered in an
+  abstract way, appear strangely difficult and incomprehensible.
+
+========================================================================================
+[aff=expository]  primary=opinion  classes=['opinion', 'composition']
+  In Pennsylvania you have made a beginning, but only a beginning, in proper legislation
+  and administration on this subject; the law must if necessary be strengthened, and it
+  must be rigorously enforced. The National Government can do but little in the matter
+  of child labor, though I earnestly hope that that little will be permitted to be done
+  by Congress. The great bulk of the work, however, must be left to the State
+  Legislatures; and if our State Legislatures would act as drastically and yet as wisely
+  on this subject of child labor as Pennsylvania has acted within the present year as
+  regards the subjects I have enumerated above, the gain would be literally
+  incalculable; and one of the most vital needs of modern American life would at last be
+  adequately met. So much for the State. Now for the Nation; and here I can not do
+  better than base my theory of governmental action upon the words and deeds of one of
+  Pennsylvania's greatest sons, Justice James Wilson.

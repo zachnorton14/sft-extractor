@@ -1,0 +1,322 @@
+route: opinion_qa
+model: deepseek-v4-pro
+seed:  2
+n:     20
+kept:  14/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that voices an OPINION — a
+judgment, preference, or stance. Build a pair in which the ANSWERER takes the stance:
+a question asking for a judgment, answered by the period view itself.
+
+1. FIND THE STANCE. Choose the judgment the passage advances, with the ground it rests
+   on where the passage gives it, and copy it VERBATIM as the answer.
+   - Return it as "spans": exact quotations stating the view (and its reason). Prefer
+     ONE; use up to 3 only if view and ground lie apart. Fewest, longest.
+   - Copy WORD FOR WORD — no paraphrase, summary, correction, or added word.
+   - The span must read as a DIRECT assertion of the view — the answer speaks the
+     opinion outright. Do NOT take third-person reportage of who held it ("the
+     committee found ...", "it was urged that ...", "critics held ..."); take the
+     asserted view itself.
+   - Take WHOLE sentences: begin and end at a sentence boundary, keep terminal
+     punctuation, so several spans read as continuous prose when joined.
+   - SUBSTANCE: only a genuine, defensible stance qualifies. If the passage merely
+     touches a topic, drops a throwaway remark, or states a plain fact with no
+     judgment, return NO span for it.
+   - Keep it RAW: period opinions stand as written even where later knowledge judges
+     them wrong — do not soften, hedge, or correct.
+
+2. WRITE THE QUESTION as a request for JUDGMENT on the subject — the answer is the
+   opinion given as the answerer's OWN.
+   - Solicit a stance, not a fact: "Ought ...?", "Is it right (wise, best) that ...?",
+     "What is to be thought of ...?", "Is ... justified?", "Should ...?".
+   - NO attribution, NO source: never name a holder, speaker, author, school, or say
+     "the passage", "the text", "according to". Ask about the SUBJECT ITSELF.
+   - Name the subject so the question stands alone to someone who never saw the passage.
+   - Plain period register, pre-1930s English — no word or idiom that came into use
+     after 1930, no modern or conversational phrasing.
+   - Do NOT put the view's distinctive wording in the question; ask for it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[SCIENCE]  1832  prose_score 0.30
+  excerpt : The heat in some of the stoves, on the first of August, was 130, (shewing
+            how capable toads are of enduring great heat as well as extreme cold) and
+            yet the toads did not appear at all affected by it. If an insect was put
+            five or six inches from one of them, it seized it with so much rapidity that
+            it was difficult to perceive how it disappeared. On one occasion a large
+            toad eat four good sized beet...
+  Q       : What is the true character of the toad, and ought it to be loathed as it
+            commonly is?
+  A       : Toads are harmless animals, and of infinite use in a garden, consuming great
+            numbers of slugs and destructive insects. Toads are certainly capable of
+            attachment, (indeed what animal is not?) and when they are without fear,
+            their eyes are peculiarly soft and mild in their expression.
+
+========================================================================================
+[AGRICULTURE]  1837  prose_score 1.00
+  excerpt : I shall therefore conclude this part of my subject by observing, that most
+            of the digestive products are acid: the chyme is uniformly distinguished by
+            this character; and, if the experiments of Dr. Prout be correct, muriatic
+            acid is always present in the stomach: we may, therefore, suppose that the
+            nerves of this organ have the power of decomposing the muriatic salts, and
+            transferring its alkali t...
+  Q       : What is to be made of the character of the digestive products, and may it
+            not afford a hint as to the operation of the nerves in the transference of
+            matter?
+  A       : Most of the digestive products are acid: the chyme is uniformly
+            distinguished by this character; and, if the experiments of Dr. Prout be
+            correct, muriatic acid is always present in the stomach: we may, therefore,
+            suppose that the nerves of this organ have the power of decomposing the
+            muriatic salts, and transferring its alkali to some distant reservoir,
+            perhaps the liver. The intestinal juices are also acid; the fæces, unless
+            they have undergone a degree of putrefactive decomposition, redden litmus;
+            the urine, as well as the perspirable matter, are likewise acid; and it is
+            scarcely necessary to observe, that the only product of the respiratory
+            function is carbonic acid.
+
+========================================================================================
+[TECHNOLOGY]  1916  prose_score 0.62
+  excerpt : Unless there be some apprehension of the plant becoming obsolete, this is
+            generally too liberal a rate for fixed machines, unless it is neutralized in
+            some other way. In other cases, the records of many years' working may show
+            that 212 per cent is sufficient, because the machinery was good in kind and
+            quality to begin with, partly also because the expenses of installation and
+            of liberal repairs ha...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1817  prose_score 0.44
+  excerpt : I am sure that in England, they reign paramount in every circle, treating
+            us, poor fellows, as only born to wait their pleasure and bow to every
+            wayward inclination and caprice. You bring to my recollection, said
+            Sophronia, a remark in Hume's Essay on the Rise and Progress of the Arts and
+            Sciences, which I will repeat. "As nature," says he, " has given man "the
+            superiority above woman, by endowing...
+  Q       : Is it consistent, supposing the natural superiority of one sex in endowments
+            to be granted, that the superior should yield a studied deference to all the
+            opinions of the inferior?
+  A       : If the superiority of endowments derived from nature be admitted, continued
+            Sophronia, it does not appear consistent, that a superior should pay a
+            studied deference to all the opinions of an inferior, or yield a blind
+            compliance to one less capable of judging than himself.
+
+========================================================================================
+[TECHNOLOGY]  1896  prose_score 0.30
+  excerpt : For instance, they are commonly used for selfrecording barometers,
+            voltmeters, and steam pressure gaugesthe curves being drawn automatically by
+            the instrument and not by hand. Such Curves as these have been adopted to a
+            very considerable extent, not merely because they are interesting, but
+            because they afford a ready and rapid method of watching and recording
+            results, many of which are of prime im...
+  Q       : What is to be thought of a manager who does not give strict heed to the
+            constancy of boiler pressures?
+  A       : The Manager, who in these days does not pay strict attention to boiler
+            pressures, which should, of course, be as near constant as possible, cannot
+            be working economically or efficiently.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1896  prose_score 1.00
+  excerpt : The homestead of the free. We go to rear a wall of men On Freedom's southern
+            line, And plant beside the cotton-tree The rugged Northern pine! We're
+            flowing from our native hills As our free rivers flow: The blessing of our
+            Mother-land Is on us as we go. We go to plant her common schools On distant
+            prairie swells, BARBARA FRIETCHIE....
+  (failed)
+
+========================================================================================
+[SCIENCE]  1860  prose_score 0.45
+  excerpt : If the air were competent to produce these magnificent effects they would be
+            the rule instead of the exception. No sooner had the thermometers been thus
+            disposed of than the weather appeared to undergo a permanent change. On the
+            10th it was perfectly fine-not the slightest mist upon Mont Blanc; on the
+            11th this was also the case. Balmat still had the old thermometer to which I
+            have already referre...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1906  prose_score 0.50
+  excerpt : To reduce the expenditure on our very small Regular Army for the purpose of
+            devoting the money to the Volunteers, would not have been a reasonable
+            course. If reductions were to be made, it was obviously reasonable that all
+            branches of the Army should bear some proportion of such reduction. If,
+            therefore, more money was to be spent on improving the Volunteer Force,
+            coupled with a reduction of the V...
+  Q       : In considering reductions in military expenditure, what is the proper
+            principle to apply?
+  A       : If reductions were to be made, it was obviously reasonable that all branches
+            of the Army should bear some proportion of such reduction. The natural step
+            was to inquire whether any part of the Volunteer Force could be reduced
+            without injury to the fighting power of the country.
+
+========================================================================================
+[TECHNOLOGY]  1853  prose_score 1.00
+  excerpt : Glaisher, to state that having noticed the great want of an accurately kept
+            series of observations of atmospheric and meteoric changes in this country,
+            he has sedulously devoted himself to the establishment of local
+            observatories throughout the kingdom. He furnishes the observers with
+            formularies, he directs them in the selection of instruments, and he visits
+            their localities if needful. He thus i...
+  Q       : What is to be thought of the systematic observation of the weather
+            throughout the country, and ought those whose living depends upon it to take
+            part?
+  A       : Such works as these cannot be too highly commended; and as the farmers'
+            crops and landowners' rents depend on these changes, they will do well to
+            observe them also.
+
+========================================================================================
+[SCIENCE]  1859  prose_score 0.30
+  excerpt : In his case its exciting gas constitutes no objection to its use. The good
+            effects of the water, so differently used by C. and D., will be the same,
+            because the difference in their cases makes the difference in the use of the
+            remedy. 9* UNIFORMITY IN THE QUALITY OF THE WHITE SUL- PHUR-LIABILITY TO
+            ERROR, BY RELYING ON SOME OF THE ASSUMED TESTS OF THE VALUE OF SUL- PHUR
+            WATERS. THE White Sulphur wa...
+  Q       : Is the saline strength of the White Sulphur water constant, or does it vary
+            with the season?
+  A       : THE White Sulphur water is uniform in its saline strength; that is, it
+            contains in a given quantity, at all seasons, the same amount of solid
+            contents.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1890  prose_score 0.46
+  excerpt : Teufelsdröckh contends that the aspect of a "deceased or expiring Society"
+            fronts us everywhere, so that whoso runs may read. "What, for example," says
+            he, "is the universally arrogated Virtue, almost the sole remaining Catholic
+            Virtue, of these days? For some half-century, it has been the thing you name
+            'Independence.' Suspicion of Servility,' of reverence for Superiors, the
+            very dog-leech is anx...
+  Q       : What is to be thought of the modern exaltation of Independence as the
+            supreme virtue?
+  A       : "What, for example," says he, "is the universally arrogated Virtue, almost
+            the sole remaining Catholic Virtue, of these days? For some half-century, it
+            has been the thing you name 'Independence.' Suspicion of Servility,' of
+            reverence for Superiors, the very dog-leech is anxious to disavow. Fools!
+            Were your Superiors worthy to govern, and you worthy to obey, reverence for
+            them were even your only possible freedom. Independence, in all kinds, is
+            rebellion; if unjust rebellion, why parade it, and everywhere prescribe it?"
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1829  prose_score 0.57
+  excerpt : It is by the belief of a testimony, which is attended with a love of God as
+            its consequence. This is the foundation of real morality; and, when we
+            review the commencement a holy life, and the means for its successful
+            prosecution, as exhibited in Christianity, and consider the source of
+            philosophical morality together with its effects, we see how the apostle
+            might well ask, "Hath not God shown the ...
+  Q       : Is philosophical morality to be preferred to the morality founded upon
+            Christian faith?
+  A       : It is by the belief of a testimony, which is attended with a love of God as
+            its consequence. This is the foundation of real morality; and, when we
+            review the commencement a holy life, and the means for its successful
+            prosecution, as exhibited in Christianity, and consider the source of
+            philosophical morality together with its effects, we see how the apostle
+            might well ask, "Hath not God shown the wisdom of this world to be
+            foolishness?"
+
+========================================================================================
+[EDUCATION]  1919  prose_score 0.58
+  excerpt : "What are you going to give these fresh young minds this morning,
+            Mademoiselle?" Alas! the schedule calls for a "politeness" lesson on
+            behavior at table. First, when should we sit down? One little girl answers,
+            "When we are hungry." This reply, however pleasing in its thoughtless and
+            whimsical spontaneity, coming perhaps from some little girl of careless
+            parents, needs to be corrected by a skillfu...
+  Q       : Is it wise to prefer a scheduled lesson on politeness to the natural and
+            spontaneous answers of a young child?
+  A       : This reply, however pleasing in its thoughtless and whimsical spontaneity,
+            coming perhaps from some little girl of careless parents, needs to be
+            corrected by a skillful teacher. How cold and colorless this is, this
+            "politeness" lesson, to begin, to launch a child's day!
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1902  prose_score 0.52
+  excerpt : In the old story of Bruce's saying, the style may be said to be homely. "I
+            doubt I have killed the comyn." "Ye doubt?" replies Kirkpatrick; "I mak
+            siccar." Hume puts this into elegant language in this wise: "Sir Thomas
+            Kirkpatrick, one of Bruce's friends, asking him soon after if the traitor
+            was slain, 'I believe so,' replied Bruce. 'And is that a matter,' cried
+            Kirkpatrick, 'to be left to conject...
+  Q       : Is polished, 'dressed-up' prose to be accounted superior to a homely and
+            vigorous style?
+  A       : This is polite prose, dressed-up prose, but its charm for us is gone. There
+            are as many styles as there are moods and tempers in men. Words may be used
+            so as to give us a sense of vigor, a sense of freshness, a sense of the
+            choice and scholarly, or of the dainty and exclusive, or of the polished and
+            elaborate, or of heat or cold, or of any other quality known to life.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1811  prose_score 1.00
+  excerpt : "These fancy Bell's Poetics only sweet, "And intercept his hawkers in the
+            street; "There, smoking hot, inhale Mit Yenda's strains, "And the rank fume
+            of TONY PASQUIN's brains." "I have too much respect for my reader to affront
+            "him with any specimens of this man's" (meaning www [136] the said John's)
+            "poetry, at once licentious and "dull beyond example:" (thereby meaning that
+            the poetry of the sai...
+  Q       : What is to be thought of the character of John Williams's verse?
+  A       : The poetry of the said John was licentious and dull beyond example Thou,
+            like that statue, art devoid of brains
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1875  prose_score 0.66
+  excerpt : A Christian working-man said, that "in the buildingyard where he worked,
+            this week there had been two boys and three men brought to Christ." "I give
+            thanks for six," was on a paper handed in at the prayermeeting; while a
+            disciple, who had for many years been pleading for the conversion of near
+            and dear relatives, asked the meeting to join him in thanksgiving for a
+            daughter saved, a nephew and seve...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1879  prose_score 0.67
+  excerpt : LXXIII. HOW TO BEAR CROSSES. You OU have to carry many a cross, but you need
+            them, since God lays them on you. He knows how to select them; it is the
+            fact of their being His selection which disturbs and roots out self-will.
+            Crosses which you picked out, and thought well to bear, so far from being
+            crosses and means of death unto self, would be all that was wanted to
+            sustain and strengthen self-will...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1848  prose_score 0.38
+  excerpt : The civilization of mankind seems to be more and more closely connected with
+            their progress; and if, in these times of universal revolution, any
+            consoling prospect for the future is opened, is it not the triumph of
+            European culture beyond the limits of Europe? "From whence proceeds this
+            superiority, this universal sovereignty of so small a region as Europe? An
+            important truth presents itself at on...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1891  prose_score 0.38
+  excerpt : Every traveller on the Nile brings away a handful of the smaller scarabs,
+            genuine or otherwise. Some may not particularly care to possess them; yet
+            none can help buying them, if only because other people do so, or to get rid
+            of a troublesome dealer, or to give to friends at home. I doubt, however, if
+            even the most enthusiastic scarab-fanciers really feel in all its force the
+            symbolism attaching to...
+  Q       : Is the scarab beetle in Egypt as plentiful now as it was in ancient times,
+            and what may be expected of its future?
+  A       : The scarab race in Egypt would seem indeed to have diminished very
+            considerably since the days of the Pharaohs, and the time is not perhaps far
+            distant when the naturalist will look in vain for specimens on this side of
+            the first cataract.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1847  prose_score 0.47
+  excerpt : Shall Othman only unavenged despoil? Shall they, who by the stress of
+            grinding toil Wrest from the unwilling earth his luxuries, Perish for crime,
+            while his foul blood may boil, Or creep within his veins at will?-Arise! And
+            to high justice make her chosen sacrifice. "What do ye seek? what fear ye?"
+            then I cried, Suddenly starting forth, "that ye should shed The blood of
+            Othman-if your hearts are t...
+  Q       : What ought a man to consider before he joins in vengeance upon a fellow
+            creature?
+  A       : What call ye justice? Is there one who ne'er In secret thought has wished
+            another's ill?- Are ye all pure? Let those stand forth who hear, And tremble
+            not. Shall they insult and kill, If such they be? their mild eyes can they
+            fill With the false anger of the hypocrite?

@@ -1,0 +1,301 @@
+classify sample
+model: claude-haiku-4-5
+seed:  2
+n:     20
+
+========================================================================================
+[aff=expository]  primary=verse  classes=['verse']
+  6 But see what diff'rent thoughts arise In ours and angels breasts. To hail his birth
+  they left the skies; We lodg'd him with the beasts. 7 Yet let believers cease their
+  fears Nor envy heav'nly pow'rs: If sinless innocence be theirs, Redemption all is
+  ours. 13 Another. 1 How blest is the season At which we appear! Bow down, sense and
+  reason; Faith only reign here. 'Tis heard by mere nature With coldness or scorn, That
+  God our Creator An Infant was born. 2 Lost souls to recover And form them afresh, Our
+  wonderful lover Took flesh of our flesh. Then let each dull dreamer Awake to this
+  morn, And hail the Redeemer At Bethlehem born. 3 Ye drunkards, ye swearers, Ye
+  muckworms of earth Repent, and be sharers In this blessed birth. From sin to release
+  us, That yoke so long worn, The holy child Jesus Of Mary was born.
+
+========================================================================================
+[aff=opinion]  primary=composition  classes=['composition']
+  Force. Judge Force responded as follows: LADIES AND GENTLEMEN:-The presiding officer
+  of this meeting has already explained that the toasts of to-day, which would have been
+  disposed of down stairs at the dinner table, amid the ease and relaxation enjoyed by
+  people who have dined well and are chatting over the wrecks of the meal, have been
+  brought up here and exposed to the critical attention of this cultivated audience. Now
+  toast is something that should be whipped off hot and crisp from the fire. Carry it
+  from room to room, or carry it from floor to floor, and it is apt to get chilled and
+  moist. So this afternoon we have to trust somewhat for the acceptance of the toasts to
+  the preliminary butter of pleasant words which our presiding officer has administered.
+  The Judiciary of our state, if we count Judges and ex- Judges, is a very important
+  body-in numbers, at least.
+
+========================================================================================
+[aff=expository]  primary=stem_reasoning  classes=['stem_reasoning', 'knowledge']
+  Ibid., p. 95. See pp. 107 et seq. This was exemplified by the apparent ease with which
+  face stones were withdrawn. A batter of 9 inches in a foot was at first adopted; this
+  was afterwards reduced to 6 inches, and later still to 4 inches; but even that was too
+  great. (e) The evil effect of parapets in increasing the recoil of waves and the
+  height to which water is thrown; also in unequally loading the foundation, whereby
+  irregular settlement and longitudinal cracks are likely to be brought about. The high
+  parapet at Alderney caused the whole force of the waves to be thrown against the
+  superstructure, and immense volumes of water were projected, during storms, to a
+  height of fully 200 feet, by the falling of which the roadway of the breakwater was
+  frequently damaged, and the rubble mound scooped out. Sir John Hawkshaw and Sir Andrew
+  Clarke recommended, as a remedial measure, the entire removal of the parapet-or
+  promenade wall, as it was called-and the formation of a wave-breaker, composed of
+  heavy concrete blocks deposited along the seaward face of the breakwater, and
+  extending to slightly above high-water mark.
+
+========================================================================================
+[aff=expository]  primary=knowledge  classes=['knowledge']
+  The plants tiller or spread at the root very much, so that each sends up several or
+  many stalks. The rice-grounds are carefully kept clear of weeds, although often so wet
+  that a man cannot walk in them without sinking to the knees. In many parts of China
+  and in other warm countries it is common to obtain two crops of rice in a year. Rice
+  is husked and quickly dried before being brought to market. Special milling machinery
+  is required for removing the inner skin of the rice grain, and a large quantity of the
+  grain is badly broken in the process, being saleable only as broken rice or rice
+  flour. Good Indian rice has the following composition: Moisture, 13.50 per cent.;
+  nitrogenous matter, 741; starch, 78.10; fatty or oily matter, 0'40; ash, 0.59. Rice
+  contains a smaller amount of nitrogenous elements than any other grain (wheat having
+  as much as 22 per cent.); it is also deficient in fatty matter, and if taken by itself
+  is less nutritious than other grainfood (see FOOD, Vol.
+
+========================================================================================
+[aff=argument]  primary=narrative_grounded  classes=['narrative_grounded']
+  There are such steep descents in Buenos Ayres, that during the great rains in Lisbon,
+  to which I have never seen the like anywhere else, the little chaises drawn by two
+  mules cannot face the torrent, which rushes through the narrow, and almost
+  perpendicular streets. There are instances of men and horses being driven by the force
+  of the rain-water into the Tagus, which flows directly at the foot of the hill. These
+  torrents have at least, the advantage of clearing away the filth in the streets, which
+  but for them and the salubrity of the air, would inevitably create the plague. In
+  Lisbon no kind of filth is ever removed, and when an ass, a cow, or a goat dies in the
+  streets, it is left on the pavement; but in thirty-six hours afterwards the rarified
+  air, dries it, and neutralizes the noxious miasma arising from it. Buenos Ayres is
+  chiefly the residence of the English and Dutch Merchants, who prefer that situation,
+  not only on account of the purity of the air, but because at the time of the great
+  earth- quake that part of the city suffered less than others.
+
+========================================================================================
+[aff=opinion]  primary=opinion  classes=['opinion']
+  But those who send from a considerable distance, and must take their chances in the
+  general market, persist in raising the "sour, crude berry," which is red before it is
+  ripe, and hard enough to stand the rough usage which it is almost certain to receive
+  from the hands through which it passes. I do not expect to see the day when the
+  Wilson, or some berry like it, is not the staple supply of the market; although I hope
+  and think it will be improved up But let it be understood generally that they are
+  "Wilsons," the cheap vin ordinaire of strawberries. Cities will ever be flooded with
+  varieties that anybody can grow under almost any kind of culture; and no doubt it is
+  better that there should be an abundance of such fruit rather than none at all. But a
+  delicately organized man, like Mr. Bryant, cannot eat them; and those who have enjoyed
+  the genuine strawberries of the garden will not.
+
+========================================================================================
+[aff=expository]  primary=drop  classes=['drop']
+  DU MAURIER and C. S. R. The Frozen Deep. Illustrated by G. Du MAURIER and M. F. My
+  Miscellanies. With Steelplate Portrait of the Author, and Illustrations by ALFRED
+  CONCANEN. Man and Wife. Miss or Mrs. ? Illustrated by "Like all the author's works,
+  full of a certain power and ingenuity. is upon such suggestions of crime that the
+  fascination of the story depends. The reader feels it his duty to serve to the end
+  upon the inquest on which he has been called by the author."-Times, in review of "The
+  Law and the Lady." It "The greatest master the sensational novel has ever
+  known."-World. COLMAN'S HUMOROUS WORKS.-Broad Grins, My Night gown and Slippers, and
+  other Humorous Works, Prose and Poetical, of GEORGE COLMAN. With Life and Anecdotes by
+  G. B. BUCKSTONE, and Frontispiece by HOGARTH. Crown 8vo, cloth extra, gilt, 75. 6d.
+  The Law and the Lady. Illustrated by S.
+
+========================================================================================
+[aff=argument]  primary=opinion  classes=['opinion']
+  Did the siege of Rome shake his soul? Did the Austrian gallows warn him off the
+  territory of the Hapsburg? Did he ever beat a woman? Was he ever horsewhipped on the
+  Boulevards of Paris or elsewhere—a fact which Italian journalism studiously
+  suppressed? Ah! I see, Sir. You are brave, therefore Mazzini, who is of a different
+  order of beings, and is not like you, must be cowardly. Was it necessary, that the
+  Emperor Napoleon should publish a Letter No. II. from Mazzini, after martyrdom, dated
+  from Mazas or La Roquette, whose authenticity should be attested by two gaolers,
+  together with a will, of which the executioner should be sole executor, before you
+  could possibly admit the Italian patriot's soul into the Valhalla of your selection?
+  Suppose that Mazzini had never been under fire in his life, that he had never chanced
+  to be in the way of danger, have you, therefore, the right to call him a coward?
+
+========================================================================================
+[aff=expository]  primary=reasoning  classes=['knowledge', 'reasoning']
+  The plan consisted in constituting an European congress, or, as the French authors
+  style it, a pacific republic; by appointing delegates from the several nations, who
+  were to act, as a court of arbitration, in any disputes that might arise between
+  nation and nation. Had such a plan been adopted at the time it was proposed, the taxes
+  of England and France, as two of the parties, would have been at least ten millions
+  sterling annually, to each nation, less than they were at the commencement of the
+  French revolution. To conceive a cause why such a plan has not been adopted (and that
+  instead of a congress for the purpose of preventing war, it has been called only to
+  terminate a war, after a fruitless expense of several years) it will be necessary to
+  consider the interest of governments as a distinct interest to that of nations.
+  Whatever is the cause of taxes to a nation, becomes also the means of revenue to a
+  government.
+
+========================================================================================
+[aff=expository]  primary=reasoning  classes=['opinion', 'reasoning']
+  Amongst all holy and consecrated things which the Devil ever stole and alienated from
+  the service of the Deity, as altars, temples, sacrifices, prayers, and the like, there
+  is none that he so universally and so long usurped as poetry. It is time to recover it
+  out of the tyrant's hands, and to restore it to the kingdom of God, who is the father
+  of it. It is time to baptize it in Jordan; for it will never become clean by bathing
+  in the water of Damascus. When I consider how many bright and magnificent subjects the
+  Holy Scripture affords and proffers, as it were, to poesy, in the wise managing and
+  illustrating whereof the glory of God Almighty might be joined with the singular
+  utility and noblest delight of mankind, it is not without grief and indignation that I
+  behold that divine science employing all her inex- 35 haustable riches of wit and
+  eloquence, either in the wicked and beggarly flattery of great persons, or the unmanly
+  idolizing of foolish women.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded',
+'knowledge']
+  In that address he declared that the feeling of the princes and chiefs in Rajpootana
+  and Central India was thoroughly loyal towards the British Government, and in no part
+  of India did he find the feeling of the people for the British Government more cordial
+  than in these independent States. From a report of the address which appeared in The
+  Times, the following passages may be cited: (1) The Rajpoot princes of the present day
+  retain many of the high qualities of their race. He would give them as the type of a
+  Rajpoot prince some account of the late Maharajah of Jeypore, who died within the last
+  few months. This prince governed his country well. He established an excellent
+  college, which was affiliated to the Calcutta University, and a school for the
+  education of the sons of his nobles. Female education was not neglected, and some
+  progress had been made in inducing the daughters of the higher castes to attend his
+  girl schools.
+
+========================================================================================
+[aff=narrative]  primary=conversational  classes=['conversational', 'narrative_fiction']
+  Wot are you a-tapping your nose for?" "Was I tapping it?" demanded Mr. Smith, in
+  surprise. Well, I didn't know it. I'm glad you told me." (c "You're quite welcome,"
+  said the steward, sharply. Crimping ain't in my line; I'd sooner sweep the roads." cc
+  66 "'Ear, 'ear," exclaimed Mr. Smith, approvingly. "Ah! wot thing it is to come acrost
+  an honest man. Wot a good thing it is for the eyesight." He stared stonily somewhere
+  in the direction of Mr. Wilks, and then blinking rapidly shielded his eyes with his
+  hand as though overcome by the sight of so much goodness. The steward's wrath rose at
+  the performance, and he glowered back at him until his eyes watered. 150 "Twenty past
+  six," said Mr. Smith, suddenly, as he fumbled in his waistcoat-pocket and drew out a
+  small folded paper. "It's time I made a start. I s'pose you've got some salt in the
+  house?" "Plenty," said Mr.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded',
+'knowledge']
+  In this mining-camp, as in others in different parts of the world, considering how
+  easy it would be to break the Eighth Commandment, there are very few instances of it.
+  There may be occasionally some petty pilfering, but even that is rare. The risk is too
+  great, for in a mining-camp the goldthief would be treated as summarily as the
+  horsestealer on the prairies. Here there is also the police to count with. There was
+  one case whilst I was in Dawson. A man had made off with two big bags of dust. He was
+  followed, and soon caught, after a desperate resistance. At his trial, thinking he
+  would get off more easily, he pleaded guilty, and gave information as to where he had
+  concealed one of the bags. The judge, however, decided to make an example of him, more
+  especially as he had seriously injured one of his captors, so he was sentenced to five
+  years' hard labour.
+
+========================================================================================
+[aff=expository]  primary=narrative_fiction  classes=['narrative_fiction']
+  Something of his former self rose within him as he smiled in scorn, but the smile was
+  too near akin to tears not to soften him; and soon he thought that, however
+  contemptible such abject devotion might be in other cases, Grace was worth it all; so
+  he would watch here for a while, and this should be his leave-taking. Again the proud
+  spirit rose-the master-will that would not be denied. Speculating vaguely on the
+  future, a long vista seemed to open before him of fame and patriotism; and the triumph
+  of religious freedom wrought out by the efforts of himself and such as he. Her party
+  would fail; it must yield to the voice of the country-the strong power of right.
+  George Effingham, one of the pillars of the State, one of the Councillors of England,
+  might aspire to the broken-down Cavalier's daughter. Aspire, forsooth! it would be
+  condescension, then.
+
+========================================================================================
+[aff=narrative]  primary=narrative_grounded  classes=['narrative_grounded', 'knowledge']
+  Man, of Glouc. Literature, vol. iii. p. 339. 2 Allnutt, Bibliographica, vol. ii. p.
+  302. bulk of the work turned out by provincial presses; and it furnishes its own
+  criticism in a list of errata on the last page, which closes with the words, 'with
+  many others too tedious to insert.' Thomas Tanner, writing to Browne Willis in 1706,
+  says that he has heard of a bi-weekly paper printing at Exeter. No copy of an Exeter
+  paper of so early a date is known. In 1705 Farley was joined by Joseph Bliss, and
+  jointly they issued several books; but the partnership lasted a very short time, as by
+  1708 Joseph Bliss had set up for himself in the Exchange. On September 24, 1714,
+  Samuel Farley issued the first number of The Exeter Mercury; or Weekly Intelligence of
+  News, which in the next year he transferred to Philip Bishop. In 1715 also Joseph
+  Bliss started a rival sheet called the Protestant Mercury, or The Exeter Post-Boy,
+  from his new printing-house near the London Inn.
+
+========================================================================================
+[aff=expository]  primary=reasoning  classes=['knowledge', 'reasoning']
+  Of the labouring classes generally it would appear that the pressure of taxation
+  hardly touched them at all. The excise was approved as an expedient for distributing
+  the burden of taxation as widely as possible, Money, Credit, and Finance. but Charles
+  I failed to secure it, and it was left to those who defeated him to carry out this
+  project. tion finance. 106. The Parliamentary party were forced to raise money for the
+  support of their army, and in Parliamentary this emergency adopted financial methods,
+  and Restorawhich had been tried by the Dutch and approved by their experience. They
+  levied monthly assessments from the landowners, or from tenants who could recover the
+  amount from their landowners, and they also introduced an excise on beer. The measure
+  was very unpopular, but it was very profitable; and, when once introduced, it became a
+  permanent source of revenue. successful organisation of the Post-Office as a money-
+  making concern dates from the same period; and these two expedients were retained and
+  perpetuated, when the whole financial system of the country was reconstituted at the
+  Restoration.
+
+========================================================================================
+[aff=expository]  primary=narrative_grounded  classes=['narrative_grounded', 'opinion',
+'knowledge']
+  We entered into conversation with the chief, who spoke Hindostani. He said they had
+  left Lassa in the preceding autumn, and had wintered at Leh to await the opening of
+  the Zoji La. This brick tea is not very palatable to Europeans, but is held in high
+  estimation by the Kashmiris, for it fetches two rupees or so a pound in the bazaar at
+  Srinagur; whereas Indian tea of inferior quality can be purchased there for a few
+  annas a pound. The Chinese levy a duty on Indian tea. It is, however, often smuggled
+  across the frontier, fifty horseloads at a time. Our commercial arrangements with
+  China in this part of the world are, by the way, in a somewhat unsatisfactory
+  condition, and the presence of a British Consul at Yarkand is much needed. I believe
+  that a bit of red-tapeism at home stands in the way of our having a representative in
+  Chinese Turkestan.
+
+========================================================================================
+[aff=expository]  primary=narrative_fiction  classes=['narrative_fiction']
+  My affliction was too mighty to find any common vent. Despair seized my brain. I
+  determined not to live. I listened, apparently with calm resignation, to the dreadful
+  tale. I heard, without complaining, that my unhappy child, having been left in his
+  cradle too near the fire, a spark set fire to his clothes, and every endeavour to
+  check its progress having proved ineffectual, he lingered on two hours in agony, and
+  at last expired, uttering the most hideous groans ! I asked every particular, I even
+  ventured to embrace the disfigured remains of what once was my lovely infant! The
+  persons present, deceived by these outward marks of tranquillity, did not suspect my
+  intention, and I was allowed to leave the house unob-served. I walked, with a
+  deliberate step, to the Green Park. I no sooner saw the basin, than I welcomed it as
+  the means of rescuing me from the weight of my existence, now too grievous to be
+  borne!
+
+========================================================================================
+[aff=argument]  primary=how_to  classes=['how_to', 'knowledge']
+  The weight of BaSO4 obtained multiplied by the factor 0.3430 gives weight of sulphuric
+  acid (SO3). For the determination of total sulphur, two methods are available. The
+  first to be described below, the fusion method, is the one reported by the committee
+  on uniform methods of analysis. The alternate method is a very good one and is
+  especially good for the determination of sulphur in cement. * Many chemists filter the
+  solution at this point and precipitate the sulphuric acid immediately without going
+  through the NH4OH and (NH4)2CO3 treatment. This procedure seems to be very
+  satisfactory though it is liable to give too high results, inasmuch as the BaSO4
+  brings down other substances mechanically. Fusion Method. About 1 gram of the powdered
+  sample is weighed out into a large platinum crucible and about 5 or 6 grams of pure
+  dry Na2CO3 (free from sulphur) and 0.3 gram of KNO, are added.* This charge should be
+  intimately mixed by means of a platinum spatula or glass rod, and then fused.
+
+========================================================================================
+[aff=opinion]  primary=conversational  classes=['conversational', 'narrative_fiction']
+  But what I've got to show you chiefly is this little piece of beastly joking. Just you
+  look at that.' Hocking slapped down the parchment titledeed of the Venezuela estate,
+  and a translation of Appadacca's letter to Campos. Then there was silence for five
+  minutes. The President's eye ran eagerly through the words. 'This means mischief, I
+  calculate,' he muttered. 'It meant,' said Hocking; it can't mean any more. That
+  parchment is now in the pockets of the United States, and so is the piece of land it
+  represents.' It isn't, Dick P. Hocking,' replied McKinley. 'Look here, don't you fancy
+  that you are going to get us into any hot places more than we are in already. That
+  parchment will come in handy later; it won't go rotten in your drawers, may be. Right
+  now I beg to decline it with best thanks.' 'Well, I am not saying that you don't know
+  your business.' 'No; you are too cute a man.

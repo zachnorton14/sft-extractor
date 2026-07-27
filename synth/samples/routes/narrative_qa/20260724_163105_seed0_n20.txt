@@ -1,0 +1,431 @@
+route: narrative_qa
+model: claude-haiku-4-5
+seed:  0
+n:     20
+kept:  14/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that is MEANT to narrate events — a
+scene, an episode, an account of what happened.
+
+FIRST, judge whether it actually does. A narrated episode has actors doing or
+undergoing things in sequence. If instead the passage is exposition or analysis, a
+biographical or catalog entry ("APPLETON, Nathan, manufacturer, was born..."), a list,
+table, or section heading, an examination paper, a definition, an argument, or a formal
+document, then it has no episode to recount — emit NO item for it (omit that index).
+Only proceed when there is a real episode. Better to skip than to force a question the
+passage does not narrate.
+
+When there IS an episode, work in this order.
+
+1. FIND THE ANSWER FIRST. Choose the account the passage gives — the narrated episode,
+   or the salient action, outcome, or turn within it — and copy it VERBATIM as the
+   answer.
+   - Return it as "spans": prefer ONE long contiguous quotation that carries the whole
+     account. Use several exact quotations only when the answer is genuinely spread out
+     — never more than 3, always the fewest, longest spans that hold it
+     together.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder within a span, or add any word not in the passage — including connecting
+     words between spans. You may only select and order the passage's own sentences.
+
+2. THEN WRITE THE QUESTION that this account answers. Use whichever shape fits:
+   - RETELL — if the episode is a matter of record you can recognize (a known event,
+     campaign, voyage, or life — "Washington's crossing of the Delaware", "the retreat
+     from Moscow"), NAME it from your own knowledge and ask the reader to recount it:
+     "Recount how ...", "Tell how ... came about", "Describe what befell ...".
+   - COMPREHEND — otherwise ask what happens in the episode: "What did ... do when
+     ...?", "How did ... meet ...?", "What became of ...?". The span must CORRECTLY
+     AND COMPLETELY answer it — ask exactly what the account tells; never demand a
+     name, motive, or detail it does not supply.
+   - Plain period register: direct, no modern or conversational phrasing, no
+     meta-language. Write it in pre-1930s English — period vocabulary, spelling, and
+     phrasing; use no word, term, or idiom that came into use after 1930.
+   - Stands alone. Never mention the source — no "the passage", "the text", "the
+     story", "the author", "the narrator", "according to", "described", "mentioned".
+     Ask as if of the episode itself.
+   - Self-situating — the reader has NOT seen this passage. For a RETELL, the named
+     event carries the context. For a COMPREHEND question about a particular scene, SET
+     IT UP inside the question: briefly establish the actors and circumstance the
+     answer depends on (introduce them by role or name — "a besieged garrison", "the
+     young woman Naomi", "a sea-captain pursued by a Spanish squadron") and give just
+     enough that the question is unambiguous. Never leave a bare "he", "she", "they",
+     "it", or "this" whose antecedent the question itself has not supplied, and do not
+     retell the whole scene.
+   - Do NOT put the answer, or its distinctive wording, in the question. Ask what
+     happened; do not reveal it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[FINE ARTS]  1853  prose_score 0.82
+  excerpt : SHARPE, for the Art-Journal, Nov. 1850. In considering this picture, we are
+            struck with the way in which the artist has dwelt upon the distinction
+            between the conquerors, as an ambitious race, and the simple Peruvians, a
+            people whose policy was peace. The expression of the Inca is admirable; that
+            of the Spaniard with whom he treats, an epitome of all the evil passions
+            which were indulged in the co...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1900  prose_score 0.81
+  excerpt : Waugh and Kerr have studied this point with native plums for several years
+            and their judgment is united in a table of recommended pollinizers for plums
+            (12th Report Vt. Ag. Ex. Sta.). A few results from crosses made at Ithaca in
+            1899 will illustrate this point. Fig. 81 shows the comparative size of
+            Seckel when pollinated with Kieffer and with Lawrence pollen. Clapp
+            pollinated with Kieffer was also...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1917  prose_score 0.82
+  excerpt : Going up to the soda counter, he instructed the clerk to prepare him a dose
+            of aromatic spirits of ammonia as quickly as possible. While waiting for it,
+            he watched the cab through the store window. The preparation of the dose
+            required but a few moments. Then, explaining matters to the clerk, Duvall
+            took the glass in his hand and went back to the cab. He smiled to himself at
+            his anxiety, as he pass...
+  Q       : What happened when Detective Duvall returned to the cab with the aromatic
+            spirits of ammonia?
+  A       : Going up to the soda counter, he instructed the clerk to prepare him a dose
+            of aromatic spirits of ammonia as quickly as possible. While waiting for it,
+            he watched the cab through the store window. The preparation of the dose
+            required but a few moments. Then, explaining matters to the clerk, Duvall
+            took the glass in his hand and went back to the cab. He smiled to himself at
+            his anxiety, as he passed through the door. The woman was far too ill, he
+            reflected, to entertain any thoughts of escape. "Here," the detective said,
+            opening the door of the cab. "Drink this." There was no response. Duvall
+            stuck his head into the vehicle with some misgivings. Then he experienced a
+            sudden and most mortifying shock. There was no fainting woman huddled
+            against the cushions in the far corner. There was no woman at all. The cab
+            was empty!
+
+========================================================================================
+[FINE ARTS]  1905  prose_score 0.96
+  excerpt : In the same year the Earl of Derby received a marchpane; and two gallons of
+            white hippocras with four boxes of marmalade were given to the son and
+            daughter of the Lord Chief Baron. But 1588 saw more serious extraordinary
+            expenditure. The armada was hourly expected, and a camp was established at
+            Northborne to guard the lowlying coast between Deal and Ramsgate. To this
+            camp flocked the various compa...
+  Q       : Recount the preparations made by the East Kent levies, especially those of
+            Canterbury, for the expected Spanish Armada in 1588.
+  A       : But 1588 saw more serious extraordinary expenditure. The armada was hourly
+            expected, and a camp was established at Northborne to guard the lowlying
+            coast between Deal and Ramsgate. To this camp flocked the various companies
+            of the East Kent levies. Canterbury contributed two hundred men under the
+            leadership of Alderman Bartholomew Brown. The contingent from the city
+            consisted chiefly of bowmen and billmen; sixty bows and bow I 12 strings
+            were specially provided by the city for the Canterformer, whilst the latter
+            were armed with the bury of weapons and corslets stored up in the Guildhall.
+            the sixteenth In addition there were twenty trayned shot' century or calyver
+            men.' It is of particular interest to note that the foreign refugees who had
+            settled in the city a quarter of a century before this date, had their own
+            company.
+
+========================================================================================
+[AGRICULTURE]  1900  prose_score 1.00
+  excerpt : If I did it I would cease being a chief. Lad, you are her cousin, do it
+            yourself." "I am no chief," the young fellow said, "and have no power to
+            flog. If I could I would." "Well," I said, "I can't, and I won't, so go
+            forward now and endure it as I do." An hour afterwards we came to a low sand
+            island. It was absolutely bare of vegetation, and probably covered by the
+            sea at high tides. Here I made u...
+  Q       : Recount how the chief fared when he stalked the solitary white crane upon
+            the low sand island.
+  A       : An hour afterwards we came to a low sand island. It was absolutely bare of
+            vegetation, and probably covered by the sea at high tides. Here I made up my
+            mind to anchor, and if the wind did not change, to try and make the land by
+            moonlight. At the other end of the little island, half a mile off, was a
+            solitary white crane, and seizing the gun with hungry intent I stalked that
+            wretched bird, for an hour crawling and wriggling over the soft glittering
+            sand, all to no purpose, as he flew before I got within a hundred yards, and
+            I don't know when I felt more disappointed.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1860  prose_score 0.89
+  excerpt : God be praised! Oh, how everything goes! All in this world!" She sank down
+            by the bed and wept and sobbed bitterly. At length John raised her up, and
+            Barefoot closed the eyes of the dead. They stood long, silently together, by
+            the bed. Then Amrie said, "I will wake some one in the village to watch by
+            her. How good God has been. She had no one to take care of her after I had
+            gone, and God has given...
+  Q       : Relate what took place at Mariann's bedside after her death.
+  A       : She sank down by the bed and wept and sobbed bitterly. At length John raised
+            her up, and Barefoot closed the eyes of the dead. They stood long, silently
+            together, by the bed. Then Amrie said, "I will wake some one in the village
+            to watch by her. How good God has been. She had no one to take care of her
+            after I had gone, and God has given her the greatest joy in her last moment.
+            Oh, how long she had waited for this joy!" "Yes! But now you can stay here
+            no longer," said John. "Now you will come with me, and we will go on
+            immediately." Barefoot waked the wife of the Sacristan, and sent her to
+            Mariann. She was herself so wonderfully self-possessed, that she charged the
+            woman to have Mariann's flowers planted upon her grave, and not to forget to
+            place her hymn book, and that of her son, beneath her head, as Amrie had
+            always promised her.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1912  prose_score 0.86
+  excerpt : Then he turned and looked steadily into my eyes. "It has been bought with a
+            price," he said simply. "Three days ago I left you a boy. I come back to
+            find you a man. Where's O'mie?" "D-down there, I think." It dawned on me
+            suddenly that not one of us had seen or heard of O'mie since he left Tell
+            and Jim at the shop just before midnight. Marjie had seen him a few minutes
+            later, and so had Cam Gentry...
+  Q       : What happened when the man who had left three days before returned and asked
+            after O'mie, and what did the priest then inquire?
+  A       : Then he turned and looked steadily into my eyes. "It has been bought with a
+            price," he said simply. "Three days ago I left you a boy. I come back to
+            find you a man. Where's O'mie?" "D-down there, I think." It dawned on me
+            suddenly that not one of us had seen or heard of O'mie since he left Tell
+            and Jim at the shop just before midnight. Marjie had seen him a few minutes
+            later, and so had Cam Gentry. But where was he after that? Much as we had
+            needed him, we had had no time to hunt for him. Places had to be filled by
+            those at hand necessity before us. We could count on O'mie, of course. He
+            was no coward, nor laggard; but where could he have kept himself? in the
+            dreadful "What has happened, Philip?" the priest asked. Briefly I told him,
+            ending with the story of the threatening terror of an Indian invasion.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1824  prose_score 0.89
+  excerpt : O how unprepared for this important station! O how much I need clearer views
+            of the Saviour, more unshaken faith in the great and precious promises. It
+            gives me great consolation to remember that my mother prays for me every
+            day. You know not how much our mission may be advanced by interceding with
+            him who hears prayer. I need many things, but especially humility. This is
+            the brightest ornament of...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1822  prose_score 0.89
+  excerpt : 1821, is entitled Swedenborgianism, to which we beg leave to refer our
+            readers. The following extracts are deserving of great attention. "EMANUEL
+            SWEDENBORG, whose name and writings have lately attracted more attention, in
+            this vicinity, than heretofore, was born at Upsal, in Sweden, on the 29th of
+            January, 1688. No memorabilia have yet transpired respecting his infancy;
+            but he was early distingui...
+  (failed)
+
+========================================================================================
+[POLITICAL SCIENCE]  1898  prose_score 0.83
+  excerpt : At the beginning of the Session of 1894, Mr. Morley also took an effective
+            step to do something for Ireland, when, on the suggestion of Mr. T. W.
+            Russell (without even apprising the discredited Committee of the Irish
+            Party") he appointed a Select Committee to inquire into the working of the
+            Irish Land Acts. Its investigations led, in 66 1896, to many valuable
+            amendments of the law, although Mr. Mo...
+  Q       : What steps did Mr. Morley take in 1894 concerning Irish land, what resulted
+            from the committee he appointed, and what was announced by Mr. Davitt in
+            October 1894?
+  A       : At the beginning of the Session of 1894, Mr. Morley also took an effective
+            step to do something for Ireland, when, on the suggestion of Mr. T. W.
+            Russell (without even apprising the discredited Committee of the Irish
+            Party") he appointed a Select Committee to inquire into the working of the
+            Irish Land Acts. Its investigations led, in 66 1896, to many valuable
+            amendments of the law, although Mr. Morley was not the Minister to carry
+            them. Acknowledgment should likewise be made that Mr. Morley was not to
+            blame for the refusal of the demand for such administrative reforms as the
+            appointment of popular High Sheriffs with a view to placing the control of
+            Grand Juries in the hands of the ratepayers. Mr. Davitt, in a speech on the
+            21st October, 1894, announced that the Irish Parliamentary Committee decided
+            that the Government should not be asked to grant such a reform, and that the
+            suggestion was voted down in the same spirit as was the proposal (made
+            before the Liberal Ministry was formed) to impose conditions on the incoming
+            Cabinet.
+
+========================================================================================
+[WORLD HISTORY AND HISTORY OF EUROPE, ASIA, AFRICA, AUSTRALIA, NEW ZEALAND, ETC.]  1870
+prose_score 0.88
+  excerpt : Having detained five of his companions, Aguta sent back the envoy with a
+            missive, in which he, in his turn, addressed the Liau Emperor by name, and
+            bade him submit to him (De Mailla, vol. viii. p. 376). While Aguta passed
+            the summer heats near his capital, he, on the 5th day of the 5th month,
+            "adored the sky and shot arrows at the willows." It was customary for the
+            Jurchi sovereign to do this thre...
+  Q       : After detaining five of his companions, what course of action did Aguta
+            pursue?
+  A       : Having detained five of his companions, Aguta sent back the envoy with a
+            missive, in which he, in his turn, addressed the Liau Emperor by name, and
+            bade him submit to him (De Mailla, vol. viii. p. 376). While Aguta passed
+            the summer heats near his capital, he, on the 5th day of the 5th month,
+            "adored the sky and shot arrows at the willows." It was customary for the
+            Jurchi sovereign to do this three times a year, namely, on the 5th day of
+            the 5th month, the 15th of the 7th month, and the 9th of the 9th month. In
+            the 6th month, we are told, Yelu channu returned with a fresh message from
+            his master, the Khitan Emperor, which, as before, was not conciliatory
+            (Visdelou, p. 237). In the 7th month Aguta raised his younger brother,
+            called Ukimai, to the rank of Amban-po-ke-lie, i.e. great Po ke lie, and
+            made him Kuesang, equivalent to grand vizier.
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1918  prose_score 0.92
+  excerpt : I want to talk about my position generally. I see that I have made a fool of
+            myself." The man of law raised his hands lightly with fingers spread, the
+            gesture was eloquent. "But," went on the other, "I want to make good, I want
+            to clear up the mess." The lawyer sighed. Then he took a small piece of
+            chamois leather from his waistcoat pocket and began to polish his glasses.
+            "You remember what I told...
+  Q       : Two men, Collins and Jones, sought the advice of a lawyer. What ensued?
+  A       : I want to talk about my position generally. I see that I have made a fool of
+            myself." The man of law raised his hands lightly with fingers spread, the
+            gesture was eloquent. "But," went on the other, "I want to make good, I want
+            to clear up the mess." The lawyer sighed. Then he took a small piece of
+            chamois leather from his waistcoat pocket and began to polish his glasses.
+            "You remember what I told you the day before yesterday," said he; "have you
+            determined to take my advice? Then you had nothing to offer me but some wild
+            talk about suicide." "What advice?" Collins made an impatient gesture.
+            "Advice-why to emigrate and try your luck in the Colonies." "H'm, h'm," said
+            Jones. "Yes, I remember, but since then I have been thinking things out. I'm
+            going to stay here and make good." Again the lawyer made a gesture of
+            impatience.
+
+========================================================================================
+[TECHNOLOGY]  1873  prose_score 0.75
+  excerpt : Appalachian coal field, about Illinois, Indiana, Western Kentucky Basin
+            Missouri and Arkansas Basin 29 Entire coal fields of North America of all
+            Europe. 1 2 38 35 201 111 83 been brought to market cannot be regarded as
+            equal to our own best household coal. The total produce of America, for the
+            whole thirty-five years from 1820 to 1855, did not exceed the produce of
+            Northumberland and Durham for f...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1844  prose_score 1.00
+  excerpt : At those meetings, the articles which the storm which threatened the
+            archduke, his were afterwards to be submitted to the council protector, had
+            broken the feudal bond which were debated, and the cardinals obtained that
+            bound them to him. From all parts arrived mes- the pope should not be then
+            accused of sengers bearing those disastrous pieces of in- heresy and schism
+            for having fled. They detelli...
+  Q       : Describe the events that befell Pope John XXIII after his flight from the
+            Council of Constance.
+  A       : At those meetings, the articles which the storm which threatened the
+            archduke, his were afterwards to be submitted to the council protector, had
+            broken the feudal bond which were debated, and the cardinals obtained that
+            bound them to him. From all parts arrived mes- the pope should not be then
+            accused of sengers bearing those disastrous pieces of in- heresy and schism
+            for having fled. They detelligence; "and the reports of all those defec-
+            manded several other points, but all without tions," said a contemporary
+            author, "were so success. The greater part of them, however, many
+            incitements, so many strokes of the spur, solemnly promised the emperor to
+            attend the to John XXIII. in his flight."* He proceeded approaching session.
+            towards Lauffenburg, situated on the banks of the Rhine, which he reached
+            the same evening. But scarcely had he quitted Schaffhausen, when, ordering a
+            notary and witnesses to appear before him, he dictated a retraction of every
+            thing that he had done at Constance, protesting that he had neither promised
+            nor sworn any thing in the council, but from yielding to violence or fear;
+            and declaring, that, consequently, he was not bound to the observance of any
+            such promises.
+
+========================================================================================
+[LAW]  1910  prose_score 0.92
+  excerpt : Wages are paid to the men as at Merxplas, and the unexpended balance is
+            handed to them on discharge. THE early legislation of Germany relative to
+            begging and vagrancy was not greatly dissimilar in spirit from our own. Down
+            to the sixteenth century Germany was satisfied with the mere prohibition of
+            these practices. A Resolution of the Diet at Lindau in 1497 simply forbade
+            vagabondage, and ordered t...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1911  prose_score 0.92
+  excerpt : Not only had the Griffon, on board of which he had furs of the value of
+            10,000 crowns, been lost, but a vessel which was bringing him from France a
+            cargo worth 880l. had been shipwrecked, and his enemies had spread a report
+            of his death. Having no further business at Catarocouy, and having proved by
+            his presence that the reports of his disappearance were all false, he
+            arrived again at the fort of ...
+  Q       : What had occurred at Fort Crèvecœur and Fort Miami while La Salle was away,
+            and what did the Chevalier Tonti do thereupon?
+  A       : Not only had the Griffon, on board of which he had furs of the value of
+            10,000 crowns, been lost, but a vessel which was bringing him from France a
+            cargo worth 880l. had been shipwrecked, and his enemies had spread a report
+            of his death. Having no further business at Catarocouy, and having proved by
+            his presence that the reports of his disappearance were all false, he
+            arrived again at the fort of Crèvecœur, where he was much astonished to find
+            no one. This is what had happened. While the Chevalier Tonti was employed in
+            the construction of Fort St. Louis, the garrison of Fort Crèvecœur had
+            mutinied, had pillaged the magazines, had done the same at Fort Miami, and
+            then fled to Machillimackinac. Tonti, almost alone in face of the Illinois,
+            who were roused against him by the depredations of his men, and judging that
+            he could not resist in his fort of Crèvecœur, had left it on September 11th,
+            1680, with the five Frenchmen who composed his garrison, and had retired as
+            far as the bay of the Lake Michigan.
+
+========================================================================================
+[SOCIAL SCIENCES]  1919  prose_score 0.96
+  excerpt : Among the diplomatic incidents of this period, the "Nanking Incident" and
+            the "Changli Affair" are the most notable. They reveal a clear intent on the
+            part of the Japanese Government to make the most of its opportunities, and
+            they did much to increase that powerful anti-Japanese feeling which exists
+            among the Chinese and their sympathizers. Upon the capture of Nanking by
+            General Chang Hsun on Sept...
+  Q       : Recount the Nanking Incident of 1913 and the reparation Japan exacted
+            therefor.
+  A       : Upon the capture of Nanking by General Chang Hsun on September 1, 1913, his
+            troops plundered the city, killing some of the citizens. Among those killed
+            were two Japanese. It was also claimed that the flag of the Japanese
+            consulate had been insulted. … For these acts, extremely reprehensible but
+            common în Chinese warfare, Japan demanded and ultimately obtained, among
+            other things, the payment of a large indemnity, an apology and the
+            punishment of the culprits, including the removal of General Chang Hsun.
+
+========================================================================================
+[WORLD HISTORY AND HISTORY OF EUROPE, ASIA, AFRICA, AUSTRALIA, NEW ZEALAND, ETC.]  1913
+prose_score 0.89
+  excerpt : But in a masterly way Greene soon won the confidence and good-will of
+            officers and soldiers alike. Recruits came in, and after a few weeks the
+            army was again in fighting condition. Greene separated his troops into two
+            divisions, sending one north-east and the other south-west. The one moving
+            south-west was under General Morgan, well called The Thunderbolt. He met the
+            enemy at a place called the Co...
+  Q       : Recount how General Greene restored the American army after its
+            discomfiture, and describe the victory at the Cowpens and the subsequent
+            escape across the Dan River.
+  A       : But in a masterly way Greene soon won the confidence and good-will of
+            officers and soldiers alike. Recruits came in, and after a few weeks the
+            army was again in fighting condition. Greene separated his troops into two
+            divisions, sending one north-east and the other south-west. The one moving
+            south-west was under General Morgan, well called The Thunderbolt. He met the
+            enemy at a place called the Cowpens (January, 1781). There with a small body
+            of men he surrounded and captured a British force stronger than his own. He
+            then hastened to join the main body under Greene. Cornwallis followed in hot
+            pursuit. But Morgan escaped Cornwallis chases the and the united Americans
+            now led Cornwallis a chase. Americans The two armies were so close that the
+            rear of the Americans and the advance of the British were much of the time
+            in sight of each other, until Greene crossed the Dan River and was safe in
+            Virginia.
+
+========================================================================================
+[WORLD HISTORY AND HISTORY OF EUROPE, ASIA, AFRICA, AUSTRALIA, NEW ZEALAND, ETC.]  1883
+prose_score 0.93
+  excerpt : Hayes, on Saturday evening, March 3d, 1877, a few persons only, besides the
+            Chief- Justice of the United States, who administered the oath, being
+            present. This was done to prevent an interregnum from Sunday to Monday. The
+            inaugural ceremonies took place on Monday (the 5th), in the open air, at the
+            east front of the Capitol, in the presence of at least fifteen thousand
+            persons. The new President ha...
+  Q       : Recount the inauguration of President Rutherford B. Hayes in 1877.
+  A       : Hayes, on Saturday evening, March 3d, 1877, a few persons only, besides the
+            Chief- Justice of the United States, who administered the oath, being
+            present. This was done to prevent an interregnum from Sunday to Monday. The
+            inaugural ceremonies took place on Monday (the 5th), in the open air, at the
+            east front of the Capitol, in the presence of at least fifteen thousand
+            persons. … William A. Wheeler was inducted into office as Vice-President.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1899  prose_score 0.95
+  excerpt : As usual the enthusiasm of the young school irritated and perplexed the old.
+            Some of us were beginning to feel our feet. The tables are turned to-day,
+            but in a different sense. Now the old school is irritated at the want of
+            enthusiasm of the new. Our most intellectual and serious opponent was George
+            Henry Lewes, who would not have Stella Colas at any price whatever. He said
+            of her, "With all her v...
+  Q       : Recount the performance of Stella Colas as Juliet at the Princess's Theatre
+            on the 24th of June, 1863.
+  A       : When this very gifted artist appeared as Juliet on the 24th of June, 1863,
+            at the Princess's Theatre, Walter Montgomery was the Romeo, and George
+            Vining the Mercutio, and not a very bad one either.

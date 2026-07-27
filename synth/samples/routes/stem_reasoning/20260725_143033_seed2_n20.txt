@@ -1,0 +1,493 @@
+route: stem_reasoning
+model: claude-haiku-4-5
+seed:  2
+n:     20
+kept:  14/20
+
+--- EXTRACT SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s science or engineering text that
+reasons quantitatively or physically. The author's own reasoning is in the text.
+
+EXTRACT THE REASONING CHAIN. Find where the author reasons from a principle to a
+conclusion, and copy that chain out.
+  - Return it as "spans": the quotations from the passage that, read in order, form
+    one coherent chain (principle → application → conclusion). Use as many as the
+    reasoning needs — up to 6, and always the fewest, longest spans that
+    hold the chain together. Extract as much of the reasoning as you can.
+  - Give EACH span as an object with two fields:
+      "verbatim"    — the span copied EXACTLY as it appears in the passage, character
+                      for character, including any garbled formula.
+      "refurbished" — the SAME span with only its mathematical or chemical formulas
+                      restored to correct standard form. If the span has no formula,
+                      make "refurbished" identical to "verbatim".
+  - REPAIR ONLY FORMULAS. The OCR has mangled this text's equations, exponents,
+    subscripts, symbols, and numbers, and page numbers bleed into the formulas. In
+    "refurbished" you MAY fix a corrupted expression back to what it plainly must be
+    (e.g. "CuSO,+ZnZnSO,+ Cu" → "CuSO₄ + Zn → ZnSO₄ + Cu"; "9X2" → "9 × 2";
+    "P₁ = pressure" kept clean). You MAY change only digits, symbols, operators,
+    subscripts/superscripts, and spacing.
+  - ADD NO NEW CONTENT. Do NOT paraphrase, summarize, rewrite, reorder, translate, or
+    add, remove, or alter any WORD of the prose — not a connecting word, not a gloss,
+    not a clarification. Every word in "refurbished" must already stand in "verbatim".
+    Repair the formulas; leave the author's prose exactly as written, misspellings and
+    all. Only select and order the author's own sentences.
+  - Do not build the chain out of a span that hinges on a figure, plate, table, or
+    page the reader cannot see ("as in Fig. 36", "see p. 466") — those cannot be
+    refurbished into anything meaningful; choose spans that carry the reasoning
+    without them.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": [{"verbatim": "...", "refurbished": "..."}]}, ...]
+
+
+--- QUESTION SYSTEM PROMPT ---
+You are given a passage from a pre-1930s science or engineering text and a REASONING
+CHAIN quoted verbatim from it — this is the ANSWER. Write the single question that
+this reasoning chain answers, as if setting an exercise.
+
+- The chain must CORRECTLY AND COMPLETELY answer your question — ask exactly what
+  this reasoning concludes or explains. Do not ask for a step, a numeric result, or
+  an identity the chain does not reach. Read the chain as the answer: if it does not
+  fully answer, adjust the question to fit the chain.
+- Pose a problem that must be reasoned through, not a fact to recall: "Why does
+  ...", "How does it follow that ...", "Why must ...?", "If ..., what happens and
+  why?".
+- Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use no
+  word, term, or idiom that came into use after 1930, and no modern conversational
+  or academic phrasing — it must read as a question a period examiner would pose.
+- The question must STAND ALONE and betray no awareness of a source. Never refer to
+  the passage or to whoever wrote it — no "the passage", "the text", "the author",
+  "the figure", "according to", "as described", "as shown". Ask about the SUBJECT
+  ITSELF, as a matter of physical fact, to someone who never saw the passage.
+- SUPPLY THE PHYSICAL SETUP the reader needs so the problem is well-posed and the
+  chain's "it / this / these" have clear antecedents: name the bodies, quantities,
+  or conditions involved (the gas held at constant temperature, the beam loaded at
+  its centre, the current through the coil). Give just enough to make the question
+  unambiguous — do not restate the whole passage, and never leave a bare "this
+  quantity", "such a body", or "the system".
+- Every proper noun must be one the reader can place: either widely recognizable on
+  its own (Boyle's law, Carnot's cycle), or introduced with a short descriptor.
+- Do NOT reveal the answer: do not state the conclusion, and do not reuse the
+  chain's distinctive wording. Ask for the reasoning; make the reader supply it.
+
+Input: JSON array [{"i": 0, "passage": "...", "answer": "..."}, ...]
+Output JSON only: [{"i": 0, "q": "..."}, ...]
+
+
+========================================================================================
+[SCIENCE]  1898  stem_signal 0.45
+  excerpt : Whether the notion of necessity which attaches to it has an a priori or an a
+            posteriori origin is a question not relevant to the present discussion. But
+            I would beg to be informed, if it is necessary, where is the "com- pelling
+            force" out of which the necessity arises; and further, if it is not
+            necessary, whether it loses the character of a law of nature? I take it to
+            be a law of nature, based on ...
+  Q       : The principle that the mass of matter remains unchanged throughout every
+            chemical or physical alteration is often termed a law of nature. On what
+            evidence does this law rest, and does it possess the quality of necessity?
+            Give a full account of your reasoning.
+  A       : I take it to be a law of nature, based on unexceptionable evidence, that the
+            mass of matter remains unchanged, whatever chemical or other modifications
+            it may undergo. This law is one of the foundations of chemistry. But it is
+            by no means necessary.
+
+========================================================================================
+[SCIENCE]  1916  stem_signal 1.00
+  excerpt : If the temperature rises above that point we have a fever; if it falls below
+            that point we are at the point of collapse. Thus nature must keep the body
+            at a constant, even temperature, and this is accomplished by various means.
+            In most parts of the world and at almost all hours of the day the body is
+            warmer than the air. Therefore heat is constantly passing from the body to
+            the air. Thus radiation...
+  Q       : The human body must be maintained at a constant temperature of about 98½°
+            Fahrenheit. Explain by what means the body parts with its excess heat,
+            taking into account that the surrounding air is ordinarily at a lower
+            temperature.
+  A       : If the temperature rises above that point we have a fever; if it falls below
+            that point we are at the point of collapse. Thus nature must keep the body
+            at a constant, even temperature, and this is accomplished by various means.
+            In most parts of the world and at almost all hours of the day the body is
+            warmer than the air. Therefore heat is constantly passing from the body to
+            the air. Thus radiation from the surface of the body disposes of part of the
+            excess heat in the body. Large quantities of heat are also carried out of
+            the body in the air breathed out of the lungs. The air enters the lungs, say
+            at a temperature of sixty-eight degrees. It leaves the lungs at a
+            temperature of about ninety-eight and a half degrees. Thus a large quantity
+            of heat leaves the body by way of the lungs. The pores of the skin, also,
+            are constantly exuding or discharging water known as perspiration or sweat.
+            This water also carries off a large quantity of heat.
+
+========================================================================================
+[SCIENCE]  1877  stem_signal 0.50
+  excerpt : Three of these were so posted that they could be brought up in time for
+            resistance to Khrouleff's impending attack. Though not without some hard
+            fighting, and even at one point encountering a somewhat long check, General
+            Khrouleff's battalions recovered the lodgments which their adversary had
+            been suffered to occupy, advanced to the head of the sap, and invaded the
+            foremost approaches,' whence—aft...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1903  stem_signal 0.62
+  excerpt : May not a volcano be likened to a protruding and cracked portion on a vast
+            natural high-pressure boiler, formed by the surrounding area of country? In
+            fact, I think my simile would be truer if the difference consisted only in
+            the cracked case of the boiler being much thicker in some parts than in
+            others, and therefore having to expel a greater thickness or depth of water
+            in the thicker cracks or p...
+  Q       : Why may a volcano be likened to a protruding and cracked portion of a vast
+            natural high-pressure boiler, and why is the thickness of the boiler case or
+            the depth of water in the crack of no consequence in the discharge of steam
+            and water, whereas if the boiler were unheated the difference would be
+            great?
+  A       : May not a volcano be likened to a protruding and cracked portion on a vast
+            natural high-pressure boiler, formed by the surrounding area of country? In
+            fact, I think my simile would be truer if the difference consisted only in
+            the cracked case of the boiler being much thicker in some parts than in
+            others, and therefore having to expel a greater thickness or depth of water
+            in the thicker cracks or parts-a difference of course absolutely as nothing.
+            I have seen an old boiler in action, with steam and drops of water spurting
+            out of some of the rivet-holes. No one would think whether the rivet-holes
+            passed through a greater or less thickness of iron, or were connected with
+            the water higher or lower within the boiler, so small would the gravity be
+            compared with the force of the steam. If the boiler had been not heated,
+            then of course there would be a great differ- Letter 488 ence whether the
+            rivet-holes entered the water high or low, so that there was greater or less
+            pressure of gravity.
+
+========================================================================================
+[SCIENCE]  1911  stem_signal 1.00
+  excerpt : 7. Prove that two dihedral angles are equal if their plane angles are equal.
+            Is it true that if a plane is parallel to one of two parallel lines it is
+            parallel to the other? Illustrate by a figure. Is it true that if a line is
+            parallel to one of two parallel planes it is parallel to the other?
+            Illustrate by a figure. 8. Prove that the volume of a triangular prism is
+            equal to the product of its bas...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1860  stem_signal 1.00
+  excerpt : Secondly, those points at which the principal moment about a tangent is
+            constant are found by making I or I constant. Let II be the length of the
+            perpendicular from the origin on the plane that contains the axes I, I,,
+            then Q.R.II=abc. and Also P²+ Q² + R² = a² + b² + c². Hence a2b2c2 = a² + b²
+            + c² − λ — Q'II*, a²b²c² I₁ = a² + b² + c² — λ – RII** If any line of
+            curvature be taken on the ellipsoi...
+  Q       : Why are the moments of inertia about the tangents to any line of curvature
+            on an ellipsoid equal?
+  A       : If any line of curvature be taken on the ellipsoid the tangents are all
+            principal axes at the points of contact, and (as is proved in all books on
+            Solid Geometry) along that line Q. II constant. … Hence the moments of
+            inertia about the tangents to any line of curvature are equal.
+
+========================================================================================
+[SCIENCE]  1901  stem_signal 1.00
+  excerpt : If the circle is truly centred, with its centre on the line AC, the two
+            readings will differ by 180°. If, now, the graduated circle is displaced,
+            without being rotated, till its centre is at a distance h from AC, then the
+            points of the scale, now under AC, will be at distances h from the points
+            formerly under AC, both being displaced in the same direction. Hence, since
+            both readings are measured t...
+  Q       : A graduated circle is viewed by a pair of opposite microscopes A and C whose
+            line of centres AC passes through the centre of the circle when it is
+            correctly centred. If the circle be displaced without rotation through a
+            small distance h laterally from AC, shew that the arithmetic mean of the two
+            readings remains the same as when the circle was truly centred.
+  A       : If the circle is truly centred, with its centre on the line AC, the two
+            readings will differ by 180°. If, now, the graduated circle is displaced,
+            without being rotated, till its centre is at a distance h from AC, then the
+            points of the scale, now under AC, will be at distances h from the points
+            formerly under AC, both being displaced in the same direction. … Hence,
+            since both readings are measured the same way round the circle, one will be
+            increased and the other will be decreased by the same angle. … The
+            arithmetic mean of the two readings will, therefore, be unaltered by the
+            displacement of the centre, and will be independent of any small error due
+            to imperfect centering.
+
+========================================================================================
+[SCIENCE]  1904  stem_signal 1.00
+  excerpt : The coil may be placed so that its plane coincides with the length of the
+            needle. If a current passes through the coil, the magnetic field within it
+            will be perpendicular to the axis of the needle, which will accordingly
+            move. An instrument made in this manner is called a detector or
+            galvanometer. If a wire is suspected of carrying a current, it can be broken
+            and the two ends joined to the ends of...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1880  stem_signal 0.50
+  excerpt : Each stream according to the supply of food which it affords, will carry a
+            certain weight of fish. If the fish be trout, the weight may be made up of
+            many small, or a few large trout. Let us suppose a mile of stream which
+            affords food sufficient for five hundred pounds weight of trout. What
+            happens if salmon be admitted? I won't argue that the salmon will eat any of
+            the trouts' food, because I mig...
+  Q       : A mile of river is known to provide sufficient food to sustain five hundred
+            pounds of trout. If salmon be admitted into the river, shew that the weight
+            of trout which the river can maintain must be greatly reduced.
+  A       : Each stream according to the supply of food which it affords, will carry a
+            certain weight of fish. If the fish be trout, the weight may be made up of
+            many small, or a few large trout. Let us suppose a mile of stream which
+            affords food sufficient for five hundred pounds weight of trout. … But no
+            one will deny that female salmon have a habit of laying eggs, and that in
+            the spring of the year following their admission to the river, every shallow
+            stream will be swarming with parr, and in the next year with smolts
+            preparing to start for the sea. What do smolts eat? Exactly the same food as
+            trout. So in your mile of water, which is suited to carry five hundred
+            pounds weight of trout, you have perhaps two or three hundred thousand parrs
+            and smolts eating the trouts' food.
+
+========================================================================================
+[SCIENCE]  1894  stem_signal 0.50
+  excerpt : The effect of this excess of nitrogenous food would be to injure the
+            digestive and eliminating organs. Imagine, for instance, the effect upon the
+            digestive apparatus if man's exclusive diet were potatoes. It will be seen
+            by the table that in potatoes there are 2 per cent. of proteids and 20.75
+            per cent. of carbohydrates. Therefore, to obtain enough proteids from
+            potatoes to sustain life it would b...
+  Q       : Having regard to the fact that potatoes contain but 2 per cent. of proteids
+            and 20.75 per cent. of carbohydrates, and that a man would need to consume
+            at least ten pounds of them each day to obtain a sufficient supply of
+            proteids, explain why an exclusive potato diet is hurtful to the digestive
+            organs. Also, explain why a diet consisting wholly of meat, when taken in
+            the quantity required to furnish the requisite carbonaceous material, throws
+            an excessive burden on the eliminating organs. From these considerations,
+            what does experience show to be the true physiological method of diet?
+  A       : The effect of this excess of nitrogenous food would be to injure the
+            digestive and eliminating organs. Imagine, for instance, the effect upon the
+            digestive apparatus if man's exclusive diet were potatoes. It will be seen
+            by the table that in potatoes there are 2 per cent. of proteids and 20.75
+            per cent. of carbohydrates. Therefore, to obtain enough proteids from
+            potatoes to sustain life it would be necessary to eat daily at least ten
+            pounds, or thirty good-sized potatoes. In some parts of the world this has
+            been put into practice, the effect being to distend the stomach and to
+            derange digestion to a harmful degree. … If the diet were exclusively of
+            meat, then in order to supply the body with the necessary amount of
+            carbonaceous material a very large quantity of meat would be required, and
+            to meet this requirement there would be taken in an excess of nitrogenous
+            constituents, thus placing a serious burden on the eliminating organs to get
+            rid of them. … Experience demonstrates that a mixture of foods is the true
+            physiological method of supplying the wants of the human body: from meat is
+            obtained the proteids necessary for nutrition; from the potato is derived
+            the starch; and from butter is secured the fat.
+
+========================================================================================
+[TECHNOLOGY]  1869  stem_signal 1.00
+  excerpt : Multiplication is also often indicated by placing a dot between the factors,
+            or by writing the latter, when not numerals, one after another, without any
+            sign; as, a × 6 × cx d = a·b⋅ c⋅d = abcd; 1 × 2 × 3 × 4 = 24 = 1 2 3 4.
+            a+a+a+a+a= 5 times a, written 5 a, must not be confounded with a xa ×a×a×a =
+            a in the fifth power, written a³. If a 2, then in the first case 5 a = 10;
+            and in the second a5 = ...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1848  stem_signal 1.00
+  excerpt : The greatest hardness is given to steel, by heating it to a white heat, and
+            then suddenly cooling it, by plunging it into mercury. Although water is
+            commonly employed for this purpose, the hardness which the steel receives
+            from being plunged into it is not so great as it derives from being immersed
+            in mercury; probably because, owing to the less power which water possesses
+            of conducting heat, the ...
+  Q       : In the heat-treatment of steel, what method yields the highest degree of
+            hardness, and why does it surpass the ordinary method of quenching in water;
+            and after the steel has been hardened to the utmost, by what means may its
+            brittleness be reduced and a desired balance of hardness and elasticity be
+            obtained?
+  A       : The greatest hardness is given to steel, by heating it to a white heat, and
+            then suddenly cooling it, by plunging it into mercury. Although water is
+            commonly employed for this purpose, the hardness which the steel receives
+            from being plunged into it is not so great as it derives from being immersed
+            in mercury; probably because, owing to the less power which water possesses
+            of conducting heat, the cooling of the steel is less rapid in it. In its
+            state of greatest hardness, steel is scarcely fit for any purpose in the
+            arts and manufactures; since it is so brittle that its points or edges are
+            broken by a very slight resistance. But by heating it to a lower
+            temperature, and then gradually cooling it, this extreme hardness may be
+            reduced, and a greater amount of elasticity substituted for it. Thus, if it
+            were heated to a red heat, and allowed to cool very gradually, it would be
+            rendered soft again. If heated to a less degree, and cooled gradually, it
+            would retain more of its hardness, and would be less elastic; and various
+            degrees of these properties may be communicated to it at will, by varying
+            the degree of heat to which it is raised, after having been completely
+            hardened at first.
+
+========================================================================================
+[TECHNOLOGY]  1904  stem_signal 0.62
+  excerpt : Take a flour mill, for instance. From a given quantity of raw material-
+            wheat-the product is pretty nearly constant, if not quite so. We have then a
+            given product (so much flour of each grade, so much bran, etc., etc.). This
+            product has a certain value, governed by causes entirely separate from its
+            cost. If only the one thing is produced—the products of wheat-the total
+            expenditure for all purposes ...
+  Q       : In a factory that converts a single raw material into several distinct
+            products, each manufactured by separate sets of machinery, and where the
+            whole works is divided into departments, how should the total expenditure be
+            apportioned so as to ascertain the cost per unit of each product and the
+            cost of the work performed in each department?
+  A       : Take a flour mill, for instance. From a given quantity of raw material-
+            wheat-the product is pretty nearly constant, if not quite so. We have then a
+            given product (so much flour of each grade, so much bran, etc., etc.). This
+            product has a certain value, governed by causes entirely separate from its
+            cost. If only the one thing is produced—the products of wheat-the total
+            expenditure for all purposes could be divided, proportionably to value,
+            among the units of product, to show the cost per pound, barrel, or ton.
+            Where a second material or a second grade is handled it will usually be
+            found that separate sets of machinery are employed on the separate products,
+            and it is simply necessary to apportion the total expenditure between the
+            two processes. A flour mill is instanced here, but the case is the same with
+            any factory in class two, whether it produces flour, paper or rope. If the
+            process of manufacture is divided into departments it is quite easy to find
+            the cost of the process in each department by the apportionment. of total
+            expense to the various departments, and so arranging the pay roll that the
+            labor in each department is recorded separately.
+
+========================================================================================
+[TECHNOLOGY]  1904  stem_signal 0.80
+  excerpt : A verdict was taken by consent for the defendant. The amount of damages, if
+            damages were recoverable, was fixed by agreement. All other questions were
+            reserved for the Full Court. The Full Court dismissed the action with costs.
+            The first question is, Was there a contract? If there was no contract in
+            fact, Was the proposal made on Falck's behalf so clear and unambiguous that
+            Williams cannot be hear...
+  Q       : In the action of Falck against Williams, touching the alleged charter of the
+            steamship 'Semiramis' for the carriage of shale from Sydney to Barcelona,
+            what is the first question that the Court must decide?  If no contract be
+            found, what further question must be considered?  And what follows if that
+            further question be answered in the negative?
+  A       : The first question is, Was there a contract? If there was no contract in
+            fact, Was the proposal made on Falck's behalf so clear and unambiguous that
+            Williams cannot be heard to say that he misunderstood it? If that question
+            be answered in the negative, all other questions become immaterial.
+
+========================================================================================
+[TECHNOLOGY]  1892  stem_signal 0.62
+  excerpt : The numerous measurements made, however, have so uniformly been in favor of
+            motors with comparatively a large number of conductors on the armatures,
+            that the importance of this matter is now pretty generally understood. This
+            agreement as to the general design of motors has in no small way been
+            influential in bringing electricians into agreement as to how the motor
+            should be controlled, since with ...
+  Q       : Why does a motor with a comparatively large number of conductors on the
+            armature require fewer turns on the field magnets to produce a given torque,
+            and what are the consequences for the control of the motor, the torque at
+            small currents, and the efficiency when the difference in electromotive
+            force between the armature terminals and the line may be due either to an
+            external resistance or to the magnets?
+  A       : The numerous measurements made, however, have so uniformly been in favor of
+            motors with comparatively a large number of conductors on the armatures,
+            that the importance of this matter is now pretty generally understood. This
+            agreement as to the general design of motors has in no small way been
+            influential in bringing electricians into agreement as to how the motor
+            should be controlled, since with an armature of a comparatively large number
+            of turns, less turns are required in the field magnets to produce a given
+            torque with a given number of amperes. The function of the magnets,
+            therefore, has become of less importance. It is always, however, to be borne
+            in mind that, other things being equal, the motor with the greatest number
+            of turns in the magnets will develop the greatest torque for small currents.
+            With a given electromotive force acting on the armature circuit, and a given
+            torque developed by the armature per ampere, it does not matter, so far as
+            efficiency is concerned, whether the difference in electromotive force at
+            the armature terminals and the line is due to drop in external resistance,
+            or to drop in the magnets.
+
+========================================================================================
+[TECHNOLOGY]  1901  stem_signal 0.60
+  excerpt : 72. Internal grinding presents problems of a practical nature that differ
+            somewhat from those encountered in external grinding; since a knowledge of
+            the causes of these problems is essential to their partial or entire
+            solution, they are here briefly explained. 73. Influence of Pressure.-In
+            internal grinding the truth of the surfaces, at least as far as the grinding
+            itself is concerned, depends pri...
+  Q       : How does the amount of pressure in internal grinding affect the truth of the
+            surfaces, and why is the pressure required to make the wheel cut greater in
+            internal grinding than in external grinding, especially when the hole is
+            small?
+  A       : 73. Influence of Pressure.-In internal grinding the truth of the surfaces,
+            at least as far as the grinding itself is concerned, depends primarily on
+            the amount of pressure caused by the grinding operation As in the case of
+            external work, this pressure tends to disturb the position of the axes of
+            rotation of the work and the grinding wheel; since the amount of disturbance
+            depends directly on the pressure, it follows that a reduction of it to the
+            lowest limit attainable with a given set of conditions causes a
+            corresponding reduction of errors and a consequent increase in the truth of
+            the work. 74. Pressure Greater Than in External Grinding. The pressure
+            required to make the wheel cut is always greater in internal grinding than
+            in external grinding, especially when the hole that is being ground is
+            small.
+
+========================================================================================
+[TECHNOLOGY]  1880  stem_signal 0.40
+  excerpt : In No. 2, the frame plates are in front themselves, carried by the truck
+            frame, the vertical strain on them being, therefore, less. This support is
+            placed underneath, or very near the center of the cylinders. Overhanging
+            weight there is none; the tendency to oscillation is, therefore, removed. We
+            find, moreover, in No. 1, a rigid leading axle, unavoidably subject to
+            straining in curves, and is one...
+  Q       : Two locomotive engines are compared. In the first, the frame plates are
+            placed behind and carried by the main frame, the leading axle is rigid, and
+            the cylinders overhang the support. In the second, the frame plates are
+            placed in front and carried by the truck frame, the support is placed
+            beneath or very near the centre of the cylinders, and the truck turns about
+            a centre-pin. What are the reasons why the second engine is more steady-
+            going and less subject to wear and tear than the first?
+  A       : In No. 2, the frame plates are in front themselves, carried by the truck
+            frame, the vertical strain on them being, therefore, less. This support is
+            placed underneath, or very near the center of the cylinders. Overhanging
+            weight there is none; the tendency to oscillation is, therefore, removed. …
+            We find, moreover, in No. 1, a rigid leading axle, unavoidably subject to
+            straining in curves, and is one cause of oscillation. … In No. 2, we find
+            the truck movable around a center-pin, the wheels and axles adjusting
+            themselves to the curvature, thus removing a great cause of wear and tear
+            and loss of power. … Were the form of the frame beam the same, with the
+            above points of difference, we should rightly suppose No. 2 a more steady-
+            going engine, but in the construction of these beams itself, we find a
+            better proportioning of material for the purpose for which it is designed in
+            No. 2.
+
+========================================================================================
+[TECHNOLOGY]  1874  stem_signal 1.00
+  excerpt : It starts with a certain amount of energy of motion, but as it ascends, this
+            is by degrees changed into that of position, until, when it gets to the top
+            of its flight, its energy is entirely due to position. To take an example,
+            let us suppose that a kilogramme is projected vertically upwards with the
+            velocity of 19 ·6 metres in one second. According to the formula of Art. 28,
+            it contains 19 6 unit...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1896  stem_signal 1.00
+  excerpt : If the screen is managed in such a manner as to make the spot on the left
+            face of the screen disappear (position L), we have e₁e'; that is, I 1 It I +
+            = di² d d d It'. Whence, (t₁'t₁) d I₁ = (₁-r') d Designate by p the ratio
+            d,2 and we have d₂ (t₁' — t₁) I₁ = (†2 — r;') PiI2 • (1) Observing the
+            disappearance of the spot on the right side in the same manner (position R),
+            we have I₁ = (r₂ — r₂') -P2...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1858  stem_signal 1.00
+  excerpt : I will, therefore, now give the analysis of the same joint in an abbreviated
+            form. The third head, relative to the shearing and drawing power of the
+            rivet, will be always omitted: for it will be assumed that the engineer
+            considers the rivets he is using strong enough for the thickness of the
+            plate and it is obvious that, if the diameter, and therefore the section, of
+            one rivet be in due proportion...
+  Q       : Two plates are riveted together by four rivets. The tensile strength of
+            either plate along a line through the rivet-holes is calculated to be 8
+            tons, and the bearing capacity of the four rivets is 2 tons. The shearing
+            strength of the rivets is assumed to be sufficient. How is the efficiency,
+            or value, of the joint determined, and what is its numerical value?
+  A       : I will, therefore, now give the analysis of the same joint in an abbreviated
+            form. The third head, relative to the shearing and drawing power of the
+            rivet, will be always omitted: for it will be assumed that the engineer
+            considers the rivets he is using strong enough for the thickness of the
+            plate and it is obvious that, if the diameter, and therefore the section, of
+            one rivet be in due proportion to its bearing area on the plate, then the
+            united sections of all the rivets in a joint must also be in the same due
+            proportion to the united bearing area. … Let A, B be two plates rivetted by
+            a common boiler-joint. Line of fracture of either plate right through the
+            rivet-holes Efficiency =9"- 4 no. × 1 9 =7× × -= 12=7". say 8 tons. …
+            Efficiency of bearing area of 4 no. rivets 1" 1" = 4 no. × × × 5 = 2 tons. …
+            The efficiency (or value) of joint is 2 tons.

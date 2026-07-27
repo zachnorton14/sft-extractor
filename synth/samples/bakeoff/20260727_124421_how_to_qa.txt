@@ -1,0 +1,432 @@
+synth.how_to_qa bake-off   2026-07-27 12:44
+models: 8   excerpts: 5
+
+========================================================================================
+EXCERPT: A divided circle fixed on this last tube allows the angle between the normal to
+         the diffuser and the horizontal to be read; the value of this angle permits the
+         calculation of the ratio of the intensities I and I. Let us suppose, to measure
+         I, that the diffuser is vertical, while in measuring I, its normal makes the
+         angle i with the horizontal; for a uniform illumination of the screen we shall
+         have I₁ S₁ cos 45° = D₁2 S₂ cos 45° cos i, SD² whence cos i. SD2 I2 It should
+         be remarked that the diffusion photometer of Crova supposes a perfect diffuser;
+         for the construction of the latter, let us refer to the details that we have
+         given concerning the construction of the Foucault screen (§ 21). An essential
+         condition of Crova's photometer is, furthermore, the necessity of choosing
+         diffusers whose opaqueness varies with the intensity of the lights to be
+         compared. Mascart's Photometer. 41. This apparatus* uses at the same time
+         diffusers and lenses provided with diaphragms; it allows the comparison of
+         lights of very different intensities, and the measurement of the intensities of
+         rays of light in any direction without measuring the angles. * Bull. de la Soc.
+         int. des Electriciens, 1888, p.
+
+--- deepseek-v4-flash  ($0.28/1M out) ---
+  Q: How is the ratio of two intensities measured with Crova's diffusion photometer?
+  A: (no verbatim answer)
+  [90s, 9296 out-tok, finish=stop]
+
+--- deepseek-v4-pro  ($0.87/1M out) ---
+  ERROR: ReadTimeout:
+
+--- mimo-v2.5  ($0.28/1M out) ---
+  Q: By what process is the ratio of the intensities I and I determined with Crova's
+     diffusion photometer?
+  A: (no verbatim answer)
+  [42s, 2438 out-tok, finish=stop]
+
+--- mimo-v2.5-pro  ($0.87/1M out) ---
+  Q: How is the ratio of light intensities measured using a diffusion photometer with a
+     divided circle?
+  A: (no verbatim answer)
+  [58s, 4126 out-tok, finish=stop]
+
+--- minimax-m3  ($1.20/1M out) ---
+  Q: By what method is the ratio of two light intensities ascertained by means of
+     Crova's diffusion photometer?
+  A: (no verbatim answer)
+  [119s, 11045 out-tok, finish=stop]
+
+--- minimax-m2.7  ($1.20/1M out) ---
+  Q: By what procedure are the intensities of two lights compared using Crova's
+     diffusion photometer?
+  A: (no verbatim answer)
+  [11s, 458 out-tok, finish=stop]
+
+--- minimax-m2.5  ($1.20/1M out) ---
+  Q: By what process is the ratio of light intensities determined using a diffusion
+     photometer?
+  A: (no verbatim answer)
+  [84s, 5431 out-tok, finish=stop]
+
+--- qwen3.7-plus  ($1.60/1M out) ---
+  Q: How is the ratio of the intensities of two lights measured using the diffusion
+     photometer of Crova?
+  A: A divided circle fixed on this last tube allows the angle between the normal to the
+     diffuser and the horizontal to be read; the value of this angle permits the
+     calculation of the ratio of the intensities I and I. Let us suppose, to measure I,
+     that the diffuser is vertical, while in measuring I, its normal makes the angle i
+     with the horizontal; for a uniform illumination of the screen we shall have I₁ S₁
+     cos 45° = D₁2 S₂ cos 45° cos i, SD² whence cos i. SD2 I2
+  [75s, 4061 out-tok, finish=stop]
+
+========================================================================================
+EXCERPT: 1 In this position the mercury is not exerting pressure on the gas and the
+         total pressure P₁ on the gas is 1 atmosphere. If there is a barometer in the
+         laboratory measure its height. If not, take the height of the barometer to be
+         76 cm. (1 atmosphere). Since the bore of the tube is uniform we may use the
+         length of the air column as a measure of the volume of the air under different
+         pressures. closed end down and The pressure P2 on the (2) Stand the tube
+         upright with the measure the length V2 of the air column. air in the tube is 76
+         cm. (1 atmosphere) + the length of the mercury column in cm. (3) Stand the tube
+         upright with the closed end up and measure the length V3 of the air column. The
+         pressure P3 on the air in the tube is 76 cm. (1 atmosphere) the length of the
+         mercury column. If the volume of the gas varies inversely as the pressure on it
+         P2 P3 V₁ V2 P₁ (Boyle's Law), then should equal and should equal P₁ V₁ V3 That
+         is, the volume of the air should be decreased in the proportion the pressure is
+         increased, and vice versa.
+
+--- deepseek-v4-flash  ($0.28/1M out) ---
+  Q: How is Boyle's law verified by means of a uniform tube and a column of mercury?
+  A: (no verbatim answer)
+  [135s, 15921 out-tok, finish=stop]
+
+--- deepseek-v4-pro  ($0.87/1M out) ---
+  ERROR: ReadTimeout:
+
+--- mimo-v2.5  ($0.28/1M out) ---
+  Q: How does one verify Boyle's Law using a tube with mercury and measurements of the
+     air column length?
+  A: (no verbatim answer)
+  [70s, 4416 out-tok, finish=stop]
+
+--- mimo-v2.5-pro  ($0.87/1M out) ---
+  Q: By what procedure may Boyle's Law be verified experimentally with a closed tube
+     containing a mercury column?
+  A: 1 In this position the mercury is not exerting pressure on the gas and the total
+     pressure P₁ on the gas is 1 atmosphere. If there is a barometer in the laboratory
+     measure its height. If not, take the height of the barometer to be 76 cm. (1
+     atmosphere). Since the bore of the tube is uniform we may use the length of the air
+     column as a measure of the volume of the air under different pressures. closed end
+     down and The pressure P2 on the (2) Stand the tube upright with the measure the
+     length V2 of the air column. air in the tube is 76 cm. (1 atmosphere) + the length
+     of the mercury column in cm. (3) Stand the tube upright with the closed end up and
+     measure the length V3 of the air column. The pressure P3 on the air in the tube is
+     76 cm. (1 atmosphere) the length of the mercury column.
+  [28s, 1643 out-tok, finish=stop]
+
+--- minimax-m3  ($1.20/1M out) ---
+  Q: How is Boyle's Law experimentally verified with a tube of air and mercury?
+  A: (no verbatim answer)
+  [48s, 4500 out-tok, finish=stop]
+
+--- minimax-m2.7  ($1.20/1M out) ---
+  Q: By what procedure is Boyle's Law verified experimentally using a mercury tube?
+  A: (no verbatim answer)
+  [18s, 880 out-tok, finish=stop]
+
+--- minimax-m2.5  ($1.20/1M out) ---
+  Q: By what experimental procedure may Boyle's Law be verified through measurement of
+     an enclosed column of air?
+  A: (no verbatim answer)
+  [8s, 355 out-tok, finish=stop]
+
+--- qwen3.7-plus  ($1.60/1M out) ---
+  Q: How is Boyle's Law verified by experiment using a tube of mercury and air?
+  A: (no verbatim answer)
+  [47s, 2465 out-tok, finish=stop]
+
+========================================================================================
+EXCERPT: 66.-A vinegar ripener. The tank shown opened at the side is filled with a
+         special type of beech shavings which thus provide a very large surface. The
+         apple juice which has been previously fermented with yeast, which converts the
+         sugar into alcohol, is allowed to trickle through the openings at the top over
+         the shavings. The acetic acid bacteria on the shavings rapidly oxidize the
+         alcohol to acetic acid. The vinegar is drawn off below. cess an "alcoholic
+         fermentation" rather than an acid one. In brewing and distilling industries,
+         yeasts are used to make the alcohol, though molds replace them in some
+         countries ("sake" and "arrak" from rice). Under ordinary conditions the
+         carbohydrate is never completely fermented, since the accumulation of the
+         product- acid-stops the reaction. If the acid is neutralized by the addition of
+         an alkali-calcium or magnesium carbonate is best then the sugar may all be
+         split up. Where such fermentation occurs under natural conditions, the products
+         are further split up, partly by molds and partly by aciddestroying bacteria
+         into simpler acids and eventually to carbon dioxide and water, so that the end-
+         products of the complete fermentation of carbohydrate material in nature are
+         carbon dioxide, hydrogen, marsh gas, and water.
+
+--- deepseek-v4-flash  ($0.28/1M out) ---
+  Q: By what process is vinegar made in a vinegar ripener?
+  A: The apple juice which has been previously fermented with yeast, which converts the
+     sugar into alcohol, is allowed to trickle through the openings at the top over the
+     shavings. The acetic acid bacteria on the shavings rapidly oxidize the alcohol to
+     acetic acid. The vinegar is drawn off below.
+  [50s, 4899 out-tok, finish=stop]
+
+--- deepseek-v4-pro  ($0.87/1M out) ---
+  Q: How is a vinegar ripener used to produce vinegar from fermented apple juice?
+  A: The tank shown opened at the side is filled with a special type of beech shavings
+     which thus provide a very large surface. The apple juice which has been previously
+     fermented with yeast, which converts the sugar into alcohol, is allowed to trickle
+     through the openings at the top over the shavings. The acetic acid bacteria on the
+     shavings rapidly oxidize the alcohol to acetic acid. The vinegar is drawn off
+     below.
+  [96s, 7122 out-tok, finish=stop]
+
+--- mimo-v2.5  ($0.28/1M out) ---
+  Q: How is vinegar prepared using a vinegar ripener?
+  A: The tank shown opened at the side is filled with a special type of beech shavings
+     which thus provide a very large surface. The apple juice which has been previously
+     fermented with yeast, which converts the sugar into alcohol, is allowed to trickle
+     through the openings at the top over the shavings. The acetic acid bacteria on the
+     shavings rapidly oxidize the alcohol to acetic acid. The vinegar is drawn off
+     below.
+  [35s, 2282 out-tok, finish=stop]
+
+--- mimo-v2.5-pro  ($0.87/1M out) ---
+  Q: How is vinegar prepared from apple juice using a vinegar ripener?
+  A: The tank shown opened at the side is filled with a special type of beech shavings
+     which thus provide a very large surface. The apple juice which has been previously
+     fermented with yeast, which converts the sugar into alcohol, is allowed to trickle
+     through the openings at the top over the shavings. The acetic acid bacteria on the
+     shavings rapidly oxidize the alcohol to acetic acid. The vinegar is drawn off
+     below.
+  [37s, 2225 out-tok, finish=stop]
+
+--- minimax-m3  ($1.20/1M out) ---
+  Q: How is vinegar made by means of a vinegar ripener?
+  A: The tank shown opened at the side is filled with a special type of beech shavings
+     which thus provide a very large surface. The apple juice which has been previously
+     fermented with yeast, which converts the sugar into alcohol, is allowed to trickle
+     through the openings at the top over the shavings. The acetic acid bacteria on the
+     shavings rapidly oxidize the alcohol to acetic acid. The vinegar is drawn off
+     below.
+  [12s, 1025 out-tok, finish=stop]
+
+--- minimax-m2.7  ($1.20/1M out) ---
+  Q: By what method is vinegar prepared from fermented apple juice?
+  A: The tank shown opened at the side is filled with a special type of beech shavings
+     The apple juice which has been previously fermented with yeast, which converts the
+     sugar into alcohol, is allowed to trickle through the openings at the top over the
+     shavings The acetic acid bacteria on the shavings rapidly oxidize the alcohol to
+     acetic acid The vinegar is drawn off below
+  [15s, 706 out-tok, finish=stop]
+
+--- minimax-m2.5  ($1.20/1M out) ---
+  Q: How is vinegar prepared by means of beech shavings?
+  A: The tank shown opened at the side is filled with a special type of beech shavings
+     The apple juice which has been previously fermented with yeast, which converts the
+     sugar into alcohol, is allowed to trickle through the openings at the top over the
+     shavings The acetic acid bacteria on the shavings rapidly oxidize the alcohol to
+     acetic acid The vinegar is drawn off below
+  [7s, 294 out-tok, finish=stop]
+
+--- qwen3.7-plus  ($1.60/1M out) ---
+  Q: How is vinegar made from fermented apple juice?
+  A: The apple juice which has been previously fermented with yeast, which converts the
+     sugar into alcohol, is allowed to trickle through the openings at the top over the
+     shavings. The acetic acid bacteria on the shavings rapidly oxidize the alcohol to
+     acetic acid. The vinegar is drawn off below.
+  [48s, 2616 out-tok, finish=stop]
+
+========================================================================================
+EXCERPT: The slabs retain sufficient heat to enable them to be drawn down or elongated
+         into rough bars, 12 inches by 4 inches by 1 inch. If the slabs are intended for
+         use as plates or sheets, they are drawn out from 9 inches to 18 inches wide by
+         passing them through heavy grooved rolls rotated by an engine. The metal is now
+         known as ordinary malleable or wrought iron. If iron of a better quality is
+         required the bars are cut up into short lengths, and piled into stacks,
+         averaging 3 feet in length, and from 8 inches to 9 inches square, the plates
+         overlapping each other in order to break the joint, and are held together by a
+         band of iron. The bars are then re-heated in a re-heating furnace, which is
+         somewhat similar in construction to the puddling furnace, and are afterwards
+         rolled out into bars, etc. If a still better quality is required, the above
+         process is repeated. Wrought iron is, therefore, pig iron deprived of its
+         impurities, such as carbon, silicon, and phosphorus, by being heated and worked
+         in the puddling furnace, and afterwards hammered and rolled.
+
+--- deepseek-v4-flash  ($0.28/1M out) ---
+  Q: How is wrought iron of a better quality manufactured?
+  A: The slabs retain sufficient heat to enable them to be drawn down or elongated into
+     rough bars, 12 inches by 4 inches by 1 inch. If iron of a better quality is
+     required the bars are cut up into short lengths, and piled into stacks, averaging 3
+     feet in length, and from 8 inches to 9 inches square, the plates overlapping each
+     other in order to break the joint, and are held together by a band of iron. The
+     bars are then re-heated in a re-heating furnace, which is somewhat similar in
+     construction to the puddling furnace, and are afterwards rolled out into bars, etc.
+     If a still better quality is required, the above process is repeated.
+  [105s, 11150 out-tok, finish=stop]
+
+--- deepseek-v4-pro  ($0.87/1M out) ---
+  Q: By what process are slabs of iron converted into wrought iron?
+  A: The slabs retain sufficient heat to enable them to be drawn down or elongated into
+     rough bars, 12 inches by 4 inches by 1 inch. If the slabs are intended for use as
+     plates or sheets, they are drawn out from 9 inches to 18 inches wide by passing
+     them through heavy grooved rolls rotated by an engine. The metal is now known as
+     ordinary malleable or wrought iron. If iron of a better quality is required the
+     bars are cut up into short lengths, and piled into stacks, averaging 3 feet in
+     length, and from 8 inches to 9 inches square, the plates overlapping each other in
+     order to break the joint, and are held together by a band of iron. The bars are
+     then re-heated in a re-heating furnace, which is somewhat similar in construction
+     to the puddling furnace, and are afterwards rolled out into bars, etc. If a still
+     better quality is required, the above process is repeated.
+  [75s, 5198 out-tok, finish=stop]
+
+--- mimo-v2.5  ($0.28/1M out) ---
+  Q: By what process is wrought iron prepared?
+  A: The slabs retain sufficient heat to enable them to be drawn down or elongated into
+     rough bars, 12 inches by 4 inches by 1 inch. If iron of a better quality is
+     required the bars are cut up into short lengths, and piled into stacks, averaging 3
+     feet in length, and from 8 inches to 9 inches square, the plates overlapping each
+     other in order to break the joint, and are held together by a band of iron. The
+     bars are then re-heated in a re-heating furnace, which is somewhat similar in
+     construction to the puddling furnace, and are afterwards rolled out into bars, etc.
+     If a still better quality is required, the above process is repeated.
+  [49s, 3240 out-tok, finish=stop]
+
+--- mimo-v2.5-pro  ($0.87/1M out) ---
+  Q: By what process is wrought iron made from pig iron?
+  A: The slabs retain sufficient heat to enable them to be drawn down or elongated into
+     rough bars, 12 inches by 4 inches by 1 inch. If the slabs are intended for use as
+     plates or sheets, they are drawn out from 9 inches to 18 inches wide by passing
+     them through heavy grooved rolls rotated by an engine. The metal is now known as
+     ordinary malleable or wrought iron. If iron of a better quality is required the
+     bars are cut up into short lengths, and piled into stacks, averaging 3 feet in
+     length, and from 8 inches to 9 inches square, the plates overlapping each other in
+     order to break the joint, and are held together by a band of iron. The bars are
+     then re-heated in a re-heating furnace, which is somewhat similar in construction
+     to the puddling furnace, and are afterwards rolled out into bars, etc. If a still
+     better quality is required, the above process is repeated.
+  [87s, 5117 out-tok, finish=stop]
+
+--- minimax-m3  ($1.20/1M out) ---
+  Q: How is wrought iron produced from the slabs obtained in the puddling furnace?
+  A: The slabs retain sufficient heat to enable them to be drawn down or elongated into
+     rough bars, 12 inches by 4 inches by 1 inch. If the slabs are intended for use as
+     plates or sheets, they are drawn out from 9 inches to 18 inches wide by passing
+     them through heavy grooved rolls rotated by an engine. The metal is now known as
+     ordinary malleable or wrought iron. If iron of a better quality is required the
+     bars are cut up into short lengths, and piled into stacks, averaging 3 feet in
+     length, and from 8 inches to 9 inches square, the plates overlapping each other in
+     order to break the joint, and are held together by a band of iron. The bars are
+     then re-heated in a re-heating furnace, which is somewhat similar in construction
+     to the puddling furnace, and are afterwards rolled out into bars, etc. If a still
+     better quality is required, the above process is repeated.
+  [9s, 900 out-tok, finish=stop]
+
+--- minimax-m2.7  ($1.20/1M out) ---
+  Q: By what process is wrought iron of superior quality produced from pig iron?
+  A: The slabs retain sufficient heat to enable them to be drawn down or elongated into
+     rough bars, 12 inches by 4 inches by 1 inch. If iron of a better quality is
+     required the bars are cut up into short lengths, and piled into stacks, averaging 3
+     feet in length, and from 8 inches to 9 inches square, the plates overlapping each
+     other in order to break the joint, and are held together by a band of iron. The
+     bars are then re-heated in a re-heating furnace, which is somewhat similar in
+     construction to the puddling furnace, and are afterwards rolled out into bars, etc.
+     If a still better quality is required, the above process is repeated.
+  [15s, 738 out-tok, finish=stop]
+
+--- minimax-m2.5  ($1.20/1M out) ---
+  Q: By what process is wrought iron made from pig iron?
+  A: The slabs retain sufficient heat to enable them to be drawn down or elongated into
+     rough bars, 12 inches by 4 inches by 1 inch. If the slabs are intended for use as
+     plates or sheets, they are drawn out from 9 inches to 18 inches wide by passing
+     them through heavy grooved rolls rotated by an engine. The metal is now known as
+     ordinary malleable or wrought iron. If iron of a better quality is required the
+     bars are cut up into short lengths, and piled into stacks, averaging 3 feet in
+     length, and from 8 inches to 9 inches square, the plates overlapping each other in
+     order to break the joint, and are held together by a band of iron. The bars are
+     then re-heated in a re-heating furnace, which is somewhat similar in construction
+     to the puddling furnace, and are afterwards rolled out into bars, etc. If a still
+     better quality is required, the above process is repeated.
+  [19s, 893 out-tok, finish=stop]
+
+--- qwen3.7-plus  ($1.60/1M out) ---
+  Q: How is wrought iron of a better quality made from ordinary bars?
+  A: If iron of a better quality is required the bars are cut up into short lengths, and
+     piled into stacks, averaging 3 feet in length, and from 8 inches to 9 inches
+     square, the plates overlapping each other in order to break the joint, and are held
+     together by a band of iron. The bars are then re-heated in a re-heating furnace,
+     which is somewhat similar in construction to the puddling furnace, and are
+     afterwards rolled out into bars, etc.
+  [60s, 3215 out-tok, finish=stop]
+
+========================================================================================
+EXCERPT: In order to secure the greatest brilliancy in the experiment, the proper
+         relative position of the selenite may be determined by noticing the natural 145
+         flaws in the film, which will be observed to run parallel with each other;
+         these flaws should be adjusted at about 46° from the square parts of the stage,
+         to obtain the greatest amount of depolarisation. “Experiment 3.—If we now take
+         the plate of selenite thus prepared, and place it under the piece of brass on
+         the stage, we shall see, instead of the alternate black and white images, two
+         coloured images composed of the constituents of white light, which will
+         alternately change by revolving the eye-piece at every quarter of the circle;
+         then, by passing along the brass, the images will overlap; and at the point at
+         which they do so, white light will be produced. If, by accident, the prism be
+         placed at an angle of 45° from the square part of the stage, no particular
+         colour will be perceived; and it will then illustrate the phenomena of the
+         neutral axis of the selenite, because when placed in that relative position no
+         depolarisation takes place.
+
+--- deepseek-v4-flash  ($0.28/1M out) ---
+  Q: How does one secure the greatest brilliancy in the experiment with a selenite plate
+     and then produce the two coloured images and the white light?
+  A: In order to secure the greatest brilliancy in the experiment, the proper relative
+     position of the selenite may be determined by noticing the natural 145 flaws in the
+     film, which will be observed to run parallel with each other; these flaws should be
+     adjusted at about 46° from the square parts of the stage, to obtain the greatest
+     amount of depolarisation. “Experiment 3.—If we now take the plate of selenite thus
+     prepared, and place it under the piece of brass on the stage, we shall see, instead
+     of the alternate black and white images, two coloured images composed of the
+     constituents of white light, which will alternately change by revolving the eye-
+     piece at every quarter of the circle; then, by passing along the brass, the images
+     will overlap; and at the point at which they do so, white light will be produced.
+  [67s, 6653 out-tok, finish=stop]
+
+--- deepseek-v4-pro  ($0.87/1M out) ---
+  Q: How does one obtain the coloured images with selenite?
+  A: (no verbatim answer)
+  [160s, 11365 out-tok, finish=stop]
+
+--- mimo-v2.5  ($0.28/1M out) ---
+  Q: How is the selenite adjusted and employed to observe coloured images and produce
+     white light in an optical experiment?
+  A: (no verbatim answer)
+  [54s, 3651 out-tok, finish=stop]
+
+--- mimo-v2.5-pro  ($0.87/1M out) ---
+  Q: How is the proper relative position of selenite determined to obtain the greatest
+     depolarisation in the experiment?
+  A: The proper relative position of the selenite may be determined by noticing the
+     natural 145 flaws in the film, which will be observed to run parallel with each
+     other; these flaws should be adjusted at about 46° from the square parts of the
+     stage, to obtain the greatest amount of depolarisation.
+  [56s, 4028 out-tok, finish=stop]
+
+--- minimax-m3  ($1.20/1M out) ---
+  Q: By what method is white light produced from two coloured images formed by a plate
+     of selenite placed under a piece of brass on the stage?
+  A: (no verbatim answer)
+  [28s, 2560 out-tok, finish=stop]
+
+--- minimax-m2.7  ($1.20/1M out) ---
+  Q: By what procedure are coloured images produced from a plate of selenite, and how is
+     white light obtained from their overlap?
+  A: (no verbatim answer)
+  [17s, 822 out-tok, finish=stop]
+
+--- minimax-m2.5  ($1.20/1M out) ---
+  Q: By what method is white light produced through the overlap of coloured images in an
+     optical experiment with selenite?
+  A: These flaws should be adjusted at about 46° from the square parts of the stage, to
+     obtain the greatest amount of depolarisation take the plate of selenite thus
+     prepared, and place it under the piece of brass on the stage, we shall see, instead
+     of the alternate black and white images, two coloured images composed of the
+     constituents of white light, which will alternately change by revolving the eye-
+     piece at every quarter of the circle by passing along the brass, the images will
+     overlap; and at the point at which they do so, white light will be produced
+  [15s, 768 out-tok, finish=stop]
+
+--- qwen3.7-plus  ($1.60/1M out) ---
+  Q: How is a plate of selenite prepared and used to observe coloured images and white
+     light?
+  A: (no verbatim answer)
+  [58s, 3162 out-tok, finish=stop]

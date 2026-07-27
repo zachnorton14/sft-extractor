@@ -1,0 +1,332 @@
+route: stem_reasoning
+model: claude-haiku-4-5
+seed:  0
+n:     20
+kept:  5/20
+
+--- EXTRACT SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s science or engineering text that
+reasons quantitatively or physically. The author's own reasoning is in the text.
+
+EXTRACT THE REASONING CHAIN, STATED IN WORDS, VERBATIM. Find where the author reasons
+from a principle to a conclusion, and copy that chain WORD FOR WORD.
+  - Return it as "spans": exact quotations from the passage that, read in order,
+    form one coherent chain (principle → application → conclusion). Prefer ONE long
+    contiguous span. Use several only because the steps are spread out — never more
+    than 4, and always the fewest, longest spans that hold the chain
+    together.
+  - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+    reorder within a span, or add any word not in the passage — including connecting
+    words between spans. You may only select and order the author's own sentences.
+  - CHOOSE SPANS STATED IN WORDS. The OCR has mangled this text's equations,
+    exponents, symbols, and numbers, and page and figure numbers bleed into the
+    formulas. A span that carries a formula, an equation, a bare math symbol
+    (=, ×, ÷, an exponent), a letter-and-number expression (x2, P1V1, H2O), a
+    fraction, or a reference to a figure, plate, table, equation, section, or page
+    is USELESS on its own and WILL BE DISCARDED. Pick the sentences that state the
+    reasoning verbally — the principle and its consequence in prose ("the product of
+    two powers of the same base adds their exponents", "the pressure varies inversely
+    as the volume", "heat added at constant volume raises the temperature"). If the
+    chain cannot be formed from prose alone, omit this item.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only: [{"i": 0, "spans": ["..."]}, ...]
+
+
+--- QUESTION SYSTEM PROMPT ---
+You are given a passage from a pre-1930s science or engineering text and a REASONING
+CHAIN quoted verbatim from it — this is the ANSWER. Write the single question that
+this reasoning chain answers, as if setting an exercise.
+
+- The chain must CORRECTLY AND COMPLETELY answer your question — ask exactly what
+  this reasoning concludes or explains. Do not ask for a step, a numeric result, or
+  an identity the chain does not reach. Read the chain as the answer: if it does not
+  fully answer, adjust the question to fit the chain.
+- Pose a problem that must be reasoned through, not a fact to recall: "Why does
+  ...", "How does it follow that ...", "Why must ...?", "If ..., what happens and
+  why?".
+- Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use no
+  word, term, or idiom that came into use after 1930, and no modern conversational
+  or academic phrasing — it must read as a question a period examiner would pose.
+- The question must STAND ALONE and betray no awareness of a source. Never refer to
+  the passage or to whoever wrote it — no "the passage", "the text", "the author",
+  "the figure", "according to", "as described", "as shown". Ask about the SUBJECT
+  ITSELF, as a matter of physical fact, to someone who never saw the passage.
+- SUPPLY THE PHYSICAL SETUP the reader needs so the problem is well-posed and the
+  chain's "it / this / these" have clear antecedents: name the bodies, quantities,
+  or conditions involved (the gas held at constant temperature, the beam loaded at
+  its centre, the current through the coil). Give just enough to make the question
+  unambiguous — do not restate the whole passage, and never leave a bare "this
+  quantity", "such a body", or "the system".
+- Every proper noun must be one the reader can place: either widely recognizable on
+  its own (Boyle's law, Carnot's cycle), or introduced with a short descriptor.
+- Do NOT reveal the answer: do not state the conclusion, and do not reuse the
+  chain's distinctive wording. Ask for the reasoning; make the reader supply it.
+
+Input: JSON array [{"i": 0, "passage": "...", "answer": "..."}, ...]
+Output JSON only: [{"i": 0, "q": "..."}, ...]
+
+
+========================================================================================
+[SCIENCE]  1925  stem_signal 1.00
+  excerpt : AN ACUTE ANGLE to the straight angle? What name is given to an angle that is
+            less than a straight angle and greater than a right angle? 7. Point to 5
+            acute angles in your classroom; to 3 obtuse angles. AN OBTUSE ANGLE 8. What
+            is the dictionary definition of acute? of ob tuse? 9. What kind of angle do
+            the hands of a clock make at 2 o'clock? at 3 o'clock? at 6 o'clock? at 8
+            o'clock ? How to Read Ang...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1915  stem_signal 0.80
+  excerpt : In what way does interest resemble the rent for a horse and carriage, or any
+            other form of rent? II Interest is reckoned in per cents, the given per cent
+            covering the rate of interest paid each year. In order to complete the
+            purchase of a home, I borrow $900 from a trust company charging 5% interest.
+            What sum must I return to the bank, if I return the loan at the end of 2
+            years? Int. for 1 yr. = 5...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1907  stem_signal 1.00
+  excerpt : When equivalent weights of the substances enter the reaction, it amounts to
+            25,050 calories. Hence the thermochemical equation, involving two
+            equivalents of the substances in question, is as follows:- CuSO,+ZnZnSO,+ Cu
+            + 2 x 25,050 calories. If now instead of heat this reaction produces
+            electrical energy, the quantity of the latter produced would be the
+            electrical equivalent of 25,050 calories. Th...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1900  stem_signal 1.00
+  excerpt : The chemical sources lie, as may be inferred from what has been already
+            said, in the oxidation processes due to the interaction between oxygen and
+            the living substances of the cells. Thus, when a muscle contracts, chemical
+            decompositions occur, and the energy resulting makes its appearance sooner
+            or later as heat. But in response to the needs of the body, the central
+            nervous system can stir up sim...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1905  stem_signal 1.00
+  excerpt : It will be noticed in Fig. 44 that if the point O is so situated that its
+            horizontal projection falls on m,-n,, the base of the triangle will vanish
+            and the hypotenuse will be equal to the altitude. In such a case then the
+            distance of the point from the axis, or the radius of the arc in which the
+            point moves, will be equal to the distance of the vertical projection of the
+            point from G-L. 88. Probl...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1891  stem_signal 1.00
+  excerpt : Upon weighing now a liter of water-gas-steamits mass is found to be 0-8047
+            grams; whence its relative density is 0.80470-0896, or 9, and its molecular
+            mass is 9X2 or 18. Water therefore consists of 2 parts of hydrogen and 16
+            parts of oxygen in each molecule. Again, olefiant gas-a compound of carbon
+            and hydrogen-affords on analysis 85.71 per cent of carbon and 14-29 per cent
+            of hydrogen, which is t...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1900  stem_signal 0.50
+  excerpt : It is highly important to know where these stones came from, and whether
+            they were already shaped to fit the building before they were fixed by
+            selection, or whether they were simply rough stones of indefinite shape, the
+            shape thus appearing in the structure only as the stones were put in place.
+            According to the first idea, variations are said to be determinate, since
+            the direction of the variatio...
+  Q       : In the theory of organic evolution, two rival views are held concerning the
+            nature of variations: some consider them determinate, while others regard
+            them as purely haphazard. What, according to each of these views, is the
+            true directing agency in the evolutionary process?
+  A       : According to the first idea, variations are said to be determinate, since
+            the direction of the variations appears to be determined by some underlying
+            law. If such is the case, the real factor in evolution is not the survival
+            factor but that which determines the character of the variations. If,
+            however, the variations are purely hap-hazard, then the determining factor
+            in evolution is the force that selects the variations which are to survive
+            and become transmitted to future generations.
+
+========================================================================================
+[SCIENCE]  1848  stem_signal 1.00
+  excerpt : 3 X 6= 18. It follows, therefore, that 3 and 6 are component parts of 18. 4
+            dollars, cost of 1 yard. 3 yards. 12 dollars, cost of 3 yards. 6 (3 × 6 =)
+            18 yards. 72 dollars, cost of 18 yards. SOLUTION.If 1 yard cost 4 dollars, 3
+            yards will cost 3 times 4 dollars, 12 dollars; and, if 3 yards cost 12
+            dollars, 18 yards (3×6= 18) will cost 6 times as much as 3 yards, that is, 6
+            times 12 dollars = 72 do...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1898  stem_signal 1.00
+  excerpt : The conclusion was that there is no philosophical difference between the
+            different cases ; since the phenomena produced by the different kinds of
+            electricity differ not in their character but only in degree. "Electricity,
+            whatever may be its source, is identical in its nature." On comparing the
+            effects produced by different discharges, he concludes that "if the same
+            absolute quantity of electricit...
+  Q       : From the fact that the same absolute quantity of electricity, whatever its
+            source or intensity, produces the same deflection in a galvanometer and the
+            same amount of chemical decomposition, what general inference is to be drawn
+            concerning the nature of electricity and the law connecting its quantity
+            with its magnetic and chemical force?
+  A       : The conclusion was that there is no philosophical difference between the
+            different cases ; since the phenomena produced by the different kinds of
+            electricity differ not in their character but only in degree. "Electricity,
+            whatever may be its source, is identical in its nature." On comparing the
+            effects produced by different discharges, he concludes that "if the same
+            absolute quantity of electricity pass through the galvanometer, whatever may
+            be its intensity, the deflecting force upon the magnetic needle is the
+            same." … quantitative comparison between the "quantity" of electricity from
+            different sources, and came to the conclusion that both in magnetic
+            deflection and in chemical force the current of electricity given by his
+            standard battery for eight beats of his watch was equal to that of the
+            friction machine evolved by thirty revolutions; further, that "the chemical
+            power, like the magnetic force, is in direct proportion to the absolute
+            quantity of electricity which passes."
+
+========================================================================================
+[SCIENCE]  1843  stem_signal 0.40
+  excerpt : It will be perceived that inorganic matter, or that of the mineral kingdom,
+            possesses the same properties when divided or ground to powder that it does
+            in the mass; i. e. each particle possesses those properties in proportion to
+            its size; while the organic parts of animals or of vegetables, if thus
+            crushed or divided, are deprived by death of the vital forces which
+            distinguished them from inorgani...
+  Q       : In what manner does the germination of a seed, by which a portion of its
+            substance becomes a living plant and the residue rots, exemplify the
+            difference between organic and inorganic matter with respect to the laws of
+            decomposition?
+  A       : It will be perceived that inorganic matter, or that of the mineral kingdom,
+            possesses the same properties when divided or ground to powder that it does
+            in the mass; i. e. each particle possesses those properties in proportion to
+            its size; while the organic parts of animals or of vegetables, if thus
+            crushed or divided, are deprived by death of the vital forces which
+            distinguished them from inorganic matter. The seed of a plant, if placed in
+            the earth, forms a living plant, which, from its incipiency, opposes
+            inorganic laws, or those of decomposition. The vital principle which it has
+            received from the seed and which the seed having parted with, together with
+            a portion of its sub- 3* stance for its support, continues to animate the
+            plant; while the remainder of the seed has thereby become subject to the
+            inorganic laws and rots, or is decomposed in the ground. The plant lives and
+            flourishes, and by the force of its vital powers, thus obtained,
+            appropriates inorganic matter to its support and the development of its
+            organs, until by violence or the exhaustion of its vital energies at
+            maturity, it is at length, and in turn, subjected to the force of the
+            inorganic laws it dies and is decomposed, either in the ground or by being
+            consumed by animals.
+
+========================================================================================
+[TECHNOLOGY]  1905  stem_signal 0.40
+  excerpt : The three QUANTITY S'ZE on FIGURE XXVI. The Stock Ledger on which is kept
+            record of all gen delivery of all stores must be posted-the "Received" and
+            "Given Out" sides TO WHOM DELIVERED QUANTITY DELIVERED TO SHOP QUANTITY
+            DELIVERED TO FINISHED STOCK GIVEN OUT QUANTITY actly the same duty for
+            Finished Stores that Form XXIII does for rough ON HAND COST GIVEN OUT SIZE
+            OR SHOP OR QUALITY OFFICE RE- DEL...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1873  stem_signal 1.00
+  excerpt : Draw any straight line of considerable length on a flat sheet of paper or on
+            the board, and by a geometrical construction, according to any of the usual
+            methods in Elementary Geometry, lay out very accurately two lines
+            perpendicular to the line already drawn, and at a distance apart equal to
+            the width of the blade of the T square at any one point. Then if the edges
+            of the blade are parallel, they ...
+  Q       : How may a draughtsman ascertain, by the aid of a straight line and
+            perpendiculars drawn upon a flat board, whether the two edges of his
+            T-square blade are parallel?
+  A       : Draw any straight line of considerable length on a flat sheet of paper or on
+            the board, and by a geometrical construction, according to any of the usual
+            methods in Elementary Geometry, lay out very accurately two lines
+            perpendicular to the line already drawn, and at a distance apart equal to
+            the width of the blade of the T square at any one point. Then if the edges
+            of the blade are parallel, they will coincide with these lines.
+
+========================================================================================
+[TECHNOLOGY]  1880  stem_signal 1.00
+  excerpt : As to the amount of space to be warmed, it is assumed that at least two full
+            stories, say 100 feet deep by 15 feet high, on each side of the street, will
+            require steam, as in many blocks and hotels it will be used in the third and
+            fourth stories, and more or less in the basements. Then we have 100 × 15 =
+            1,500 × 2 = 3,000 × 2 = = 6,000 cubic feet of space for each lineal foot of
+            street, including ...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1912  stem_signal 0.50
+  excerpt : The remaining 2/23rds, the last two of the twenty-three half-hours of every
+            day, produce the net profits of 10 per cent. If therefore (prices remaining
+            the same) the factory could be kept at work thirteen hours instead of eleven
+            and one-half, by an addition of about £2,000 to the circulating capital, the
+            net profit would be more than doubled. On the other hand, if the hours of
+            working were reduced...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1916  stem_signal 0.50
+  excerpt : If all bolts and screws intended especially for railways (including track
+            bolts) and all enameled ware be eliminated from consideration among the
+            imports, the items considered in this report would amount to about
+            $2,500,000, of which the United States sells about 28 per cent. If we
+            include the items first mentioned, the United States sells about 21 per
+            cent. In making an estimate of a possible inc...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1915  stem_signal 1.00
+  excerpt : 395. fluid soils, such as quicksand, alluvium, etc., should be removed where
+            practicable or the foundation carried to a lower stratum. If in Fig. 36 we
+            let x=depth of ballast (from top of tie to subgrade); p=maximum supporting
+            power per sq. ft. of the subgrade; P₁ = pressure exerted on subgrade midway
+            between ties; y=weight of 1 cu. ft. of ballast; angle of repose of subgrade;
+            Ballast K....X------...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1908  stem_signal 0.45
+  excerpt : Section 7 of the act by which this railway company was incorporated runs as
+            follows: and the said company shall be entitled, and they are hereby
+            empowered, to demand and collect by way of freight or toll, on all goods,
+            wares, merchandise, and productions of the country and cars or vehicles of
+            any description, conveyed over and upon said railroad, such rates of toll or
+            freight as the board of direc...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1919  stem_signal 0.88
+  excerpt : The dark portions or solids will not show any wear. In marking out this
+            sheet, use the standard marks, so that any feeder can readily patch up your
+            sheets. These marks include a ring or a series of circles without any other
+            marks or letters, meaning tissue paper. Patch marks with the letter "F"
+            signify folio, which is twice as thick as tissue. If there is a series of
+            patch marks within a circle ma...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1919  stem_signal 0.45
+  excerpt : A serious menace to the wages of workingmen is the cut-throat competition of
+            the less competent. If 10 per cent of the workingmen are thriftless and
+            vicious, then the competition of that 10 per cent is a load on the neck of
+            the 90 per cent. They and their unfortunate families are thrown upon the
+            labor market, and it is one of the benefits of universal insurance that it
+            helps in some degree to take...
+  Q       : Why is the cut-throat competition of the less competent workingman a menace
+            to the wages of the more competent, and how does universal health insurance,
+            properly worked out, propose to remove this evil?
+  A       : A serious menace to the wages of workingmen is the cut-throat competition of
+            the less competent. … The honest, thrifty worker is already paying a part of
+            the cost of the thriftless and vicious, but he is paying it through the
+            invisible pressure of competitive wages. … Health insurance, properly worked
+            out, is a visible payment designed to remove that invisible pressure.
+
+========================================================================================
+[TECHNOLOGY]  1916  stem_signal 0.80
+  excerpt : 12 per cent (3) To find a number when the rate per cent and the percentage
+            are known: Add two ciphers to the percentage and divide by the rate per
+            cent. Example: If 68 pounds is 15 per cent of the entire charge, how many
+            pounds in the total charge? Ans. 6800÷15-453.33 pounds (4) To find what
+            number is a certain per cent more or less than a given number: (a) When the
+            given number is more than the r...
+  (failed)
