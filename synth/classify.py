@@ -232,6 +232,10 @@ _AFF_TO_PRIMARY = {
     "expository": "knowledge", "argument": "reasoning", "opinion": "opinion",
     "procedural": "how_to", "composition": "composition",
     "narrative": ("narrative_grounded", "narrative_fiction"),
+    # harvest_stem's heuristic pre-tag: "agreement" here = classifier-confirmed STEM,
+    # so the metric reads as the confirmation rate rather than scoring every overlay
+    # window as a disagreement.
+    "stem_reasoning": "stem_reasoning",
 }
 
 
