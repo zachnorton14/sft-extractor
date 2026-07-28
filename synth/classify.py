@@ -131,7 +131,8 @@ async def run_async(records, state, save=True):
     batches = engine._pack_batches(pending, TOKEN_BUDGET)
     print(f"  {len(pending)} excerpts, {len(batches)} batches...")
     done = [0]
-    empties = [0]                     # consecutive batches that stored nothing
+    last = [len(state)]               # stored count at the last checkpoint
+    stall = [0]                       # consecutive checkpoints with no storage growth
     aborted = asyncio.Event()
     async with engine.open_client() as client:
         semaphore = asyncio.Semaphore(CONCURRENCY)
@@ -139,25 +140,27 @@ async def run_async(records, state, save=True):
         async def tracked(batch):
             if aborted.is_set():       # cap detected -> stop issuing work
                 return
-            before = len(state)
             await _classify_batch(client, semaphore, batch, state, cfg)
             done[0] += len(batch)
-            if len(state) > before:
-                empties[0] = 0
-            else:
-                empties[0] += 1
-                # A batch almost always stores >=1 (even all-`drop` is stored). Many in
-                # a row storing nothing = the endpoint is returning empty output — the
-                # OpenCode usage cap (or a degraded fallback). Abort instead of spinning.
-                if empties[0] >= 20 and not aborted.is_set():
-                    aborted.set()
-                    print("  ABORTING: 20 batches in a row stored nothing — the OpenCode "
-                          "usage cap is likely active (empty/degraded responses). Nothing "
-                          "lost; resumable. Re-run after the 5-hour window resets.",
-                          flush=True)
-            if done[0] % 200 < len(batch) and save:
-                save_state(state)
-                print(f"  {done[0]}/{len(pending)}  (stored {len(state):,})", flush=True)
+            if done[0] % 400 < len(batch):            # checkpoint every ~400 excerpts
+                stored = len(state)
+                if save:
+                    save_state(state)
+                print(f"  {done[0]}/{len(pending)}  (stored {stored:,})", flush=True)
+                # Cap detection at the checkpoint level (concurrency-safe): if the stored
+                # count hasn't grown across several checkpoints (~3k excerpts) the endpoint
+                # is returning empty output — the OpenCode usage cap or a degraded fallback.
+                if stored == last[0]:
+                    stall[0] += 1
+                    if stall[0] >= 8 and not aborted.is_set():
+                        aborted.set()
+                        print("  ABORTING: no results stored across ~3k excerpts — the "
+                              "OpenCode usage cap is likely active. Nothing lost; "
+                              "resumable. Re-run after the 5-hour window resets.",
+                              flush=True)
+                else:
+                    stall[0] = 0
+                    last[0] = stored
 
         await asyncio.gather(*[asyncio.create_task(tracked(b)) for b in batches])
     if save:
