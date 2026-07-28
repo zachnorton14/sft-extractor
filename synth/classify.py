@@ -131,15 +131,33 @@ async def run_async(records, state, save=True):
     batches = engine._pack_batches(pending, TOKEN_BUDGET)
     print(f"  {len(pending)} excerpts, {len(batches)} batches...")
     done = [0]
+    empties = [0]                     # consecutive batches that stored nothing
+    aborted = asyncio.Event()
     async with engine.open_client() as client:
         semaphore = asyncio.Semaphore(CONCURRENCY)
 
         async def tracked(batch):
+            if aborted.is_set():       # cap detected -> stop issuing work
+                return
+            before = len(state)
             await _classify_batch(client, semaphore, batch, state, cfg)
             done[0] += len(batch)
+            if len(state) > before:
+                empties[0] = 0
+            else:
+                empties[0] += 1
+                # A batch almost always stores >=1 (even all-`drop` is stored). Many in
+                # a row storing nothing = the endpoint is returning empty output — the
+                # OpenCode usage cap (or a degraded fallback). Abort instead of spinning.
+                if empties[0] >= 20 and not aborted.is_set():
+                    aborted.set()
+                    print("  ABORTING: 20 batches in a row stored nothing — the OpenCode "
+                          "usage cap is likely active (empty/degraded responses). Nothing "
+                          "lost; resumable. Re-run after the 5-hour window resets.",
+                          flush=True)
             if done[0] % 200 < len(batch) and save:
                 save_state(state)
-                print(f"  {done[0]}/{len(pending)}", flush=True)
+                print(f"  {done[0]}/{len(pending)}  (stored {len(state):,})", flush=True)
 
         await asyncio.gather(*[asyncio.create_task(tracked(b)) for b in batches])
     if save:
