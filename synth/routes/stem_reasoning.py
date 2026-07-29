@@ -59,7 +59,8 @@ conclusion, and copy that chain out.
     "refurbished" you MAY fix a corrupted expression back to what it plainly must be
     (e.g. "CuSO,+ZnZnSO,+ Cu" → "CuSO₄ + Zn → ZnSO₄ + Cu"; "9X2" → "9 × 2";
     "P₁ = pressure" kept clean). You MAY change only digits, symbols, operators,
-    subscripts/superscripts, and spacing.
+    subscripts/superscripts, and spacing. Write exponents and indices as Unicode
+    super/subscript characters (a², cʳ, x₁), NEVER as HTML or markup (no <sup>/<sub>).
   - ADD NO NEW CONTENT. Do NOT paraphrase, summarize, rewrite, reorder, translate, or
     add, remove, or alter any WORD of the prose — not a connecting word, not a gloss,
     not a clarification. Every word in "refurbished" must already stand in "verbatim".
@@ -105,6 +106,9 @@ this reasoning chain answers, as if setting an exercise.
   its own (Boyle's law, Carnot's cycle), or introduced with a short descriptor.
 - Do NOT reveal the answer: do not state the conclusion, and do not reuse the
   chain's distinctive wording. Ask for the reasoning; make the reader supply it.
+- Write any mathematical notation as plain Unicode: exponents and indices as Unicode
+  superscript/subscript characters (a², xₙ, aᵖ, cʳ), or a caret where no such
+  character exists (a^k). NEVER emit HTML or markup — no <sup>, <sub>, or any tag.
 
 Input: JSON array [{"i": 0, "passage": "...", "answer": "..."}, ...]
 Output JSON only: [{"i": 0, "q": "..."}, ...]
