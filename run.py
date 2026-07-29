@@ -353,6 +353,12 @@ def cmd_classify(args):
     asyncio.run(classify.run_async(pool, state))
     classify.write_back(records, state)
     classify.report(records, state)
+    remaining = sum(1 for r in records if str(r["doc_index"]) not in state)
+    if remaining:
+        print(f"\nINCOMPLETE — {remaining:,} of {len(records):,} still unclassified. "
+              f"Re-run to finish (usage-cap limited).")
+    else:
+        print(f"\nCOMPLETE — all {len(records):,} excerpts classified.")
 
 
 def cmd_composition(args):

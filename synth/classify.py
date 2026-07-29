@@ -162,7 +162,16 @@ async def run_async(records, state, save=True):
                     stall[0] = 0
                     last[0] = stored
 
-        await asyncio.gather(*[asyncio.create_task(tracked(b)) for b in batches])
+        tasks = [asyncio.create_task(tracked(b)) for b in batches]
+
+        async def _cancel_on_abort():         # abort must actually STOP the run: all
+            await aborted.wait()              # tasks are created up front, so setting the
+            for t in tasks:                  # flag isn't enough — cancel the pending ones.
+                t.cancel()
+
+        watcher = asyncio.create_task(_cancel_on_abort())
+        await asyncio.gather(*tasks, return_exceptions=True)
+        watcher.cancel()
     if save:
         save_state(state)
 
