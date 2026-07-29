@@ -88,6 +88,12 @@ asked to COMPOSE such a piece. Work in this order.
      that to read cleanly — a garbled WORD, a dropped word, anything you are not certain
      of — do NOT patch it: reject the WHOLE item (emit nothing for that index).
      Passages are plentiful; emit a pristine specimen or none.
+   - REJECT DESTROYED CONTENT, not just garbled letters. If the specimen's MEANING has
+     been lost — an exercise whose fill-in blanks or answers have dropped out, equations
+     that no longer balance or resolve, doubled or dangling operators ("= =", "÷ ;"), a
+     chain of figures that does not follow — you cannot honestly restore it (that would
+     mean inventing the missing values). Emit NO item for it. Only pass a specimen whose
+     content is intact and correct.
    - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
      terminal punctuation, so several spans read as continuous prose when joined.
 
@@ -122,9 +128,12 @@ Output JSON only:
 
 def source_excerpts(n, seed=0, **_):
     """Composition excerpts from the materialized corpus, selected by the classifier
-    (classes contains "composition"). n falsy or >= pool returns the whole pool;
+    (classes contains "composition") and screened for OCR-destroyed arithmetic — drills
+    whose fill-in blanks and equations the scan mangled beyond honest repair (see
+    corpus.has_broken_math). n falsy or >= pool returns the whole (screened) pool;
     otherwise a seeded random sample. Requires `classify` write-back to have run."""
-    mat = corpus.load_excerpts(cls=CLASSES)
+    mat = [r for r in corpus.load_excerpts(cls=CLASSES)
+           if not corpus.has_broken_math(r["excerpt"])]
     if not n or n >= len(mat):
         return mat
     return random.Random(seed).sample(mat, n)

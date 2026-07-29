@@ -882,6 +882,20 @@ def ocr_score(text):
     return round(bad / len(toks), 3)
 
 
+# Doubled or dangling math operators ("= =", "÷ ·", "= ;", "· =") are OCR DESTRUCTION,
+# not artifacts any route can repair — clean equations never contain them. In scanned
+# arithmetic drills the fill-in blanks (where a pupil's answer goes) drop out and the
+# two equals signs collide, or a line's result bleeds into the next, leaving a chain no
+# one can reconstruct. High precision: clean math and ordinary prose never match.
+_BROKEN_MATH = re.compile(r"=\s*=|[=×÷]\s*[·;]|[·;]\s*=")
+
+
+def has_broken_math(text):
+    """True if the span carries OCR-destroyed arithmetic (doubled/dangling operators,
+    dropped fill-in blanks) that cannot be honestly repaired — drop it at source."""
+    return bool(_BROKEN_MATH.search(text))
+
+
 def _first_word(text):
     m = re.match(r"\s*([A-Za-z]+)", text)
     return m.group(1).lower() if m else ""
