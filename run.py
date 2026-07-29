@@ -256,7 +256,8 @@ def cmd_harvest(args):
         return
     if args.conversational:
         target = float("inf") if args.exhaust else args.total
-        corpus.harvest_conversational(target, seed=args.seed, max_shards=args.max_shards)
+        corpus.harvest_conversational(target, per_doc=args.per_doc, seed=args.seed,
+                                      max_shards=args.max_shards)
         return
     corpus.harvest(args.total, alpha=args.alpha, min_conf=args.min_conf,
                    n_words=args.words, per_doc=args.per_doc, seed=args.seed,

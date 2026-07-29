@@ -28,7 +28,6 @@ import asyncio
 import json
 import random
 import re
-from collections import Counter
 from datetime import datetime
 
 from synth import corpus, engine
@@ -38,22 +37,11 @@ MIN_TURNS = 4                     # at least two full exchanges — a real conve
 
 # The classifier over-tags novel and play dialogue as `conversational` (quoted speech
 # with questions reads as a two-party exchange). Genuine usable material — catechism,
-# Socratic dialogue, deposition, debate — has EXPLICIT structure the classifier can't
-# see: Q./A. markers, or a repeated short speaker-name label (Euph./Alc., Chairman.).
-# Prose fiction lacks these; plays have them but live in LANGUAGE AND LITERATURE, which
-# the route excludes. So sourcing filters on structure + category, not the class alone.
-_SPEAKER_LABEL = re.compile(r'(?:^|(?<=[.!?”"\'])\s)([A-Z][a-z]{0,9}\.)(?=\s+[A-Z“"\'])')
-_QA_MARK = re.compile(r"(?:^|\n|\.\s)\s*(?:Q\.|A\.|Ques\b|Ans\b)", re.I)
+# Socratic dialogue, deposition, debate — has EXPLICIT structure (Q./A. markers or a
+# repeated speaker-name label; see corpus.is_structured_dialogue), which prose fiction
+# lacks. Plays have it too but live in LANGUAGE AND LITERATURE, which the route excludes.
+# The harvest overlay applies the same structure filter, so both look for the same thing.
 _EXCLUDE_CATEGORIES = {"LANGUAGE AND LITERATURE"}
-
-
-def _is_structured_dialogue(text):
-    """True when the excerpt shows explicit two-party structure — Q./A. markers, or a
-    short speaker-name label used at least twice (a real turn-taking pattern) — the
-    mark of a catechism / Socratic dialogue / deposition / debate rather than prose
-    fiction with quoted speech."""
-    repeated = sum(v for v in Counter(_SPEAKER_LABEL.findall(text)).values() if v >= 2)
-    return len(_QA_MARK.findall(text)) >= 2 or repeated >= 3
 
 SYSTEM = f"""\
 You are given a passage of pre-1930s DIALOGUE — a conversation, catechism, or
@@ -137,7 +125,7 @@ def source_excerpts(n, seed=0, **_):
     whole filtered pool; else a seeded sample. Requires `classify` write-back."""
     mat = [r for r in corpus.load_excerpts(cls=CLASSES)
            if r.get("category") not in _EXCLUDE_CATEGORIES
-           and _is_structured_dialogue(r["excerpt"])]
+           and corpus.is_structured_dialogue(r["excerpt"])]
     if not n or n >= len(mat):
         return mat
     return random.Random(seed).sample(mat, n)

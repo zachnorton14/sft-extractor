@@ -618,9 +618,11 @@ def harvest_verse(target, seed=0, max_shards=N_SHARDS):
                             VERSE_HARVEST_STATE, seed=seed, max_shards=max_shards)
 
 
-def harvest_conversational(target, seed=0, max_shards=N_SHARDS):
-    """Targeted conversational overlay — dialogue/catechism/Q&A windows."""
-    return _harvest_overlay("conversational", "c", conversational_windows,
+def harvest_conversational(target, per_doc=6, seed=0, max_shards=N_SHARDS):
+    """Targeted conversational overlay — structured catechism/dialogue/Q&A windows,
+    up to per_doc per doc (catechism books span many topics)."""
+    return _harvest_overlay("conversational", "c",
+                            lambda t, r: conversational_windows(t, r, k=per_doc),
                             CONVERSATIONAL_CATEGORIES, target,
                             CONVERSATIONAL_HARVEST_STATE, seed=seed, max_shards=max_shards)
 
@@ -1068,10 +1070,27 @@ def verse_windows(text, rng=None, k=6, min_score=0.6, win=12):
 # LITERATURE is dropped on purpose: its "dialogue" is novels and plays, where speech is
 # wrapped in narration/attribution ('"...," said X') and can't be split into clean
 # verbatim turns, and plays carry >2 speakers.
+# Structured Q&A lives well beyond catechism books — legal depositions (LAW), science
+# catechisms (SCIENCE), Socratic dialogue and religious catechism (PHILOSOPHY/RELIGION),
+# didactic textbooks (EDUCATION, AGRICULTURE), debate/testimony (SOCIAL SCIENCES).
+# LANGUAGE AND LITERATURE is excluded on purpose — its "dialogue" is novels and plays.
 CONVERSATIONAL_CATEGORIES = [
-    "PHILOSOPHY. PSYCHOLOGY. RELIGION", "EDUCATION",
+    "PHILOSOPHY. PSYCHOLOGY. RELIGION", "EDUCATION", "LAW", "SCIENCE",
+    "SOCIAL SCIENCES", "AGRICULTURE",
 ]
 _QA_MARK = re.compile(r"(?:^|\n)\s*(?:Q\.|A\.|Ques\b|Ans\b|Question\b|Answer\b)", re.I)
+
+# Explicit two-party structure — Q./A. markers, or a short speaker-name label used at
+# least twice (real turn-taking) — the mark of a catechism/Socratic dialogue/deposition/
+# debate, as opposed to prose fiction with quoted speech. Shared by the harvest window
+# gate and the route's sourcing filter so both look for the same thing.
+_STRUCT_QA = re.compile(r"(?:^|\n|\.\s)\s*(?:Q\.|A\.|Ques\b|Ans\b)", re.I)
+_SPEAKER_LABEL = re.compile(r'(?:^|(?<=[.!?”"\'])\s)([A-Z][a-z]{0,9}\.)(?=\s+[A-Z“"\'])')
+
+
+def is_structured_dialogue(text):
+    repeated = sum(v for v in Counter(_SPEAKER_LABEL.findall(text)).values() if v >= 2)
+    return len(_STRUCT_QA.findall(text)) >= 2 or repeated >= 3
 
 
 def conversational_signal(text):
@@ -1118,7 +1137,7 @@ def conversational_windows(text, rng=None, k=3, min_signal=0.35, n_words=220):
         if not is_self_contained(ex) or not has_affordance(ex) or is_garbage(ex):
             continue
         sig = conversational_signal(ex)
-        if sig >= min_signal:
+        if sig >= min_signal and is_structured_dialogue(ex):
             cands.append((sig, start, end, ex))
     cands.sort(key=lambda c: c[0], reverse=True)
     out, used = [], []
