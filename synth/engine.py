@@ -454,8 +454,24 @@ async def run_async(route, excerpts, state, save=True):
             save_state(route, state)
 
 
+def emit_rows(route_name, rows):
+    """Sink for a route's finished rows. Default: push to the HF dataset repo, ONE
+    FOLDER PER ROUTE, nothing left on local disk (the deliverable lives on HF; the
+    resume ledger under synth/state/ is what stays local). Set SFT_OUTPUT_LOCAL=1 to
+    write OUTPUT_DIR/<route>.json instead — offline/debug escape."""
+    if os.environ.get("SFT_OUTPUT_LOCAL"):
+        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        out = OUTPUT_DIR / f"{route_name}.json"
+        out.write_text(json.dumps(rows, indent=2, ensure_ascii=False))
+        print(f"  wrote {len(rows)} {route_name} rows -> {out}")
+        return out
+    from synth import hf_push                        # lazy: keeps engine import light
+    dest = hf_push.push_rows(route_name, rows)
+    print(f"  pushed {len(rows)} {route_name} rows -> {dest}")
+    return dest
+
+
 def write_output(route, excerpts, state):
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     rows = []
     for e in excerpts:
         r = state.get(str(e["doc_index"]))
@@ -475,10 +491,7 @@ def write_output(route, excerpts, state):
         row["question"] = r["q"]
         row["answer"] = r["a"]
         rows.append(row)
-    out = OUTPUT_DIR / f"{route.name}.json"
-    out.write_text(json.dumps(rows, indent=2, ensure_ascii=False))
-    print(f"  wrote {len(rows)} {route.name} rows -> {out}")
-    return out
+    return emit_rows(route.name, rows)
 
 
 def _wrap(label, text):

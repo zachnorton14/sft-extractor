@@ -237,7 +237,6 @@ async def run_async(excerpts, state, save=True):
 
 
 def write_output(excerpts, state):
-    engine.OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     rows = []
     for e in excerpts:
         r = state.get(str(e["doc_index"]))
@@ -248,10 +247,7 @@ def write_output(excerpts, state):
             "year": e.get("year"), "prose_score": e.get("prose_score"),
             "excerpt": e["excerpt"], "conversations": r["turns"],
         })
-    out = engine.OUTPUT_DIR / "multiturn_qa.json"
-    out.write_text(json.dumps(rows, indent=2, ensure_ascii=False))
-    print(f"  wrote {len(rows)} multiturn_qa rows -> {out}")
-    return out
+    return engine.emit_rows("multiturn_qa", rows)
 
 
 def _conv_lines(excerpts, state):
