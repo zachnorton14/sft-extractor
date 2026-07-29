@@ -59,6 +59,7 @@ else:                                         # deepseek — direct API
 HTTP_TIMEOUT = 180                # seconds per request
 CONCURRENCY = 20
 TOKEN_BUDGET = 1200               # chars/4 per batch
+CHECKPOINT_EVERY = 500            # save the resume ledger every N excerpts within a phase
 
 
 # --- shared parsing / extraction helpers ---------------------------------------
@@ -416,6 +417,26 @@ async def _question_batch(client, semaphore, batch, state, route):
             state[keys[idx]]["q"] = q
 
 
+async def _run_batches(batches, run_one, state, route, save, label):
+    """Run batch coroutines concurrently, checkpointing state every CHECKPOINT_EVERY
+    excerpts (and once at the end) so a long run — especially the two-phase extract,
+    which otherwise saved nothing until the whole phase finished — is crash-safe and
+    resumable. run_one(batch) is an awaitable that mutates `state`."""
+    total = sum(len(b) for b in batches)
+    done = [0]
+
+    async def tracked(batch):
+        await run_one(batch)
+        done[0] += len(batch)
+        if save and done[0] % CHECKPOINT_EVERY < len(batch):
+            save_state(route, state)
+            print(f"  {label}: {done[0]}/{total}", flush=True)
+
+    await asyncio.gather(*[asyncio.create_task(tracked(b)) for b in batches])
+    if save:
+        save_state(route, state)
+
+
 async def run_async(route, excerpts, state, save=True):
     async with open_client() as client:
         semaphore = asyncio.Semaphore(route.concurrency)
@@ -426,10 +447,9 @@ async def run_async(route, excerpts, state, save=True):
             if need_a:
                 batches = _pack_batches(need_a, route.token_budget)
                 print(f"  extract: {len(need_a)} excerpts, {len(batches)} batches...")
-                await asyncio.gather(*[_extract_batch(client, semaphore, b, state, route)
-                                       for b in batches])
-                if save:
-                    save_state(route, state)
+                await _run_batches(batches,
+                                   lambda b: _extract_batch(client, semaphore, b, state, route),
+                                   state, route, save, "extract")
             # phase 2 — write questions for extracted answers that lack one
             need_q = [e for e in excerpts
                       if state.get(str(e["doc_index"]), {}).get("a")
@@ -438,10 +458,9 @@ async def run_async(route, excerpts, state, save=True):
                 # payload carries passage + answer, so halve the budget
                 batches = _pack_batches(need_q, max(1, route.token_budget // 2))
                 print(f"  question: {len(need_q)} answers, {len(batches)} batches...")
-                await asyncio.gather(*[_question_batch(client, semaphore, b, state, route)
-                                       for b in batches])
-                if save:
-                    save_state(route, state)
+                await _run_batches(batches,
+                                   lambda b: _question_batch(client, semaphore, b, state, route),
+                                   state, route, save, "question")
             return
 
         # one-phase
@@ -451,18 +470,9 @@ async def run_async(route, excerpts, state, save=True):
             return
         batches = _pack_batches(pending, route.token_budget)
         print(f"  {len(pending)} excerpts, {len(batches)} batches...")
-        done = [0]
-
-        async def tracked(batch):
-            await _single_batch(client, semaphore, batch, state, route)
-            done[0] += len(batch)
-            if done[0] % 100 < len(batch) and save:
-                save_state(route, state)
-                print(f"  {done[0]}/{len(pending)}", flush=True)
-
-        await asyncio.gather(*[asyncio.create_task(tracked(b)) for b in batches])
-        if save:
-            save_state(route, state)
+        await _run_batches(batches,
+                           lambda b: _single_batch(client, semaphore, b, state, route),
+                           state, route, save, route.name)
 
 
 def emit_rows(route_name, rows):

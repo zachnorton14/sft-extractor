@@ -227,7 +227,7 @@ async def run_async(excerpts, state, save=True):
         async def tracked(batch):
             await _batch(client, semaphore, batch, state)
             done[0] += len(batch)
-            if done[0] % 100 < len(batch) and save:
+            if done[0] % engine.CHECKPOINT_EVERY < len(batch) and save:
                 save_state(state)
                 print(f"  {done[0]}/{len(pending)}", flush=True)
 
