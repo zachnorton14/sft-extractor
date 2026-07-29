@@ -64,6 +64,8 @@ side, return NO span for it. Proceed only when the passage genuinely holds a vie
      after 1930, no modern or conversational phrasing.
    - Do NOT put the view's distinctive wording in the question; ask for it.
 
+{engine.OCR_REJECT}
+
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
 Output JSON only:
   [{{"i": 0, "spans": ["exact quotation"], "q": "..."}}, ...]

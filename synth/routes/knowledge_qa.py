@@ -86,6 +86,8 @@ You are given a short passage from a pre-1930s book. Work in this order.
    - Do NOT put the answer, or the answer's distinctive wording, in the question.
      Ask for the fact; do not reveal it.
 
+{engine.OCR_REJECT}
+
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
 Output JSON only:
   [{{"i": 0, "spans": ["exact quotation"], "q": "..."}}, ...]

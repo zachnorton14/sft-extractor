@@ -80,6 +80,8 @@ question-and-answer exchange between TWO voices. Turn it into a multi-turn conve
    alternate the two roles. If the passage is not a genuine two-party spoken exchange —
    it is narration, monologue, exposition, or a single Q&A pair — emit NO item for it.
 
+{engine.OCR_REJECT}
+
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
 Output JSON only:
   [{{"i": 0, "turns": [{{"role": "user", "content": "..."}},

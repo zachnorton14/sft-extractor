@@ -125,6 +125,8 @@ length, between a curious USER who asks and an ASSISTANT who answers. Work in th
    an assistant turn carries "spans". If the passage states no clean fact at all, emit
    NO item for it.
 
+{engine.OCR_REJECT}
+
 Input: JSON array [{{"i": 0, "text": "...", "exchanges": N}}, ...]
 Output JSON only:
   [{{"i": 0, "turns": [{{"role": "user", "q": "..."}},

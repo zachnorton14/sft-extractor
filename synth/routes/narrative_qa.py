@@ -104,6 +104,8 @@ When there IS an episode, work in this order.
    - Do NOT put the answer, or its distinctive wording, in the question. Ask what
      happened; do not reveal it.
 
+{engine.OCR_REJECT}
+
 Input: JSON array [{{"i": 0, "text": "...", "kind": "grounded" | "fiction"}}, ...]
 Output JSON only:
   [{{"i": 0, "spans": ["exact quotation"], "q": "..."}}, ...]

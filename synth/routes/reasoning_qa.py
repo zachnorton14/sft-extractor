@@ -61,6 +61,8 @@ a conclusion, and copy that chain WORD FOR WORD.
      that carry the reasoning WITHOUT such references; skip a sentence that leans on
      one. If the chain cannot be formed without them, omit this item.
 
+{engine.OCR_REJECT}
+
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
 Output JSON only: [{{"i": 0, "spans": ["..."]}}, ...]
 """

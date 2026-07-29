@@ -77,6 +77,8 @@ a document. Work in this order.
 If the passage is NOT actually a composed document of a recognizable genre — it is
 ordinary narration, exposition, or argument — emit NO item for it (omit that index).
 
+{engine.OCR_REJECT}
+
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
 Output JSON only:
   [{{"i": 0, "spans": ["exact quotation"], "q": "..."}}, ...]

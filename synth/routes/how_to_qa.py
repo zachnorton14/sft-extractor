@@ -51,6 +51,8 @@ made — a method, recipe, process, or technique. Work in this order.
      Never leave a bare "this preparation" or "the process".
    - Do NOT put the steps, or their distinctive wording, in the question.
 
+{engine.OCR_REJECT}
+
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
 Output JSON only:
   [{{"i": 0, "spans": ["exact quotation"], "q": "..."}}, ...]

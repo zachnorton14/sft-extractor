@@ -142,6 +142,18 @@ async def open_client():
 # seam falls at a sentence boundary.
 SPAN_JOIN = " "
 
+# Shared rejection clause dropped into every route prompt EXCEPT stem_reasoning (whose
+# whole purpose is to repair OCR-mangled formulas, so it must keep such passages). The
+# corpus is scanned period text and some of it is OCR garbage; with excerpts plentiful,
+# the model should skip anything corrupt rather than emit a garbled answer.
+OCR_REJECT = """\
+REJECT OCR-CORRUPTED TEXT. These passages are scanned from old books and some are
+mangled by OCR — garbled or run-together words, dropped or transposed letters, stray
+marks, broken spacing, nonsense strings. If such corruption touches the material your
+answer would quote or rest on, so that a clean and correct answer is not possible, emit
+NO item for that passage. Passages are plentiful; prefer skipping a doubtful one to
+emitting a garbled answer."""
+
 
 def verbatim_answer(spans, excerpt, max_spans=2):
     """Return the answer built ONLY from exact substrings of `excerpt`, or None.
