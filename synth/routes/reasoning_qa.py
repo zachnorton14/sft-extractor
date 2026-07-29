@@ -20,9 +20,8 @@ model to compose vintage-sounding logic.
     follow ...". Answer-first: find the chain, then write the question for it.
 
 Input:  synth/output/excerpts.jsonl (affordance == argument)
-Output: synth/output/reasoning_qa.json
-        [{"doc_index","category","book_category","category_moved","year",
-          "prose_score","excerpt","question","answer"}]
+Output: HF dataset shards reasoning_qa/part-*.jsonl (one row per line)
+        {"doc_index","category","book_category","year","prose_score","question","answer"}
 
 Env (same as the other model passes):
     export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic

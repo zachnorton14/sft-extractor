@@ -22,9 +22,8 @@ Two calls, as in reasoning_qa:
   - call 2 writes the standalone question the chain answers.
 
 Input:  corpus.sample_stem (SCIENCE + TECHNOLOGY, stem-seeking windows)
-Output: synth/output/stem_reasoning.json
-        [{"doc_index","category","book_category","category_moved","year",
-          "stem_signal","excerpt","question","answer"}]
+Output: HF dataset shards stem_reasoning/part-*.jsonl (one row per line)
+        {"doc_index","category","book_category","year","stem_signal","question","answer"}
 
 Env:
     export OPENCODE_API_KEY=<your opencode Go key>   # or put it in ROOT/.env

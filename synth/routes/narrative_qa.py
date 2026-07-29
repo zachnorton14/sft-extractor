@@ -21,9 +21,8 @@ Splitting the prompts makes it structurally impossible to misframe fiction as hi
 a fiction excerpt only ever meets the TELL-A-TALE prompt.
 
 Input:  synth/output/excerpts.jsonl (classes contains narrative_grounded/_fiction)
-Output: synth/output/narrative_grounded.json and synth/output/narrative_fiction.json
-        [{"doc_index","category","book_category","category_moved","year",
-          "prose_score","excerpt","question","answer"}]
+Output: HF dataset shards narrative_grounded/part-*.jsonl and narrative_fiction/part-*.jsonl
+        {"doc_index","category","book_category","year","prose_score","question","answer"}
 
 Env:
     export OPENCODE_API_KEY=<your opencode Go key>   # or put it in ROOT/.env

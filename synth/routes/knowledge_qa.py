@@ -24,9 +24,8 @@ both: `category` (content, from the model) and `book_category` (from the metadat
 with `category_moved` flagging divergence.
 
 Input:  sampled via corpus.sample_excerpts (coverage-weighted across categories)
-Output: synth/output/knowledge_qa.json
-        [{"doc_index","category","book_category","category_moved","year",
-          "prose_score","excerpt","question","answer"}]
+Output: HF dataset shards knowledge_qa/part-*.jsonl (one row per line)
+        {"doc_index","category","book_category","year","prose_score","question","answer"}
 
 Set environment before running (same as the other model passes):
     export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic

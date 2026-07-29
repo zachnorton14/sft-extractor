@@ -33,9 +33,8 @@ subject without dictating the wording.
     alone, not reproducing the specimen's wording.
 
 Input:  synth/output/excerpts.jsonl (classes contains composition)
-Output: synth/output/composition_qa.json
-        [{"doc_index","category","book_category","category_moved","year",
-          "prose_score","excerpt","question","answer"}]
+Output: HF dataset shards composition_qa/part-*.jsonl (one row per line)
+        {"doc_index","category","book_category","year","prose_score","question","answer"}
 
 Env (same as the other model passes):
     export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
