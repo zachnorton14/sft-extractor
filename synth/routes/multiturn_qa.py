@@ -243,13 +243,14 @@ async def run_async(excerpts, state, save=True):
 
 
 def _mt_row(e, r):
-    """Build one multi-turn output row from a state entry, or None if it has no turns."""
+    """Build one multi-turn output row from a state entry, or None if it has no turns.
+    Excludes the source excerpt — the SFT set needs just the conversation + metadata."""
     if not (r and r.get("turns")):
         return None
     return {
         "doc_index": e["doc_index"], "category": e.get("category"),
         "year": e.get("year"), "prose_score": e.get("prose_score"),
-        "excerpt": e["excerpt"], "conversations": r["turns"],
+        "conversations": r["turns"],
     }
 
 

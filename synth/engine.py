@@ -487,30 +487,29 @@ async def run_async(route, excerpts, state, save=True):
 
 
 def _qa_row(route, e, r):
-    """Build one Q/A output row from a state entry, or None if the pair is incomplete."""
+    """Build one Q/A output row from a state entry, or None if the pair is incomplete.
+    Excludes source-only fields (excerpt, category_moved) — the SFT set needs just the
+    Q/A plus light provenance/metadata."""
     if not (r and r.get("q") and r.get("a")):        # both halves required
         return None
-    content = r.get("category") or e["category"]
     row = {
         "doc_index": e["doc_index"],
-        "category": content,
+        "category": r.get("category") or e["category"],
         "book_category": e["category"],
-        "category_moved": content != e["category"],
         "year": e.get("year"),
     }
     for f in route.passthrough:
         row[f] = e.get(f)
-    row["excerpt"] = e["excerpt"]
     row["question"] = r["q"]
     row["answer"] = r["a"]
     return row
 
 
 def _write_local(route_name, rows):
-    """Offline/debug sink: write all rows to OUTPUT_DIR/<route>.json (SFT_OUTPUT_LOCAL)."""
+    """Offline/debug sink: write all rows to OUTPUT_DIR/<route>.jsonl (SFT_OUTPUT_LOCAL)."""
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    out = OUTPUT_DIR / f"{route_name}.json"
-    out.write_text(json.dumps(rows, indent=2, ensure_ascii=False))
+    out = OUTPUT_DIR / f"{route_name}.jsonl"
+    out.write_text("\n".join(json.dumps(r, ensure_ascii=False) for r in rows) + "\n")
     print(f"  wrote {len(rows)} {route_name} rows -> {out}")
     return out
 

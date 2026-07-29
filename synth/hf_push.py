@@ -55,16 +55,16 @@ def _api():
 
 
 def push_shard(route_name, rows, repo=HF_REPO):
-    """Upload `rows` as a NEW timestamped shard under <route_name>/ on the HF dataset
-    repo, so a long run commits incrementally without re-uploading prior shards. Each
-    call is one commit of one part-file; HF load_dataset globs <route_name>/*.json.
-    Returns the repo path. Creates the repo if it does not yet exist."""
+    """Upload `rows` as a NEW timestamped JSONL shard under <route_name>/ on the HF
+    dataset repo (one compact row per line), so a long run commits incrementally without
+    re-uploading prior shards. Each call is one commit of one part-file; HF load_dataset
+    globs <route_name>/*.jsonl. Returns the repo path. Creates the repo if missing."""
     from datetime import datetime, timezone
     api = _api()
     api.create_repo(repo_id=repo, repo_type=HF_REPO_TYPE, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")
-    path_in_repo = f"{route_name}/part-{stamp}.json"
-    data = json.dumps(rows, indent=2, ensure_ascii=False).encode("utf-8")
+    path_in_repo = f"{route_name}/part-{stamp}.jsonl"
+    data = ("\n".join(json.dumps(r, ensure_ascii=False) for r in rows) + "\n").encode("utf-8")
     api.upload_file(
         path_or_fileobj=io.BytesIO(data),
         path_in_repo=path_in_repo,
@@ -73,6 +73,35 @@ def push_shard(route_name, rows, repo=HF_REPO):
         commit_message=f"{route_name}: +{len(rows)} rows",
     )
     return f"{repo}/{path_in_repo}"
+
+
+def migrate_route(route_name, drop_keys=("excerpt", "category_moved"), repo=HF_REPO):
+    """One-time fixup for shards already pushed under the old schema/format: for every
+    <route_name>/part-*.json shard, strip drop_keys from each row, rewrite it as a .jsonl
+    shard, and delete the old .json. Returns (shards_migrated, rows_migrated)."""
+    from huggingface_hub import hf_hub_download
+    api = _api()
+    old = sorted(f for f in api.list_repo_files(repo_id=repo, repo_type=HF_REPO_TYPE)
+                 if f.startswith(f"{route_name}/") and f.endswith(".json"))
+    total = 0
+    for f in old:
+        local = hf_hub_download(repo_id=repo, repo_type=HF_REPO_TYPE, filename=f,
+                                token=_token())
+        with open(local, encoding="utf-8") as fh:
+            rows = json.load(fh)
+        for row in rows:
+            for k in drop_keys:
+                row.pop(k, None)
+        new_path = f[:-len(".json")] + ".jsonl"
+        body = ("\n".join(json.dumps(r, ensure_ascii=False) for r in rows) + "\n").encode("utf-8")
+        api.upload_file(path_or_fileobj=io.BytesIO(body), path_in_repo=new_path,
+                        repo_id=repo, repo_type=HF_REPO_TYPE,
+                        commit_message=f"migrate {f} -> jsonl, drop {list(drop_keys)}")
+        api.delete_file(path_in_repo=f, repo_id=repo, repo_type=HF_REPO_TYPE,
+                        commit_message=f"remove pre-migration {f}")
+        total += len(rows)
+        print(f"  migrated {f} -> {new_path}  ({len(rows)} rows)")
+    return len(old), total
 
 
 def test_connection(repo=HF_REPO):
