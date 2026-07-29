@@ -10,17 +10,25 @@ excerpt corpus (synth/output/excerpts.jsonl) and keeps the ones the classifier t
 `composition` (a specimen of a producible FORM).
 
 It is still EXTRACTIVE, and that is the whole point: the answer is a genuine period
-specimen lifted verbatim, so the model learns to EMIT period-authentic prose in its
-proper form, with no anachronism risk (it can only select real period text, never
-compose modern-sounding text). The question is the one thing that differs from the
-recall routes — it is an INSTRUCTION to compose ("Draft an act to ...", "Define ...",
-"Set an examination question on ...", "Write a fitting close for a tale in which ..."),
-naming the form and subject without dictating the wording.
+specimen, so the model learns to EMIT period-authentic prose in its proper form, with
+no anachronism risk (it can only select real period text, never compose modern-sounding
+text). The one licensed exception, as in stem_reasoning, is OCR cleanup: the model
+returns each span as `verbatim` (the exact scanned text, our proof it is real and
+located) plus `refurbished` (the same span with OCR artifacts removed so it reads
+pristine), and engine.refurbished_spans_answer verifies the refurbished form adds NO
+letter the verbatim lacked — only non-letters and stray-character deletions may change.
+So spacing, punctuation, stray dots, and mangled figures get cleaned, but no word can
+be invented; if a span cannot be made pristine that way, the model rejects the item.
+The question is the one thing that differs from the recall routes — it is an
+INSTRUCTION to compose ("Draft an act to ...", "Define ...", "Set an examination
+question on ...", "Write a fitting close for a tale in which ..."), naming the form and
+subject without dictating the wording.
 
-  - the ANSWER is the verbatim specimen — prefer ONE long contiguous span that is the
-    piece (or a self-contained part: a full clause, a full letter, a full stanza, a
-    self-standing paragraph). Verified as a literal substring (verbatim_answer);
-    non-verbatim dropped.
+  - the ANSWER is the verbatim-anchored specimen, OCR-cleaned — prefer ONE long
+    contiguous span that is the piece (or a self-contained part: a full clause, a full
+    letter, a full stanza, a self-standing paragraph). Its verbatim form is verified as
+    a literal substring; anything that can't be cleaned without inventing letters is
+    dropped.
   - the QUESTION is a compose-instruction: form + subject, period register, standing
     alone, not reproducing the specimen's wording.
 
@@ -61,9 +69,25 @@ asked to COMPOSE such a piece. Work in this order.
      spans. Begin and end at natural boundaries of the form (a heading, salutation,
      "Whereas", "Resolved, that", "O Lord", a definition's opening term, the first line
      of a closing).
-   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
-     reorder within a span, or add any word not in the passage — including connecting
-     words between spans. You may only select and order the passage's own text.
+   - Give EACH span as an object with two fields:
+       "verbatim"    — the span copied EXACTLY as it appears in the passage, character
+                       for character, including any OCR corruption.
+       "refurbished" — the SAME span with OCR artifacts cleaned so it reads pristine. If
+                       the span is already clean, make "refurbished" identical to it.
+   - REPAIR ONLY OCR ARTIFACTS, AND ONLY WHEN CERTAIN. The scan may have introduced
+     stray marks, doubled or dropped punctuation, interpolated dots or ellipses, broken
+     or run-together spacing, hyphenation split across a line break, or mangled figures.
+     In "refurbished" you MAY remove such junk and set spacing, punctuation, digits, and
+     symbols right — rejoin "informa- tion" into "information", drop a stray "..." or a
+     doubled "= =", close up "28 ; the". Repair only what its correct form plainly and
+     unambiguously must be.
+   - INVENT NOTHING. Every WORD — indeed every letter — in "refurbished" must already
+     stand in "verbatim". You may DELETE a stray character and change only non-letters
+     (spacing, punctuation, digits, operators); you may NOT add a letter, spell out a
+     missing word, transpose letters, or rewrite phrasing. If a span needs more than
+     that to read cleanly — a garbled WORD, a dropped word, anything you are not certain
+     of — do NOT patch it: reject the WHOLE item (emit nothing for that index).
+     Passages are plentiful; emit a pristine specimen or none.
    - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
      terminal punctuation, so several spans read as continuous prose when joined.
 
@@ -90,11 +114,9 @@ If the passage is NOT a specimen of any nameable, producible form — it is just
 shapeless prose (plain narration, exposition, or argument with no particular form that
 one could be asked to write) — emit NO item for it (omit that index).
 
-{engine.OCR_REJECT}
-
 Input: JSON array [{{"i": 0, "text": "..."}}, ...]
 Output JSON only:
-  [{{"i": 0, "spans": ["exact quotation"], "q": "..."}}, ...]
+  [{{"i": 0, "spans": [{{"verbatim": "...", "refurbished": "..."}}], "q": "..."}}, ...]
 """
 
 
@@ -112,7 +134,7 @@ ROUTE = engine.Route(
     name="composition_qa",
     system=SYSTEM,
     source=source_excerpts,
-    answer_fn=engine.spans_answer(MAX_SPANS),   # verbatim artifact extraction
+    answer_fn=engine.refurbished_spans_answer(MAX_SPANS),   # verbatim-anchored, OCR cleaned
     passthrough=("prose_score",),
     extra_body=engine.DISABLE_THINKING,         # no thinking trace: fast, no truncation
 )
