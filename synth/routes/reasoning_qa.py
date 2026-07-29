@@ -54,12 +54,13 @@ a conclusion, and copy that chain WORD FOR WORD.
      sentences.
    - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
      terminal punctuation, so several spans read as continuous prose when joined.
-   - Do NOT choose spans that refer to a figure, plate, diagram, table, page,
-     section, or note number ("Fig. 36", "as shown in the figure", "see page 466",
-     "§ 4", "the note on p. 22") — these point to something the reader cannot see and
-     are meaningless on their own. Since you select and order the spans, pick ones
-     that carry the reasoning WITHOUT such references; skip a sentence that leans on
-     one. If the chain cannot be formed without them, omit this item.
+   - WORK AROUND references the reader cannot see — a figure, plate, diagram, table,
+     page, section, or note number ("Fig. 36", "as shown in the figure", "see page
+     466", "§ 4", "the note on p. 22"). Since you select and order the spans, choose
+     ones that carry the reasoning WITHOUT such references, and skip any sentence that
+     leans on one — a span that mentions or depends on such a reference must NOT enter
+     the answer. If the chain cannot be formed without them, REJECT the item (emit
+     nothing for it).
 
 {engine.OCR_REJECT}
 
@@ -102,8 +103,13 @@ answers.
   its own, or introduced with a short descriptor of who or what it is (not a bare
   "Skobeleff" but "the Russian general Skobeleff"). When in doubt, describe by role
   instead of naming.
-- Do NOT reveal the answer: do not state the conclusion, and do not reuse the
-  chain's distinctive wording. Ask for the reasoning; make the reader supply it.
+- Do not mention or lean on any figure, plate, diagram, table, page, or section — the
+  reader cannot see them; ask about the subject itself.
+- Do NOT reveal the answer, and NEVER echo it: the question must be in your own words
+  and must not restate, quote, or paraphrase the chain in whole or in part — never
+  return the answer, or any piece of it, as the question. Do not state the conclusion
+  or reuse the chain's distinctive wording. Ask for the reasoning; make the reader
+  supply it.
 
 Input: JSON array [{"i": 0, "passage": "...", "answer": "..."}, ...]
 Output JSON only: [{"i": 0, "q": "..."}, ...]
