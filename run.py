@@ -382,19 +382,22 @@ def cmd_composition(args):
 
 def cmd_narrative(args):
     from synth.routes import narrative_qa as nq
-    excerpts = nq.source_excerpts(args.size, seed=args.seed)
-    print(f"Sourced {len(excerpts)} narrative excerpts (classes={nq.CLASSES})")
-    if args.test:
-        asyncio.run(nq.test_run(excerpts))
-        return
-    if args.sample:
-        asyncio.run(nq.sample_run(excerpts, seed=args.seed))
-        return
-    state = nq.load_state()
-    resolved = sum(1 for e in excerpts if str(e["doc_index"]) in state)
-    print(f"Excerpts: {len(excerpts)}  Resolved: {resolved}")
-    asyncio.run(nq.run_async(excerpts, state))
-    nq.write_output(excerpts, state)
+    from synth import engine
+    # Two baked-in prompts: grounded (fact) and fiction (story). Drive both passes.
+    for route in nq.ROUTES:
+        excerpts = route.source(args.size, seed=args.seed)
+        print(f"Sourced {len(excerpts)} {route.name} excerpts")
+        if args.test:
+            asyncio.run(engine.test_run(route, excerpts))
+            continue
+        if args.sample:
+            asyncio.run(engine.sample_run(route, excerpts, seed=args.seed))
+            continue
+        state = engine.load_state(route)
+        resolved = sum(1 for e in excerpts if str(e["doc_index"]) in state)
+        print(f"  resolved {resolved}/{len(excerpts)}")
+        asyncio.run(engine.run_async(route, excerpts, state))
+        engine.write_output(route, excerpts, state)
     print("Done.")
 
 
