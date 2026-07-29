@@ -254,11 +254,6 @@ def cmd_harvest(args):
         target = float("inf") if args.exhaust else args.total
         corpus.harvest_verse(target, seed=args.seed, max_shards=args.max_shards)
         return
-    if args.conversational:
-        target = float("inf") if args.exhaust else args.total
-        corpus.harvest_conversational(target, per_doc=args.per_doc, seed=args.seed,
-                                      max_shards=args.max_shards)
-        return
     corpus.harvest(args.total, alpha=args.alpha, min_conf=args.min_conf,
                    n_words=args.words, per_doc=args.per_doc, seed=args.seed,
                    max_shards=args.max_shards)
@@ -434,11 +429,6 @@ def cmd_verse(args):
     _run_extractive_route(args, verse_qa, "verse")
 
 
-def cmd_conversational(args):
-    from synth.routes import conversational_qa
-    _run_extractive_route(args, conversational_qa, "conversational")
-
-
 def cmd_multiturn(args):
     from synth.routes import multiturn_qa
     _run_extractive_route(args, multiturn_qa, "multiturn")
@@ -606,10 +596,8 @@ def main():
                            "excerpts.jsonl via multi-window (uses --total as the STEM target)")
     p_hv.add_argument("--verse", action="store_true",
                       help="targeted verse overlay: line-based windows from poetry/hymn books")
-    p_hv.add_argument("--conversational", action="store_true",
-                      help="targeted conversational overlay: dialogue/catechism/Q&A windows")
     p_hv.add_argument("--exhaust", action="store_true",
-                      help="with --stem/--verse/--conversational: ignore the count target "
+                      help="with --stem/--verse: ignore the count target "
                            "and sweep ALL remaining shards, filling the bucket to the brim")
 
     # stem-reasoning
@@ -673,7 +661,6 @@ def main():
         ("how-to-qa", "Generate method Q/A from how_to excerpts"),
         ("opinion-qa", "Generate view-and-ground Q/A from opinion excerpts"),
         ("verse-qa", "Generate compose-a-verse Q/A from verse excerpts"),
-        ("conversational-qa", "Generate multi-turn conversations from dialogue excerpts"),
         ("multiturn-qa", "Generate interrelated multi-turn Q&A from knowledge excerpts (hybrid route)"),
     ]:
         _p = sub.add_parser(_name, help=_help)
@@ -765,8 +752,6 @@ def main():
         cmd_opinion(args)
     elif args.cmd == "verse-qa":
         cmd_verse(args)
-    elif args.cmd == "conversational-qa":
-        cmd_conversational(args)
     elif args.cmd == "multiturn-qa":
         cmd_multiturn(args)
     elif args.cmd == "filter-pool":

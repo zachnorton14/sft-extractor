@@ -1,8 +1,8 @@
 """Multiturn route: turn one fact-rich excerpt into an interrelated Q&A conversation.
 
-Where conversational_qa is EXTRACTIVE on both sides (it lifts a real two-party
-dialogue verbatim, and is bottlenecked by how little genuine catechism/deposition text
-exists), this route is a HYBRID that rides on the huge `knowledge` pool:
+Genuine two-party period dialogue (catechism/deposition text) is too scarce to build a
+multi-turn route on; instead this route is a HYBRID that rides on the huge `knowledge`
+pool to synthesize multi-turn exchanges:
 
   - each USER turn is a model-COMPOSED question (period-schoolbook register), like
     knowledge_qa's question — anachronism on the question side is handled by the
