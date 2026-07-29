@@ -59,14 +59,24 @@ SYSTEM = f"""\
 You are given a passage of pre-1930s DIALOGUE — a conversation, catechism, or
 question-and-answer exchange between TWO voices. Turn it into a multi-turn conversation.
 
-1. Identify the two speakers. Assign one to the USER role — the voice that asks,
-   prompts, or leads — and the other to the ASSISTANT role — the voice that answers or
-   explains. In a catechism the questioner is the user.
+1. Identify the two speakers. Assign one to the USER role — the voice that ASKS the
+   questions or leads — and the other to the ASSISTANT role — the voice that ANSWERS. In
+   a catechism the questioner is the user.
+   - The ASSISTANT NEVER asks a question; it only answers. Every question belongs to a
+     USER turn. If one utterance gives an answer and THEN poses the next question, SPLIT
+     it — the answer is the assistant's turn, and the following question becomes the next
+     USER turn (each half is still a verbatim substring). An assistant turn must not end
+     on a question.
 
 2. Return the exchange as "turns": an ordered list, each turn one speaker's utterance
    copied VERBATIM from the passage, ALTERNATING user, assistant, user, assistant …,
    beginning with the user. Keep the natural back-and-forth — several turns, not one
    pair.
+   - The FIRST turn (user) must be a question that STANDS ON ITS OWN: it names its own
+     subject and assumes no earlier context. Do NOT open mid-exchange — not with "And
+     …", "Then …", "But …", nor a bare "it / this / they / these" whose antecedent was
+     never given. If the passage's opening question depends on unstated context, BEGIN
+     the conversation at a later question that stands alone, or emit no item.
    - Copy WORD FOR WORD. Do NOT paraphrase, rewrite, summarize, translate, or add any
      word. Each turn is the spoken words themselves.
    - Strip ONLY the speaker's label or attribution and the quotation marks that mark
@@ -112,6 +122,8 @@ def build_turns(r, excerpt):
         content = _verbatim_turn(t.get("content"), excerpt)
         if not content:
             return None                              # not verbatim -> drop
+        if expect == "assistant" and content.rstrip().endswith("?"):
+            return None                              # assistant never asks -> drop
         out.append({"role": expect, "content": content})
         expect = "assistant" if expect == "user" else "user"
     return out
