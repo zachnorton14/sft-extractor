@@ -436,6 +436,11 @@ def cmd_conversational(args):
     _run_extractive_route(args, conversational_qa, "conversational")
 
 
+def cmd_multiturn(args):
+    from synth.routes import multiturn_qa
+    _run_extractive_route(args, multiturn_qa, "multiturn")
+
+
 def cmd_knowledge(args):
     from synth.routes import knowledge_qa as kq
     excerpts = kq.source_excerpts(args.size, seed=args.seed)
@@ -666,6 +671,7 @@ def main():
         ("opinion-qa", "Generate view-and-ground Q/A from opinion excerpts"),
         ("verse-qa", "Generate compose-a-verse Q/A from verse excerpts"),
         ("conversational-qa", "Generate multi-turn conversations from dialogue excerpts"),
+        ("multiturn-qa", "Generate interrelated multi-turn Q&A from knowledge excerpts (hybrid route)"),
     ]:
         _p = sub.add_parser(_name, help=_help)
         _p.add_argument("--seed", type=int, default=0)
@@ -758,6 +764,8 @@ def main():
         cmd_verse(args)
     elif args.cmd == "conversational-qa":
         cmd_conversational(args)
+    elif args.cmd == "multiturn-qa":
+        cmd_multiturn(args)
     elif args.cmd == "filter-pool":
         cmd_filter_pool(args)
     elif args.cmd == "classify":
