@@ -62,7 +62,13 @@ When there IS an episode, work in this order.
      reorder within a span, or add any word not in the passage — including connecting
      words between spans. You may only select and order the passage's own sentences.
    - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
-     terminal punctuation, so several spans read as continuous prose when joined."""
+     terminal punctuation, so several spans read as continuous prose when joined.
+   - SKIP INTERPOLATED HEADERS AND MARGINS. The scan sometimes drops a running header,
+     page number, chapter title, or marginal index into the MIDDLE of the account (e.g.
+     "... breadstuffs KY., SW. VA., ... N. GA. [CHAP. XL. and small stores ..."). Never
+     let such matter into a span: split the account into spans BEFORE and AFTER the
+     intrusion so the junk falls out and the remaining spans read cleanly. If it cannot
+     be cleanly excluded that way, emit NO item for that passage."""
 
 _Q_TAIL = """\
    - Plain period register: direct, no modern or conversational phrasing, no
@@ -70,6 +76,11 @@ _Q_TAIL = """\
      phrasing; use no word, term, or idiom that came into use after 1930.
    - Stands alone. Never mention the source — no "the passage", "the text", "the
      story", "the author", "the narrator", "according to", "described", "mentioned".
+   - FIRST-PERSON accounts ("I ...", "we ..."): never call the speaker "the narrator",
+     "the author", or "the writer". Identify the speaker by a concrete role or name if
+     it is knowable ("a French officer under Napoleon", "General Foster"), otherwise
+     build the question around the other, nameable party and the situation. Do NOT ask
+     "How did the narrator ...?".
    - Self-situating — the reader has NOT seen this passage. Give the question its own
      context: for a named event the name carries it; otherwise SET THE SCENE UP inside
      the question — briefly establish the actors and circumstance the answer depends on
