@@ -151,8 +151,12 @@ REJECT OCR-CORRUPTED TEXT. These passages are scanned from old books and some ar
 mangled by OCR — garbled or run-together words, dropped or transposed letters, stray
 marks, broken spacing, nonsense strings. If such corruption touches the material your
 answer would quote or rest on, so that a clean and correct answer is not possible, emit
-NO item for that passage. Passages are plentiful; prefer skipping a doubtful one to
-emitting a garbled answer."""
+NO item for that passage. Watch too for running headers, page numbers, chapter titles,
+or marginal indices the scan has dropped into the MIDDLE of the text (e.g. "... breadstuffs
+KY., SW. VA., ... N. GA. [CHAP. XL. and small stores ..."): such interpolated matter
+must never enter your answer — keep it out, and if it cannot be cleanly kept out, emit
+NO item. Passages are plentiful; prefer skipping a doubtful one to emitting a garbled
+answer."""
 
 
 def verbatim_answer(spans, excerpt, max_spans=2):
