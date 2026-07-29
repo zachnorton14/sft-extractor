@@ -120,7 +120,7 @@ def source_excerpts(n, seed=0, **_):
     """Reasoning excerpts from the materialized corpus, selected by the classifier
     (classes contains "reasoning"). n falsy or >= pool returns the whole pool;
     otherwise a seeded random sample. Requires `classify` write-back to have run."""
-    mat = corpus.load_excerpts(cls=CLASSES)
+    mat = corpus.load_excerpts(cls=CLASSES, drop_broken_math=True)
     if not n or n >= len(mat):
         return mat
     return random.Random(seed).sample(mat, n)

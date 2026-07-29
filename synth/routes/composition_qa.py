@@ -132,8 +132,7 @@ def source_excerpts(n, seed=0, **_):
     whose fill-in blanks and equations the scan mangled beyond honest repair (see
     corpus.has_broken_math). n falsy or >= pool returns the whole (screened) pool;
     otherwise a seeded random sample. Requires `classify` write-back to have run."""
-    mat = [r for r in corpus.load_excerpts(cls=CLASSES)
-           if not corpus.has_broken_math(r["excerpt"])]
+    mat = corpus.load_excerpts(cls=CLASSES, drop_broken_math=True)
     if not n or n >= len(mat):
         return mat
     return random.Random(seed).sample(mat, n)

@@ -125,7 +125,7 @@ def source_excerpts(n, seed=0, **_):
     and carrying explicit dialogue structure (see _is_structured_dialogue). This drops
     the novel/play dialogue the classifier over-tags. n falsy or >= pool returns the
     whole filtered pool; else a seeded sample. Requires `classify` write-back."""
-    mat = [r for r in corpus.load_excerpts(cls=CLASSES)
+    mat = [r for r in corpus.load_excerpts(cls=CLASSES, drop_broken_math=True)
            if r.get("category") not in _EXCLUDE_CATEGORIES
            and corpus.is_structured_dialogue(r["excerpt"])]
     if not n or n >= len(mat):

@@ -211,7 +211,7 @@ VERSE_HARVEST_STATE = ROOT / "synth" / "state" / "harvest_verse.json"
 CONVERSATIONAL_HARVEST_STATE = ROOT / "synth" / "state" / "harvest_conversational.json"
 
 
-def load_excerpts(affordance=None, cls=None, min_prose=0.0):
+def load_excerpts(affordance=None, cls=None, min_prose=0.0, drop_broken_math=False):
     """Read the materialized excerpt corpus (one JSON object per line), optionally
     filtered to a classifier class / regex affordance / prose floor. This is what
     every generation route consumes — sourced once by harvest(), never re-fetched.
@@ -219,7 +219,11 @@ def load_excerpts(affordance=None, cls=None, min_prose=0.0):
     `cls` (a class name or an iterable of them) selects by the model classifier's
     `classes` — the routes' real filter. An excerpt matches if any wanted class is in
     its `classes`, so unclassified excerpts (no `classes` yet) never match: run
-    `classify` write-back before sourcing by class."""
+    `classify` write-back before sourcing by class.
+
+    `drop_broken_math` screens out OCR-destroyed arithmetic (see has_broken_math) — on
+    for every prose route, OFF only for stem_reasoning (which repairs real math) and the
+    internal dedup/report callers that must see the whole corpus."""
     if not EXCERPTS_FILE.exists():
         return []
     want = ({cls} if isinstance(cls, str) else set(cls)) if cls is not None else None
@@ -233,6 +237,8 @@ def load_excerpts(affordance=None, cls=None, min_prose=0.0):
         if want is not None and not want & set(r.get("classes") or []):
             continue
         if r.get("prose_score", 0) < min_prose:
+            continue
+        if drop_broken_math and has_broken_math(r["excerpt"]):
             continue
         out.append(r)
     return out
@@ -266,7 +272,7 @@ def knowledge_partition(which, seed=KNOWLEDGE_PARTITION_SEED):
     trailing (1 - KNOWLEDGE_MULTI_START) fraction. The two overlap on
     [KNOWLEDGE_MULTI_START, KNOWLEDGE_RESERVE_END), which is intentionally double-passed.
     """
-    mat = load_excerpts(cls=("knowledge",))
+    mat = load_excerpts(cls=("knowledge",), drop_broken_math=True)
     random.Random(seed).shuffle(mat)                 # in-place on our fresh list
     n = len(mat)
     if which == "reserve":
