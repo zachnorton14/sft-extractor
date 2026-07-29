@@ -273,6 +273,18 @@ class Route:
     concurrency: int = CONCURRENCY
     token_budget: int = TOKEN_BUDGET
     extra_body: dict = None       # passed to messages.create (e.g. disable thinking)
+    payload_fn: Callable = None   # (excerpt) -> dict of EXTRA per-item payload fields
+                                  # merged alongside {"i","text"} (e.g. narrative kind)
+
+
+def _payload_item(i, it, route):
+    """The per-item payload object sent to the model: {"i","text"} plus any extra
+    fields a route contributes via payload_fn (e.g. the classifier's narrative kind)."""
+    item = {"i": i, "text": it["excerpt"]}
+    fn = getattr(route, "payload_fn", None)
+    if fn:
+        item.update(fn(it))
+    return item
 
 
 def state_file(route):
@@ -339,7 +351,7 @@ async def _call(client, semaphore, route, system, payload, n):
 async def _single_batch(client, semaphore, batch, state, route):
     """One-phase: Q, A, and category in a single call (knowledge, stem)."""
     keys = [str(it["doc_index"]) for it in batch]
-    payload = json.dumps([{"i": i, "text": it["excerpt"]} for i, it in enumerate(batch)])
+    payload = json.dumps([_payload_item(i, it, route) for i, it in enumerate(batch)])
     parsed = await _call(client, semaphore, route, route.system, payload, len(batch))
     for r in parsed if isinstance(parsed, list) else []:
         if not isinstance(r, dict):                  # model returned a bare value
@@ -358,7 +370,7 @@ async def _single_batch(client, semaphore, batch, state, route):
 async def _extract_batch(client, semaphore, batch, state, route):
     """Two-phase call 1: extract the answer (spans) + category from the passage."""
     keys = [str(it["doc_index"]) for it in batch]
-    payload = json.dumps([{"i": i, "text": it["excerpt"]} for i, it in enumerate(batch)])
+    payload = json.dumps([_payload_item(i, it, route) for i, it in enumerate(batch)])
     parsed = await _call(client, semaphore, route, route.system, payload, len(batch))
     for r in parsed if isinstance(parsed, list) else []:
         if not isinstance(r, dict):                  # model returned a bare value

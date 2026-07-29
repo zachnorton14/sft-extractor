@@ -8,15 +8,17 @@ period text, never composed — so the anachronism guarantee holds: an answer bu
 only from the passage cannot carry modern phrasing.
 
 What differs from knowledge-QA is the QUESTION framing, not the answer. Two shapes
-both fit extraction:
-  - RETELL — when the episode is a matter of record ("Washington crossing the
-    Delaware", "the burning of Moscow"), the question names it from general knowledge
+both fit extraction, and the classifier's real/invented tag (passed to the prompt as
+"kind") selects between them:
+  - RETELL — grounded episodes that are a matter of record ("Washington crossing the
+    Delaware", "the burning of Moscow"): the question names it from general knowledge
     and asks the reader to recount it ("Recount how ...", "Tell how ... came about"),
-    and the answer is the verbatim narration itself — one long span.
-  - COMPREHEND — when the episode is a particular scene the reader has not seen (a
-    fiction, an obscure incident), the question sets the scene up from within —
-    briefly introducing the actors and circumstance, the way the reasoning route
-    introduces persons "described only in the passage" — and asks what happened.
+    and the answer is the verbatim narration itself — one long span. Grounded episodes
+    the model does not recognize fall back to COMPREHEND.
+  - COMPREHEND — fiction always, and any unrecognized scene the reader has not seen:
+    the question sets the scene up from within — briefly introducing the actors and
+    circumstance, the way the reasoning route introduces persons "described only in the
+    passage" — and asks what happened. A fiction episode is NEVER presented as history.
 
   - the ANSWER is a VERBATIM quotation of what the passage narrates — prefer ONE long
     contiguous span (the account itself); splice more only when the answer is spread
@@ -69,15 +71,22 @@ When there IS an episode, work in this order.
    - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
      terminal punctuation, so several spans read as continuous prose when joined.
 
-2. THEN WRITE THE QUESTION that this account answers. Use whichever shape fits:
-   - RETELL — if the episode is a matter of record you can recognize (a known event,
-     campaign, voyage, or life — "Washington's crossing of the Delaware", "the retreat
-     from Moscow"), NAME it from your own knowledge and ask the reader to recount it:
-     "Recount how ...", "Tell how ... came about", "Describe what befell ...".
-   - COMPREHEND — otherwise ask what happens in the episode: "What did ... do when
-     ...?", "How did ... meet ...?", "What became of ...?". The span must CORRECTLY
-     AND COMPLETELY answer it — ask exactly what the account tells; never demand a
-     name, motive, or detail it does not supply.
+2. THEN WRITE THE QUESTION that this account answers. The item's "kind" field tells you
+   which shape to use — it is the classifier's judgment of whether the episode is real
+   or invented, and it is authoritative:
+   - kind "grounded" — the episode is presented as a REAL, historical event. If you
+     recognize it as a matter of record (a known event, campaign, voyage, or life —
+     "Washington's crossing of the Delaware", "the retreat from Moscow"), NAME it from
+     your own knowledge and use RETELL: ask the reader to recount it — "Recount how ...",
+     "Tell how ... came about", "Describe what befell ...". If you do NOT recognize the
+     specific event, fall back to COMPREHEND.
+   - kind "fiction" — the episode is INVENTED (a novel, tale, or story). NEVER name it
+     as a matter of record, never claim it happened, and never ask to "recount" it as
+     history. ALWAYS use COMPREHEND.
+   - COMPREHEND — ask what happens in the episode: "What did ... do when ...?", "How did
+     ... meet ...?", "What became of ...?". The span must CORRECTLY AND COMPLETELY
+     answer it — ask exactly what the account tells; never demand a name, motive, or
+     detail it does not supply.
    - Plain period register: direct, no modern or conversational phrasing, no
      meta-language. Write it in pre-1930s English — period vocabulary, spelling, and
      phrasing; use no word, term, or idiom that came into use after 1930.
@@ -95,7 +104,7 @@ When there IS an episode, work in this order.
    - Do NOT put the answer, or its distinctive wording, in the question. Ask what
      happened; do not reveal it.
 
-Input: JSON array [{{"i": 0, "text": "..."}}, ...]
+Input: JSON array [{{"i": 0, "text": "...", "kind": "grounded" | "fiction"}}, ...]
 Output JSON only:
   [{{"i": 0, "spans": ["exact quotation"], "q": "..."}}, ...]
 """
@@ -112,6 +121,16 @@ def source_excerpts(n, seed=0, **_):
     return random.Random(seed).sample(mat, n)
 
 
+def _kind_field(excerpt):
+    """Feed the classifier's real/invented judgment into the prompt so RETELL vs
+    COMPREHEND follows the tag, not the model's re-derivation. An excerpt carrying the
+    grounded tag is treated as grounded (a matter of record may be retold) even if it
+    also carries the fiction tag; fiction only when grounded is absent."""
+    classes = excerpt.get("classes") or []
+    kind = "grounded" if "narrative_grounded" in classes else "fiction"
+    return {"kind": kind}
+
+
 ROUTE = engine.Route(
     name="narrative_qa",
     system=SYSTEM,
@@ -119,6 +138,7 @@ ROUTE = engine.Route(
     answer_fn=engine.spans_answer(MAX_SPANS),   # verbatim extraction
     passthrough=("prose_score",),
     extra_body=engine.DISABLE_THINKING,         # no thinking trace: fast, no truncation
+    payload_fn=_kind_field,                     # inject narrative kind per item
 )
 
 
