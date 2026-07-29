@@ -68,15 +68,25 @@ ASSISTANT who answers. Work in this order.
    - Plain period-schoolbook register, pre-1930s English: period vocabulary, spelling,
      and phrasing. Use no word, term, or idiom that came into use after 1930. Never
      mention the source — no "the passage", "the text", "according to", "mentioned".
-   - The FIRST question must STAND ON ITS OWN: it names its own subject (the war,
-     battle, place, ruler, work, statute, or scripture — use your own knowledge to name
-     it when the passage assumes it) and assumes no earlier context. FORBIDDEN in the
-     first question: catalog/specimen/figure numbers, or a bare "the statute", "the
-     act", "the gun", "it", "this", "they" whose meaning is not given.
+   - The FIRST question must SELF-SITUATE — it must make sense to someone who NEVER saw
+     the passage. Name the actual subject: the war, battle, place, ruler, work, statute,
+     or scripture involved, using your OWN knowledge of the subject when the passage
+     assumes it (e.g. "the Revised Statutes of the United States", "at the Battle of
+     Williamsburg", "in the Gospel of Luke"). Frame the reader — supply the era, place,
+     subject, or situation that makes the span the natural, correct answer.
+     FORBIDDEN in the first question — references that mean nothing on their own:
+     catalog, specimen, or figure numbers ("specimen 167"); a bare "the statute", "the
+     act", "the gun", "the assembly", "the expedition"; a bare "it", "this", "they",
+     "these"; or "two specific verses" / "a certain scholar" without naming which. If
+     the fact you picked cannot be made to stand alone (it hinges on an item known only
+     from the passage), pick a DIFFERENT fact to open with — one that can.
    - LATER questions build on the conversation so far — they MAY and SHOULD use natural
-     follow-up phrasing that refers back to what was just answered ("And why did that
-     happen?", "What became of him afterward?", "How was it accomplished?"). Keep the
-     thread coherent: each question should feel like it follows from the last answer.
+     follow-up phrasing that refers back to what was ALREADY ESTABLISHED in an earlier
+     turn ("And why did that happen?", "What became of him afterward?", "How was it
+     accomplished?"). But a pronoun or "the ___" is allowed ONLY when its antecedent
+     was actually named in a previous turn; never introduce a NEW bare reference the
+     conversation has not yet identified. Keep the thread coherent: each question should
+     follow from the last answer.
 
 4. Return the exchange as "turns": an ordered list ALTERNATING user, assistant, user,
    assistant …, beginning with the user, {MIN_TURNS} to {MAX_TURNS} turns (two to four
