@@ -37,17 +37,28 @@ ROOT = Path(__file__).parent.parent
 OUTPUT_DIR = ROOT / "synth" / "output"
 STATE_DIR = ROOT / "synth" / "state"
 
-BASE_URL = "https://opencode.ai/zen/go"   # opencode Go API (OpenAI-style /v1/chat/completions)
+# Inference provider, switchable via SFT_PROVIDER. Default "deepseek" = the direct
+# DeepSeek API: cheapest per token AND it auto-caches the repeated system prompt (a big
+# win here, since every batch of a route resends the same long prompt). The old opencode
+# Go transport stays available with SFT_PROVIDER=opencode.
+PROVIDER = os.environ.get("SFT_PROVIDER", "deepseek")
+
+if PROVIDER == "opencode":
+    BASE_URL = "https://opencode.ai/zen/go"   # opencode Go (OpenAI-style /v1/chat/completions)
+    MODEL = "deepseek-v4-pro"                 # opencode model id
+    API_KEY_NAME = "OPENCODE_API_KEY"
+    MAX_TOKENS = 16384                        # room for a thinking trace + JSON
+    DISABLE_THINKING = {"thinking": {"type": "disabled"}}   # opencode flag to drop the trace
+else:                                         # deepseek — direct API
+    BASE_URL = "https://api.deepseek.com"     # OpenAI-compatible; /v1/chat/completions works
+    MODEL = "deepseek-chat"                   # V3, non-thinking by default — cheapest
+    API_KEY_NAME = "DS_API_KEY"
+    MAX_TOKENS = 8192                          # deepseek-chat output ceiling; extractive JSON fits
+    DISABLE_THINKING = {}                     # deepseek-chat needs no thinking flag; routes no-op
+
 HTTP_TIMEOUT = 180                # seconds per request
-MODEL = "deepseek-v4-pro"         # opencode Go model id; routes inherit unless they override
-MAX_TOKENS = 16384                # reasoning model: room for thinking + JSON
 CONCURRENCY = 20
 TOKEN_BUDGET = 1200               # chars/4 per batch
-
-# deepseek-v4-flash thinks by default; extraction/QA needs no reasoning trace, and on
-# long dense inputs the trace overruns max_tokens -> truncation -> retry storm (minutes
-# per batch). Routes set extra_body=DISABLE_THINKING to turn it off (as classify does).
-DISABLE_THINKING = {"thinking": {"type": "disabled"}}
 
 
 # --- shared parsing / extraction helpers ---------------------------------------
@@ -111,10 +122,10 @@ def _from_dotenv(name):
 
 
 def _api_key():
-    """The opencode Go key (env or .env) — NOT ANTHROPIC_API_KEY."""
-    key = os.environ.get("OPENCODE_API_KEY") or _from_dotenv("OPENCODE_API_KEY")
+    """The inference key (env or .env) for the active provider — see API_KEY_NAME."""
+    key = os.environ.get(API_KEY_NAME) or _from_dotenv(API_KEY_NAME)
     if not key:
-        sys.exit("Set OPENCODE_API_KEY (env or .env) to the opencode Go key.")
+        sys.exit(f"Set {API_KEY_NAME} (env or .env) for provider '{PROVIDER}'.")
     return key
 
 
