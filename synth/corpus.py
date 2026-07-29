@@ -238,6 +238,44 @@ def load_excerpts(affordance=None, cls=None, min_prose=0.0):
     return out
 
 
+# --- knowledge partition (single-turn reserve + overlapping multiturn slice) ------
+#
+# The `knowledge` pool feeds TWO routes, and we want three things at once: a large
+# pool of pure single-exchange rows (knowledge_qa), a large pool for the multiturn
+# route to trim to a length distribution, and a deliberate OVERLAP where the same
+# excerpt is passed BOTH ways ("same facts, different forms"). We get all three by
+# ordering the pool once (a fixed seeded shuffle, so the slices are independent of
+# doc_index/category order) and taking two overlapping slices of that one sequence:
+#
+#     |<----------- RESERVE (single) 0.00 .. 0.45 ----------->|
+#                            |<------- MULTITURN 0.30 .. 1.00 ------------------>|
+#     [ single only 0.30 ][ BOTH 0.15 ][ multiturn only 0.55                     ]
+#
+# Both routes MUST call knowledge_partition() with the same seed so the overlap lines
+# up. Change the fractions here (not per route) to retune the split.
+KNOWLEDGE_PARTITION_SEED = 20260729
+KNOWLEDGE_RESERVE_END = 0.45      # single-turn reserve = first 45%
+KNOWLEDGE_MULTI_START = 0.30      # multiturn slice = last 70% (overlaps reserve's tail)
+
+
+def knowledge_partition(which, seed=KNOWLEDGE_PARTITION_SEED):
+    """Return the deterministic knowledge slice for `which` ('reserve' or 'multiturn').
+
+    The knowledge pool is loaded, shuffled once by a fixed seed, then sliced: 'reserve'
+    is the leading KNOWLEDGE_RESERVE_END fraction (single-turn) and 'multiturn' is the
+    trailing (1 - KNOWLEDGE_MULTI_START) fraction. The two overlap on
+    [KNOWLEDGE_MULTI_START, KNOWLEDGE_RESERVE_END), which is intentionally double-passed.
+    """
+    mat = load_excerpts(cls=("knowledge",))
+    random.Random(seed).shuffle(mat)                 # in-place on our fresh list
+    n = len(mat)
+    if which == "reserve":
+        return mat[: int(n * KNOWLEDGE_RESERVE_END)]
+    if which == "multiturn":
+        return mat[int(n * KNOWLEDGE_MULTI_START):]
+    raise ValueError(f"unknown knowledge partition: {which!r}")
+
+
 def relabel_excerpts():
     """Re-tag the affordance of every excerpt in EXCERPTS_FILE in place, using the
     current affordance_label — for when the routing rules change (a new affordance,

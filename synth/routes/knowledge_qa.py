@@ -95,10 +95,12 @@ MAX_SPANS = 3
 
 
 def source_excerpts(n, seed=0, **_):
-    """Knowledge-QA excerpts from the materialized corpus, selected by the classifier
-    (classes contains "knowledge"). n falsy or >= pool returns the whole pool;
-    otherwise a seeded random sample. Requires `classify` write-back to have run."""
-    mat = corpus.load_excerpts(cls=CLASSES)
+    """Knowledge-QA excerpts: the SINGLE-TURN RESERVE slice of the knowledge pool (see
+    corpus.knowledge_partition — the leading fraction, overlapping the multiturn route's
+    tail slice so a portion is deliberately double-passed as both a single pair and a
+    conversation). n falsy or >= slice returns the whole slice; otherwise a seeded
+    sample. Requires `classify` write-back to have run."""
+    mat = corpus.knowledge_partition("reserve")
     if not n or n >= len(mat):
         return mat
     return random.Random(seed).sample(mat, n)

@@ -12,13 +12,24 @@ exists), this route is a HYBRID that rides on the huge `knowledge` pool:
     model-written word ever enters an answer, so the answers stay anachronism-safe by
     construction.
 
-The point is MULTI-TURN, not dialogue provenance: the model picks SEVERAL different
+The point is MULTI-TURN, not dialogue provenance: the model picks several different
 facts from one passage and threads them into an interrelated exchange. Only the FIRST
 question must stand on its own (knowledge_qa's self-situating rule); follow-ups are
 ALLOWED to lean on the context already established in the conversation ("And what
 became of it?", "Why was that so?") — that coreference across turns is exactly the
 behavior we want to teach, and it is safe because the antecedent now lives in an
 earlier turn.
+
+LENGTH is controlled by us, not the model: each excerpt is assigned a target number of
+exchanges by a seeded per-doc RNG (_target_exchanges — a balanced mix over 2..5), the
+model is asked for that many, and build_turns truncates any overshoot. This route is
+2-EXCHANGE-AND-UP ONLY; single pairs are supplied (and cherry-picked) by the
+knowledge_qa reserve, so an excerpt that can't sustain two exchanges is dropped here.
+
+SOURCING: this route draws the MULTITURN SLICE of the knowledge pool
+(corpus.knowledge_partition), which overlaps knowledge_qa's single-turn reserve on a
+deliberate band — those excerpts are double-passed as both a single pair and a
+conversation ("same facts, different forms").
 
 Because the shape is a `conversations` list (not a single question/answer), this route
 carries its own run/write loop, reusing the engine's transport, batching, retry,
@@ -40,18 +51,36 @@ from datetime import datetime
 from synth import corpus, engine
 
 CLASSES = ("knowledge",)          # classifier classes this route sources
-MIN_TURNS = 4                     # at least two full exchanges — a real conversation
-MAX_TURNS = 8                     # cap so one excerpt doesn't overreach
+MIN_TURNS = 4                     # at least TWO full exchanges — this route is 2+ only
 MAX_SPANS = 2                     # verbatim spans per assistant answer
 
-SYSTEM = f"""\
-You are given a short fact-rich passage from a pre-1930s book. Build a MULTI-TURN
-question-and-answer conversation about it between a curious USER who asks and an
-ASSISTANT who answers. Work in this order.
+# Each excerpt is assigned a TARGET number of exchanges (one Q&A pair each), drawn from
+# this distribution by a seeded per-doc RNG. The model is asked for that many, and
+# build_turns truncates any overshoot — so the length mix is controlled by US, not the
+# model's whim. This route NEVER emits a single-exchange row: those are supplied (and
+# cherry-picked) by the knowledge_qa reserve, so producing them here would be waste.
+# The balanced 30/20/7.5/7.5 mix, renormalized over 2..5: 46/31/11.5/11.5.
+def _target_exchanges(doc_index, seed=0):
+    x = random.Random(f"{seed}:multiturn:{doc_index}").random()
+    if x < 0.4615:                                    # 46% -> 2 exchanges
+        return 2
+    if x < 0.7692:                                    # 31% -> 3 exchanges
+        return 3
+    if x < 0.8846:                                    # 11.5% -> 4 exchanges
+        return 4
+    return 5                                          # 11.5% -> 5 exchanges
 
-1. Pick SEVERAL DIFFERENT facts the passage states — a definition, a cause, a number,
-   a consequence, a name — enough for at least two exchanges. Each fact will become one
-   assistant answer, so choose facts that lie in DISTINCT places in the passage.
+SYSTEM = f"""\
+You are given a short fact-rich passage from a pre-1930s book and a target number of
+question-and-answer EXCHANGES for it (its "exchanges" field — one exchange is one user
+question plus one assistant answer). Build a question-and-answer conversation of that
+length, between a curious USER who asks and an ASSISTANT who answers. Work in this order.
+
+1. Pick `exchanges` DIFFERENT facts the passage states — a definition, a cause, a
+   number, a consequence, a name. Each fact becomes one assistant answer, so choose
+   facts that lie in DISTINCT places in the passage. Use as many as `exchanges` asks
+   for; only if the passage genuinely lacks that many distinct facts, use fewer (never
+   pad with weak or repeated facts, and never fewer than one).
 
 2. For EACH fact, write the assistant's answer as "spans": a list of ONE exact
    quotation from the passage (up to {MAX_SPANS} only if the fact genuinely lies in
@@ -67,7 +96,8 @@ ASSISTANT who answers. Work in this order.
      distinctive wording, in the question.
    - Plain period-schoolbook register, pre-1930s English: period vocabulary, spelling,
      and phrasing. Use no word, term, or idiom that came into use after 1930. Never
-     mention the source — no "the passage", "the text", "according to", "mentioned".
+     mention the source — no "the passage", "the text", "according to", "mentioned", 
+     "the author".
    - The FIRST question must SELF-SITUATE — it must make sense to someone who NEVER saw
      the passage. Name the actual subject: the war, battle, place, ruler, work, statute,
      or scripture involved, using your OWN knowledge of the subject when the passage
@@ -80,21 +110,22 @@ ASSISTANT who answers. Work in this order.
      "these"; or "two specific verses" / "a certain scholar" without naming which. If
      the fact you picked cannot be made to stand alone (it hinges on an item known only
      from the passage), pick a DIFFERENT fact to open with — one that can.
-   - LATER questions build on the conversation so far — they MAY and SHOULD use natural
-     follow-up phrasing that refers back to what was ALREADY ESTABLISHED in an earlier
-     turn ("And why did that happen?", "What became of him afterward?", "How was it
-     accomplished?"). But a pronoun or "the ___" is allowed ONLY when its antecedent
-     was actually named in a previous turn; never introduce a NEW bare reference the
-     conversation has not yet identified. Keep the thread coherent: each question should
-     follow from the last answer.
+   - Any LATER question (when `exchanges` > 1) builds on the conversation so far — it
+     MAY and SHOULD use natural follow-up phrasing that refers back to what was ALREADY
+     ESTABLISHED in an earlier turn ("And why did that happen?", "What became of him
+     afterward?", "How was it accomplished?"). But a pronoun or "the ___" is allowed
+     ONLY when its antecedent was actually named in a previous turn; never introduce a
+     NEW bare reference the conversation has not yet identified. Keep the thread
+     coherent: each question should follow from the last answer.
 
 4. Return the exchange as "turns": an ordered list ALTERNATING user, assistant, user,
-   assistant …, beginning with the user, {MIN_TURNS} to {MAX_TURNS} turns (two to four
-   full exchanges). A user turn carries "q"; an assistant turn carries "spans".
-   If the passage does not state enough distinct facts for two exchanges, emit NO item
-   for it.
+   assistant …, beginning with a user question and ending with an assistant answer —
+   one user+assistant pair per exchange, so `exchanges` pairs (2 x `exchanges` turns),
+   or fewer only if the passage lacked enough distinct facts. A user turn carries "q";
+   an assistant turn carries "spans". If the passage states no clean fact at all, emit
+   NO item for it.
 
-Input: JSON array [{{"i": 0, "text": "..."}}, ...]
+Input: JSON array [{{"i": 0, "text": "...", "exchanges": N}}, ...]
 Output JSON only:
   [{{"i": 0, "turns": [{{"role": "user", "q": "..."}},
                        {{"role": "assistant", "spans": ["exact quotation"]}},
@@ -103,24 +134,28 @@ Output JSON only:
 """
 
 
-def build_turns(r, excerpt):
-    """Validate + rebuild the model's turns: MIN_TURNS..MAX_TURNS, strictly alternating
-    from user, each user turn a non-empty composed question, each assistant turn a
-    verbatim answer (spans verified as literal substrings). Returns the clean turn list
+def build_turns(r, excerpt, max_exchanges):
+    """Validate + rebuild the model's turns into a clean alternating conversation,
+    capped at `max_exchanges` pairs (this excerpt's target). Takes the longest valid
+    leading run: strictly alternating from user, each user turn a non-empty composed
+    question, each assistant turn a verbatim answer (spans verified as literal
+    substrings). Stops at the cap or the first malformed/non-verbatim turn, drops a
+    dangling trailing user turn, and requires at least MIN_TURNS. Returns the turn list
     or None (drop the row)."""
     turns = r.get("turns")
-    if not isinstance(turns, list) or not (MIN_TURNS <= len(turns) <= MAX_TURNS):
+    if not isinstance(turns, list):
         return None
-    if len(turns) % 2:                               # must end on an assistant answer
-        return None
+    cap = 2 * max_exchanges
     out, expect = [], "user"
     for t in turns:
+        if len(out) >= cap:                          # reached this excerpt's target
+            break
         if not isinstance(t, dict) or t.get("role") != expect:
-            return None                              # missing/mis-ordered role -> drop
+            break                                    # missing/mis-ordered role -> stop
         if expect == "user":
             q = t.get("q") or t.get("content")
             if not isinstance(q, str) or not q.strip():
-                return None
+                break
             content = q.strip()
         else:
             spans = t.get("spans")
@@ -128,17 +163,20 @@ def build_turns(r, excerpt):
                 spans = [t["content"]]
             content = engine.verbatim_answer(spans, excerpt, MAX_SPANS)
             if not content:
-                return None                          # not verbatim -> drop
+                break                                # not verbatim -> stop the run here
         out.append({"role": expect, "content": content})
         expect = "assistant" if expect == "user" else "user"
-    return out
+    if len(out) % 2:                                 # drop a dangling trailing question
+        out.pop()
+    return out if len(out) >= MIN_TURNS else None
 
 
 def source_excerpts(n, seed=0, **_):
-    """Multiturn excerpts: the classifier-tagged `knowledge` pool (the same fact-rich
-    expository excerpts knowledge_qa uses). n falsy or >= pool returns the whole pool;
-    else a seeded sample. Requires `classify` write-back."""
-    mat = corpus.load_excerpts(cls=CLASSES)
+    """Multiturn excerpts: the MULTITURN SLICE of the knowledge pool (see
+    corpus.knowledge_partition — the trailing fraction, overlapping knowledge_qa's
+    reserve so a portion is deliberately double-passed). n falsy or >= slice returns the
+    whole slice; else a seeded sample. Requires `classify` write-back."""
+    mat = corpus.knowledge_partition("multiturn")
     if not n or n >= len(mat):
         return mat
     return random.Random(seed).sample(mat, n)
@@ -150,7 +188,7 @@ ROUTE = engine.Route(
     name="multiturn_qa",
     system=SYSTEM,
     source=source_excerpts,
-    answer_fn=lambda r, e: None,
+    answer_fn=lambda *_: None,
     passthrough=("prose_score",),
     extra_body=engine.DISABLE_THINKING,
 )
@@ -158,7 +196,9 @@ ROUTE = engine.Route(
 
 async def _batch(client, semaphore, batch, state):
     keys = [str(it["doc_index"]) for it in batch]
-    payload = json.dumps([{"i": i, "text": it["excerpt"]} for i, it in enumerate(batch)])
+    targets = [_target_exchanges(it["doc_index"]) for it in batch]
+    payload = json.dumps([{"i": i, "text": it["excerpt"], "exchanges": targets[i]}
+                          for i, it in enumerate(batch)])
     parsed = await engine._call(client, semaphore, ROUTE, SYSTEM, payload, len(batch))
     for r in parsed if isinstance(parsed, list) else []:
         if not isinstance(r, dict):
@@ -166,7 +206,7 @@ async def _batch(client, semaphore, batch, state):
         idx = r.get("i")
         if not (isinstance(idx, int) and 0 <= idx < len(keys)):
             continue
-        turns = build_turns(r, batch[idx]["excerpt"])
+        turns = build_turns(r, batch[idx]["excerpt"], targets[idx])
         if turns:
             state[keys[idx]] = {"turns": turns}
 
