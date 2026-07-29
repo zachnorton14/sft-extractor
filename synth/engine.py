@@ -60,6 +60,7 @@ HTTP_TIMEOUT = 180                # seconds per request
 CONCURRENCY = 20
 TOKEN_BUDGET = 1200               # chars/4 per batch
 CHECKPOINT_EVERY = 500            # save the resume ledger every N excerpts within a phase
+HF_PUSH_EVERY = int(os.environ.get("SFT_HF_PUSH_EVERY", "2000"))   # commit an HF shard every N rows
 
 
 # --- shared parsing / extraction helpers ---------------------------------------
@@ -417,20 +418,29 @@ async def _question_batch(client, semaphore, batch, state, route):
             state[keys[idx]]["q"] = q
 
 
-async def _run_batches(batches, run_one, state, route, save, label):
+async def _run_batches(batches, run_one, state, route, save, label,
+                       excerpts=None, build_row=None):
     """Run batch coroutines concurrently, checkpointing state every CHECKPOINT_EVERY
-    excerpts (and once at the end) so a long run — especially the two-phase extract,
-    which otherwise saved nothing until the whole phase finished — is crash-safe and
-    resumable. run_one(batch) is an awaitable that mutates `state`."""
+    excerpts (so a long run — especially the two-phase extract, which otherwise saved
+    nothing until the whole phase finished — is crash-safe and resumable) and pushing an
+    HF shard every HF_PUSH_EVERY rows (so outputs commit incrementally, not only at the
+    end). run_one(batch) is an awaitable that mutates `state`."""
     total = sum(len(b) for b in batches)
     done = [0]
 
     async def tracked(batch):
         await run_one(batch)
         done[0] += len(batch)
-        if save and done[0] % CHECKPOINT_EVERY < len(batch):
+        if not save:
+            return
+        if done[0] % CHECKPOINT_EVERY < len(batch):
             save_state(route, state)
             print(f"  {label}: {done[0]}/{total}", flush=True)
+        if build_row is not None and done[0] % HF_PUSH_EVERY < len(batch):
+            if flush_shard(route.name, excerpts, state, build_row):
+                save_state(route, state)             # persist the _pushed marks
+        # (during a two-phase extract, build_row yields None for every entry — no q yet
+        #  — so flush is a no-op; complete rows first appear in the question phase.)
 
     await asyncio.gather(*[asyncio.create_task(tracked(b)) for b in batches])
     if save:
@@ -438,6 +448,7 @@ async def _run_batches(batches, run_one, state, route, save, label):
 
 
 async def run_async(route, excerpts, state, save=True):
+    build = lambda e, r: _qa_row(route, e, r)        # for incremental HF shard flushes
     async with open_client() as client:
         semaphore = asyncio.Semaphore(route.concurrency)
 
@@ -449,7 +460,7 @@ async def run_async(route, excerpts, state, save=True):
                 print(f"  extract: {len(need_a)} excerpts, {len(batches)} batches...")
                 await _run_batches(batches,
                                    lambda b: _extract_batch(client, semaphore, b, state, route),
-                                   state, route, save, "extract")
+                                   state, route, save, "extract", excerpts, build)
             # phase 2 — write questions for extracted answers that lack one
             need_q = [e for e in excerpts
                       if state.get(str(e["doc_index"]), {}).get("a")
@@ -460,7 +471,7 @@ async def run_async(route, excerpts, state, save=True):
                 print(f"  question: {len(need_q)} answers, {len(batches)} batches...")
                 await _run_batches(batches,
                                    lambda b: _question_batch(client, semaphore, b, state, route),
-                                   state, route, save, "question")
+                                   state, route, save, "question", excerpts, build)
             return
 
         # one-phase
@@ -472,47 +483,74 @@ async def run_async(route, excerpts, state, save=True):
         print(f"  {len(pending)} excerpts, {len(batches)} batches...")
         await _run_batches(batches,
                            lambda b: _single_batch(client, semaphore, b, state, route),
-                           state, route, save, route.name)
+                           state, route, save, route.name, excerpts, build)
 
 
-def emit_rows(route_name, rows):
-    """Sink for a route's finished rows. Default: push to the HF dataset repo, ONE
-    FOLDER PER ROUTE, nothing left on local disk (the deliverable lives on HF; the
-    resume ledger under synth/state/ is what stays local). Set SFT_OUTPUT_LOCAL=1 to
-    write OUTPUT_DIR/<route>.json instead — offline/debug escape."""
+def _qa_row(route, e, r):
+    """Build one Q/A output row from a state entry, or None if the pair is incomplete."""
+    if not (r and r.get("q") and r.get("a")):        # both halves required
+        return None
+    content = r.get("category") or e["category"]
+    row = {
+        "doc_index": e["doc_index"],
+        "category": content,
+        "book_category": e["category"],
+        "category_moved": content != e["category"],
+        "year": e.get("year"),
+    }
+    for f in route.passthrough:
+        row[f] = e.get(f)
+    row["excerpt"] = e["excerpt"]
+    row["question"] = r["q"]
+    row["answer"] = r["a"]
+    return row
+
+
+def _write_local(route_name, rows):
+    """Offline/debug sink: write all rows to OUTPUT_DIR/<route>.json (SFT_OUTPUT_LOCAL)."""
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    out = OUTPUT_DIR / f"{route_name}.json"
+    out.write_text(json.dumps(rows, indent=2, ensure_ascii=False))
+    print(f"  wrote {len(rows)} {route_name} rows -> {out}")
+    return out
+
+
+def flush_shard(route_name, excerpts, state, build_row):
+    """Push complete-but-not-yet-pushed rows as a NEW HF shard and mark them pushed, so
+    a long run commits incrementally and a resume never re-pushes. `build_row(e, r)`
+    returns a row dict or None. No-op in local mode or when there is nothing new; returns
+    the count pushed."""
     if os.environ.get("SFT_OUTPUT_LOCAL"):
-        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-        out = OUTPUT_DIR / f"{route_name}.json"
-        out.write_text(json.dumps(rows, indent=2, ensure_ascii=False))
-        print(f"  wrote {len(rows)} {route_name} rows -> {out}")
-        return out
+        return 0
+    new = []
+    for e in excerpts:
+        r = state.get(str(e["doc_index"]))
+        if not r or r.get("_pushed"):
+            continue
+        row = build_row(e, r)
+        if row is None:
+            continue
+        r["_pushed"] = True
+        new.append(row)
+    if not new:
+        return 0
     from synth import hf_push                        # lazy: keeps engine import light
-    dest = hf_push.push_rows(route_name, rows)
-    print(f"  pushed {len(rows)} {route_name} rows -> {dest}")
-    return dest
+    dest = hf_push.push_shard(route_name, new)
+    print(f"  pushed +{len(new)} {route_name} rows -> {dest}", flush=True)
+    return len(new)
 
 
 def write_output(route, excerpts, state):
-    rows = []
-    for e in excerpts:
-        r = state.get(str(e["doc_index"]))
-        if not (r and r.get("q") and r.get("a")):    # both halves required
-            continue
-        content = r.get("category") or e["category"]
-        row = {
-            "doc_index": e["doc_index"],
-            "category": content,
-            "book_category": e["category"],
-            "category_moved": content != e["category"],
-            "year": e.get("year"),
-        }
-        for f in route.passthrough:
-            row[f] = e.get(f)
-        row["excerpt"] = e["excerpt"]
-        row["question"] = r["q"]
-        row["answer"] = r["a"]
-        rows.append(row)
-    return emit_rows(route.name, rows)
+    """Final flush: shard the remaining unpushed rows to HF (or write one local file)."""
+    build = lambda e, r: _qa_row(route, e, r)
+    if os.environ.get("SFT_OUTPUT_LOCAL"):
+        rows = [row for e in excerpts
+                if (row := build(e, state.get(str(e["doc_index"])))) is not None]
+        return _write_local(route.name, rows)
+    n = flush_shard(route.name, excerpts, state, build)
+    save_state(route, state)                         # persist final _pushed marks
+    print(f"  final: +{n} {route.name} rows; shards under {route.name}/ on HF")
+    return n
 
 
 def _wrap(label, text):

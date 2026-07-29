@@ -45,6 +45,7 @@ Env:
 
 import asyncio
 import json
+import os
 import random
 from datetime import datetime
 
@@ -227,27 +228,41 @@ async def run_async(excerpts, state, save=True):
         async def tracked(batch):
             await _batch(client, semaphore, batch, state)
             done[0] += len(batch)
-            if done[0] % engine.CHECKPOINT_EVERY < len(batch) and save:
+            if not save:
+                return
+            if done[0] % engine.CHECKPOINT_EVERY < len(batch):
                 save_state(state)
                 print(f"  {done[0]}/{len(pending)}", flush=True)
+            if done[0] % engine.HF_PUSH_EVERY < len(batch):
+                if engine.flush_shard("multiturn_qa", excerpts, state, _mt_row):
+                    save_state(state)
 
         await asyncio.gather(*[asyncio.create_task(tracked(b)) for b in batches])
     if save:
         save_state(state)
 
 
+def _mt_row(e, r):
+    """Build one multi-turn output row from a state entry, or None if it has no turns."""
+    if not (r and r.get("turns")):
+        return None
+    return {
+        "doc_index": e["doc_index"], "category": e.get("category"),
+        "year": e.get("year"), "prose_score": e.get("prose_score"),
+        "excerpt": e["excerpt"], "conversations": r["turns"],
+    }
+
+
 def write_output(excerpts, state):
-    rows = []
-    for e in excerpts:
-        r = state.get(str(e["doc_index"]))
-        if not (r and r.get("turns")):
-            continue
-        rows.append({
-            "doc_index": e["doc_index"], "category": e.get("category"),
-            "year": e.get("year"), "prose_score": e.get("prose_score"),
-            "excerpt": e["excerpt"], "conversations": r["turns"],
-        })
-    return engine.emit_rows("multiturn_qa", rows)
+    """Final flush: shard remaining unpushed rows to HF (or write one local file)."""
+    if os.environ.get("SFT_OUTPUT_LOCAL"):
+        rows = [row for e in excerpts
+                if (row := _mt_row(e, state.get(str(e["doc_index"])))) is not None]
+        return engine._write_local("multiturn_qa", rows)
+    n = engine.flush_shard("multiturn_qa", excerpts, state, _mt_row)
+    save_state(state)
+    print(f"  final: +{n} multiturn_qa rows; shards under multiturn_qa/ on HF")
+    return n
 
 
 def _conv_lines(excerpts, state):

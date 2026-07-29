@@ -54,19 +54,23 @@ def _api():
     return HfApi(token=_token())
 
 
-def push_rows(route_name, rows, repo=HF_REPO):
-    """Upload `rows` (a list of dicts) as <route_name>/<route_name>.json to the HF
-    dataset repo, creating the repo if it does not yet exist. Returns the repo path."""
+def push_shard(route_name, rows, repo=HF_REPO):
+    """Upload `rows` as a NEW timestamped shard under <route_name>/ on the HF dataset
+    repo, so a long run commits incrementally without re-uploading prior shards. Each
+    call is one commit of one part-file; HF load_dataset globs <route_name>/*.json.
+    Returns the repo path. Creates the repo if it does not yet exist."""
+    from datetime import datetime, timezone
     api = _api()
     api.create_repo(repo_id=repo, repo_type=HF_REPO_TYPE, exist_ok=True)
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")
+    path_in_repo = f"{route_name}/part-{stamp}.json"
     data = json.dumps(rows, indent=2, ensure_ascii=False).encode("utf-8")
-    path_in_repo = f"{route_name}/{route_name}.json"
     api.upload_file(
         path_or_fileobj=io.BytesIO(data),
         path_in_repo=path_in_repo,
         repo_id=repo,
         repo_type=HF_REPO_TYPE,
-        commit_message=f"Update {route_name} ({len(rows)} rows)",
+        commit_message=f"{route_name}: +{len(rows)} rows",
     )
     return f"{repo}/{path_in_repo}"
 
