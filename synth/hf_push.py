@@ -75,6 +75,37 @@ def push_shard(route_name, rows, repo=HF_REPO):
     return f"{repo}/{path_in_repo}"
 
 
+def compact_route(route_name, shard_size=2000, repo=HF_REPO):
+    """Rewrite a route's shards to a uniform SHARD_SIZE rows each (last shard holds the
+    remainder). Reads every existing <route>/part-*.jsonl in generation order, re-chunks,
+    and swaps old->new in ONE atomic commit (adds + deletes together, so an interruption
+    can't drop data). New shards are sequentially named part-00000.jsonl … Returns
+    (old_shards, new_shards, rows)."""
+    from huggingface_hub import hf_hub_download, CommitOperationAdd, CommitOperationDelete
+    api = _api()
+    old = sorted(f for f in api.list_repo_files(repo_id=repo, repo_type=HF_REPO_TYPE)
+                 if f.startswith(f"{route_name}/") and f.endswith((".jsonl", ".json")))
+    rows = []
+    for f in old:
+        local = hf_hub_download(repo_id=repo, repo_type=HF_REPO_TYPE, filename=f, token=_token())
+        with open(local, encoding="utf-8") as fh:
+            if f.endswith(".json"):
+                rows.extend(json.load(fh))
+            else:
+                rows.extend(json.loads(l) for l in fh if l.strip())
+    ops = [CommitOperationDelete(path_in_repo=f) for f in old]
+    n_new = 0
+    for i in range(0, len(rows), shard_size):
+        chunk = rows[i:i + shard_size]
+        body = ("\n".join(json.dumps(r, ensure_ascii=False) for r in chunk) + "\n").encode("utf-8")
+        ops.append(CommitOperationAdd(path_in_repo=f"{route_name}/part-{n_new:05d}.jsonl",
+                                      path_or_fileobj=body))
+        n_new += 1
+    api.create_commit(repo_id=repo, repo_type=HF_REPO_TYPE, operations=ops,
+                      commit_message=f"compact {route_name}: {len(old)} -> {n_new} shards of <= {shard_size}")
+    return len(old), n_new, len(rows)
+
+
 def migrate_route(route_name, drop_keys=("excerpt", "category_moved"), repo=HF_REPO):
     """One-time fixup for shards already pushed under the old schema/format: for every
     <route_name>/part-*.json shard, strip drop_keys from each row, rewrite it as a .jsonl
