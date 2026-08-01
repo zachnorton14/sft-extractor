@@ -38,13 +38,44 @@ from nanochat.loss_eval import score_word_bits  # noqa: E402
 from scripts.anachronism_eval import _delta_metrics  # noqa: E402
 
 
+def _scorable(tok, texts, max_tokens):
+    """True per text if it survives tokenization with >= 2 target tokens.
+
+    score_word_bits guards len(ids) < 2, but ids includes the prepended BOS, so a
+    single-token text (e.g. the literal question "NO") reaches the model with T == 1
+    and trips gpt.forward's `assert T > 1`. One such row would abort a whole pass, so
+    they are identified up front and scored as None instead.
+    """
+    bos = tok.get_bos_token_id()
+    return [len(tok.encode(t, prepend=bos)[:max_tokens]) >= 3 for t in texts]
+
+
 def filter_file(path, model, tokenizer, token_bytes, modern, modern_tok, modern_token_bytes,
-                device, peak_k, max_tokens, drop_frac):
+                device, peak_k, max_tokens, drop_frac, mask=False):
     records = json.loads(Path(path).read_text())
     texts = [r["synthetic_q"] for r in records]
 
-    wv = score_word_bits(model, tokenizer, texts, device, token_bytes, max_tokens=max_tokens)
-    wm = score_word_bits(modern, modern_tok, texts, device, modern_token_bytes, max_tokens=max_tokens)
+    ok_v = _scorable(tokenizer, texts, max_tokens)
+    ok_m = _scorable(modern_tok, texts, max_tokens)
+    keep_idx = [i for i in range(len(texts)) if ok_v[i] and ok_m[i]]
+    if len(keep_idx) < len(texts):
+        print0(f"{Path(path).stem}: {len(texts) - len(keep_idx)} degenerate text(s) unscorable, "
+               f"passed through with a null score")
+    sub = [texts[i] for i in keep_idx]
+
+    sv = score_word_bits(model, tokenizer, sub, device, token_bytes, max_tokens=max_tokens)
+    sm = score_word_bits(modern, modern_tok, sub, device, modern_token_bytes, max_tokens=max_tokens)
+    empty = {"words": [], "bits": [], "bytes": []}
+    wv, wm = [dict(empty) for _ in texts], [dict(empty) for _ in texts]
+    for j, i in enumerate(keep_idx):
+        wv[i], wm[i] = sv[j], sm[j]
+
+    if mask:
+        # drop math/scientific-notation words so delta_peak scores prose register only
+        # (both models re-aggregate to the same text words, so kept indices align)
+        from synth.notation_mask import mask_wordbits
+        wv = [mask_wordbits(v) for v in wv]
+        wm = [mask_wordbits(m) for m in wm]
 
     scored = []
     for r, v, m in zip(records, wv, wm):
@@ -95,6 +126,8 @@ def main():
     parser.add_argument("--peak-k", type=int, default=3, help="top-k words averaged for the peak metric")
     parser.add_argument("--max-tokens", type=int, default=512, help="truncate questions to this many tokens")
     parser.add_argument("--device-type", type=str, default="", help="cuda|cpu|mps (empty = autodetect)")
+    parser.add_argument("--mask", action="store_true",
+                        help="mask math/scientific notation words before scoring (recommended for STEM)")
     args = parser.parse_args()
 
     device_type = autodetect_device_type() if args.device_type == "" else args.device_type
@@ -114,7 +147,8 @@ def main():
     total = total_dropped = 0
     for path in args.inputs:
         n, d = filter_file(path, model, tokenizer, token_bytes, modern, modern_tok,
-                           modern_token_bytes, device, args.peak_k, args.max_tokens, args.drop_frac)
+                           modern_token_bytes, device, args.peak_k, args.max_tokens, args.drop_frac,
+                           mask=args.mask)
         total += n
         total_dropped += d
 
