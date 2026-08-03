@@ -40,7 +40,7 @@ ROUTES = ["knowledge_qa", "reasoning_qa", "narrative_grounded", "narrative_ficti
 DICT_PATH = "/usr/share/dict/words"
 
 _TOK = re.compile(r"[A-Za-z][A-Za-z'-]*")
-_HYPHEN_BREAK = re.compile(r"\b[A-Za-z]{2,}-\s+[a-z]{2,}\b")
+_HYPHEN_BREAK = re.compile(r"\b([A-Za-z]{2,})-\s+([a-z]{2,})\b")
 _MOJIBAKE = re.compile(r"Ã[\x80-\xbf©®¨«»]|â€[\x99\x9c\x9d\x93\x94]|Â[\xa0-\xbf]|�")
 
 # Greek/Cyrillic characters that are visual lookalikes for Latin letters.
@@ -162,6 +162,56 @@ def homoglyph_words(text):
     return out
 
 
+def join_hyphen_breaks(text):
+    """Rejoin line-break hyphenation, but ONLY where the joined form is a real word.
+
+    Returns (text, n_joined, n_left). The dictionary gate is what makes this safe to
+    run blind: "after- wards" -> "afterwards" and "fluctu- ations" -> "fluctuations"
+    join, while a suspended hyphen ("rod- and cone-layer") or a dash used as
+    punctuation ("audience- especially") would join to a non-word and is left exactly
+    as it was. The cost is recall on proper nouns and rare compounds -- "Plassen- burg"
+    stays broken because "Plassenburg" is not in the dictionary -- which is the right
+    trade when the alternative is silently welding two unrelated words together.
+    """
+    words = _english()
+    joined = left = 0
+
+    def sub(m):
+        nonlocal joined, left
+        a, b = m.group(1), m.group(2)
+        cand = (a + b).lower()
+        if words and cand in words:
+            joined += 1
+            return a + b
+        left += 1
+        return m.group(0)
+
+    return _HYPHEN_BREAK.sub(sub, text), joined, left
+
+
+def broken_fragments(text):
+    """Hyphen breaks that survive join_hyphen_breaks AND look genuinely destroyed.
+
+    After the dictionary-gated join, three kinds of residue remain: proper nouns
+    ("South- ampton"), punctuation dashes ("naturalists- which"), and text the scan
+    truncated ("coun- as", "con- of"). Only the last is corruption. The discriminator
+    is the pre-hyphen fragment: "naturalists" and "spring" are words used before a
+    dash, while "coun" and "indorse" are word fragments left by a dropped line.
+    """
+    words = _english()
+    if not words:
+        return []
+    out = []
+    for m in _HYPHEN_BREAK.finditer(text):
+        a, b = m.group(1), m.group(2)
+        if (a + b).lower() in words:
+            continue                      # join_hyphen_breaks would have fixed it
+        if a.lower() in words or a[0].isupper():
+            continue                      # real word before a dash, or a proper noun
+        out.append(m.group(0))
+    return out
+
+
 def corruption_report(text):
     """{class: count} of corruption found; empty dict means clean."""
     r = {}
@@ -171,8 +221,8 @@ def corruption_report(text):
         r["homoglyph"] = n
     if (n := len(_MOJIBAKE.findall(text))):
         r["mojibake"] = n
-    if (n := len(_HYPHEN_BREAK.findall(text))):
-        r["hyphen_break"] = n
+    if (n := len(broken_fragments(text))):
+        r["broken_fragment"] = n
     return r
 
 
