@@ -6,9 +6,11 @@
 #   docker push ghcr.io/<you>/talkie-encoder:latest
 # Then make the package Public in GitHub (Packages > settings) so vast can pull it.
 
-FROM pytorch/pytorch:2.4.0-cuda12.1-cudnn9-runtime
+FROM pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime
 
-RUN pip install --no-cache-dir "git+https://github.com/talkie-lm/talkie" numpy
+RUN python --version && \
+    python -m pip install --no-cache-dir \
+    "git+https://github.com/talkie-lm/talkie" numpy
 
 # Put HF/talkie caches on the big instance disk, not the small container layer.
 ENV HF_HOME=/workspace/.cache/huggingface \
