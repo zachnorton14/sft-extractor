@@ -434,6 +434,11 @@ def cmd_multiturn(args):
     _run_extractive_route(args, multiturn_qa, "multiturn")
 
 
+def cmd_calibration(args):
+    from synth.routes import calibration_qa
+    _run_extractive_route(args, calibration_qa, "calibration")
+
+
 def cmd_knowledge(args):
     from synth.routes import knowledge_qa as kq
     excerpts = kq.source_excerpts(args.size, seed=args.seed)
@@ -662,6 +667,7 @@ def main():
         ("opinion-qa", "Generate view-and-ground Q/A from opinion excerpts"),
         ("verse-qa", "Generate compose-a-verse Q/A from verse excerpts"),
         ("multiturn-qa", "Generate interrelated multi-turn Q&A from knowledge excerpts (hybrid route)"),
+        ("calibration-qa", "Generate calibrated-uncertainty Q/A from hedging passages"),
     ]:
         _p = sub.add_parser(_name, help=_help)
         _p.add_argument("--seed", type=int, default=0)
@@ -754,6 +760,8 @@ def main():
         cmd_verse(args)
     elif args.cmd == "multiturn-qa":
         cmd_multiturn(args)
+    elif args.cmd == "calibration-qa":
+        cmd_calibration(args)
     elif args.cmd == "filter-pool":
         cmd_filter_pool(args)
     elif args.cmd == "classify":

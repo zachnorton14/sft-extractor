@@ -902,6 +902,33 @@ def has_broken_math(text):
     return bool(_BROKEN_MATH.search(text))
 
 
+# Period expressions of epistemic uncertainty — the calibration route sources passages
+# that contain one, so the verbatim answer can be the author's own "it is not known".
+_HEDGE_PHRASES = [
+    r"not (?:certainly |precisely |exactly |yet )?known",
+    r"(?:is|are|remains?|was|were) (?:still |yet |as yet )?(?:unknown|uncertain|obscure|doubtful|conjectural|unsettled|undetermined|unascertained)",
+    r"cannot (?:be |now be )?(?:known|determined|ascertained|decided|explained|said)",
+    r"(?:authorities|opinions|writers|physicians|naturalists|historians|philosophers|critics) (?:differ|are divided|are at variance)",
+    r"(?:a )?matter of (?:conjecture|dispute|doubt|opinion|uncertainty)",
+    r"open to (?:doubt|dispute|question)",
+    r"little is (?:certainly )?known",
+    r"we (?:are (?:wholly |as yet )?ignorant|do not know|cannot (?:say|tell|determine))",
+    r"no one (?:knows|can tell)",
+    r"impossible to (?:say|determine|ascertain|decide|know)",
+    r"difficult to (?:say|determine|decide)",
+    r"remains? (?:a )?(?:mystery|secret)",
+    r"has not (?:yet |as yet )?been (?:determined|ascertained|explained|discovered|settled)",
+    r"in (?:doubt|dispute)",
+]
+_HEDGE = re.compile(r"\b(?:" + "|".join(_HEDGE_PHRASES) + r")\b", re.I)
+
+
+def has_hedge(text):
+    """True if the span states that something is not known / doubtful / disputed — the
+    calibration route's source signal."""
+    return bool(_HEDGE.search(text))
+
+
 def _first_word(text):
     m = re.match(r"\s*([A-Za-z]+)", text)
     return m.group(1).lower() if m else ""
