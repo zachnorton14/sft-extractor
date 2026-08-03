@@ -32,17 +32,26 @@ from synth.ngram_filter import _load_route, ROUTES
 BATCH = 40
 
 SYSTEM = """\
-You are given a numbered list of QUESTION/ANSWER pairs taken from pre-1930s books. For
-each pair judge ONLY whether the ANSWER correctly and completely answers the QUESTION.
+You are given a numbered list of QUESTION/ANSWER pairs from pre-1930s books. For each
+pair, judge whether the ANSWER is a RIGHT and COMPLETE answer to the QUESTION — not
+merely on the same subject.
 
-Do NOT fact-check against modern knowledge — period beliefs are fine. Do NOT judge style
-or era. Judge only: does the answer actually and completely answer the question?
+Be strict about CORRECTNESS. The answer must actually resolve what the question asks —
+the right name, number, date, cause, or outcome — completely and without mismatch. Mark
+0 if the answer is on-topic but does not correctly or fully answer: it gives the wrong
+specific, omits what was asked, only REFERS to the answer ("this was the ...", "is
+reported by ...") without stating it, is cut off, or does not actually match the
+question.
 
-Output ONLY a JSON array of 0/1 — one value per input pair, IN THE SAME ORDER, nothing
-else (no keys, no text):
-  1 = the answer correctly and completely answers the question
-  0 = it does not (wrong subject, incomplete, or it merely REFERS to the answer — "this
-      was the ...", "is reported by ..." — without actually stating it)
+Do NOT fact-check against modern knowledge: an answer that correctly reflects what a
+pre-1930 source states is CORRECT even if modern science disagrees. You judge whether the
+answer correctly answers the question, not whether the period belief is true today. Do
+NOT judge style or era.
+
+Output ONLY a bare JSON array of 0/1 — one value per input pair, IN THE SAME ORDER,
+nothing else (no keys, no text):
+  1 = correctly and completely answers the question
+  0 = does not
 Return EXACTLY as many values as there are input pairs, e.g. [1,1,0,1,0].
 
 Input: JSON array of pairs [{"q": "...", "a": "..."}, ...]
@@ -138,6 +147,37 @@ def _report(scored, n_total, show):
         print(f"      A: {a[:150]}")
 
 
+async def _run_sanity(routes, model, batch, n, seed):
+    """Discrimination test: judge N real pairs AND N deliberately-WRONG pairs (each
+    question given a different question's answer). A discriminating judge scores real
+    pairs ~1 and mismatched pairs ~0. If it passes the mismatches as 1, it is rubber-
+    stamping and the pass is worthless."""
+    reals = _collect(routes, 0, seed)
+    reals = random.Random(seed).sample(reals, min(n, len(reals)))
+    perm = [p[3] for p in reals]
+    random.Random(seed + 1).shuffle(perm)
+    mism = [(r, di, q, a2) for (r, di, q, a), a2 in zip(reals, perm) if a2 != a]
+    route = engine.Route(name="verify", system=SYSTEM, source=None, answer_fn=None,
+                         model=model, extra_body=engine.DISABLE_THINKING)
+    async with engine.open_client() as client:
+        sem = asyncio.Semaphore(engine.CONCURRENCY)
+
+        async def judge_all(items):
+            bs = [items[i:i + batch] for i in range(0, len(items), batch)]
+            res = await asyncio.gather(*[_judge(client, sem, route, b) for b in bs])
+            return [s for r in res for s in r]
+
+        real_scored = await judge_all(reals)
+        mism_scored = await judge_all(mism)
+    keep = 100 * sum(s for *_, s in real_scored) / max(1, len(real_scored))
+    caught = 100 * sum(1 for *_, s in mism_scored if s == 0) / max(1, len(mism_scored))
+    print(f"\nSANITY (judge={model}, batch={batch}):")
+    print(f"  real pairs      : {len(real_scored):>5} judged, {keep:5.1f}% scored 1  "
+          f"(want high — real pairs are mostly correct)")
+    print(f"  mismatched pairs: {len(mism_scored):>5} judged, {caught:5.1f}% scored 0  "
+          f"(DISCRIMINATION — want high; low = rubber-stamping)")
+
+
 def main():
     ap = argparse.ArgumentParser(description="LLM-judge Q/A alignment verification")
     ap.add_argument("--route", choices=ROUTES, help="single route (default: all)")
@@ -146,8 +186,13 @@ def main():
     ap.add_argument("--model", default=engine.MODEL, help="judge model (default: engine MODEL)")
     ap.add_argument("--batch", type=int, default=BATCH, help="pairs per judge call (bare 0/1 array; auto-splits on drift)")
     ap.add_argument("--show", type=int, default=20, help="misaligned examples to print")
+    ap.add_argument("--sanity", type=int, default=0, metavar="N",
+                    help="discrimination test on N real + N shuffled-answer pairs")
     args = ap.parse_args()
     routes = [args.route] if args.route else list(ROUTES)
+    if args.sanity:
+        asyncio.run(_run_sanity(routes, args.model, args.batch, args.sanity, args.seed))
+        return
     items = _collect(routes, args.sample, args.seed)
     print(f"collected {len(items):,} pairs from {len(routes)} route(s); judging (batch={args.batch})...")
     asyncio.run(_run(items, args.model, args.batch, args.show))
