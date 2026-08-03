@@ -100,6 +100,7 @@ def _parse_json_array(text):
     or leading prose — reasoning models over chat/completions do all three."""
     text = _THINK_RE.sub("", text)
     text = _strip_fence(text).strip()
+    text = re.sub(r"^\[?json\]?\s*", "", text, flags=re.I)   # stray leading "[json]" tag
     if not text.startswith("["):
         i, j = text.find("["), text.rfind("]")
         if i != -1 and j != -1:

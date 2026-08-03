@@ -48,6 +48,24 @@ pre-1930 source states is CORRECT even if modern science disagrees. You judge wh
 answer correctly answers the question, not whether the period belief is true today. Do
 NOT judge style or era.
 
+Study these examples, then apply the SAME standard:
+  Q: "Who discovered the circulation of the blood?"
+  A: "The circulation of the blood was discovered by Harvey."            -> 1  (states it)
+  Q: "What was the original constitution of the government of New-Haven?"
+  A: "This was the original, fundamental constitution of New-Haven."     -> 0  (only REFERS
+     to it; never says what it was)
+  Q: "How many men were lost in the assault on the redoubt?"
+  A: "The assault was made at dawn and repulsed with heavy loss."        -> 0  (on topic
+     but never gives the number asked)
+  Q: "In what year did Harvard place its law school on a graduate basis?"
+  A: "Harvard placed its school on a graduate basis in 1896."            -> 1  (right specific)
+  Q: "By what river did General Wolfe land before the assault on Quebec?"
+  A: "General Wolfe landed by the Hudson before the assault on Quebec."  -> 0  (wrong
+     specific — the answer names the wrong thing)
+  Q: "What did Fleischmann report as the most extraordinary instance of prepotency?"
+  A: "The most extraordinary instance of prepotency is reported by Fleischmann." -> 0
+     (attributes it but never states what it was)
+
 Output ONLY a bare JSON array of 0/1 — one value per input pair, IN THE SAME ORDER,
 nothing else (no keys, no text):
   1 = correctly and completely answers the question
@@ -56,6 +74,10 @@ Return EXACTLY as many values as there are input pairs, e.g. [1,1,0,1,0].
 
 Input: JSON array of pairs [{"q": "...", "a": "..."}, ...]
 """
+
+# Judge should be deterministic: temperature 0. (extra_body merges into the request; for
+# DeepSeek DISABLE_THINKING is empty, for opencode it carries the thinking-off flag.)
+JUDGE_EXTRA = {**engine.DISABLE_THINKING, "temperature": 0}
 
 
 def _pairs(row):
@@ -107,7 +129,7 @@ async def _judge(client, sem, route, batch):
 
 async def _run(items, model, batch_size, show):
     route = engine.Route(name="verify", system=SYSTEM, source=None, answer_fn=None,
-                         model=model, extra_body=engine.DISABLE_THINKING)
+                         model=model, extra_body=JUDGE_EXTRA)
     scored = []
     batches = [items[i:i + batch_size] for i in range(0, len(items), batch_size)]
     async with engine.open_client() as client:
@@ -158,7 +180,7 @@ async def _run_sanity(routes, model, batch, n, seed):
     random.Random(seed + 1).shuffle(perm)
     mism = [(r, di, q, a2) for (r, di, q, a), a2 in zip(reals, perm) if a2 != a]
     route = engine.Route(name="verify", system=SYSTEM, source=None, answer_fn=None,
-                         model=model, extra_body=engine.DISABLE_THINKING)
+                         model=model, extra_body=JUDGE_EXTRA)
     async with engine.open_client() as client:
         sem = asyncio.Semaphore(engine.CONCURRENCY)
 
