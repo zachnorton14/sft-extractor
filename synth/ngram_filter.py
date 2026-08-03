@@ -45,9 +45,9 @@ ROUTES = (
 # Test 3 is how you discover more to add here.
 MODERN_UNIGRAMS = {
     "internet", "website", "online", "offline", "email", "e-mail", "download", "upload",
-    "wifi", "wi-fi", "bluetooth", "smartphone", "laptop", "software", "app", "apps",
+    "wifi", "wi-fi", "bluetooth", "smartphone", "laptop", "software",
     "blog", "blogger", "podcast", "hashtag", "selfie", "emoji", "google", "googled",
-    "googling", "wikipedia", "youtube", "facebook", "twitter", "cyberspace",
+    "googling", "wikipedia", "youtube", "facebook", "cyberspace",
     "cybersecurity", "malware", "chatbot", "livestream", "cellphone", "teenager",
     "teenagers", "microchip", "transistor", "cosmonaut", "photocopier", "supermarket",
     "genocide", "napalm", "antibiotic", "antibiotics", "neutron", "radar", "sonar",
@@ -58,7 +58,10 @@ MODERN_UNIGRAMS = {
 # (lowercased) text so spacing/case don't matter. Excludes pre-1930 phrases ("middle
 # class", "working class", "human rights", "credit card", "assembly line").
 MODERN_PHRASES = (
-    "cold war", "world war", "first world war", "second world war", "world war one",
+    # "world war" (bare) is period-valid — WWI was called "the World War" 1914-1930s;
+    # "First/Second World War" imply a sequel and were coined ~1931+, so they ARE
+    # anachronistic in a pre-1930 question.
+    "cold war", "first world war", "second world war", "world war one",
     "world war two", "machine learning", "artificial intelligence", "social media",
     "search engine", "climate change", "global warming", "greenhouse gas",
     "united nations", "european union", "space race", "nuclear weapon", "nuclear weapons",
