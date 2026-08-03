@@ -1,0 +1,439 @@
+route: multiturn_qa
+model: deepseek-v4-pro
+seed:  0
+n:     20
+kept:  13/20
+
+--- SYSTEM PROMPT ---
+You are given a short fact-rich passage from a pre-1930s book. Build a MULTI-TURN
+question-and-answer conversation about it between a curious USER who asks and an
+ASSISTANT who answers. Work in this order.
+
+1. Pick SEVERAL DIFFERENT facts the passage states — a definition, a cause, a number,
+   a consequence, a name — enough for at least two exchanges. Each fact will become one
+   assistant answer, so choose facts that lie in DISTINCT places in the passage.
+
+2. For EACH fact, write the assistant's answer as "spans": a list of ONE exact
+   quotation from the passage (up to 2 only if the fact genuinely lies in
+   separate places).
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize, or
+     add any word not in the passage. Take WHOLE sentences: begin and end each span at
+     a sentence boundary and keep its terminal punctuation.
+   - The ASSISTANT ONLY ANSWERS — it never asks a question and never ends on a question.
+
+3. For EACH answer write the USER question ("q") it answers.
+   - The span must CORRECTLY AND COMPLETELY answer the question. Do not demand a name,
+     number, or identity the span does not supply. Do not reveal the answer, or its
+     distinctive wording, in the question.
+   - Plain period-schoolbook register, pre-1930s English: period vocabulary, spelling,
+     and phrasing. Use no word, term, or idiom that came into use after 1930. Never
+     mention the source — no "the passage", "the text", "according to", "mentioned".
+   - The FIRST question must STAND ON ITS OWN: it names its own subject (the war,
+     battle, place, ruler, work, statute, or scripture — use your own knowledge to name
+     it when the passage assumes it) and assumes no earlier context. FORBIDDEN in the
+     first question: catalog/specimen/figure numbers, or a bare "the statute", "the
+     act", "the gun", "it", "this", "they" whose meaning is not given.
+   - LATER questions build on the conversation so far — they MAY and SHOULD use natural
+     follow-up phrasing that refers back to what was just answered ("And why did that
+     happen?", "What became of him afterward?", "How was it accomplished?"). Keep the
+     thread coherent: each question should feel like it follows from the last answer.
+
+4. Return the exchange as "turns": an ordered list ALTERNATING user, assistant, user,
+   assistant …, beginning with the user, 4 to 8 turns (two to four
+   full exchanges). A user turn carries "q"; an assistant turn carries "spans".
+   If the passage does not state enough distinct facts for two exchanges, emit NO item
+   for it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "turns": [{"role": "user", "q": "..."},
+                       {"role": "assistant", "spans": ["exact quotation"]},
+                       {"role": "user", "q": "..."},
+                       {"role": "assistant", "spans": ["exact quotation"]}]}, ...]
+
+
+========================================================================================
+[AGRICULTURE]  1884  turns=6
+  excerpt : It is true we "freely grant" a national revenue of a most liberal character-
+            we give £20,000,000 when we abolish slavery, and we do not hold our hands to
+            rescue captive missionaries in Abyssinia or send relief to Gordon-but it is
+            all done with the conscious consent of the individuals who contribute the
+            revenue. It is this national idea which lies at the root of our commercial
+            prosperity. But on the...
+  USER  : What sum was granted by the nation when slavery was abolished?
+  ASST  : We give £20,000,000 when we abolish slavery, and we do not hold our hands to
+          rescue captive missionaries in Abyssinia or send relief to Gordon-but it is
+          all done with the conscious consent of the individuals who contribute the
+          revenue.
+  USER  : What spirit does the author hold responsible for our commercial prosperity?
+  ASST  : It is this national idea which lies at the root of our commercial prosperity.
+  USER  : And what does the foreign taxpayer do in the matter of the sugar bounties?
+  ASST  : But the foreign taxpayer holds his peace; and, whether it be in ignorance or
+          in fear, it exhibits an equally lamentable absence of the primary conditions
+          of individual freedom.
+
+========================================================================================
+[POLITICAL SCIENCE]  1899  turns=4
+  excerpt : Political duty in a democracy centres primarily in those well-organised
+            interests which together make up the national life. The ideal of political
+            knowledge for the ordinary citizen ought to lie in a just estimate of the
+            importance of his class to the national welfare. And that estimate can only
+            be made by weighing too the importance of other classes and other interests.
+            This, no doubt, is a much ...
+  USER  : Upon what does political duty in a democracy chiefly centre?
+  ASST  : Political duty in a democracy centres primarily in those well-organised
+          interests which together make up the national life.
+  USER  : What is the first condition of a healthy political life in such a state?
+  ASST  : The first condition, therefore, of healthy political life in a democracy is
+          the more thorough organisation of all those classes and sections which have a
+          quite distinct life, with its needs and duties, of their own.
+
+========================================================================================
+[SOCIAL SCIENCES]  1913  turns=0
+  excerpt : An immense fan-shaped garden, with lawns as soft and compact as a cloth of
+            velvet, sprinkled with small white daisies, dotted here and there with
+            yellow buttercups, in keeping with the medieval simplicity of everything, is
+            bordered and set off by rows of yew as old as the place itself, the
+            symbolical tree of the primitive bards and mystics. And they are in their
+            proper element here, in front of th...
+  (dropped)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1832  turns=0
+  excerpt : Greek words sometimes occur in the Septuagint, the reason for the choice of
+            which it is impossible for us to discover, either from Greek or Hebrew
+            usage. In these cases, according to Le Dieu and others, the Chaldee or
+            Arabic usage has been followed, or the primary meaning of the word, which
+            has been lost in Hebrew, remains in Chaldee or Arabic." Thus AD is rendered
+            συγκρίνειν instead of ἑρμηνεύειν...
+  (dropped)
+
+========================================================================================
+[SCIENCE]  1922  turns=8
+  excerpt : The distance of Antares, though not very accurately known, is probably not
+            far from 350 light-years. Its angular diameter of 0.040 of a second would
+            thus correspond to a linear diameter of about 400 million miles. their
+            characteristic bands in the spectrum. Finally comes extinction of light, as
+            the star approaches its ultimate state of a cold and solid globe. We may
+            thus form a new picture of the ...
+  USER  : How far from the earth is the star Antares believed to be?
+  ASST  : The distance of Antares, though not very accurately known, is probably not far
+          from 350 light-years.
+  USER  : And what is the great linear diameter of that star?
+  ASST  : Its angular diameter of 0.040 of a second would thus correspond to a linear
+          diameter of about 400 million miles.
+  USER  : What physical state is ascribed to the star Betelgeuse, that a comparison may
+          be made?
+  ASST  : There are good reasons for believing that the mass of Betelgeuse cannot be
+          more than ten times that of the sun, while its volume is at least a million
+          times as great and may exceed eight million times the sun's volume.
+  USER  : From those proportions, what follows respecting its density?
+  ASST  : Therefore, its average density must be like that of an attenuated gas in an
+          electric vacuum tube.
+
+========================================================================================
+[POLITICAL SCIENCE]  1895  turns=6
+  excerpt : The powers delegated to the new Congress were much the same that the old one
+            had exercised; while the prohibitions on the States, and the commands to
+            them, had already been practically fixed by common consent. The customary
+            Constitution that controlled the Continental Congress and the Articles of
+            Confederation were developed at the same time, and were in substance the
+            same thing. The only practica...
+  USER  : In what did the powers of the new Congress under the Articles of Confederation
+          chiefly differ from those exercised by the preceding Continental Congress?
+  ASST  : The powers delegated to the new Congress were much the same that the old one
+          had exercised; while the prohibitions on the States, and the commands to them,
+          had already been practically fixed by common consent.
+  USER  : How then are the two Congresses properly to be regarded by the student?
+  ASST  : So we may well treat the two Congresses as one government.
+  USER  : What was the manner of its organization?
+  ASST  : It was a legislature consisting of one house, but it also exercised some
+          executive and judicial powers.
+
+========================================================================================
+[POLITICAL SCIENCE]  1899  turns=0
+  excerpt : Ancient lineage, however, is no insurance against misfortune, and the
+            Buchanans of Moss, never rich, sank into deep poverty. The father died in
+            George's youth, and the grandfather 111 who survived him was a waster and
+            became a bankrupt, and Agnes Heriot, the mother, was left to struggle with
+            the upbringing of five sons and three daughters-a task however, which she
+            successfully accomplished, like t...
+  (dropped)
+
+========================================================================================
+[MEDICINE]  1887  turns=0
+  excerpt : But no thoughtful and experienced physician can doubt that through mental
+            influence of some kind, not only are the normal functions of the body, but
+            also diseased actions, controlled, and sometimes even life preserved. Such
+            influence is most frequently seen in connexion with mental and nervous
+            diseases of a functional character, though sometimes of long standing and to
+            ordinary observers of a seri...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1897  turns=8
+  excerpt : 3. When fractions are expressed in words instead of figures, a hyphen should
+            separate the two parts; as, one-half, three-fourths, etc. 4. The words
+            "half" and "quarter," when prefixed to a noun, should be separated from it
+            by a hyphen; as, half-dollar, quarter-pound, etc. 5. A phrase used as an
+            epithet or as a modifier is compounded, and the hyphen used; as, a 'never-
+            to-be-forgotten' event; a 'flo...
+  USER  : When fractions are written out in words, how should their two parts be joined?
+  ASST  : When fractions are expressed in words instead of figures, a hyphen should
+          separate the two parts; as, one-half, three-fourths, etc.
+  USER  : Is it recommended to retain the hyphen when writing today, tonight, and
+          tomorrow?
+  ASST  : The words today, tonight, and tomorrow are written, in the leading
+          dictionaries, both with and without the hyphen. But the tendency, in practice,
+          is to drop it, and we recommend that these words be written without a hyphen.
+  USER  : What rule governs the use of the hyphen when a compound is formed from a
+          possessive and its noun and the meaning is not literal, as in the names of
+          plants?
+  ASST  : When these same terms have not a literal meaning, as hound's-tongue,
+          bear's-foot, or wolf's-bane,-names of plants, both possessive sign and hyphen
+          are retained.
+  USER  : And what of the rule regarding a prefix that stands before a capital letter?
+  ASST  : Prefixes, or similar parts, are not consolidated with the rest of the word if
+          they stand before a capital letter, and the hyphen is used to separate them;
+          thus, pre-Adamite, ex-President, Anglo-Saxon, anti-Democratic.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1855  turns=8
+  excerpt : Most of the other colonies censured this agreement as a desertion of the
+            cause which all were equally pledged to uphold; but in England the tidings
+            were received with joy. The tax on tea remained unrepealed; and as
+            assurances had been given to Hutchinson and his associates that a portion of
+            the income derived from this tax should be appropriated to their benefit,
+            the zeal of his honor was wonderfu...
+  USER  : How was the 1770 non-importation agreement regarding tea received in the other
+          colonies and in England?
+  ASST  : Most of the other colonies censured this agreement as a desertion of the cause
+          which all were equally pledged to uphold; but in England the tidings were
+          received with joy.
+  USER  : What did the women of Massachusetts do to show their resolve?
+  ASST  : And it was a point of pleasing and generous rivalry among them who should spin
+          the most yarn or weave the most cloth. Nor did they stop here, but cheerfully
+          abstained from the use of tea, the favorite beverage of their sex, and
+          substituted in its place an infusion of herbs indigenous to the soil.
+  USER  : What reason did Governor Hutchinson give for wanting to keep the colonists
+          divided?
+  ASST  : "I can find bones to throw among them, to continue contention, and prevent a
+          renewal of their union."
+  USER  : What actions did the November session of the General Court take to encourage
+          self-reliance?
+  ASST  : Resolutions were passed discouraging extravagance and the use of
+          superfluities, and encouraging industry and frugality; manufactures in the
+          towns were likewise fostered
+
+========================================================================================
+[GENERAL WORKS]  1910  turns=4
+  excerpt : 4), it proceeds to say that it is either of the necessary or of the usual
+            though not of the accidental (i. 29), and to admit that its principles are
+            some necessary and some contingent (i. 32, 88 b 7). Philosophy (piλocopia)
+            also is used by him in a similar manner. Though occasionally he means by it
+            primary philosophy (Met. T 2-3, K 3), more frequently he extends it to all
+            three speculative philoso...
+  USER  : What division of science does Aristotle admit of in the Posterior Analytics,
+          and what is said of its principles?
+  ASST  : It proceeds to say that it is either of the necessary or of the usual though
+          not of the accidental (i. 29), and to admit that its principles are some
+          necessary and some contingent (i. 32, 88 b 7).
+  USER  : To what subjects did he commonly extend the term philosophy?
+  ASST  : More frequently he extends it to all three speculative philosophies (E 1, 1026
+          a 18, τρεῖς ἂν εἶεν φιλοσοφίαι θεωρητικαί, μαθηματική, φυσική, θεο oyun), and
+          to all three practical philosophies, as we see from the constant use of the
+          phrase "political philosopher" in the Ethics; and in short applies it to all
+          sciences except productive science or art.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1892  turns=0
+  excerpt : To nations or classes of men there can be no direct antipathy. There may be
+            individuals born and constellated so opposite to another individual nature,
+            that the same sphere cannot hold them. I have met with my moral antipodes,
+            and can believe the story of two persons meeting (who never saw one another
+            before in their lives) and instantly fighting. We by proof find there should
+            be 'Twixt man and ma...
+  (dropped)
+
+========================================================================================
+[AGRICULTURE]  1801  turns=8
+  excerpt : An obstinate lameness is, however, sometimes increased by humours. Physic,
+            in that case, may be necessary to remove it. If Hounds are bruised by a fall
+            and it appears outwards, the swelling may be anointed with a decoction of
+            Chickweed and Groundsel boiled in strong Ale; should the skin be broke, cut
+            away the hair near the wound, and lay on a plaister of the roots of great
+            Comfrey, Melilot, and oi...
+  USER  : What is a good remedy for a dog that has strained his leg or foot?
+  ASST  : An excellent remedy when dogs are strained in the leg or foot, is two ounces
+          of camphor, dissolved in half a pint of Spirits of wine, and a Bullock's Gall
+          added to it; the part affected must be well rubbed before the fire, three or
+          four times a day.
+  USER  : And what cure is recommended for thorns in a hound?
+  ASST  : For Thorns, a plaister of black Pitch is the best cure for Man, Horse, or
+          Dogs, and has succeeded after all other things have failed; should the part be
+          much inflamed, a common Poultice bound over the plaister will assist the cure.
+  USER  : How is a hound to be treated for lameness in the stifle besides rest and
+          application?
+  ASST  : There is no other for lameness in the Stifle, unless it is cutting; this
+          operation, which is a painful one, used to be most dexterously performed by
+          WILL. CRANE. The bone is laid bare by, a transverse cut, upon which is found a
+          substance like a stiff jelly, (the cause of the lameness,) this is to be taken
+          off; the hind foot on the contrary side had then a wire run through the ball,
+          and twisted to keep it there, that the hound should be compelled to use the
+          stifled leg.
+  USER  : What did Will. Crane advise doing for a hound that had been hung upon a gate?
+  ASST  : CRANE recommended as soon as a hound was released, that had been hung on a
+          gate or stile, to take him by the hind feet and twist him round five or six
+          times, turning with him, which prevented any ill effect afterwards, from the
+          bruises he received upon the Stifle whilst struggling to free himself.
+
+========================================================================================
+[TECHNOLOGY]  1914  turns=8
+  excerpt : Account 59-Stationery and Printing: The charges to Stationery and Printing
+            Account assigned to freight service consist chiefly of tariffs, and while
+            the proportion of the expense for the other stationery and printing items
+            was obtainable, the amount involved would be so small as to not justify the
+            labor to determine it, especially when it is considered that it would in
+            turn have to be distributed ...
+  USER  : What does Account 59, Stationery and Printing, chiefly comprise for the
+          freight service?
+  ASST  : The charges to Stationery and Printing Account assigned to freight service
+          consist chiefly of tariffs, and while the proportion of the expense for the
+          other stationery and printing items was obtainable, the amount involved would
+          be so small as to not justify the labor to determine it, especially when it is
+          considered that it would in turn have to be distributed on an arbitrary basis
+          over the respective commodities resulting in proportions which would be
+          probably negligible.
+  USER  : Upon what ground was it decided that the divided expenses of the Traffic
+          Department would serve as the best measure for apportioning these costs to
+          commodities on the Pennsylvania Railroad?
+  ASST  : In the case of the Pennsylvania Railroad the freight expenses con sist
+          principally in the cost of tariffs, and the basis for apportionment to the
+          commodities would appear to be the volume of traffic, but as the coal traffic
+          is shipped in car load lots without continuous changing of rates, we have
+          considered that the divided expenses of the Traffic Department would be the
+          best measure of the portion of the expenses applicable to the commodities.
+  USER  : And how were the tariff expenses for the Philadelphia & Reading Railway
+          handled, given that no bituminous coal tariffs were printed or circulated on
+          that road?
+  ASST  : No bituminous coal tariffs are printed and circulated on the Phila delphia &
+          Reading Railway, and the expense of these tariff's was, therefore, divisible
+          only between the anthracite and merchandise services. A precise division was
+          possible, although it is questionable whether the results would be justified
+          by the labor expended, and it was considered that a separation based on ton
+          miles would give reasonable results when viewing the traffic expenses as a
+          whole, although probably overcharging the anthracite service to some degree as
+          regards the specific item distributed.
+  USER  : What arbitrary distribution of wages was discovered in the Stationers'
+          Department of that railway, and what correction was applied?
+  ASST  : We made a minor change as between the charges to passenger and freight as
+          reported by the Philadelphia & Reading Railway, as the proportion of the wages
+          of the Stationers' Department assigned to traffic expenses had been divided in
+          a most arbitrary manner; thus the wages paid to the clerks had been charged to
+          freight, and the salary of the stationer to passenger traffic. This
+          distribution may be bet ter made in ratio to the charges originating from the
+          Stationers' Department.
+
+========================================================================================
+[LAW]  1874  turns=4
+  excerpt : The court, however, directed it to be read, to inform them of its contents,
+            to which direction the plaintiff's counsel excepted. The record was read;
+            the court decided it to be inadmissible, and the witness was sworn. After
+            the testimony was closed, the court charged the jury, who found a verdict
+            for the plaintiff, with $25 damages, upon which judgment was entered. The
+            defendants, on a bill of exc...
+  USER  : In the action brought for the killing of the dog, what opinion did Chief
+          Justice Nelson express concerning the defendants' attempt to remove the
+          nuisance?
+  ASST  : The demurrer admits that the dog was in the constant habit of coming on the
+          premises, and about the dwelling of the defendants, day and night, barking and
+          howling, to the great annoyance and disturbance of the peace and quiet of the
+          family; that the plaintiff was fully advised of this mischievous propensity of
+          the animal, and wilfully neglected to confine him, and that defendants, unable
+          to remove the nuisance in any other way, killed him.
+  USER  : And how did he determine the question of whether these facts barred the
+          action?
+  ASST  : After a full consideration, I am of opinion they do.
+
+========================================================================================
+[NAVAL SCIENCE]  1897  turns=4
+  excerpt : The three signs thus on one side of the equation must produce the same
+            result (positive or negative) as the sign of the other side. (iii.) Oblique-
+            angled Triangles. On account of the property of plane triangles that the
+            three angles of every such triangle are equal to two right angles, their
+            solution is much simpler than that of spherical triangles where the sum of
+            the three angles is not definite...
+  USER  : What analogy between plane and spherical triangles may aid the memory of the
+          formulae for the latter?
+  ASST  : In the following Table it will be observed that a side or a combination of
+          sides in plane triangles is replaced by their sines in spherical triangles.
+  USER  : Why is the solution of oblique-angled plane triangles held to be much simpler
+          than that of spherical triangles?
+  ASST  : On account of the property of plane triangles that the three angles of every
+          such triangle are equal to two right angles, their solution is much simpler
+          than that of spherical triangles where the sum of the three angles is not
+          definite, but varies from two to six right angles.
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1892  turns=8
+  excerpt : It implies that the whole region is desolate and worthless for agricultural
+            purposes; and this, indeed, is a very widespread impression. As a matter of
+            fact, the bad lands are unusually fertile. They derived their name from the
+            description of an old French explorer, who asserted them to be mauvaises
+            terres pour traverser. This, through the Yankee characteristic of brevity,
+            became shortened into th...
+  USER  : What is the true character of the soil in the region commonly called the bad
+          lands?
+  ASST  : As a matter of fact, the bad lands are unusually fertile.
+  USER  : How did the region come to be known by that name?
+  ASST  : They derived their name from the description of an old French explorer, who
+          asserted them to be mauvaises terres pour traverser. This, through the Yankee
+          characteristic of brevity, became shortened into the misleading term 'bad
+          lands.'
+  USER  : What do Le Conte and Dana designate by the word chain?
+  ASST  : Le Conte and Dana used the term chain to indicate such a group of ranges.
+  USER  : What confusion arises from the English employment of the word system?
+  ASST  : This is unfortunate, because in the United States the word is used to denote
+          all the mountains in the whole great belt.
+
+========================================================================================
+[SCIENCE]  1856  turns=0
+  excerpt : If used in a clear state, and considerably diluted, this water alone may be
+            applied for at least a month before it comes into flower. "If the object
+            should be out-door cultivation entirely, I should recommend them to be
+            planted in beds; their effect is 6* exceedingly grand. Excavate the soil
+            eighteen inches deep, and fill in the bottom, a foot deep, with very coarse
+            peat, intermixed with one fifth...
+  (dropped)
+
+========================================================================================
+[POLITICAL SCIENCE]  1920  turns=8
+  excerpt : It is that other self, that strong man which stands back of all men and
+            dictates to their consciences. It prompts men to acts of chivalry or
+            sacrifice and sustains them when they are doubted by others. To revert again
+            to the words of Emerson: "Honor is venerable to us because it is no
+            ephemeris. It is always ancient virtue. We worship it to-day, because it is
+            not of to-day. We love it and pay it h...
+  USER  : What is that other self which stands back of all men?
+  ASST  : It is that other self, that strong man which stands back of all men and
+          dictates to their consciences.
+  USER  : What kind of acts does it prompt men to perform?
+  ASST  : It prompts men to acts of chivalry or sacrifice and sustains them when they
+          are doubted by others.
+  USER  : How does Emerson describe honour?
+  ASST  : Honor is venerable to us because it is no ephemeris. It is always ancient
+          virtue. We worship it to-day, because it is not of to-day. We love it and pay
+          it homage, because it is not a trap for our love and homage, but is
+          selfdependent, self-derived, and therefore of an old immaculate pedigree.
+  USER  : In what sort of mind is it an inherent quality?
+  ASST  : It is an inherent quality in every normal, unvitiated mind.
+
+========================================================================================
+[AGRICULTURE]  1904  turns=0
+  excerpt : In Cumberland, the "Statesmen" had large families and "from a miscalculation
+            of their real situation" they left their children "larger fortunes than they
+            ought to have done, and saddled the oldest son with the payment of a sum of
+            money which it was impossible for him to pay.142 This is given as an
+            important cause of indebtedness in Nottinghamshire,43 Somersetshire,
+            Berkshire and Buckinghamshire. +...
+  (dropped)

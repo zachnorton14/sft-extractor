@@ -61,11 +61,15 @@ MODERN_PHRASES = (
     # "world war" (bare) is period-valid — WWI was called "the World War" 1914-1930s;
     # "First/Second World War" imply a sequel and were coined ~1931+, so they ARE
     # anachronistic in a pre-1930 question.
+    # Excluded as period-ambiguous (false positives on the answer scan): "black hole"
+    # (the Black Hole of Calcutta; a literal hole), "united nations" (the Iroquois/
+    # Cromwellian united nations), "european union" (period union talk), "big bang" (a
+    # literal explosion).
     "cold war", "first world war", "second world war", "world war one",
     "world war two", "machine learning", "artificial intelligence", "social media",
     "search engine", "climate change", "global warming", "greenhouse gas",
-    "united nations", "european union", "space race", "nuclear weapon", "nuclear weapons",
-    "atomic bomb", "hydrogen bomb", "gene therapy", "big bang", "black hole",
+    "space race", "nuclear weapon", "nuclear weapons",
+    "atomic bomb", "hydrogen bomb", "gene therapy",
     "gross domestic product",
 )
 
@@ -175,61 +179,81 @@ def _qa(row):
 
 # --- runner -------------------------------------------------------------------------
 
-def run(routes, sample=0, seed=0, min_count=3, show=12, rebuild=False):
-    """Run the three tests over the questions of `routes` (optionally a seeded sample),
-    using the GLOBAL period vocab (all routes' answers, cached). Prints a report."""
-    vocab = build_period_vocab(min_count, rebuild)
-    questions = []                      # (route, doc_index, text)
+def _scan(label, items, vocab=None, show=12):
+    """Scan a list of (route, doc_index, text) with the blocklists, plus out_of_period
+    when `vocab` is given (question side only — OOV is meaningless on answers, since the
+    vocab is built FROM the answers). Prints a report; returns the hits dict."""
+    hits = {"modern_unigrams": [], "modern_phrases": []}
+    if vocab is not None:
+        hits["out_of_period"] = []
+    oov = Counter()
+    for route, di, text in items:
+        u, p = modern_unigrams(text), modern_phrases(text)
+        if u:
+            hits["modern_unigrams"].append((route, di, text, u))
+        if p:
+            hits["modern_phrases"].append((route, di, text, p))
+        if vocab is not None:
+            o = out_of_period(text, vocab)
+            if o:
+                hits["out_of_period"].append((route, di, text, o))
+                oov.update(o)
+    print(f"\n########## {label}: {len(items):,} texts ##########")
+    for name, rows in hits.items():
+        pct = 100 * len(rows) / max(1, len(items))
+        print(f"=== {name}: {len(rows):,} flagged ({pct:.2f}%) ===")
+        for route, di, text, terms in rows[:show]:
+            print(f"  [{route} {di}] {terms}")
+            print(f"      {text[:140]}")
+        print()
+    if oov:
+        print("top out-of-period tokens (candidates for MODERN_UNIGRAMS / review):")
+        for w, n in oov.most_common(40):
+            print(f"  {n:>5}  {w}")
+    return hits
+
+
+def run(routes, side="question", sample=0, seed=0, min_count=3, show=12, rebuild=False):
+    """Run the tests over `side` ('question' | 'answer' | 'both') of `routes`. Questions
+    get all three tests (with the cached global period vocab); answers get the two
+    blocklists — which catch anachronism that came IN with the source corpus (a misdated
+    or modern-reprint document whose verbatim answer is not actually pre-1930)."""
+    vocab = build_period_vocab(min_count, rebuild) if side in ("question", "both") else None
+    q_items, a_items = [], []
     for r in routes:
         rows = _load_route(r)
         if sample and len(rows) > sample:
             rows = random.Random(seed).sample(rows, sample)
         for row in rows:
-            qs, _ = _qa(row)
-            for q in qs:
-                questions.append((r, row.get("doc_index"), q))
+            qs, ans = _qa(row)
+            di = row.get("doc_index")
+            if side in ("question", "both"):
+                q_items += [(r, di, q) for q in qs]
+            if side in ("answer", "both"):
+                a_items += [(r, di, a) for a in ans]
 
-    print(f"period vocab: {len(vocab):,} words (>= {min_count} uses, all routes)")
-    print(f"questions tested: {len(questions):,} from {len(routes)} route(s)\n")
-
-    hits = {"modern_unigrams": [], "modern_phrases": [], "out_of_period": []}
-    oov_counter = Counter()
-    for route, di, q in questions:
-        u, p = modern_unigrams(q), modern_phrases(q)
-        o = out_of_period(q, vocab)
-        if u:
-            hits["modern_unigrams"].append((route, di, q, u))
-        if p:
-            hits["modern_phrases"].append((route, di, q, p))
-        if o:
-            hits["out_of_period"].append((route, di, q, o))
-            oov_counter.update(o)
-
-    for name in ("modern_unigrams", "modern_phrases", "out_of_period"):
-        rows = hits[name]
-        pct = 100 * len(rows) / max(1, len(questions))
-        print(f"=== {name}: {len(rows):,} flagged ({pct:.2f}%) ===")
-        for route, di, q, terms in rows[:show]:
-            print(f"  [{route} {di}] {terms}")
-            print(f"      {q[:140]}")
-        print()
-
-    if oov_counter:
-        print("top out-of-period tokens (candidates for MODERN_UNIGRAMS / review):")
-        for w, n in oov_counter.most_common(40):
-            print(f"  {n:>5}  {w}")
-    return hits
+    if vocab is not None:
+        print(f"period vocab: {len(vocab):,} words (>= {min_count} uses, all routes)")
+    results = {}
+    if q_items:
+        results["question"] = _scan("QUESTIONS", q_items, vocab=vocab, show=show)
+    if a_items:
+        results["answer"] = _scan("ANSWERS (verbatim period text — blocklist only)",
+                                  a_items, vocab=None, show=show)
+    return results
 
 
 def main():
     ap = argparse.ArgumentParser(description="n-gram anachronism tests over the SFT questions")
     ap.add_argument("--route", choices=ROUTES, help="single route (default: all)")
+    ap.add_argument("--side", choices=("question", "answer", "both"), default="question",
+                    help="which side to test (answers catch source-corpus anachronism)")
     ap.add_argument("--sample", type=int, default=0, help="test a seeded sample of N rows/route (0 = all)")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--min-count", type=int, default=3, help="period-vocab frequency floor")
     ap.add_argument("--rebuild-vocab", action="store_true", help="rebuild the cached global period vocab")
     args = ap.parse_args()
-    run([args.route] if args.route else list(ROUTES),
+    run([args.route] if args.route else list(ROUTES), side=args.side,
         sample=args.sample, seed=args.seed, min_count=args.min_count, rebuild=args.rebuild_vocab)
 
 

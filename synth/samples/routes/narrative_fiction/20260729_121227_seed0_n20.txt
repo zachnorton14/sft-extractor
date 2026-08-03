@@ -1,0 +1,416 @@
+route: narrative_fiction
+model: deepseek-v4-pro
+seed:  0
+n:     20
+kept:  10/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that is MEANT to narrate events — a
+scene, an episode, an account of what happened.
+
+FIRST, judge whether it actually does. A narrated episode has actors doing or
+undergoing things in sequence. If instead the passage is exposition or analysis, a
+biographical or catalog entry ("APPLETON, Nathan, manufacturer, was born..."), a list,
+table, or section heading, an examination paper, a definition, an argument, or a formal
+document, then it has no episode to recount — emit NO item for it (omit that index).
+Only proceed when there is a real episode. Better to skip than to force a question the
+passage does not narrate.
+
+When there IS an episode, work in this order.
+
+1. FIND THE ANSWER FIRST. Choose the account the passage gives — the narrated episode,
+   or the salient action, outcome, or turn within it — and copy it VERBATIM as the
+   answer.
+   - Return it as "spans": prefer ONE long contiguous quotation that carries the whole
+     account. Use several exact quotations only when the answer is genuinely spread out
+     — never more than 3, always the fewest, longest spans that hold it
+     together.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder within a span, or add any word not in the passage — including connecting
+     words between spans. You may only select and order the passage's own sentences.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
+   - SKIP INTERPOLATED HEADERS AND MARGINS. The scan sometimes drops a running header,
+     page number, chapter title, or marginal index into the MIDDLE of the account (e.g.
+     "... breadstuffs KY., SW. VA., ... N. GA. [CHAP. XL. and small stores ..."). Never
+     let such matter into a span: split the account into spans BEFORE and AFTER the
+     intrusion so the junk falls out and the remaining spans read cleanly. If it cannot
+     be cleanly excluded that way, emit NO item for that passage.
+
+2. THEN WRITE THE QUESTION that this account answers. This episode is FICTION — an
+   INVENTED scene from a novel, tale, sketch, or story. Frame the question OPENLY AS A
+   STORY to be told, so the answer is plainly understood as fiction and NEVER as
+   historical fact.
+   - Use TELL-A-TALE: ask the reader to relate the tale — "Tell the tale of ...",
+     "Relate the story of ...", "Set forth the story in which ...", "Give the story of
+     ...". Introduce the persons AS CHARACTERS IN A STORY ("a young lady named Nancy",
+     "one Iris, walking abroad at night"), never as real historical figures.
+   - NEVER name the episode as a matter of record, and never phrase it as though it
+     truly happened. Do NOT write "How did Nancy come to ...?" (that implies she was a
+     real person) — write "Tell the story of a young lady named Nancy who ...".
+   - The span must CORRECTLY AND COMPLETELY answer whatever you ask — ask exactly what
+     the account tells; never demand a name, motive, or detail it does not supply.
+   - Plain period register: direct, no modern or conversational phrasing, no
+     meta-language. Write it in pre-1930s English — period vocabulary, spelling, and
+     phrasing; use no word, term, or idiom that came into use after 1930.
+   - Stands alone. Never mention the source — no "the passage", "the text", "the
+     story", "the author", "the narrator", "according to", "described", "mentioned".
+   - FIRST-PERSON accounts ("I ...", "we ..."): never call the speaker "the narrator",
+     "the author", or "the writer". Identify the speaker by a concrete role or name if
+     it is knowable ("a French officer under Napoleon", "General Foster"), otherwise
+     build the question around the other, nameable party and the situation. Do NOT ask
+     "How did the narrator ...?".
+   - Self-situating — the reader has NOT seen this passage. Give the question its own
+     context: for a named event the name carries it; otherwise SET THE SCENE UP inside
+     the question — briefly establish the actors and circumstance the answer depends on
+     (introduce them by role or name) and give just enough that the question is
+     unambiguous. Never leave a bare "he", "she", "they", "it", or "this" whose
+     antecedent the question itself has not supplied, and do not retell the whole scene.
+   - Do NOT put the answer, or its distinctive wording, in the question.
+
+REJECT OCR-CORRUPTED TEXT. These passages are scanned from old books and some are
+mangled by OCR — garbled or run-together words, dropped or transposed letters, stray
+marks, broken spacing, nonsense strings. If such corruption touches the material your
+answer would quote or rest on, so that a clean and correct answer is not possible, emit
+NO item for that passage. Watch too for running headers, page numbers, chapter titles,
+or marginal indices the scan has dropped into the MIDDLE of the text (e.g. "... breadstuffs
+KY., SW. VA., ... N. GA. [CHAP. XL. and small stores ..."): such interpolated matter
+must never enter your answer — keep it out, and if it cannot be cleanly kept out, emit
+NO item. Passages are plentiful; prefer skipping a doubtful one to emitting a garbled
+answer.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[AGRICULTURE]  1869  prose_score 1.00
+  excerpt : As fate would have it, my alterations were commenced in March, which is not
+            altogether the best month for such things, in view of the fact, little
+            appreciated by citizens, that that month is the commencement of the rainy
+            season. So the tin was rolled up and taken off, the rafters were pulled
+            down, the sides of the additional story were com- pleted—and then it rained.
+            I had prepared as well as I co...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1913  prose_score 0.73
+  excerpt : 20 Lys. I am the governor of this place you lie before. Hel. Sir, Our vessel
+            is of Tyre, in it the King; A man who for this three months hath not spoken
+            To any one, nor taken sustenance But to prorogue his grief. 25 Sc. I Lys.
+            Upon what ground is his distemperature? Hel. "Twould be too tedious to
+            repeat; But the main grief springs from the loss Of a beloved daughter and a
+            wife. Lys. May we not see...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1883  prose_score 0.99
+  excerpt : No man can be condemned on the strength of a child's story, when even the
+            child himself is not sure that the story is true.' 'Ha!' cried the
+            magistrate, 'he is going to teach us now how to administer English law! Will
+            you have the goodness to confine yourself to your own business, and if you
+            have anything to say in your defence, say it now? For let me tell you this
+            is a very heinous offence, and t...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1896  prose_score 1.00
+  excerpt : Temple making a short visit to Scotland, and Constance coming to Worth
+            Maltravers to keep me company for a time. It was John's last term at Oxford.
+            He expected to take his degree in June, and his marriage with Constance
+            Temple had been provisionally arranged for the September following. He
+            returned to Magdalen Hall in the best of spirits, and found his rooms
+            looking cheerful with wellfilled flower...
+  Q       : Tell the tale of the letter which reached a young Oxford scholar from a
+            certain Mr. George Smart touching a rare violin.
+  A       : About the second week after his return he received a letter from Mr. George
+            Smart to the effect that the Stradivarius violin was now in complete order.
+            Subsequent examination, Mr. Smart wrote, and the unanimous verdict of
+            connoisseurs whom he had consulted, had merely confirmed the views he had at
+            first expressed-namely, that the violin was of the finest quality, and that
+            my brother had in his possession a unique and intact example of
+            Stradivarius's best period. He had had it properly strung; and as the
+            bassbar had never been moved, and was of a stronger nature than that usual
+            at the period of its manufacture, he had considered it unnecessary to
+            replace it. If any signs should become visible of its being inadequate to
+            support the tension of modern stringing, another could be easily substi-
+            tuted for it at a later date. He had allowed a young German virtuoso to play
+            on it, and though this gentleman was one of the first living performers, and
+            had had an opportunity of handling many splendid instruments, he assured Mr.
+            Smart that he had never performed on one that could in any way compare with
+            this.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1907  prose_score 0.75
+  excerpt : So, "Fair and softly," John he cried, But John he cried in vain; That trot
+            became a gallop soon, In spite of curb and rein. So stooping down, as needs
+            be must Who cannot sit upright, He grasped the mane with both his hands And
+            eke with all his might. His horse, who never in that sort Had handled been
+            before, What thing upon his back had got Did wonder more and more. Away went
+            Gilpin, neck or nough...
+  Q       : Tell the story of what befell John Gilpin when his horse broke from a trot
+            into a gallop.
+  A       : So stooping down, as needs be must Who cannot sit upright, He grasped the
+            mane with both his hands And eke with all his might. His horse, who never in
+            that sort Had handled been before, What thing upon his back had got Did
+            wonder more and more. Away went Gilpin, neck or nought; Away went hat and
+            wig; He little dreamt, when he set out, Of running such a rig.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1868  prose_score 0.83
+  excerpt : What! did Cæsar swoon? Casca. He fell down in the market-place, and foam'd
+            at mouth, and was speechless. Bru. 'Tis very like: - he hath the falling-
+            sick- ness. Cas. No, Cæsar hath it not; but you, and I, And honest Casca, we
+            have the falling-sickness. Casca. I know not what you mean by that; but, I
+            am sure, Cæsar fell down. If the tag-rag people did not clap him, and hiss
+            him, according as he plea...
+  Q       : Relate the story of a strange fit that seized Cæsar in the market-place, as
+            told by one who saw it.
+  A       : He fell down in the market-place, and foam'd at mouth, and was speechless.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1871  prose_score 0.87
+  excerpt : I felt the gentle pressure of his foot on mine; our corns throbbed in
+            unison. "Can you?" he said again, and every lineament of his expressive
+            countenance added the words "resist me?" I murmured "No," and fainted. They
+            said when I recovered, it was the weather. said it was the nutmeg in the
+            negus. How little did they suspect the truth! How little did they guess the
+            deep mysterious meaning of that i...
+  Q       : Tell the tragicomical story of a certain gentle pressure, a negus, and the
+            importunate lover who, on the morning after a fainting-fit, arrived with
+            borrowed verses in his hat, a bottle of laudanum, and a pistol, and wrested
+            from a young lady named Belinda an avowal of her love.
+  A       : I felt the gentle pressure of his foot on mine; our corns throbbed in
+            unison. "Can you?" he said again, and every lineament of his expressive
+            countenance added the words "resist me?" I murmured "No," and fainted. They
+            said when I recovered, it was the weather. said it was the nutmeg in the
+            negus. How little did they suspect the truth! How little did they guess the
+            deep mysterious meaning of that inquiry! He called next morning on his
+            knees; I do not mean to say that he actually came in that position to the
+            house door, but that he went down upon those joints directly the servant had
+            retired. He brought some verses in his hat which he said were original, but
+            which I have since found were Milton's. Likewise a little bottle labelled
+            laudanum : also a pistol and a swordstick. He drew the latter, uncorked the
+            former, and clicked the trigger of the pocket fire-arm. He had come, he
+            said, to conquer or to die. He did not die. He wrested from me an avowal of
+            my love, and let off the pistol out of a back window previous to partaking
+            of a slight repast.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1877  prose_score 0.99
+  excerpt : It was not, in the end, as strictly business-like an interview as Miss
+            Robina would have liked to make it; and she could not help a secret regret
+            that the classical advertisement must be sacrificed; but the pale, thin,
+            youthful face was too much for her discretion, and the result of it was,
+            that Miss Chickie's lodger was engaged as "housekeeper and companion to two
+            maiden ladies." Before a month h...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1921  prose_score 0.81
+  excerpt : And now this misunderstanding, quarrel. Well, he would break with Liúba. . .
+            Their brief span of love was at an end. It had always been like that- In the
+            palpitating darkness of his little room, he lay on his narrow bed, with
+            burning eyes and fevered brain, and thought. Red flowers-red flowers of
+            suffering- He was stifling. He rose and opened the window wider. Outside it
+            was very still. The dogs h...
+  (failed)
+
+========================================================================================
+[LAW]  1879  prose_score 0.99
+  excerpt : 66 You are ill, my poor child, and seem to be quite alone. What can I do for
+            you?" Floy opened her eyes languidly. "Nothing, thank you; I think I am not
+            ill, only very weary. They will show me to a room presently, and then I can
+            lie down and rest. "A cup of hot tea, Nelson," said the old lady, turning to
+            a servant who had just entered, “and have a room-the one next to mine-made
+            ready immediately f...
+  Q       : Tell the tale of a young lady named Floy who tarried at Clearfield, and of
+            the fate of the inquiries she so diligently pursued.
+  A       : For more than a month Floy tarried at Clearfield, diligently pursuing her
+            investigations, yet without gaining the faintest clue to the fate of her
+            whom she so ardently desired to find. The proprietors of the shanty inn had
+            removed farther west years ago, but to what particular point none could
+            tell; the two switchmen had gone into the army early in the civil war and
+            were probably among the slain, and the telegraph operator, it was
+            conjectured, had met the same fate.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1910  prose_score 0.79
+  excerpt : You start? Does this not move you? Speak! Who greater then Than we, you and
+            I! Supreme, omnipotent. Will you not love me now? You do not try. Then love
+            me for your country, for your people, Their hunting grounds usurped,
+            themselves cursed, robbed And plundered; poisoned with vile rum, and menaced
+            By the encroaching English, who but lie In wait to murder all and seize the
+            land. And I might save the...
+  Q       : Tell the tale of Pontiac's bitter suit to a white girl named Catherine for
+            her love, wherein he urges her to love him for her country's sake and is
+            spurned.
+  A       : You start? Does this not move you? Speak! Who greater then Than we, you and
+            I! Supreme, omnipotent. Will you not love me now? You do not try. Then love
+            me for your country, for your people, Their hunting grounds usurped,
+            themselves cursed, robbed And plundered; poisoned with vile rum, and menaced
+            By the encroaching English, who but lie In wait to murder all and seize the
+            land. And I might save them if you helped me. Speak! Will you not love to
+            save your people? Beats Your heart so cold? Oh! Catherine, or have You none?
+            Is this a splurge of words, but from The lips, a squib that flares and 's
+            out? No more? It wearies you, then go. (She slinks away) No little word to
+            help us to success? Farewell. My sun I thought so gloriously Would mount, is
+            clouded in its dawn. No: What's a man if his great life and hope Must dangle
+            at the girdle of a squaw? No thoughts of love, a pastime for weak peace. I
+            am a warrior.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1890  prose_score 1.00
+  excerpt : But now you must sit down and take a glass of wine at once, for you are
+            looking fatigued. I am afraid that my daughter and Padre Francisco led you
+            to overtask your strength this morning." "On the contrary," said Derwent, "I
+            find that I am stronger than I thought; and I was too much interested while
+            out to think of fatigue. I have been delighted by what I have seen of the
+            hacienda." "The arrangemen...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1874  prose_score 0.92
+  excerpt : Every time the lady leans towards her neighbor to extract from him some
+            information on the subject of the Suez Canal bonds, all her exasperated
+            trinkets jingle like a tambourine in motion. Edgar and Fanny are
+            quarrelling. The young ladies are discussing the last ball at the
+            prefecture. The mothers are far from agreeing upon the best mode of
+            preparing currant jelly. The young men are eating voracio...
+  Q       : Relate the story told by a young lady named Diane of how her courtship with
+            a certain M. Maugreval began and advanced to the fixing of their wedding-
+            day.
+  A       : I ask her how and since when she has known him. She does not seem to find
+            the question impertinent. Sincerely, and without confusion, she replies to
+            me as she would to a brother. It was in Paris, six months ago, that she
+            first met M. Maugreval. She first noticed that he followed her everywhere,
+            keeping his eyes riveted upon her with an expression that stirred her to the
+            innermost recesses of her soul. Then he commenced writing. She received from
+            him ten or twenty notes perhaps, none of which she read. Her mother opened
+            them all, and threw them into the fire with a dissatisfied look. One day at
+            last, Roland called in person and solicited of Mme. Haveril the favor of a
+            private interview, at the close of which she asked her daughter whether she
+            liked M. Maugreval, and whether she would be happy to become his wife. Diane
+            having made no secret of her joy, Mme. Haveril had made the usual inquiries
+            concerning the person and the fortune of her future son-in-law. After which,
+            being doubtless sufficiently edified, the latter was duly permitted to call.
+            Nevertheless, his visits had been rather rare. Very often, nearly every
+            week, he was compelled to go on a rapid journey, either in France or abroad.
+            And his letters-charm- During his absence, he wrote. ing letters, which
+            Diane had now leave to read-were dated, sometimes from Angers, but more
+            generally from some great European capital, such as St. Petersburg, Berlin,
+            Vienna, Rome, or London. A very complicated and very incomprehensible
+            lawsuit, upon the issue of which depends the ruin or the fortune of
+            Maugreval, compelled him, he said, to these frequent excursions. But the
+            famous lawsuit having lately taken a favorable turn, there would no longer
+            be any necessity for these journeys, and the wedding has been definitely
+            fixed for the latter part of next month.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1856  prose_score 1.00
+  excerpt : And I now, from three o'clock to five, several miles off! But if I am going
+            to you all will be well again I hope. Lack-a-day, what strange crea- But
+            yet, after all, this last goodness of his has touched me too sen-tures are
+            men!—gentlemen, I should say rather! for my dear deserving good mother,
+            though poverty be both your lots, has had better hap, and you are, and have
+            always been, blessed in one ...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1831  prose_score 0.95
+  excerpt : Jodrell, in the above-mentioned Illustrations. It wears its own brief life
+            away-- It marks the shining waters stray-- Courts every change that glads
+            the river- And finds that change it pines for-never! New string the lute, as
+            from my soul The feelings life should banish, fail, And sobering from fond
+            Thought's control, My verse glides onward with my tale. Above their heads
+            she held the lamp, And st...
+  Q       : Relate the story of a woman who held a lamp above the heads of two sleepers,
+            one named Chang and the other Ching, and set forth how each appeared as the
+            light fell upon them.
+  A       : Above their heads she held the lamp, And still the light which there it
+            threw, On Chang's dark brow the feverish damp Was slowly gathering; and the
+            hue Upon his cheek flush'd rich and brightly, And his clos'd lips just
+            quivered slightly. But Ching sleeps sound and calm as death; You scarcely
+            catch his even breath : Still lie the tides within, nor seem As wrinkled by
+            the faintest dream; And o'er his cheek one soft smile keeps Its silent home,
+            nor varies ever; All like some tender star, that sleeps Upon the hush'd lap
+            of the river.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1912  prose_score 1.00
+  excerpt : For he walked on tip-toe, loftily and slowly, with his head thrown back, and
+            his chin high in air, while his rolled with rage, eyes and his breath
+            spurted forward in jets of steam through the cold, damp air, as he snorted
+            defiance. Then presently both Stags dropped their heads and made for each
+            other; and they fought with locked horns, shoving and straining and
+            struggling, backward and forward and...
+  Q       : Tell the tale of the battle between a proud great Stag and a smaller rival
+            on Exmoor.
+  A       : For he walked on tip-toe, loftily and slowly, with his head thrown back, and
+            his chin high in air, while his rolled with rage, eyes and his breath
+            spurted forward in jets of steam through the cold, damp air, as he snorted
+            defiance. Then presently both Stags dropped their heads and made for each
+            other; and they fought with locked horns, shoving and straining and
+            struggling, backward and forward and round and round, till the smaller Stag
+            could fight no longer but turned and fled limping away, with the blood
+            flowing from a deep thrust in his flank. Then the great Stag threw up his
+            head and belled again with triumph, and huddling the Hinds together once
+            more, he drove them on before him.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1900  prose_score 0.80
+  excerpt : At last, however, he found time to remember the obligations he was under to
+            his friend. "But where can our dear Dieppe be?" he cried. "We owe so much to
+            him." "Yes, we do owe a lot to him," murmured the Countess. "But, Andrea-”
+            Indeed, my darling, we must n't forget him. I must-" "No, we must n't forget
+            him. Oh, no, we won't. But, Andrea, I-I 've got another piece of news for
+            you." The Countess sp...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1910  prose_score 1.00
+  excerpt : Nothing further occurred that day, except for frequent reports from Burke,
+            who told us how his men were getting on in their shadowing of Forsythe & Co.
+            Apparently, the death of Leon had put a stop to revolutionary plots, or at
+            least had caused the plotters to change their methods radically. The time
+            was shortening, too, during which Burke could keep the passengers of the
+            Haytien under such close s...
+  Q       : Tell the story of a young lady named Collette Aux Cayes who rushed into a
+            laboratory one morning, protesting that some person had endeavoured to keep
+            her upon a boat and that she had been followed.
+  A       : It was early the next morning, about half an hour after the time set for the
+            release of the passengers, that our laboratory door was flung open and
+            Collette Aux Cayes rushed in, wildly excited. "What's the matter?" asked
+            Kennedy anxiously. "Someone has been trying to keep me on the boat," she
+            panted. "And all the way over here a man has been following me." Kennedy
+            looked at her a minute calmly. We could understand why she might have been
+            shadowed, though it must have been a bungling job of Burke's operative. But
+            who could have wanted her kept on the boat? "I don't know," she replied, in
+            answer to Kennedy's question. "But somehow I was the only one not told that
+            we could go. And when I did go, one of the Secret Service men stopped me."
+            "Are you sure it was a Secret Service man?" "He said he was.' "" "Yes, but
+            if he had been, he would not have done that, nor let you get away, if he
+            had. Can't you imagine anyone who might want you detained longer?" She
+            looked at us, half frightened. "N-not unless it is that man-or the woman
+            with him," she replied, clasping her hands.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1899  prose_score 1.00
+  excerpt : As to the other point which I have thought may have proved a difficulty and
+            cost the University delay, I will touch but a moment upon that, and pass on.
+            The University decided that it was blasphemy for Joan to say that her saints
+            spoke French and not English, and were on the French side in political
+            sympathies. I think that the thing which troubled the doctors of theology
+            was this: they had decide...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1905  prose_score 0.83
+  excerpt : If you want to talk to me, talk away at your pleasure, for, although I am a
+            lover of silence, as I think you know, yet, to oblige you, I am willing to
+            listen to you, and even to answer your questions. Earth. Well, then, to
+            begin. Do you hear the delicious 82 Giacomo Leopardi harmony which the
+            heavenly bodies produce by their revolutions? Moon. To tell you the truth, I
+            hear nothing. Earth. Well, fo...
+  (failed)

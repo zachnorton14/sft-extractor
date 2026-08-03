@@ -1,0 +1,448 @@
+route: narrative_qa
+model: deepseek-v4-pro
+seed:  1
+n:     20
+kept:  11/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that is MEANT to narrate events — a
+scene, an episode, an account of what happened.
+
+FIRST, judge whether it actually does. A narrated episode has actors doing or
+undergoing things in sequence. If instead the passage is exposition or analysis, a
+biographical or catalog entry ("APPLETON, Nathan, manufacturer, was born..."), a list,
+table, or section heading, an examination paper, a definition, an argument, or a formal
+document, then it has no episode to recount — emit NO item for it (omit that index).
+Only proceed when there is a real episode. Better to skip than to force a question the
+passage does not narrate.
+
+When there IS an episode, work in this order.
+
+1. FIND THE ANSWER FIRST. Choose the account the passage gives — the narrated episode,
+   or the salient action, outcome, or turn within it — and copy it VERBATIM as the
+   answer.
+   - Return it as "spans": prefer ONE long contiguous quotation that carries the whole
+     account. Use several exact quotations only when the answer is genuinely spread out
+     — never more than 3, always the fewest, longest spans that hold it
+     together.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder within a span, or add any word not in the passage — including connecting
+     words between spans. You may only select and order the passage's own sentences.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
+
+2. THEN WRITE THE QUESTION that this account answers. The item's "kind" field tells you
+   which shape to use — it is the classifier's judgment of whether the episode is real
+   or invented, and it is authoritative:
+   - kind "grounded" — the episode is presented as a REAL, historical event. If you
+     recognize it as a matter of record (a known event, campaign, voyage, or life —
+     "Washington's crossing of the Delaware", "the retreat from Moscow"), NAME it from
+     your own knowledge and use RETELL: ask the reader to recount it — "Recount how ...",
+     "Tell how ... came about", "Describe what befell ...". If you do NOT recognize the
+     specific event, fall back to COMPREHEND.
+   - kind "fiction" — the episode is INVENTED (a novel, tale, or story). NEVER name it
+     as a matter of record, never claim it happened, and never ask to "recount" it as
+     history. ALWAYS use COMPREHEND.
+   - COMPREHEND — ask what happens in the episode: "What did ... do when ...?", "How did
+     ... meet ...?", "What became of ...?". The span must CORRECTLY AND COMPLETELY
+     answer it — ask exactly what the account tells; never demand a name, motive, or
+     detail it does not supply.
+   - Plain period register: direct, no modern or conversational phrasing, no
+     meta-language. Write it in pre-1930s English — period vocabulary, spelling, and
+     phrasing; use no word, term, or idiom that came into use after 1930.
+   - Stands alone. Never mention the source — no "the passage", "the text", "the
+     story", "the author", "the narrator", "according to", "described", "mentioned".
+     Ask as if of the episode itself.
+   - Self-situating — the reader has NOT seen this passage. For a RETELL, the named
+     event carries the context. For a COMPREHEND question about a particular scene, SET
+     IT UP inside the question: briefly establish the actors and circumstance the
+     answer depends on (introduce them by role or name — "a besieged garrison", "the
+     young woman Naomi", "a sea-captain pursued by a Spanish squadron") and give just
+     enough that the question is unambiguous. Never leave a bare "he", "she", "they",
+     "it", or "this" whose antecedent the question itself has not supplied, and do not
+     retell the whole scene.
+   - Do NOT put the answer, or its distinctive wording, in the question. Ask what
+     happened; do not reveal it.
+
+Input: JSON array [{"i": 0, "text": "...", "kind": "grounded" | "fiction"}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1891  prose_score 1.00
+  excerpt : Now for the first time he recalled Mrs. Lawrence's intimations with regard
+            to the doctor, and his connection with the signal-lights. Now for the first
+            time it occurred to him that the secret of those cavalry hoof-prints at the
+            gate was that no ranchman, but an officer of the garrison had been the means
+            of leaving them there. Now for the first time it flashed upon him that the
+            Englishman's astonish...
+  Q       : What chain of surmises concerning a certain officer came upon the young
+            cavalryman Perry just before the sound of the trumpet roused him?
+  A       : Now for the first time he recalled Mrs. Lawrence's intimations with regard
+            to the doctor, and his connection with the signal-lights. Now for the first
+            time it occurred to him that the secret of those cavalry hoof-prints at the
+            gate was that no ranchman, but an officer of the garrison had been the means
+            of leaving them there. Now for the first time it flashed upon him that the
+            Englishman's astonishment and concern on hearing of those hoof-tracks
+            indicated that the story of a mystery at Dunraven in which the doctor was
+            connected amounted to something more than garrison rumor. Now for the first
+            time an explanation occurred to him of the singular conduct of the horseman
+            who had dodged him by crossing the Monee.
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1839  prose_score 0.99
+  excerpt : On entering the spacious bar-room I at once asked for a separate room, and
+            ordered my luggage to be taken up to it; but was told "that I must not be in
+            a hurry," and that no room could be given away to any gentleman without the
+            bar-keeper having made his "calculation." I then perceived that the
+            gentlemen, one after the other, stepped up to him, telling him their names;
+            which he put down on a slate...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1827  prose_score 0.99
+  excerpt : SPECTATOR. house of his supposed father, Leontine told him that Eudoxus had
+            something of great importance to communicate to him; upon which the good man
+            embraced him, and wept. Florio was no sooner arrived at the great house that
+            stood in his neighbourhood, but Eudoxus took him by the hand, after the
+            first salutes were over, and conducted him into his closet. He there opened
+            to him the whole secre...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1912  prose_score 0.95
+  excerpt : I ditched for him, and delvéd, his bidding follow fair, Within, without,
+            untiring, I for his profit care; Amid his folk no labourer shall dearer to
+            Him be, Tho' I myself shall say it, He is well pleased with me! From Him I
+            have good payment, at times be over-paid, He is the promptest payer that
+            e'er a poor man prayed, From none his hire withholding, at eve pays all and
+            each. He as a lamb is humble...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1869  prose_score 1.00
+  excerpt : What kind of bread is this you gave me?" "What's the matter?" said Oonagh
+            coolly. "Matter!" shouted the other again; "why, here are the two best teeth
+            in my head gone." "Why," said she, "that's Fin's bread-the only bread he
+            ever eats when at home; but, indeed, I forgot to tell you that nobody can
+            eat it but himself, and that child in the cradle there. I thought, however,
+            that, as you were reported...
+  Q       : What befel the giant Cucullin when Oonagh gave him Fin's bread to eat?
+  A       : "What's the matter?" said Oonagh coolly. "Matter!" shouted the other again;
+            "why, here are the two best teeth in my head gone." "Why," said she, "that's
+            Fin's bread-the only bread he ever eats when at home; but, indeed, I forgot
+            to tell you that nobody can eat it but himself, and that child in the cradle
+            there. I thought, however, that, as you were reported to be rather a stout
+            little fellow of your size, you might be able to manage it, and I did not
+            wish to affront a man that thinks himself able to fight Fin. Here's another
+            cake-maybe it's not so hard as that." Cucullin at the moment was not only
+            hungry, but ravenous, so he accordingly made a fresh set at the second cake,
+            and immediately another yell was heard twice as loud as the first.
+
+========================================================================================
+[SCIENCE]  1908  prose_score 0.95
+  excerpt : The lecture was stopped, and Bernard gave the learned stranger an
+            affectionate welcome." Return to Sweden.-After an absence of three and
+            onehalf years, Linnæus returned to his native country in 1738, and soon
+            after was married to the young woman who had assisted him and had waited for
+            him so loyally. He settled in Stockholm and began the practice of medicine.
+            In the period of his absence he had ac...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1828  prose_score 0.96
+  excerpt : 44. Sir Philip, who not unjustly considered himself, on this occasion, as
+            the champion of rational liberty and pure religion, entered into the cause
+            with the utmost cheerfulness and enthusiasm, prepared, if necessary, to
+            sacrifice both his property and his life in its behalf. He reached Flushing
+            on the 18th of November, was received with every demonstration of joy and
+            gratitude, and immediately ap...
+  Q       : Recount the campaign and fall of Sir Philip Sidney in the Low Countries.
+  A       : He reached Flushing on the 18th of November, was received with every
+            demonstration of joy and gratitude, and immediately appointed colonel of the
+            Dutch forces; and had he remained sole in command, had the earl of Leicester
+            never been sent as general-in-chief of the English auxiliaries, the
+            dissensions which shortly afterwards broke out among the principal officers,
+            and in fact frustrated the objects of the expedition, had not in all
+            probability occurred. Sir Philip strained every nerve, though with little
+            success, to compose and reconcile their differences; and all that his
+            personal efforts and limited command could effect in a military capacity was
+            exerted to the utmost. In July 1586, he exhibited very remarkable skill and
+            address in the surprise and capture of Axell, a town in Flanders, which he
+            effected without the loss of a single soldier, an advantage, however, which
+            weighed but as a grain in the balance, when put in competition with the
+            irreparable loss which speedily followed; for, on the 22d day of the ensuing
+            September, in endeavouring to stop a convoy of the enemy on its road to
+            Zutphen, sir Philip, after every effort of the most heroic valour, after
+            having rescued lord Willoughby, surrounded by his foes, from instant danger
+            of death, and after having thrice charged the enemy in one skirmish, fell,
+            in the moment of decisive victory over a very superior force, by a bullet
+            received in his left thigh, and which, after much suffering from
+            excruciating pain, but borne with unparalleled fortitude, proved fatal on
+            the 17th of the following October.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1913  prose_score 0.99
+  excerpt : "The Master stepped out into the courtyard, and the multitude of patient,
+            longing people waiting there crowded around Him as if they were starving for
+            His presence. He healed the sick, comforted sorrows and fears, smiled at the
+            children, and by His gracious teaching brought peace and happiness to them
+            all; until as the sunset and the purple twilight filled the court, that
+            throng of poor and ragged...
+  Q       : What befell the narrator in the courtyard, and how did it affect him, that
+            he likened to a great feast?
+  A       : "The Master stepped out into the courtyard, and the multitude of patient,
+            longing people waiting there crowded around Him as if they were starving for
+            His presence. He healed the sick, comforted sorrows and fears, smiled at the
+            children, and by His gracious teaching brought peace and happiness to them
+            all; until as the sunset and the purple twilight filled the court, that
+            throng of poor and ragged people looked more shining and blissful than the
+            whole company of brilliant guests who still ate and drank within the house.
+            "Out into the streets the great crowd followed the Master, and then,
+            although I The Great Feast 181 longed to linger near that wonderful One who
+            was still stirring the hearts of the multitude with His thrilling words, I
+            knew that I should not be serving Him truly if I neglected my work and kept
+            the fishermen waiting for me that night. So I hurried off down the dark
+            streets and across the starlit moors to the sea. But my heart beat high with
+            happiness, and I felt as if I had been one of the guests brought from the
+            highway and the hedges to a great feast, the memory of which will fill all
+            the rest of my life with joy and splendour."
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1899  prose_score 0.81
+  excerpt : The one was a self-righteous Pharisee, The other a Publican. And the
+            Pharisee Stood and prayed thus within himself! O God, I thank thee I am not
+            as other men, Extortioners, unjust, adulterers, Or even as this Publican. I
+            fast Twice in the week, and also I give tithes Of all that I possess ! The
+            Publican, Standing afar off, would not lift so much Even as his eyes to
+            heaven, but smote his breast, Sa...
+  Q       : How did a certain Pharisee and a Publican each pray in the temple, and what
+            was their different acceptance with God?
+  A       : The one was a self-righteous Pharisee, The other a Publican. And the
+            Pharisee Stood and prayed thus within himself! O God, I thank thee I am not
+            as other men, Extortioners, unjust, adulterers, Or even as this Publican. I
+            fast Twice in the week, and also I give tithes Of all that I possess ! The
+            Publican, Standing afar off, would not lift so much Even as his eyes to
+            heaven, but smote his breast, Saying God be merciful to me a sinner! I tell
+            you that this man went to his house More justified than the other. Every one
+            That doth exalt himself shall be abased, And he that humbleth himself shall
+            be exalted!
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1822  prose_score 0.98
+  excerpt : In this little book there are some lines of hers in a different style,"
+            continued Mrs. Egerton, "which I like particularly. But they are perhaps
+            rather too serious to please your young tastes as well as they do mine."
+            Nevertheless, the young people unanimously desired to hear them, and Mrs.
+            Egerton read aloud, from a poem addressed to "A Friend on New Year's Day,"
+            the following lines:- "Sudden to ...
+  Q       : What were the lines Mrs. Egerton read aloud to the young people from a poem
+            addressed to 'A Friend on New Year's Day'?
+  A       : In this little book there are some lines of hers in a different style,"
+            continued Mrs. Egerton, "which I like particularly. But they are perhaps
+            rather too serious to please your young tastes as well as they do mine."
+            Nevertheless, the young people unanimously desired to hear them, and Mrs.
+            Egerton read aloud, from a poem addressed to "A Friend on New Year's Day,"
+            the following lines:- "Sudden to cease, or gently to decline, Oh, power of
+            Mercy! may the lot be mine: Let me not linger on the verge of fate, Nor
+            weary duty to its utmost date; Losing, in pain's impatient gloom confin'd,
+            Freedom of thought and dignity of mind; Till pity views, untouch'd, the
+            parting breath, And cold indiff'rence adds a pang to death. Yet if to suffer
+            long my doom is past, Let me preserve this temper to the last. Oh let me
+            still from self my feelings bear, To sympathize with sorrow's starting tear:
+            Nor sadden at the smile which joy bestows, Though far from me her beam
+            ethereal glows. Let me remember, in the gloom of age, To smile at follies
+            happier youth engage; See them fallacious, but indulgent spare The fairy
+            dreams experience cannot share; Nor view the rising morn with jaundic'd eye,
+            Because, for me, no more the sparkling moments fly."
+
+========================================================================================
+[MEDICINE]  1898  prose_score 1.00
+  excerpt : Then he paired this sow with a boar of a small black breed, which he had
+            likewise imported from England. This boar, when matched with sows of his own
+            breed, produced from seven to nine young pigs; now, the sow of the large
+            breed, which was so unproductive when paired with her own uncle, yielded to
+            the small black boar in the first litter twenty-one, and in the second
+            litter eighteen young pigs, so...
+  Q       : Recount the experiment by which a breeder demonstrated the effect of
+            crossing a sow of a large unproductive breed with a small black boar, and
+            state what the result was.
+  A       : Then he paired this sow with a boar of a small black breed, which he had
+            likewise imported from England. This boar, when matched with sows of his own
+            breed, produced from seven to nine young pigs; now, the sow of the large
+            breed, which was so unproductive when paired with her own uncle, yielded to
+            the small black boar in the first litter twenty-one, and in the second
+            litter eighteen young pigs, so that in one year she produced thirty-nine
+            fine young animals.
+
+========================================================================================
+[SCIENCE]  1888  prose_score 0.38
+  excerpt : Sirûr took in his hands that which came uppermost, a square compass,-it had
+            been bound in a cloth. "Let it be untied!" quoth Abdullah. The fellow
+            turning it in his hand, said, "Auh! this is sabûny." (a square of Syrian
+            soap), so Abdullah, to my great comfort, let it pass. But Abd el-Hâdy
+            espying somewhat, stretched forth his hand suddenly, and took up a comb;
+            "Ha! ha!" cries my host (who till now ...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1882  prose_score 1.00
+  excerpt : Conattee, we may be permitted to say, was still quite popular among them, in
+            spite of his bad taste, and manifest unavailableness; possibly, for the very
+            reason that his wife was universally detested; and it will, perhaps, speak
+            something for their charity, if we pry no deeper into their motives, to say
+            that the wish was universal among them that the Opitchi Manneyto, or Black
+            Devil of their belie...
+  Q       : What befell Conattee and Selonee when they plunged into the thicket between
+            the Pacolet and the Thicketty?
+  A       : They had not proceeded far, before a single boar-wolf, of amazing size,
+            started up in their path; and, being slightly wounded by the arrow of
+            Selonee, which glanced first upon some twigs beneath which he lay, he darted
+            off with a fearful howl in the direction of Conattee, whose unobstructed
+            shaft, penetrating the side beneath the fore shoulders, inflicted a fearful,
+            if not a fatal wound, upon the now thoroughly enraged beast. He rushed upon
+            Conattee in his desperation, but the savage was too quick for him; leaping
+            behind a tree, he avoided the rashing stroke with which the white tusks
+            threatened him, and by this time was enabled to fit a second arrow to his
+            bow.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1904  prose_score 0.99
+  excerpt : I've got a knife. Let's dig out that stuff, and lift up the lid before the
+            darkies come back. If we find any dead bodies inside this tomb, they will
+            frighten those fellows to death, if they catch sight of them." "Very good,"
+            said the Captain; "I shall be only too glad to get this slab up if I can,
+            but I am afraid we shall want a crowbar and more help. It's a heavy piece of
+            stone, and I see no way ...
+  Q       : What befell when Captain Horn and Ralph uncovered the stone slab within the
+            tomb, and what did Edna Markham discover within?
+  A       : After a few minutes' work with the jack-knives this substance was loosened
+            and came out in two parts, showing a bowl-like depression in the slab, which
+            had been so cut as to leave a little bar running from side to side of it. "A
+            handle!" cried Ralph. "That is what it is," said Captain Horn. "If it is
+            'ntended to be lifted, I ought to be able to do it. Move down a little with
+            the lantern and give me room." The Captain now stood on the top of the
+            mound, with the slab between his feet, and stooping down he took hold of the
+            handle with both hands. He was a powerful man, but he could not lift the
+            stone. His first effort, however, loosened it, and then he began to move it
+            from side to side, still pulling upward until at last he could feel it
+            rising. Then with a great heave he lifted it entirely out of the square
+            aperture in which it had been fitted, and set it on one side. In an instant,
+            Ralph, lantern in hand, was gazing down into the opening. "Hello!" he cried,
+            "there is something on fire in there. Oh no," he added quickly, correcting
+            himself, "it's only the reflection from our light.” CAPTAIN HORN, his face
+            red with exertion and excitement, stood gazing down into the square aperture
+            at his feet. On the other edge of the opening knelt Ralph, holding the
+            lantern so that it would throw its light into the hole. In a moment, before
+            the boy had time to form a question, he was pushed gently to one side, and
+            his sister Edna, who had clambered up the side of the mound, knelt beside
+            him. She peered down into the depths beneath, and then she drew back and
+            looked up at the Captain. His whole soul was in his downward gaze, and he
+            did not even see her. Then there came a voice from below. cried Mrs. Cliff.
+            tell me." "What is it?" "What are you all looking at? Do With half-shut eyes
+            Edna let herself down the side of the mound, and when her feet touched the
+            ground she made a few tottering steps towards Mrs. Cliff, and placing her
+            two hands on her companion's shoulders, she whispered, "I thought it was. It
+            is gold! It is the gold 79 of the Incas." And then she sank senseless at the
+            feet of the older woman.
+
+========================================================================================
+[WORLD HISTORY AND HISTORY OF EUROPE, ASIA, AFRICA, AUSTRALIA, NEW ZEALAND, ETC.]  1860
+prose_score 0.75
+  excerpt : Even Condorcet, the advocate of freedom of worship, was the first to support
+            the violent measures proposed against them. It was decreed that all the
+            clergy should be ordained instantly to take the oath to the constitution,
+            under pain of being deprived of their benefices, and declared suspected of
+            treason against the State. They were ordered to be moved from place to
+            place, to prevent their acquiri...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1922  prose_score 0.78
+  excerpt : It was far worse than that! It would take 246 that much more to retrace his
+            steps and circle around the other way before he could get started again. He
+            gnawed at his lips now as he turned and began to run. It was almost certain
+            disaster; disaster to the moral responsibility he had assumed, disaster to
+            the hope he had cherished that to-night- He stumbled. He could not be
+            careful of his footing now....
+  Q       : What befell the man as he ran on, after turning back to retrace his steps?
+  A       : It was almost certain disaster; disaster to the moral responsibility he had
+            assumed, disaster to the hope he had cherished that to-night- He stumbled.
+            He could not be careful of his footing now. Defeat, yes, perhaps-but he
+            would not accept it. He ran doggedly. Again he stumbled, and again. And now
+            he winced with pain. This hurt his side brutally. It wasn't like riding on
+            the cushions of a luxurious limousine, or even of walking when no unusual
+            effort was required. He went on. His breath came hard. He swept beads of
+            moisture away from his forehead-and then once he reeled.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1898  prose_score 0.99
+  excerpt : "You see that I also have my treat," said he, nodding his head with an air
+            of triumph. "Others inay run after dinners and balls; as for me, this is the
+            pleasure I give myself for my Carnival." "But if this painting is really so
+            precious," replied I, "it ought to be worth a high price.” "Eh! eh!" said M.
+            Antoine, with an air of proud indifference. "In good times, a good judge
+            might value it at some...
+  Q       : What passed in the visit where the old picture-fancier M. Antoine showed his
+            guest the Jordaens he had bought for his Carnival treat?
+  A       : "You see that I also have my treat," said he, nodding his head with an air
+            of triumph. "Others inay run after dinners and balls; as for me, this is the
+            pleasure I give myself for my Carnival." "But if this painting is really so
+            precious," replied I, "it ought to be worth a high price.” "Eh! eh!" said M.
+            Antoine, with an air of proud indifference. "In good times, a good judge
+            might value it at somewhere about twenty thousand francs." I started back.
+            25 25 "And you have bought it?" cried I. "For nothing," replied he, lowering
+            his voice. "These brokers are asses; mine mistook this for a student's copy;
+            he let me have it for fifty louis, ready money! This morning I took them to
+            him, and now he wishes to be off the bargain." "This morning!" repeated I,
+            involuntarily casting my eyes on the letter of refusal that M. Antoine had
+            made me write to his son's widow, and which was still on the little table.
+            He took no notice of my exclamation, and went on contemplating the work of
+            Jordaens in a kind of ectasy. "What a knowledge of chiaroscuro!” murmured
+            he, biting his last crust in delight. 'What relief! what fire! Where can one
+            find such transparency of color! such magical lights! such force! such
+            nature!" As I was listening to him in silence, he mistook my astonishment
+            for admiration, and clapped me on the shoulder. "You are dazzled," said he
+            merrily; "you did not expect such a treasure! What do you say to the bargain
+            I have made?" "Pardon me,” replied I gravely; "but I think you might have
+            done better." M. Antoine raised his head. "How!" cried he; "do you take me
+            for a man likely to be deceived about the merit of a painting or its value?"
+            "I neither doubt your taste nor your knowledge; 26 The Carnival. but I
+            cannot help thinking that, for the price of this picture of a family party,
+            you might have had—” "What then?" "The family itself, sir." The old amateur
+            cast a look at me, not of anger, but of contempt. In his eyes I had
+            evidently just proved myself a barbarian, incapable of understanding the
+            arts, and unworthy of enjoying them. He got up without answering me, hastily
+            took up the Jordaens, and replaced it in its hiding-place behind the prints.
+            It was a sort of dismissal; I took leave of him, and went away.
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1893  prose_score 0.86
+  excerpt : The little world, and then the great we'll view. With what delight, what
+            profit too, Thou'lt revel through thy gay career! FAUST. Despite my length
+            of beard I need The easy manners that insure success: Th' attempt, I fear,
+            can ne'er succeed; To mingle in the world I want address; I still have an
+            embarrass'd air, and then I feel myself so small with other men. Time, my
+            good friend, will all that's ...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1857  prose_score 0.75
+  excerpt : Cowper, of England, obtained a patent for a paper-cutting machine. As other
+            machines were introduced, his ingenious arrangement ceased to be used,
+            except as a model for others to improve upon. 1828. Richard Waterman and
+            George W. Annis, of Providence, R. I., obtained a patent for a mode of
+            making double paper. It consisted in bringing a sheet previously formed in
+            contact with the stuff on the felt...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1902  prose_score 0.88
+  excerpt : Enter CLARA, EUGENIA, MARI NUÑO, as from travel. Clara (kneeling). Sir, and
+            my father-by my daily prayers Heav'n, won at last in suffering me to kiss
+            These honour'd hands, leaves me no more to ask, Than at these honour'd feet
+            to die, With its eternal blessing afterward. Eug. And I, my father, grateful
+            as I am To Heav'n, for coming to your feet once more, Have yet this more to
+            ask-to live with you ...
+  (failed)

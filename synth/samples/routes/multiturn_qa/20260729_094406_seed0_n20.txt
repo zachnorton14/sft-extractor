@@ -1,0 +1,446 @@
+route: multiturn_qa
+model: deepseek-v4-pro
+seed:  0
+n:     20
+kept:  13/20
+
+--- SYSTEM PROMPT ---
+You are given a short fact-rich passage from a pre-1930s book. Build a MULTI-TURN
+question-and-answer conversation about it between a curious USER who asks and an
+ASSISTANT who answers. Work in this order.
+
+1. Pick SEVERAL DIFFERENT facts the passage states — a definition, a cause, a number,
+   a consequence, a name — enough for at least two exchanges. Each fact will become one
+   assistant answer, so choose facts that lie in DISTINCT places in the passage.
+
+2. For EACH fact, write the assistant's answer as "spans": a list of ONE exact
+   quotation from the passage (up to 2 only if the fact genuinely lies in
+   separate places).
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize, or
+     add any word not in the passage. Take WHOLE sentences: begin and end each span at
+     a sentence boundary and keep its terminal punctuation.
+   - The ASSISTANT ONLY ANSWERS — it never asks a question and never ends on a question.
+
+3. For EACH answer write the USER question ("q") it answers.
+   - The span must CORRECTLY AND COMPLETELY answer the question. Do not demand a name,
+     number, or identity the span does not supply. Do not reveal the answer, or its
+     distinctive wording, in the question.
+   - Plain period-schoolbook register, pre-1930s English: period vocabulary, spelling,
+     and phrasing. Use no word, term, or idiom that came into use after 1930. Never
+     mention the source — no "the passage", "the text", "according to", "mentioned".
+   - The FIRST question must SELF-SITUATE — it must make sense to someone who NEVER saw
+     the passage. Name the actual subject: the war, battle, place, ruler, work, statute,
+     or scripture involved, using your OWN knowledge of the subject when the passage
+     assumes it (e.g. "the Revised Statutes of the United States", "at the Battle of
+     Williamsburg", "in the Gospel of Luke"). Frame the reader — supply the era, place,
+     subject, or situation that makes the span the natural, correct answer.
+     FORBIDDEN in the first question — references that mean nothing on their own:
+     catalog, specimen, or figure numbers ("specimen 167"); a bare "the statute", "the
+     act", "the gun", "the assembly", "the expedition"; a bare "it", "this", "they",
+     "these"; or "two specific verses" / "a certain scholar" without naming which. If
+     the fact you picked cannot be made to stand alone (it hinges on an item known only
+     from the passage), pick a DIFFERENT fact to open with — one that can.
+   - LATER questions build on the conversation so far — they MAY and SHOULD use natural
+     follow-up phrasing that refers back to what was ALREADY ESTABLISHED in an earlier
+     turn ("And why did that happen?", "What became of him afterward?", "How was it
+     accomplished?"). But a pronoun or "the ___" is allowed ONLY when its antecedent
+     was actually named in a previous turn; never introduce a NEW bare reference the
+     conversation has not yet identified. Keep the thread coherent: each question should
+     follow from the last answer.
+
+4. Return the exchange as "turns": an ordered list ALTERNATING user, assistant, user,
+   assistant …, beginning with the user, 4 to 8 turns (two to four
+   full exchanges). A user turn carries "q"; an assistant turn carries "spans".
+   If the passage does not state enough distinct facts for two exchanges, emit NO item
+   for it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "turns": [{"role": "user", "q": "..."},
+                       {"role": "assistant", "spans": ["exact quotation"]},
+                       {"role": "user", "q": "..."},
+                       {"role": "assistant", "spans": ["exact quotation"]}]}, ...]
+
+
+========================================================================================
+[AGRICULTURE]  1884  turns=8
+  excerpt : It is true we "freely grant" a national revenue of a most liberal character-
+            we give £20,000,000 when we abolish slavery, and we do not hold our hands to
+            rescue captive missionaries in Abyssinia or send relief to Gordon-but it is
+            all done with the conscious consent of the individuals who contribute the
+            revenue. It is this national idea which lies at the root of our commercial
+            prosperity. But on the...
+  USER  : Upon what principle does the writer rest the commercial prosperity of Great
+          Britain?
+  ASST  : It is this national idea which lies at the root of our commercial prosperity.
+  USER  : And how is that national idea described just before?
+  ASST  : It is true we "freely grant" a national revenue of a most liberal character-we
+          give £20,000,000 when we abolish slavery, and we do not hold our hands to
+          rescue captive missionaries in Abyssinia or send relief to Gordon-but it is
+          all done with the conscious consent of the individuals who contribute the
+          revenue.
+  USER  : What contrast does he draw with the condition of the taxpayer on the Continent
+          in the matter of the sugar bounties?
+  ASST  : In this matter of sugar bounties alone no English taxpayer would for a moment
+          hold his peace. He would bluntly say, "Either this making of sugar from beet
+          pays or it does not. If it does I am not going to contribute to the profits of
+          the manufacturers; if it does not I refuse to make them good their losses."
+  USER  : What, then, is the actual conduct of the foreign taxpayer in this same affair?
+  ASST  : But the foreign taxpayer holds his peace; and, whether it be in ignorance or
+          in fear, it exhibits an equally lamentable absence of the primary conditions
+          of individual freedom.
+
+========================================================================================
+[POLITICAL SCIENCE]  1899  turns=6
+  excerpt : Political duty in a democracy centres primarily in those well-organised
+            interests which together make up the national life. The ideal of political
+            knowledge for the ordinary citizen ought to lie in a just estimate of the
+            importance of his class to the national welfare. And that estimate can only
+            be made by weighing too the importance of other classes and other interests.
+            This, no doubt, is a much ...
+  USER  : In a democracy, where does political duty chiefly centre, according to the
+          writer?
+  ASST  : Political duty in a democracy centres primarily in those well-organised
+          interests which together make up the national life.
+  USER  : What does he set forth as the ideal of political knowledge for the ordinary
+          citizen?
+  ASST  : The ideal of political knowledge for the ordinary citizen ought to lie in a
+          just estimate of the importance of his class to the national welfare.
+  USER  : And what does he declare to be the first condition of a healthy political life
+          in such a state?
+  ASST  : The first condition, therefore, of healthy political life in a democracy is
+          the more thorough organisation of all those classes and sections which have a
+          quite distinct life, with its needs and duties, of their own.
+
+========================================================================================
+[SOCIAL SCIENCES]  1913  turns=8
+  excerpt : An immense fan-shaped garden, with lawns as soft and compact as a cloth of
+            velvet, sprinkled with small white daisies, dotted here and there with
+            yellow buttercups, in keeping with the medieval simplicity of everything, is
+            bordered and set off by rows of yew as old as the place itself, the
+            symbolical tree of the primitive bards and mystics. And they are in their
+            proper element here, in front of th...
+  USER  : What are the two chief things which give the Tudor palace of Hampton Court its
+          peculiar charm?
+  ASST  : The two chief things which give this Tudor palace its peculiar charm are its
+          red brick and its quaint forms.
+  USER  : Did the new part erected later by William III succeed in making the palace
+          resemble Versailles?
+  ASST  : But, fortunately for lovers of the natural, William did not succeed in turning
+          Hampton Court into an English Versailles.
+  USER  : How did the art at the Court of Louis XIV at Versailles differ from what is
+          found at Hampton Court?
+  ASST  : At the Court of Louis XIV things were made to shine and dazzle. Art became
+          fantastic and superficial. Caprice and convention usurped the place of the
+          natural and the intimate.
+  USER  : What two painters are said to suggest the differing atmospheres of Versailles
+          and Hampton Court?
+  ASST  : The fêtes champêtres of Watteau depict the life and sentiment of Versailles;
+          the pictures of Claude Lorraine suggest the atmosphere of Hampton Court.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1832  turns=0
+  excerpt : Greek words sometimes occur in the Septuagint, the reason for the choice of
+            which it is impossible for us to discover, either from Greek or Hebrew
+            usage. In these cases, according to Le Dieu and others, the Chaldee or
+            Arabic usage has been followed, or the primary meaning of the word, which
+            has been lost in Hebrew, remains in Chaldee or Arabic." Thus AD is rendered
+            συγκρίνειν instead of ἑρμηνεύειν...
+  (dropped)
+
+========================================================================================
+[SCIENCE]  1922  turns=8
+  excerpt : The distance of Antares, though not very accurately known, is probably not
+            far from 350 light-years. Its angular diameter of 0.040 of a second would
+            thus correspond to a linear diameter of about 400 million miles. their
+            characteristic bands in the spectrum. Finally comes extinction of light, as
+            the star approaches its ultimate state of a cold and solid globe. We may
+            thus form a new picture of the ...
+  USER  : What is the probable distance of the star Antares from the earth?
+  ASST  : The distance of Antares, though not very accurately known, is probably not far
+          from 350 light-years.
+  USER  : What linear diameter has been computed to correspond with its measured angular
+          diameter?
+  ASST  : Its angular diameter of 0.040 of a second would thus correspond to a linear
+          diameter of about 400 million miles.
+  USER  : What does the passage say concerning the probable mass and volume of
+          Betelgeuse?
+  ASST  : There are good reasons for believing that the mass of Betelgeuse cannot be
+          more than ten times that of the sun, while its volume is at least a million
+          times as great and may exceed eight million times the sun's volume.
+  USER  : To what does the author consequently liken its average density?
+  ASST  : Therefore, its average density must be like that of an attenuated gas in an
+          electric vacuum tube.
+
+========================================================================================
+[POLITICAL SCIENCE]  1895  turns=8
+  excerpt : The powers delegated to the new Congress were much the same that the old one
+            had exercised; while the prohibitions on the States, and the commands to
+            them, had already been practically fixed by common consent. The customary
+            Constitution that controlled the Continental Congress and the Articles of
+            Confederation were developed at the same time, and were in substance the
+            same thing. The only practica...
+  USER  : How did the powers delegated to the Congress under the new Constitution
+          compare with those previously exercised by the Continental Congress?
+  ASST  : The powers delegated to the new Congress were much the same that the old one
+          had exercised; while the prohibitions on the States, and the commands to them,
+          had already been practically fixed by common consent.
+  USER  : What was the relation between the customary Constitution and the Articles of
+          Confederation?
+  ASST  : The customary Constitution that controlled the Continental Congress and the
+          Articles of Confederation were developed at the same time, and were in
+          substance the same thing.
+  USER  : What was the only practical difference that distinguished the two governments?
+  ASST  : The only practical difference between the two governments was the lack of a
+          written constitution in the first case, and its presence in the second.
+  USER  : How was the government of the Congress organized?
+  ASST  : It was a legislature consisting of one house, but it also exercised some
+          executive and judicial powers.
+
+========================================================================================
+[POLITICAL SCIENCE]  1899  turns=0
+  excerpt : Ancient lineage, however, is no insurance against misfortune, and the
+            Buchanans of Moss, never rich, sank into deep poverty. The father died in
+            George's youth, and the grandfather 111 who survived him was a waster and
+            became a bankrupt, and Agnes Heriot, the mother, was left to struggle with
+            the upbringing of five sons and three daughters-a task however, which she
+            successfully accomplished, like t...
+  (dropped)
+
+========================================================================================
+[MEDICINE]  1887  turns=0
+  excerpt : But no thoughtful and experienced physician can doubt that through mental
+            influence of some kind, not only are the normal functions of the body, but
+            also diseased actions, controlled, and sometimes even life preserved. Such
+            influence is most frequently seen in connexion with mental and nervous
+            diseases of a functional character, though sometimes of long standing and to
+            ordinary observers of a seri...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1897  turns=0
+  excerpt : 3. When fractions are expressed in words instead of figures, a hyphen should
+            separate the two parts; as, one-half, three-fourths, etc. 4. The words
+            "half" and "quarter," when prefixed to a noun, should be separated from it
+            by a hyphen; as, half-dollar, quarter-pound, etc. 5. A phrase used as an
+            epithet or as a modifier is compounded, and the hyphen used; as, a 'never-
+            to-be-forgotten' event; a 'flo...
+  (dropped)
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1855  turns=6
+  excerpt : Most of the other colonies censured this agreement as a desertion of the
+            cause which all were equally pledged to uphold; but in England the tidings
+            were received with joy. The tax on tea remained unrepealed; and as
+            assurances had been given to Hutchinson and his associates that a portion of
+            the income derived from this tax should be appropriated to their benefit,
+            the zeal of his honor was wonderfu...
+  USER  : How did Governor Hutchinson of Massachusetts Bay behave after he was assured
+          he would personally profit from the tea tax that the British ministry had left
+          in force?
+  ASST  : The tax on tea remained unrepealed; and as assurances had been given to
+          Hutchinson and his associates that a portion of the income derived from this
+          tax should be appropriated to their benefit, the zeal of his honor was
+          wonderfully increased, and he exultingly cried, "I can find bones to throw
+          among them, to continue contention, and prevent a renewal of their union."
+  USER  : Were the people of his own province willing to abet him in those designs?
+  ASST  : But the Bay Province was little disposed to second him in these views; and at
+          the November session of the General 1770. Court resolutions were passed
+          discouraging extravagance and the use of superfluities, and encouraging
+          industry and frugality; manufactures in the towns were likewise fostered; and
+          the wives and daughters of the yeomen of Massachusetts, catching the spirit
+          which every where prevailed, held — as, indeed, for a long time they had done
+          - social gatherings at different houses; and it was a point of pleasing and
+          generous rivalry among them who should spin the most yarn or weave the most
+          cloth.
+  USER  : And in what particular did the ladies of the province alter their domestic
+          habits to give practical effect to their principles?
+  ASST  : Nor did they stop here, but cheerfully abstained from the use of tea, the
+          favorite beverage of their sex, and substituted in its place an infusion of
+          herbs indigenous to the soil.
+
+========================================================================================
+[GENERAL WORKS]  1910  turns=6
+  excerpt : 4), it proceeds to say that it is either of the necessary or of the usual
+            though not of the accidental (i. 29), and to admit that its principles are
+            some necessary and some contingent (i. 32, 88 b 7). Philosophy (piλocopia)
+            also is used by him in a similar manner. Though occasionally he means by it
+            primary philosophy (Met. T 2-3, K 3), more frequently he extends it to all
+            three speculative philoso...
+  USER  : In the Metaphysics of Aristotle, how many and which speculative philosophies
+          does he enumerate?
+  ASST  : More frequently he extends it to all three speculative philosophies (E 1, 1026
+          a 18, τρεῖς ἂν εἶεν φιλοσοφίαι θεωρητικαί, μαθηματική, φυσική, θεο oyun)
+  USER  : Does he employ the term 'philosophy' to cover practical sciences as well, and
+          by what token may we be sure of this?
+  ASST  : And to all three practical philosophies, as we see from the constant use of
+          the phrase "political philosopher" in the Ethics; and in short applies it to
+          all sciences except productive science or art.
+  USER  : What does the passage then declare, for Aristotle and the Greeks in general,
+          to be the true problems of philosophy?
+  ASST  : With him, as with the Greeks generally, the problems of philosophy are the
+          nature and origin of being and of good: it is not as with too many of us a
+          mere science of mind.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1892  turns=0
+  excerpt : To nations or classes of men there can be no direct antipathy. There may be
+            individuals born and constellated so opposite to another individual nature,
+            that the same sphere cannot hold them. I have met with my moral antipodes,
+            and can believe the story of two persons meeting (who never saw one another
+            before in their lives) and instantly fighting. We by proof find there should
+            be 'Twixt man and ma...
+  (dropped)
+
+========================================================================================
+[AGRICULTURE]  1801  turns=0
+  excerpt : An obstinate lameness is, however, sometimes increased by humours. Physic,
+            in that case, may be necessary to remove it. If Hounds are bruised by a fall
+            and it appears outwards, the swelling may be anointed with a decoction of
+            Chickweed and Groundsel boiled in strong Ale; should the skin be broke, cut
+            away the hair near the wound, and lay on a plaister of the roots of great
+            Comfrey, Melilot, and oi...
+  (dropped)
+
+========================================================================================
+[TECHNOLOGY]  1914  turns=8
+  excerpt : Account 59-Stationery and Printing: The charges to Stationery and Printing
+            Account assigned to freight service consist chiefly of tariffs, and while
+            the proportion of the expense for the other stationery and printing items
+            was obtainable, the amount involved would be so small as to not justify the
+            labor to determine it, especially when it is considered that it would in
+            turn have to be distributed ...
+  USER  : On the Pennsylvania Railroad, what chiefly composes the freight expenses
+          reported under the Stationery and Printing account?
+  ASST  : In the case of the Pennsylvania Railroad the freight expenses con sist
+          principally in the cost of tariffs
+  USER  : And what measure was deemed best for dividing those freight expenses among
+          commodities on the Pennsylvania Railroad?
+  ASST  : The basis for apportionment to the commodities would appear to be the volume
+          of traffic, but as the coal traffic is shipped in car load lots without
+          continuous changing of rates, we have considered that the divided expenses of
+          the Traffic Department would be the best measure of the portion of the
+          expenses applicable to the commodities.
+  USER  : On the Philadelphia & Reading Railway, were bituminous coal tariffs printed
+          and circulated?
+  ASST  : No bituminous coal tariffs are printed and circulated on the Phila delphia &
+          Reading Railway, and the expense of these tariff's was, therefore, divisible
+          only between the anthracite and merchandise services.
+  USER  : Upon what basis did you consider that a reasonable division of those tariff
+          expenses might be had?
+  ASST  : It was considered that a separation based on ton miles would give reasonable
+          results when viewing the traffic expenses as a whole, although probably
+          overcharging the anthracite service to some degree as regards the specific
+          item distributed.
+
+========================================================================================
+[LAW]  1874  turns=6
+  excerpt : The court, however, directed it to be read, to inform them of its contents,
+            to which direction the plaintiff's counsel excepted. The record was read;
+            the court decided it to be inadmissible, and the witness was sworn. After
+            the testimony was closed, the court charged the jury, who found a verdict
+            for the plaintiff, with $25 damages, upon which judgment was entered. The
+            defendants, on a bill of exc...
+  USER  : In the case of the dog that was killed, what was the decision of the court
+          upon the plea that the animal had been a constant nuisance at the defendants'
+          dwelling?
+  ASST  : After a full consideration, I am of opinion they do. The demurrer admits that
+          the dog was in the constant habit of coming on the premises, and about the
+          dwelling of the defendants, day and night, barking and howling, to the great
+          annoyance and disturbance of the peace and quiet of the family; that the
+          plaintiff was fully advised of this mischievous propensity of the animal, and
+          wilfully neglected to confine him, and that defendants, unable to remove the
+          nuisance in any other way, killed him.
+  USER  : What did Chief Justice Nelson say regarding the remedy for damage done by a
+          dog to grass or grain before the owner is notified of the habit?
+  ASST  : I am not prepared to deny the remedy for such damage, after the owner is duly
+          advised of the habit of the dog to commit it; on the contrary, I entertain no
+          doubt of his responsibility for this violation of right after a knowledge of
+          the animal's propensity, the same as for an injury to the cattle, the person,
+          or the family of an individual.
+  USER  : And what did the court find insufficient to justify the killing of the dog?
+  ASST  : I think the court were also warranted in saying to the jury that the evidence
+          given of the chasing and worrying of the defendants' sheep by the dog was not
+          sufficient to justify the killing.
+
+========================================================================================
+[NAVAL SCIENCE]  1897  turns=4
+  excerpt : The three signs thus on one side of the equation must produce the same
+            result (positive or negative) as the sign of the other side. (iii.) Oblique-
+            angled Triangles. On account of the property of plane triangles that the
+            three angles of every such triangle are equal to two right angles, their
+            solution is much simpler than that of spherical triangles where the sum of
+            the three angles is not definite...
+  USER  : In the solution of oblique-angled triangles, how does the sum of the three
+          angles of a spherical triangle compare with that of a plane triangle?
+  ASST  : On account of the property of plane triangles that the three angles of every
+          such triangle are equal to two right angles, their solution is much simpler
+          than that of spherical triangles where the sum of the three angles is not
+          definite, but varies from two to six right angles.
+  USER  : What analogy exists between the fundamental formulæ of plane and spherical
+          triangles to aid the memory?
+  ASST  : In the following Table it will be observed that a side or a combination of
+          sides in plane triangles is replaced by their sines in spherical triangles.
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1892  turns=4
+  excerpt : It implies that the whole region is desolate and worthless for agricultural
+            purposes; and this, indeed, is a very widespread impression. As a matter of
+            fact, the bad lands are unusually fertile. They derived their name from the
+            description of an old French explorer, who asserted them to be mauvaises
+            terres pour traverser. This, through the Yankee characteristic of brevity,
+            became shortened into th...
+  USER  : What is the true character of the soil in the region of the American West
+          commonly called the 'bad lands'?
+  ASST  : As a matter of fact, the bad lands are unusually fertile.
+  USER  : How came so fertile a district to receive that misleading name?
+  ASST  : They derived their name from the description of an old French explorer, who
+          asserted them to be mauvaises terres pour traverser. This, through the Yankee
+          characteristic of brevity, became shortened into the misleading term 'bad
+          lands.'
+
+========================================================================================
+[SCIENCE]  1856  turns=4
+  excerpt : If used in a clear state, and considerably diluted, this water alone may be
+            applied for at least a month before it comes into flower. "If the object
+            should be out-door cultivation entirely, I should recommend them to be
+            planted in beds; their effect is 6* exceedingly grand. Excavate the soil
+            eighteen inches deep, and fill in the bottom, a foot deep, with very coarse
+            peat, intermixed with one fifth...
+  USER  : In out-door cultivation of lilies, what preparation of the soil does the
+          horticulturist recommend for planting them in beds?
+  ASST  : Excavate the soil eighteen inches deep, and fill in the bottom, a foot deep,
+          with very coarse peat, intermixed with one fifth of decayed manure or leaf
+          mould. The remaining six inches may be entirely peat.
+  USER  : What rule does he give for the distance between the bulbs if they are large
+          enough to bloom?
+  ASST  : If the bulbs are large enough to bloom, plant them twelve inches apart every
+          way; and if beds of each kind are brought into contact with one another, the
+          effect will be magnificent.
+
+========================================================================================
+[POLITICAL SCIENCE]  1920  turns=4
+  excerpt : It is that other self, that strong man which stands back of all men and
+            dictates to their consciences. It prompts men to acts of chivalry or
+            sacrifice and sustains them when they are doubted by others. To revert again
+            to the words of Emerson: "Honor is venerable to us because it is no
+            ephemeris. It is always ancient virtue. We worship it to-day, because it is
+            not of to-day. We love it and pay it h...
+  USER  : What quality does Emerson ascribe to honor, by which it is distinguished from
+          things of a passing nature?
+  ASST  : Honor is venerable to us because it is no ephemeris. It is always ancient
+          virtue.
+  USER  : And why, in Emerson's words, does our homage for honor never prove a snare?
+  ASST  : We love it and pay it homage, because it is not a trap for our love and
+          homage, but is selfdependent, self-derived, and therefore of an old immaculate
+          pedigree.
+
+========================================================================================
+[AGRICULTURE]  1904  turns=0
+  excerpt : In Cumberland, the "Statesmen" had large families and "from a miscalculation
+            of their real situation" they left their children "larger fortunes than they
+            ought to have done, and saddled the oldest son with the payment of a sum of
+            money which it was impossible for him to pay.142 This is given as an
+            important cause of indebtedness in Nottinghamshire,43 Somersetshire,
+            Berkshire and Buckinghamshire. +...
+  (dropped)

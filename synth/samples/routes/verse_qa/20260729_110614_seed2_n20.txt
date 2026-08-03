@@ -1,0 +1,293 @@
+route: verse_qa
+model: deepseek-v4-pro
+seed:  2
+n:     20
+kept:  8/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage of pre-1930s VERSE. Turn it into an instruction-and-
+completion pair in which the reader is asked to COMPOSE such verse.
+
+1. FIND THE VERSE FIRST. Copy a self-contained run of the verse — a full stanza, or a
+   few consecutive lines that stand on their own — VERBATIM as the answer.
+   - Return it as "spans": prefer ONE contiguous quotation of the verse, kept line for
+     line; use up to 2 only if you take two separate stanzas.
+   - Copy WORD FOR WORD, line for line. Do NOT paraphrase, rewrite, correct, modernize,
+     reorder, or add or drop any word. Take the poet's own lines exactly.
+   - Skip a run that is garbled by OCR or that cannot stand on its own.
+
+2. THEN WRITE THE INSTRUCTION that asks for this verse.
+   - Name the SUBJECT or occasion and ask for verse on it: "Compose a verse upon ...",
+     "Write lines on ...", "Give a stanza in praise of ...", "Set down a verse lamenting
+     ...". The verse must be a fitting answer to the instruction.
+   - Do NOT quote or paraphrase the verse's own wording in the instruction; give only
+     its subject and, if apt, its mood or form (a lament, a hymn, a sonnet).
+   - Plain period register, pre-1930s English — no word or idiom that came into use
+     after 1930.
+   - Stands alone. Never mention the source — no "the passage", "the poem above", "the
+     poet". Phrase it as a task set from scratch.
+
+If the passage is NOT actually verse (it is prose, a table, an index, or OCR soup), emit
+NO item for it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact verse"], "q": "..."}, ...]
+
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1843  prose_score 1.00
+  excerpt : Should you by deserts be engrossed? Come, be the city's pride and boast.
+            Besides, the woods remind of harms That Tereus, in them, did your charms.
+            BOOK III. FABLE XVI. Alas! replied the bird of song, The thought of that so
+            cruel wrong Makes me, from age to age, Prefer this hermitage; For nothing
+            like the sight of men Can call up what I suffered then. FABLE XVI. THE WOMAN
+            DROWNED....
+  Q       : Write a stanza wherein one speaker urges a nightingale to quit the lonely
+            woods and take up her dwelling among men in the city.
+  A       : Should you by deserts be engrossed? Come, be the city's pride and boast.
+            Besides, the woods remind of harms That Tereus, in them, did your charms.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1901  prose_score 0.92
+  excerpt : But the clouds that overcast Thy young morning may not last. Soon shall
+            arrive the rescuing hour That yields thee up to Nature's power. Nature that
+            so late doth greet thee Shall in o'erflowing measure meet thee. She shall
+            recompense with cost For every lesson thou hast lost. Then wandering up thy
+            sire's loved hill Thou shalt take thy airy fill Of health and pastime. Birds
+            shall sing For thy deligh...
+  Q       : Compose lines of comfort for a child whose early days have been clouded,
+            promising the near return of health and freedom among the hills.
+  A       : But the clouds that overcast Thy young morning may not last. Soon shall
+            arrive the rescuing hour That yields thee up to Nature's power. Nature that
+            so late doth greet thee Shall in o'erflowing measure meet thee. She shall
+            recompense with cost For every lesson thou hast lost. Then wandering up thy
+            sire's loved hill Thou shalt take thy airy fill Of health and pastime. Birds
+            shall sing For thy delight each May morning. 'Mid new-yeaned lambkins thou
+            shalt play, Hardly less a lamb than they.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1889  prose_score 1.00
+  excerpt : MEMORY. I. O DREADFUL Memory! why dost thou tread From out the secret
+            chambers of my life? Thou livest with the dead -go to thy dead! Nor break my
+            peaceful carelessness with strife. Thy chains are heavy; thou hast bound me
+            fast. I bend beneath the weight I have to bear ; Leave me the Present, thou
+            hast all the Past! Unbind me go! I keep the smallest share. Art thou not
+            weary of thy ceaseless chase...
+  Q       : Give a stanza apostrophizing Memory as a dreadful and burdensome pursuer,
+            and begging to be left in peace with the present.
+  A       : O DREADFUL Memory! why dost thou tread From out the secret chambers of my
+            life? Thou livest with the dead -go to thy dead! Nor break my peaceful
+            carelessness with strife. Thy chains are heavy; thou hast bound me fast. I
+            bend beneath the weight I have to bear ; Leave me the Present, thou hast all
+            the Past! Unbind me go! I keep the smallest share. Art thou not weary of thy
+            ceaseless chase? Day after day hast thou not followed me?
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1888  prose_score 0.92
+  excerpt : Flee homeward, angel! This dark, earthen cottage- Built for a mighty
+            monarch's wandering child— Must break in twain; but from thy Father's
+            palace, They call thee home, in accents sweet and mild. Flee homeward,
+            angel! These degrading fetters Shall never gall thy tender limbs again ; The
+            stern deliverer comes, and in a moment Proclaims thy liberty and breaks the
+            chain. O, my sweet life, could I but ...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1907  prose_score 1.00
+  excerpt : THE GHAZUL, OR ORIENTAL LOVE-SONG THE ROCKS WAS a timid little antelope; My
+            home was in the rocks, the lonely rocks. I saw the hunters scouring on the
+            plain; I lived among the rocks, the lonely rocks. I was a-thirsty in the
+            summer-heat; I ventured to the tents beneath the rocks. Zuleikah brought me
+            water from the well; Since then I have been faithless to the rocks. I saw
+            her face reflected in the ...
+  (failed)
+
+========================================================================================
+[MUSIC AND BOOKS ON MUSIC]  1859  prose_score 0.71
+  excerpt : Stay, father, stay, once more I ask, O count it not a heavy task, To stay
+            with me till life shall end, My last, my only earthly friend. O, father,
+            leave me not, O, father, leave me not. [12] 1. Let Temp'rance and her sons
+            rejoice, And be their praises loud and long, 2 Let ev'ry heart and ev'ry
+            voice Con-spire to raise a joy-ful song. 2 And let the anthem rise to God,
+            Whose fav'ring mercies so abou...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1894  prose_score 0.47
+  excerpt : St. Joseph the Hymnographer Chris-tian, dost thou see them 64 On the holy
+            ground, How the troops of Mid ian Prowl and prowl a - round? Chris-tian, up
+            and 口 smite them, Count - ing gain but loss; Smite them by the mer it Of the
+            holy Cross. 2 Christian, dost thou feel them, How they work within,
+            Striving, tempting, luring, Goading into sin? Christian, never tremble,
+            Never be downcast; Gird thee for ...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1889  prose_score 0.99
+  excerpt : Our Faith shall be a sweet and noble confidence in the Eternal Power, in the
+            adequacy of nature and of man, in the meaning of this present life. Our Hope
+            shall be a hope for man's unwearying progression from all good to better
+            things, and for that Life Immortal without which we cannot think the best
+            can ever be. Our Love shall be a fountain of perpetual renewal to our Faith
+            and Hope. And by what f...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1892  prose_score 0.96
+  excerpt : "O Malebranche¹ of our bridge," he said, "lo, one of the Ancients of Saint
+            Zita! 2 put him under, for I return again to that city, which I have
+            furnished well with them; every man there is a barrator,³ except Bonturo:
+            there, for money, of No they make Ay." He hurled him down, and along the
+            hard crag he turned, and never mastiff loosed was in such haste to follow a
+            thief. That one sank under, and c...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1864  prose_score 0.83
+  excerpt : THE DESPAIRING LOVER. RELENTLESS tyrant of my heart, Attend, and hear thy
+            slave impart The matchless story of his pain. In vain I labor to conceal
+            What my extorted groans reveal; Who can be rack'd, and not complain? But oh!
+            who duly can express Thy cruelty, and my distress? No human art, no human
+            tongue. DON QUIXOTE. 133 Then fiends assist, and rage infuse !...
+  Q       : Compose a verse upon a despairing lover's complaint of his lady's cruelty.
+  A       : RELENTLESS tyrant of my heart, Attend, and hear thy slave impart The
+            matchless story of his pain. In vain I labor to conceal What my extorted
+            groans reveal; Who can be rack'd, and not complain? But oh! who duly can
+            express Thy cruelty, and my distress? No human art, no human tongue.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1848  prose_score 0.99
+  excerpt : The world is good; Let it alone: 'twill educate itself." He ceased, and
+            looked about him with a smile That said, as plainly as a smile can say, How
+            smart he was, how practically wise Whereat another, taking up the chant,
+            Said, "Bah! it irks my patience evermore, To hear such vulgar flattery of
+            the crowd; Were they not born to drudge, to groan, to sweat? Is't not so
+            written in the Book? If so, Why ...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1819  prose_score 0.92
+  excerpt : PURGATORY. Then of this path thou wilt have reach'd the end. There hope to
+            rest thee from thy toil. No more I answer, and thus far for certain know."
+            As he his words had spoken, near to us A voice there sounded: "Yet ye first
+            perchance May to repose you by constraint be led." At sound thereof each
+            turn'd; and on the left A huge stone we beheld, of which nor I Nor he before
+            was ware. Thither we dre...
+  Q       : Set down verse describing how a speaker is interrupted by a sudden voice and
+            how the listeners discover a company of idlers behind a great stone.
+  A       : As he his words had spoken, near to us A voice there sounded: "Yet ye first
+            perchance May to repose you by constraint be led." At sound thereof each
+            turn'd; and on the left A huge stone we beheld, of which nor I Nor he before
+            was ware. Thither we drew; And there were some, who in the shady place
+            Behind the rock were standing, as a man Through idleness might stand.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1912  prose_score 0.96
+  excerpt : 1876 Still debating, still delay, And the world's a ghost that gleams—
+            Wavers-vanishes away! We must live while live we can ; We should love while
+            love we may. Dread in women, doubt in man So the Infinite runs away. 1876 O,
+            HAVE you blessed, behind the stars, The blue sheen in the skies, When June
+            the roses round her calls?— Then do you know the light that falls From her
+            beloved eyes. And have you...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1899  prose_score 1.00
+  excerpt : He left you-well! Julie. Then came a sharper trial! At the king's suit, the
+            Count de Baradas Sought me, to soothe, to fawn, to flatter, while On his
+            smooth lip insult appeared more hateful 11 RICHELIEU. For the false mask of
+            pity: letting fall Dark hints of treachery, with a world of sighs That
+            heaven had granted to so base a lord The heart whose coldest friendship were
+            to him What Mexico to miser...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1919  prose_score 0.93
+  excerpt : Yet not for those, 95 Nor what the potent Victor in his rage Can else
+            inflict, do I repent, or change, Though changed in outward lustre, that
+            fixed mind, And high disdain from sense of injured merit, That with the
+            Mightiest raised me to contend, 100 And to the fierce contention brought
+            along Innumerable force of Spirits armed, That durst dislike his reign, and,
+            me preferring, His utmost power with...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1892  prose_score 1.00
+  excerpt : For this reason, it is used for pier building. Another kind of eucalyptus is
+            said by the doctors to be an anti-fever tree, for its foliage has a
+            wonderfully purifying effect upon the air, its roots have an unusual
+            capacity for absorption of moisture, and in regions round about the
+            eucalyptus, it is said, nothing of the nature of fever ever is found among
+            the people. Another highly prized Australia...
+  Q       : Compose a comic verse describing all the strange reversals of nature that
+            might be found in New South Wales.
+  A       : There is a land in distant seas Full of all contrarieties, There beasts have
+            mallards' bills and legs, Have spurs like cocks, like hens lay eggs. There
+            parrots walk upon the ground, And grass upon the trees is found; On other
+            trees another wonder. Leaves without upper side or under. There pears you'll
+            scarce with hatchet cut; Stones are outside the cherries put; Swans are not
+            white, but black as soot; There neither leaf, nor root, nor fruit, Will any
+            Christian palate suit; Unless in desperate need you'll fill ye With root of
+            fern and stalk of lily. There, 'stead of bread, and beef and broth Men feed
+            on many a roasted moth. There missiles to far distance sent Come whizzing
+            back from whence they went. There quadrupeds go on two feet, And yet few
+            quadrupeds so fleet. There birds, although they cannot fly, In swiftness
+            with the greyhound vie. With equal wonder you may see The foxes fly from
+            tree to tree. And what they value most, so wary, These foxes in their
+            pockets carry. The sun, when you to face him turn ye, From right to left
+            performs his journey. The north winds scorch, but when the breeze is Full
+            from the south, why, then it freezes. Now of what place can such strange
+            tales Be told with truth, but New South Wales?
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1898  prose_score 0.83
+  excerpt : Before her queenly womanhood How dared our hostess utter The paltry errand
+            of her need To buy her fresh-churned butter? 270 Then, while along the
+            western hills We watched the changeful glory Of sunset, on our homeward way,
+            I heard her simple story. The early crickets sang; the stream Plashed
+            through my friend's narration: Her rustic patois of the hills Lost in my
+            free translation. 265 "More wise,"...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1910  prose_score 0.99
+  excerpt : 225 After proceeding a mile or two farther, I perceived, upon my left, a
+            village spire rising over the vineyards. Towards this I directed my
+            footsteps; but it seemed to recede as I advanced, and at last quite
+            disappeared. It was evidently many miles distant; and as the path I followed
+            descended from the highway, it had gradually sunk beneath a swell of the
+            vine-clad landscape. I now found myself i...
+  Q       : Write a verse contrasting the gaiety of a ball with the sudden alarm that
+            breaks it.
+  A       : There was a sound of revelry by night, And Belgium's capital had gathered
+            then Her Beauty and her Chivalry; and bright The lamps shone o'er fair women
+            and brave men. A thousand hearts beat happily; and when Music arose with its
+            voluptuous swell, Soft eyes looked love to eyes which spake again, And all
+            went merry as a marriage bell: But hush! hark! a deep sound strikes like a
+            rising knell!
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1911  prose_score 0.99
+  excerpt : The concluding thought is exceedingly noble. - EDGAR ALLAn Poe. To him who
+            in the love of Nature holds "Communion with her visible forms, she speaks A
+            various language; for his gayer hours She has a voice of gladness, and a
+            smile And eloquence of beauty, and she glides Into his darker musings, with
+            a mild And healing sympathy, that steals away Their sharpness, ere he is
+            aware. When thoughts Of the...
+  (failed)
+
+========================================================================================
+[FINE ARTS]  1855  prose_score 1.00
+  excerpt : And Retrospection many times arose, Soft as a diver rising through the sea,
+            And showed old sorrows that, like softest pearls, 'Mid tangled fragments of
+            forgotten things, His hand had rescued from deep Lethe's stream. And in the
+            midst of those old faded scenes The wicker of the little cot it creaked,
+            Rousing the quick-eared mother from her dreams. You should have seen her
+            with fresh parted lip And ...
+  Q       : Write lines of a father picturing to his wife the sight of their little
+            children kneeling in their evening prayers.
+  A       : And then in fancy up the toilsome stairs My wife I took, and, through the
+            half-open door, Showed her our little children on their knees, Palm unto
+            palm their placid hands upraised, And prayer escaping from their parted lips
+            Gently as odorous exhalations creep From out the bosom of an opening rose.

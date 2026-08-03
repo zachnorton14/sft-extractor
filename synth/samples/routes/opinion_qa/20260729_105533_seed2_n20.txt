@@ -1,0 +1,330 @@
+route: opinion_qa
+model: deepseek-v4-pro
+seed:  2
+n:     20
+kept:  14/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book, tagged as possibly voicing an
+OPINION. Build a pair in which the ANSWERER takes a stance: a question asking for a
+judgment, answered by the period view itself.
+
+GATE FIRST. Many passages tagged opinion are really plain exposition, narration, or
+statement of fact. REJECT any excerpt that does not, even in the slightest, ARGUE a
+point or VOICE a judgment — anything a reader could only KNOW, not DISPUTE. Do not
+manufacture an opinion out of descriptive or factual prose; if nothing here takes a
+side, return NO span for it. Proceed only when the passage genuinely holds a view.
+
+1. FIND THE STANCE. Choose the judgment the passage advances, with the ground it rests
+   on where the passage gives it, and copy it VERBATIM as the answer.
+   - Return it as "spans": exact quotations stating the view (and its reason). Prefer
+     ONE; use up to 3 only if view and ground lie apart. Fewest, longest.
+   - Copy WORD FOR WORD — no paraphrase, summary, correction, or added word.
+   - The span must read as a DIRECT assertion of the view — the answer speaks the
+     opinion outright. Do NOT take third-person reportage of who held it ("the
+     committee found ...", "it was urged that ...", "critics held ..."); take the
+     asserted view itself.
+   - Take WHOLE sentences: begin and end at a sentence boundary, keep terminal
+     punctuation, so several spans read as continuous prose when joined.
+   - SUBSTANCE: only a genuine, defensible stance qualifies. If the passage merely
+     touches a topic, drops a throwaway remark, or states a plain fact with no
+     judgment, return NO span for it.
+   - Keep it RAW: period opinions stand as written even where later knowledge judges
+     them wrong — do not soften, hedge, or correct.
+
+2. WRITE THE QUESTION as a request for JUDGMENT on the subject — the answer is the
+   opinion given as the answerer's OWN.
+   - Solicit a JUDGMENT, answerable only by taking a side: "Ought ...?", "Is it right
+     (wise, best) that ...?", "Is ... to be believed?", "Is ... to be preferred?",
+     "Is ... justified?". NEVER a bare fact question — not "What is ...?", "For what
+     purpose ...?", "What effect has ...?", "To what is ... owing?". If the only honest
+     question would be factual, the passage failed the GATE — drop it.
+   - NO attribution, NO source: never name a holder, speaker, author, school, or say
+     "the passage", "the text", "according to". Ask about the SUBJECT ITSELF.
+   - Name the subject so the question stands alone to someone who never saw the passage.
+   - Plain period register, pre-1930s English — no word or idiom that came into use
+     after 1930, no modern or conversational phrasing.
+   - Do NOT put the view's distinctive wording in the question; ask for it.
+
+REJECT OCR-CORRUPTED TEXT. These passages are scanned from old books and some are
+mangled by OCR — garbled or run-together words, dropped or transposed letters, stray
+marks, broken spacing, nonsense strings. If such corruption touches the material your
+answer would quote or rest on, so that a clean and correct answer is not possible, emit
+NO item for that passage. Passages are plentiful; prefer skipping a doubtful one to
+emitting a garbled answer.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1864  prose_score 0.99
+  excerpt : No judging of the motives from the actions; the same actions proceeding from
+            contrary motives, and the same motives influencing contrary actions. 2. Yet
+            to form characters we can only take the strongest actions of a man's life,
+            and try to make them agree: the utter uncertainty of this, from nature
+            itself, and from policy. Characters given according to the rank of men of
+            the world; and some reason ...
+  Q       : Is it possible to attain a true and settled knowledge of a man’s character?
+  A       : Men may be read, as well as books, too much. Our depths who fathoms, or our
+            shallows finds, Quick whirls and shifting eddies of our minds? On human
+            actions reason though you can, It may be reason, but it is not man: His
+            principle of action once explore, That instant 'tis his principle no more.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1891  prose_score 0.99
+  excerpt : Is this perfectly correct, or is it not more exact to say that the acuteness
+            and massiveness belong in every case to the whole sensation or emotion of
+            which pleasure is but a single phase? Or, if the difference of extension in
+            feeling be regarded, like that of intensity, as one of pure quantity, and so
+            as involving the pleasurable accompaniment of a state of consciousness, it
+            is surely a loose way...
+  (failed)
+
+========================================================================================
+[POLITICAL SCIENCE]  1862  prose_score 1.00
+  excerpt : Yet how entirely different in mental power. The one full of noble and
+            generous sentiments, of apt intelligence, with a keen sense of honour; the
+            other as incapable of such feelings, as impervious to them, as if he were
+            altogether a thing of ill-coloured clay, hideously fashioned into human
+            form. And these races, differing so radically in mental capacity, are in the
+            same latitude, nearest neighbour...
+  Q       : Can the mind of the negro be raised to the level of that of the European?
+  A       : The mind of the negro may be improved and instructed, but it cannot be
+            raised to the level of the European. When we see throughout Nature a
+            prevailing law of variety, in all things-in animal instinct-in the
+            intelligence of individual men-why assume that there should be uniformity in
+            the mental power allotted to different races of men?
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1901  prose_score 0.97
+  excerpt : "Literature will take care of itself," answered Mr. Pitt, when applied-to
+            for some help for Burns. "Yes," adds Mr. Southey, "it will take care of
+            itself; and of you too, if you do not look to it!" 20 The result to
+            individual Men of Letters is not the momentous one; they are but
+            individuals, an infinitesimal fraction of the great body; they can struggle
+            on, and live or else die, as they have been w...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1869  prose_score 0.99
+  excerpt : We know that this is so. We know that our own views of the same doctrines
+            change. We call the doctrine by the same name, perhaps, but it is not the
+            same doctrine to us that it was once. No man but the most narrow bigot, can
+            deny that there are good men in all religious denominations; and no rational
+            mind can admit, that the belief of every good man and woman is true in every
+            particular, because th...
+  Q       : Ought we to hold that the great majority of mankind will require instruction
+            upon entering the spiritual world, seeing that death itself confers no new
+            knowledge and heaven admits of no falsity?
+  A       : The conclusion is inevitable, that there would be very few, if any, who
+            would not need instruction. They would have the same belief on first
+            entering the spiritual world, that they had when they left this. They cannot
+            enter heaven with any falsity, for, by the very nature of heaven, every
+            thought and affection must be in perfect harmony. Knowledge is not gained by
+            mere entrance into the spiritual world.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1896  prose_score 0.91
+  excerpt : (2) אשה. 179 monogamy; but on account of the "hard-heartedness of man"in
+            consideration of the right of the "fist," or club-law, social law gave to
+            man the privilege of polygamy, with its corollary of free divorcement.
+            Polygamy is universal in the Orient. It is clandestinely tolerated in the
+            Occident too. And the Pentateuch had legally to give way and tolerate
+            divorcement and polygamy, though moral...
+  Q       : Is it to the glory of Jesus of Nazareth that he so emphatically declared
+            against polygamy and free divorcement, speaking out what the best felt to be
+            correct?
+  A       : It is to the glory of Jesus of Nazareth that over eighteen hundred years ago
+            he emphatically declared against both these institutions. He was standing on
+            the height of Jewish morality and fearlessly spoke out what the best ones
+            felt to be correct.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1893  prose_score 0.80
+  excerpt : 1 Hor. l. i., Epist. xi. 25. 2 Hor. 1. iii., Od. i. 39. Hæret lateri
+            lethalis arundo.¹ The shaft that death implied Sticks by the flying side. It
+            was told Socrates that one was no whit amended by his travel: "I believe it
+            well (said he), for he carried himself with him." Quid terras alio calentes
+            Sole mutamus? patriâ quis exul Se quoque fugit ?2 Why change we soils warm'd
+            with another sun? Who fro...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1833  prose_score 1.00
+  excerpt : Now I was willing to make this short addition to my treatise, founded on new
+            reasons; few persons caring to peruse long-winded discourses; whereas short
+            tracts have a chance of being read by many; and I wish that many may see
+            this addition, to the end that its utility may be more extensive. A Loveney
+            & hortation WHEREIN the Author uses the strongest arguments to persuade all
+            men to embrace a regul...
+  Q       : Is the infirmity of old age to be blamed upon nature, or upon the conduct of
+            men themselves?
+  A       : I could never bring myself to believe, that nature, the common parent of
+            all, should be partial to any of her children. they are to thank themselves;
+            because they most unreasonably presume on the goodness of their
+            constitution; and cannot by any means be brought to depart, when grown old,
+            from the mode of life they pursued in their younger days
+
+========================================================================================
+[MEDICINE]  1896  prose_score 0.45
+  excerpt : The adjustment of any climatic, therapeutic measure to the wants of the
+            vital requirements of the patient not only involves a full and accurate
+            knowledge of the remedy to be applied, but a careful and skilful
+            determination of the patient's condition. Let us carefully consider seriatim
+            all the elements, favorable and unfavorable, which enter into our estimate
+            of the amount of resistance still retai...
+  Q       : Is the period between twenty and thirty rightly considered the most
+            vulnerable age for a patient?
+  A       : To say that the period between twenty and thirty is a decade characterized
+            by the greatest vulnerability is to make the statement that a less amount of
+            resistance may be generated by the vital economy at that age than at any
+            other age or decade. If it can be shown that the patient's resources are not
+            lacking at that time in that form of activity which is directly translatable
+            into resistance, then the ages spoken of are neither more vulnerable ages,
+            nor are they less favorable to recovery. Nay, verily, I believe a patient is
+            as much more liable to recover at that age, as he is capable of generating a
+            larger amount of force at that age.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1883  prose_score 1.00
+  excerpt : Among its editorial notes it speaks of the Unitarian Sunday-schools as
+            Sunday-schools," and talks of its fifty thousand readers as if they were all
+            of that sort. It talked about Robert Collyer as we said it would when he
+            came to Boston, in a pile of paragraphs; though it evidently felt our
+            suggestion, and apologized for its frequent praise. It does not seem
+            necessary for the Unitarian Association ...
+  Q       : Is the Unitarian Association justified in continuing to publish the Register
+            at its own expense?
+  A       : It does not seem necessary for the Unitarian Association to be at the
+            expense of publishing the "Register," when the "Transcript" does their work
+            so well. Better devote that money also to "Brother Collyer."
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1888  prose_score 1.00
+  excerpt : Third: A large company, being impressed with the advantage that Norfolk has
+            in tapping the gold leaf tobacco belt of North Carolina through the agency
+            of the Seaboard Air Line, takes into consideration the location of a great
+            tobacco factory in Norfolk, but is induced to locate in Richmond because it
+            has a larger population. These incidents (with probably the first an
+            exception) continue to repeat...
+  Q       : Ought annexation to be regarded chiefly as a matter of sentiment or of
+            profit?
+  A       : Annexation is not simply a question of sentiment, but profit; for the
+            greater the parent city grows the greater, naturally, must be the prosperity
+            of her annexed suburban children.
+
+========================================================================================
+[SOCIAL SCIENCES]  1892  prose_score 0.92
+  excerpt : John A. Grier, having, with my consent, my manuscript before him, wrote an
+            article for the same number of Lippincott's in which he said: "In 1873, when
+            the United States outlawed silver as full legal-tender money, we blindly
+            committed an absurd national mistake that has cost the mass of our people
+            the loss of untold millions of dollars annually.¹ 66 'Only a small part of
+            this has legally, but unfa...
+  Q       : Was the United States's action in 1873 of outlawing silver as full legal-
+            tender money a wise national policy?
+  A       : In 1873, when the United States outlawed silver as full legal-tender money,
+            we blindly committed an absurd national mistake that has cost the mass of
+            our people the loss of untold millions of dollars annually.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1908  prose_score 0.43
+  excerpt : Does that church discredit the indiscriminate circulation of the scriptures
+            among the people?-so do these very writers. Does that church uphold the
+            divine and superior sanctity of virginity, and the celibacy of the
+            clergy?-and so, also, do these divines. Does the Romish church inculcate the
+            necessity of reserve in communicating the doctrines of the Bible?—and so,
+            also, do these divines. Does the R...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1919  prose_score 0.98
+  excerpt : The Cigarette Elbert Hubbard says, "If you want a man who will train on,
+            flee the cigarettist as you would a pestilence. As a close observer of men
+            and an employer of labor for over twenty-five years, I give you this: Never
+            advance the pay of a cigarette smoker-never promote him-never depend upon
+            him to carry a roll to Gomez, unless you do not care for Gomez and are
+            willing to lose the roll, "I sa...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1813  prose_score 0.35
+  excerpt : If we are strangers to these things, if we never received efficacious
+            intimations of divine love to our souls, in and by the duties of divine
+            worship, we cannot love them and delight in them as we ought. What do meri
+            come to hear the word of God for? What do they pray for? What do they expect
+            to receive from him? Do they come to God as the eternal fountain of living
+            waters? as the God of all grace...
+  Q       : Is it possible for those who approach worship without expecting to receive
+            anything from God ever to attain a proper delight in divine ordinances?
+  A       : It is not for persons who walk in such ways, ever to attain a due delight in
+            the ordinances of divine worship.
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1907  prose_score 0.88
+  excerpt : The fifteenth century was entirely barren of English literature. After the
+            bright sun of Chaucer had set, a period of darkness arose, unrelieved by the
+            slightest gleam of brilliancy or genius. An unheroic age produced a race of
+            unheroic versifiers, men who slavishly followed in the steps of Chaucer,
+            hailed him as their master in all their works, and exemplified the law that
+            a literature which look...
+  Q       : Was the fifteenth century a fruitful period for English literature?
+  A       : The fifteenth century was entirely barren of English literature. After the
+            bright sun of Chaucer had set, a period of darkness arose, unrelieved by the
+            slightest gleam of brilliancy or genius.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1904  prose_score 0.99
+  excerpt : The poor woman was ill, and he concluded that she was about to die. He had
+            her removed outside the village, and then with a knife, which he had
+            borrowed from a companion, opened her side. He then thrust into the gaping
+            wound some broken stones, dogs' bones, etc., and covered up the wound with a
+            piece of tin which he had picked up. Then he went away, and left her alone
+            to die in agony. Such are the...
+  Q       : Is it right to hold out hope for the reformation of a man guilty of such
+            cruelties, and upon what grounds may one do so?
+  A       : Such are the cruelties of the heathen! We can only wait, and hope that this
+            hardened old man may, at length, perceive the error of his ways, and that
+            God in His mercy will soften his heart, and suffer him not to reject the
+            hope of salvation which is continually offered him.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1849  prose_score 1.00
+  excerpt : But the priest was on his legs before the other had opened his eyes, and
+            said, "There's your winnowing basket, gossip, and I'm much obliged to you ;"
+            and so saying, he walked off. The poor husbandman, quite bewildered, asked
+            his wife what was the matter? "It is your winnowing basket, my dear," she
+            replied, "which the priest had borrowed and has now returned." "It is a very
+            clumsy way of returning ...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1879  prose_score 1.00
+  excerpt : "How beautiful are the feet of them that preach the gospel?" Then let them
+            that preach the gospel, accept the noble challenge which I have given them,
+            to undertake its defence, on terms of fair and free discussion. Let them
+            come and stand foot to foot, with me, and see how soon they should find
+            themselves de-feeted. For, by my master's honour, in the solution of that
+            enigma, would I convict them o...
+  Q       : Is the learning of the established preachers in the true meaning of the
+            gospel to be trusted?
+  A       : By my master's honour, in the solution of that enigma, would I convict them
+            of being as ignorant of the real meaning of the gospel, as if they didn't
+            know great A from a bull's foot.
+
+========================================================================================
+[SCIENCE]  1911  prose_score 0.62
+  excerpt : It must not be imagined that because the treatment previously described is
+            such a wonderful curative and 87 preventive of disease that nothing more is
+            necessarythat all other hygienic measures can be ignored. These bodies of
+            ours were given us for a nobler purpose than to be the sport of our caprice
+            or neglect. It is our duty to treat them as a divine trust. There is no
+            reason why any human being ...
+  Q       : Is it reasonable to hope that most persons, with proper care, might live to
+            a hundred?
+  A       : There is no reason why any human being should die before eighty at least.
+            With proper care the century mark should be reached in the majority of
+            cases. This may sound like an extravagant assertion, but it is absolutely
+            true.

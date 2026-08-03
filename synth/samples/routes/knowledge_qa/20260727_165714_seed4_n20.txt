@@ -1,0 +1,327 @@
+route: knowledge_qa
+model: deepseek-v4-pro
+seed:  4
+n:     20
+kept:  20/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book. Work in this order.
+
+1. FIND THE ANSWER FIRST. Choose the single most salient fact, definition, or
+   explanation the passage states, and copy it VERBATIM as the answer.
+   - Return it as "spans": a list of ONE exact quotation from the passage — or up
+     to THREE, only if the answer genuinely lies in separate places. Prefer one;
+     never more than three. Choose the SHORTEST span(s) that carry the whole fact.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder, or add any word not in the passage. Pick a span that reads as a clean,
+     quotable fact, so a short exact quotation suffices.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
+
+2. THEN WRITE THE QUESTION that this answer answers.
+   - The span must CORRECTLY AND COMPLETELY answer your question. Ask precisely the
+     question the span answers — never demand a name, number, or identity the span
+     does not supply. If the span only characterizes something ("It was the first
+     which the army had lost"), ask what was true or notable about it, not WHICH
+     specific thing it was. Before finishing, read the span as the answer to your
+     question: if it does not fully and correctly answer, rewrite the QUESTION to
+     fit the span.
+   - Frame the reader: supply the context that makes the span the natural, correct
+     answer — the era, place, subject, or situation it belongs to.
+   - Plain period-schoolbook register: direct, often "What/Why/How/Of what". No
+     modern or conversational phrasing, no meta-language.
+   - Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use
+     no word, term, or idiom that came into use after 1930 — it must read as a
+     question a period schoolbook or examiner would actually pose.
+   - Stands alone. Never mention the source — no "the passage", "the text",
+     "according to", "described", "mentioned". Ask as if from general knowledge.
+   - Self-situating — the question must make sense to someone who NEVER saw the
+     passage. Name the actual subject: the war, battle, place, ruler, work,
+     statute, or scripture involved, using your own knowledge of the subject when
+     the passage assumes it (e.g. "the Revised Statutes of the United States", "at
+     the Battle of Williamsburg", "in the Gospel of Luke"). FORBIDDEN — references
+     that mean nothing on their own: catalog, specimen, or figure numbers
+     ("specimen 167"); a bare "the statute", "the act", "the gun", "the assembly",
+     "the expedition"; or "two specific verses" / "a certain scholar" without
+     naming which. If the chosen fact simply cannot be made to stand alone (it
+     hinges on an item known only from the passage), pick a DIFFERENT fact from the
+     passage that can.
+   - Do NOT put the answer, or the answer's distinctive wording, in the question.
+     Ask for the fact; do not reveal it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[MEDICINE]  1884  prose_score 0.62
+  excerpt : I write this to inform your numerous readers of a cure we have here,
+            although perhaps the remedy is generally known. It is to cut off the toes of
+            the hind foot (in which only it appears), about an inch horizontal, so as to
+            open the foot sufficiently there for the blood to come out; then put the
+            foot in a stocking with plenty of tar at the toe. If taken in time this will
+            effect a cure. It must be d...
+  Q       : What was the method of cure, as given in 1857, for the disease in cattle
+            evidenced by a frequent and slight kicking out of the hind foot?
+  A       : It is to cut off the toes of the hind foot (in which only it appears), about
+            an inch horizontal, so as to open the foot sufficiently there for the blood
+            to come out; then put the foot in a stocking with plenty of tar at the toe.
+
+========================================================================================
+[NAVAL SCIENCE]  1903  prose_score 0.30
+  excerpt : Workman & Clark, of Belfast. Her carrying capacity is much greater than that
+            of any of her predecessors, and further increase of tonnage has marked all
+            the vessels added to the fleet since. Her principal dimensions are- Length
+            269 feet 6 inches, beam 34 feet 2 inches, and depth of hold 16 feet 4
+            inches. She was followed in quick succession by the LADY HUDSON- KINAHAN,
+            built by the Ailsa Shipbuildi...
+  Q       : What were the principal dimensions of the steamer built by Workman & Clark,
+            of Belfast, which possessed a greater carrying capacity than any of her
+            predecessors in the fleet?
+  A       : Her principal dimensions are- Length 269 feet 6 inches, beam 34 feet 2
+            inches, and depth of hold 16 feet 4 inches.
+
+========================================================================================
+[MEDICINE]  1891  prose_score 0.40
+  excerpt : The overt act, the actual deed can be measured, but the internal disposition
+            is immeasurable. If met by justice it must suffer annihilation. Grace will
+            meet it if it repents and save it from punishment and eternal death. This
+            distinction between crime and sin has been growing clear for many centuries
+            and by its light the nations are coming to see the necessity of the
+            separation of church and state...
+  Q       : On what ground is it held that the overt act and the internal disposition
+            require distinct treatment by the state and the church respectively?
+  A       : The overt act, the actual deed can be measured, but the internal disposition
+            is immeasurable.
+
+========================================================================================
+[MEDICINE]  1914  prose_score 0.50
+  excerpt : Its crystals are difficult to pulverize, but this difficulty may be overcome
+            by trituration with a few drops of alcohol. It may then be dusted from the
+            pepper-box or blown through a blower. Cavities that are to heal by
+            granulation may be filled with it. Thus used after excisions,
+            sequestrotomies, removal of projectiles, etc., it offers the safest means of
+            preventing sepsis. For such purposes its o...
+  Q       : How may the difficulty of pulverizing boracic acid crystals, as met with in
+            surgical use, be overcome?
+  A       : Its crystals are difficult to pulverize, but this difficulty may be overcome
+            by trituration with a few drops of alcohol.
+
+========================================================================================
+[SCIENCE]  1903  prose_score 0.40
+  excerpt : Now if we remove with some sharp instrument the upper portion of this fold,
+            the edges of the writing paper that represent the veins will be exposed in
+            the horizontal section and they will be dipped away from the anticlinal
+            axis. Unless all the sheets are cut away, which is not desirable, then the
+            writing paper may be seen to be continuous over the crown of the anticlinal,
+            forming a saddle with two...
+  Q       : Of what character, notwithstanding great local disturbance, is the
+            disposition of the mineral veins in the Oldham district?
+  A       : In spite of much fracturing and dislocation of the strata, this is the
+            general plan of the arrangement of these leads.
+
+========================================================================================
+[AGRICULTURE]  1823  prose_score 0.30
+  excerpt : A bed of blue clay, four feet deep, is next the wood; above that a bed of
+            red clay, three feet deep. These two strata have evidently been covered by a
+            bank of twelve feet, that has been washed away by the encroachments of the
+            lake; so that in the whole, this collection of petrifaction had been covered
+            to a depth of nineteen feet. Another fact will shew that the water, when the
+            substance was within...
+  Q       : What opinion respecting the celebrated petrifying power of Lough Neagh do
+            the circumstances of a canoe found on its shore and the strata at Crumlin
+            water foot suggest?
+  A       : The truth therefore seems to be, that it is the soil beneath and around
+            Lough Neagh that possesses petrifying qualities, and not the water.
+
+========================================================================================
+[SCIENCE]  1858  prose_score 1.00
+  excerpt : If in the expression of a product there occur similar terms, the expression
+            may be abridged by uniting these terms into one. Thus 2 a b² + a²-c²
+            multiplied by a² — ab² + c² gives 2 a³baa²c - 2 a²b¹ — a³ b² + a b² c² 2 ab²
+            c²+a²c²-c¹ a³ b² + a¹ — 2 a²b¹ + 3 a b² c² — c*. To verify this result let a
+            5, b=2, c=3. From what has been done we have the following rule for the
+            multiplication of polynomials...
+  Q       : What is the general rule for the multiplication of polynomials?
+  A       : Multiply each term of the multiplicand by each term of the multiplier,
+            observing with respect to the signs, that if two terms multiplied together
+            have each the same sign, the product must have the sign+, but if they have
+            different signs, the product must have the sign —; Add together the partial
+            products thus obtained, taking care to unite in one, terms which are
+            similar.
+
+========================================================================================
+[AGRICULTURE]  1832  prose_score 0.80
+  excerpt : The seeds did not germinate. But they germinated upon the readmission of the
+            air, which is thus proved by consequence to be necessary to their
+            germination. The discovery of the several gasses, and of their various
+            chemical properties, has contributed more than all other circumstances put
+            together, to explain and elucidate the phenomena of vegetation. The first
+            experiments on this obscure but inter...
+  Q       : Whose were the earliest experiments to show that seeds do not germinate
+            indifferently in any gas, but require oxygen gas?
+  A       : The first experiments on this obscure but interesting subject are those of
+            Scheele; who discovered soon after the introduction of pneumatic chemistry,
+            that beans did not germinate in any kind of gas indifferently; but that
+            oxygen gas is necessary to the process.
+
+========================================================================================
+[AGRICULTURE]  1911  prose_score 0.80
+  excerpt : Good tea gives from 5 to 7 per cent of ash. If the leaves are exhausted, the
+            per cent will be less. To ascertain the strength of the tea, an infusion is
+            the best test. If the decoction is very high-colored, the tea has probably
+            been doctored. If there is not much extract, the leaves have been exhausted.
+            The surest test of this is the specific gravity of the solution; but even
+            this is a delicate te...
+  Q       : What proportion of its weight should good tea yield to boiling water?
+  A       : Good tea should yield 26 per cent, and often as much as 36 per cent, of its
+            weight to boiling water.
+
+========================================================================================
+[SCIENCE]  1865  prose_score 0.38
+  excerpt : The common name, Flying-bull, given to this insect in different languages,
+            corresponds very well with that given by Nigridius.¹ A popular belief in
+            Germany is, that the Stag-beetle, Lucanus cervus, carries burning coals into
+            houses by means of its jaws, and that it has thus occasioned many fearful
+            fires.2 In the New Forest of England, the Stag-beetle by the rustics is
+            called the Devil's Imp, and i...
+  Q       : What popular belief concerning the Stag-beetle is held in Germany?
+  A       : A popular belief in Germany is, that the Stag-beetle, Lucanus cervus,
+            carries burning coals into houses by means of its jaws, and that it has thus
+            occasioned many fearful fires.
+
+========================================================================================
+[MEDICINE]  1883  prose_score 0.30
+  excerpt : It is rare that the patient recovers when inflammation has appeared in the
+            joints. The treatment is to endeavour to prevent the absorption. of fresh
+            poison into the blood and to sustain the patient, if possible, through the
+            attack. The cavity of the uterus should be syringed out twice a day with a
+            solution of carbolic acid in the proportion of an ounce of acid to forty
+            ounces of tepid water. If th...
+  Q       : Of what treatment does the cavity of the uterus stand in need when
+            inflammation appears in the joints after childbirth?
+  A       : The cavity of the uterus should be syringed out twice a day with a solution
+            of carbolic acid in the proportion of an ounce of acid to forty ounces of
+            tepid water.
+
+========================================================================================
+[TECHNOLOGY]  1917  prose_score 0.60
+  excerpt : Wool is capable of slowly absorbing a large amount of moisture and of тоб
+            holding it between its cells and in the very center of the cells. Under
+            ordinary conditions it takes in from twelve to seventeen per cent of its
+            weight, but when exposed to very damp air it will absorb as much as thirty
+            to fifty per cent, thus making it much heavier. The legal amount of moisture
+            at present is seventeen and o...
+  Q       : What is the ordinary, the maximum, and the legal amount of moisture absorbed
+            by wool?
+  A       : Under ordinary conditions it takes in from twelve to seventeen per cent of
+            its weight, but when exposed to very damp air it will absorb as much as
+            thirty to fifty per cent, thus making it much heavier. The legal amount of
+            moisture at present is seventeen and one half per cent.
+
+========================================================================================
+[TECHNOLOGY]  1827  prose_score 1.00
+  excerpt : It is well known that the light emanating from any luminous body always
+            moves in straight lines, and diverges, or in other words spreads, itself in
+            every direction; and it is also known that the intensity of the light
+            decreases in proportion as the distance increases from the point whence it
+            proceeds. For example: if in a dark night a lighted candle be placed on an
+            elevated spot, the rays of light...
+  Q       : By what law does the intensity of light diminish with distance from a
+            luminous body?
+  A       : The intensity or degree of light decreases as the square of the distance
+            from the luminous body increases.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1908  prose_score 0.49
+  excerpt : "Give," He said, "to him that asketh thee; and from him that would borrow of
+            thee turn not thou away."1 "He that hath two coats, let him impart to him
+            that hath none; and he that hath food, let him do likewise." Again, "Give,
+            and it shall be given unto you: good measure, pressed down, shaken together,
+            running over, shall they 3 Luke vi. 38. give into your bosom." › Another of
+            these far-reaching pr...
+  Q       : What saying of our Lord, not recorded in the gospels, did the Apostle Paul
+            enjoin upon the elders of Ephesus to remember?
+  A       : It is more blessed to give than to receive.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1854  prose_score 0.83
+  excerpt : Earth's highest station ends in 'Here he dies;' And dust to dust' concludes
+            her noblest song." The author of these lines is not without his hic jacet.
+            By the good sense of his son, it contains none of that praise which no
+            marble can make the bad or the foolish merit; which, without the direction
+            of a stone or a turf, will find its way, sooner or later, to the deserving.
+            M. S. Optimi Parentis EDVAR...
+  Q       : With what couplet does the monument to Dr. Edward Young, as erected by his
+            son, characterise the end of earthly greatness?
+  A       : Earth's highest station ends in 'Here he dies;' And dust to dust' concludes
+            her noblest song.
+
+========================================================================================
+[AGRICULTURE]  1897  prose_score 0.75
+  excerpt : The quantity. of water depends upon the weight of the oatmeal, whether it be
+            loose or packed, and also whether the vessel containing it is open or
+            tightly covered. If the vessel in which the meal is cooked is covered so
+            that no steam escapes, it will ordinarily be sufficient to add three
+            measures of water to each measure of oatmeal. If the vessel be open and the
+            atmosphere dry, considerable more t...
+  Q       : Why is the use of cold water in the preparation of oatmeal considered
+            preferable to that of hot water?
+  A       : It cooks more thoroughly in cold water, and this method is preferable from a
+            standpoint of digestibility although there is no great difference.
+
+========================================================================================
+[MEDICINE]  1902  prose_score 1.00
+  excerpt : Dumas, that almost certainly the first operation which tartar goes through
+            in certain factories causes it to lose all or nearly all its racemic acid.
+            Well, in the two Viennese factories, it is only two years since they began
+            to operate on crude tartar, and it is only two years since they first saw
+            the supposed sulphate of potash, the supposed sulphate of magnesia. For, at
+            M. Seybel's, they had 86 ...
+  Q       : In what crude tartars had M. Pasteur found racemic acid to be present?
+  A       : The Naples tartar contains racemic acid. The Austrian tartar (neighbourhood
+            of Vienna) contains racemic acid. The tartars of Hungary, Croatia, Carniola
+            contain racemic acid.
+
+========================================================================================
+[SCIENCE]  1922  prose_score 0.38
+  excerpt : 2nd, pure air containing germs, will not necessarily putrify a fermentable
+            liquid previously made sterile, because the microbes may not be sufficiently
+            numerous. Since the results of Pasteur's endeavors have proved to be of
+            importance not only to the scien- 67 tist but also to mankind in general, it
+            may not be out of place to consider some of the details. (1) He showed that
+            sterilized air would no...
+  Q       : What did Pasteur demonstrate concerning sterilized air and a fermentable
+            liquid devoid of germs?
+  A       : He showed that sterilized air would not cause a fermentable liquid free from
+            germs to become putrid.
+
+========================================================================================
+[SCIENCE]  1892  prose_score 1.00
+  excerpt : 97). If the pressure within the heart be increased, the heart-beats are
+            gradually increased; if it be diminished, the number of beats diminishes
+            (Ludwig and Thiry). If the intra-cardiac pressure be very greatly increased,
+            the heart's action becomes very irregular and slower. A heart which has
+            ceased to beat may under certain circumstances be caused to execute a single
+            contraction if it be stimulat...
+  Q       : What is the effect of altered intra-cardiac pressure upon the frequency of
+            the heart-beats, according to the observations of Ludwig and Thiry?
+  A       : If the pressure within the heart be increased, the heart-beats are gradually
+            increased; if it be diminished, the number of beats diminishes
+
+========================================================================================
+[MILITARY SCIENCE]  1898  prose_score 0.40
+  excerpt : During the week in camp those regiments which systematize the instruction
+            progress the most. The changes in the enrollment during a period of two
+            years amount to about 32 per cent of the officers and 41 per cent of the
+            enlisted men, so that a large proportion of the men are present for the
+            first time in the camp of instruction, while the number of officers and
+            noncommissioned officers who lack kno...
+  Q       : What is the extent of the biennial change in enrollment, and what
+            consequence does this produce in the camp of instruction?
+  A       : The changes in the enrollment during a period of two years amount to about
+            32 per cent of the officers and 41 per cent of the enlisted men, so that a
+            large proportion of the men are present for the first time in the camp of
+            instruction, while the number of officers and noncommissioned officers who
+            lack knowledge of and experience in their duties is also large.

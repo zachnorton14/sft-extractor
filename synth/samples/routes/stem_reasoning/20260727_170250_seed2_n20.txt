@@ -1,0 +1,392 @@
+route: stem_reasoning
+model: deepseek-v4-pro
+seed:  2
+n:     20
+kept:  11/20
+
+--- EXTRACT SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s science or engineering text that
+reasons quantitatively or physically. The author's own reasoning is in the text.
+
+EXTRACT THE REASONING CHAIN. Find where the author reasons from a principle to a
+conclusion, and copy that chain out.
+  - Return it as "spans": the quotations from the passage that, read in order, form
+    one coherent chain (principle → application → conclusion). Use as many as the
+    reasoning needs — up to 6, and always the fewest, longest spans that
+    hold the chain together. Extract as much of the reasoning as you can.
+  - Give EACH span as an object with two fields:
+      "verbatim"    — the span copied EXACTLY as it appears in the passage, character
+                      for character, including any garbled formula.
+      "refurbished" — the SAME span with only its mathematical or chemical formulas
+                      restored to correct standard form. If the span has no formula,
+                      make "refurbished" identical to "verbatim".
+  - REPAIR ONLY FORMULAS. The OCR has mangled this text's equations, exponents,
+    subscripts, symbols, and numbers, and page numbers bleed into the formulas. In
+    "refurbished" you MAY fix a corrupted expression back to what it plainly must be
+    (e.g. "CuSO,+ZnZnSO,+ Cu" → "CuSO₄ + Zn → ZnSO₄ + Cu"; "9X2" → "9 × 2";
+    "P₁ = pressure" kept clean). You MAY change only digits, symbols, operators,
+    subscripts/superscripts, and spacing.
+  - ADD NO NEW CONTENT. Do NOT paraphrase, summarize, rewrite, reorder, translate, or
+    add, remove, or alter any WORD of the prose — not a connecting word, not a gloss,
+    not a clarification. Every word in "refurbished" must already stand in "verbatim".
+    Repair the formulas; leave the author's prose exactly as written, misspellings and
+    all. Only select and order the author's own sentences.
+  - Do not build the chain out of a span that hinges on a figure, plate, table, or
+    page the reader cannot see ("as in Fig. 36", "see p. 466") — those cannot be
+    refurbished into anything meaningful; choose spans that carry the reasoning
+    without them.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": [{"verbatim": "...", "refurbished": "..."}]}, ...]
+
+
+--- QUESTION SYSTEM PROMPT ---
+You are given a passage from a pre-1930s science or engineering text and a REASONING
+CHAIN quoted verbatim from it — this is the ANSWER. Write the single question that
+this reasoning chain answers, as if setting an exercise.
+
+- The chain must CORRECTLY AND COMPLETELY answer your question — ask exactly what
+  this reasoning concludes or explains. Do not ask for a step, a numeric result, or
+  an identity the chain does not reach. Read the chain as the answer: if it does not
+  fully answer, adjust the question to fit the chain.
+- Pose a problem that must be reasoned through, not a fact to recall: "Why does
+  ...", "How does it follow that ...", "Why must ...?", "If ..., what happens and
+  why?".
+- Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use no
+  word, term, or idiom that came into use after 1930, and no modern conversational
+  or academic phrasing — it must read as a question a period examiner would pose.
+- The question must STAND ALONE and betray no awareness of a source. Never refer to
+  the passage or to whoever wrote it — no "the passage", "the text", "the author",
+  "the figure", "according to", "as described", "as shown". Ask about the SUBJECT
+  ITSELF, as a matter of physical fact, to someone who never saw the passage.
+- SUPPLY THE PHYSICAL SETUP the reader needs so the problem is well-posed and the
+  chain's "it / this / these" have clear antecedents: name the bodies, quantities,
+  or conditions involved (the gas held at constant temperature, the beam loaded at
+  its centre, the current through the coil). Give just enough to make the question
+  unambiguous — do not restate the whole passage, and never leave a bare "this
+  quantity", "such a body", or "the system".
+- Every proper noun must be one the reader can place: either widely recognizable on
+  its own (Boyle's law, Carnot's cycle), or introduced with a short descriptor.
+- Do NOT reveal the answer: do not state the conclusion, and do not reuse the
+  chain's distinctive wording. Ask for the reasoning; make the reader supply it.
+
+Input: JSON array [{"i": 0, "passage": "...", "answer": "..."}, ...]
+Output JSON only: [{"i": 0, "q": "..."}, ...]
+
+
+========================================================================================
+[SCIENCE]  1830  stem_signal 1.00
+  excerpt : 340 1 0 18 17 10 6 5 11 2 1 117 2 1 117 1 11 5% 364 14 37 58. Since the
+            quotient, multiplied by the divisor, must produce the dividend, division
+            will also offer two cases, accordingly as the quotient or the divisor
+            represents the multiplier, and is consequently to be con❤ sidered as
+            abstract. 1. Case. If the divisor be the multiplier, the quotient is the
+            multiplicand, and must consist of the same ...
+  Q       : If it be required to divide 234 livres, 15 sous, 7 deniers equally among 4
+            persons, how must the operation be performed, and what sum will each
+            receive?
+  A       : Since the quotient, multiplied by the divisor, must produce the dividend,
+            division will also offer two cases, accordingly as the quotient or the
+            divisor represents the multiplier, and is consequently to be con❤ sidered as
+            abstract. If the divisor be the multiplier, the quotient is the
+            multiplicand, and must consist of the same species of units as the dividend,
+            which represents the product. Thus, to divide 234 livres, 15 sous, 7
+            deniers, by 4, we shall take the fourth of 234 livres, which is 58 livres,
+            with the remainder 2; this remainder we shall reduce into sous, to be added
+            to the 15 sous of the dividend, when we shall have 40 + 15 = 55, the fourth
+            of which is 13 sous, with the remainder 3 sous, or 36 deniers; 36+7=43
+            deniers, the fourth of which is 10 deniers; and the quotient therefore is 58
+            livres, 13 sous, 10 deniers.
+
+========================================================================================
+[SCIENCE]  1854  stem_signal 1.00
+  excerpt : The most simple and direct means of accomplishing this are supplied by the
+            camera lucida. * More strictly 57-3 times; but the round number will be
+            sufficient for the above illustration. 62 Let a micrometric scale, such as
+            we have already described, be placed on the stage, the instrument focussed,
+            the camera attached, and a sheet of paper placed at 10 inches from it. An
+            image of the scale being see...
+  Q       : A microscope is furnished with a camera lucida, and a sheet of paper is
+            placed at ten inches from it. A micrometric scale, having its inch divided
+            into 25 parts and each of these subdivided into 100, is placed on the stage
+            and its image cast upon the paper. The distance between the images of two
+            contiguous divisions upon the paper is found to be four-tenths of an inch.
+            How is the magnifying power deduced from these data?
+  A       : Let the distance between these marks be then exactly measured, and let it be
+            divided by the actual length of the divisions of the scale. The quotient
+            will be the magnifying power. Thus, for example, let us suppose that the
+            micrometric scale is the 25th part of an inch, and that this length is
+            divided into 100 parts, each of these parts will be the 2500th part of an
+            inch.
+
+========================================================================================
+[SCIENCE]  1905  stem_signal 1.00
+  excerpt : The fact would be that the upper surface of the threads would constitute a
+            basin, with the eye at the bottom of a concavity 50 feet deep! Let us
+            inquire if a rise of 8 inches of the surface of the earth would be
+            perceptible to the eye. Suppose the eye looks out upon a flat plane, whose
+            radii are one mile in length. Let the eye be placed near the surface of the
+            plane, after placing at a distance of...
+  Q       : A vertical object 8 inches high stands upon a level plane, the observer's
+            eye being placed close to the surface of the plane one mile distant. Why is
+            the object invisible to the unaided eye, and at what distance would it first
+            become so?
+  A       : The object would be invisible, because an object of that dimension is not
+            sufficient to subtend an angle of one minute (1') of a degree—it is not of
+            sufficient size to fill the area of vertical perspective for one mile. The
+            distance at which an object 8 inches in diameter would become invisible is 8
+            × 3,000 = 24,000 inches, or 2,000 feet, less than one half a mile.
+
+========================================================================================
+[TECHNOLOGY]  1915  stem_signal 1.00
+  excerpt : 13. Dynamical Measure of Force. - Newton states in the "Principia ": "If any
+            force generates any momentum, a double force will generate a double, a
+            triple force will generate a triple momentum, whether simultaneously and
+            suddenly, or gradually and successively impressed. And if the body was
+            moving before: this momentum, if in the same direction as the motion, is
+            added; if opposite, is subtracted; ...
+  Q       : How is the dynamical measure of a force established from Newton's second law
+            of motion, and what consequence follows when several forces act at once upon
+            a body?
+  A       : "If any force generates any momentum, a double force will generate a double,
+            a triple force will generate a triple momentum, whether simultaneously and
+            suddenly, or gradually and successively impressed. And if the body was
+            moving before: this momentum, if in the same direction as the motion, is
+            added; if opposite, is subtracted; or if in an oblique direction, is annexed
+            obliquely, and compounded with it, according to the direction and magnitude
+            of the two." Forces are proportional to the momenta which would be generated
+            by their constant and uniform action during a unit of time. When any number
+            of forces act simultaneously upon a body, then, whether the body be
+            originally at rest or in motion, each force produces exactly the same effect
+            in magnitude and direction as if it acted alone.
+
+========================================================================================
+[AGRICULTURE]  1844  stem_signal 1.00
+  excerpt : It is now an ascertained fact, that little or no saccharine matter
+            evaporates with the steam in boiling, and consequently the gravities of the
+            taps, if properly taken, ought exactly to coincide with the gravities in the
+            gyle-tun, making allowance only for what may be retained by the hops in the
+            last wort. We all know that the gravities of the taps, or worts running from
+            the mash-tun, vary consider...
+  Q       : Why must the gravities of worts, as commonly calculated without proper
+            deduction, appear at least ten per cent. higher than the true extract
+            actually present in the gyle-tun?
+  A       : It is now an ascertained fact, that little or no saccharine matter
+            evaporates with the steam in boiling, and consequently the gravities of the
+            taps, if properly taken, ought exactly to coincide with the gravities in the
+            gyle-tun, making allowance only for what may be retained by the hops in the
+            last wort. We thus calculate a gravity (taking in what is retained by the
+            hops) of at least ten per cent. more than we actually have making all the
+            difference between the (so denominated) raw and boiled gravities.
+
+========================================================================================
+[SCIENCE]  1861  stem_signal 0.53
+  excerpt : At last, in June, the rivers open, and fish pour in abundantly; but
+            sometimes this season brings with it a new difficulty. The rivers cannot
+            carry away sufficiently fast the masses of ice which are borne down by the
+            current; these ground in bays or shallows, and thus form a kind of dam,
+            which impedes the course of the river, and causes it to overflow the banks;
+            in this way the meadows and villages...
+  Q       : Why does the annual drifting of great quantities of river ice into the
+            Arctic Ocean affect the climate both of the districts the ice has left and
+            of the Polar basin itself?
+  A       : It requires as much heat to melt a given quantity of ice as would raise
+            twenty-eight times the mass of water one degree of Fahrenheit. Hence the
+            drifting of a large quantity of ice down the rivers relieves the districts
+            it leaves from the loss of heat that would have been consumed in melting it,
+            and that which is carried down the rivers into the Polar basin produces a
+            proportional deterioration of climate there.
+
+========================================================================================
+[TECHNOLOGY]  1874  stem_signal 1.00
+  excerpt : If the cross is exactly in the centre of B the needle will not move, as the
+            two currents will balance each other. If one section of B is longer than the
+            other, the resist- * Culley's Handbook, 3d edition, page 279. ance added to
+            the shorter section to balance the needle will show the difference in the
+            resistance of the two sections. Let L the total resistance of B. "resistance
+            of the shorter porti...
+  Q       : A Wheatstone bridge has a slide wire B of total resistance L. The cross is
+            placed so that the needle is balanced, dividing B into a shorter portion of
+            unknown resistance and a longer one. If an extra resistance R is then added
+            to the shorter portion to restore the balance, how does one deduce the
+            resistance of the shorter portion in terms of L and R?
+  A       : If the cross is exactly in the centre of B the needle will not move, as the
+            two currents will balance each other. If one section of B is longer than the
+            other, the resist- * Culley's Handbook, 3d edition, page 279. ance added to
+            the shorter section to balance the needle will show the difference in the
+            resistance of the two sections. Let L the total resistance of B. "resistance
+            of the shorter portion. L-x= 66 66 longer 66 R resistance added to shorter
+            portion. Then x =
+
+========================================================================================
+[TECHNOLOGY]  1905  stem_signal 0.60
+  excerpt : It has been found, by actual com- } utation from the area of ground
+            excavated and from the tonnage received at the mill, that the average width
+            of rock extracted throughout the mine is 12 ft. I must explain this matter
+            carefully because it is an important factor in the contract system, in the
+            application of which there is an assumed unit of width-which is this 12 ft.
+            The men are paid by the cubic ...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1809  stem_signal 1.00
+  excerpt : 1, pl. 4, let the two circles DI and Ek be described, at the very small
+            distance DE from each other, and let the velocities of the bodies at D and I
+            be equal; and if there be drawn NT perpendicular to IK; then Newton fully
+            shows that the accelerating force in DE is to that in IK, as IN For if the
+            force in DE or IN be represented by the right line DE or IN, then the force
+            in IN is resolved into the...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1888  stem_signal 1.00
+  excerpt : Q2 2mk2H(1 MG2 cos²a cos 01). If T be the complete period of free vibration
+            of the needle, we have T = 2 mk²/MH, or _mk²/M = HT²/4². Thus the last
+            equation becomes Q: HT sin TG cos a (29) 2. account To take into account the
+            damping action exerted on the Taking needle by the air, &c., and by the
+            induced currents produced in into the coil by the motion of the needles, we
+            shall suppose the deflection...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1873  stem_signal 1.00
+  excerpt : But a certain amount of this pressure exerted by the air in the lungs is
+            counterbalanced by the elasticity of the distended lungs. Say that in a
+            given condition of inspiration a pound pressure on the square inch is needed
+            to overcome this elasticity, then there will be only fourteen pounds
+            pressure on every square inch of the heart and great vessels. And hence the
+            pressure on the blood in these ve...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1907  stem_signal 0.45
+  excerpt : 618 864 730 866 1,161 .. 1,136 329 631 2,038 All results are given in
+            kilowatt-hours per ton of 2,000 lb. These figures show that, as regards the
+            manufacture of steel from scrap and pig iron, charged cold, the Héroult,
+            Kjellin and Keller furnaces all yield results in the neighbourhood of 800
+            kw.-hours, while the Stassano and Girod furnaces have an energy consumption
+            50 per cent. higher. The Héroul...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1887  stem_signal 1.00
+  excerpt : Two parallelograms are equal when two adjacent sides and the included angle
+            of the one are equal to two adjacent sides and the included angle of the
+            other. Let AC, A'C', have AB = A'B', AD A'D', and the angle BAD B'A'D'; then
+            these parallelo- are equal when they have equal bases and equal altitudes.
+            grams are equal. For they may evidently be applied the one to the other, so
+            as to coincide througho...
+  Q       : If two parallelograms have two adjacent sides and the included angle of the
+            one respectively equal to two adjacent sides and the included angle of the
+            other, how may it be shown that the parallelograms are themselves equal?
+  A       : Two parallelograms are equal when two adjacent sides and the included angle
+            of the one are equal to two adjacent sides and the included angle of the
+            other. For they may evidently be applied the one to the other, so as to
+            coincide throughout.
+
+========================================================================================
+[MILITARY SCIENCE]  1863  stem_signal 0.80
+  excerpt : We feel this sensibly when we run quickly, or move through it rapidly on
+            horseback, or better yet when drawing along an open umbrella. It consists of
+            very small particles which are compressed by a body passing through them, or
+            in other words, are forced into a closer mass, and therefore require
+            corresponding force to remove them, and overcome their resistance; and the
+            greater the velocity of the b...
+  Q       : Why must the resistance which the air opposes to a moving body, such as a
+            bullet, increase with the velocity of that body, and how great may its
+            effect become in comparison with the weight of the bullet?
+  A       : It consists of very small particles which are compressed by a body passing
+            through them, or in other words, are forced into a closer mass, and
+            therefore require corresponding force to remove them, and overcome their
+            resistance; and the greater the velocity of the body, proportionately
+            greater is the resistance it encounters. The effect of this resistance on a
+            bullet is so considerable, that in some cases it amounts to ten or more
+            times the weight of the ball, so that a missile, which would otherwise reach
+            a distance of 10,000 yards, may, by the resistance of the air, be stopped at
+            1,000 yards or less.
+
+========================================================================================
+[SCIENCE]  1874  stem_signal 1.00
+  excerpt : For example, 1 part of hydrogen combines with 8 of oxygen, and 35 of
+            chlorine combine with 8 of oxygen, but 35 of chlorine is the very quantity
+            which combines with 1 of hydrogen. Thus the proportion in which any two
+            bodies combine with each other is that in which they combine with every
+            other. 127. Combining or equivalent numbers.-To each chemical substance,
+            therefore, is attached its fixed number...
+  Q       : What relation must obtain amongst the combining proportions of hydrogen,
+            oxygen, and chlorine, given that 1 part of hydrogen unites with 8 of oxygen,
+            and 35 of chlorine with 8 of oxygen, and why does this lead to the general
+            law of combining numbers?
+  A       : For example, 1 part of hydrogen combines with 8 of oxygen, and 35 of
+            chlorine combine with 8 of oxygen, but 35 of chlorine is the very quantity
+            which combines with 1 of hydrogen. Thus the proportion in which any two
+            bodies combine with each other is that in which they combine with every
+            other.
+
+========================================================================================
+[SCIENCE]  1882  stem_signal 1.00
+  excerpt : If 35, required the velocity at the end of ten seconds. 6. If s = gt, what
+            is the velocity in terms of the time and space? 7. If at-e-1, required the
+            velocity in terms of the time and space. [16, 17.j 16. ANGULAR VELOCITY is
+            the rate of angular movement. If a particle moves around a point having
+            either a constant or a variable velocity along its path, the angular
+            velocity is measured by the arc at...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1862  stem_signal 1.00
+  excerpt : 3. If two equal bodies describe unequal circles in equal times, the central
+            forces will be as the distances from the centre. 4. If equal bodies describe
+            unequal circles with equal celerities, the central forces will be inversely
+            as the distances. 5. If equal bodies describe equal circles, the central
+            forces will be as the squares of the celerities. 6. If equal bodies
+            describing unequal circles, ha...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1890  stem_signal 0.88
+  excerpt : Now Trinker gives the latter as 7,838 feet, which would bring the Sasso
+            Bianco up to 8,238 or 8,438 feet; so that in this way too you get the
+            estimate of over 8,000 feet confirmed." F.F.T. For the present, then, and
+            until some more competent traveller shall determine this point with
+            accuracy, the height of the Sasso Bianco may be allowed to stand at
+            something over 8,000 feet. Having spent two hour...
+  (failed)
+
+========================================================================================
+[NAVAL SCIENCE]  1860  stem_signal 1.00
+  excerpt : 1 According to the numbers in the table, it wants a 256th part of being so;
+            but this difference may surely be passed over, if not for its
+            insignificance, as some allowance for the more important difference
+            mentioned in note 2 of the last page. 2 All fractional parts may be given up
+            thus: 1268-12-105 and a fraction, but 105 (without the fraction)+1268=1373.
+            47 removed, and then, without suffering t...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1922  stem_signal 1.00
+  excerpt : The tensile strength of concrete in this connection may be taken at 100 lb.
+            per square inch. Thus a square foot of concrete would require 144 X
+            100/40,000 0.36 sq. in. of steel, or 0.25 per cent, to crack the concrete
+            and thus distribute the contraction. It is 123 customary to use about 0.2 to
+            0.3 per cent of steel for temperature reinforcement, which seems to be
+            ample. Since there is no change in...
+  Q       : A mass of concrete reinforced with steel is allowed to harden and shrink.
+            The tensile strength of the concrete is 100 lb. per square inch, and the
+            allowable stress in the steel is 40,000 lb. per square inch. How much steel,
+            expressed as a percentage of the cross-section, is required in a square foot
+            of such concrete to cause the concrete to crack and thereby distribute the
+            contraction, and why must stresses be set up in the steel during hardening?
+  A       : The tensile strength of concrete in this connection may be taken at 100 lb.
+            per square inch. Thus a square foot of concrete would require 144 ×
+            100/40,000 = 0.36 sq. in. of steel, or 0.25 per cent, to crack the concrete
+            and thus distribute the contraction. Since there is no change in the length
+            of the reinforcing steel to correspond with the change in the concrete due
+            to setting, shrinkage of the concrete while hardening definitely sets up
+            stresses in the steel as may be shown theoretically and experimentally. Let
+            C = coefficient of contraction of concrete, fₛ = compressive stress in the
+            steel caused by the shrinkage, fₑ = tensile stress in the concrete caused by
+            the shrinkage, then the net contraction per unit of length in terms of the
+            concrete stress is C − fₑ/Eₑ, and in terms of the steel stress is fₛ/Eₛ.
+            These expressions are equal, and for equilibrium, fₑ = pₙ pₙ fₛ, whence fₛ.

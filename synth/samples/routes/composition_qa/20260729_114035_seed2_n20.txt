@@ -1,0 +1,358 @@
+route: composition_qa
+model: deepseek-v4-pro
+seed:  2
+n:     20
+kept:  12/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that IS, or contains, a SPECIMEN of
+a nameable, producible FORM — a piece of writing of a recognizable kind that a person
+could be told to write. The form may be a formal document (a statute or act, a legal
+pleading, a letter, a speech or resolution, a prayer or devotion, a proclamation, a
+contract or like instrument) OR a shorter set form (an examination question, a
+definition, a preface or dedication, a review or notice, a toast, an epitaph, a maxim,
+a caption, the conclusion of a tale). It may be a WHOLE specimen or a SELF-CONTAINED
+PART of one. Turn it into an instruction-and-completion pair in which the reader is
+asked to COMPOSE such a piece. Work in this order.
+
+1. FIND THE SPECIMEN FIRST. Identify the piece of a recognizable form in the passage and
+   copy it VERBATIM as the answer.
+   - Return it as "spans": prefer ONE long contiguous quotation that is the whole
+     specimen, or a self-contained part of it (a whole clause, a whole letter, a whole
+     stanza, a whole paragraph that stands on its own). Use several exact quotations only
+     when it is genuinely split — never more than 3, always the fewest, longest
+     spans. Begin and end at natural boundaries of the form (a heading, salutation,
+     "Whereas", "Resolved, that", "O Lord", a definition's opening term, the first line
+     of a closing).
+   - Give EACH span as an object with two fields:
+       "verbatim"    — the span copied EXACTLY as it appears in the passage, character
+                       for character, including any OCR corruption.
+       "refurbished" — the SAME span with OCR artifacts cleaned so it reads pristine. If
+                       the span is already clean, make "refurbished" identical to it.
+   - REPAIR ONLY OCR ARTIFACTS, AND ONLY WHEN CERTAIN. The scan may have introduced
+     stray marks, doubled or dropped punctuation, interpolated dots or ellipses, broken
+     or run-together spacing, hyphenation split across a line break, or mangled figures.
+     In "refurbished" you MAY remove such junk and set spacing, punctuation, digits, and
+     symbols right — rejoin "informa- tion" into "information", drop a stray "..." or a
+     doubled "= =", close up "28 ; the". Repair only what its correct form plainly and
+     unambiguously must be.
+   - INVENT NOTHING. Every WORD — indeed every letter — in "refurbished" must already
+     stand in "verbatim". You may DELETE a stray character and change only non-letters
+     (spacing, punctuation, digits, operators); you may NOT add a letter, spell out a
+     missing word, transpose letters, or rewrite phrasing. If a span needs more than
+     that to read cleanly — a garbled WORD, a dropped word, anything you are not certain
+     of — do NOT patch it: reject the WHOLE item (emit nothing for that index).
+     Passages are plentiful; emit a pristine specimen or none.
+   - REJECT DESTROYED CONTENT, not just garbled letters. If the specimen's MEANING has
+     been lost — an exercise whose fill-in blanks or answers have dropped out, equations
+     that no longer balance or resolve, doubled or dangling operators ("= =", "÷ ;"), a
+     chain of figures that does not follow — you cannot honestly restore it (that would
+     mean inventing the missing values). Emit NO item for it. Only pass a specimen whose
+     content is intact and correct.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
+
+2. THEN WRITE THE INSTRUCTION that asks for this piece.
+   - Name the FORM and the SUBJECT, matching the verb to the form: "Draft an act of
+     Parliament to ...", "Compose a letter ...", "Frame a resolution ...", "Write a
+     prayer for ...", "Set out a plaintiff's plea that ...", "Define ...", "Set an
+     examination question on ...", "Write a preface to ...", "Give a review of ...",
+     "Propose a toast to ...", "Compose an epitaph for ...", "Write a fitting close for
+     a tale in which ...". It must call for exactly the kind of piece the answer is, on
+     its actual subject and occasion. When the answer is a PART, ask for that part (its
+     clause, its closing, its single question), not the whole work.
+   - Give the instruction the substance the piece needs to be a fitting answer — its
+     purpose, parties, subject, or occasion — but do NOT copy the piece's wording or
+     dictate its phrasing. Ask for the thing; let the answer supply the words.
+   - Plain period register: direct, no modern or conversational phrasing, no
+     meta-language. Write it in pre-1930s English — period vocabulary, spelling, and
+     phrasing; use no word, term, or idiom that came into use after 1930.
+   - Stands alone. Never mention the source — no "the passage", "the text", "the
+     author", "as given", "above", "described". Phrase it as a task set from scratch.
+   - Do NOT reproduce the piece's distinctive wording in the instruction.
+
+If the passage is NOT a specimen of any nameable, producible form — it is just ordinary
+shapeless prose (plain narration, exposition, or argument with no particular form that
+one could be asked to write) — emit NO item for it (omit that index).
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": [{"verbatim": "...", "refurbished": "..."}], "q": "..."}, ...]
+
+
+========================================================================================
+[SCIENCE]  1911  prose_score 1.00
+  excerpt : Euclid, I, 15. † Cf. Euclid, I, 8. definition that if X and Y are any two
+            points of the segments BA and BC respectively, and X' and Y' the
+            corresponding points of the segments B'A' and B'C' respectively, then (X, Y)
+            is congruent to (X, Y). Applying the same argument to the angles 4ACB and B'
+            C' A'C'B' and the angles BAC and B'A'C' we have that the two triangles are
+            congruent. The following theorem...
+  Q       : Frame a theorem stating the conditions under which two triangles may be
+            proved congruent from the equality of two sides and the included angle.
+  A       : If two sides and the included angle of one triangle are congruent to two
+            sides and the included angle of another triangle the two triangles are
+            congruent.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1869  prose_score 0.75
+  excerpt : "O, coward conscience, how dost thou afflict me! Cold, fearful drops stand
+            on my trembling flesh. Is there a murderer here?... Then fly. What from?
+            Myself? My conscience has a thousand tongues . .... (They) Throng to the
+            bar, crying all, Guilty! Guilty. Shadows to-night Have struck more terror to
+            the soul of Richard Than can the substance of ten thousand soldiers." * Do
+            we condemn the representati...
+  Q       : Compose a dramatic soliloquy for a king, stricken in the night by the
+            spectres of his crimes, in which he confesses that the terrors of a guilty
+            conscience are sharper than any material foe.
+  A       : "O, coward conscience, how dost thou afflict me! Cold, fearful drops stand
+            on my trembling flesh. Is there a murderer here?... Then fly. What from?
+            Myself? My conscience has a thousand tongues...... (They) Throng to the bar,
+            crying all, Guilty! Guilty. Shadows to-night Have struck more terror to the
+            soul of Richard Than can the substance of ten thousand soldiers."
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1856  prose_score 1.00
+  excerpt : Lord God! O Lord, the only begotten Son: Jesus Christ! That takest away the
+            sins of the world: Have mercy upon us. Thou that takest away the sins of the
+            world: Have mercy upon us, receive our prayer. Thou that sittest at the
+            right hand of God the Father: Have mercy upon us. For Thou only art holy :
+            Thou only art the Lord Jesus Christ: To the glory of God the Father.
+            Amen....
+  Q       : Write a litany of supplication to the Lord Jesus Christ, invoking His mercy
+            as the only-begotten Son of God, the taker-away of the sins of the world,
+            and the sole holy Lord.
+  A       : Lord God! O Lord, the only begotten Son: Jesus Christ! That takest away the
+            sins of the world: Have mercy upon us. Thou that takest away the sins of the
+            world: Have mercy upon us, receive our prayer. Thou that sittest at the
+            right hand of God the Father: Have mercy upon us. For Thou only art holy:
+            Thou only art the Lord Jesus Christ: To the glory of God the Father. Amen.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1887  prose_score 0.95
+  excerpt : As Foster's plaintive melodies carried the pathos and humor of the
+            plantation all over the land, so Mrs. Harriet Beecher Stowe's Uncle Tom's
+            Cabin, 1852, brought home to millions of readers the sufferings of the
+            negroes in the "black belt" of the cotton-growing States. This is the most
+            popular novel ever written in America. Hundreds of thousands of copies were
+            sold in this country and in England, ...
+  Q       : Write a review of a highly popular and influential novel recently published,
+            acknowledging its peculiar power and the service it has done, while noting
+            also its several defects of manner and execution.
+  A       : It is easy now to point out defects of taste and art in this masterpiece, to
+            show that the tone is occasionally melodramatic, that some of the characters
+            are conventional, and that the literary execution is in parts feeble and in
+            others coarse.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1847  prose_score 0.77
+  excerpt : It is the part of a Christian to spend his time in assisting the-wretched.
+            Let us consult the interests of those with whom we have to live. I will
+            inquire of Caius whether Balbus should be consulted. We must consult the
+            interests of Balbus. It was owing to you22 that the interests of Caius were
+            not consulted. I made it my first object to (ut) preserve the Roman
+            territory. I cannot repay your kindn...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1828  prose_score 0.41
+  excerpt : You will make no bargains with him for keeping one sin, and letting another
+            go this would be mere traffic; not taking him for your master: it would be
+            endeavouring to serve two masters. The only way of being sure that you are
+            coming to Christ is, are you coming all to him? Are you keeping any sin to
+            yourself? Are you keeping your favourite sin? This is the shortest and the
+            only sure trial. If you ...
+  Q       : Frame a series of searching questions for the examination of one's own soul,
+            designed to discover whether a Christian has truly surrendered every sin and
+            taken Christ alone for his Master and pattern of holiness.
+  A       : Do you allow Christ to obtain a mastery over all your vices? Do you make him
+            the fountain of all your virtues? Do you avoid all evil for his sake? And,
+            above all, is he the bright example that you follow? Do you take some poor
+            human standard of excellence, and put that in the place of Christ? Or do you
+            look to him, not only for salvation, but for example? Is his lowly and meek
+            humility, his pure and holy conversation, his active and benevolent charity,
+            his mild and gentle patience, his fervent and constant piety, his spirit of
+            mercy and forgiveness, are these your pattern of perfection to which you
+            seek to be conformed?
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1908  prose_score 0.98
+  excerpt : You may form some idea of the scale upon which the scene is played when I
+            say that when I saw it the stage extended over five acres. You have real
+            cowboys, with bucking horses, real buffaloes and great hordes of cows, which
+            are lassoed and stampeded in the most realistic fashion imaginable. Then 169
+            there are real Indians, who execute attacks upon coaches driven at full
+            speed. No one can exaggerat...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1887  prose_score 1.00
+  excerpt : But whatso ye can, that do ye, accursed eyes! many a time will I make you
+            remember it! for never, till death dry you up, should ye make an end of your
+            weeping." And when I had spoken thus unto mine eyes, I was taken again with
+            extreme and grievous sighing. And to the end that this inward strife which I
+            had undergone might not be hidden from all saving the miserable wretch who
+            endured it, I propose...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1892  prose_score 0.99
+  excerpt : It is not carried far, and had we more work from his hand, he would perhaps
+            have purged himself from it when he had grown older. The fault is a fault of
+            youth as well as of age. It belonged to Coleridge, to Byron, to Browning, to
+            Tennyson, when they were young. And now air and earth and fire join in the
+            wrath which falls on the folk and the town. The yellow waters waxed more and
+            more and men fled ...
+  Q       : Compose a song of praise such as a company of faithful thanes might sing
+            upon the shore, as they watch their lord and apostle sail away over the
+            whale-path.
+  A       : "One only is the eternal God! Of all Created beings is his might and power
+            Lauded aloud; and, over all, his Joy- In high and holy splendour of the
+            Heavens - Shines through the everlasting ages far; In glory beautiful for
+            evermore With angel hosts our Ætheling, our King."
+
+========================================================================================
+[EDUCATION]  1921  prose_score 0.74
+  excerpt : Turning now to them, he asked, "Would ye also go away?" Then Peter, speaking
+            for the others, showed the difference between true disciples and those who
+            are offended at every hard saying. "Lord," he said, "to whom shall we go?
+            thou hast the words of eternal life." 1. What is a parable? How does it
+            differ from an allegory? 2. Why did Jesus use parables? Mention some of the
+            parables recorded in the G...
+  Q       : Set an examination paper of five questions upon the latter part of our
+            Lord's Galilean ministry, touching the use of parables, the working of
+            miracles, and the discourse on the Bread of Life.
+  A       : 1. What is a parable? How does it differ from an allegory? 2. Why did Jesus
+            use parables? Mention some of the parables recorded in the Gospels. 3. What
+            is a miracle? Why did Jesus work miracles? 4. What is the particular
+            importance of the feeding of the five thousand? 5. Why were the people
+            offended by the discourse on the Bread of life?
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1896  prose_score 0.99
+  excerpt : "9 "9 I cannot quit this subject, however, without observing by what slight
+            changes in the dialects favored by different tribes of the same race, the
+            original signification and beauty of sounds may become confused and
+            deformed. Zee told me with much indignation that Zummer (lover), which, in
+            the way she uttered it, seemed slowly taken down to the very depths of her
+            heart, was, in some not very dis...
+  (failed)
+
+========================================================================================
+[EDUCATION]  1896  prose_score 0.76
+  excerpt : 2. The words "the Scriptures" or "the Scripture are applied by St. Paul and
+            other New-Testament writers to the entire Old Testament. 2 Tim. 3:15, 16;
+            Matt. 21:42; John 5:39. In other parts of the New Testament the singular
+            term "the scripture" refers to particular passages. Luke 4:21; James 2: 8.
+            To-day the term "scripture" is used for either the part or the whole. 3.
+            Paul speaks of the old covena...
+  Q       : Define the term 'the Scriptures' as it is employed by St. Paul and other
+            New-Testament writers.
+  A       : The words "the Scriptures" or "the Scripture" are applied by St. Paul and
+            other New-Testament writers to the entire Old Testament.
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1855  prose_score 0.38
+  excerpt : In naming these instances, I do not mean to imply that community of
+            employment is essential to the union of husband and wife, more than to the
+            union of friends. Harmony exists in difference, no less than in likeness, if
+            only the same key-note govern both parts. Woman the poem, Man the poet!
+            Woman the heart, Man the head! Such divisions are only important when they
+            are never to be transcended. If n...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1891  prose_score 0.85
+  excerpt : Hancock in Popes head Alley, 1650. 8vo." The printed title-page reads:
+            "Recreation for Ingenious Head-peeces. Or, A Pleasant Grove for their Wits
+            to Walke in. Of Epigrams, 700: Epi taphs, 200: Fancies, a number;
+            Fantasticks, abun- dance. With their Addition, Multiplication, and Division.
+            London, Printed by M. Simmons,” etc. In this edition many of the Epigrams
+            are omitted and more than one hundred...
+  Q       : Write a prefatory letter 'To the Reader,' for a short pamphlet giving an
+            account of the Faery King and Queen, their retinue, raiment, carriage, and
+            fare, commending its sweetness to the courtly reader.
+  A       : I present thee here with the Description of the King of the Fayries, of his
+            Attendants, Apparel, Gesture, and Victuals, which though comprehended in the
+            brevity of so short a volume, yet as the Proverbe truely averres, it hath as
+            mellifluous and pleasing discourse, as that whose amplitude containes the
+            fulnesse of a bigger composition
+
+========================================================================================
+[SCIENCE]  1876  prose_score 0.94
+  excerpt : "The nurseries belonging to the Administration promise soon to supply plants
+            at less expense than that at which at present they can be obtained "The
+            agents at the conference at Carpentras stated that they had employed, on
+            L'Isère, and the High and the Low Alps, the white oak up to 1000 mètres of
+            altitude, the acacia up to 900 mètres, in all exposures. The ailanthus had
+            as yet given too little expe...
+  Q       : Set an examination question upon the subject of sowing in the work of
+            reforesting mountainous districts.
+  A       : Ninth Question. "Sowing. Discuss the choice of kinds of trees, the fitness
+            of each mode of sowing, (sowing in rows, in holes, in the open bed, etc.,)
+            the quantity of seed to be used per hectare, the fit season for carrying on
+            the works, the expense of the work per hectare, etc."
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1851  prose_score 1.00
+  excerpt : The answer will be found within ourselves. Such inquiries will stimulate us
+            to action, and may, as we are faithful to our convictions of duty, often
+            lead us, as Ananias was led of old, when he was sent on this high mission to
+            one who was praying in Tarsus, with this encouraging language; "Brother
+            Saul, receive thy sight." But I fear the spirit of the gospel is wanted more
+            among us than it exists. ...
+  (failed)
+
+========================================================================================
+[LAW]  1889  prose_score 0.80
+  excerpt : 13 of 1869, on the file of the Joint-Magistrate of Poonamallee, and also
+            letter from the Sessions Judge of Chingleput, dated 1st April 1869,
+            submitting the record in the above case in accordance with the proceedings
+            of the High Court, dated 23rd March 1869The High Court made the following
+            RULING: The Joint-Magistrate convicted the accused under s. 456 of The High
+            Court has power the Penal Code, an...
+  (failed)
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1824  prose_score 1.00
+  excerpt : Let us mingle our sympathies with theirs, for the loss of such a man. As a
+            testimonial thereof, permit me to ask, that the resolution which I now hand
+            to the Secretary may be placed upon our records. I move the same, and can
+            only add, that I anticipate its immediate, unanimous, unhesitating adoption.
+            Resolved, That this Institution is deeply afflicted by the death of William
+            H. Fitzhugh, Esq. one ...
+  Q       : Frame a memorial resolution upon the death of a vice-president of a
+            benevolent institution, recording the society's sense of loss and its
+            enduring esteem for his character and labours in a philanthropic cause.
+  A       : Resolved, That this Institution is deeply afflicted by the death of William
+            H. Fitzhugh, Esq. one of its Vice-Presidents, and that it will cherish an
+            affectionate remembrance of his eminent private and public virtues, and his
+            distinguished exertions in aid of the African cause.
+
+========================================================================================
+[LAW]  1871  prose_score 0.99
+  excerpt : 85. PROFESSOR MOSES STUART.-"My final conclusion is this, viz.: that,
+            whenever the Scriptures speak of wine as a comfort, a blessing, or a
+            libation to God, and rank it with such articles as corn and oil, they mean-
+            they can mean-only such wine as contained no alcohol that could have a
+            mischievous tendency; that wherein they denounce it, prohibit it, and
+            connect it with drunkenness and revelling, th...
+  (failed)
+
+========================================================================================
+[SOCIAL SCIENCES]  1872  prose_score 0.94
+  excerpt : 130th. The several periods of time above limited for preparing or filing a
+            statement or amendments thereto may be enlarged, upon good cause shown, by
+            the judge before whom the case was tried. 131st. The statement, when settled
+            by the judge, shall be signed by him, with his certificate that the same has
+            been allowed and is correct. When the statement is agreed upon by the
+            parties, they or their att...
+  Q       : Draft the section of a code of civil procedure prescribing the powers of an
+            appellate court upon an appeal from a judgment or order.
+  A       : Upon an appeal from a judgment the court may review any intermediate order
+            involving the merits and necessarily affecting the judgment. Upon an appeal
+            from a judgment or order, the appellate court may revise, affirm, or modify
+            the judgment or order appealed from in the respect mentioned in the notice
+            of appeal, and as to any or all of the parties, and may set aside or confirm
+            or modify any or all of the proceedings subsequent to or dependent upon such
+            judgment or order, and may, if necessary or proper, order a new trial.

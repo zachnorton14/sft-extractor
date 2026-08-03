@@ -1,0 +1,335 @@
+route: opinion_qa
+model: deepseek-v4-pro
+seed:  3
+n:     20
+kept:  18/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book, tagged as possibly voicing an
+OPINION. Build a pair in which the ANSWERER takes a stance: a question asking for a
+judgment, answered by the period view itself.
+
+GATE FIRST. Many passages tagged opinion are really plain exposition, narration, or
+statement of fact. REJECT any excerpt that does not, even in the slightest, ARGUE a
+point or VOICE a judgment — anything a reader could only KNOW, not DISPUTE. Do not
+manufacture an opinion out of descriptive or factual prose; if nothing here takes a
+side, return NO span for it. Proceed only when the passage genuinely holds a view.
+
+1. FIND THE STANCE. Choose the judgment the passage advances, with the ground it rests
+   on where the passage gives it, and copy it VERBATIM as the answer.
+   - Return it as "spans": exact quotations stating the view (and its reason). Prefer
+     ONE; use up to 3 only if view and ground lie apart. Fewest, longest.
+   - Copy WORD FOR WORD — no paraphrase, summary, correction, or added word.
+   - The span must read as a DIRECT assertion of the view — the answer speaks the
+     opinion outright. Do NOT take third-person reportage of who held it ("the
+     committee found ...", "it was urged that ...", "critics held ..."); take the
+     asserted view itself.
+   - Take WHOLE sentences: begin and end at a sentence boundary, keep terminal
+     punctuation, so several spans read as continuous prose when joined.
+   - SUBSTANCE: only a genuine, defensible stance qualifies. If the passage merely
+     touches a topic, drops a throwaway remark, or states a plain fact with no
+     judgment, return NO span for it.
+   - Keep it RAW: period opinions stand as written even where later knowledge judges
+     them wrong — do not soften, hedge, or correct.
+
+2. WRITE THE QUESTION as a request for JUDGMENT on the subject — the answer is the
+   opinion given as the answerer's OWN.
+   - Solicit a JUDGMENT, answerable only by taking a side: "Ought ...?", "Is it right
+     (wise, best) that ...?", "Is ... to be believed?", "Is ... to be preferred?",
+     "Is ... justified?". NEVER a bare fact question — not "What is ...?", "For what
+     purpose ...?", "What effect has ...?", "To what is ... owing?". If the only honest
+     question would be factual, the passage failed the GATE — drop it.
+   - NO attribution, NO source: never name a holder, speaker, author, school, or say
+     "the passage", "the text", "according to". Ask about the SUBJECT ITSELF.
+   - Name the subject so the question stands alone to someone who never saw the passage.
+   - Plain period register, pre-1930s English — no word or idiom that came into use
+     after 1930, no modern or conversational phrasing.
+   - Do NOT put the view's distinctive wording in the question; ask for it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[SCIENCE]  1855  prose_score 0.30
+  excerpt : Mystery of mysteries! Let us jest no more -Heaven forgive us if we have
+            jested too much on so simple a matter as that poor spider-crab, taken out of
+            the lobster-pots, and left to die at the bottom of the boat, because his
+            more aristocratic cousins of the blue and purple armour will not enter the
+            trap while he is within. I am not aware whether the surmise, that these tiny
+            zoophytes help to purify t...
+  Q       : Is the supposition, that zoophytes help to purify the water by exhaling
+            oxygen gas, to be credited?
+  A       : I myself should be inclined to doubt that this is the case with zoophytes,
+            having found water in which they were growing (unless, of course, sea-weeds
+            were present) to be peculiarly ready to become foul
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1860  prose_score 0.30
+  excerpt : The consequence of Sir John Leach deciding generally with few or no reasons
+            assigned was, that appeals were multiplied; the successful party had only
+            obtained half a victory; and it became a remark, frequent in the mouths of
+            successive chancellors, that causes were decided below, but heard before
+            them. It is an unaccountable mistake into which some fall, when they fancy
+            that the more weight is att...
+  Q       : Is a judge's sentence entitled to the greater weight for being delivered
+            without reasons?
+  A       : The very reverse is true. With an enlightened bar and an intelligent people,
+            the mere authority of the bench will cease to have any weight at all, if it
+            be unaccompanied with argument and explanation.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1844  prose_score 0.43
+  excerpt : What is creation, Providence, and the Gospel scheme, but an embodied
+            manifestation of the three correspondent attributes of Deity,- power,
+            wisdom, and goodness? And what is the harmonic whole, but the sphere and
+            growing kingdom of embodied Godhead? One leading purpose of this great
+            mysterious plan, we are told, is "va yvwgioon ταῖς ἀρχαῖς καὶ ταῖς ἐξουσίαις
+            ἐν τοῖς ἐπουρανίοις διὰ τῆς ἐκκλησίας, ἡ...
+  Q       : Is it the proper duty of man to exercise his mind upon the great display of
+            creation, Providence, and the Gospel scheme?
+  A       : Is it not then still more the appropriate duty of man to employ his mind on
+            this exquisite display, in order that he may receive fresh beams of Divine
+            knowledge from these mirrors of God's own preparation?
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1857  prose_score 0.73
+  excerpt : Here is a being who was always calmly, perfectly conscious of faultlessness.
+            "I do always those things which please the Father." 1 "Which of you
+            convicteth me of sin ?" "If I say the truth why do you then not believe?"
+            "The prince of this world cometh, and hath nothing in me." 3 There is a
+            still more mysterious utterance of Christ's inward nature. We find him
+            avowing the most extraordinary sense, ...
+  Q       : Do the utterances of Christ convey, at the least, a conviction of
+            faultlessness and official greatness?
+  A       : It can not be disputed that they convey this at least, a conviction
+
+========================================================================================
+[AGRICULTURE]  1915  prose_score 0.40
+  excerpt : On the writer's own market last spring and summer corn sold for 85 cents a
+            bushel cash and $1.05 on time, due October I. Farmers who bought April 1
+            thus paid an interest rate of 47 per cent a year; farmers who bought July I
+            paid at the rate of 94 per cent a year. From these figures it seems safe to
+            assume that on time prices for ordinary supplies the average charge is 12½
+            to 20 per cent for six mo...
+  Q       : Is it better for a farmer to buy supplies on time, or to borrow money at
+            interest and pay cash?
+  A       : From these figures it seems safe to assume that on time prices for ordinary
+            supplies the average charge is 12½ to 20 per cent for six months' time, or
+            at the rate of 25 to 40 per cent interest per annum. Instead of paying "time
+            prices" we should certainly advise any honest farmer to go to some banker or
+            man of wealth and borrow money at a reasonable rate of interest, put it in a
+            bank, and check on it as needed to pay cash for whatever he needs.
+
+========================================================================================
+[FINE ARTS]  1891  prose_score 1.00
+  excerpt : The only true method of colouring is that which regards value, that is to
+            say, the relative loss of light in any mass of colour, from the first; at
+            one step combining colour and tone, treating every mass as -not first tone
+            and then hue, but a definite and ascertainable colour value. "All objects
+            appear to the eye simply as masses of colour of variable depth, texture, and
+            outline. The outline of an...
+  Q       : What is the only sound method of applying colour to a picture?
+  A       : The only true method of colouring is that which regards value, that is to
+            say, the relative loss of light in any mass of colour, from the first; at
+            one step combining colour and tone, treating every mass as -not first tone
+            and then hue, but a definite and ascertainable colour value.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1888  prose_score 0.53
+  excerpt : I hate questioners and questions; there are so few that can be spoken to
+            without a lie. "Do you forgive me?" Madam and sweetheart, so far "Virginibus
+            Puerisque" 75 as I have gone in life I have never yet been able to discover
+            what forgiveness means. "Is it still the same between us?" Why, how can it
+            be? It is eternally different; and yet you are still the friend of my heart.
+            "Do you understana me ...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1903  prose_score 0.50
+  excerpt : As regards the usual indications of the positions of the ears- If they rise
+            high above the outer corners of the eyes= Excitable, highly-strung temper.
+            If the orifice be lower than on a line with the nostrils= A passionate,
+            ungovernable temper. If protruding in the upper part contradiction. If close
+            to the head=Want of spirit. If upright=Pluck. If sloping Cowardice. Courage;
+            love of - The full, rou...
+  Q       : Is the shape of a man's ear a trustworthy index of his character and
+            capacity?
+  A       : The full, rounding ear is associated, as a general rule, with more ambition,
+            social inclinations, and innate power than the angular one.
+
+========================================================================================
+[AGRICULTURE]  1900  prose_score 0.38
+  excerpt : The aim with Europeans invariably is to discover the volume of wood
+            contained in a forest as expressed in cubic metres. There can be no doubt
+            that this in itself brings about much greater accuracy than our system of
+            expressing quantity in feet board measure, although it is not so convenient
+            for the lumberman, because he must first make another calculation before he
+            can tell how many boards he ough...
+  Q       : Is the European method of measuring timber by cubic volume to be preferred
+            over the American board-foot system?
+  A       : There can be no doubt that this in itself brings about much greater accuracy
+            than our system of expressing quantity in feet board measure, although it is
+            not so convenient for the lumberman, because he must first make another
+            calculation before he can tell how many boards he ought to saw out of a
+            given amount of logs.
+
+========================================================================================
+[MEDICINE]  1891  prose_score 0.35
+  excerpt : 25 takes place. The combining peculiarities of the elements to produce
+            compounds by multiple proportion is evidence of divine impression, which is
+            the creative manifestation in preventing them from exerting more than a
+            given amount of energy, making evolution possible and in harmony with
+            creation. Through evolution, law and order manifest the divinity of
+            impression. It may be said that God could h...
+  Q       : For what end is the great proportion of nitrogen in the air ordained?
+  A       : The enormous amount of nitrogen in our atmosphere is to protect all living
+            beings from being consumed by oxygen; notwithstanding which, oxygen does its
+            part in accomplishing this purpose by oxidation, consuming the body and
+            supporting life at the same time, till the end of that process, which is
+            culminated in the liberation of the spirit.
+
+========================================================================================
+[EDUCATION]  1895  prose_score 0.69
+  excerpt : "If I buy thee," asked one of a Spartan captive, “and treat thee well, wilt
+            thou be good?”—“I will,” he replied, "if thou buy me or not; or if, having
+            bought me, thou treat me ill." If there be anything of worth in thee, it
+            will make thee strong and contented; it is so good for thee to have it that
+            thou canst easily forget it is unrecognized by others. If all sufferings,
+            sorrows, and disappointmen...
+  Q       : Is it right to regard sufferings and disappointments as wholly evil?
+  A       : If all sufferings, sorrows, and disappointments had been left out of thy
+            life, wouldst thou be more or less than thou art? Less worthy, doubtless,
+            and less wise. In these evils, then, there is something good.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1852  prose_score 0.51
+  excerpt : The question is, who cares enough about any of these things to take the
+            trouble and pains necessary to be competent to judge rationally and
+            righteously concerning any of them? Who? For three years echo has replied,
+            who? But I am constantly asked, "Why do you not publish?" I answer, I have
+            published, but who has read? Who is willing to pay twelve and a half cents
+            for as much philosophy as the liter...
+  Q       : Is there any sufficient interest amongst the public to sustain the
+            publication of serious philosophical works?
+  A       : I answer, I have published, but who has read? Who is willing to pay twelve
+            and a half cents for as much philosophy as the literati of this generation,
+            with the means they now possess, can digest? Let him call upon any of the
+            booksellers in Portland, or upon the writer, at his office, 104 1-2 Federal
+            street, and he can get it. But why do you not publish more? Say, your
+            treatise on Anthroposophy, Logic, your philosophical tracts, &c. ? I answer,
+            I am poor and cannot do it. Nor have I found a rich man in two years who
+            cared enough about the matter to lend aid or comfort in such an enterprise.
+            Say, does such an one live? Where?
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1851  prose_score 0.64
+  excerpt : We come now to the concluding part of the noted instructions of the Savior,
+            on the duty of prayer. These instructions conclude with strong assurances of
+            being heard, and of being accepted and answered. "And I say unto you, Ask,
+            and it shall be given you; seek, and ye shall find; knock, and it shall be
+            opened unto you." "For every one that asketh, receiveth." There is no
+            exception in this case. Not...
+  Q       : Are faithful prayers ever left unanswered?
+  A       : Not a faithful prayer was ever left unanswered. That all faithful prayers
+            are abundantly answered, is evident from Scripture promises, declarations
+            and facts.
+
+========================================================================================
+[MEDICINE]  1900  prose_score 0.53
+  excerpt : Ridge says in Addresses on the Physio logical Action of Alcohol:- "It has
+            been found by experiment that, when alcohol is taken, less carbonic acid
+            comes away in the breath than when it is not. This is partly because the
+            blood-corpuscles cannot carry so much, and partly because so much is not
+            produced, because there is less oxygen to join with the food and produce it.
+            Just as burning paper smokes w...
+  Q       : Is it possible for a blood corpuscle to come into direct contact with an
+            atom of alcohol without its function being spoiled?
+  A       : A blood corpuscle cannot come into direct contact with an atom of alcohol,
+            without the function of the former being spoiled, and not only is it
+            spoiled, but the effete matter which it has within its capsule cannot be
+            exchanged for the necessary oxygen.
+
+========================================================================================
+[TECHNOLOGY]  1855  prose_score 0.30
+  excerpt : Upon the amount of energy bestowed in the founding of libraries and
+            mechanics' institutes and free schools, depends the future of this key to
+            the Union. Let the Mississippi Valley sink to the intellectual condition of
+            Mexico, and the growth of our country will be a growth of death; but let the
+            West be true to its duty, and it can hold North and South to their
+            equilibrium, without pandering to the ...
+  Q       : Ought the intellectual condition of the Mississippi Valley to be neglected?
+  A       : Let the Mississippi Valley sink to the intellectual condition of Mexico, and
+            the growth of our country will be a growth of death; but let the West be
+            true to its duty, and it can hold North and South to their equilibrium,
+            without pandering to the fanaticisms of either.
+
+========================================================================================
+[SCIENCE]  1914  prose_score 0.38
+  excerpt : It is not strange, therefore, that no two individuals among the progeny from
+            sexual reproduction are alike. Sex reproduction, therefore, secures extreme
+            individuality, and it is individual variation that makes evolutionary
+            processes possible. The cell fusion preceding the reproduction of a new
+            individual is not necessary to reproduction, therefore, but it is necessary
+            to make the individual produc...
+  Q       : Has the progress and great diversity of plants depended more upon sexual
+            reproduction than upon any other cause?
+  A       : That variation is enormously multiplied by sexual reproduction, and that
+            therefore the progress of plants and their great diversity has depended more
+            upon sexual reproduction than upon any other cause.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1880  prose_score 0.62
+  excerpt : By common consent, his advent is the fulfilment of all prophecy. He is
+            called "Immanuel, God with us." He says of Himself, "I and the Father are
+            one." To one of his disciples, begging Him to show them the Father, He
+            replies, "Have I been so long time with you, and yet hast thou not known me,
+            Philip? He that hath seen me hath seen the Father; and how sayest thou then,
+            Show us the Father?" Again: "H...
+  Q       : Is Jesus Christ Himself the one Lord God, and should the term "Son of God"
+            be taken to indicate a separate divine personality?
+  A       : Thus the Lord our God is one Lord, and Jesus Christ is He. The term "Son of
+            God" is used, according to the natural appearance, to designate the humanity
+            which He assumed, but not as indicating a separate divine personality.
+
+========================================================================================
+[MUSIC AND BOOKS ON MUSIC]  1907  prose_score 0.98
+  excerpt : Then the figure of Christ as the cleft rock seems to have suggested to the
+            poet the scene on the hilltop of Calvary, when a thoughtless soldier with
+            one spear-thrust fulfilled two important prophecies. "But one of the
+            soldiers with a spear pierced His side, and forthwith came there out blood
+            and water" (St. John xix. 34). And so the prayer of the hymn proceeds: "Let
+            the Water and the Blood, From T...
+  Q       : Is deliverance from the guilt of sin sufficient, or must we also seek
+            deliverance from the power of sin for a complete emancipation?
+  A       : It is a great boon to be purified from the guilt of sin. But we need much
+            more than this cleansing. We require to have the chains of our slavery
+            removed, and sin's mastery over us overthrown. To be cleansed from the power
+            of sin as well as from its stain-this is complete emancipation, and such is
+            the twofold deliverance for which we are taught to pray.
+
+========================================================================================
+[AGRICULTURE]  1910  prose_score 0.38
+  excerpt : The point is that there was a natural adjustment of work to worker which
+            modern industry undermines in three ways-in separating work from the home,
+            in separating work from education, and in shaping the conditions and
+            concomitants of work without regard to the powers, tastes, or needs of the
+            workers. Before endeavoring to analyze these effects let us consider various
+            types of modern women in whose ...
+  Q       : Is it desirable for large numbers of women to adopt a celibate life in the
+            professions?
+  A       : While it is doubtless a happy solution in many cases, it is certainly
+            undesirable that large numbers of women should adopt it, especially if we
+            may suppose that a class of celibate professional women withdraw from the
+            race the inheritance of some degree of picked intellectual ability.
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1911  prose_score 0.30
+  excerpt : Is it not evidently the intent of Nature that both shall live on land and
+            use land in the same way and to the same degree? Is there not, therefore, a
+            violation of the intent of Nature in human laws which give to one more land
+            than he can possibly use, and deny any land to the other? Let me ask the
+            Duke to consider, from the point of view of an observer of Nature, a
+            landless man-a being fitted in a...
+  (failed)

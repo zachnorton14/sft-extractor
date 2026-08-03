@@ -1,0 +1,423 @@
+route: conversational_qa
+model: deepseek-v4-pro
+seed:  0
+n:     20
+kept:  7/20
+
+--- SYSTEM PROMPT ---
+You are given a passage of pre-1930s DIALOGUE — a conversation, catechism, or
+question-and-answer exchange between TWO voices. Turn it into a multi-turn conversation.
+
+1. Identify the two speakers. Assign one to the USER role — the voice that ASKS the
+   questions or leads — and the other to the ASSISTANT role — the voice that ANSWERS. In
+   a catechism the questioner is the user.
+   - The ASSISTANT NEVER asks a question; it only answers. Every question belongs to a
+     USER turn. If one utterance gives an answer and THEN poses the next question, SPLIT
+     it — the answer is the assistant's turn, and the following question becomes the next
+     USER turn (each half is still a verbatim substring). An assistant turn must not end
+     on a question.
+
+2. Return the exchange as "turns": an ordered list, each turn one speaker's utterance
+   copied VERBATIM from the passage, ALTERNATING user, assistant, user, assistant …,
+   beginning with the user. Keep the natural back-and-forth — several turns, not one
+   pair.
+   - The FIRST turn (user) must be a question that STANDS ON ITS OWN: it names its own
+     subject and assumes no earlier context. Do NOT open mid-exchange — not with "And
+     …", "Then …", "But …", nor a bare "it / this / they / these" whose antecedent was
+     never given. If the passage's opening question depends on unstated context, BEGIN
+     the conversation at a later question that stands alone, or emit no item.
+   - Copy WORD FOR WORD. Do NOT paraphrase, rewrite, summarize, translate, or add any
+     word. Each turn is the spoken words themselves.
+   - Strip ONLY the speaker's label or attribution and the quotation marks that mark
+     who is speaking ("said John", "Q.", "A.", "Socrates.", "" ""). Keep a turn's own
+     wording exactly, punctuation and spelling included.
+   - Drop narration or stage directions that fall BETWEEN turns; keep only what is
+     spoken. Each turn's remaining words must appear verbatim and unbroken in the
+     passage (do not stitch across an interruption like '"I am," he said, "a
+     traveller"').
+   - Begin and end each turn at a natural utterance boundary.
+
+3. The exchange must have at least 4 turns (two full exchanges) and strictly
+   alternate the two roles. If the passage is not a genuine two-party spoken exchange —
+   it is narration, monologue, exposition, or a single Q&A pair — emit NO item for it.
+
+REJECT OCR-CORRUPTED TEXT. These passages are scanned from old books and some are
+mangled by OCR — garbled or run-together words, dropped or transposed letters, stray
+marks, broken spacing, nonsense strings. If such corruption touches the material your
+answer would quote or rest on, so that a clean and correct answer is not possible, emit
+NO item for that passage. Watch too for running headers, page numbers, chapter titles,
+or marginal indices the scan has dropped into the MIDDLE of the text (e.g. "... breadstuffs
+KY., SW. VA., ... N. GA. [CHAP. XL. and small stores ..."): such interpolated matter
+must never enter your answer — keep it out, and if it cannot be cleanly kept out, emit
+NO item. Passages are plentiful; prefer skipping a doubtful one to emitting a garbled
+answer.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "turns": [{"role": "user", "content": "..."},
+                       {"role": "assistant", "content": "..."}, ...]}, ...]
+
+
+========================================================================================
+[LAW]  1910  turns=0
+  excerpt : Q. Is New York your residence and domicile, or how will you distinguish? A.
+            New York is my residence and domicile; yes, sir. Q. And you consider
+            Cleveland merely a place of visit? A. Summering. Q. The defendant company's
+            office is where? A. In Cleveland. Ohio? Q. I do. A. In Cleveland. You refer
+            to the Standard Oil Company of Q. Do the so-called liquidating trustees of
+            the Standard Oil Trust have ...
+  (dropped)
+
+========================================================================================
+[SOCIAL SCIENCES]  1911  turns=0
+  excerpt : Some individuals suggested getting up a subscription among the different
+            institutions to enable us to meet the demand which would follow. What
+            happened to that? Mr. HEWITT. The amount suggested was inadequate, in our
+            judgment. Mr. UNTERMYER. What was the amount suggested? Mr. HEWITT. The
+            lapse of time is too great. I simply remember that the amount suggested was
+            insufficient, in our judgment. The ...
+  (dropped)
+
+========================================================================================
+[LAW]  1928  turns=0
+  excerpt : Question. You are employed by the city of Springfield? Question. In what
+            capacity? Answer. Well, I hold the title of commissioner of public property,
+            and my position is subject to election every four years. Question. That is,
+            you mean that you occupy an elective office? Answer. Yes, sir. Question. How
+            long have you had that office? 1 Answer. About 20 years. Question. Now, you
+            are acquainted with t...
+  (dropped)
+
+========================================================================================
+[LAW]  1893  turns=0
+  excerpt : By the way, I must confess that from my youth up I've had as much as I could
+            do to keep the terms of mine own honour precise. What is Honour? A word!
+            What is that word, Honour? Air. A trim reckoning!-Who hath it? He that died
+            o' Wednesday. Doth he feel it? No. Doth he hear it? No. Is it insensible,
+            then? Yea, to Falstaff. the dead. But will it not live with the living? No.
+            Why? Detraction will not...
+  (dropped)
+
+========================================================================================
+[TECHNOLOGY]  1911  turns=7
+  excerpt : By first closing stop cock in the main reservoir pipe and working the handle
+            back and forth a few times to exhaust the air from the brake valve; then by
+            removing the oil plugs in the cover; the slide valve and its seat may then
+            be lubricated, Q. What is the function of the straight air brake pressure
+            reducing valve? A. The straight air brake pressure reducing valve, limits
+            the pressure obtainable ...
+  USER  : What is the function of the straight air brake pressure reducing valve?
+  ASST  : The straight air brake pressure reducing valve, limits the pressure obtainable
+          in the straight air brake pipe and in the brake cylinder to the desired
+          amount.
+  USER  : At what pressure does the reducing valve usually limit the air for the
+          straight air brake?
+  ASST  : Usually at 45 pounds, but this may be varied to suit special conditions, and
+          the valve may be set to furnish either more or less.
+  USER  : How is the straight air pressure reducing valve adjusted?
+  ASST  : By removing the cap nut and screwing the regulating screw to increase the
+          pressure, and by unscrewing it to reduce the pressure.
+  USER  : Why are the spring case, the regulating spring, and regulating nut located
+          above the supply valve?
+
+========================================================================================
+[AGRICULTURE]  1902  turns=6
+  excerpt : KELLY. Well, if a field will yield 25 tons of cane per acre, that cane will
+            yield about 2 tons of sugar. Mr. TAWNEY. Two and a half tons of sugar? Mr.
+            KELLY. About that, yes, sir; say 10 per cent. We generally calculate 10 per
+            cent of the weight of the cane in finished product. 61 Mr. TAWNEY. It would
+            mean, then, a bounty of about $60 per acre on every acre of available sugar
+            land in Cuba if you t...
+  USER  : It would mean, then, a bounty of about $60 per acre on every acre of available
+          sugar land in Cuba if you took off the duty?
+  ASST  : Yes; two and a half tons. The duty is nearly $34 per ton.
+  USER  : It would increase the value of the land, then, about $75 per acre?
+  ASST  : Yes, sir.
+  USER  : That is assuming that the price of sugar does not fall?
+  ASST  : That is assuming a price of about 2 cents per pound for sugar.
+
+========================================================================================
+[LAW]  1816  turns=44
+  excerpt : There was a bed brought out of the lumber room, a nasty bed; and she said,
+            that if she could not lie on a bed of her own, she would not lie on that;
+            but went away. L. C. J. You say she went away; you can't say she was there
+            then? Wilkinson. I can't. Bambridge. I desire to know, if, when he carried
+            that bed up, he did not bring another down. Wilkinson. Yes; I said so
+            before, that you did order anot...
+  USER  : You say she went away; you can't say she was there then?
+  ASST  : I can't.
+  USER  : I desire to know, if, when he carried that bed up, he did not bring another
+          down.
+  ASST  : Yes; I said so before, that you did order another bed; but I said it was a
+          masty one,
+  USER  : Tell us, whether that was a good bed or not?
+  ASST  : I can't say it was, my lord: she had reason enough to complain of it; for I
+          lay upon a better bed myself, and that was not fit for her, who was a
+          gentlewoman.
+  USER  : Was it any other than what was usual for the people in the house?
+  ASST  : I bave known some lie on sacks; but because they could get no better.
+  USER  : Were there any better beds there?
+  ASST  : Yes; there were three, and you sent them away with her's: ever since she has
+          lain without a bed, unless she has had one within these ten days.
+  USER  : I desire to know, whether Mrs. Berkley was turned out of her room, or went out
+          of herself, at that time?
+  ASST  : She went out of it herself, when her bed was taken away.
+  USER  : Do you remember any goods taken away in the Fleet prison, and from whom?
+  ASST  : I was present, not at the breaking open the door, but after.
+  USER  : When was it?
+  ASST  : About 14 days after the 23rd of October.
+  USER  : Go on.
+  ASST  : I heard, that Mr. Bambridge was going in to look on some affairs of Mrs.
+          Berkley's, and I went into the room a little after the door was broken open.
+  USER  : Who was there?
+  ASST  : There were Mr. Bambridge, Turner, Savage, Pindar, Barnes, and Wilkinson, and
+          one or two more that were strangers.
+  USER  : What did you see done there?
+  ASST  : I saw the boxes broke open.
+  USER  : Who broke them open?
+  ASST  : Mr. Turner and Mr. Bambridge together.
+  USER  : What was there in them?
+  ASST  : Twenty ounces of Orrice lace, a great many good clothes, and a great many good
+          things.
+  USER  : I desire he may raise his voice; I cannot hear him.
+  ASST  : Raise your voice.
+  USER  : Did you see the boxes broke open?
+  ASST  : I was there present, and saw the boxes broke open by Mr. Bambridge and Mr.
+          Turner; and saw the china put into the window, and some Orrice lace; and saw
+          an emerald, or ruby, which he put in his pocket.
+  USER  : What did you see at that time?
+  ASST  : I saw the rings taken out.
+  USER  : What did you see put in his pocket?
+  ASST  : One was a pearl, the other an eme rald.
+  USER  : Were they set in rings?
+  ASST  : They were both separate.
+  USER  : What is the colour of an emerald?
+  ASST  : It is of a greenish colour.
+  USER  : These then were separate stones?
+  ASST  : Yes.
+  USER  : Were there any rings?
+  ASST  : I can't say.
+  USER  : What did he do with these stones?
+  ASST  : Mr. Bambridge put them into his pocket, and said they might be lost if put in
+          the portmanteau; and afterwards, as he was drinking punch, he took them out of
+          his pocket.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1836  turns=0
+  excerpt : Clear the way, my friends. How dares Licinius thus oppose the consul? Lic.
+            How dar'st thou, Manlius, thus oppose the tribune? Man. I'll show thee what
+            I dare, imprudent boy! Lictors, force through the passage. Lic. Romans,
+            guard it. Man. Gods! is my power resisted then with arms! Thou dost affront
+            the majesty of Rome. Lic. The majesty of Rome is in the people; Thou dost
+            insult it by opposing them....
+  (dropped)
+
+========================================================================================
+[EDUCATION]  1815  turns=0
+  excerpt : Q. With what did John baptize? A. With water. Sometimes they are questioned
+            promiscuously, in the following manner. Q. Who is Christ? A. The Son of God,
+            and Saviour of sinners. Q. What are the means of salvation in Christ ? A. By
+            grace ye are saved, through faith. Q. Where, and how, did Christ die for
+            sinners ? A. He was crucified on Mount Calvary, near Jerusalem. Q. Who were
+            crucified with him? A...
+  (dropped)
+
+========================================================================================
+[NAVAL SCIENCE]  1904  turns=0
+  excerpt : No. Mr. CHAMBERLAIN. That is a straight-out defensive proposition that any
+            nation has a right to make. Senator LODGE. Certainly. Mr. CHAMBERLAIN. They
+            have done it. Senator LODGE. I am very glad to know that. It is an important
+            precedent. Representative MINOR. While you are on your feet, and as you are
+            considered an authority, how are Canadian bounties paid? Senator LODGE. They
+            pay bounties to the...
+  (dropped)
+
+========================================================================================
+[SOCIAL SCIENCES]  1922  turns=18
+  excerpt : Senator TOWNSEND. What was your pay for five days? Mr. CHAPMAN. It was $5.83
+            a day. Senator TOWNSEND. For five days? Mr. CHAPMAN. For one day. Senator
+            TOWNSEND. And it was to continue for five days, I mean; that is, five days
+            would constitute a week's work? Mr. CHAPMAN. Yes, sir; five days' pay would
+            constitute a week's work. Senator TOWNSEND. For six days' work? Mr. CHAPMAN.
+            We were requested to ...
+  USER  : What was your pay for five days?
+  ASST  : It was $5.83 a day.
+  USER  : For five days?
+  ASST  : For one day.
+  USER  : And it was to continue for five days, I mean; that is, five days would
+          constitute a week's work?
+  ASST  : Yes, sir; five days' pay would constitute a week's work.
+  USER  : For six days' work?
+  ASST  : We were requested to perform six days' service for five days' pay.
+  USER  : How much a day?
+  ASST  : $5.83, sir, per day.
+  USER  : That would be $29.15 a week. How many hours a day?
+  ASST  : Eight hours, sir. The hours were determined upon the volume of traffic moved.
+          There was no set number of hours.
+  USER  : But was it in actual fact eight hours? That was what you did work, eight
+          hours?
+  ASST  : We worked eight hours. Some days only seven and a half hours, some days eight
+          and a half hours, but an average of eight hours a day, sir.
+  USER  : For the six days or five days?
+  ASST  : Six days.
+  USER  : Is that all of your statement?
+  ASST  : Except that it may be thought that the railroad property, or the individual
+          railroad, might have revised this billing themselves, or through some
+          employees of their own attempt to revise it; but the railroad companies have
+          audit and revision departments.
+
+========================================================================================
+[LAW]  1915  turns=18
+  excerpt : "Q. Did you have the currency on hand or send out and get it? Sent out and
+            got it. I went out and got it. A. "Q. Where did you get it? A. I don't
+            remember, I had to go to several banks. "Q. Did Mr. Glass tell you he wanted
+            you to give it to him in currency? A. Yes, sir." 191 These admissions led to
+            close questioning of Mr. Zimmer. The following is taken from his testimony
+            given before the Grand Ju...
+  USER  : Did you have the currency on hand or send out and get it?
+  ASST  : Sent out and got it. I went out and got it.
+  USER  : Where did you get it?
+  ASST  : I don't remember, I had to go to several banks.
+  USER  : Did Mr. Glass tell you he wanted you to give it to him in currency?
+  ASST  : Yes, sir.
+  USER  : Now, in what way did that money appear in the books?
+  ASST  : Didn't appear in the books.
+  USER  : How was it taken care of?
+  ASST  : No voucher was ever made for it.
+  USER  : How would your cash account for it?
+  ASST  : It wasn't taken out of the cash account, so far as I know.
+  USER  : What was it taken from?
+  ASST  : By check issued on the regular bank account.
+  USER  : Who was the check made payable to?
+  ASST  : Eaton, treasurer, the same as other coin checks are issued, coin or currency.
+  USER  : It would have appeared somewhere in the books, that check, that amount would
+          be deducted from the bank account?
+  ASST  : Yes, sir; but carried in the expense account of the cash suspense.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1892  turns=0
+  excerpt : Celso. I would not have her cut it, neither with the scissors nor with a
+            razor, but with the blade of the ima gination. Behold how this Selvaggia
+            mocks all I say! And yet she is in the wrong, for I do not so to her. But
+            patience; time peradventure will show her her error, since nought else will
+            avail. But to return to the matter: now that we have her hair, fair, fine,
+            soft, waving, abundant, long,...
+  (dropped)
+
+========================================================================================
+[EDUCATION]  1885  turns=12
+  excerpt : Q. Are children much tempted to the commission of it? A. Yes. Q.-Is
+            untruthfulness or lying a low and degrading vice, repugnant to conscience,
+            punishable by law, and universally abhorred and condemned? A. Yes. Q. And
+            yet you say children are guilty of it, and greatly tempted to its
+            commission? A. Yes. Q. Are there instances recorded in Scripture of this sin
+            being instantly visited by the punishmen...
+  USER  : Are children much tempted to the commission of it?
+  ASST  : Yes.
+  USER  : Is untruthfulness or lying a low and degrading vice, repugnant to conscience,
+          punishable by law, and universally abhorred and condemned?
+  ASST  : Yes.
+  USER  : And yet you say children are guilty of it, and greatly tempted to its
+          commission?
+  ASST  : Yes.
+  USER  : Are there instances recorded in Scripture of this sin being instantly visited
+          by the punishment of death?
+  ASST  : Yes.
+  USER  : Ought any one to respect, or esteem, a known liar?
+  ASST  : No.
+  USER  : Would you willingly associate with, or make a companion of, any boy or girl
+          known to be a liar?
+  ASST  : No.
+
+========================================================================================
+[LAW]  1889  turns=23
+  excerpt : A. Well, I did general clerical service. Q. Was it an important part of the
+            work? A. I suppose so. Q. In your judgment was the work prosecuted with
+            proper expedition or rapidity? A. Well, it was not my duty to say. Perhaps
+            if I were conducting the work I would have been a little more expeditious,
+            but I did all I could, as well as I could, and as fast as I could. Q. What
+            is your view in regard to t...
+  USER  : Was it an important part of the work?
+  ASST  : I suppose so.
+  USER  : In your judgment was the work prosecuted with proper expedition or rapidity?
+  ASST  : Well, it was not my duty to say. Perhaps if I were conducting the work I would
+          have been a little more expeditious, but I did all I could, as well as I
+          could, and as fast as I could.
+  USER  : What is your view in regard to the general prosecution of the work. Was it
+          done as expeditiously as it might have been done?
+  ASST  : Perhaps if our head had been there it would have been a little different. We
+          were like sheep without a shepherd part of the time.
+  USER  : Well, when your shepherd was there did it require your whole time?
+  ASST  : It required our whole time, yes.
+  USER  : You did nothing else but work steadily at that?
+  ASST  : Yes; our head required us to do certain things, and we did them under his
+          direction. I stayed during my office hours. Most of the time I worked outside
+          of office hours.
+  USER  : Did you for the copy of this work take the printed pages?
+  ASST  : Very little.
+  USER  : How much of it was in original manuscript copy?
+  ASST  : I could not tell the proportion. The notes material was all manuscript.
+  USER  : But the laws were generally printed?
+  ASST  : I would not say generally; some of them were. We had quite a lot from
+          manuscript.
+  USER  : Did you go back and take the original engrossed copies of all those laws and
+          compare them with the printed laws?
+  ASST  : Yes, sir, and indicated the differences in spelling, etc.
+  USER  : That is, if a word was misspelled in the engrossed copy you carried that into
+          the present volume?
+  ASST  : We did.
+  USER  : If a word had a capital letter at the end instead of the beginning you put it
+          in this printed matter?
+  ASST  : Not in the acts.
+  USER  : If the word Committee, for instance, was spelled Comtee, the word was printed
+          in that way?
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1845  turns=0
+  excerpt : I do not know. Has she treated you ill? No. Is she kind to you? Does she
+            take care of you? Yes. Why do you beat her? In order to kill her. How! In
+            order to kill her? Yes, I desire that she may die. Your blows cannot kill
+            her; you are too young for that. I know it. One must suffer, to die. I wish
+            to make her sick, so that she may suffer and die, as I am too small to kill
+            her at a blow. When she is ...
+  (dropped)
+
+========================================================================================
+[LAW]  1909  turns=0
+  excerpt : Q. Train loading is a very important element on the cost per ton per mile of
+            movement, is it not? Q. Very important, isn't it? A. Yes, sir. Q. More
+            important than the average length of haul? A. Well, that would be pretty
+            hard to say; it is a very important element, though. Q. And the proportion
+            that is in through, and the proportion that is in local trains, is very
+            important on the total, is it no...
+  (dropped)
+
+========================================================================================
+[AGRICULTURE]  1909  turns=0
+  excerpt : The minute you turn it into the stream it is subject to all the
+            contamination of that stream. Furthermore, the company turns out the low-
+            water discharge of the river, uses it for power, and turns it back into the
+            stream, where there are irrigators below, and the riparian rights of the
+            settlers below would be involved. Mr. MCCUTCHEON. Does the riparian right
+            attach to this water which you propose t...
+  (dropped)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1841  turns=0
+  excerpt : Question. Can you tell me, child, who made you? Answer. God made me and all
+            things. Q. For what did God. make you? A. To be good and happy. Q. What is
+            it to be good? A. To love and obey my parents, to speak the truth always,
+            and to be just and kind to all persons. Q. Can God know whether you be good
+            or not? A. Yes; for though we cannot see God, yet he sees us, wherever we
+            are, by night as well as ...
+  (dropped)
+
+========================================================================================
+[LAW]  1882  turns=0
+  excerpt : Q. You have seen no other, within the last two years? A. No, sir. Q. By whom
+            has the paddle been used? A. By the principal keeper. Q. Has any other
+            keeper the right to use it? A. No, sir; not as I understand it; I have never
+            seen any other officer use it. Q. You understand that when it is so used, it
+            is used in the presence of the physician? Q. Invariably when you have seen
+            it used? A. Yes, sir. Q...
+  (dropped)

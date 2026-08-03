@@ -1,0 +1,347 @@
+route: how_to_qa
+model: deepseek-v4-pro
+seed:  1
+n:     20
+kept:  17/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that tells how something is done or
+made — a method, recipe, process, or technique. Work in this order.
+
+1. FIND THE PROCEDURE FIRST. Choose the sequence of steps the passage gives for doing
+   or making ONE thing, and copy it VERBATIM as the answer.
+   - Return it as "spans": exact quotations from the passage that, read in order, give
+     the steps of the method from start to finish. Prefer ONE contiguous span; use up
+     to 4 only because the steps are spread out, always the fewest, longest
+     spans that hold the procedure together.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder, or add any word not in the passage — including connecting words between
+     spans. Only select and order the author's own sentences.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
+   - Do NOT choose spans that lean on a figure, plate, table, or page the reader cannot
+     see ("as in Fig. 4", "see p. 20"); pick steps that stand without them, or omit.
+
+2. THEN WRITE THE QUESTION the procedure answers.
+   - Ask how the thing is done or made: "How is ... made?", "How does one ...?", "By
+     what process is ... prepared?", "What are the steps in ...?". The spans must give
+     the COMPLETE method your question asks for.
+   - Plain period register, pre-1930s English — no word, term, or idiom that came into
+     use after 1930, no modern or conversational phrasing.
+   - Stands alone. Never mention the source — no "the passage", "the text", "described",
+     "above". Ask as if setting a practical exercise.
+   - Self-situating — name the actual thing made or done (the process, dish, material,
+     or operation) so the question makes sense to someone who never saw the passage.
+     Never leave a bare "this preparation" or "the process".
+   - Do NOT put the steps, or their distinctive wording, in the question.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[AGRICULTURE]  1862  prose_score 0.45
+  excerpt : In the thrust the swimmer lies horizontally upon his waist, and makes the
+            common motions in swimming. He then simply stretches one arm forwards, as in
+            swimming on the side, but remains lying upon the waist, and, in a widely
+            described circle, he carries the other hand, which is working under the
+            breast, towards the hip. As soon as the arm has completed this motion, it is
+            lifted from the water in a ...
+  Q       : How is the thrust executed in swimming?
+  A       : He then simply stretches one arm forwards, as in swimming on the side, but
+            remains lying upon the waist, and, in a widely described circle, he carries
+            the other hand, which is working under the breast, towards the hip. As soon
+            as the arm has completed this motion, it is lifted from the water in a
+            stretched position, and thrown forward in the greatest horizontal level, and
+            is then sunk with the hand flat into the water; while the swimmer thus
+            stretches forth the arm, he, with the other hand stretched as wide as
+            possible, describes a small circle in order to sustain the body; after this
+            he brings his hand in a largely described circle rapidly to the hip, lifts
+            the arm out of the water, and thrusts it forward. During the describing of
+            the larger circle the feet make their movements.
+
+========================================================================================
+[SCIENCE]  1919  prose_score 0.60
+  excerpt : 6. If time permits, other organs of the plant may be tested for food in the
+            same way, and starch grains may be studied under the microscope. Scrapings
+            from potato, the root of the canna, and various grains will furnish material
+            for the study. 1 Benedict's solution: Dissolve 173 gm. copper acetate and
+            100 gm. anhydrous sodium carbonate in 600 cc. of distilled water. Filter,
+            and add water until the ...
+  Q       : How is Benedict's solution prepared?
+  A       : Dissolve 173 gm. copper acetate and 100 gm. anhydrous sodium carbonate in
+            600 cc. of distilled water. Filter, and add water until the total solution
+            is 850 cc. Dissolve 17.3 gm. of copper sulfate in 100 cc. of water and
+            dilute to 150 cc. Then mix the two solutions, which together will make a
+            liter of Benedict's solution.
+
+========================================================================================
+[AGRICULTURE]  1911  prose_score 0.99
+  excerpt : Green peas can be had on the table until the first of August-with especial
+            care till the middle of that month, but not later, for very late plantings
+            will surely mildew. The earliest corn should come on the table in June, and
+            the later sorts should not be exhausted before October. I told you how my
+            boy George managed to grow some fine melons. The center of a cornfield not
+            only hides the delicious ...
+  Q       : By what simple method is subirrigation accomplished with tile?
+  A       : The simplest way is to run two-inch tile underneath the plants, below the
+            reach of the cultivator. When irrigation becomes necessary, the lower outlet
+            of the tile can be blocked and the water turned in. When the tiles are full
+            enough, water will soak out into the soil.
+
+========================================================================================
+[SCIENCE]  1903  prose_score 0.88
+  excerpt : Tests for Fats.2-(1) A simple method of testing a given food for fats is by
+            heating a small quantity, and then placing it on a piece of paper. If fat is
+            present, it will make a translucent grease spot on the paper. (2) Ether or
+            benzine, when poured upon foods, dissolves the fats, and when these solvents
+            evaporate, the fat or oil is left behind. (3) A solution of osmic acid
+            stains fats brown or bla...
+  Q       : How is a simple test for fats in a food performed?
+  A       : A simple method of testing a given food for fats is by heating a small
+            quantity, and then placing it on a piece of paper. If fat is present, it
+            will make a translucent grease spot on the paper.
+
+========================================================================================
+[MEDICINE]  1916  prose_score 0.98
+  excerpt : The first step toward demonstrating is to fix the nature of this prosperity
+            and of its reasonableness so firmly in the mind that the old beliefs in
+            regard to financial things will be done away with. Begin with some such
+            consideration as this: "I and my Father are one. Nothing can come to me or
+            go from me except as perfect love and wisdom and power direct; and I know
+            that this Spirit of Communion w...
+  Q       : How does one set the mind toward demonstrating prosperity?
+  A       : Begin with some such consideration as this: "I and my Father are one.
+            Nothing can come to me or go from me except as perfect love and wisdom and
+            power direct; and I know that this Spirit of Communion which permeates and
+            surrounds me, desires that I 107 DIRECT should manifest perfection on the
+            physical as well as on the spiritual plane. I have and shall always have
+            infinite, unmeasurable abundance. I can draw without stint upon physical
+            substance, just as I can and do upon the wisdom and power and love to use
+            all this prosperity righteously and scientifically." Now, this is to be your
+            covenant with yourself; and having set your seal to it, you are not to
+            consider for an instant anything less.
+
+========================================================================================
+[AGRICULTURE]  1922  prose_score 0.98
+  excerpt : If convenient to do so they should be placed on the north side of a
+            building, under a tree or some place as free as possible from the sun and
+            drying winds. The seed are stratified in the boxes or beds as follows: First
+            place in the bottom of the bed about an inch of sand. If large nuts such as
+            acorns or walnuts are to be stratified, follow with a layer of seed 2 to 3
+            inches deep. Then cover the se...
+  Q       : By what process are tree seeds stratified in boxes or beds?
+  A       : First place in the bottom of the bed about an inch of sand. If large nuts
+            such as acorns or walnuts are to be stratified, follow with a layer of seed
+            2 to 3 inches deep. Then cover the seed with sand until they are buried an
+            inch deep. Then follow with alternate layers of seed and sand until the bed
+            is filled. On top of the top layer of sand should be placed a mulch of pine
+            needles, leaves or chaff about an inch deep. If the seed are smaller such as
+            ash, tulip or maple, the layers of seed should not be over an inch deep, and
+            the layer of sand need not be quite an inch deep.
+
+========================================================================================
+[WORLD HISTORY AND HISTORY OF EUROPE, ASIA, AFRICA, AUSTRALIA, NEW ZEALAND, ETC.]  1896
+prose_score 0.94
+  excerpt : Topical Reading. In Parts II and III of this work will be found a series of
+            topics covering, in general, the whole field of American history. These may
+            be used in connection with courses of lectures or lessons (§ 7), or in the
+            preparation of written work. The effort is to digest and classify the more
+            valuable part of the immense literature of the subject. As a guide to the
+            reading these topics may...
+  Q       : How is a series of topics used as a guide in topical reading for American
+            history?
+  A       : In Parts II and III of this work will be found a series of topics covering,
+            in general, the whole field of American history. These may be used in
+            connection with courses of lectures or lessons (§ 7), or in the preparation
+            of written work. As a guide to the reading these topics may be used either
+            before or after set lectures; if used afterward they will serve to group the
+            material about the lecturer's notes (§ 62). Elaborate systems of notes will
+            naturally be so arranged as to bring the lecturer's material and the
+            material from the topical readings together into one part of the notes.
+
+========================================================================================
+[TECHNOLOGY]  1872  prose_score 0.99
+  excerpt : Punch Jelly. Dissolve an ounce and a half of isinglass in a pint of boiling
+            water. Rub off the peel of two lemons on ten ounces of loaf sugar, and pour
+            over it the juice of three lemons and one Seville orange, a quarter of a
+            pint of rum, and a quarter of a pint of brandy. Put it over the fire, and
+            pour the dissolved isinglass in, and simmer three or four minutes, not
+            longer; then pass the liquor t...
+  Q       : How is Punch Jelly made?
+  A       : Dissolve an ounce and a half of isinglass in a pint of boiling water. Rub
+            off the peel of two lemons on ten ounces of loaf sugar, and pour over it the
+            juice of three lemons and one Seville orange, a quarter of a pint of rum,
+            and a quarter of a pint of brandy. Put it over the fire, and pour the
+            dissolved isinglass in, and simmer three or four minutes, not longer; then
+            pass the liquor through a silk or muslin sieve into the mould.
+
+========================================================================================
+[MEDICINE]  1899  prose_score 1.00
+  excerpt : The methods that have given us the best results, and from which we have no
+            good grounds for departing, are as follows: Prepare the bouillon in the
+            usual way. Agar-agar reacts neutral or very slightly alkaline, so that the
+            bouillon may be neutralized before the agar-agar is added. Then add finely
+            chopped or powdered agaragar in the proportion of 1 to 1.5 per cent. Place
+            the mixture in a porcelain-l...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1871  prose_score 1.00
+  excerpt : Take, for example, the number 7542; 7542=7000+500 + 40+ 2; and 70007 times
+            999 +7; 5005 times 99+5; 404 times 9+4; 2; where the figures expressing the
+            number of each order plus and 2 5* the exact number of times 9 are the
+            figures of the given number. Now, 7 times 999, 5 times 99 and 4 times 9,
+            being each divisible by 9 and by 3, if the sum of the ones represented by
+            the figures of the number are d...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1894  prose_score 1.00
+  excerpt : The antelope are accustomed to see carts and natives, and will generally
+            allow them to pass within about a hundred and fifty yards, while the sight
+            of a European will start them off at once; but in most places in Central and
+            Northern India these accessories are not needed. The pleasantest way of
+            shooting is to ride a quiet horse, which will do for stalking if the
+            antelope are wild or for riding do...
+  Q       : How does one shoot antelope in Central and Northern India?
+  A       : The pleasantest way of shooting is to ride a quiet horse, which will do for
+            stalking if the antelope are wild or for riding down a wounded buck, taking
+            a few coolies with you to carry game, luncheon, guns and cartridges.
+
+========================================================================================
+[MEDICINE]  1891  prose_score 0.75
+  excerpt : The condition of the atmosphere of the interior may then be observed. This
+            fact should be impressed upon the mind of every fireman that heat and smoke,
+            by their lightness, tend to rise; that therefore the intensity of heat and
+            the density of smoke increase rapidly as the ceiling is approached, and
+            conversely, the heat becomes less oppressive and the air much freer from
+            smoke as the floor is neared...
+  Q       : By what method do firemen move about and ventilate a smoke-filled room?
+  A       : By crawling upon the hands and knees, or by lying flat upon the floor,
+            firemen will find they can get about, or remain in a very smoky room for a
+            113 considerable length of time, where the upright position could not be
+            maintained for more than a moment or so. If the amount of smoke and heat in
+            any way interferes with the firemen's efforts in finding or extinguishing
+            the fire, there should be no delay in providing for the rapid escape of both
+            heat and smoke. Windows should be lowered from the top; if this cannot be
+            done, then at least one should be broken at the top, the others being raised
+            from the bottom.
+
+========================================================================================
+[TECHNOLOGY]  1893  prose_score 0.96
+  excerpt : 122. Luminous Pane in connection with Prime Conductor of Electric Machine.
+            Cut a number of strips of tinfoil -inch wide and 1 inch shorter than the
+            width of the pane, then paste them in parallel lines across the pane,
+            commencing -inch from the top edge, and pasting the strips 1-inch apart.
+            Connect the ends of these strips alternately with short pieces of tinfoil,
+            so as to form one continuous zigza...
+  Q       : How is a luminous pane for an electric machine constructed?
+  A       : Cut a number of strips of tinfoil -inch wide and 1 inch shorter than the
+            width of the pane, then paste them in parallel lines across the pane,
+            commencing -inch from the top edge, and pasting the strips 1-inch apart.
+            Connect the ends of these strips alternately with short pieces of tinfoil,
+            so as to form one continuous zigzag line from top to bottom of the pane. At
+            the top, paste a piece of foil to connect the upper strip with a split lead
+            bullet. placed on the edge of the pane, and at the bottom, paste a similar
+            piece for the same purpose. When the foil is dry and firmly adherent to the
+            glass, take a sharp penknife, and cut out 3-inch gaps from the strips of
+            tinfoil to form a design, such as the figure of a man, the outline of a
+            flower, or of an animal, or of a church window, or of a portico, or of a
+            word.
+
+========================================================================================
+[EDUCATION]  1834  prose_score 1.00
+  excerpt : Great care is required that children do not imbibe terrific and gloomy ideas
+            of death; nor should they incautiously be taken to funerals, or allowed to
+            see a corpse. It is desirable to dwell on the joys of the righteous in the
+            presence of their heavenly Father, freed from every pain and sorrow, rather
+            than on the state and burial of the body, a subject, very likely, painfully
+            to affect the imagina...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1911  prose_score 0.40
+  excerpt : How then does it happen that the nitrate-of-silver solution has such a
+            beneficent action in conjunctival catarrh? The delicate bluish-white
+            pellicle which covers the conjunctiva directly after the application is due
+            to coagulation of the albumin of the cells in the upper layers of the
+            epithelium by the nitrate of silver, so that these layers become opaque and
+            die. The escharotic process acts like ...
+  Q       : How is the nitrate-of-silver solution applied to the eye?
+  A       : The application is made with a fine brush, and it is obvious that we must
+            avoid treating different patients with the same brush lest we transmit
+            diseases (especially trachoma) from one to the other.
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1911  prose_score 0.95
+  excerpt : The "log-fire". As timber-cutters and floaters often have to reside far away
+            in the wilderness but do not stay in the same place long enough to make it
+            worth while to erect a real hut, (17 they make their bed for the night near
+            a log-fire, called nying. A lair of spruce-twigs is arranged on the ground;
+            and two large timbers are placed to the windward side of it, the upper being
+            wedged up somewhat ...
+  Q       : How does one make a log-fire for sleeping in the open air in severe cold?
+  A       : A lair of spruce-twigs is arranged on the ground; and two large timbers are
+            placed to the windward side of it, the upper being wedged up somewhat above
+            the lower so as to form a slit between them. The slit is filled with chips
+            and splinters of light-wood which, after being lighthed, set the logs
+            aglowing.
+
+========================================================================================
+[EDUCATION]  1857  prose_score 1.00
+  excerpt : Meats should not be done very hard. They should be thoroughly cooked, but
+            not excessively so. A beefsteak that is still red in the inside when cut,
+            has far more nourishment in it than one that is brown throughout. Variety in
+            diet. At first the child should be allowed to suck the meat only, so as to
+            obtain the juices, but as the experiment proves successful, it may be
+            allowed what it will try to ge...
+  Q       : By what process is meat first given to a young child?
+  A       : At first the child should be allowed to suck the meat only, so as to obtain
+            the juices, but as the experiment proves successful, it may be allowed what
+            it will try to get, namely, the meat itself. This should be cut very fine,
+            and given to it in small pieces, and not entirely alone. It should be
+            accompanied with bread, or potato, or other starchy food.
+
+========================================================================================
+[AGRICULTURE]  1907  prose_score 0.38
+  excerpt : Among higher animals and plants the new individual is the direct product of
+            two others, the male and the female parent, -and is of necessity different
+            from either, being a product of both. In bisexual reproduction, therefore,
+            biologists recognize a fundamental cause of variation, slight if the parents
+            are of like blood lines, extreme if of radically different, as in hybridism.
+            161 This view of the...
+  Q       : What is the cause of variation in bisexual reproduction?
+  A       : In bisexual reproduction, therefore, biologists recognize a fundamental
+            cause of variation, slight if the parents are of like blood lines, extreme
+            if of radically different, as in hybridism.
+
+========================================================================================
+[TECHNOLOGY]  1913  prose_score 0.50
+  excerpt : It is best to conceal the fan with merchandise or a show card. The current
+            of air should strike the glass from one side and sweep over the entire
+            surface, thus creating a circulation of air over as much as possible of the
+            surface. In large windows two fans should be used. The windows frost over
+            because of the difference in temperature in front and back of the glass. If
+            the air in the window is war...
+  Q       : How does one prevent a store show-window from frosting over?
+  A       : The windows should be enclosed, the back, sides and floor being practically
+            air-tight so that none of the warm, moisture laden air of the store or
+            basement will find its way in. Sometimes this will be all that is necessary,
+            but in 49 most cases you will have to go further and have some form of an
+            opening just below the glass to admit cold air into the window, and openings
+            in the top to let out the warm air.
+
+========================================================================================
+[SCIENCE]  1891  prose_score 0.86
+  excerpt : Prove escape of air in first case. Compressed air exerts increased pressure
+            on enclosing vessel, and assumes original size when pressure removed.
+            Ex.-Note strain on sides of closed ball when pressed. Sum up result of
+            observations on balls. Parts of pop-gun-tube, rod, inner cork or plug, loose
+            cork. Action of air enclosed between the corks; compression, resist. ance,
+            and pressure. Ex.-Shoot gun; no...
+  Q       : How is a pop-gun constructed and made to shoot?
+  A       : Parts of pop-gun-tube, rod, inner cork or plug, loose cork. Action of air
+            enclosed between the corks; compression, resist. ance, and pressure.
+            Ex.-Shoot gun; note corks do not touch.

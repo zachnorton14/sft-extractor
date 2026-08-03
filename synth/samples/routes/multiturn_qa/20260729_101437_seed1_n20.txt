@@ -1,0 +1,524 @@
+route: multiturn_qa
+model: deepseek-v4-pro
+seed:  1
+n:     20
+kept:  19/20
+
+--- SYSTEM PROMPT ---
+You are given a short fact-rich passage from a pre-1930s book and a target number of
+question-and-answer EXCHANGES for it (its "exchanges" field — one exchange is one user
+question plus one assistant answer). Build a question-and-answer conversation of that
+length, between a curious USER who asks and an ASSISTANT who answers. Work in this order.
+
+1. Pick `exchanges` DIFFERENT facts the passage states — a definition, a cause, a
+   number, a consequence, a name. Each fact becomes one assistant answer, so choose
+   facts that lie in DISTINCT places in the passage. Use as many as `exchanges` asks
+   for; only if the passage genuinely lacks that many distinct facts, use fewer (never
+   pad with weak or repeated facts, and never fewer than one).
+
+2. For EACH fact, write the assistant's answer as "spans": a list of ONE exact
+   quotation from the passage (up to 2 only if the fact genuinely lies in
+   separate places).
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize, or
+     add any word not in the passage. Take WHOLE sentences: begin and end each span at
+     a sentence boundary and keep its terminal punctuation.
+   - The ASSISTANT ONLY ANSWERS — it never asks a question and never ends on a question.
+
+3. For EACH answer write the USER question ("q") it answers.
+   - The span must CORRECTLY AND COMPLETELY answer the question. Do not demand a name,
+     number, or identity the span does not supply. Do not reveal the answer, or its
+     distinctive wording, in the question.
+   - Plain period-schoolbook register, pre-1930s English: period vocabulary, spelling,
+     and phrasing. Use no word, term, or idiom that came into use after 1930. Never
+     mention the source — no "the passage", "the text", "according to", "mentioned", 
+     "the author".
+   - The FIRST question must SELF-SITUATE — it must make sense to someone who NEVER saw
+     the passage. Name the actual subject: the war, battle, place, ruler, work, statute,
+     or scripture involved, using your OWN knowledge of the subject when the passage
+     assumes it (e.g. "the Revised Statutes of the United States", "at the Battle of
+     Williamsburg", "in the Gospel of Luke"). Frame the reader — supply the era, place,
+     subject, or situation that makes the span the natural, correct answer.
+     FORBIDDEN in the first question — references that mean nothing on their own:
+     catalog, specimen, or figure numbers ("specimen 167"); a bare "the statute", "the
+     act", "the gun", "the assembly", "the expedition"; a bare "it", "this", "they",
+     "these"; or "two specific verses" / "a certain scholar" without naming which. If
+     the fact you picked cannot be made to stand alone (it hinges on an item known only
+     from the passage), pick a DIFFERENT fact to open with — one that can.
+   - Any LATER question (when `exchanges` > 1) builds on the conversation so far — it
+     MAY and SHOULD use natural follow-up phrasing that refers back to what was ALREADY
+     ESTABLISHED in an earlier turn ("And why did that happen?", "What became of him
+     afterward?", "How was it accomplished?"). But a pronoun or "the ___" is allowed
+     ONLY when its antecedent was actually named in a previous turn; never introduce a
+     NEW bare reference the conversation has not yet identified. Keep the thread
+     coherent: each question should follow from the last answer.
+
+4. Return the exchange as "turns": an ordered list ALTERNATING user, assistant, user,
+   assistant …, beginning with a user question and ending with an assistant answer —
+   one user+assistant pair per exchange, so `exchanges` pairs (2 x `exchanges` turns),
+   or fewer only if the passage lacked enough distinct facts. A user turn carries "q";
+   an assistant turn carries "spans". If the passage states no clean fact at all, emit
+   NO item for it.
+
+Input: JSON array [{"i": 0, "text": "...", "exchanges": N}, ...]
+Output JSON only:
+  [{"i": 0, "turns": [{"role": "user", "q": "..."},
+                       {"role": "assistant", "spans": ["exact quotation"]},
+                       {"role": "user", "q": "..."},
+                       {"role": "assistant", "spans": ["exact quotation"]}]}, ...]
+
+
+========================================================================================
+[SCIENCE]  1894  turns=6
+  excerpt : The magnets are supposed to be horizontal and to lie flatwise throughout
+            these experiments. I. Place magnet No. 3 on the balance pan; counterpoise
+            it, and raise the balance beam by its lever, so that the magnet may swing
+            freely. Find whether the poles of two other magnets marked “N” attract or
+            repel that of the suspended magnet marked in the same way, when held at a
+            short distance (2 or 3 cm.) fro...
+  USER  : In a course of experimental physics, if one has a magnet on a balance pan and
+          has found that two poles of other magnets are similar in their action upon its
+          poles, what is the next step to be taken with those two similar poles?
+  ASST  : Find whether two poles found in I. to be similar attract or repel each other;
+          also whether two dissimilar poles attract or repel each other.
+  USER  : And how is the apparatus to be arranged for the trial of the poles of magnet
+          No. 1 and magnet No. 2?
+  ASST  : Counterpoise magnet No. 1 on the balance, and clamp magnet No. 2 so that one
+          of its poles may be directly above the similar pole of No.
+  USER  : What is the very first operation of the whole series, before any comparisons
+          of poles are made?
+  ASST  : Place magnet No. 3 on the balance pan; counterpoise it, and raise the balance
+          beam by its lever, so that the magnet may swing freely.
+
+========================================================================================
+[SCIENCE]  1890  turns=4
+  excerpt : The chief varieties of zoological workers coming under this head are (1) the
+            museum-makers of old days and their modern representatives the curators and
+            describers of zoological collections, (2) early explorers and modern
+            naturalist-travellers and writers on zoogeography, and (3) collectors of
+            fossils and palæontologists. Gradually since the time of Hunter and Cuvier
+            anatomical study has associate...
+  USER  : What honour belongs to Edward Wotton in the history of the science of zoology
+          after the Middle Ages?
+  ASST  : It was Wotton's merit that he rejected the legendary and fantastic accretions,
+          and returned to Aristotle and the observation of nature.
+  USER  : What group did Wotton add to the bloodless animals that Aristotle had not
+          distinguished?
+  ASST  : Wotton follows Aristotle in the division of animals into the Enama and the
+          Anæma, and in fact in the recognition of all the groups above given, adding
+          only one large group to those recognised by Aristotle under the Anama, namely,
+          the group of Zoophyta, in which Wotton includes the Holothuria, Star-Fishes,
+          Medusa, Sea-Anemones, and Sponges.
+
+========================================================================================
+[SCIENCE]  1891  turns=6
+  excerpt : The present members of the Utah Commission (April, 1889) are Gen. John A.
+            McClernand, of Illinois, A. B. Carlton, of Indiana, George L. Godfrey of
+            Iowa, A. B. Williams of Arkansas, and Arthur L. Thomas, now residing in Salt
+            Lake City, formerly of Pennsylvania. William C. Hall, Territorial Secretary,
+            is ex-officio Secretary of the Commission. Of the Commissioners originally
+            appointed, only two rema...
+  USER  : Who composed the Utah Commission in the spring of 1889?
+  ASST  : The present members of the Utah Commission (April, 1889) are Gen. John A.
+          McClernand, of Illinois, A. B. Carlton, of Indiana, George L. Godfrey of Iowa,
+          A. B. Williams of Arkansas, and Arthur L. Thomas, now residing in Salt Lake
+          City, formerly of Pennsylvania.
+  USER  : And which of those commissioners were hold-overs from the body's original
+          appointments?
+  ASST  : Of the Commissioners originally appointed, only two remain, Messrs. Godfrey
+          and Carlton.
+  USER  : What were the circumstances of Arthur L. Thomas's joining the commission in
+          1886?
+  ASST  : Mr. Thomas was appointed in December, 1886, vice A. S. Paddock resigned.
+
+========================================================================================
+[MEDICINE]  1905  turns=8
+  excerpt : No further event of importance is recorded for the remainder of 1695, except
+            a trifling dispute with the Water Bailiff at Chelsea. On May 22, 1696, the
+            Master entered into preliminary negotiations with Lord Cheyney touching the
+            purchase of the garden at Chelsea. Lord Cheyney, however, had only a life
+            interest in the ground, and was unlikely to outlive the thirty years' lease
+            which the Company held...
+  USER  : What business did the College of Physicians undertake with Lord Cheyney in the
+          spring of 1696?
+  ASST  : On May 22, 1696, the Master entered into preliminary negotiations with Lord
+          Cheyney touching the purchase of the garden at Chelsea.
+  USER  : Why did it seem improbable that negotiating with him would lead to a purchase?
+  ASST  : Lord Cheyney, however, had only a life interest in the ground, and was
+          unlikely to outlive the thirty years' lease which the Company held.
+  USER  : Who held the offices of Master and Wardens of the College in the year 1696 to
+          1697?
+  ASST  : The Master and Wardens for 1696-7 were Fige, Elton, and 115 Bearcroft.
+  USER  : What rule did the College lay down in December 1696 respecting the writing of
+          directions on Latin 'bills' sent to the Apothecary?
+  ASST  : In future, no fellow or member of the College of Physicians shall write a
+          direction for the use of the medicines by him prescribed, in the Latin 'bills'
+          that are to be sent to the Apothecary, except such 'bills' as shall be
+          prescribed for the Royal Family and except such 'bills' as shall be prescribed
+          for the hospitals.
+
+========================================================================================
+[SCIENCE]  1901  turns=8
+  excerpt : All conclusions drawn from experiments with the respiration apparatus are
+            based largely upon the income and outgo of nitrogen and carbon. As carbon is
+            a constituent of all possible compounds of the animal body except the
+            mineral, it is certain that when the body gains in carbon it gains in
+            organic substance of some kind, and if it loses in carbon there is a waste
+            of organic body substance. The gen...
+  USER  : In experiments with a respiration apparatus, upon what two substances are the
+          conclusions chiefly founded?
+  ASST  : All conclusions drawn from experiments with the respiration apparatus are
+          based largely upon the income and outgo of nitrogen and carbon.
+  USER  : What principle makes it certain that a gain of carbon in the animal body means
+          a gain of organic substance?
+  ASST  : As carbon is a constituent of all possible compounds of the animal body except
+          the mineral, it is certain that when the body gains in carbon it gains in
+          organic substance of some kind, and if it loses in carbon there is a waste of
+          organic body substance.
+  USER  : How is the general character of that gain or loss determined?
+  ASST  : The general character of the gain or loss can be determined by the nitrogen
+          balance.
+  USER  : When more carbon is gained or lost than can be accounted for by the nitrogen
+          gained or lost, in what form must the gain or loss have occurred?
+  ASST  : If more carbon is gained or lost than can possibly be associated with the
+          nitrogen gained or lost, then there has been a gain or loss of fat, because
+          protein and fat being the main constituents of the animal carcass, any
+          considerable retention of carbon must be in one of these forms.
+
+========================================================================================
+[SCIENCE]  1882  turns=8
+  excerpt : Reduce and to least similar fractions. Since 12 is the least common multiple
+            of the denominators 4 and 6, the fractions can be reduced to twelfths. Since
+            12 equals 4 times 3 or 6 times 2, I reduce to twelfths by multiplying its
+            terms by 3, and § to twelfths by multiplying its terms by 2; and I obtain
+            the least similar fractions and 12. Reduce to least similar fractions 7. The
+            fractions and. 9. & a...
+  USER  : When reducing the fractions 3/4 and 5/6 to least similar fractions, what is
+          the least common multiple of their denominators?
+  ASST  : Since 12 is the least common multiple of the denominators 4 and 6, the
+          fractions can be reduced to twelfths.
+  USER  : And by what numbers are the terms of 3/4 and 5/6 multiplied to reduce them to
+          twelfths?
+  ASST  : Since 12 equals 4 times 3 or 6 times 2, I reduce to twelfths by multiplying
+          its terms by 3, and § to twelfths by multiplying its terms by 2; and I obtain
+          the least similar fractions and 12.
+  USER  : In the written work for reducing 4/9, 2/15, and 11/18 to least similar
+          fractions, what is the least common multiple of the three denominators?
+  ASST  : I first find the least common multiple of the given denominators -9, 15, 18-to
+          be 90.
+  USER  : After dividing 90 by each denominator, by what numbers are the terms of those
+          three fractions respectively multiplied?
+  ASST  : I then multiply the terms of by 10, the terms of by 6, and the terms of by 5;
+          and obtain 48, 18, and 55, the least similar fractions required.
+
+========================================================================================
+[AGRICULTURE]  1893  turns=6
+  excerpt : Bernicla of F. Boie (1822).-The birds comprising the present genus are
+            characterised by their short subconical bills, much shorter than the head.
+            The inner edge of the mandibles is nearly straight, and the lamellæ are
+            concealed or nearly so. The strongly contrasted colours of the plumage are
+            also very characteristic. The wings are long and ample and more pointed than
+            in Anser; the tail is short an...
+  USER  : What are the bill and nostril characteristics that distinguish the geese of
+          the genus Bernicla?
+  ASST  : The bill is higher than broad at the base, the unguis ovate; nostrils oval and
+          nearly central.
+  USER  : Where does the typical form of the Brent Goose breed?
+  ASST  : The typical form of the Brent Goose breeds on Spitzbergen, Franz Josef Land,
+          and Nova Zembla, but how far to the east is unknown.
+  USER  : And how is Bernicla nigricans distinguished from it in plumage?
+  ASST  : Distinguished from the Brent Goose by having the white of the neck meeting in
+          front and forming a nearly uninterrupted collar, and the black of the breast
+          reaching to the belly.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1867  turns=4
+  excerpt : I desired them to go into the smoke, which they would by no means do. I then
+            took one of them and thrust him into the smoke, and willed one of my company
+            to tread out the fire, and spurn it into the sea, which was done to show
+            them that we did contemn their sorceries. It is a very English story-exactly
+            what a modern Englishman would do; only, perhaps, not believing that there
+            was any real devil in...
+  USER  : When Captain John Davis attempted to sail north-west from Gilbert's Sound in
+          the 1580s, what did he meet with upon the sea in latitude 63°?
+  ASST  : Leaving Gilbert's Sound, Davis went on to the north-west, and in lat. 63° fell
+          in with a barrier of ice, which he coasted for thirteen days without finding
+          an opening.
+  USER  : What fate overtook him in later life, in 1604, when he was conveying Sir
+          Edward Michellthorne to India?
+  ASST  : In taking out Sir Edward Michellthorne to India, in 1604, he fell in with a
+          crew of Japanese, whose ship had been burnt, drifting at sea, without
+          provisions, in a leaky junk. He supposed them to be pirates, but he did not
+          choose to leave them to so wretched a death, and took them on board; and in a
+          few hours, watching their opportunity, they murdered him.
+
+========================================================================================
+[SCIENCE]  1821  turns=4
+  excerpt : Let it be proposed, for example, to add 33 and 23; we first take the sum of
+            and }, or of and. It is or 1; then the sum total is 63. Of the
+            Multiplication and Division of Fractions. 101. THE rule for the
+            multiplication of a fraction by an integer, or whole number, is to multiply
+            the numerator only by the given number, and not to change the denominator:
+            thus, 2 times, or twice 2 times, or twice } 3 ...
+  USER  : In the operation of multiplying a simple fraction by a whole number, when is
+          it judged more expedient to divide the denominator by the given integer rather
+          than to multiply the numerator by it?
+  ASST  : Instead of this rule, we may use that of dividing the denominator by the given
+          integer; and this is preferable, when it can be used, because it shortens the
+          operation.
+  USER  : And what is the established rule that one abandons in order to employ that
+          preferable method?
+  ASST  : THE rule for the multiplication of a fraction by an integer, or whole number,
+          is to multiply the numerator only by the given number, and not to change the
+          denominator:
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1912  turns=8
+  excerpt : 19 provides that "No joint rule shall be repealed, amended or suspended
+            except by two-thirds vote in each house." All bills reported by all standing
+            committees go to the steering committee. See how this operates: After the
+            steering committee favorably passes upon a measure, both chairmen of the
+            committee must approve and sign it before the measure may come before either
+            house, and there is no powe...
+  USER  : What was the requirement for repealing, amending, or suspending a joint rule
+          of the Montana Legislature under the provision discussed by the writer?
+  ASST  : No joint rule shall be repealed, amended or suspended except by two-thirds
+          vote in each house.
+  USER  : And how did the operation of the Steering Committee, combined with the
+          political composition of the legislature, make that two-thirds vote
+          practically unattainable for certain measures?
+  ASST  : The only way to force action by either committee or chairman is to suspend the
+          rule, which requires a two-thirds vote in each house. There has not been a
+          session of the legislature in ten years in Montana in which the copper combine
+          has not had sufficient representation to prevent such action on any measure.
+  USER  : In the report by Mr. James W. Scott concerning the 1911 session, what specific
+          conduct of the lawmakers, especially on the final day, is cited as one of
+          their most disgraceful delinquencies?
+  ASST  : This desperate and unseemly struggle to perfect in twenty-four hours
+          legislation that had been dallied with for two months is one of the most
+          disgraceful delinquencies of the Montana lawmakers.
+  USER  : And what were the gross numbers of bills passed, and how many of those were
+          crowded through in that final rush?
+  ASST  : This legislature passed 223 bills, and 114 of these were rushed through on the
+          last legislative day.
+
+========================================================================================
+[TECHNOLOGY]  1868  turns=10
+  excerpt : Four small powers, concerning which no information is given. "Rumford
+            Falls," on the Androscoggin river, one of the largest, if not the largest in
+            the State. Height of the falls 162 feet eight inches, in a running distance
+            of one mile. Power, that of the whole Androscoggin river at that point. The
+            river is but ninety feet wide and could be dammed at comparatively small
+            expense. The bottom and side...
+  USER  : What was the recorded height of the Rumford Falls on the Androscoggin River in
+          the State of Maine?
+  ASST  : Height of the falls 162 feet eight inches, in a running distance of one mile.
+  USER  : At the time of the report, who held the ownership of this water power?
+  ASST  : The power is owned by Chaplin Virgin and others.
+  USER  : What is the calculated net horse power of the whole fall during a drought,
+          assuming a volume of water twenty-five per cent. less than that at Lewiston,
+          or 70,500 cubic feet per minute at low run?
+  ASST  : The 255 power of the whole fall in a drouth is not less than 15,974 net horse
+          power, or 958,440 spindles.
+  USER  : What existing works were already standing at Rumford falls, utilizing only an
+          insignificant fraction of the available power?
+  ASST  : Improvements, one saw mill, one grist mill, and some other small works at
+          Rumford falls. An insignificant fraction of the power is employed.
+  USER  : What was the condition of the stream's bed and sides that rendered the site
+          suitable for damming at comparatively small expense?
+  ASST  : The bottom and sides of the stream are granite ledge; the rocks are suitable
+          for building purposes.
+
+========================================================================================
+[LAW]  1906  turns=6
+  excerpt : Darby, for appellee. Principal and Surety-Pledge of Indemnity. In an action
+            on a note, a surety can not complain that the payee did not make the pledge
+            of indemnity perfect, where it is neither alleged nor proved that he could
+            have done so. Principal and Surety-Negligence-Release of Surety. It was held
+            that the payee of a note was not guilty of negligence or fraud in regard to
+            a pledge of indemnit...
+  USER  : In the 1873 case of Herndon against Charles C. Moore, what defence was made by
+          Moore, who had been sued on a note, and under what capacity did he say he had
+          signed it?
+  ASST  : Moore, in his answer, admits the execution of the note, but says he executed
+          the same as the surety of his co-obligor, J.
+  USER  : And what complaint concerning a pledge of indemnity was he not permitted to
+          raise?
+  ASST  : In an action on a note, a surety can not complain that the payee did not make
+          the pledge of indemnity perfect, where it is neither alleged nor proved that
+          he could have done so.
+  USER  : Upon what ground, then, did the court hold that the payee's conduct did not
+          discharge him from his obligation?
+  ASST  : It was held that the payee of a note was not guilty of negligence or fraud in
+          regard to a pledge of indemnity so as to release the surety on a note from
+          liability.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1910  turns=4
+  excerpt : Freeman, Civilization and Barbarism, p. 61. Also, ibid, a quotation from the
+            "learned and pious Rev. Cotton Mather:" "Many of them were broiled unto
+            death in the avenging flames; many climbing to the tops of the palisades,
+            were a fair mark for mortiferous bullets; and many who had the resolution to
+            issue forth were slain by the English who stood ready to bid them welcome."
+            'DeForest, History of Co...
+  USER  : In Captain John Mason's account of the Pequot War, from what unusual article
+          carried in one man's pocket did Lieutenant Bull receive his preservation?
+  ASST  : Lieutenant Bull, by a hard piece of cheese which he carried in his pocket, by
+          which the fatal arrow was stopped; while two other men were saved by the hard
+          knot in their neckcloths.
+  USER  : And what was it that preserved Captain Mason himself during the fight?
+  ASST  : Mason was saved by his helmet; Lieutenant Bull, by a hard piece of cheese
+          which he carried in his pocket, by which the fatal arrow was stopped; while
+          two other men were saved by the hard knot in their neckcloths.
+
+========================================================================================
+[POLITICAL SCIENCE]  1914  turns=4
+  excerpt : F. Rhodes, Hist. of U. S. (1893), I, 441; A. B. Hart and E. Channing, Eds.,
+            Am. Hist. Leaflets, No. 17 (1894-1901); J. A. Woodburn, Political Parties
+            and Party Prob lems (1803); T. C. Smith, Liberty and Free Soil Parties in
+            the Northwest (1897), Parties and Slavery (1906). TICS.-Independent
+            movements in politics include all those that lead away from unswerving
+            adherence to the established parties....
+  USER  : What is the general definition of independent movements within the politics of
+          the United States?
+  ASST  : Independent movements in politics include all those that lead away from
+          unswerving adherence to the established parties.
+  USER  : Upon what class of citizens do these movements chiefly depend for their
+          support?
+  ASST  : They make an especial appeal to and depend for support on the large numbers of
+          citizens who, regarding party as an evil, are eager to join any movement that,
+          for the time, promises relief from the dominance of the organization.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1850  turns=4
+  excerpt : Ezra Smith, for Ashford. Mr. Lusher Gay, Mr. Benjamin Leavins, for
+            Killingley. Mr. Jedediah Strong, Capt. David Welch, for Litchfield. Mr.
+            Heman Swift, Mr. Thomas Russell, for Cornwall. Capt. Samuel Forbs, Maj'
+            Charles Burrell, for Canaan. Capt. Mathew Gillett, Mr. Seth Smith, for New
+            Hartford. Mr. Joshua Porter, Capt. James Landon, for Salisbury. Mr. Josiah
+            Phelps, Maj. Abijah Catlin, for Harwing...
+  USER  : What did the General Assembly of Connecticut resolve regarding the western
+          limits of the Colony in May 1774?
+  ASST  : Resolved, That this Assembly at this time will assert their claim and in some
+          proper way support such claim to those lands contained within the limits and
+          boundaries of the charter of this Colony, which are westward of the Province
+          of New York.
+  USER  : What body did the Assembly then create to pursue that claim, and who composed
+          it?
+  ASST  : Be it enacted by the Governor, Council and Representatives, in General Court
+          assembled, and by the authority of the same, That the Hone Mathew Griswold,
+          Esq', Eliphalet Dyer, Esq', Roger Sherman, Esq', William Samuel Johnson, Esq,
+          Samuel Holden Parsons, Silas Dean, William Williams and Jedediah Strong, Esq,
+          be and they are hereby appointed a committee with full power, to assist his
+          Honor, Governor Trumbull, in stating and taking proper steps to pursue the
+          claim of this Colony to said Western Lands; and any three of the aforesaid
+          committee are hereby authorized and directed to proceed as soon as may be
+          convenient to Philadelphia, to wait on his Honor Governor Penn with the
+          resolutions of this Assembly and such letter or letters as his Honor Governor
+          Trumbull with the advice of said committee shall write to his Honor the said
+          Governor Penn on that subject, and with power to treat with said Governor Penn
+          and the Agent or Agents of the Proprietaries of Pensylvania respecting an
+          amicable agreement between this Colony and the aforesaid Proprietaries
+          concerning the boundaries of this Colony and the Province of Pensylvania.
+
+========================================================================================
+[MEDICINE]  1876  turns=6
+  excerpt : A. B. Shipman, M.D., Anatomy and General Principles of Surgery. Ehrick
+            Parmly, M.D., D.D.S., Institutes of Dentistry, Dental Hygiene, and
+            Comparative Dental Anatomy. Corydon L. Ford, M.D., D.D.S., Microscopic
+            Anatomy, Physiology, and Pathology. R. F. Stevens, M.D., Chemistry, Materia
+            Medica, and Therapeutics. William Dalrymple, D.D.S., Demonstrator of
+            Operative and Mechanical Dentistry. L. G. Bart...
+  USER  : What befell the Philadelphia College of Dental Surgery after its chartering in
+          1850?
+  ASST  : But, unfortunately, the building in which it was located was destroyed by fire
+          in 1855, and its apparatus, museum, and records were consumed. The college,
+          after this, did not continue.
+  USER  : Who instructed the pupils in Institutes of Dentistry, Dental Hygiene, and
+          Comparative Dental Anatomy at that institution?
+  ASST  : Ehrick Parmly, M.D., D.D.S., Institutes of Dentistry, Dental Hygiene, and
+          Comparative Dental Anatomy.
+  USER  : Had a charter for a dental college been sought before that one was obtained?
+  ASST  : Previous to this date, five of the members of the Pennsylvania Association of
+          Dental Surgeons (shortly after the formation of that Society, in 1845),
+          attempted to procure the passage of a bill through the Legislature of that
+          State, incorporating a dental college, but were unsuccessful.
+
+========================================================================================
+[LAW]  1909  turns=6
+  excerpt : 19. In all factories, mercantile establishments, mills or workshops,
+            machines must not be placed so closely together as to be a serious menace to
+            those that have to pass between them. Passageways must be of ample width and
+            head room and must be kept well lighted and free from obstructions. 20.
+            Every factory, mercantile establishment, mill or workshop, shall be provided
+            with a sufficient number of ...
+  USER  : In factories and workshops, what provision must be made for the cleanliness
+          and decency of the operatives?
+  ASST  : Every factory, mercantile establishment, mill or workshop, shall be provided
+          with a sufficient number of water closets, earth closets, or privies, within
+          reasonable access of the persons employed therein, and such water closets,
+          earth closets or privies shall be supplied in the proportion of at least one
+          (1) to every thirty (30) male persons, and one to every twenty-five (25)
+          female persons; and whenever both male and female persons are employed, said
+          water closets and privies shall be provided separate and apart for the use of
+          each sex, and plainly marked by which sex they are to be used; and no person
+          or persons shall be allowed to use the closets or privies assigned to the
+          opposite sex; and such water closets or privies shall be constructed in an
+          approved manner and properly enclosed, and at all times kept in a clean and
+          sanitary condition.
+  USER  : What rules govern the placing of machinery and the passageways between it?
+  ASST  : In all factories, mercantile establishments, mills or workshops, machines must
+          not be placed so closely together as to be a serious menace to those that have
+          to pass between them. Passageways must be of ample width and head room and
+          must be kept well lighted and free from obstructions.
+  USER  : Whose use of the separate conveniences is expressly forbidden by the rule?
+  ASST  : And no person or persons shall be allowed to use the closets or privies
+          assigned to the opposite sex;
+
+========================================================================================
+[MEDICINE]  1825  turns=4
+  excerpt : Civiale is unquestionably the first who has produced and made trial of it.
+            This, however, is a method that can never be applied to males, nor even
+            successfully to females, except where the calculus is comparatively of small
+            dimensions, or the meatus is so far dilated by the passage of former calculi
+            as to render it unnecessary. In all other cases lithotomy Lithotomy. Lithia
+            vesi calis. Stone in th...
+  USER  : Who is acknowledged as the first to have produced and made trial of
+          lithotrity?
+  ASST  : Civiale is unquestionably the first who has produced and made trial of it.
+  USER  : To what class of patient can this method never be applied?
+  ASST  : This, however, is a method that can never be applied to males, nor even
+          successfully to females, except where the calculus is comparatively of small
+          dimensions, or the meatus is so far dilated by the passage of former calculi
+          as to render it unnecessary.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1809  turns=0
+  excerpt : So, in Chapman's version of the 17th Book of the Odyssey: 66 — and fill'd
+            his fulsome scrip," &c. Again, in the dedication to Burton's Anatomy of
+            Melancholy, p. 63: "noisome or fulsome for bad smells, as butchers'
+            slaughter houses," &c. It is likewise used by Shakspeare in King John, to
+            express some quality offensive to nature: "And stop this gap of breath with
+            fulsome dust." Steevens. Minsheu sup...
+  (dropped)
+
+========================================================================================
+[POLITICAL SCIENCE]  1905  turns=4
+  excerpt : Before the revolution there existed no such nation as the United States;
+            they then first associated as a nation, but for special purposes only. They
+            had all their laws to make, as Virginia had on her first establishment as a
+            nation. But they did not, as Virginia had done, proceed to adopt a whole
+            system of laws ready made to their hand. As their association as a nation
+            was only for special purpose...
+  USER  : What original defect in the creation of the federal compact did Mr. Jefferson
+          describe in his letter of August 26, 1799, to explain why the common law did
+          not automatically become the law of the United States?
+  ASST  : As their association as a nation was only for special purposes, to wit, for
+          the management of their concerns with one another and with foreign nations,
+          and the States composing the association chose to give it powers for those
+          purposes and no others, they could not adopt any general system, because it
+          would have embraced objects on which this association had no right to form or
+          declare a will.
+  USER  : And by what sole means, then, could that common law ever become operative
+          under the new association?
+  ASST  : It could only become so by a positive adoption, and so far only as they were
+          authorized to adopt.

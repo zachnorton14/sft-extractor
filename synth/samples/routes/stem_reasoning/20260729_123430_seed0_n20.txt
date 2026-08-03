@@ -1,0 +1,410 @@
+route: stem_reasoning
+model: deepseek-v4-pro
+seed:  0
+n:     20
+kept:  12/20
+
+--- EXTRACT SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s science or engineering text that
+reasons quantitatively or physically. The author's own reasoning is in the text.
+
+EXTRACT THE REASONING CHAIN. Find where the author reasons from a principle to a
+conclusion, and copy that chain out.
+  - Return it as "spans": the quotations from the passage that, read in order, form
+    one coherent chain (principle → application → conclusion). Use as many as the
+    reasoning needs — up to 6, and always the fewest, longest spans that
+    hold the chain together. Extract as much of the reasoning as you can.
+  - Give EACH span as an object with two fields:
+      "verbatim"    — the span copied EXACTLY as it appears in the passage, character
+                      for character, including any garbled formula.
+      "refurbished" — the SAME span with only its mathematical or chemical formulas
+                      restored to correct standard form. If the span has no formula,
+                      make "refurbished" identical to "verbatim".
+  - REPAIR ONLY FORMULAS. The OCR has mangled this text's equations, exponents,
+    subscripts, symbols, and numbers, and page numbers bleed into the formulas. In
+    "refurbished" you MAY fix a corrupted expression back to what it plainly must be
+    (e.g. "CuSO,+ZnZnSO,+ Cu" → "CuSO₄ + Zn → ZnSO₄ + Cu"; "9X2" → "9 × 2";
+    "P₁ = pressure" kept clean). You MAY change only digits, symbols, operators,
+    subscripts/superscripts, and spacing. Write exponents and indices as Unicode
+    super/subscript characters (a², cʳ, x₁), NEVER as HTML or markup (no <sup>/<sub>).
+  - ADD NO NEW CONTENT. Do NOT paraphrase, summarize, rewrite, reorder, translate, or
+    add, remove, or alter any WORD of the prose — not a connecting word, not a gloss,
+    not a clarification. Every word in "refurbished" must already stand in "verbatim".
+    Repair the formulas; leave the author's prose exactly as written, misspellings and
+    all. Only select and order the author's own sentences.
+  - Do not build the chain out of a span that hinges on a figure, plate, table, or
+    page the reader cannot see ("as in Fig. 36", "see p. 466") — those cannot be
+    refurbished into anything meaningful; choose spans that carry the reasoning
+    without them.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": [{"verbatim": "...", "refurbished": "..."}]}, ...]
+
+
+--- QUESTION SYSTEM PROMPT ---
+You are given a passage from a pre-1930s science or engineering text and a REASONING
+CHAIN quoted verbatim from it — this is the ANSWER. Write the single question that
+this reasoning chain answers, as if setting an exercise.
+
+- The chain must CORRECTLY AND COMPLETELY answer your question — ask exactly what
+  this reasoning concludes or explains. Do not ask for a step, a numeric result, or
+  an identity the chain does not reach. Read the chain as the answer: if it does not
+  fully answer, adjust the question to fit the chain.
+- Pose a problem that must be reasoned through, not a fact to recall: "Why does
+  ...", "How does it follow that ...", "Why must ...?", "If ..., what happens and
+  why?".
+- Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use no
+  word, term, or idiom that came into use after 1930, and no modern conversational
+  or academic phrasing — it must read as a question a period examiner would pose.
+- The question must STAND ALONE and betray no awareness of a source. Never refer to
+  the passage or to whoever wrote it — no "the passage", "the text", "the author",
+  "the figure", "according to", "as described", "as shown". Ask about the SUBJECT
+  ITSELF, as a matter of physical fact, to someone who never saw the passage.
+- SUPPLY THE PHYSICAL SETUP the reader needs so the problem is well-posed and the
+  chain's "it / this / these" have clear antecedents: name the bodies, quantities,
+  or conditions involved (the gas held at constant temperature, the beam loaded at
+  its centre, the current through the coil). Give just enough to make the question
+  unambiguous — do not restate the whole passage, and never leave a bare "this
+  quantity", "such a body", or "the system".
+- Every proper noun must be one the reader can place: either widely recognizable on
+  its own (Boyle's law, Carnot's cycle), or introduced with a short descriptor.
+- Do NOT reveal the answer: do not state the conclusion, and do not reuse the
+  chain's distinctive wording. Ask for the reasoning; make the reader supply it.
+- Write any mathematical notation as plain Unicode: exponents and indices as Unicode
+  superscript/subscript characters (a², xₙ, aᵖ, cʳ), or a caret where no such
+  character exists (a^k). NEVER emit HTML or markup — no <sup>, <sub>, or any tag.
+
+Input: JSON array [{"i": 0, "passage": "...", "answer": "..."}, ...]
+Output JSON only: [{"i": 0, "q": "..."}, ...]
+
+
+========================================================================================
+[SCIENCE]  1903
+  excerpt : The last equation tells us that the projection of p on a is always the same,
+            hence for co-planar vectors (ap)=a constant says that the point whose
+            position vector is p must lie on a straight line perpendicular to a. If we
+            are not confined to a plane, then the point must lie in a plane
+            perpendicular to a. For if we imagine the line AP in the figure to rotate
+            round OA as an axis, then AP will genera...
+  Q       : In Peaucellier's straight-line linkage, four equal links form a rhombus
+            BCPD; equal links OC, OD join C and D to a fixed pivot O; and an equal link
+            AB joins B to a fixed pivot A, with OA = AB. Let the vector OA be denoted by
+            α, the vector AB by β, BC by γ, and CP by δ. Given that (a+β+γ)² = σ² (a
+            constant), how may it be shown from these vectors that the projection of the
+            position vector p of P upon α is constant, and what must follow regarding
+            the path traced by P?
+  A       : Hence therefore OP=p p=a+β+γ+δ (ap)=a²+(aβ)+(aγ)+(aδ). (a+β+γ)²=OC²=σ², (a
+            constant). a²+β²+γ²+2(aβ) +2 (aγ) +2 (aδ)=σ²; 2 (ap)=σ²+a²−β²−γ² =σ²−γ²
+            which is constant Hence P describes a straight line perpendicular to a.
+
+========================================================================================
+[SCIENCE]  1890
+  excerpt : Calculate its own potential, and also that of the field where it is placed
+            as due to A. Add these; this gives V₁ the potential before movement. Now
+            consider B when placed at 50 cm. from A. Again calculate the potential due
+            to effect of A, and this added to potential due to B, gives the new
+            potential V, and the difference of energy is the work of moving 100 units
+            from potential V, to potential V2.t...
+  Q       : A small body bearing a charge of 100 units is moved from a point B, distant
+            100 centimetres from a fixed charge A, to a point C, distant 25 centimetres
+            from A. Assuming Coulomb's law, how may the average force acting upon the
+            body during the movement be obtained from the forces at B and C, and what is
+            its value?
+  A       : The force upon one unit at B due to A is, by Coulomb's law, (100 × 1)/100² =
+            1/100, and at C it is similarly 1/25, and the average force between B and C
+            is (1/100 × 1/25)=1/50, that is, fin the formula W=mxsxf(p.
+
+========================================================================================
+[TECHNOLOGY]  1907  stem_signal 1.00
+  excerpt : If the unit of volume taken be a cube of unit șide with its edges parallel
+            and perpendicular to the tubes, there will be N tubes, each of unit length,
+            within this volume. If each unit length of a tube be supposed to possess a
+            mass 4πμN sin², the kinetic energy of all the tubes will be †N × (4πµÑ sin²
+            √) × v² = 2πµÑ²v² sin² †, which is the magnetic energy in the field. At
+            first sight the supposed d...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1851  stem_signal 1.00
+  excerpt : EPC= If the angle of intersection of the two lines be a right angle, its
+            tangent must be infinite. But in order that the expression a'-a may become
+            infinite, the denominator 1+aa' must be- 1+aa' come zero; so that in this
+            case we must have aa'= -1, or 1 α== =-7. This, then, is the condition by
+            which two straight lines are shown to be at right angles to each other.
+            (24.) This last conclusion might ...
+  Q       : If two straight lines are inclined to the axis of x at angles whose tangents
+            are a and a′, and the expression (a′ − a)/(1 + aa′) is formed from them,
+            what condition must obtain between a and a′ in order that the two lines
+            shall be perpendicular to each other, and why must it be so?
+  A       : But in order that the expression a′-a may become infinite, the denominator
+            1+aa′ must be- 1+aa′ come zero; so that in this case we must have aa′ = −1,
+            or 1 α == −1. This, then, is the condition by which two straight lines are
+            shown to be at right angles to each other.
+
+========================================================================================
+[SCIENCE]  1896
+  excerpt : How does this differ from the two preceding cases? Odor of product which is
+            formed? 75. The Formation of Salts by Double Decomposition. a. To a solution
+            of barium chloride in a test-tube add a few drops of a diluted solution of
+            sulphuric acid. What is formed? Does the precipitate dissolve on boiling?
+            Does it dissolve in an excess of sulphuric acid? b. Repeat a, using a
+            solution of potassium sulpha...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1915
+  excerpt : It is noteworthy that the force of attraction of two parallel charged plates
+            due to given charges +g and -g on the plates is independent of the distance
+            between the plates, provided that the plates are very large as compared to
+            the distance between them.* The charge g on the two plates is equal to CE,
+            where E is the electromotive force between the plates and C is the capacity
+            of the condenser form...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1914
+  excerpt : All the projection points on the upper half of the sphere are contained
+            within a circle, corresponding to the equator. Those on the half of the
+            sphere toward the observer lie outside that circle. The complete
+            stereographic projection takes account of the points within and without but
+            in general use the points lying outside the circle are not indicated. Faces
+            belonging to the zone which intersects ...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1922  stem_signal 1.00
+  excerpt : (Q)(b) cannot be positive. A number, n, of independent vectors form a
+            Cartesian coordinate system if for every vector x = x₁₁ + x2е2 + Q(x) = x¸²
+            + x² + xnen ... £2 holds, i.e. if Q(ei, ex) (1(ik) 10(i + k). (13) From the
+            standpoint of metrical geometry all co-ordinate systems are of equal value.
+            A proof (appealing directly to our geometrical sense) of the theorem that
+            such systems exist will now ...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1819
+  excerpt : The parallax would therefore under these circumstances experience an
+            alteration of 8″,5; a quantity certainly too small to be verified with
+            accuracy by means of observations of the height of the moon. But, this
+            slight alteration produces, in certain cases, effects that are very visible:
+            a fact which escaped the observation of Maupertuis; who, it is true, speaks
+            of occultations as a mean of discove...
+  Q       : If the earth be an oblate spheroid, how does the consequent variation of the
+            moon's parallax with latitude render an occultation of a star by the moon
+            capable of manifesting the polar compression?
+  A       : Let a = the polar compression of the earth, supposed 1/300; λ = the latitude
+            of the place; and the radius of the equator equal to unity: then we shall
+            have the length of any other terrestrial radius = (1 — a · sin² λ) nearly;
+            which, being multiplied by, will give π = (1 — a · sin² λ) = the parallax of
+            height on the supposition that the earth is an oblate spheroid. Then ML will
+            be equal to 8″,5 as before mentioned: and, computing from the mean rate of
+            the horary motion of the moon, it will be found that the duration of the
+            occultation behind AB will be 20′. 7″ of time; and, behind DE, 18′. 41″*. We
+            therefore see how considerable is this difference of 1′. 26″ of time; and
+            how well such observations are adapted not only to convince those who doubt
+            the reality of the compression of the earth's axis, but likewise to show
+            with very great approximation to truth the relative length of the earth's
+            radii in different latitudes.
+
+========================================================================================
+[SCIENCE]  1883
+  excerpt : FIG. 251.-SIDE VIEW OF THE PRE-MAXILLA OF A PARROT-FISH (Scarus), showing
+            the closely apposed denticles which encrust it. (After Owen. 33. The
+            STRUCTURE of man's teeth supplies us with a key by which we may understand
+            that of Vertebrates generally; nor is there any real increase of complexity
+            as to the number of the constituent materials, though the dentine may be of
+            various degrees of vascularity...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1888  stem_signal 1.00
+  excerpt : The adhesion of the stamens to the corolla or perianth thus seems to give a
+            rigidity and firmness, as well as leverage in some cases, so that the action
+            of the insects is more accurately secured, and some one particular spot on
+            their bodies invariably struck and dusted with pollen; which would scarcely
+            be the case if the filaments were free and at liberty to oscillate or swing
+            about in any directi...
+  Q       : In a declinate flower such as Echium, where the stamens are adherent to the
+            corolla-tube and a rib strengthens the place of insertion, how does this
+            adhesion enable the filaments to support an insect's weight?
+  A       : In many flowers with irregular corollas, the stamens are declinate; and
+            their adhesion to the tube is then of manifest advantage, for the basal part
+            of the filaments thus acquires an additional strength to act as a fulcrum,
+            which enables the filaments to support the weight of the insect. In Echium,
+            for example (Fig. 20, p. 82), the corolla is even strengthened by a rib
+            where the stamen is inserted. This part constitutes the fulcrum. The line of
+            force from the fulcrum intersects a line perpendicular to the filaments,
+            corresponding to the weight of the insect; while the third and upward force
+            is that exerted by the filaments to counteract the resultant of the two
+            former.
+
+========================================================================================
+[SOCIAL SCIENCES]  1911
+  excerpt : The spaces between the large circles represent the bodies of the individuals
+            while the small circles within each represent the germ cells formed by those
+            individuals. P, parental generation; each individual forms a single kind of
+            germ cells. G. F1, germs of the first filial or hybrid generation, each
+            composed of two different 92 tween a member of a pure race, either dominant
+            or recessive, and a hy...
+  Q       : If a black fowl of pure race be crossed with a white one, and a hybrid from
+            their progeny be then mated with a pure white individual, what will be the
+            nature of the resulting offspring, and why?
+  A       : The results of such a mating, first between a hybrid and a recessive
+            individual can be most easily described by considering a cross between black
+            and white forms and expressing the result algebraically. Germ cells of first
+            parent (white or recessive)....W + W Germ cells of second parent) (hybrid)
+            .B + W That is, returning to the example of the Andalusian fowls, the
+            progeny will be one half hykinds of germ cells, one from each parent.
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1891  stem_signal 1.00
+  excerpt : In order to fully understand what follows, it will be necessary to stop long
+            enough to give a few definitions, and call to mind some geometric relations.
+            All circles contain 360°: hence if in any circle we know the length of one
+            degree, 360 times that quantity will give the entire circumference. As the
+            circumference increases in proportion as the radius increases, the length of
+            one degree will inc...
+  Q       : If a terrestrial meridian is supposed to be an ellipse instead of a circle,
+            how do we determine which axis passes through the poles and which lies in
+            the plane of the equator, and what relation must then hold between the
+            curvature and the measured length of a degree at the extremities of those
+            axes?
+  A       : All circles contain 360°: hence if in any circle we know the length of one
+            degree, 360 times that quantity will give the entire circumference. As the
+            circumference increases in proportion as the radius increases, the length of
+            one degree will increase with the increase of the radius. Then since the
+            longer radius gives a circumference of less curvature, that is, more like a
+            straight line, the less the curvature the greater will be the length of one
+            degree. If a meridian of the earth is not a circle, suppose it is an
+            ellipse. If an ellipse, which axis will be polar, and which equatorial? From
+            the figure of the ellipse we see that the greatest curvature is at the
+            extremity of the longer axis, therefore a degree at this point will be at
+            the minimum, while the least curvature and greatest degree are at the
+            extremity of the shorter axis.
+
+========================================================================================
+[SCIENCE]  1885  stem_signal 1.00
+  excerpt : From the hook I suspend by a silk thread a gilded ball, made of elder pith."
+            "This ball has been electrified positively or vitreously and this stick of
+            wax has been electrified negatively or resinously." "I put the wax near the
+            pith ball and it attracts it." "I now touch the pith ball with the wax and
+            it is repelled." 10 A, silk cord insulator; B, pith ball, gilded; C, stick
+            of wax; D, insulator. ...
+  Q       : Two gilded pith balls are suspended by silk threads. One is charged by
+            contact with rubbed wax, making its electricity resinous, and the other by
+            contact with rubbed glass, making its electricity vitreous. When brought
+            near each other, what occurs and why? If instead both balls are touched with
+            the same rubbed wax so that each acquires a resinous charge, what occurs
+            when they are brought near? Lastly, in an electroscope consisting of two
+            gold leaves suspended from a metal rod passing through a metal cap into a
+            glass case, with two uninsulated metal strips standing inside the case, what
+            happens when an electrified body is applied to the knob, and how is the
+            effect produced?
+  A       : Therefore, electrify one pith ball with negative and another with positive
+            electricity and they will attract each other. Electrify both with the same
+            electricity and they repel each other. In the electroscope the metal strips
+            are inductively electrified by any charge of electricity applied through the
+            metal rod suspended from which are the strips of gold leaf. The metal strips
+            attract the gold leaf and make them go farther apart.
+
+========================================================================================
+[SCIENCE]  1876  stem_signal 1.00
+  excerpt : Alternate exterior angles are those which lie without the two lines, on
+            opposite sides of the secant, but not adjacent. Thus, b and h, c and e. 7th.
+            Corresponding angles are those which are similarly situated with respect to
+            the two lines and the secant. Thus, b and f, a and e, c and g, d and h. It
+            will be observed that the two lines are not necessarily parallel. 37.
+            Proposition VI.-Theorem. Two p...
+  Q       : Two lines are given parallel: how does it follow that they must lie in one
+            and the same plane?
+  A       : Since the line and plane are divergent and do not change their directions,
+            we shall find, on passing from C along this line, points farther and farther
+            from the plane, till, at length, we shall find a point D, whose shortest
+            distance from the plane is greater than the shortest distance of C from AB;
+            and since AB, the axis about which the plane revolved, is a line of the
+            plane, the shortest distance of D from AB is greater than the shortest
+            distance of C from AB; that is, the lines are not every-where equally
+            distant, and hence not parallel, which is contrary to the hypothesis.
+
+========================================================================================
+[SCIENCE]  1899  stem_signal 1.00
+  excerpt : We have assumed that this body is maintained at a constant temperature. The
+            caloric is therefore taken from it as fast as it is given up to it by the
+            steam. An example of such a body is furnished by the metallic walls of the
+            condenser when the vapor is condensed in it by means of cold water applied
+            to the outside, as is done in some engines. In the same way the water of a
+            reservoir can be maintain...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1906  stem_signal 1.00
+  excerpt : (A resultant force is always equivalent to its components.) For Equilibrium
+            of Bodies 61 example, let G (Fig. 57) represent the center of gravity of a
+            stone; then, under all circumstances, we may regard its weight as a single
+            force applied at G and acting vertically downward. 75. Action of Weight on a
+            Suspended Body. If a body is free to rotate about an axis from which it is
+            suspended, it always c...
+  Q       : A flat board is free to turn about a horizontal axis passing through a point
+            O near its edge. Its centre of gravity is at C, and it is not initially
+            hanging with C vertically below O. Why does it not remain at rest in that
+            position, and why does it finally come to rest only when C is vertically
+            below O?
+  A       : The weight of the body, w, is regarded as a single force applied at its
+            center of gravity, C. The body is evidently not in equilibrium in the
+            position represented in the figure, since the moment of its weight is
+            unbalanced and causes rotation. When C is vertically below O, the moment of
+            the weight of the body is zero, since its arm is then zero.
+
+========================================================================================
+[SCIENCE]  1846  stem_signal 1.00
+  excerpt : It must be observed that the direction in which the undulation is propagated
+            in the lower medium, is not the same as the direction a b in which it moved
+            at first; for the perpendicular to etg is bc, whence the ray bc is refracted
+            towards the perpendicular. If, on the contrary, the lower medium have the
+            less refractive power, then the wave of light enters into a more elastic
+            ether, and its velocity...
+  Q       : If a plane wave of light in a rarer medium meets the plane boundary of a
+            denser medium, the ray is bent towards the perpendicular. Why must the
+            refracted ray be bent away from the perpendicular when, instead, the lower
+            medium is the rarer one?
+  A       : If, on the contrary, the lower medium have the less refractive power, then
+            the wave of light enters into a more elastic ether, and its velocity becomes
+            greater. The particle b of the wave A' B', fig, 38, performs the distance
+            bt, whilst the particle p in the upper medium traverses only the space pg;
+            in this case the wave acquires the position etg, and be is the perpendicular
+            to it, which marks the direction in which it advances, consequently the ray
+            be is refracted from the perpendicular.
+
+========================================================================================
+[SCIENCE]  1876  stem_signal 1.00
+  excerpt : B, passing through the centre of the semicircle. The rod b, which is
+            attached to the mirror and points by means of an indicator, c, to the scale
+            of degrees, is at right angles to the plane of the mirror, and consequently
+            represents the perpendicular. If now a small beam of parallel rays be
+            allowed to pass through the slit and fall on the mirror, the reflexion will
+            illuminate and make visible that ...
+  Q       : A beam of parallel rays from a slit at a falls upon a plane mirror at the
+            centre of a graduated semicircle; the rod b, fixed at right angles to the
+            mirror, carries the indicator c, which is first set to 20°. At which
+            graduation on the circle ought the reflected light to appear, and what
+            successive positions of the indicator and of the reflected beam would
+            confirm the law of reflexion?
+  A       : The ray coursing from a to f strikes the mirror under an angle of incidence
+            of 20°, and hence if the above law of reflexion be correct, should be
+            reflected to the line marking 40°, and in point of fact it will be found
+            that this is the degree which is brilliantly illuminated by the reflected
+            light. If now the indicator be successively placed opposite the lines
+            marking 10°, 20°, 30°, etc., the reflected ray will successively illuminate
+            the lines marking 20°, 40°, 60°, etc., as the law of reflexion requires that
+            it should do.
+
+========================================================================================
+[TECHNOLOGY]  1916  stem_signal 1.00
+  excerpt : Although hydrocarbons of the type contained in gasoline are more stable than
+            the heavy hydrocarbons such as are contained in "reduced" oils, it is
+            nevertheless important to remove the gasoline from the "sphere of reaction"
+            as fast as formed. Thus, heating a certain volume of heavy oil under a given
+            pressure for a given period of time, and subsequently distilling at
+            atmospheric pressure, does not y...
+  (failed)

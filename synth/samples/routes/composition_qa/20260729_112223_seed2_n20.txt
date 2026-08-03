@@ -1,0 +1,359 @@
+route: composition_qa
+model: deepseek-v4-pro
+seed:  2
+n:     20
+kept:  11/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that IS, or contains, a SPECIMEN of
+a nameable, producible FORM — a piece of writing of a recognizable kind that a person
+could be told to write. The form may be a formal document (a statute or act, a legal
+pleading, a letter, a speech or resolution, a prayer or devotion, a proclamation, a
+contract or like instrument) OR a shorter set form (an examination question, a
+definition, a preface or dedication, a review or notice, a toast, an epitaph, a maxim,
+a caption, the conclusion of a tale). It may be a WHOLE specimen or a SELF-CONTAINED
+PART of one. Turn it into an instruction-and-completion pair in which the reader is
+asked to COMPOSE such a piece. Work in this order.
+
+1. FIND THE SPECIMEN FIRST. Identify the piece of a recognizable form in the passage and
+   copy it VERBATIM as the answer.
+   - Return it as "spans": prefer ONE long contiguous quotation that is the whole
+     specimen, or a self-contained part of it (a whole clause, a whole letter, a whole
+     stanza, a whole paragraph that stands on its own). Use several exact quotations only
+     when it is genuinely split — never more than 3, always the fewest, longest
+     spans. Begin and end at natural boundaries of the form (a heading, salutation,
+     "Whereas", "Resolved, that", "O Lord", a definition's opening term, the first line
+     of a closing).
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder within a span, or add any word not in the passage — including connecting
+     words between spans. You may only select and order the passage's own text.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
+
+2. THEN WRITE THE INSTRUCTION that asks for this piece.
+   - Name the FORM and the SUBJECT, matching the verb to the form: "Draft an act of
+     Parliament to ...", "Compose a letter ...", "Frame a resolution ...", "Write a
+     prayer for ...", "Set out a plaintiff's plea that ...", "Define ...", "Set an
+     examination question on ...", "Write a preface to ...", "Give a review of ...",
+     "Propose a toast to ...", "Compose an epitaph for ...", "Write a fitting close for
+     a tale in which ...". It must call for exactly the kind of piece the answer is, on
+     its actual subject and occasion. When the answer is a PART, ask for that part (its
+     clause, its closing, its single question), not the whole work.
+   - Give the instruction the substance the piece needs to be a fitting answer — its
+     purpose, parties, subject, or occasion — but do NOT copy the piece's wording or
+     dictate its phrasing. Ask for the thing; let the answer supply the words.
+   - Plain period register: direct, no modern or conversational phrasing, no
+     meta-language. Write it in pre-1930s English — period vocabulary, spelling, and
+     phrasing; use no word, term, or idiom that came into use after 1930.
+   - Stands alone. Never mention the source — no "the passage", "the text", "the
+     author", "as given", "above", "described". Phrase it as a task set from scratch.
+   - Do NOT reproduce the piece's distinctive wording in the instruction.
+
+If the passage is NOT a specimen of any nameable, producible form — it is just ordinary
+shapeless prose (plain narration, exposition, or argument with no particular form that
+one could be asked to write) — emit NO item for it (omit that index).
+
+REJECT OCR-CORRUPTED TEXT. These passages are scanned from old books and some are
+mangled by OCR — garbled or run-together words, dropped or transposed letters, stray
+marks, broken spacing, nonsense strings. If such corruption touches the material your
+answer would quote or rest on, so that a clean and correct answer is not possible, emit
+NO item for that passage. Passages are plentiful; prefer skipping a doubtful one to
+emitting a garbled answer.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[SCIENCE]  1879  prose_score 1.00
+  excerpt : 67. Rule.-Consider, from your knowledge of the Multiplication Table, how
+            many times the given divisor must be taken in order to make the given
+            dividend. 7 times 4 times 68. The sign is the sign of division, and is read
+            "divided by." Thus 246 is read "24 divided by 6." The dividend is written
+            before the sign and the divisor after it. 13. Copy on your slate the
+            following and fill the blanks: 28; the...
+  Q       : Set an elementary exercise on division, in which the pupil is to copy
+            incomplete equalities and supply the missing quotients.
+  A       : Copy on your slate the following and fill the blanks: 28; therefore 28 ÷ 7 =
+            = 20; therefore 20 ÷ 4 = = 18; therefore 18 ÷ 3 = 18; therefore 18 ÷ 6 = 14.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1814  prose_score 0.75
+  excerpt : * Of Vesta. THE FRAGMENTS DIODORUS SICULUS, CONCERNING EMBASSIES. PUBLISHED
+            BY FULVIUS URSINUS. NNNN DIODORUS SICULUS. FRAGMENTS. TO THE READER. THESE
+            few fragments, together with those of Polybius, Dionysius Halicarnassus,
+            Dion Cassius, and Appian, were published in the year of our Lord 1581, by
+            Fulvius Ursinus, a Roman born, and eminently learned: but for a further and
+            more particular account of...
+  Q       : Write a brief preface to a collection of newly translated classical
+            fragments, acknowledging the editor who first published them and the scholar
+            who supplied the source text.
+  A       : TO THE READER. THESE few fragments, together with those of Polybius,
+            Dionysius Halicarnassus, Dion Cassius, and Appian, were published in the
+            year of our Lord 1581, by Fulvius Ursinus, a Roman born, and eminently
+            learned: but for a further and more particular account of them, I refer the
+            reader to the epistle to the fragments of Valerius, placed next before
+            these; and therefore have now nothing further to add, but an acknowledgment
+            of thanks due to a learned person in Oxford, through whose candour the book
+            out of which the translation of these fragments was made was brought to hand
+            for perusal.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1888  prose_score 1.00
+  excerpt : Pen. Degenerated man! what mad disease Dwells in thy veins, that does
+            corrupt the flowings Of generous blood within thee? Fow. Shall I not vault,
+            gentlewoman? Pen. What behaviour Of mine gave thee suspicion I could be So
+            lost to virtue, to give up mine honour? Poor man! How thou didst fool
+            thyself to thy devouring Lust, for 'twas it made thee so late a
+            counterfeit.— Go home, and pray Thy sin may b...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1891  prose_score 1.00
+  excerpt : The tabernacle of God is with men : he dwelleth not in temples made with
+            hands. The temple of our holy Jerusalem: are the Lord God himself and the
+            Lamb; They are the light that lighten it: though sun and moon should fail.
+            All day its gates are open: and no night shuts the way of mercy. Come to the
+            river of God in the midst: to him that is athirst he giveth of its living
+            waters freely. Come to the ...
+  Q       : Begin an intercessory prayer acknowledging God's sovereignty and his
+            dealings with a nation.
+  A       : ALMIGHTY Lord, of whose righteous will all things are, and were created; who
+            liftest the islands out of the deep, and preparest not in vain the habitable
+            world; thou hast gathered our people into a great nation, and sent them to
+            sow beside all waters, and multiply sure dwellings on the earth.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1881  prose_score 0.90
+  excerpt : I assure you, gentlemen of the jury, that popular, handsome, and wealthy
+            John Williams, son of Samuel Williams, who is now over seventy years of age,
+            boldly went to the city of New York, that city which is so well governed. 10
+            (2). I assure you, gentlemen of the jury, that popular, handsome, and
+            wealthy John Williams, son of Samuel Williams, who is now over seventy years
+            of age, boldly went to the...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1829  prose_score 0.55
+  excerpt : 2. What Preachers remain on trial? 3. What Preachers are now received on
+            trial? 4. What Preachers have died since the last Conference? 5. Are there
+            any objections to any of our Preachers? 6. What Preachers have desisted from
+            travelling? 7. How are our Preachers stationed for the ensuing year? 8. What
+            is the number of Members in our Societies? 9. Who is appointed the President
+            of the next Conferenc...
+  (failed)
+
+========================================================================================
+[LAW]  1888  prose_score 0.93
+  excerpt : The losses were soon repaired. Among the gains was Fort Du Quesne, which on
+            November 9, 1758, on the approach of General Forbes and his powerful forces,
+            in which were Colonels Washington and Bouquet, was evacuated and blown up by
+            the French. By Wolfe's great and crowning victory on the heights of Quebec,
+            September 13, 1759, the result was determined. The contest in Upper Canada
+            continued until the...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1884  prose_score 1.00
+  excerpt : I'll lend you, sir, my bran-new Muff! My dear! My Muff is spoilt for all the
+            year, For Simon's ways are rather rough; And he knows nought of doubt or
+            fear, He quite destroyed my poor new Muff! Simon, you've ruffled all its
+            fur, Made it too large, you careless sir ! Now warm yourself! I'll lend you,
+            sir, my bran-new Muff! My dear! Made it too large, you careless sir! See it
+            has been entirely spoile...
+  Q       : Write a fitting close for a tale in which a dying girl asks her lover to buy
+            her a muff for All Hallows Day, and on the morrow, when he brings it, she is
+            seized with the death-struggle.
+  A       : "Don't listen to him," says she to her love, "don't listen to him, Jacques,
+            he is telling stories; we will go out to-morrow, it is All Hallows Day, Bet
+            it will be cold, . go and buy me a Muff, . . . mind it is a good one, . . .
+            and will last a long while; I am afraid of having chilblains this winter."
+            "It is very pretty," said Francine; "I will carry it in our walk." The
+            morrow, All Hallows Day, about the time of the Angelus of noon, she was
+            seized with the death-struggle, and all her body began to tremble.
+
+========================================================================================
+[MEDICINE]  1909  prose_score 0.88
+  excerpt : Penalty. Sec. 6. All violations of this act, except as otherwise provided,
+            shall be punished by a fine of not less than ten or more than fifty dollars.
+            Infant Blindness Law AN ACT entitled An act to prevent infant blindness
+            caused by the preventable disease known as ophthalmia neonatorum. [H. 56.
+            Approved March 4, 1911.] Preamble. Whereas, About thirty per centum of all
+            blindness is caused by the ...
+  Q       : Draft an act of a state legislature to prevent infant blindness from
+            ophthalmia neonatorum, requiring the reporting of every birth within thirty-
+            six hours.
+  A       : AN ACT entitled An act to prevent infant blindness caused by the preventable
+            disease known as ophthalmia neonatorum. [H. 56. Approved March 4, 1911.]
+            Whereas, About thirty per centum of all blindness is caused by the
+            preventable disease known as ophthalmia neonatorum ; (and,) Whereas, This
+            disease may always be prevented, and almost always cured in its incipiency,
+            and its existence is generally due to ignorant or careless management;
+            therefore, Section 1. Be it enacted by the General Assembly of the State of
+            Indiana, That whenever a child is born, the physician, midwife or any other
+            person who is present and engaged as professional attendant, shall report
+            said birth on a blank supplied by the State Board of Health to the health
+            officer having jurisdiction, within thirty-six hours after such birth
+            occurs.
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1857  prose_score 0.99
+  excerpt : I may be wrong; but when I read, 'Come out of the world, and be ye separate;
+            love not the world, nor the things which are in the world,' and many other
+            such solemn exhortations, with so many exceeding great and precious promises
+            to the overcoming Christian, I am satisfied of the way a believer in Christ
+            should walk, and have only to regret I so often wander from it myself. Dear
+            Savior, keep me nea...
+  Q       : Write a brief word of exhortation warning a Christian against seeking
+            comfort or assurance by looking within, and directing them instead to look
+            wholly unto Christ.
+  A       : Never look within for comfort. You will find nothing there but what is
+            calculated to humble you. But look to JESUS. There is every thing in Him to
+            encourage you in your warfare. Oh! live upon Him, out of yourselves.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1886  prose_score 0.95
+  excerpt : S. L." What one may surmise to have happened that the friends heard a sound
+            resembling heavy steps, and inferred that it was on the stairs. We learn, on
+            inquiry, that a horse kicking in the stables could be distinctly heard in
+            the house"; which suggests the true nature of the particular horse's
+            "agency" in the matter. In Morrison's Reminiscences of Sir W. Scott there is
+            an account of the strange s...
+  (failed)
+
+========================================================================================
+[MUSIC AND BOOKS ON MUSIC]  1841  prose_score 0.73
+  excerpt : Neate must be in London by this time; he has taken charge of several of my
+            works and has promised me all his interest for them. The Archduke Rudolph,
+            amongst others, plays your compositions with me, dear Ries, and your Sogno
+            pleases me above all the rest. Farewell. I commend me to your well-beloved
+            wife and to all the fair English women who will receive my greetings. Your
+            true friend, Vienne, le 1...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1879  prose_score 0.62
+  excerpt : 2. If he shall leave no lawful issue, to his widow; if he shall leave no
+            such issue or widow, to his parents, if living; and if either shall not be
+            living, the survivor shall inherit his said estate. If a woman shall die,
+            leaving no issue, her estate shall descend to her husband, if she shall have
+            one at the time of her decease, and if she shall leave, surviving her,
+            neither issue nor husband, to ...
+  Q       : Draft a clause of a statute prescribing the course of descent of an
+            intestate's estate to the spouse and parents, distinguishing between the
+            case of a man dying and that of a woman dying.
+  A       : If he shall leave no lawful issue, to his widow; if he shall leave no such
+            issue or widow, to his parents, if living; and if either shall not be
+            living, the survivor shall inherit his said estate. If a woman shall die,
+            leaving no issue, her estate shall descend to her husband, if she shall have
+            one at the time of her decease, and if she shall leave, surviving her,
+            neither issue nor husband, to her parents, if living; and if either shall
+            not be living, the survivor shall inherit her said estate.
+
+========================================================================================
+[POLITICAL SCIENCE]  1917  prose_score 0.95
+  excerpt : Moulding Work. Wiring. (a) Wires must have an ap proved rubber insulating
+            covering, and must be in continuous lengths from outlet outlet, or from
+            fitting to fitting, no joints or taps to be made in moulding. Where branch
+            taps are necessary in moulding work approved fittings for this purpose must
+            be used. (b) Must never be placed in either metal or wooden moulding nor in
+            concealed or damp places, n...
+  Q       : Draft regulations for the wiring of electric circuits run in moulding.
+  A       : Wires must have an ap proved rubber insulating covering, and must be in
+            continuous lengths from outlet outlet, or from fitting to fitting, no joints
+            or taps to be made in moulding. Where branch taps are necessary in moulding
+            work approved fittings for this purpose must be used. Must never be placed
+            in either metal or wooden moulding nor in concealed or damp places, nor
+            where the difference of potential between any two (2) wires in the same
+            moulding is over three hundred volts. Metal mouldings must not be used for
+            circuits requiring more than six hundred sixty (660) watts of energy. Must
+            for alternating current systems if in metal moulding have the two (2) or
+            more wires of a circuit installed in the same moulding.
+
+========================================================================================
+[LAW]  1919  prose_score 0.92
+  excerpt : 126] That hereafter all bidders under any advertisement published by the
+            Commissioner of Indian Affairs for proposals for goods, supplies,
+            transportation, and so forth, for and on account of the Indian Service,
+            whenever the value of the goods, supplies, and so forth, to be furnished, or
+            the transportation to be performed, shall exceed the sum of $5,000, shall
+            accompany their bids with a certified ...
+  Q       : Frame an act of Congress requiring a deposit from bidders on large contracts
+            for the Indian Service, and prescribing the forfeiture or return thereof.
+  A       : That hereafter all bidders under any advertisement published by the
+            Commissioner of Indian Affairs for proposals for goods, supplies,
+            transportation, and so forth, for and on account of the Indian Service,
+            whenever the value of the goods, supplies, and so forth, to be furnished, or
+            the transportation to be performed, shall exceed the sum of $5,000, shall
+            accompany their bids with a certified check, draft, or cashier's check,
+            payable to the order of the Commissioner of Indian Affairs, upon some United
+            States depository or some one of such solvent national banks as the
+            Secretary of the Interior may designate, or by an acceptable bond in favor
+            of the United States, which check, draft, or bond shall be for five per
+            centum of the amount of the goods, supplies, transportation, and so forth,
+            as aforesaid; and in case any such bidder, on being awarded a contract,
+            shall fail to execute the same with good and sufficient sureties according
+            to the terms on which such bid was made and accepted, such bidder, or the
+            sureties on his bond, shall forfeit the amount so deposited or guaranteed to
+            the United States, and the same shall forthwith be paid into the Treasury of
+            the United States; but if such contract shall be duly executed, as
+            aforesaid, such draft, check, or bond so deposited shall be returned to the
+            bidder.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1824  prose_score 0.81
+  excerpt : 5 The wreathed thorns no longer press His reverend head; but, robb'd in
+            light, And thron'd in pow'r, he sits to bless, Th' observers of this sacred
+            rite. LIII. HYMN.-L. M. 1 The Lord my pasture shall prepare, And feed me
+            with a shepherd's care; His presence shall my wants supply, And guard me
+            with a watchful eye; My noon-day walks he shall attend, And all my midnight
+            hours defend. 2 When in the su...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1883  prose_score 0.89
+  excerpt : We come to the door of the sepulchre and beg with tears the dead body of
+            Jesus; we are answered by silence because we are to get something better—a
+            living Lord. My soul, be not afraid of God's silence; it is another form of
+            His voice; God's silence is more than man's speech; God's negative is better
+            than the world's affirmation. Have thy prayers been followed only by a calm
+            stillness? Well, and is...
+  Q       : Write a text suitable for the inscription upon a young person's memorial,
+            drawn from the book of Ecclesiastes.
+  A       : Remember thy creator in the days of thy youth.
+
+========================================================================================
+[NAVAL SCIENCE]  1863  prose_score 0.99
+  excerpt : Accumulating inductions, and presenting for consideration facts the most
+            undoubted and probabilities of the highest kind, he yet affirms nothing,
+            contenting himself with showing that his opponent had no good reason for
+            affirming the nature of the progression, nor the time of duplication, nor
+            the generalization which takes the facts of an individual case and deduces
+            from them a law for every race, ...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1856  prose_score 0.82
+  excerpt : By JOHN S. C. Аввотт. With numerous Illustrations. 12mo, Muslin, $1 00;
+            Muslin, gilt edges, $1 25. This work contains more information respecting
+            the political and social condition of the several monarchies of Europe than
+            any other in our language of the same magnitude. The whole Eastern Question
+            is presented, briefly yet comprehensively, in its bearings upon Europe and
+            Asia. The character of Nich...
+  Q       : Write the notice of terms to be printed in a circulating-library book,
+            stating the date by which it must be returned and the penalty for lateness,
+            and adding a courteous request.
+  A       : This book should be returned to the Library on or before the last date
+            stamped below. A fine of five cents a day is incurred by retaining it beyond
+            the specified time. Please return promptly.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1900  prose_score 0.97
+  excerpt : Lucien N. B. Wyse, who accepts it in the name of the civil International
+            Interoceanic Canal Association, represented by their board of directors, the
+            exclusive privilege for the construction across its territory, and for the
+            operating of a canal between the Atlantic and Pacific oceans. Said canal may
+            be constructed without restrictive stipulations of any kind. This concession
+            is made under the fol...
+  (failed)

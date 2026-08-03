@@ -1,0 +1,352 @@
+route: how_to_qa
+model: deepseek-v4-pro
+seed:  2
+n:     20
+kept:  14/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that tells how something is done or
+made — a method, recipe, process, or technique. Work in this order.
+
+1. FIND THE PROCEDURE FIRST. Choose the sequence of steps the passage gives for doing
+   or making ONE thing, and copy it VERBATIM as the answer.
+   - Return it as "spans": exact quotations from the passage that, read in order, give
+     the steps of the method from start to finish. Prefer ONE contiguous span; use up
+     to 4 only because the steps are spread out, always the fewest, longest
+     spans that hold the procedure together.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder, or add any word not in the passage — including connecting words between
+     spans. Only select and order the author's own sentences.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
+   - Do NOT choose spans that lean on a figure, plate, table, or page the reader cannot
+     see ("as in Fig. 4", "see p. 20"); pick steps that stand without them, or omit.
+
+2. THEN WRITE THE QUESTION the procedure answers.
+   - Ask how the thing is done or made: "How is ... made?", "How does one ...?", "By
+     what process is ... prepared?", "What are the steps in ...?". The spans must give
+     the COMPLETE method your question asks for.
+   - Plain period register, pre-1930s English — no word, term, or idiom that came into
+     use after 1930, no modern or conversational phrasing.
+   - Stands alone. Never mention the source — no "the passage", "the text", "described",
+     "above". Ask as if setting a practical exercise.
+   - Self-situating — name the actual thing made or done (the process, dish, material,
+     or operation) so the question makes sense to someone who never saw the passage.
+     Never leave a bare "this preparation" or "the process".
+   - Do NOT put the steps, or their distinctive wording, in the question.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[SCIENCE]  1880  prose_score 0.40
+  excerpt : The roll was then manipulated backwards and forwards, very much in the way
+            one might use a cylindrical blotting roll, with occasional dabs to compress
+            the wool. After about ten minutes, the roll was carefully undone and
+            examined, put right with the finger-nail, and then pressed under foot. This
+            concluded the exhibition, and the beauty and accuracy of the pattern was
+            enhanced by the extreme simplic...
+  Q       : How are large felts manufactured?
+  A       : In the manufacture of large felts the pattern is laid out on a large mat of
+            reeds, bound together by cords, wool being added till the required thickness
+            is obtained. The mass is then rolled in the mat until the whole is
+            thoroughly interwoven, and after beating and washing with soap and water,
+            the pattern part is neatly shaved with a long knife; the felt is then
+            finished and left to dry.
+
+========================================================================================
+[SCIENCE]  1900  prose_score 1.00
+  excerpt : The objects ought to remain in the first bath until very thoroughly
+            penetrated;-days, even for small objects,-weeks or months for large ones
+            (human embryos of from six to twelve weeks, for instance). If the object
+            contain cavities, these should be opened to ensure their being filled by the
+            mass. When the object is duly penetrated by the thin solution, or solutions
+            if more than one have been employ...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1912  prose_score 0.50
+  excerpt : But this is usually associated with injury to the eighth cervical, affecting
+            the flexors of the fingers. TREATMENT.—If seen early, the arm must be
+            bandaged to the side with the paralyzed muscles relaxed and kept absolutely
+            at rest; as soon as all tenderness has disappeared, massage and movements
+            must be employed. Under this 109 treatment incomplete injuries are likely to
+            improve, and the prognosis...
+  Q       : What is the treatment for an obstetric brachial plexus palsy?
+  A       : If seen early, the arm must be bandaged to the side with the paralyzed
+            muscles relaxed and kept absolutely at rest; as soon as all tenderness has
+            disappeared, massage and movements must be employed. If at the end of three
+            months from birth the reaction of degeneration is present in the affected
+            muscles, the sooner operation is carried out the better. The upper cords of
+            the plexus are easily exposed by an incision in the posterior triangle of
+            the neck. The anterior primary divisions of five and six must be exposed,
+            together with their junction and division, and the origin of the
+            suprascapular nerve.
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1899  prose_score 0.79
+  excerpt : A sandy field will serve to illustrate desert; see also pages 102 and 103.
+            Lead pupils to make a collection of spices; see page 110. Talk about the
+            seal; see pages 43 and 44. will help to teach cotton. land of the Eskimo and
+            Flax, thistle or milkweed See mountains on page 13. Do not teach all the
+            above in one lesson. For pronunciation of names of places and of other words
+            used in Elements of Geogr...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1854  prose_score 0.50
+  excerpt : The ball you can reach with straight bat, will go off on the principle of
+            the cover-hit- But, the more square the better. when a ball is only just
+            within reach, by using a horizontal bat, you know where to find the ball
+            just before it has risen; for, your bat covers the space about the pitch. If
+            you reach far enough, even a shooter may be picked up; and if a few inches
+            short of the pitch, you may ...
+  (failed)
+
+========================================================================================
+[SOCIAL SCIENCES]  1904  prose_score 0.98
+  excerpt : Give reasons for your answer. No. So long as the assets are equal to the
+            liabilities (exclusive of capital) the firm is solvent. In this case. they
+            exceed them by $33,000. January, 1901. I. How should an auditor deal with
+            customers' accounts outstanding at the date of closing books? He should
+            examine critically every open account in company with a member of the firm
+            or with some responsible offici...
+  Q       : How should an auditor deal with customers' accounts outstanding at the date
+            of closing books?
+  A       : He should examine critically every open account in company with a member of
+            the firm or with some responsible official (if a corporation) with a view to
+            satisfying himself that the balances are good and collectable, or if not,
+            that proper provision has been made in the form of a reserve for doubtful
+            debts. If accounts are found to be uncollectable (and the auditor should
+            require the fullest explanations as to why they are so) they should be
+            charged to profit and loss account at once. Accounts about whose collection
+            there is any reason to be doubtful, should be so classed, and a reserve
+            created by a charge to profit and loss to provide for them. Accounts in good
+            standing would, of course, appear in the regular way. In determining the
+            class to which each balance belongs the auditor should see that no outlawed
+            accounts are admitted; that in all cases where the debtor has made an
+            assignment the account is classed as doubtful; and that all balances consist
+            of definite unsettled items, i. e., that the balances do not include
+            disputed balances of old charges.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1887  prose_score 0.99
+  excerpt : A picture of a boy sitting on the bank of a stream of water, may suggest a
+            story somewhat as follows:- :- "Last Wednesday, Charles had a holiday. His
+            teacher, Miss Moody, wished to go to Lynn, and the Committee gave her
+            permission to close the school for the day. I think she went to a teachers'
+            meeting. The day was warm and pleasant, and Charlie's mother told him that
+            he might go fishing. He had a...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1851  prose_score 1.00
+  excerpt : There are two eyesights, a and b ; a being merely a small hole for the eye
+            to be placed against, and b a square opening, with a hair-wire crossing it
+            in the middle. Being furnished with the implements above mentioned, and
+            having a spirit-level of the description referred to, if it is required to
+            drain a flat bog for the purpose of planting trees in it, the drainer will
+            proceed as follows:-Look for...
+  Q       : By what process does a drainer find the lowest part of a flat bog using a
+            spirit-level?
+  A       : Look for the lowest part of the ground to be drained, and if this cannot be
+            decidedly ascertained by the eye, set up the spirit-level about the centre
+            of the flat ground, and take sights from it all round in order to find out
+            this point. In using the instrument, it may be unnecessary for me to
+            observe, that the height of the eyesight a from the ground must be deducted
+            from the point observed—that is, if the object-pole used be marked in feet
+            and inches, and the hair-wire, in taking a sight, hit the same at six and a
+            half feet—then, if your eyesight be three feet from the ground, the
+            difference of level between the two stations will be exactly three and a
+            half feet; that is to say, there would be three and a half feet of descent
+            from the spirit-level station to that of the station where the object was
+            placed.
+
+========================================================================================
+[SCIENCE]  1872  prose_score 1.00
+  excerpt : Hydrostatical Assay. This method is of course by no means so correct as
+            either of the foregoing, and, moreover, is impaired by the fact that,
+            although alloys of copper and silver expand under pressure, they become
+            denser, so that the hydrostatic weighing, that is to say, the estimation of
+            the specific gravity of the alloy, is only admitted as a test of its
+            relative value. With such alloys as have,...
+  Q       : How is the fineness of a silver alloy estimated by the hydrostatical assay?
+  A       : The empirical rule for the estimation of the value of silver assayed by this
+            method is the following:-The number 8-814 is subtracted from the specific
+            gravity of the alloy, two cyphers are added to the difference, and the
+            figure thus formed, considered as a whole number, is divided by 579; the
+            quotient is the fineness of the silver alloy expressed in grains.
+
+========================================================================================
+[SCIENCE]  1836  prose_score 0.40
+  excerpt : It had four windows of moose-skin parchment, with a small pane of glass in
+            each, facing respectively north, south, east, and west. The space within was
+            carefully cleared of all stones, and a thoroughly dried trunk of a tree
+            seven feet long, and two feet and a half in diameter, was let down into a
+            hole three feet deep in the centre, and then rammed tight by successive
+            layers of clay and sand. This ...
+  Q       : How is a log-built structure raised and finished?
+  A       : The space within was carefully cleared of all stones, and a thoroughly dried
+            trunk of a tree seven feet long, and two feet and a half in diameter, was
+            let down into a hole three feet deep in the centre, and then rammed tight by
+            successive layers of clay and sand. This part was cased in a square
+            framework of three feet, grooved and mortised; and the interior spaces were
+            gradually filled up with the same composition as was used to plaster the
+            walls. When the plaster was quite dry, a square thick board was mortised on
+            the post, and the whole fabric was as firm as a rock. The floor was planked,
+            and when the doors were closed, the difference of temperature between the
+            out and inside was 14°.
+
+========================================================================================
+[SCIENCE]  1890  prose_score 0.91
+  excerpt : P Fig. 201. 251. PROBLEM 130.-To draw a perpendicular to a given line upon
+            the ground from a given point without the line. Measure the oblique
+            distance, P B, Fig. 201, from the given point P to a point taken on the
+            line; fix one end of the chain at B; carry the other end along the given
+            line to C, and the middle point along the line BP to D, until the chain is
+            evenly stretched. Now measure the dis...
+  Q       : How does one draw a perpendicular to a given line upon the ground from a
+            given point without the line?
+  A       : Measure the oblique distance, P B, Fig. 201, from the given point P to a
+            point taken on the line; fix one end of the chain at B; carry the other end
+            along the given line to C, and the middle point along the line BP to D,
+            until the chain is evenly stretched. Now measure the distances B C and B P,
+            and find BE from the proportion 1 chain BP:: BC: BE; and the distance B E,
+            measured from B to E, will give the foot of the perpendicular.
+
+========================================================================================
+[TECHNOLOGY]  1874  prose_score 1.00
+  excerpt : Few persons are fond of rare veal. Broil upon a well-greased gridiron over a
+            clear fire, and turn frequently while the steaks are cooking. Put into a
+            saucepan four or five young onions minced fine, a great teaspoonful of
+            tomato catsup, or twice the quantity of stewed tomato, a lump of butter the
+            size of an egg, and a little thyme or parsley, with a small teacupful of hot
+            water. Let them stew toget...
+  Q       : How are broiled veal steaks prepared with a savoury sauce?
+  A       : Broil upon a well-greased gridiron over a clear fire, and turn frequently
+            while the steaks are cooking. Put into a saucepan four or five young onions
+            minced fine, a great teaspoonful of tomato catsup, or twice the quantity of
+            stewed tomato, a lump of butter the size of an egg, and a little thyme or
+            parsley, with a small teacupful of hot water. Let them stew together while
+            the steaks are broiling, thickening, before you turn the gravy out, with a
+            spoonful of browned flour. Boil up once hard, and when the steaks are
+            dished, with a small bit of butter upon each, pour the mixture over and
+            around them.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1852  prose_score 0.36
+  excerpt : Like to this, for the matter of the enquiry, is that we examine ourselves in
+            the matter of our debts; whether we detain them otherwise than in justice we
+            are obliged. Here we must examine whether we be able to pay them? if so,
+            whether presently or afterwards? by what we are disabled? whether we can and
+            ought to alter the state of our expences? what probability we have to pay
+            them at all? how we ca...
+  Q       : By what method ought one to examine oneself in the matter of one's debts?
+  A       : Here we must examine whether we be able to pay them? if so, whether
+            presently or afterwards? by what we are disabled? whether we can and ought
+            to alter the state of our expences? what probability we have to pay them at
+            all? how we can secure that they shall be paid ? and if they cannot, how
+            much can we do towards it? and what amends can we make to our creditors? and
+            how we mean to end that entercourse?
+
+========================================================================================
+[AGRICULTURE]  1915  prose_score 1.00
+  excerpt : A vista of water, either moving or silent, through an opening in the
+            shrubbery adds at once a quiet and a charm. of which one seldom tires.
+            Moving water gives more variety, adds life and vivacity to the landscape,
+            while the peaceful lakelet or pond has a quieting effect. In places where
+            there is much of the bold and strong in the decoration the surprise and
+            variety given by the quiet lakelet is ve...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1873  prose_score 1.00
+  excerpt : To a quarter of a pound of potatoes, put a quart of milk, three table-
+            spoonfuls of melted butter, four beaten eggs, a wine-glass of wineadd sugar
+            and nutmeg to the taste. Take mellow juicy peaches-wash and put them in a
+            deep pie plate, lined with pie crust. Sprinkle a thick layer of sugar on
+            each layer of peaches, put in about a table-spoonful of water, and sprinkle
+            a little flour over the top-cov...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1889  prose_score 0.92
+  excerpt : The wooden niblick has a shaft similar to the driver. It is well spooned,
+            and very short from heel to toe, but the head is broad. A ball may be lying
+            in a small hollow, or in a rut, into which none of the other clubs, by
+            reason of their length of head, could possibly descend so as to dislodge the
+            ball. The wooden niblick is the weapon for the purpose. Brassey. A brassey
+            is very similar to a wooden...
+  Q       : By what provision does a golfer prepare for a ball lying against a wall or
+            on the edge of a bunker?
+  A       : To be prepared for such an event, every player should be provided with a
+            left-handed cleek; and, for the same reason, a left-handed player should
+            include among his set a righthanded cleek.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1922  prose_score 0.99
+  excerpt : All Maddox multiple rods should be accurately ground on both the plano and
+            the corrugated sides. Ground rods are free from prismatic effects,
+            distortions and other errors which are necessarily present in pressed or
+            blown rods. Researches recently carried out by leading authorities have
+            shown beyond question that blown or pressed Maddox rods are so defective in
+            their function of transforming a poin...
+  Q       : By what process is a desired prism equivalent obtained from a rotary prism
+            unit?
+  A       : When the prism unit is completely assembled within a circular holder forming
+            the prism case and the radial pinion is turned by an extended milled head,
+            the prisms are caused to rotate inversely with respect to each other about a
+            common center. By reason of this inverse rotation, the bases of the prisms
+            may be so interrelated that any desired prism equivalent ranging from zero
+            to the maximum of 15 prism diopters may be obtained.
+
+========================================================================================
+[SCIENCE]  1882  prose_score 0.30
+  excerpt : The arrangement for setting the clock is very simple, there being a dial on
+            the clock movement inside comparing with the outside, and by pressing on a
+            pin all five dials are set at the same time. The striking train raises a
+            hammer weighing sixty pounds, and is so arranged that if it refuses to
+            strike at any given hour, it will strike correctly the following hour,
+            making what we call a repeating cl...
+  Q       : How does one set the five dials of the clock?
+  A       : The arrangement for setting the clock is very simple, there being a dial on
+            the clock movement inside comparing with the outside, and by pressing on a
+            pin all five dials are set at the same time.
+
+========================================================================================
+[SCIENCE]  1870  prose_score 0.88
+  excerpt : When this route is taken, the zone of the S. E. trade-winds should be
+            reached as soon as possible in the region where they are well established at
+            this period; that is, between the parallels of 9° or 10°; then run to the
+            west. If not certain of the position, it will be well to sight the Island of
+            Diego Garcia, and then steer toward the southwest, to pass to southward of
+            the Centurion Bank. Should ...
+  Q       : How should a vessel proceed when taking the southern route across the Indian
+            Ocean before returning to the northern hemisphere?
+  A       : When this route is taken, the zone of the S. E. trade-winds should be
+            reached as soon as possible in the region where they are well established at
+            this period; that is, between the parallels of 9° or 10°; then run to the
+            west. If not certain of the position, it will be well to sight the Island of
+            Diego Garcia, and then steer toward the southwest, to pass to southward of
+            the Centurion Bank. Should this island not be sighted, run to the westward
+            between the parallels of 80 and 90, giving the shoals to the southward of
+            the Chagos a good berth. Then return to the northward to cross the line on
+            the meridian of 62° or 63°, as in the northern route, and whatever may be
+            the destination, before returning to the northern hemisphere sufficient
+            westing should be made to reach it with the winds of the monsoon, which are
+            sometimes very strong, and occasion a rapid current to the eastward.
+
+========================================================================================
+[TECHNOLOGY]  1872  prose_score 0.87
+  excerpt : I cannot recommend this pattern to the householder. Ja 151151... 151. Fig.
+            151f exhibits an enamelled iron hopper closet, and in the sketch here given
+            the water is supplied to the basin by means of a wire which passes beneath
+            the floor, connected with the door and also with the supply valve. The
+            flushing water is discharged every time the door is opened. The supply of
+            this water can also be regula...
+  Q       : By what process does Mr. Common's patent closet flush the pan?
+  A       : Here the water runs directly from the main into an airvessel of cast iron,
+            and compresses the overlying air to such an extent, that when the handle on
+            the seat is raised the water is forced to flush out the pan.

@@ -1,0 +1,444 @@
+route: stem_reasoning
+model: deepseek-v4-pro
+seed:  3
+n:     20
+kept:  17/20
+
+--- EXTRACT SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s science or engineering text that
+reasons quantitatively or physically. The author's own reasoning is in the text.
+
+EXTRACT THE REASONING CHAIN. Find where the author reasons from a principle to a
+conclusion, and copy that chain out.
+  - Return it as "spans": the quotations from the passage that, read in order, form
+    one coherent chain (principle → application → conclusion). Use as many as the
+    reasoning needs — up to 6, and always the fewest, longest spans that
+    hold the chain together. Extract as much of the reasoning as you can.
+  - Give EACH span as an object with two fields:
+      "verbatim"    — the span copied EXACTLY as it appears in the passage, character
+                      for character, including any garbled formula.
+      "refurbished" — the SAME span with only its mathematical or chemical formulas
+                      restored to correct standard form. If the span has no formula,
+                      make "refurbished" identical to "verbatim".
+  - REPAIR ONLY FORMULAS. The OCR has mangled this text's equations, exponents,
+    subscripts, symbols, and numbers, and page numbers bleed into the formulas. In
+    "refurbished" you MAY fix a corrupted expression back to what it plainly must be
+    (e.g. "CuSO,+ZnZnSO,+ Cu" → "CuSO₄ + Zn → ZnSO₄ + Cu"; "9X2" → "9 × 2";
+    "P₁ = pressure" kept clean). You MAY change only digits, symbols, operators,
+    subscripts/superscripts, and spacing. Write exponents and indices as Unicode
+    super/subscript characters (a², cʳ, x₁), NEVER as HTML or markup (no <sup>/<sub>).
+  - ADD NO NEW CONTENT. Do NOT paraphrase, summarize, rewrite, reorder, translate, or
+    add, remove, or alter any WORD of the prose — not a connecting word, not a gloss,
+    not a clarification. Every word in "refurbished" must already stand in "verbatim".
+    Repair the formulas; leave the author's prose exactly as written, misspellings and
+    all. Only select and order the author's own sentences.
+  - Do not build the chain out of a span that hinges on a figure, plate, table, or
+    page the reader cannot see ("as in Fig. 36", "see p. 466") — those cannot be
+    refurbished into anything meaningful; choose spans that carry the reasoning
+    without them.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": [{"verbatim": "...", "refurbished": "..."}]}, ...]
+
+
+--- QUESTION SYSTEM PROMPT ---
+You are given a passage from a pre-1930s science or engineering text and a REASONING
+CHAIN quoted verbatim from it — this is the ANSWER. Write the single question that
+this reasoning chain answers, as if setting an exercise.
+
+- The chain must CORRECTLY AND COMPLETELY answer your question — ask exactly what
+  this reasoning concludes or explains. Do not ask for a step, a numeric result, or
+  an identity the chain does not reach. Read the chain as the answer: if it does not
+  fully answer, adjust the question to fit the chain.
+- Pose a problem that must be reasoned through, not a fact to recall: "Why does
+  ...", "How does it follow that ...", "Why must ...?", "If ..., what happens and
+  why?".
+- Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use no
+  word, term, or idiom that came into use after 1930, and no modern conversational
+  or academic phrasing — it must read as a question a period examiner would pose.
+- The question must STAND ALONE and betray no awareness of a source. Never refer to
+  the passage or to whoever wrote it — no "the passage", "the text", "the author",
+  "the figure", "according to", "as described", "as shown". Ask about the SUBJECT
+  ITSELF, as a matter of physical fact, to someone who never saw the passage.
+- SUPPLY THE PHYSICAL SETUP the reader needs so the problem is well-posed and the
+  chain's "it / this / these" have clear antecedents: name the bodies, quantities,
+  or conditions involved (the gas held at constant temperature, the beam loaded at
+  its centre, the current through the coil). Give just enough to make the question
+  unambiguous — do not restate the whole passage, and never leave a bare "this
+  quantity", "such a body", or "the system".
+- Every proper noun must be one the reader can place: either widely recognizable on
+  its own (Boyle's law, Carnot's cycle), or introduced with a short descriptor.
+- Do NOT reveal the answer: do not state the conclusion, and do not reuse the
+  chain's distinctive wording. Ask for the reasoning; make the reader supply it.
+- Write any mathematical notation as plain Unicode: exponents and indices as Unicode
+  superscript/subscript characters (a², xₙ, aᵖ, cʳ), or a caret where no such
+  character exists (a^k). NEVER emit HTML or markup — no <sup>, <sub>, or any tag.
+
+Input: JSON array [{"i": 0, "passage": "...", "answer": "..."}, ...]
+Output JSON only: [{"i": 0, "q": "..."}, ...]
+
+
+========================================================================================
+[SCIENCE]  1842  stem_signal 1.00
+  excerpt : 1st. Let it be required to form the square or second power of the binomial,
+            (a+b). We have, from known principles, (a+b)²=(a+b) (a+b)=a²+2ab+b². That
+            is, the square of the sum of two quantities is equal to the square of the
+            first, plus twice the product of the first by the second, plus the square of
+            the second. Thus, to form the square of 5a²+8a2b, we have, from what has
+            just been said, (5a²+8a2b)...
+  (failed)
+
+========================================================================================
+[TECHNOLOGY]  1918  stem_signal 1.00
+  excerpt : From the data given by Mr. Heinrich I have prepared the following formulas
+            to be used in computing the number of hours required to drill a hole of
+            given depth. Let T= Total number of minutes required to bore the hole. n =
+            total depth of hole in feet. 1 = length of each coupling rod = 10 ft. in
+            this case. t = the number of minutes required to bore 1 ft. of the hole. In
+            the formation given by Heinri...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1914
+  excerpt : But geometry teaches us that, in the case of similar solids, the ratio of
+            two volumes is greater than the ratio of their surfaces; which, for the sake
+            of better understanding, I shall illustrate by a particular case. Take,
+            Take, for example, a cube two inches on a side so that each face has an area
+            of four square inches and the total area, i. e., the sum of the six faces,
+            amounts to twenty-four sq...
+  Q       : How may it be shown from geometry that, for similar solids, the ratio of
+            their volumes exceeds the ratio of their surfaces? Illustrate by considering
+            a cube of two inches side divided into eight smaller cubes.
+  A       : In the case of similar solids, the ratio of two volumes is greater than the
+            ratio of their surfaces; Take, for example, a cube two inches on a side so
+            that each face has an area of four square inches and the total area, i. e.,
+            the sum of the six faces, amounts to twenty-four square inches; now imagine
+            this cube to be sawed through three times so as to divide it into eight
+            smaller cubes, each one inch on the side, each face one inch square, and the
+            total surface of each cube six square inches instead of twenty-four as in
+            the case of the larger cube.
+
+========================================================================================
+[TECHNOLOGY]  1874
+  excerpt : AW The vertical lines W and W, are the lines of action of the equal and
+            opposite forces due to weight and displacement. The condition of equilibrium
+            is stable, and the righting couple is W₁ × 0₁ H₁. 1 The point M, where the
+            lines O, W₁ and LOK intersect, is called the metacentre. The line LOK is a
+            line drawn through the centre of 23 gravity of the vessel or floating body,
+            and the centre of buoyanc...
+  Q       : A floating vessel is heeled over through a small angle. Its weight is W₁,
+            the metacentre is M, the centre of gravity is O, and the angle of heel is
+            FOF₁. How does it follow that the righting couple, or moment of stability,
+            can be expressed as the product of the vessel's weight, the metacentric
+            height MO, and the sine of the angle of heel?
+  A       : The angle W₁ M L, or its equal O M H, is equal to the angle FOF₁; and since
+            MO × sin. OMH = OH = arm of righting couple, then MO × sin. OMH × W₁ =
+            righting couple. if we multiply the weight of the vessel (or its equivalent
+            the weight of the displaced fluid) by the distance between the metacentre
+            and centre of gravity, and by the sine of the angle of heel, the result will
+            be the moment of stability of the vessel.
+
+========================================================================================
+[SCIENCE]  1894  stem_signal 1.00
+  excerpt : A living muscle, like all living tissues, is constantly taking oxygen from
+            the blood, and its complex substances are constantly breaking down into
+            simple substances, of which carbonic acid is one of the chief. This breaking
+            down of the substance of the muscle sets free energy in the form of heat, so
+            that the muscle is constantly giving out heat. When a muscle contracts there
+            is a large increase in...
+  Q       : When a living muscle is at rest it continually evolves heat, and when it
+            contracts it evolves much more heat. By what chemical and energetic
+            reasoning does it follow that the heat evolved in contraction is greater
+            than that evolved during rest?
+  A       : This breaking down of the substance of the muscle sets free energy in the
+            form of heat, so that the muscle is constantly giving out heat. When a
+            muscle contracts there is a large increase in the amount of carbonic acid
+            which it gives off, that is to say, the breaking down of the complex
+            substances of the muscle is much more active, and consequently a larger
+            amount of energy is set free. Some of this energy is used to perform the
+            work which the muscle does, the rest of it is given out as heat. The heat
+            given out in this way when a muscle contracts is much greater than the heat
+            given out when it is at rest.
+
+========================================================================================
+[SCIENCE]  1850  stem_signal 1.00
+  excerpt : The sign =, equal to, placed between two numbers, or numerical expressions,
+            signifies that they are equal to each other. Thus 12+8=4×5 signifies that
+            the sum of 12 and 8 is equal to the product of 4 and 5; and is read 12 plus
+            8 is equal to 4 into 5. Constant Product of Several Factors. 68. The Product
+            of several factors remains the same in whatever order the factors are
+            multiplied together. Take, ...
+  Q       : How does it follow that the product of the three numbers 2, 3, and 5 remains
+            unchanged, no matter in what order they are multiplied together?
+  A       : The Product of several factors remains the same in whatever order the
+            factors are multiplied together. Take, for example, the product 2×3×5. Since
+            2×3=3×2, we have 2×3×5=3×2×5; and since 2×5=5×2, we have 3×2×5=3×5×2; and so
+            on, there being six different ways in which the factors may be multiplied
+            together.
+
+========================================================================================
+[SCIENCE]  1835
+  excerpt : Some idea of this may be formed from the annexed figures, the second of
+            which represents a piece of the finest down magnified. But others there are,
+            much stronger and stiffer than the wing quill-feathers, as those, for
+            instance, forming the tails of the Woodpecker tribe. And the reason would be
+            evident to any person who watched a Woodpecker on the stem of a tree
+            feeding. Its food consists of grubs...
+  Q       : Why are the tail-feathers of the Woodpecker tribe much stronger and stiffer
+            than wing quill-feathers, and what further office does the tail perform in
+            birds generally?
+  A       : Its food consists of grubs, usually concealed in the wood. In order to get
+            them, he must therefore remain fixed on the bark, and make a hole with his
+            beak, a tedious, if not an impracticable operation, were it not for the wiry
+            stiffness of the tail-feathers, which press against the tree, and act like
+            an additional limb. The tail, however, has another use, applicable more or
+            less to all birds; it is to them, what a rudder is to a boat, and in many
+            cases acts like a third wing.
+
+========================================================================================
+[SCIENCE]  1893  stem_signal 1.00
+  excerpt : The gas should be smelt (taking care not to breathe much of it into the
+            lungs), it should also be poured downwards on to a burning candle which will
+            thus be extinguished (Fig. 5)— hence the gas is heavier than air-and some of
+            it should be shaken with lime-water. The student will thus be better able to
+            contrast the properties of this gas with those of candle-stuff. It is
+            assumed here that the gas p...
+  Q       : On the supposition that a burning candle is wholly converted into water and
+            carbonic acid gas, and into nothing else, what relation must obtain between
+            the original mass of candle and the masses of the products, and why?
+  A       : If the candle is changed, in some way we cannot as yet understand, into
+            water and carbonic acid gas, and into these only, then the sum of the masses
+            of these two ought to be equal to the mass of the candle burnt: in other
+            words, a determinate quantity of candle ought to produce, when wholly burnt,
+            such quantities of water and carbonic acid gas, that the sum of these two
+            quantities is equal to the quantity of candle used.
+
+========================================================================================
+[SCIENCE]  1852  stem_signal 0.75
+  excerpt : Now combine the impulsive force first given, with that power which caused
+            the moon, when left free to move, to fall to the earth. Let them both act at
+            once: the impulse is given, the moon darts off in a straight line, but is
+            instantly seized by the earth's attraction, which drags it from its
+            rectilineal path, and the two contending forces, ever struggling, neither
+            conquering, exercise a divided em...
+  Q       : If we conceive the moon as subject at once to an original tangential impulse
+            and to the constant attraction of the earth, what happens to its motion, and
+            how may the space through which it falls toward the earth in a given time be
+            deduced from its actual path?
+  A       : Now combine the impulsive force first given, with that power which caused
+            the moon, when left free to move, to fall to the earth. the impulse is
+            given, the moon darts off in a straight line, but is instantly seized by the
+            earth's attraction, which drags it from its rectilineal path, and the two
+            contending forces, ever struggling, neither conquering, exercise a divided
+            empire over the moon ; onwards she moves, obedient to the impulsive force,
+            bent to her orbit by the action of the earth's attraction. Now the amount by
+            which it is deflected in one second of time, from the straight line it would
+            have pursued, is the amount precisely, by which it falls to the earth.
+            Newton easily computed, from the known velocity of the moon in its orbit,
+            and from the radius of orbit, the space through which the moon actually fell
+            to the earth in one second of time.
+
+========================================================================================
+[SCIENCE]  1905  stem_signal 1.00
+  excerpt : It is evident, therefore, that the law of contraction cannot be
+            indeterminate as in the case where the load is imposed by the hand of man.
+            There is, therefore, in addition to the Boyle-Gay-Lussac law, another
+            definite relation between any two of the three variables involved in that
+            law. The application of well-known equations of ¹ Transactions, Academy of
+            Science of St. Louis, XIII, no. 3; xiv, no...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1821
+  excerpt : Now the product will become the multiplicand, and the number of quantities
+            being (p+1)(q+1), will be repeated as often as the new multiplier
+            (1+c+c+...c") contains parts or terms; therefore the whole number of
+            quantities in the product of the three factors will be represented by
+            (p+1)(q+1)(r+1), and so on, to any number. Q.E.D. The product
+            (1+a)(1+b)(1+c), &c., to m factors, will contain all the c...
+  Q       : If the product of two polynomial factors containing respectively (p+1) and
+            (q+1) terms is taken as a new multiplicand, and multiplied by a third
+            polynomial factor containing (r+1) terms, how many terms will be found in
+            the final product, and why?
+  A       : Now the product will become the multiplicand, and the number of quantities
+            being (p+1)(q+1), will be repeated as often as the new multiplier
+            (1+c+c²+...cʳ) contains parts or terms; therefore the whole number of
+            quantities in the product of the three factors will be represented by
+            (p+1)(q+1)(r+1), and so on, to any number.
+
+========================================================================================
+[SCIENCE]  1919
+  excerpt : We have shown that any point P' not on the perpendicular bisector is not
+            equidistant from A and B. 13... the theorem is true. 1. The perpendicular
+            bisector of the base of an isosceles triangle passes through the vertex. 2.
+            What is the locus of the vertices of all isosceles triangles constructed on
+            a given base? Explain your answer. 3. If two points of one line are
+            equidistant from two points of an...
+  Q       : Given the angle AOB and its bisector OC: prove that every point on OC is
+            equidistant from OA and OB, and that every point equidistant from OA and OB
+            lies on OC. What is the locus of a point equidistant from the sides of an
+            angle, and how does this conclusion follow?
+  A       : The locus of a point equidistant from the sides of an angle is the bisector
+            of the angle. From any point P on OC draw PD and PE, each ⊥ OA and OB
+            respectively. In the △OPE and △OPD, OP = OP, and ∠ x = ∠ x'. any point on
+            the bisector is equidistant from the sides OA and OB. From any point P'
+            equidistant from OA and OB draw P'D' and P'E' ⊥ OA and OB respectively.
+
+========================================================================================
+[SCIENCE]  1885
+  excerpt : 13. The price of brandy is 52 centimes per litre ; express it in pence per
+            gallon, the rate of exchange being 25 80 francs = £. 14. By taking the
+            decimetre as equal to four inches, what percentage of error is introduced,
+            first, in linear measure; second, in square measure; third, in cubic
+            measure. Take the legal equivalent as the true length of the metre? 15. Find
+            the length of the side of a cubic...
+  Q       : From the expression for the volume of a cylinder, how does it follow that
+            the volume of a cone is one-third of the volume of a cylinder upon the same
+            base and of the same greatest altitude?
+  A       : The volume of a cylinder is given by V = S base by L altitude, where V
+            denotes L³ and S denotes L². In the case of a cone the altitude is variable,
+            but it can be shown that the average altitude is ⅓ of the greatest altitude.
+
+========================================================================================
+[SCIENCE]  1841  stem_signal 1.00
+  excerpt : 206. It is clear, when the gases of the same volume contain the same number
+            of atoms, that 2 or 3 volumes of a gas must contain 2 or 3 times more atoms
+            of the In water, 100 oxygen combine exactly with 12.479 hydrogen; the volume
+            of hydrogen, as gas, amounts exactly to twice the volume of oxygen, whence
+            it follows, that 12.479 hydrogen express the weight of 2 atoms of hydrogen,
+            and 1 atom thus will...
+  Q       : Admitting the hypothesis that equal volumes of all gases contain the same
+            number of atoms, why must the atomic weights of bodies be proportional to
+            the specific weights of those bodies in the gaseous state?
+  A       : It is clear, when the gases of the same volume contain the same number of
+            atoms, that 2 or 3 volumes of a gas must contain 2 or 3 times more atoms The
+            specific weights of the gases are their relative weights by equal volume;
+            whence it follows, if the above proposition be regarded as true, that the
+            true atomic weights of bodies must be proportional to their specific weights
+            when in the state of gases.
+
+========================================================================================
+[SCIENCE]  1851  stem_signal 1.00
+  excerpt : A rough estimate of these relations yields the same numbers which Liebig has
+            deduced from a more complicated calculation. Thus, for instance, if a man
+            daily consume 45,000 cubic inches of oxygen, which would give 9505 2 cubic
+            feet for the year, 9 billions and 505,200 cubic feet of oxygen will be
+            abstracted from the atmosphere by a thousand millions of men; and if,
+            further, it be assumed that about...
+  Q       : If a man daily consume 45,000 cubic inches of oxygen, and it be assumed that
+            the whole annual abstraction by respiration of animals, decomposition, and
+            combustion is thrice that of a thousand millions of men, why must the oxygen
+            of the atmosphere be exhausted in 800,000 years, and what further fact makes
+            this conclusion compatible with the observed constancy of atmospheric
+            composition during 1800 years?
+  A       : If a man daily consume 45,000 cubic inches of oxygen, which would give
+            9505.2 cubic feet for the year, 9 billions and 505,200 cubic feet of oxygen
+            will be abstracted from the atmosphere by a thousand millions of men if,
+            further, it be assumed that about double this amount of oxygen is lost by
+            the respiration of animals, and by the processes of decomposition and
+            combustion, it follows that all the oxygen of the atmosphere would be
+            exhausted in 800,000 years.
+
+========================================================================================
+[TECHNOLOGY]  1910  stem_signal 0.80
+  excerpt : The poles of the electromagnet in the local circuit are hollowed out and
+            filled up with carbon disks or powdered plumbago. The armature and the
+            carbon-tipped poles of the electromagnet form part of the local circuit; and
+            if the relay is actuated by a weak current the armature will be attracted
+            but feebly. The carbon being only slightly compressed will offer
+            considerable resistance to the flow of c...
+  Q       : In a relay whose local circuit includes the armature and the carbon-tipped
+            hollow poles of the electromagnet, how does the intensity of the incoming
+            main-line current determine the loudness of the signal heard upon the local
+            sounder?
+  A       : The armature and the carbon-tipped poles of the electromagnet form part of
+            the local circuit; and if the relay is actuated by a weak current the
+            armature will be attracted but feebly. The carbon being only slightly
+            compressed will offer considerable resistance to the flow of current from
+            the local battery, and therefore the signal on the local sounder will be
+            weak. If, on the contrary, the incoming current on the main line be strong,
+            the armature will be strongly attracted, the carbon will be sharply
+            compressed, the resistance in the local circuit will be proportionately
+            lowered, and the signal heard on the local sounder will be a loud one.
+
+========================================================================================
+[SCIENCE]  1869
+  excerpt : (Art. 189). The tangents from any point to a system of conics inscribed in
+            the same quadrilateral cut any diagonal of that quadrilateral in a system of
+            points in involution of which the two extremities of that diagonal are a
+            pair of conjugate points. (Art. 344). 358. Two lines which contain a
+            constant angle, cut the line joining the two points at infinity on a circle,
+            so that the anharmonic ratio ...
+  Q       : If two lines always contain the same constant angle θ, how does it follow
+            that they cut the two points at infinity belonging to any circle in a set of
+            four points whose anharmonic ratio is constant?
+  A       : Two points at infinity on a circle, so that the anharmonic ratio of the four
+            points is constant. For the equation of two lines containing an angle being
+            x=0, y=0, the direction of the points at infinity on any circle is
+            determined by the equation x² + y² + 2xy cos θ = 0; and, separating this
+            equation into factors, we see, by Art.
+
+========================================================================================
+[SCIENCE]  1897  stem_signal 1.00
+  excerpt : Solution. Since the pressure at all points in a horizontal plane passing
+            through a liquid is equally great, we shall have, denoting by P₁ the
+            pressure of the air confined in the tube, Collecting what we know to be true
+            about the volumes and the pressures in this problem, we have V₁ = 1, V2=x.
+            Hence, by Boyle's Law, 1: x = 30:20, 30 x = 20, x = ૐ. The required volume
+            is, then, cu. in. 1 7. A quanti...
+  Q       : A cubic inch of air, confined in a tube by mercury and under a pressure of
+            30 inches, expands until the mercury column which confines it reads 20
+            inches. What volume does the air then occupy, and by what law is the result
+            obtained?
+  A       : Since the pressure at all points in a horizontal plane passing through a
+            liquid is equally great, we shall have, denoting by P₁ the pressure of the
+            air confined in the tube, Collecting what we know to be true about the
+            volumes and the pressures in this problem, we have V₁ = 1, V₂ = x. Hence, by
+            Boyle's Law, 1 : x = 30 : 20, 30x = 20, x = ⅔.
+
+========================================================================================
+[SCIENCE]  1859  stem_signal 1.00
+  excerpt : 21. But (24) Therefore, by equality of ratios, which gives, CG.CH=CD². If
+            different ellipses have the same transverse axis, the corresponding sub-
+            tangents are equal to one another. Let EBDA, E'BD'A, &c. be any number of
+            ellipses described on AB as the transverse axis, SG produced any ordinate to
+            each, and ST, S'T, &c. tangents at the points where the ordinate meets the
+            curves. Then for each of the...
+  Q       : If several ellipses all have the same transverse axis AB, and from a point C
+            on that axis an ordinate is drawn cutting the ellipses at different points
+            S, S', &c., why must the sub-tangents corresponding to those points all be
+            equal, and how does this lead to a construction for drawing a tangent at a
+            given point of an ellipse without knowing its foci?
+  A       : Which gives, CG.CH = CD². If different ellipses have the same transverse
+            axis, the corresponding sub-tangents are equal to one another. Let EBDA,
+            E'BD'A, &c. be any number of ellipses described on AB as the transverse
+            axis, SG produced any ordinate to each, and ST, S'T, &c. tangents at the
+            points where the ordinate meets the curves. Then for each of them we have
+            (38a) Leg. 4. 10. •Leg. 4. 23. Euc. 2. 5, Cor. Euc. 6. 8, Cor. and 13. (Fig.
+            9.) and since the first three terms are the same for all, the fourth must be
+            likewise, which, diminished by CG, gives the sub-tangent TG.
+
+========================================================================================
+[SCIENCE]  1845  stem_signal 0.62
+  excerpt : Hall, this nerve is an exciter of motion, not a direct motor nerve. The
+            glosso-pharyngeal nerve has been satisfactorily determined to be chiefly, if
+            not entirely, an efferent nerve; by experiments of this kind, performed by
+            Dr. J. Reid. 123. It has been from the want of a proper mode of
+            experimenting, that the functions of the posterior roots of the spinal
+            nerves have been regarded as in any degre...
+  Q       : If the posterior roots of the spinal nerves, when irritated without
+            division, often excite motion, yet when the anterior roots are first divided
+            no motion follows upon irritation of the posterior roots still in connexion
+            with the cord, what must we conclude is the true character of the motor
+            influence exerted by the posterior roots, and by what path are the muscles
+            ultimately excited?
+  A       : It has been from the want of a proper mode of experimenting, that the
+            functions of the posterior roots of the spinal nerves have been regarded as
+            in any degree motor. If they be irritated, without division of either root,
+            motions are often excited; but if they be divided, and their separated
+            trunks be then irritated, no motions ensue; nor are any movements produced
+            by irritation of the roots in connection with the spinal cord, if the
+            anterior roots have been divided. Hence it appears that the motor powers of
+            these fibres are not direct, but that they convey an impression to the
+            centre, which is reflected to the muscles through the anterior roots.

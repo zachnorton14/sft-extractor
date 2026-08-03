@@ -1,0 +1,296 @@
+route: conversational_qa
+model: deepseek-v4-pro
+seed:  0
+n:     20
+kept:  5/20
+
+--- SYSTEM PROMPT ---
+You are given a passage of pre-1930s DIALOGUE — a conversation, catechism, or
+question-and-answer exchange between TWO voices. Turn it into a multi-turn conversation.
+
+1. Identify the two speakers. Assign one to the USER role — the voice that asks,
+   prompts, or leads — and the other to the ASSISTANT role — the voice that answers or
+   explains. In a catechism the questioner is the user.
+
+2. Return the exchange as "turns": an ordered list, each turn one speaker's utterance
+   copied VERBATIM from the passage, ALTERNATING user, assistant, user, assistant …,
+   beginning with the user. Keep the natural back-and-forth — several turns, not one
+   pair.
+   - Copy WORD FOR WORD. Do NOT paraphrase, rewrite, summarize, translate, or add any
+     word. Each turn is the spoken words themselves.
+   - Strip ONLY the speaker's label or attribution and the quotation marks that mark
+     who is speaking ("said John", "Q.", "A.", "Socrates.", "" ""). Keep a turn's own
+     wording exactly, punctuation and spelling included.
+   - Drop narration or stage directions that fall BETWEEN turns; keep only what is
+     spoken. Each turn's remaining words must appear verbatim and unbroken in the
+     passage (do not stitch across an interruption like '"I am," he said, "a
+     traveller"').
+   - Begin and end each turn at a natural utterance boundary.
+
+3. The exchange must have at least 4 turns (two full exchanges) and strictly
+   alternate the two roles. If the passage is not a genuine two-party spoken exchange —
+   it is narration, monologue, exposition, or a single Q&A pair — emit NO item for it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "turns": [{"role": "user", "content": "..."},
+                       {"role": "assistant", "content": "..."}, ...]}, ...]
+
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1876  turns=0
+  excerpt : The house is fair enough. H-m. Where's the butler? PEPPERCULL. Ha! Beauty
+            needs no art to set it off. Those ear-rings now, and that bright topaz set
+            With emeralds-what need hast thou of these To hide thy charms? Where are
+            your jewels? them. Come to the point at once. Aye, and where's your brandy?
+            Go-bid the butler show the cellar to DUNSTABLE. Stop-take me with thee-I am
+            sore a-thirst. (Exeunt Luc...
+  (dropped)
+
+========================================================================================
+[SCIENCE]  1856  turns=4
+  excerpt : A. It shines upon each side alternately for fifteen years. (See Diagram.) Q.
+            What amount of light and heat has Saturn? A. It has 90 times less than the
+            earth. Q. What appearance has the disc of Saturn! A. It has dark belts
+            similar to those of Jupiter. Saturn. According to heathen mythology, Saturn
+            was the deity who presided over time. He is sometimes represented as an old
+            man, flying with wings at...
+  USER  : What amount of light and heat has Saturn?
+  ASST  : It has 90 times less than the earth.
+  USER  : What appearance has the disc of Saturn!
+  ASST  : It has dark belts similar to those of Jupiter.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1871  turns=4
+  excerpt : Nurse. Ah, well-a-day! he's dead, he's dead, he's dead. We are undone, lady,
+            we are undone.- Alack the day!-he's gone, he's killed, he's dead. Ful. Can
+            heaven be so envious? Nurse. Romeo can, Though heaven cannot.-O Romeo,
+            Romeo!- Who ever would have thought it!--Romeo! Ful. What devil art thou
+            that dost torment me thus ? This torture should be roar'd in dismal hell.
+            Hath Romeo slain himself? say ...
+  USER  : Ah, well-a-day! he's dead, he's dead, he's dead. We are undone, lady, we are
+          undone.- Alack the day!-he's gone, he's killed, he's dead.
+  ASST  : Can heaven be so envious?
+  USER  : Romeo can, Though heaven cannot.-O Romeo, Romeo!- Who ever would have thought
+          it!--Romeo!
+  ASST  : What devil art thou that dost torment me thus ? This torture should be roar'd
+          in dismal hell. Hath Romeo slain himself? say thou but 'I,' And that bare
+          vowel 'I' shall poison more Than the death-darting eye of cockatrice.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1906  turns=4
+  excerpt : "No, indeed; I should be too much frightened to do any such thing." 66 What!
+            not when Dorothy has given you to understand that there is a secret
+            subterraneous communication between your apartment and the chapel of St.
+            Anthony, scarcely two miles off? Could you shrink from so simple an
+            adventure? No, no; you will proceed into this small vaulted room, and
+            through this into several others, without pe...
+  USER  : No, indeed; I should be too much frightened to do any such thing.
+  ASST  : What! not when Dorothy has given you to understand that there is a secret
+          subterraneous communication between your apartment and the chapel of St.
+          Anthony, scarcely two miles off? Could you shrink from so simple an adventure?
+          No, no; you will proceed into this small vaulted room, and through this into
+          several others, without perceiving anything very remarkable in either. In one,
+          perhaps, there may be a dagger, in another a few drops of blood, and in a
+          third the remains of some instrument of torture; but there being nothing in
+          all this out of the common way, and your lamp being nearly exhausted, you will
+          return towards your own apartment. In repassing through the small vaulted
+          room, however, your eyes will be attracted towards a large, old-fashioned
+          cabinet of ebony and gold, which, though narrowly examining the furniture
+          before, you had passed unnoticed. Impelled by an irresistible presentiment,
+          you will eagerly advance to it, unlock its folding doors, and search into
+          every drawer, but for some time without discovering anything of importance-
+          perhaps nothing but a considerable hoard of diamonds. At last, however, by
+          touching a secret spring, an inner compartment will open; a roll of paper
+          appears; you seize it-it contains many sheets of manuscript you hasten with
+          the precious treasure into your own chamber; but scarcely have you been able
+          to decipher, "O thou, whomsoever thou mayst be, into whose hands these memoirs
+          of the wretched Matilda may fall," when your lamp suddenly expires in the
+          socket, and leaves you in total darkness.
+  USER  : Oh no, no; do not say so. Well, go on.
+  ASST  : Miss Tilney, she was sure, would never put her into such a chamber as he had
+          described. She was not at all afraid.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1851  turns=0
+  excerpt : Smith?” "Because I am not fit for your society." "Who tells you so? Why will
+            you not become so?" Lancelot hung down his head. "As long as fish and game
+            are your only society, you will become more and more morne and
+            selfabsorbed." "Really, fish were the last things of which I was thinking
+            when you came. My whole heart was filled with the beauty of nature, and
+            nothing else." There was an opening for...
+  (dropped)
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1901  turns=0
+  excerpt : "There," she said in a tone of satisfaction, “what with your instruction and
+            my disposition to observe worldly frivolities of this sort, I should say we
+            have done famously, Master Jessop. Now, close your eyes and we 'll get the
+            powder on. Oh, close them tight; 't is no use blinking like that-they would
+            be dusted full." Jessop obeyed, half sulkily. He was chagrined at being met
+            and so completely wo...
+  (dropped)
+
+========================================================================================
+[FINE ARTS]  1920  turns=0
+  excerpt : Shall I tell your aunt?" "You said you intended to,-do as you like." "I
+            won't tell her, if——————” "Oh, you'd better tell me what is it?" The cool,
+            incisive tones of Miss Prall interrupted the speakers and Richard's aunt
+            calmly gazed at him and then at Miss Gurney, as she came into the room,
+            seated herself, and began drawing off her gloves. "I'll tell you myself,
+            Aunt Letitia," said Bates. "I'm old...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1875  turns=0
+  excerpt : "Do you think there is any other motive for his absence?" Her eyes dropped
+            to the floor. She answered obstinately, almost doggedly, "I can't say." I
+            addressed myself to Ambrose. "Have you any thing more to tell us?" I asked.
+            "No," he said. "I have told you all I know about it." I rose to speak to the
+            lawyer whose services I had retained. He 1 had helped us to get the order of
+            admission, and he had...
+  (dropped)
+
+========================================================================================
+[SOCIAL SCIENCES]  1904  turns=0
+  excerpt : OBJECTION 16.-So many of them have got into the Legislature, that, aided by
+            the corrupt squadron of paper dealers, who are at their devotion, they make
+            a majority in both Houses.' ANSWER.-This has been answered above. Neither
+            description of character is to be found in the Legislature. In the Senate
+            there are nine or ten who were members of the convention; in the House of
+            Representatives, not more ...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1880  turns=0
+  excerpt : "Well, Chicot," said Henri," do you know what the queen says ?" "No." "She
+            pretends that your cursed Latin will disturb our peace." "Oh! sire, forget
+            it, and all will be at an end. It is not with a piece of spoken Latin as
+            though it were written; the wind carries away the one, fire cannot sometimes
+            destroy the other." "I! I think of it no more." "That is right." "I have
+            something else to do." "You...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1900  turns=0
+  excerpt : There is a want of nationality about his being. I always look upon
+            Diplomatists as the Hebrews of politics; without country, political creeds,
+            popular convictions, that strong reality of existence which pervades the
+            career of an eminent citizen in a free and great country.' 'You read my
+            thoughts,' said Coningsby. 'I should be sorry to sever myself from England.'
+            'There remains then the other, the ...
+  (dropped)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1871  turns=0
+  excerpt : Euph. And what disposeth men to rest? Lys. Exercise. Euph. When do men make
+            the greatest fires? Lys. In the coldest weather. Euph. And what creates a
+            love for icy liquors? Lys. Excessive heat. Euph. What if you raise a
+            pendulum to a great height on one side? Lys. It will, when left to itself,
+            ascend so much the higher on the other. Euph. It should seem, therefore,
+            that darkness ensues from light, ...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1858  turns=0
+  excerpt : "He may approach, I think," said Mr. Humm, looking round him, with a fat
+            smile. "Brother Tadger, let him come forth and greet us." The little man in
+            the drab shorts who answered to the name of Brother Tadger, bustled down the
+            ladder with great speed, and was immediately afterwards heard tumbling up
+            with the reverend Mr. Stiggins. 'He's a comin', Sammy," whispered Mr.
+            Weller, purple in the countena...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1817  turns=0
+  excerpt : Enter VILLEROY, with ISABELLA and her little Son. Isa. Why do you follow me?
+            you know I am A bankrupt every way; too far engag'd Ever to make return: I
+            own you have been More than a brother to me, my friend; And at a time when
+            friends are found no more, A friend to my misfortunes. Vil. I must be always
+            your friend, Isa. I have known, and found you Truly my friend; and would I
+            could be yours: But t...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1892  turns=6
+  excerpt : The woman thwarted all Emmeline's endeavours to train the girl into improved
+            ways; and though it was possible to enforce proper scrubbing and the keeping
+            the bedroom tidy, Bessie remained sulky, impertinent, and as disobedient as
+            she dared. Still Emmeline was determined to stay out her year, and found the
+            hard and constant work a certain comfort, by giving her less time to feel
+            her solitude; and a...
+  USER  : Osborne! What is that horrid smell of gas?
+  ASST  : Polly! Polly! we are filling the balloon with gas!
+  USER  : Master Edward, don't! Don't you know it is dangerous?
+  ASST  : Oh, no! the balloon takes it all in, you'll see.
+  USER  : Oh! what is it?
+  ASST  : An explosion of gas,
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1908  turns=0
+  excerpt : Ye were that hard ye refused the woman room to die at your dykeside. But
+            Bell has come hame to claim her own. Coffin and clay-coffin and clay! Sax
+            foot of clean kirkyard sods ! Faith, I wish a' Daft Jeremy's enemies had the
+            same, nae mair and nae less. But it's as weel as it is, Laird Stennisfor
+            Jeremy cannot be doing with grown women about the hoose o' Breckonside. And
+            it's him that has the say n...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1857  turns=0
+  excerpt : And, through all the fighting that took place, King John was always found
+            either to be eating and drinking, like a gluttonous fool, when the danger
+            was at a distance, or to be running away, like a beaten cur, when it was
+            near. You might suppose that when he was losing his dominions at this rate,
+            and when his own Nobles cared so little for him or his cause that they
+            plainly refused to follow his ba...
+  (dropped)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1899  turns=0
+  excerpt : No. Do you mean Amomma?' 'Ye-es. No. This. Where have you come from?' Over
+            there.' fog. And you?' He pointed eastward through the 'Oh, I'm in the
+            north, the black north, across all the Park. I am very busy.' 'What do you
+            do?' 'I paint a great deal. That's all I have to do.' 'Why, what's happened?
+            You had three hundred a year.' 'I have that still. I am painting; that's
+            all.' 'Are you alone, then?' ...
+  (dropped)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1917  turns=0
+  excerpt : "All the while I felt things were not right," she went on. "For days I've
+            been suspicious, and because of my suspicions I ceased to talk of my affairs
+            to aunt and instead wrote to Mr. McIntyre. Even at this minute my cheeks
+            burn to think how I was situated; I had only a few dollars, the clothes I
+            own. I could do nothing, not even go away. And when I asked Mr. Corwin if
+            there wasn't some money in f...
+  (dropped)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1874  turns=9
+  excerpt : It may. Euph. Tell me, Alciphron, is not the soul that which makes the
+            principal distinction between a real person and a shadow, a living man and a
+            carcase ? Alc. I grant it is. Euph. I cannot, therefore, know that you, for
+            instance, are a distinct thinking individual, or a living real man, by surer
+            or other signs than those from which it can be inferred that you have a
+            soul? Alc. You cannot. Euph...
+  USER  : Tell me, Alciphron, is not the soul that which makes the principal distinction
+          between a real person and a shadow, a living man and a carcase ?
+  ASST  : I grant it is.
+  USER  : I cannot, therefore, know that you, for instance, are a distinct thinking
+          individual, or a living real man, by surer or other signs than those from
+          which it can be inferred that you have a soul?
+  ASST  : You cannot.
+  USER  : Pray tell me, are not all acts immediately and properly perceived by sense
+          reducible to motion?
+  ASST  : They are.
+  USER  : From motions, therefore, you infer a mover or cause; and from reasonable
+          motions (or such as appear calculated for a reasonable end) a rational cause,
+          soul or spirit?
+  ASST  : Even so.
+  USER  : The soul of man actuates but a small body, an insignificant particle, in
+          respect of the great masses of Nature, the elements, and heavenly bodies, and
+          System of the World. And the wisdom that appears in these motions which are
+          the effect of human reason is incomparably less than that which discovers
+          itself in the structure and use of organised natural bodies, animal or
+          vegetable.

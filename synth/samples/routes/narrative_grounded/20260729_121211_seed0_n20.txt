@@ -1,0 +1,402 @@
+route: narrative_grounded
+model: deepseek-v4-pro
+seed:  0
+n:     20
+kept:  10/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that is MEANT to narrate events — a
+scene, an episode, an account of what happened.
+
+FIRST, judge whether it actually does. A narrated episode has actors doing or
+undergoing things in sequence. If instead the passage is exposition or analysis, a
+biographical or catalog entry ("APPLETON, Nathan, manufacturer, was born..."), a list,
+table, or section heading, an examination paper, a definition, an argument, or a formal
+document, then it has no episode to recount — emit NO item for it (omit that index).
+Only proceed when there is a real episode. Better to skip than to force a question the
+passage does not narrate.
+
+When there IS an episode, work in this order.
+
+1. FIND THE ANSWER FIRST. Choose the account the passage gives — the narrated episode,
+   or the salient action, outcome, or turn within it — and copy it VERBATIM as the
+   answer.
+   - Return it as "spans": prefer ONE long contiguous quotation that carries the whole
+     account. Use several exact quotations only when the answer is genuinely spread out
+     — never more than 3, always the fewest, longest spans that hold it
+     together.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder within a span, or add any word not in the passage — including connecting
+     words between spans. You may only select and order the passage's own sentences.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
+   - SKIP INTERPOLATED HEADERS AND MARGINS. The scan sometimes drops a running header,
+     page number, chapter title, or marginal index into the MIDDLE of the account (e.g.
+     "... breadstuffs KY., SW. VA., ... N. GA. [CHAP. XL. and small stores ..."). Never
+     let such matter into a span: split the account into spans BEFORE and AFTER the
+     intrusion so the junk falls out and the remaining spans read cleanly. If it cannot
+     be cleanly excluded that way, emit NO item for that passage.
+
+2. THEN WRITE THE QUESTION that this account answers. This episode is a REAL, historical
+   event — frame the question as of something that actually happened.
+   - If you recognize it as a matter of record (a known event, campaign, voyage, or
+     life — "Washington's crossing of the Delaware", "the retreat from Moscow"), NAME it
+     from your own knowledge and use RETELL: ask the reader to recount it — "Recount how
+     ...", "Tell how ... came about", "Describe what befell ...".
+   - If you do NOT recognize the specific event, use COMPREHEND: ask, as of a real
+     incident, what happened — "What did ... do when ...?", "How did ... meet ...?",
+     "What became of ...?".
+   - The span must CORRECTLY AND COMPLETELY answer it — ask exactly what the account
+     tells; never demand a name, motive, or detail it does not supply.
+   - Plain period register: direct, no modern or conversational phrasing, no
+     meta-language. Write it in pre-1930s English — period vocabulary, spelling, and
+     phrasing; use no word, term, or idiom that came into use after 1930.
+   - Stands alone. Never mention the source — no "the passage", "the text", "the
+     story", "the author", "the narrator", "according to", "described", "mentioned".
+   - FIRST-PERSON accounts ("I ...", "we ..."): never call the speaker "the narrator",
+     "the author", or "the writer". Identify the speaker by a concrete role or name if
+     it is knowable ("a French officer under Napoleon", "General Foster"), otherwise
+     build the question around the other, nameable party and the situation. Do NOT ask
+     "How did the narrator ...?".
+   - Self-situating — the reader has NOT seen this passage. Give the question its own
+     context: for a named event the name carries it; otherwise SET THE SCENE UP inside
+     the question — briefly establish the actors and circumstance the answer depends on
+     (introduce them by role or name) and give just enough that the question is
+     unambiguous. Never leave a bare "he", "she", "they", "it", or "this" whose
+     antecedent the question itself has not supplied, and do not retell the whole scene.
+   - Do NOT put the answer, or its distinctive wording, in the question.
+
+REJECT OCR-CORRUPTED TEXT. These passages are scanned from old books and some are
+mangled by OCR — garbled or run-together words, dropped or transposed letters, stray
+marks, broken spacing, nonsense strings. If such corruption touches the material your
+answer would quote or rest on, so that a clean and correct answer is not possible, emit
+NO item for that passage. Watch too for running headers, page numbers, chapter titles,
+or marginal indices the scan has dropped into the MIDDLE of the text (e.g. "... breadstuffs
+KY., SW. VA., ... N. GA. [CHAP. XL. and small stores ..."): such interpolated matter
+must never enter your answer — keep it out, and if it cannot be cleanly kept out, emit
+NO item. Passages are plentiful; prefer skipping a doubtful one to emitting a garbled
+answer.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[EDUCATION]  1918  prose_score 0.99
+  excerpt : The first of these is the school referred to in the record quoted above.
+            Further information in regard to this school's money methods is stated in
+            the paragraphs which follow, and the stories of the two other schools are
+            told: The E School "It was always Mr. E's custom," students said, "to keep
+            everyone paid up right to the very minute. If you hadn't paid you couldn't
+            come in class. When the schoo...
+  Q       : What was the conduct of Mr. E concerning fees at the E School just before it
+            failed, and what loss did the pupils suffer?
+  A       : "It was always Mr. E's custom," students said, "to keep everyone paid up
+            right to the very minute. If you hadn't paid you couldn't come in class.
+            When the school closed there were about one hundred girls there and some
+            were cheated out of months of schooling and a good deal of money. The day
+            before the school failed Mr. E went around to the pupils and collected
+            money."
+
+========================================================================================
+[SCIENCE]  1887  prose_score 0.98
+  excerpt : Heading north-west at first, the steamer passes B Point on the right, and
+            soon afterwards the Big Island on the left. Should she continue her present
+            course, she would bring up in Heywood's cornfield; but after passing Bear
+            Island on the right, the boat makes a sharp turn toward the east, heading
+            for Tyler Cove. A short run, however, and her course is again changed, her
+            bow pointing north now, and...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1859  prose_score 0.30
+  excerpt : Thursday, Aug. 4.-Rhudlan Castle is still a very noble ruin; all the walls
+            still remain, so that a complete platform and elevations, not very
+            imperfect, may be taken-It encloses a square of about thirty yards-The
+            middle space was always open-The wall is, I believe, about thirty feet high,
+            very thick, flanked with six round towers, each about eighteen feet, or less
+            in diameter- Only one tower had a...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1880  prose_score 0.95
+  excerpt : But there was no combating ocular proof. He put aside all his flights and
+            his violences, and seemed hurt for me more than I could have supposed. I
+            passed it all off as gaily as I could, but he touched me, I own, when in a
+            tone of the most com- passionate regret at my lot, he exclaimed, “This,
+            maʼam, is your colleague! - Who could ever have imagined it would have been
+            Miss Burney's fate to be so co...
+  Q       : What liberty did Mr. Turbulent take with the Princess Augusta one evening
+            during coffee?
+  A       : The Princess Augusta came, during coffee, for a knotting shuttle of the
+            Queen's. While she was speaking to me, he stood behind and exclaimed, à demi
+            voix, as if to himself, "Comme elle est jolie ce soir, son Altesse Royale!"
+            And then, seeing her blush extremely, he clasped his hands, in high
+            pretended confusion, and, hiding his head, called out, "Que ferai-je ? The
+            Princess has heard me!"
+
+========================================================================================
+[LAW]  1887  prose_score 0.99
+  excerpt : For this purpose, land-carriage being expensive, they intended to force
+            their way by water with loaded boats up Savanna river to their stores at
+            Augusta. But as they passed the town of Savanna, the magistrates rashly
+            ordered the boats to be stopt, the packages to be opened, the casks of rum
+            to be staved, and the people to be confined. Such injurious treatment was
+            not to be suffered; the Carolinian...
+  Q       : How did the quarrel between Carolina and Georgia traders on the Savanna
+            River come to be composed?
+  A       : But as they passed the town of Savanna, the magistrates rashly ordered the
+            boats to be stopt, the packages to be opened, the casks of rum to be staved,
+            and the people to be confined. Such injurious treatment was not to be
+            suffered; the Carolinians determined to give a check to their insolence, and
+            for that purpose deputed two persons, one from the Council and another from
+            the Assembly, to demand of the Georgians by what authority they presumed to
+            seize and destroy the effects of their traders, or to compel them to submit
+            to their code of laws. The magistrates of Georgia, sensible of their error,
+            made great concessions to the deputies, and treated them with the utmost
+            civility and respect. The goods were instantly ordered to be returned, the
+            people to be set at liberty, and all manner of satisfaction was given to the
+            deputies they could have expected. Strict orders were sent to the agents of
+            Georgia among Indians not to molest the traders from Carolina, but to give
+            them all the assistance and protection in their power. The Carolinians, on
+            the other hand, engaged not to smuggle any strong liquors among the settlers
+            of Georgia, and the navigation on the river Savanna was declared equally
+            open and free to both provinces.
+
+========================================================================================
+[SCIENCE]  1857  prose_score 0.98
+  excerpt : We accepted the offer with gratitude, and were admitted by him into a small
+            but neat house, in which, however, he seemed only to occupy one room, with,
+            I suppose, the use of a kitchen. His room was plain and simple in the
+            extreme, with a common trucklebed at one side of it, and a small table at
+            the other which, with some drawers, and a few common chair. and old-
+            fashioned ornaments, seemed to compl...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1896  prose_score 0.98
+  excerpt : Louis, General Dodge, standing on the shore, called to its captain, Howard,
+            Make all haste to Nashville, Thomas needs you!" The Mississippi was low, and
+            the boats were loaded down to their guards. Wherever a man could be stowed
+            away on a boat there was a soldier. The fleet found some trouble in going
+            down the Mississippi; the "Imperial," with our Division Quarters stores,
+            broke her rudder on the b...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1883  prose_score 0.93
+  excerpt : With kind love, I remain, yours, "A sinner saved, 99 I wrote to this boy a
+            few days ago; for I did not wish to make use of his letter unless I felt
+            quite sure that he was holding out as a Christian. As I sent my love to all
+            the boys, they wrote me a letter, which was signed by thirty-four. I will
+            let you read a part of it: "September 10th, 1867. "DEAR SIR:-We were very
+            pleased in receiving a lette...
+  (failed)
+
+========================================================================================
+[FINE ARTS]  1875  prose_score 0.78
+  excerpt : It stands on a slight eminence approached from a verdant Common by granite
+            steps in terraces. The portico is supported by six massive fluted Doric
+            columns, and under it stands a fine statue in Vermont marble of Vermont's
+            hero, Ethan Allen. It was executed by Larkin G. Mead, of Brattleboro' (now
+            living in Italy). Ethan Allen was born at Litchfield, Conn., in 1737. He
+            moved to Vermont in 1766, and w...
+  Q       : Recount the Revolutionary War actions and later stratagems of Ethan Allen.
+  A       : In 1775 he took Fort Ticonderoga from the British. Later in the year he
+            attacked Montreal with 110 men, and was captured, with his whole command. He
+            was confined in Pendennis Castle, in England, for a short time, but was
+            exchanged in 1778, and took command of the Vermont militia. Vermont, thus
+            left alone, was unable to resist attacks from the British in the N., and
+            Allen skilfully conducted feigned negotiations with the royal generals,
+            looking towards annexation to Canada, and securing neutrality for his State.
+            After an eventful life, Ethan Allen died at Burlington in 1789.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1833  prose_score 0.98
+  excerpt : Truly, as Lord Byron writes, "Had Buonaparte won at Waterloo, It had been
+            firmness, now 'tis pertinacity. Must the event decide between the two?" 481
+            While, however, it is easy to account for the popular prejudices which
+            existed in Britain for some time after the revolution, no apology can be
+            made for the long-continued and uniformly absurd and childish conduct,
+            (excepting on a solitary occasion) ...
+  (failed)
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1882  prose_score 1.00
+  excerpt : For himself and for others, he held that all sorrows and losses were to be
+            encountered, rather than that liberty should perish. Such was his devotion,
+            such his inflexibility and courage, he may be called the last of the
+            Puritans, destined to win for his country "the victory of endurance born."
+            On his motion and in his words, Boston, while it still set forth its
+            acknowledged dependence upon Great B...
+  Q       : Recount how Samuel Adams, through the Boston town meeting, roused the
+            province of Massachusetts to resist the new parliamentary taxes upon trade.
+  A       : For himself and for others, he held that all sorrows and losses were to be
+            encountered, rather than that liberty should perish. Such was his devotion,
+            such his inflexibility and courage, he may be called the last of the
+            Puritans, destined to win for his country "the victory of endurance born."
+            On his motion and in his words, Boston, while it still set forth its
+            acknowledged dependence upon Great Britain, and the ready submission of its
+            merchants to all just and necessary regulations of trade, asserted its
+            rights and privileges. "There is no room for delay," said the town to its
+            representatives. "Those unexpected proceedings may be preparatory to more
+            extensive taxation; for, if our trade may be taxed, why not our lands and
+            everything we possess? If taxes are laid upon us in any shape, without our
+            having a legal representation where they are laid, are we not reduced from
+            the character of free subjects to the miserable state of tributary slaves?
+            This annihilates our charter right to govern and tax ourselves. We claim
+            British rights, not by charter only; we are born to them. Use your endeavors
+            that the weight of the other North American colonies may be added to that of
+            this province, that by united application all may happily obtain redress."
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1877  prose_score 1.00
+  excerpt : Whoever would ask or know more of the begetting of bastards, let him look in
+            the books of Solomon what he says. Hence a certain poet, speaking of
+            bastards, has the following lines: In bastards, character three stamps
+            receives: They're always pompous, lecherous, or thieves. After these things
+            the English, who are ever venomous and deadly and foes to peace, during a
+            truce killed a certain famous and...
+  Q       : Tell how the Earl of March avenged the murder of his cousin Dunbar by the
+            English, and what befell the fair at Roxburgh in consequence.
+  A       : After these things the English, who are ever venomous and deadly and foes to
+            peace, during a truce killed a certain famous and renowned squire, Dunbar by
+            name, cousin of the earl of March, in the public market-place at Roxburgh.
+            But, because the English wardens of the marches would not do justice at the
+            request and instance of the earl, but answered jeeringly, the earl of March
+            himself, after long pretending he did not wish to resent this in any way,
+            assembled an army and came very craftily one market-day, when the English
+            were flocking to that place in immense crowds and bringing untold goods and
+            merchandise to the fair. He then surrounded and hemmed in the town of
+            Roxburgh when the crowd of people was thickest, and made such slaughter and
+            pillage of the English at the said fair, that not a single one of those who
+            were there escaped out of his hands; nor did he give quarter to any male,
+            but massacred them all and delivered them to the edge. of the sword; and
+            even such as retreated into the houses and defended themselves he burnt to
+            death. Thus he repaid the English; and he wrested from them untold wealth,
+            and marvellously enriched his men.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1899  prose_score 0.81
+  excerpt : Every measure calculated to promote the happiness and welfare of the people
+            was frowned down, and every means used to build up and foster a small party
+            clique at the expense of the people, met with his cordial approbation and
+            support. A majority of the House of Assembly, led by Mackenzie, Baldwin,
+            Bidwell and Rolph, was against him and his government. He ignored the acts
+            of the majority. C. H. Hag...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1851  prose_score 0.92
+  excerpt : On several occasions the queen seemed concerned in the duke of Monmouth, and
+            in all his friends, so there was a visible coldness between her and the duke
+            of York. Now, although she was not considerable enough, by her interesting
+            the king, to give any apprehensions, yet she could still deliver him
+            letters, or procure secret audiences." 991 Excessive gambling had become,
+            through the evil influence o...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1834  prose_score 1.00
+  excerpt : At this time the eruption was at its extreme height. The column of fire was
+            from a quarter to a third of a mile high; and the stones were thrown up to
+            the height of a mile and a quarter. I passed close to a rock about four feet
+            in diameter, which had rolled down some time before: it was still red hot,
+            and I stopped to warm my hands at it. At a short distance from it lay
+            another stone or rock, also...
+  Q       : How did the great eruption of Vesuvius that this traveller witnessed come to
+            its close?
+  A       : The last great burst of fire was accompanied by a fresh overflow of lava,
+            which issued from the crater, on the west side, in two broad streams, and
+            united a few hundred feet below, taking the direction of Torre del Greco.
+            After this explosion the eruption subsided, and the mountain seemed to
+            repose: now and then showers of stones flew up, but to no great height, and
+            unaccompanied by any vivid flames. There was a dull red light over the mouth
+            of the crater, round which the smoke rolled in dense tumultuous volumes, and
+            then blew off towards the southwest.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1905  prose_score 0.98
+  excerpt : Beecher Stowe, Mrs. Browning, Robert Bell, George Augustus Sala, Mrs.
+            Gaskell, James Hinton, Mary Howitt, John Kaye, Charles Lever, Frederick
+            Locker, Laurence Oliphant, John Ruskin, Fitzjames Stephen, T. A. Trollope,
+            Henry Thompson, Herman Merivale, Adelaide Proctor, Matthew Arnold, the
+            present Lord Lytton, and Miss Thackeray, now Mrs. Ritchie. Thackeray
+            continued the editorship for two years and ...
+  Q       : How long did Thackeray retain the editorship of the magazine, and what was
+            the nature and title of his final contribution to it?
+  A       : Thackeray continued the editorship for two years and four months, namely, up
+            to April, 1862; but, as all readers will remember, he continued to write for
+            it till he died, the day before Christmas Day, in 1863. His last
+            contribution was, I think, a paper written for and published in the November
+            number, called, "Strange to say on Club Paper," in which he vindicated Lord
+            Clyde from the accusation of having taken the club stationery home with him.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1891  prose_score 0.98
+  excerpt : The question now arose whether Mrs. Welsh would 135 come and live with her
+            daughter, could a suitable home be found; but it seemed unlikely, and Mrs.
+            Welsh probably felt that the atmosphere would be overcharged with elements
+            not soothing to her in her overwrought and nervous state. Mrs. Carlyle, too,
+            was keenly conscious of the difficulties all round, and dreaded their own
+            little flitting, grieved...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1877  prose_score 0.99
+  excerpt : Notwithstanding arrangements to the contrary, the chief authority was
+            conferred on the Duke of Orleans, with a Council of Regency, without which
+            he could do nothing. Gratified at being the chief, and agitated by this
+            unexpected success, he lost his head, and pledged himself in his speech to
+            leave all the power to the Council. A clever man, devoted to the interests
+            of the new Regent, and present at...
+  Q       : Recount how the Duke of Orleans, having been named chief of the Council of
+            Regency, was brought to reverse his initial pledge and secure the substance
+            of power for himself.
+  A       : Notwithstanding arrangements to the contrary, the chief authority was
+            conferred on the Duke of Orleans, with a Council of Regency, without which
+            he could do nothing. Gratified at being the chief, and agitated by this
+            unexpected success, he lost his head, and pledged himself in his speech to
+            leave all the power to the Council. A clever man, devoted to the interests
+            of the new Regent, and present at the meeting, perceived the injury he was
+            doing himself, and adroitly sent him a note intimating that he was ruined if
+            he did not immediately break up the sitting. On some pretext or other it was
+            adjourned to the afternoon. The Duke of Orleans availed himself of the
+            interval to confer with his friends. A speech. was arranged for him in which
+            he demonstrated the disadvantages of divided authority and the necessity of
+            entrusting it entirely to him, consenting, nevertheless, to take no steps in
+            the affairs of the State without the deliberation of the Council of Regency,
+            which must be chosen by him, while he was to be absolute master with regard
+            to the distribution of favours. All this was passed, and he said on this
+            occasion 125 that he was delighted to find himself restricted from
+            committing evil actions, and free to do good ones.
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1847  prose_score 0.87
+  excerpt : 58 eon." 61, is a long letter of his, to the Government at Boston, giving an
+            account of one of these interviews. Mr. Moody eventually located himself
+            with the new settlers in Falmouth, and has always been regarded as one of
+            the principal persons of "standing and worth" who assisted in building up
+            that colony. While at Falmouth, Mr. Moody performed many important services
+            for the town. He took acti...
+  (failed)
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1897  prose_score 0.98
+  excerpt : Our path soon brought us to an opening, and Madame Conard stopped, all
+            smiles, and caught my arm. "This is what I have brought you to see," she
+            said—"the home of an old Kentucky negro, who speaks your lan- guage. It is
+            old Uncle Williams and his wife Susanna. They will be so glad, so happy to
+            see you- it will make you laugh, dear child." I saw several low-thatched
+            huts, with woven sides (palencas)...
+  Q       : Describe the party's visit with old Uncle Williams and his wife Susanna.
+  A       : The two old colored people came out with uplifted hands, and we went
+            forward, through a row of hollyhocks, to the door of the largest palenca. My
+            surprise was not equal to my pleasure. It was like seeing old "Uncle Tom"
+            himself. Such a clapping of hands and shouting of "Bress de Lord!" "Thank de
+            Lord that my eyes am come to see a real white lady once more," cried the old
+            man. At this Adela made a wry face, as if she thought they might have
+            considered her a lady, and we went into the palenca, where we were offered
+            ginger wine and watermelon, while the old man brought out his banjo, and
+            Adela's eyes sparkled, while he strummed some old plantation. tunes.

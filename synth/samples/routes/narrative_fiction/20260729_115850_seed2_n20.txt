@@ -1,0 +1,385 @@
+route: narrative_fiction
+model: deepseek-v4-pro
+seed:  2
+n:     20
+kept:  9/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that is MEANT to narrate events — a
+scene, an episode, an account of what happened.
+
+FIRST, judge whether it actually does. A narrated episode has actors doing or
+undergoing things in sequence. If instead the passage is exposition or analysis, a
+biographical or catalog entry ("APPLETON, Nathan, manufacturer, was born..."), a list,
+table, or section heading, an examination paper, a definition, an argument, or a formal
+document, then it has no episode to recount — emit NO item for it (omit that index).
+Only proceed when there is a real episode. Better to skip than to force a question the
+passage does not narrate.
+
+When there IS an episode, work in this order.
+
+1. FIND THE ANSWER FIRST. Choose the account the passage gives — the narrated episode,
+   or the salient action, outcome, or turn within it — and copy it VERBATIM as the
+   answer.
+   - Return it as "spans": prefer ONE long contiguous quotation that carries the whole
+     account. Use several exact quotations only when the answer is genuinely spread out
+     — never more than 3, always the fewest, longest spans that hold it
+     together.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder within a span, or add any word not in the passage — including connecting
+     words between spans. You may only select and order the passage's own sentences.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
+
+2. THEN WRITE THE QUESTION that this account answers. This episode is FICTION — an
+   INVENTED scene from a novel, tale, sketch, or story. Frame the question OPENLY AS A
+   STORY to be told, so the answer is plainly understood as fiction and NEVER as
+   historical fact.
+   - Use TELL-A-TALE: ask the reader to relate the tale — "Tell the tale of ...",
+     "Relate the story of ...", "Set forth the story in which ...", "Give the story of
+     ...". Introduce the persons AS CHARACTERS IN A STORY ("a young lady named Nancy",
+     "one Iris, walking abroad at night"), never as real historical figures.
+   - NEVER name the episode as a matter of record, and never phrase it as though it
+     truly happened. Do NOT write "How did Nancy come to ...?" (that implies she was a
+     real person) — write "Tell the story of a young lady named Nancy who ...".
+   - The span must CORRECTLY AND COMPLETELY answer whatever you ask — ask exactly what
+     the account tells; never demand a name, motive, or detail it does not supply.
+   - Plain period register: direct, no modern or conversational phrasing, no
+     meta-language. Write it in pre-1930s English — period vocabulary, spelling, and
+     phrasing; use no word, term, or idiom that came into use after 1930.
+   - Stands alone. Never mention the source — no "the passage", "the text", "the
+     story", "the author", "the narrator", "according to", "described", "mentioned".
+   - Self-situating — the reader has NOT seen this passage. Give the question its own
+     context: for a named event the name carries it; otherwise SET THE SCENE UP inside
+     the question — briefly establish the actors and circumstance the answer depends on
+     (introduce them by role or name) and give just enough that the question is
+     unambiguous. Never leave a bare "he", "she", "they", "it", or "this" whose
+     antecedent the question itself has not supplied, and do not retell the whole scene.
+   - Do NOT put the answer, or its distinctive wording, in the question.
+
+REJECT OCR-CORRUPTED TEXT. These passages are scanned from old books and some are
+mangled by OCR — garbled or run-together words, dropped or transposed letters, stray
+marks, broken spacing, nonsense strings. If such corruption touches the material your
+answer would quote or rest on, so that a clean and correct answer is not possible, emit
+NO item for that passage. Passages are plentiful; prefer skipping a doubtful one to
+emitting a garbled answer.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1911  prose_score 0.99
+  excerpt : "I know thy breed far too well to mean any such thing. Moreover, thy
+            precisian governor, old Paulett there, hath repelled, like instigations of
+            Satan, more hints than one that pain might be saved to one queen and
+            publicity to the other, if he would have taken a leaf from Don Philip's
+            book, and permitted the lady to be dealt with secretly. Had he given an ear
+            to the matter six months back, it would...
+  Q       : Tell the tale of the discourse betwixt one Humfrey and his comrade Will,
+            wherein Will, being chidden for speaking of dark state matters, recounts
+            tidings of Humfrey’s father, the lodging of a young lady, and the secret
+            purposes of the old man.
+  A       : "Speak not thus, Will," said Humfrey, "or thou wilt make me believe thee a
+            worse man than thou art, only for the sake of showing me how thou art versed
+            in state policy. Tell me, instead, if thou hast seen my father." Thy father?
+            yea, verily, and I have a packet for thee from him. It is in my mails, and I
+            will give it thee anon. He is come on a bootless errand! As long as my
+            mother and my sister Mall are both living, he might as well try to bring two
+            catamounts together without hisses and scratches." "Where is he lying?"
+            asked Humfrey. "In Shrewsbury House, after the family wont, and Gilbert
+            makes him welcome enough, but Mall is angered with him for not lodging his
+            daughter there likewise! I tell her he is afraid lest she should get hold of
+            the wench, and work up a fresh web of tales against this lady, like those
+            which did so much damage before. Twould be rare if she made out that Gravity
+            himself, in the person of old Paulett, had been entranced by her." "Peace
+            with thy gibes," said Humfrey impatiently, and tell me where my sister is."
+            "Where thinkest thou? Of all strange places in the world, he hath bestowed
+            her with Madame de Salmonnet, the wife of one of the French Ambassador's
+            following, to perfect her French, as he saith. Canst thou conceive wherefore
+            he doth it? Hath he any marriage in view for her? Mall tried to find out,
+            but he is secret. Tell me, Numps, what is it?" "If he be secret, must not I
+            be the same?" said Humfrey, laughing. "Nay, thou owest me some return for
+            all that I have told thee." 66 Marry, Will, that is more like a maiden than
+            a statesman! But be content, comrade, I know no more than thou what purposes
+            there may be anent my sister's marriage," he added. "Only if thou canst give
+            me my father's letter, I should be beholden to thee."
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1922  prose_score 0.99
+  excerpt : Here the cliff had nearly sloped away, the height being only some twenty or
+            thirty feet above the water, and being practicable in many cases for
+            descent; while behind lay a large wood in whicn concealment was easy, except
+            in the case of an organized search, of which they had no fear whatever. The
+            next morning they made along the shore as far as the point where the native
+            war-canoes had been pulled...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1830  prose_score 1.00
+  excerpt : The gods will have it so! AURELIA. Seize on your house? CATILINE.. Seize my
+            last sesterce! Let them have their will. We must endure. Ay, ransack-ruin
+            all ; Tear up my father's grave,-tear out my heart. VOL. II. ACT II.
+            CATILINE. Wife! the world 's wide,-Can we not dig or beg? Can we not find on
+            earth a den, or tomb?...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1844  prose_score 0.92
+  excerpt : Bloody instructions, which, being taught, return To plague the inventor.
+            This even-handed justice Commends the ingredients of our poisoned chalice To
+            our own lips. He's here in double trust: First, as I am his kinsman and his
+            subject, Strong both against the deed; then, as his host, Who should against
+            his murderer shut the door, Not bear the knife myself. Besides, this Duncan
+            Hath borne his facult...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1907  prose_score 1.00
+  excerpt : In heaven's sight. PHILIBERT NICCOLÒ Your father was a king. PHILIBERT
+            GIORDANO Forget not, earthly state is mean PHILIBERT And is my father dead?
+            GIORDANO You are not king-nor ever will be king. PHILIBERT Not king! I
+            thought you said my father was— GIORDANO...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1821  prose_score 1.00
+  excerpt : I will not be imposed on by the rascal: I'll go my- 'self to my neighbour
+            Worthland directly; he is a man of honour, and will be above taking
+            advantage, though I did oppose his election.' As your lordship pleases for
+            that. But then, perhaps, Mr. Discount will call in all his money, if he saw
+            you put yourself into other hands; beside, I am not certain 'that he will
+            refuse, and therefore I should th...
+  Q       : Relate the story of a noble lord, impatient for a thousand pounds, who was
+            humoured by his man Poundage with a show of borrowing money, and the
+            discovery of what truly lay behind the transaction.
+  A       : And then turning to his page, Reach me that paper, this pen is so good it
+            tempts me to write a letter, while I wait for Poundage's return.' And so
+            humming a new tune, he went on with his breakfast without the least concern.
+            . You are so great a stranger to the ways of that part of the world which
+            deals in money-matters, that you will be surprised when I tell you, that,
+            while this Mr. Poundage brought me from the Bank, he had called upon Mr.
+            Discount, and brought him to his lord's to do his business But you must not
+            imagine this was to lend his lordship money. Nothing less. It was only to
+            appear as the nominal lender of his lordship's own money, which Poundage had
+            that very morning received from some of his tenants in the country, and
+            which if he could not bring it in better, he meant to replace with part of
+            the price of the timber, which he was to buy in Discount's name, who was a
+            creature of his own.
+
+========================================================================================
+[SOCIAL SCIENCES]  1905  prose_score 0.99
+  excerpt : The office was closed and the office-boy, who lived on the premises, signed
+            the chit book and then sent the cover up to Carlyle's house on the Bluff.
+            The latter on arriving home at about half past seven proceeded to have his
+            bath and then dressed for dinner. On entering the dining room at eight
+            o'clock his boy handed him the letter, to which he immediately replied,
+            noting the risk, and his answer ...
+  Q       : Give the story of how a gentleman named Carlyle, receiving a late
+            communication at his home, was made to answer for the delay on the morrow by
+            an irate Mr. Warburton, and the fashion in which that worthy behaved toward
+            his subordinate.
+  A       : The office was closed and the office-boy, who lived on the premises, signed
+            the chit book and then sent the cover up to Carlyle's house on the Bluff.
+            The latter on arriving home at about half past seven proceeded to have his
+            bath and then dressed for dinner. On entering the dining room at eight
+            o'clock his boy handed him the letter, to which he immediately replied,
+            noting the risk, and his answer was handed to a coolie to be at once
+            forwarded to the offices of De Vesci & Co., where it arrived in due course.
+            The interval that had elapsed, however, gave De Vesci ample time to send
+            round the note of complaint as already arranged, to Warburton, who was at
+            dinner, and furious at being disturbed. He forwarded a letter of regret and
+            determined to make it warm for Carlyle in the morning. The next day poor
+            Arthur had a warm time, although, as he tried to point out, he did not see
+            how he could be fairly held responsible, as the communication had been
+            received long after business hours and had been attended to as soon as
+            possible. Reasonable argument was invariably lost on Warburton who, when
+            worsted, would take refuge in shricks of abuse which would effectually drown
+            all discussion, and this attitude was accentuated when he was dealing with
+            one of his own subordinates. So as Mrs. De Vesci had wisely prognosticated,
+            the way was nicely paved for the next act of the drama.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1889  prose_score 0.80
+  excerpt : Will the bitter herbs of earth grow sweet To me, as trodden by His feet?
+            Will the vexed, accurst humanity, As worn by Him, begin to be A blessing,
+            yea, a sacred thing, For love, and awe, and ministering? I am strong, I am
+            strong. By our angel ken shall we survey His loving smile through his woeful
+            clay? I am swift, I am strong- The love is bearing me along. Ador. One love
+            is bearing us along. Mid-...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1895  prose_score 0.99
+  excerpt : Langton, with an empty beef-tin in his hand, stumbled over his wife's
+            figure, plunged the vessel into the water and drank again and again. "Curse
+            you, you brute!" shouted Enderby through the wild noise of the hissing rain,
+            "Where is your 87 wife? Are you going to let her lie there without a drink?"
+            Langton answered not, but drank once more. Then Enderby, with an oath, tore
+            the tin from his hand, f...
+  Q       : Relate the story of a castaway boat in the mid-Pacific, and of one Enderby
+            who, seeing a brute named Langton deny water to his own wife, himself went
+            to her aid and was overcome by sudden feeling.
+  A       : Then Enderby, with an oath, tore the tin from his hand, filled it and took
+            it to her, holding her up while she drank. And as her eyes looked gratefully
+            into his while he placed her tenderly back in the sternsheets, the madness
+            of a moment overpowered him, and he kissed her on the lips.
+
+========================================================================================
+[MUSIC AND BOOKS ON MUSIC]  1791  prose_score 0.79
+  excerpt : Oh, thou mean heart! Is she not false! And I, Shall I sit down with tame
+            dishonour? Take Pollution to my arms? Grow vilely old, A tale for drunkards
+            in their wine? The mirth Of midnight libertines, when they recount Their
+            triumphs o'er base women? No! she dies: I tear her from my breast, though
+            the life-stream Should issue with her. Hear me, then, Ariston, Do thou
+            prepare a secret draught of death...
+  Q       : Tell the tale of the meeting between the King and his Queen after he has
+            resolved on her death, and how she bore his repulse.
+  A       : Enter EURYDICE; she kneels to Periander, who, after looking at her some time
+            with emotion, flings away without speaking. Eur. Not hear me! not vouchsafe
+            me one poor word! 'Tis hard indeed-The wretch of many crimes, [ Rising. Whom
+            mercy dares not save, is gentlicr us'd. His rigid judge is less severe than
+            mine. Ye Powers, have I deserved this! Did my heart Ere harbour one loose
+            wish? Yourselves can tell, The morning's orient beam is not more pure, More
+            stainless than my truth. Was ever fate, Were ever woes like mine? Even in
+            the hour Of general joy to all, while pleasing hope Sprung fast within my
+            heart, I find myself Undone for ever; sunk to rise no more. Not hear me
+            !-then I know my doom is fix'd. And shall I stay to hear the foul surmises,
+            The scurril taunts, the false upbraiding pity, The keen revilings that must
+            usher in My public sentence? Can there be in death Act V. Such pangs, such
+            piercing agonies? Impossible! Death is repose and calm, is soft Elysium To
+            thoughts like these. I will prevent their triumph, And save myself this
+            shame. "T is but to lose A few unhappy moment; 't is to rest The sooner from
+            my cares; to feel no more The bitterness of misery and insult That bait my
+            weary soul.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1876  prose_score 0.94
+  excerpt : Cleaves with a mighty surge the foaming plain, And with broad torrent rushes
+            in the main. Swollen Arar mingles slow its lingering tide, That, silent
+            gliding, scarcely seems to glide: Caught in the headlong whirlpool, breaks
+            away, Snatched through the plains, and starting from delay; Plunged in the
+            deep the hurried stream is tost, And in the greater flood its name is lost.
+            Alert the troops the brid...
+  (failed)
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1863  prose_score 0.97
+  excerpt : Mr. Pinchfip having asked Rocjean why, in placing that book there, he was
+            like a passenger paying his fare to the driver of an omnibus ? The latter at
+            once answered: "I give it up." "So you do," replied Pinchfip. "You are
+            quick, sir, at answering conundrums." Mr. Brick saw it. Finally Uncle Bill
+            was made to comprehend. Philadelphians "Very excellent, sir; very ingenious!
+            may well be proud of the h...
+  Q       : Tell the tale of a gentleman named Pinchfip who posed a certain conundrum to
+            an artist called Rocjean.
+  A       : Mr. Pinchfip having asked Rocjean why, in placing that book there, he was
+            like a passenger paying his fare to the driver of an omnibus ? The latter at
+            once answered: "I give it up." "So you do," replied Pinchfip.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1888  prose_score 0.99
+  excerpt : On seeing this Don Quixote observed:-These two ladies were most unhappy in
+            not being born in this age, and I above all unhappy in not being born in
+            theirs, for had I encountered those gentlemen, neither would Troy have been
+            fired nor Carthage destroyed; for by the slaying of Paris only all these
+            misfortunes had been avoided. -I will wager, quoth Sancho, that before long
+            there will not be a liquor-...
+  Q       : Set forth the story of the painter Orbaneja of Ubeda, as recounted by the
+            knight Don Quixote to his squire Sancho, wherein the painter explained his
+            curious method of labelling his works.
+  A       : Thou art right, Sancho, said Don Quixote; for this artist is like Orbaneja,
+            a painter there was in Ubeda, who, when they asked him what he was painting
+            answered, whatever it might turn out, and if by chance he painted a cock, he
+            would write underneath, This is a cock, lest they should think it was a she-
+            fox.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1903  prose_score 0.95
+  excerpt : Why, it was only the other day that my wife was remarking how odd it was
+            that at a party at the Earl of Kidderminster's your name was not mentioned.
+            To what member of the aristocracy may I ask does that equipage belong from
+            which I saw you descend? The Countess Dowager of Rockminster? How is her
+            ladyship?" 66 'Her ladyship is not very well; and when I heard that you were
+            coming to town, I strongly...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1907  prose_score 0.99
+  excerpt : Pendennis. Laura declared stoutly that she did not love Pen a bit, when he
+            did not do his duty to his mother: nor would she be convinced by any of
+            Helen's fond arguments, that the boy must make his way in the world; that
+            his uncle was most desirous that Pen should cultivate the acquaintance of
+            persons who were likely to befriend him in life; that men had a thousand
+            ties and calls which women could...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1845  prose_score 0.78
+  excerpt : Had I been To Ferdinand what Octavio was to me, War had I ne'er denounced
+            against him. No, I never could have done it. The Emperor was My austere
+            master only, not my friend. There was already war 'twixt him and me When he
+            deliver'd the Commander's Staff Into my hands; for there's a natural [He
+            observes the COUNTESS looking on THEKLA Unceasing war 'twixt cunning and
+            suspicion ; with expressions of ...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1898  prose_score 0.91
+  excerpt : "Man, are you bent on driving me into it?" The servant came near to him, and
+            laid a hand on his shoulder. "You went into as great a thing once before,
+            sir," said he. "It was to save the king." "And this is to save the queen and
+            yourself. For if we don't do it, the truth about my master must be known."
+            Sapt made him no answer. They sat down again in silence. There they sat,
+            sometimes smoking. never...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1849  prose_score 1.00
+  excerpt : Eternal spirits! Or have ye chosen this place After the toil of battle to
+            repose Your wearied virtue, for the ease you find To slumber here, as in the
+            vales of heaven? Or in this abject posture have ye sworn To adore the
+            Conqueror? who now beholds Cherub and Seraph rolling in the flood With
+            scatter'd arms and ensigns; till anon His swift pursuers from heaven-gates
+            discern The advantage, and, desce...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1918  prose_score 0.86
+  excerpt : "Thank Heaven, the little ones are boys. Daughters are a great charge, a
+            very great charge for a lonely man and a student. I ought to have married
+            again when they were little. But she is safe now, safe. I did what I could
+            for her-afterwards-God forgive those early years." "You never told me what a
+            splendid old boy your father was," Oswald said later. "Poor old chap. Saying
+            good-bye to you was a ha...
+  Q       : Tell the tale of a student and a lonely father's parting words, and that
+            which he cried aloud concerning his little sons and his daughter, when
+            Heaven was thanked.
+  A       : "Thank Heaven, the little ones are boys. Daughters are a great charge, a
+            very great charge for a lonely man and a student. I ought to have married
+            again when they were little. But she is safe now, safe. I did what I could
+            for her-afterwards-God forgive those early years."
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1898  prose_score 1.00
+  excerpt : Dando is seated majestically on the table, according to Thackeray's picture
+            of the scene; swinging his legs about in a semi-intoxicated state, and
+            picking his teeth, in an unconcerned and self-possessed manner, with an
+            oyster-knife; a pile of shells, sufficient for many grottoes, are at his
+            feet, while the horror-stricken servants are gathering other shells
+            scattered around. The professor is suppo...
+  Q       : Set forth the story of the scene, after Thackeray, in which a personage
+            called Dando, seated in state upon a table, partakes of an oyster-feast and
+            answers a demand for payment with a tipsy yell and a singular declaration.
+  A       : Dando is seated majestically on the table, according to Thackeray's picture
+            of the scene; swinging his legs about in a semi-intoxicated state, and
+            picking his teeth, in an unconcerned and self-possessed manner, with an
+            oyster-knife; a pile of shells, sufficient for many grottoes, are at his
+            feet, while the horror-stricken servants are gathering other shells
+            scattered around. The professor is supposed to have just met the reasonable
+            demand for payment made by the deluded master of the establishment with yell
+            of tipsy laughter, and the announcement that his name is Dando, and that he
+            never pays! Above his head may be read the comforting intelligence that a
+            great reduction is made on taking a quantity, to which advantage Dando is
+            very obviously entitled.

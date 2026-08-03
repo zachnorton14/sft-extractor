@@ -1,0 +1,310 @@
+route: composition_qa
+model: deepseek-v4-pro
+seed:  0
+n:     20
+kept:  5/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that IS, or contains, a formal
+COMPOSED DOCUMENT — a statute or act, a legal pleading, a letter, a speech or
+resolution, a prayer or devotion, a proclamation, a contract or like instrument. Turn
+it into an instruction-and-completion pair in which the reader is asked to COMPOSE such
+a document. Work in this order.
+
+1. FIND THE ARTIFACT FIRST. Identify the composed document in the passage and copy it
+   VERBATIM as the answer.
+   - Return it as "spans": prefer ONE long contiguous quotation that is the document,
+     or a self-contained part of it (a whole clause, a whole letter, a whole stanza of
+     the oration). Use several exact quotations only when it is genuinely split — never
+     more than 3, always the fewest, longest spans. Begin at a natural start
+     (a heading, salutation, "Whereas", "Resolved, that", "O Lord") and end at a
+     natural close.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder within a span, or add any word not in the passage — including connecting
+     words between spans. You may only select and order the passage's own text.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
+
+2. THEN WRITE THE INSTRUCTION that asks for this document.
+   - Name the GENRE and the SUBJECT: "Draft an act of Parliament to ...", "Compose a
+     letter ...", "Frame a resolution ...", "Write a prayer for ...", "Set out a
+     plaintiff's plea that ...". It must call for exactly the kind of document the
+     answer is, on its actual subject and occasion.
+   - Give the instruction the substance the document needs to be a fitting answer — its
+     purpose, parties, or occasion — but do NOT copy the document's wording or dictate
+     its phrasing. Ask for the thing; let the answer supply the words.
+   - Plain period register: direct, no modern or conversational phrasing, no
+     meta-language. Write it in pre-1930s English — period vocabulary, spelling, and
+     phrasing; use no word, term, or idiom that came into use after 1930.
+   - Stands alone. Never mention the source — no "the passage", "the text", "the
+     author", "as given", "above", "described". Phrase it as a task set from scratch.
+   - Do NOT reproduce the document's distinctive wording in the instruction.
+
+If the passage is NOT actually a composed document of a recognizable genre — it is
+ordinary narration, exposition, or argument — emit NO item for it (omit that index).
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[SOCIAL SCIENCES]  1881  prose_score 0.97
+  excerpt : Bristow, and others. I have the honor of acknowledging the receipt of your
+            letter of October 20th, 1882, which I have seen for the first time this day.
+            In answer thereto, I respectfully say that I have substantially anticipated
+            a reply to it in my letter of acceptance of the nomination of the Saratoga
+            Republican Convention, parts of which I ask leave to affix hereto. 1st.
+            Having however no relucta...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1880  prose_score 0.51
+  excerpt : Question. By whom was Jesus persecuted? Answer. By believers in endless
+            miserg. Q. By whom was he crucified? A. By believers in endless misery. Q.
+            By whom was Stephen stoned to death? A. By believers in endless misery. Q.
+            What did those forty men believe who bound themselves with an oath, that
+            they would not eat and drink again until they had killed Paul? A. If they
+            were Pharisees, (as they probab...
+  (failed)
+
+========================================================================================
+[LAW]  1887  prose_score 0.95
+  excerpt : 4, cl. (6). 2 See sec. 4, cl. (4). 3 This is the Court which can most
+            effectively discharge the duties incident to the appointment of a guardian
+            to the person. The High Court and District Court have concurrent
+            jurisdiction ; see the definition of District Court, supra, sec. 4. applica-
+            tion. of Civil Procedure for the signing and verification of a plaint¹, and
+            Form of stating, so far as can be asc...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1881  prose_score 0.30
+  excerpt : It is often considered too "rough" for ladies, and when Mrs. and I said we
+            were going, I saw Mr. M. look as if he thought we should be a dependent
+            nuisance; I was amused afterwards with his surprise at Mrs.'s courageous
+            horsemanship, and at his obvious confusion as to whether he should help us,
+            which question he wisely decided in the negative. If "happiness is
+            atmosphere," we were happy. The day w...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1896  prose_score 0.98
+  excerpt : Hawthorne was essentially a Puritan-his stories are an expression of the
+            eternal significance of Puritanism-but he sees the Puritans from a superior
+            point of view, he indulges in a laugh now and then at their expense, and
+            would have the reader see their eccentricities of mind and character. Mr.
+            Page has some of the sensitiveness of the men about whom he writes-an almost
+            fatal obstacle to insight. ...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1861  prose_score 0.76
+  excerpt : Two; the outward visible sign, and the inward spiritual grace. Question.
+            What is the outward visible sign or form in Baptism? Answer. Water; wherein
+            the person is baptized, In the name of the Father, and of the Son, and of
+            the Holy Ghost. Question. What is the inward and spiritual grace? Answer. A
+            death unto sin, and a new birth unto righteousness; for being by nature
+            sinful, we are hereby made th...
+  Q       : Set down a catechism touching the nature and requisites of the two holy
+            Sacraments of Baptism and the Lord's Supper, with their outward signs and
+            inward graces, in the form of questions and answers meet for the instruction
+            of the young.
+  A       : Two; the outward visible sign, and the inward spiritual grace. Question.
+            What is the outward visible sign or form in Baptism? Answer. Water; wherein
+            the person is baptized, In the name of the Father, and of the Son, and of
+            the Holy Ghost. Question. What is the inward and spiritual grace? Answer. A
+            death unto sin, and a new birth unto righteousness; for being by nature
+            sinful, we are hereby made the children of pardon. Question. What is
+            required of persons to be baptized? Answer. Repentance, whereby they forsake
+            sin; and faith, whereby they steadfastly believe the promises of God made to
+            them in that Sacrament. Question. Why then are infants baptized, when by
+            reason of their tender age they cannot perform them? Answer. Because they
+            promise them both by their sureties; which promise, when they come to age,
+            themselves are bound to perform. Question. Why was the Sacrament of the
+            Lord's Supper ordained? Answer. For the continual remembrance of the
+            sacrifice of the death of Christ, and of the benefits which we receive
+            thereby.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1912  prose_score 0.88
+  excerpt : 10. Abraham Lincoln's struggle and success in the pursuit of learning
+            illustrates this fact. Effect of Loose, Periodic, and Balanced Sentences.
+            Loose, periodic, and balanced sentences differ widely in the effect which
+            they produce upon the person or persons addressed. Compare the effect of the
+            following selections: 1. They tell you a story in Quebec of a man who was
+            coming one winter morning down ...
+  (failed)
+
+========================================================================================
+[LAW]  1917  prose_score 0.85
+  excerpt : SEC. 24. Every act shall embrace but one subject, which subject shall be
+            expressed in its title. But if any subject shall be embraced in an act which
+            shall not be expressed in its title, such act shall be void only as to so
+            much thereof as shall not be expressed in its title. No law shall be revised
+            or amended by reference to its title; but in such case the act revised or
+            section amended shall be ...
+  Q       : Frame a constitutional provision prescribing the form and publication of
+            legislative acts and state proceedings.
+  A       : Every act shall embrace but one subject, which subject shall be expressed in
+            its title. But if any subject shall be embraced in an act which shall not be
+            expressed in its title, such act shall be void only as to so much thereof as
+            shall not be expressed in its title. No law shall be revised or amended by
+            reference to its title; but in such case the act revised or section amended
+            shall be reenacted and published at length as revised or amended; and all
+            laws of the State of California, and all official writings, and the
+            executive, legislative, and judicial proceedings, shall be conducted,
+            preserved, and published in no other than the English language.
+
+========================================================================================
+[EDUCATION]  1870  prose_score 1.00
+  excerpt : 1. How many thirds in an apple? In 4 apples? 7 apples? 10 apples? 20 apples?
+            2. How many fifths in 3 melons? In five melons? 8 melons? 12 melons? 15
+            melons? 3. How many sixths in 1? 5? 8? 12? 20? 4. How many fourths of an
+            inch in 2 and 1 fourth inches? In 3 inches? 63 inches? 304 inches? 5. How
+            many fifths in 34? 43? 123? 16? 6. How many tenths in 5? 83? 12? 15%? 7.
+            Reduce 225 to sevenths. 1575 An...
+  (failed)
+
+========================================================================================
+[LAW]  1896  prose_score 0.97
+  excerpt : 1. See, generally, supra, note 2, p. 2. On this petition, a rehearing was
+            granted. At a subsequent hearing, the former opinion and decision of the
+            court was ordered to stand unaltered. 3. The matter enclosed by [] will not
+            be found in the reported case. 1018 Volume 15. take said hogs and remove
+            them to another place in the county, and held them as partner, etc. This
+            avowry concludes with a verific...
+  Q       : Frame the verdict of the jury in the replevin action brought by Collier
+            against Whitesides for the taking of certain hogs, wherein the defendant
+            avowed the taking and the plaintiff claimed absolute property and
+            possession.
+  A       : We, of the jury, find for the defendant, Whitesides.
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1911  prose_score 0.97
+  excerpt : The Woman Errant "The book is worth reading. It will cause discussion. It is
+            an interesting fictional presentation of an important modern question,
+            treated with fascinating feminine adroitness."-MISS JEANNETTE GILDER in the
+            Chicago Tribune. At the Sign of the Fox "Her little pictures of country life
+            are fragrant with a genuine love of nature, and there is fun as genuine in
+            her notes on rural chara...
+  (failed)
+
+========================================================================================
+[LAW]  1881  prose_score 0.80
+  excerpt : II. To construe the revenue laws for revenue officers, and instruct them in
+            relation to their duties with reference to taxation and statistics. III. To
+            see that all assessments of property in this State are made according to
+            law. IV. To see that all the taxable shares of stock of all corporations in
+            this State are assessed and taxed as provided by law, and that no
+            unauthorized deductions are made ...
+  (failed)
+
+========================================================================================
+[LAW]  1892  prose_score 0.94
+  excerpt : Construction not to proceed until plans, &c., are deposited. Co. may make
+            surveys, in sections. 57. Any omission, mis-statement or erroneous
+            description of such lands or of the owners or occupiers thereof, in any map
+            or plan or book of reference, may, after ten days' notice having been given
+            by the Company to the owners of such lands, be corrected by the registrar or
+            district registrar within whos...
+  Q       : Draft a clause of a railway act providing for the correction of errors in
+            deposited maps, plans, or books of reference upon application to the
+            registrar, and for the effect of his certificate thereupon.
+  A       : Any omission, mis-statement or erroneous description of such lands or of the
+            owners or occupiers thereof, in any map or plan or book of reference, may,
+            after ten days' notice having been given by the Company to the owners of
+            such lands, be corrected by the registrar or district registrar within whose
+            district the land in question lies, upon application made to him for that
+            purpose; and if it appears to such registrar or district registrar that such
+            omission, mis-statement or erroneous description arose from mistake, he
+            shall certify the same accordingly, setting forth the facts; and the said
+            certificates shall be kept by him along with the other documents to which it
+            relates, and the said registrar or district registrar shall forthwith advise
+            the Railway Commissioner for Manitoba thereof setting forth the facts, and
+            thereupon such map or plan or book of reference shall be deemed to be
+            corrected according to such certificate and the Company may make the railway
+            in accordance therewith.
+
+========================================================================================
+[LAW]  1836  prose_score 0.74
+  excerpt : B. O'NEALL, Speaker of the House of Representatives. Free Masons's Hall
+            company. Duration. No. 2414. Presbyterian Congregation of Hopewell
+            incorporated. Trustees of Chesterfield Academy. I. Be it enacted by the
+            Honorable the Senate and House of Represen. tatives, That the following
+            societies and associations, be, and the same are hereby declared, bodies
+            corporate and politic, by the names and styl...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1847  prose_score 0.79
+  excerpt : 20 25 30 35 40 Till slumber hath quieted me, In sorrow I sigh and weep; The
+            clouds are my canopy To cover me while I sleep. I dream that my charming
+            fair Is then in my rival's bed, Whose tresses of golden hair Are on the fair
+            pillow bespread. Then this doth my passion inflame, I start, and no longer
+            can lie : Ah! Sylvia, art thou not to blame To ruin a lover? I cry. Grim
+            king of the ghosts, be tru...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1830  prose_score 0.91
+  excerpt : Oh cruel reverse of fortune! Oh father Micipsa! Is this the consequence of
+            thy generosity, that he, whom thy goodness raised to an equality with thy
+            own children, should be the murderer of thy children? Must, then, the real
+            house of Numidia always be a scene of havoc and blood? 7 While Carthage
+            remained, we suffered, as was to be expected, all sorts of hardships from
+            their hostile attacks; our ene...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1863  prose_score 0.99
+  excerpt : And where is the trust out of which all these would spring? The Christ of
+            men's own imaginations receives a show of homage, we admit ; but the true
+            Christ hath not where to lay His head. Colder are men's hearts 53 to Jesus
+            than the sepulchre in which He lay; harder than the rocks which rent, as if
+            in sympathy with His dying pains. Mark the external, the formal, honours
+            paid to His religion, and yo...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1821  prose_score 0.95
+  excerpt : 6 The WIRY CONCORD that mine ear confounds,] We had the same expression
+            before in the eighth Sonnet : "If the true concord of well-tuned sounds, "By
+            unions married, do offend thine ear." MALOne. 7 Do I ENVY' those jacks,]
+            This word is accented by other ancient writers in the same manner. So, in
+            Marlowe's Edward II. 1598: "If for these dignities thou be envy'd." Again,
+            in Sir John Davies's Epigrams...
+  (failed)
+
+========================================================================================
+[EDUCATION]  1908  prose_score 0.69
+  excerpt : What is meant by a "balanced ration" for a dairy cow? Why is such a ration
+            important? What foods ordinarily fed to dairy cows are especially rich in
+            carbohydrates? What in fats? What in protein materials? What would be a
+            properly balanced daily ration for a cow giving thirty pounds of milk a day?
+            (Read Farmers' Bulletin No. 22.) 6. Select a young fruit tree (apple, plum,
+            or cherry) for study. By t...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1865  prose_score 0.92
+  excerpt : GRACE and peace. Most serene, high-born Princess, most gracious Lady, and
+            dear Godmother; I have learnt with hearty gladness, from Y. E. P. G.'s
+            letter, that you will quite willingly-nay, even graciously-permit Herr
+            Johann Faber to be pastor in the town of Prettin. Y. E. P. G. will thus have
+            done a good work; for, as he has been known there before, and will be
+            thankfully welcomed, I hope much frui...
+  Q       : Compose a letter from Martin Luther to the Electress Sibylla of Saxony,
+            thanking her for her gracious consent to permit Herr Johann Faber to be
+            appointed pastor in the town of Prettin, and commending the good work
+            thereby done.
+  A       : GRACE and peace. Most serene, high-born Princess, most gracious Lady, and
+            dear Godmother; I have learnt with hearty gladness, from Y. E. P. G.'s
+            letter, that you will quite willingly-nay, even graciously-permit Herr
+            Johann Faber to be pastor in the town of Prettin. Y. E. P. G. will thus have
+            done a good work; for, as he has been known there before, and will be
+            thankfully welcomed, I hope much fruit may be produced, and God give it his
+            blessing. I am bound and willing to serve Y. E. P. G. The dear God and
+            Father of our Lord and Saviour Jesus Christ be with your Electoral Princely
+            Grace always. Amen. MARTINUS LUTHER. Sunday after Dorothea, 1544. To the
+            Electress Sibylla of Saxony.

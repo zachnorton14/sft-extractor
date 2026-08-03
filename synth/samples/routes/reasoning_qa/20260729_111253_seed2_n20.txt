@@ -1,0 +1,458 @@
+route: reasoning_qa
+model: deepseek-v4-pro
+seed:  2
+n:     20
+kept:  14/20
+
+--- EXTRACT SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that argues a point, derives a
+result, or reasons from premises. The author's own reasoning is in the text.
+
+EXTRACT THE REASONING CHAIN, VERBATIM. Find where the author reasons from premises to
+a conclusion, and copy that chain WORD FOR WORD.
+   - Return it as "spans": exact quotations from the passage that, read in order,
+     form one coherent chain of reasoning (premises through conclusion). Prefer ONE
+     long contiguous span. Use several only because the steps are spread out — never
+     more than 4, and always the fewest, longest spans that hold the chain
+     together.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder within a span, or add any word not in the passage — including
+     connecting words between spans. You may only select and order the author's own
+     sentences.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
+   - WORK AROUND references the reader cannot see — a figure, plate, diagram, table,
+     page, section, or note number ("Fig. 36", "as shown in the figure", "see page
+     466", "§ 4", "the note on p. 22"). Since you select and order the spans, choose
+     ones that carry the reasoning WITHOUT such references, and skip any sentence that
+     leans on one — a span that mentions or depends on such a reference must NOT enter
+     the answer. If the chain cannot be formed without them, REJECT the item (emit
+     nothing for it).
+
+REJECT OCR-CORRUPTED TEXT. These passages are scanned from old books and some are
+mangled by OCR — garbled or run-together words, dropped or transposed letters, stray
+marks, broken spacing, nonsense strings. If such corruption touches the material your
+answer would quote or rest on, so that a clean and correct answer is not possible, emit
+NO item for that passage. Passages are plentiful; prefer skipping a doubtful one to
+emitting a garbled answer.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only: [{"i": 0, "spans": ["..."]}, ...]
+
+
+--- QUESTION SYSTEM PROMPT ---
+You are given a passage from a pre-1930s book and a REASONING CHAIN quoted verbatim
+from it — this is the ANSWER. Write the single question that this reasoning chain
+answers.
+
+- The chain must CORRECTLY AND COMPLETELY answer your question — ask exactly what
+  this reasoning concludes or explains. Do not ask for a step, result, or identity
+  the chain does not reach. Read the chain as the answer: if it does not fully
+  answer, adjust the question to fit the chain.
+- Pose a problem that must be reasoned through, not a fact to recall: "Why does
+  ...", "How does it follow that ...", "Why must ...?".
+- Write it in pre-1930s English: period vocabulary, spelling, and phrasing. Use no
+  word, term, or idiom that came into use after 1930, and no modern conversational
+  or academic phrasing — it must read as a question a period examiner would pose.
+- The question must STAND ALONE and betray no awareness of a source. Never refer to
+  the passage or to whoever wrote it — no "the passage", "the text", "the author",
+  "the writer", "the speaker", "the narrator", "the argument", "according to", "as
+  described", "as mentioned". Ask about the SUBJECT ITSELF, as a matter of fact in
+  the world, to someone who never saw the passage. (Not "Why does the author hold
+  that finite beings are on probation?" but "Why must finite beings be on
+  probation?")
+- SUPPLY THE CONTEXT THE READER NEEDS so the chain's "they / it / this / these" have
+  clear antecedents:
+    · for a matter of general record (a thinker, doctrine, war, ruler, work,
+      statute, scripture), name it from your own knowledge;
+    · for particular persons, places, or events described only in the passage,
+      introduce them briefly in the question — who they are and the situation.
+  Give just enough to make the question unambiguous — do not restate the whole
+  scene, and never leave a bare "these beings", "such creatures", or "this process".
+- Every proper noun must be one the reader can place: either widely recognizable on
+  its own, or introduced with a short descriptor of who or what it is (not a bare
+  "Skobeleff" but "the Russian general Skobeleff"). When in doubt, describe by role
+  instead of naming.
+- Do not mention or lean on any figure, plate, diagram, table, page, or section — the
+  reader cannot see them; ask about the subject itself.
+- Do NOT reveal the answer, and NEVER echo it: the question must be in your own words
+  and must not restate, quote, or paraphrase the chain in whole or in part — never
+  return the answer, or any piece of it, as the question. Do not state the conclusion
+  or reuse the chain's distinctive wording. Ask for the reasoning; make the reader
+  supply it.
+
+Input: JSON array [{"i": 0, "passage": "...", "answer": "..."}, ...]
+Output JSON only: [{"i": 0, "q": "..."}, ...]
+
+
+========================================================================================
+[SCIENCE]  1847  prose_score 0.30
+  excerpt : After drawing the boundary between Mexico and the United States from the
+            Atlantic to the Pacific, the third article con- cluded with a clause of
+            mutual renunciation and cession, a clause which, if not expressed, would
+            have been understood as a necessary corollary to the substantive adjustment
+            of the line. At all events, the cession to America could not have force
+            against England, unless the renunc...
+  Q       : In the Oregon boundary dispute, why must the United States' assertion of
+            rights acquired from Spain by the treaty of 1819 be regarded as a concession
+            ultimately securing British, rather than exclusively American, advantage
+            upon the northwest coast?
+  A       : At all events, the cession to America could not have force against England,
+            unless the renunciation on the part of Spain had force also in her favor;
+            but so far was this from being the case, that Spain was still entitled to
+            trade with the English settlements, and also, so far as England was
+            concerned, to form settlements of her own, on any unoccupied portions of the
+            northwest coast, so that, in pledging herself to America, as she virtually
+            did, not to form any such settlements, she made a cession, if not in favor
+            of the United States, at least in favor of Great Britain under the guarantee
+            of the republic.
+
+========================================================================================
+[MEDICINE]  1888  prose_score 0.75
+  excerpt : Mechanisms that operate by elastic rubber or by metallic springs, if the
+            power is not so great as to force the changes to exceed healthy action, will
+            be comparatively painless; but to control elastic materials so that they
+            will not cause pain is generally difficult and often impossible. This is not
+            the case when mechanisms operated by screws can be used, because by the
+            screw exactness can be secur...
+  Q       : Why is a screw mechanism, when employed in dental regulation, more apt to be
+            without pain than one depending upon elastic materials, and under what
+            condition is this advantage most fully realised?
+  A       : Mechanisms that operate by elastic rubber or by metallic springs, if the
+            power is not so great as to force the changes to exceed healthy action, will
+            be comparatively painless; but to control elastic materials so that they
+            will not cause pain is generally difficult and often impossible. This is not
+            the case when mechanisms operated by screws can be used, because by the
+            screw exactness can be secured and precisely the proper degree of force can
+            be given. Especially is this true when the management of the mechanism is
+            left to the patient, who knows better than the operator when the greatest
+            degree of force can be given without causing pain.
+
+========================================================================================
+[SCIENCE]  1893  prose_score 0.38
+  excerpt : There are two theories included, one of which must be abandoned if the other
+            is to be vindicated. If the object is to show that there is no fundamental
+            difference between man and the higher mammals in their mental faculties,' it
+            seems implied that there is a fundamental difference between man and the
+            lower. mammals, else there is no need for drawing the line. On the other
+            hand, if 'mental powers' ...
+  Q       : How must one of two positions respecting the mental powers of brutes be
+            chosen against the other, seeing that the evidence adduced in behalf of
+            either is insufficiently distinguished and the line of separation cannot
+            consistently be held?
+  A       : If the object is to show that there is no fundamental difference between man
+            and the higher mammals in their mental faculties,' it seems implied that
+            there is a fundamental difference between man and the lower. mammals, else
+            there is no need for drawing the line. On the other hand, if 'mental powers'
+            are to be attributed to 'animals very low in the scale,' we need some better
+            understanding of what is 'mental.'
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1830  prose_score 0.95
+  excerpt : If he had made you worms, or dogs, or serpents, you could find no fault with
+            him. May he not diversify his creatures as he please? Shall every fly and
+            vermin murmur that he is not a man? And may he not as freely diversify the
+            provision of his creatures, as their natures? Must all be masters, and yet
+            none be servants? Must the rich be bound to relieve the poor, and must there
+            be no poor to be relie...
+  Q       : Upon what grounds may a poor Christian be convinced that the unequal
+            distribution of worldly goods, which leaves him in want while the ungodly
+            prosper, neither argues any want of love in God toward him nor gives him
+            just cause to repine?
+  A       : If he had made you worms, or dogs, or serpents, you could find no fault with
+            him. May he not diversify his creatures as he please? Shall every fly and
+            vermin murmur that he is not a man? And may he not as freely diversify the
+            provision of his creatures, as their natures? Must all be masters, and yet
+            none be servants? Must the rich be bound to relieve the poor, and must there
+            be no poor to be relieved? "The poor you have always with you," saith
+            Christ. How shall men be rewarded at last, as they clothed them, fed them,
+            visited them, &c. if there were none that stood in need thereof? Is not God
+            wiser than we, to know what is best for us? and can he not give us all that
+            we desire if he saw it best? And do you think, that he wanteth so much love
+            to his children as to feed and clothe them? Were it for want of love, he
+            would not give them the far greater gifts, even his Son, and Spirit, and
+            life everlasting: if this were the trial of his love, you might say that he
+            most loveth the 409 worst of men, who more abound in riches than the most
+            cruel and persecuting tyrants, the most wicked, sensual, profligate
+            monsters? Were riches any special treasure, God would not give them to such
+            flagitious enemies, and deny them to humble, faithful persons. It is no
+            small sin to murmur at God for maintaining and governing his family
+            according to his wisdom and will, and for not being ruled by the desires of
+            our flesh.
+
+========================================================================================
+[TECHNOLOGY]  1919  prose_score 0.45
+  excerpt : A serious menace to the wages of workingmen is the cut-throat competition of
+            the less competent. If 10 per cent of the workingmen are thriftless and
+            vicious, then the competition of that 10 per cent is a load on the neck of
+            the 90 per cent. They and their unfortunate families are thrown upon the
+            labor market, and it is one of the benefits of universal insurance that it
+            helps in some degree to take...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1824  prose_score 0.37
+  excerpt : But, if considerations of policy, in the critical situation of the Church,
+            as well as of the State, preserved Gauden from a public exposure, must we
+            not conclude, that Clarendon would needs have afterwards taken some
+            opportunity to signify at least in general terms, that pretensions had been
+            made to the authorship of the King's Meditations, and that the pretensions
+            were groundless? Now, my Lord, a...
+  Q       : Why must the claim of Dr. Gauden to have written the 'Eikon Basilike' be
+            false?
+  A       : But, if considerations of policy, in the critical situation of the Church,
+            as well as of the State, preserved Gauden from a public exposure, must we
+            not conclude, that Clarendon would needs have afterwards taken some
+            opportunity to signify at least in general terms, that pretensions had been
+            made to the authorship of the King's Meditations, and that the pretensions
+            were groundless? Now, my Lord, are not all these things so? But, it is not
+            merely the wickedness of Gauden, if his claim were a false one. Can any
+            thing, upon that supposition, be equal to its folly? Is it possible that so
+            much senseless fatuity, and determined dishonesty, should meet in the same
+            individual? To what incredible suppositions are we not reduced, if his claim
+            was not true! How was it possible that he should escape detection? Did he
+            hope, that Clarendon would never enquire of Duppa, or of Morley? Did he
+            expect to gain his point before their answers should arrive? And after,
+            would he be content to make up his choice for the bad part, and care nothing
+            about the rest? Or, are we to suppose, that, in making this claim, he was
+            wholly abandoned by all self-possession and self-control; morally and
+            intellectually deranged; reason and conscience, for the time, being utterly
+            overwhelmed and lost, through the furious passions of pride, envy, avarice
+            and ambition?
+
+========================================================================================
+[AGRICULTURE]  1856  prose_score 1.00
+  excerpt : Ditto. Phosphate of magnesia. Phosphate of iron. Ditto. From this table,
+            therefore, we learn that the curd of milk is capable of undergoing certain
+            modifications, which exhibit themselves under four forms in the blood. The
+            coloring matter, too, of the blood is absent from the milk; but the latter
+            contains iron, which is connected with the coloring matter of the blood in
+            some way not yet understood...
+  Q       : Why must it be still suspected that the iron peculiar to the blood is
+            connected with the respiratory oxidation of animals, despite the objection
+            raised by Dr. Prout's discovery of a trace of colouring matter in the chyle?
+  A       : The coloring matter, too, of the blood is absent from the milk; but the
+            latter contains iron, which is connected with the coloring matter of the
+            blood in some way not yet understood: and it was the opinion of Chaptal, and
+            of others since his time, that the florid color of the blood was occasioned
+            by the action of the oxygen of the atmospheric air upon the iron of the
+            blood. But the experiments of Dr. Prout, who found a trace of coloring
+            matter in the chyle, that is, in blood before it has been exposed to the
+            action of the oxygen of the atmosphere, would appear to militate against
+            this plausible view of the cause of the florid color of the blood; and yet
+            it is impossible to avoid the suspicion that further inquiry, and a more
+            intimate acquaintance with the process of respiration, will connect, in some
+            manner or other, the iron which exists in no other part of animals but the
+            blood with the function of the oxidation of the systems of animals.
+
+========================================================================================
+[SOCIAL SCIENCES]  1911  prose_score 1.00
+  excerpt : The general strike? But the general strike cannot take place without a long
+            period of preliminary contests. A general strike does not leap into the
+            field; it is the product of painfully and carefully prepared industrial
+            organization. It implies that many minor industrial conflicts have occurred
+            before the general strike makes its appearance and each one of the minor
+            conflicts will have mirrored it...
+  Q       : Why, under democratic conditions, must the occurrence of a general strike
+            inevitably be preceded by many minor industrial conflicts which have left
+            their mark in politics?
+  A       : The general strike? But the general strike cannot take place without a long
+            period of preliminary contests. A general strike does not leap into the
+            field; it is the product of painfully and carefully prepared industrial
+            organization. It implies that many minor industrial conflicts have occurred
+            before the general strike makes its appearance and each one of the minor
+            conflicts will have mirrored itself in politics and will have produced
+            proponents of the strike in the various political bodies. Such a result is
+            unescapable, given a democracy, a prime essential of the social revolution.
+            For, at least, as far as we know, the development of the proletariat to the
+            point of becoming a revolutionary force implies the development of modern
+            industry with its by-products of popular education, suffrage, and the other
+            concomitants of the regime of liberalism.
+
+========================================================================================
+[SOCIAL SCIENCES]  1908  prose_score 0.97
+  excerpt : Lessee of Fleeger et al. The Mayor, etc., of New York vs. Miln. The
+            questions involved in the above cases had been pending in the Supreme Court
+            of the United States from 1831 until 1838. At the last term of court over
+            which Chief Justice Marshall presided these cases were continued for the
+            term because the Chief Justice had no assurance that all the members of the
+            court would be present at that te...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1879  prose_score 1.00
+  excerpt : Buckle's volumes. Ix.] far from being prejudicial to progress, was one of
+            its most essential conditions. Indeed, on calling to mind all those
+            centuries of primeval history, when there was nothing to counteract the
+            workings of the pro tective spirit, and when all things conspired to
+            strengthen its power, one might reasonably ask at the outset why it was that
+            under such circumstances the human race ...
+  Q       : If the protective spirit is in every age the necessary enemy of
+            civilisation, how are we to account for the fact that, during the long
+            centuries of primeval history when nothing existed to counteract it and all
+            things combined to strengthen its power, mankind nevertheless advanced
+            steadily and without retrogression from a state of barbarism into
+            civilisation?
+  A       : Indeed, on calling to mind all those centuries of primeval history, when
+            there was nothing to counteract the workings of the pro tective spirit, and
+            when all things conspired to strengthen its power, one might reasonably ask
+            at the outset why it was that under such circumstances the human race made
+            such sure and unceasing progress; why it was that it progressed at all; why
+            it was that it did not even retrograde. If the protective spirit is of
+            necessity in every age the enemy of civilisation, how did it happen that we
+            ever emerged from a state of barbarism? How comes it that we have not
+            remained uncivilised-mere nomads, or at best diggers of earth, living from
+            hand to mouth, little better, on the whole, than a race of chimpanzees?
+
+========================================================================================
+[SOCIAL SCIENCES]  1908  prose_score 0.87
+  excerpt : If the question arises, How does it happen that the balancing is not thrown
+            out by putting into the six-column statement items not on the books, such as
+            merchandise stock on hand, accrued interest, and valuation of real estate?
+            the answer is that these outside figures are carried also through the loss
+            and gain columns, for the figures in the loss and gain columns are taken
+            from combining the book ...
+  Q       : In preparing a six-column financial statement from a trial balance and an
+            inventory, why do the adjustments necessary to incorporate the inventory
+            figures—such as for stock on hand or accrued interest—not disturb the
+            equilibrium of the statement?
+  A       : The answer is that these outside figures are carried also through the loss
+            and gain columns, for the figures in the loss and gain columns are taken
+            from combining the book figures with the inventory figures: thus the change
+            affects both sets of figures alike. This calls for explanation, since we
+            usually add similar items and subtract dissimilar. The explanation is the
+            rather abstract one that the inventory figures represent a different sort of
+            thing from the book figures.
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1844  prose_score 0.80
+  excerpt : The arguments in favour of a general current to the west, are, I confess,
+            very cogent, and would be convincing but for the following difficulties: 1.
+            If the operation of the sun and moon, in producing alternate elevations and
+            depressions of the ocean, produce also a current, the force of this current
+            will be in proportion to the mass of water thus raised and depressed. Now,
+            contrary to the asserti...
+  Q       : Why must we reject the inference that the sun and moon, through their action
+            in raising the tides, produce a general westward current in the ocean?
+  A       : If the operation of the sun and moon, in producing alternate elevations and
+            depressions of the ocean, produce also a current, the force of this current
+            will be in proportion to the mass of water thus raised and depressed. Now,
+            contrary to the assertion of Buffon, the tides are highest in high
+            latitudes, and gradually diminish towards the equator, where I believe they
+            hardly exceed a foot. By the observations of Captain Cook, the same
+            difference exists in the Pacific ocean as was long known in the Atlantic. If
+            then there be a general current to the west, it should be strongest in high
+            latitudes and weakest under the line. But the contrary is the fact. No
+            general current to the west is found without the tropics; and that which
+            prevails irregularly between them is usually and rationally ascribed to the
+            trade winds.
+
+========================================================================================
+[SCIENCE]  1818  prose_score 0.76
+  excerpt : 353. round the World, vol. ii, p. 282. Cochin Chine, t. i, p. 69. Cook's
+            second Voyage Barrow, Voyage à la ments, which it is stated agree perfectly
+            well with each other, and in which there is an error of more than five
+            hundred toises, or a fourth part of the total height of the Peak. Dr.
+            Heberden lived seven years at Orotava; we must regret, that he enters into
+            no detail on the nature of the inst...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1890  prose_score 0.36
+  excerpt : Would our author say that a family was secluded from social relations and
+            occupations? would he speak of "the secluded exercise of a domestic virtue"?
+            for what is a monastery but a family? and in what sense is it secluded, in
+            which the greater part of the world is not secluded already? How was a nun
+            more secluded from active duties in her cloister, who had her duties found
+            for her, than most singl...
+  Q       : How does it follow that a nun in her cloister is not truly cut off from the
+            active and mixed duties of life, even if we grant to an objector that the
+            monastic state is pure seclusion?
+  A       : Would our author go the length of saying that it is a duty for every young
+            woman to marry, lest she should incur the "perversion" of a dark age?
+            Supposing a monastic life were nothing else than seclusion in the cloister,
+            would it in consequence have no trials and duties? Is there not trial, duty,
+            self-denial, of many kinds in a family?
+
+========================================================================================
+[MEDICINE]  1915  prose_score 0.88
+  excerpt : As has been shown, interference decreases with increase of distance.¹ In the
+            construction of the chromosome maps shown in the frontispiece the distance
+            taken as a unit is that within which 1 per cent. of crossing over will
+            occur. Thus, yellow and white are placed one unit apart, since there is 1
+            per cent. of crossing over between yellow and white. White and bifid give 5
+            per cent. of crossing over,...
+  Q       : Upon what principle are the relative positions of the factors yellow, white,
+            and bifid determined and expressed as a map of the chromosome?
+  A       : In the construction of the chromosome maps shown in the frontispiece the
+            distance taken as a unit is that within which 1 per cent. of crossing over
+            will occur. Thus, yellow and white are placed one unit apart, since there is
+            1 per cent. of crossing over between yellow and white. White and bifid give
+            5 per cent. of crossing over, hence they are placed five units apart; and
+            since yellow and bifid give 6 per cent., bifid must be on the other side of
+            white from yellow.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1848  prose_score 0.99
+  excerpt : Porphyry, in his Isagoge, approached so near to the true conception of
+            essences, that only one step remained to be taken, but this step, so easy in
+            appearance, was reserved for the Nominalists of modern times. By altering
+            any property, not of the essence of the thing, you merely, according to
+            Porphyry, made a difference in it; you made it dλλolov: but by altering any
+            property which was of its esse...
+  Q       : How does Porphyry distinguish between a change that merely makes a thing
+            different and a change that makes it another thing, and what criticism does
+            a modern thinker bring against this distinction?
+  A       : By altering any property, not of the essence of the thing, you merely,
+            according to Porphyry, made a difference in it; you made it dλλolov: but by
+            altering any property which was of its essence, you made it another thing,
+            ãàào. To a modern it is obvious that between the change which only makes a
+            thing different, and the change which makes it another thing, the only
+            distinction is that in the one case, though changed, it is still called by
+            the same name.
+
+========================================================================================
+[MEDICINE]  1887  prose_score 0.96
+  excerpt : The results, so far, are by no means encouraging. Thomas, in 1880 (op. cit.,
+            p. 598), gives, quoting from Schmidt's Jahrbücher, the results of
+            proceedings in this direction: "Freund had performed fourteen operations,
+            with eight deaths, five recoveries, and one incomplete operation. Of the
+            five recoveries one died from a return of the cancer, one from pleuritis,
+            and a third is now suffering from a ...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1838  prose_score 0.92
+  excerpt : 19th chapter, where God commanded, that a water of sepa. ration, a
+            purification for sin, should be made from the ashes of a red heifer, and
+            says, verse 11: "He that toucheth the body of a dead man, shall be unclean
+            seven days." Verse 12: "He shall purify himself with it (the water of
+            purification) on the third day." 13: "Whosoever toucheth the dead body of a
+            man that is dead, and purifieth not him...
+  Q       : What spiritual reality is figured by the Mosaic ordinance touching the water
+            of separation made from the ashes of a red heifer, and the cleansing of
+            those defiled by a dead body?
+  A       : The pollution of a dead body, was an emblem of the pollution of sin; and the
+            water of purification from the ashes of the red heifer, was an emblem of the
+            blood of Christ; which, when sprinkled on us, purifieth the conscience from
+            dead works, to serve the living God.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1837  prose_score 0.42
+  excerpt : Oh cease! Seeing no fruit is tians? Consider it; was persecution found
+            brought forth to God by all your labour. Is among the saints? Or did they
+            imprison any? it not for the love of money that you teach? Show one example
+            in the Scriptures for it, if And do ye not seek after the fleece more than
+            there be any. Or did the apostles own them the flock? Do ye not go from one
+            place to for Christians who ...
+  (failed)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1823  prose_score 0.99
+  excerpt : In a word, which way soever the Diatribe turns itself, it cannot keep clear
+            of inconsistencies and contradictory assertions; nor avoid making that very
+            Free-will which it defends, as much a bond-captive as it is a bond-captive
+            itself. For, in attempting to liberate Free-will, it is so entangled, that
+            it is bound, together with Free-will, in bonds indissoluble. ကိုယ် 14
+            Moreover, it is a mere logic...
+  (failed)

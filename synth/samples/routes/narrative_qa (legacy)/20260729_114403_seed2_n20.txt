@@ -1,0 +1,342 @@
+route: narrative_qa
+model: deepseek-v4-pro
+seed:  2
+n:     20
+kept:  8/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that is MEANT to narrate events — a
+scene, an episode, an account of what happened.
+
+FIRST, judge whether it actually does. A narrated episode has actors doing or
+undergoing things in sequence. If instead the passage is exposition or analysis, a
+biographical or catalog entry ("APPLETON, Nathan, manufacturer, was born..."), a list,
+table, or section heading, an examination paper, a definition, an argument, or a formal
+document, then it has no episode to recount — emit NO item for it (omit that index).
+Only proceed when there is a real episode. Better to skip than to force a question the
+passage does not narrate.
+
+When there IS an episode, work in this order.
+
+1. FIND THE ANSWER FIRST. Choose the account the passage gives — the narrated episode,
+   or the salient action, outcome, or turn within it — and copy it VERBATIM as the
+   answer.
+   - Return it as "spans": prefer ONE long contiguous quotation that carries the whole
+     account. Use several exact quotations only when the answer is genuinely spread out
+     — never more than 3, always the fewest, longest spans that hold it
+     together.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder within a span, or add any word not in the passage — including connecting
+     words between spans. You may only select and order the passage's own sentences.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
+
+2. THEN WRITE THE QUESTION that this account answers. The item's "kind" field tells you
+   which shape to use — it is the classifier's judgment of whether the episode is real
+   or invented, and it is authoritative:
+   - kind "grounded" — the episode is presented as a REAL, historical event. If you
+     recognize it as a matter of record (a known event, campaign, voyage, or life —
+     "Washington's crossing of the Delaware", "the retreat from Moscow"), NAME it from
+     your own knowledge and use RETELL: ask the reader to recount it — "Recount how ...",
+     "Tell how ... came about", "Describe what befell ...". If you do NOT recognize the
+     specific event, fall back to COMPREHEND.
+   - kind "fiction" — the episode is INVENTED (a novel, tale, or story). NEVER name it
+     as a matter of record, never claim it happened, and never ask to "recount" it as
+     history. ALWAYS use COMPREHEND.
+   - COMPREHEND — ask what happens in the episode: "What did ... do when ...?", "How did
+     ... meet ...?", "What became of ...?". The span must CORRECTLY AND COMPLETELY
+     answer it — ask exactly what the account tells; never demand a name, motive, or
+     detail it does not supply.
+   - Plain period register: direct, no modern or conversational phrasing, no
+     meta-language. Write it in pre-1930s English — period vocabulary, spelling, and
+     phrasing; use no word, term, or idiom that came into use after 1930.
+   - Stands alone. Never mention the source — no "the passage", "the text", "the
+     story", "the author", "the narrator", "according to", "described", "mentioned".
+     Ask as if of the episode itself.
+   - Self-situating — the reader has NOT seen this passage. For a RETELL, the named
+     event carries the context. For a COMPREHEND question about a particular scene, SET
+     IT UP inside the question: briefly establish the actors and circumstance the
+     answer depends on (introduce them by role or name — "a besieged garrison", "the
+     young woman Naomi", "a sea-captain pursued by a Spanish squadron") and give just
+     enough that the question is unambiguous. Never leave a bare "he", "she", "they",
+     "it", or "this" whose antecedent the question itself has not supplied, and do not
+     retell the whole scene.
+   - Do NOT put the answer, or its distinctive wording, in the question. Ask what
+     happened; do not reveal it.
+
+REJECT OCR-CORRUPTED TEXT. These passages are scanned from old books and some are
+mangled by OCR — garbled or run-together words, dropped or transposed letters, stray
+marks, broken spacing, nonsense strings. If such corruption touches the material your
+answer would quote or rest on, so that a clean and correct answer is not possible, emit
+NO item for that passage. Passages are plentiful; prefer skipping a doubtful one to
+emitting a garbled answer.
+
+Input: JSON array [{"i": 0, "text": "...", "kind": "grounded" | "fiction"}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1838  prose_score 1.00
+  excerpt : A DRAMATIC SKETCH, OF THE SEVENTEENTH CENTURY. THE WITCH. CHARACTERS. OLD
+            SERVANT in the Family of Sir Francis Fairford. STRANGER. SERVANT. ONE summer
+            night Sir Francis, as it chanced, Was pacing to and fro in the avenue That
+            westward fronts our house, Among those aged oaks, said to have been planted
+            Three hundred years ago, By a neighb'ring prior of the Fairford name....
+  Q       : How was Sir Francis occupied on a certain summer night, in what place and
+            amid what ancient trees?
+  A       : ONE summer night Sir Francis, as it chanced, Was pacing to and fro in the
+            avenue That westward fronts our house, Among those aged oaks, said to have
+            been planted Three hundred years ago, By a neighb'ring prior of the Fairford
+            name.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1830  prose_score 1.00
+  excerpt : Our tomahawks would fail to strike, Our youthful warriors would be like
+            Weeds in a burning clime, If torn from where their fathers sleep, To
+            stranger-homes beyond the deep. THE INDIAN's vow. Pale wanderers of the sea!
+            the plain Which the Great Spirit made, Is wide enough for you to reign- But
+            we must have the shade: In it our warriors have been nursed, Our fathers'
+            held it from the first, They wou...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1912  prose_score 0.99
+  excerpt : I shouldn't mind,” murmured Nancy. There was a general movement at this
+            astonishing invitation, a shuffling of feet on the floor and a simultaneous
+            disappearance of pipes, and appearance of hats and caps. "Won't you let me
+            carry your parasol ?" asked one who craved that honor so deeply that he
+            forgot to stammer and blush. "Allow me to carry your bag," another re-
+            quested, as if Nancy were a queen ...
+  Q       : How did the young American girl, Nancy Brown, come to pass the afternoon
+            upon the river after being deserted by her own party?
+  A       : Once in the long boat with her small feet on somebody's coat to keep them
+            dry, one young man holding the white silk parasol and another the hand bag,
+            and all of them entertaining her at once, Nancy quite forgot that she was
+            engaged in an unconventional adventure.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1832  prose_score 0.99
+  excerpt : In a word, can you bear to think of being in David's situation, when he
+            heard of Absalom's death? If not, O awake seasonably, and exert yourselves
+            diligently. Be assured that you will find it much less difficult and painful
+            to perform your duty, than to bear the consequences of neglecting it. But
+            perhaps religion is in a declining state in your own hearts, and therefore
+            you have little faith or di...
+  Q       : Tell what warning is drawn from David's fall for parents whose religion is
+            declining in their own hearts.
+  A       : In a similar manner, your religious declensions may be punished. You may be
+            made to suffer in the persons of your children, and to feel that remorse
+            which David felt, when in the ruin of his son, he saw the consequence of his
+            own folly.
+
+========================================================================================
+[SOCIAL SCIENCES]  1897  prose_score 0.97
+  excerpt : 1712. I am the more severe upon this Vice, because I have been so
+            unfortunate as to be a very great Criminal my self, Sir ANDREW FREEPORT, and
+            all my other Friends who are scrupulous to Promises of the meanest
+            Consideration imaginable from an Habit of Virtue that way, have often
+            upbraided me with it. I take Shame upon myself for this Crime, and more
+            particularly for the greatest I ever committed o...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1892  prose_score 0.78
+  excerpt : Priestley refers again to Mr. Parker in Letters Nos. 43 and 66. No. 13.
+            BIRM. 10th Oct., 1782. DEAR SIR: When I received your favor I was just about
+            to try the dephlogisticated marine acid,' and I find that the electric
+            matter transmitted through it affects the air in the very same manner as
+            when metal wires are employed, diminishing and phlogisticating it; so that
+            there hardly remains any doubt b...
+  (failed)
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1907  prose_score 1.00
+  excerpt : The Chinaman is an especially keen business man, as all the world knows, so
+            he absolutely refuses to embark in such ventures. However, there are always
+            daring small speculators in every part of China, and Manchuria is no
+            exception to the rule. These have hit upon an ingenious method by which it
+            is said that all are making money. Each man hires his own freight-car for a
+            month, a quarter, or a half-...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1920  prose_score 0.98
+  excerpt : It is when a child 198 without any apparent reason, leaps, turns
+            somersaults, goes through various gymnastics, runs when he might just as
+            well walk, that we find the muscle erotic. He climbs anything he can find to
+            climb, begs for work when he really means some kind of muscular activity.
+            School is irksome because he must sit still, the athletics are the sole
+            attraction but he frequently fails in t...
+  Q       : What conduct did a physician observe in a six-year-old girl and her
+            fourteen-year-old brother who showed the muscle-erotic temperament, and what
+            was the outcome of the father’s efforts?
+  A       : I recall a six-year-old girl, a muscle erotic. She never walked if she could
+            possibly run, and a smile came as she started to run. It was remarked that
+            she always looked so pleased with herself as she ran. "What are you 199
+            thinking of?" she was asked when she was running; no answer, but a shy look
+            and a drawing away from the questioner as though unable to tell her
+            thoughts. A fourteen-year-old brother had the same inclination to run and
+            keep up the same restless, muscular movements. The little girl was very
+            thin, she was given many tonics of iron and other supposed strengthening
+            properties; the brother was also thin, he ran so much his health suffered
+            seriously. In vain the father coaxed, attempted to bribe, and then to punish
+            them both, in order to make them walk, and be quiet.
+
+========================================================================================
+[AGRICULTURE]  1877  prose_score 0.40
+  excerpt : My heat was the sixth, and there were five starters marked. First came old
+            Scratch' of Pendleton, at 59 yards, then Roundtree of Huddersfield at 62,
+            and myself at 67; the other didn't turn up. The pistol was fired and away we
+            went, and, as Locker had started me hundreds of times, so that I could get
+            off the mark' well, I don't think I lost any ground. At about half way I
+            could hear somebody on my ...
+  Q       : What befell the runner when his heat was started, and how did he finish
+            against the favourite Scratch?
+  A       : The pistol was fired and away we went, and, as Locker had started me
+            hundreds of times, so that I could get off the mark' well, I don't think I
+            lost any ground. At about half way I could hear somebody on my left, but I
+            daren't look round. Afterwards I found Scratch' had tried to cut me down,'
+            but it was all no use, and I took away the tape by two yards good.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1898  prose_score 1.00
+  excerpt : As Iris counted them idly, she fancied she heard the sharp sound of a
+            distant shot, and, for the moment wondered who could be shooting at that
+            late hour. But the deep tone of the church bell striking the hour confused
+            her, and hearing no more shots she thought that she must have been dreaming.
+            After a pause she pursued her way, and turned homeward. It struck Iris that
+            Milly might have met Lovel by...
+  Q       : What did Iris hear and do when she walked abroad at a late hour suspecting
+            that Milly had gone to a secret meeting with Lovel, and what did she see
+            upon returning to Barnstead streets?
+  A       : As Iris counted them idly, she fancied she heard the sharp sound of a
+            distant shot, and, for the moment wondered who could be shooting at that
+            late hour. But the deep tone of the church bell striking the hour confused
+            her, and hearing no more shots she thought that she must have been dreaming.
+            It struck Iris that Milly might have met Lovel by appointment, in which case
+            the meeting, to elude observation, would undoubtedly take place on the
+            outskirts of the village. Iris therefore made a detour, and walked homeward
+            round by the common and through the sparse woods which fringed the town. But
+            all to no purpose; not a sign of Milly or of anyone else could she see, and
+            it was with a sigh that she re- entered Barnstead streets on her way to the
+            villa. As she passed the Herne Arms, she saw a carriage drive off, and as it
+            whirled past her on the road to Marborough, she noted that it was occupied
+            by a lady.
+
+========================================================================================
+[EDUCATION]  1903  prose_score 0.89
+  excerpt : Benjamin was nineteen years of age when he entered the newly opened Phillips
+            Andover Academy and began the study of Latin. He was one of Principal
+            Pearson's boys. In 1788 he was graduated from Harvard College, and was
+            immediately called to teach at Phillips Exeter. He was virtually the head of
+            the institution from that time on, and in 1790 was regularly elected to the
+            principalship. His salary at ...
+  (failed)
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1917  prose_score 0.77
+  excerpt : Oh, he's some guy, is old Carbon. Get onto those eyes of his-he's about
+            croaked somebody. Gee! I'd hate to mix up with that guy!" The newcomer,
+            Raphael-or, as his associates called him, the Carbon King-was staring about
+            with that same wild, unseeing look. Others besides the Ferret noticed it,
+            and, as King's face was familiar to almost every one there, although he had
+            spoken to none to-night, the s...
+  (failed)
+
+========================================================================================
+[WORLD HISTORY AND HISTORY OF EUROPE, ASIA, AFRICA, AUSTRALIA, NEW ZEALAND, ETC.]  1850
+prose_score 0.97
+  excerpt : At Thoulouse particularly, was instituted the gay society of the Seven
+            Troubadours, who held their meetings in a garden, where they discoursed on
+            love and poetry, and read their performances. From a desire of promoting the
+            advancement of their favorite science, they publicly proposed a premium for
+            the best composition, which was a violet of gold. Of the works of these
+            troubadours, there remain man...
+  (failed)
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1912  prose_score 0.74
+  excerpt : April 30, 1803, to May 8, 1804, Owned by United States, but partially
+            retained under French and Spanish rule. May 9, 1804, Upper Louisiana
+            transferred by Spain to France. May 10, 1804, Upper Louisiana transferred by
+            France to United States. 1810, Changed from District of Louisiana to
+            Territory of Louisiana. 1812, Becomes a part of Territory of Missouri.
+            1821-1834, No government was provided by Con...
+  Q       : Recount the trying incident that befell one of the Lewis and Clark party,
+            George Shannon, when horses strayed near the Vermillion.
+  A       : While Lewis and Clark were encamped on the Vermillion, two of their horses
+            strayed away. George Shannon, the youngest of the party, was sent in search
+            of them and did not overtake the expedition for sixteen days. His only food
+            was berries and what game he could secure by capture after the fourth day,
+            when his supply of bullets ran out. He was just on the point of killing his
+            only horse for food when he reached the boats.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1856  prose_score 0.98
+  excerpt : My guide wanted to persuade me that the land had been washed away by the
+            rains, but I fancy it has been chiefly dug out for making bricks,* as I
+            noticed a brick-field at no great distance. There were lots of birds'-nests
+            on the trees, built of quantities of sticks, like those of magpies, but
+            belonging to little birds; one of them, which I stood on the back of my
+            horse to look into, was the habitat...
+  (failed)
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1913  prose_score 0.96
+  excerpt : Maximum temperature 85° Fahrenheit, minimum 6312° Fahrenheit. The formation
+            of the clouds was always interesting. The long, horizontal streaks across
+            the sky, which were daily noticeable, took a form that day not unlike the
+            vertebræ of an immense snake, whereas the higher clouds of transparent mist
+            in filaments looked exactly like a huge spider's web. We established our
+            camp under a tall, handsome...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1900  prose_score 0.96
+  excerpt : Throughout the blood-stained soil of France, too, the men who were fighting
+            the same great battle as were the Netherlanders against Philip II.and the
+            Inquisition, the valiant cavaliers of Dauphiny and Provence, knelt on the
+            ground before the battle, smote their iron breasts with their mailed hands,
+            uttered a Calvinistic prayer, sang a psalm of Marot, and then charged upon
+            Guise, or upon Leicester'...
+  (failed)
+
+========================================================================================
+[AGRICULTURE]  1855  prose_score 0.50
+  excerpt : The stream falls with some force over a slanting ledge of smooth, slaty
+            rock, some three or four hundred yards long or perhaps more, and acquires in
+            its slide considerable velocity; but the bottom is smooth, and the surface
+            nowhere broken by sunken rocks. The stream, therefore, is a steady current,
+            surging up against the numerous islands which dot the river, as if they had
+            been pieces of a ruined ...
+  Q       : How did a party of travellers, coming to a long smooth rapid full of
+            islands, manage the passage of their boats?
+  A       : The ropes were got out and made fast to two or three thwarts, to take off
+            the strain; the boats were lightened of their living incumbrances-except so
+            far as the steersmen were concerned,and were then tracked by main force one
+            by one, every one of the party lending a hand, except, indeed, Jacob, who
+            considered it his duty, having once said the rapids were dangerous, to act
+            as if he thought so, and who had, therefore, been despatched by land to the
+            head of the rapid, with orders to light the fires and get the breakfast
+            ready, as nothing else could be done with him.
+
+========================================================================================
+[AGRICULTURE]  1892  prose_score 0.30
+  excerpt : The knots had somewhat shortened it; but this point was soon settled with
+            like ingenuity. A small stone was tied to one end, and then dropped over the
+            cliff. We listened: we heard the dull "thump" of the stone upon the prairie
+            turf. The rope therefore reached to the ground. It was again drawn up, the
+            stone taken out, and the noose fast. ened around the body of Rube, under his
+            armpits. He was light...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1825  prose_score 0.97
+  excerpt : It, therefore, like all bodies compounded of heterogeneous parts, contains
+            in it a principle of corruption. All disproportion is unnatural; and from
+            what is unnatural, we can derive only the pleasure which novelty produces.
+            We admire it awhile as a strange thing; but, when it is no longer strange,
+            we perceive its deformity. It is a kind of artifice, which by frequent
+            repetition detects itself; and...
+  (failed)

@@ -1,0 +1,368 @@
+route: narrative_grounded
+model: deepseek-v4-pro
+seed:  2
+n:     20
+kept:  12/20
+
+--- SYSTEM PROMPT ---
+You are given a short passage from a pre-1930s book that is MEANT to narrate events — a
+scene, an episode, an account of what happened.
+
+FIRST, judge whether it actually does. A narrated episode has actors doing or
+undergoing things in sequence. If instead the passage is exposition or analysis, a
+biographical or catalog entry ("APPLETON, Nathan, manufacturer, was born..."), a list,
+table, or section heading, an examination paper, a definition, an argument, or a formal
+document, then it has no episode to recount — emit NO item for it (omit that index).
+Only proceed when there is a real episode. Better to skip than to force a question the
+passage does not narrate.
+
+When there IS an episode, work in this order.
+
+1. FIND THE ANSWER FIRST. Choose the account the passage gives — the narrated episode,
+   or the salient action, outcome, or turn within it — and copy it VERBATIM as the
+   answer.
+   - Return it as "spans": prefer ONE long contiguous quotation that carries the whole
+     account. Use several exact quotations only when the answer is genuinely spread out
+     — never more than 3, always the fewest, longest spans that hold it
+     together.
+   - Copy WORD FOR WORD. Do NOT paraphrase, summarize, rewrite, correct, modernize,
+     reorder within a span, or add any word not in the passage — including connecting
+     words between spans. You may only select and order the passage's own sentences.
+   - Take WHOLE sentences: begin and end each span at a sentence boundary and keep its
+     terminal punctuation, so several spans read as continuous prose when joined.
+
+2. THEN WRITE THE QUESTION that this account answers. This episode is a REAL, historical
+   event — frame the question as of something that actually happened.
+   - If you recognize it as a matter of record (a known event, campaign, voyage, or
+     life — "Washington's crossing of the Delaware", "the retreat from Moscow"), NAME it
+     from your own knowledge and use RETELL: ask the reader to recount it — "Recount how
+     ...", "Tell how ... came about", "Describe what befell ...".
+   - If you do NOT recognize the specific event, use COMPREHEND: ask, as of a real
+     incident, what happened — "What did ... do when ...?", "How did ... meet ...?",
+     "What became of ...?".
+   - The span must CORRECTLY AND COMPLETELY answer it — ask exactly what the account
+     tells; never demand a name, motive, or detail it does not supply.
+   - Plain period register: direct, no modern or conversational phrasing, no
+     meta-language. Write it in pre-1930s English — period vocabulary, spelling, and
+     phrasing; use no word, term, or idiom that came into use after 1930.
+   - Stands alone. Never mention the source — no "the passage", "the text", "the
+     story", "the author", "the narrator", "according to", "described", "mentioned".
+   - Self-situating — the reader has NOT seen this passage. Give the question its own
+     context: for a named event the name carries it; otherwise SET THE SCENE UP inside
+     the question — briefly establish the actors and circumstance the answer depends on
+     (introduce them by role or name) and give just enough that the question is
+     unambiguous. Never leave a bare "he", "she", "they", "it", or "this" whose
+     antecedent the question itself has not supplied, and do not retell the whole scene.
+   - Do NOT put the answer, or its distinctive wording, in the question.
+
+REJECT OCR-CORRUPTED TEXT. These passages are scanned from old books and some are
+mangled by OCR — garbled or run-together words, dropped or transposed letters, stray
+marks, broken spacing, nonsense strings. If such corruption touches the material your
+answer would quote or rest on, so that a clean and correct answer is not possible, emit
+NO item for that passage. Passages are plentiful; prefer skipping a doubtful one to
+emitting a garbled answer.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "spans": ["exact quotation"], "q": "..."}, ...]
+
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1870  prose_score 0.30
+  excerpt : The body was placed in a box, and hung from the tie-beam of the chief
+            temple, and, for some months, the best of food was taken to it daily, the
+            bearers approaching with the greatest respect, and, after having waited as
+            long as a person would be in taking a meal, clapping their hands, as when a
+            chief has done eating, and then retiring. If tortoise-shell or mats were
+            divided, Tui Vanuavouthe child—a...
+  Q       : Recount how Tuithakau buried the lady who was greatly beloved by him.
+  A       : A good double canoe, forty feet long, was placed on a large mound cast up
+            for that purpose, and faced with stones. It was then imbedded in earth, and
+            the decks covered over with fine shingle, on which mats were spread to
+            receive the body, which was covered with sand, and upon it were placed the
+            remains of the boy of whom the queen had been so fond.
+
+========================================================================================
+[POLITICAL SCIENCE]  1908  prose_score 0.79
+  excerpt : Blaine was accused of official corruption; while Mr. Cleveland's private
+            character was attacked. Each party declared that the nation would be
+            disgraced if the candidate of the other party should be elected. But the
+            truth of the charges cannot be here considered. They are mentioned as
+            showing that political contests in the United States easily degenerate into
+            vituperation; and yet that the good sen...
+  (failed)
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1922  prose_score 0.98
+  excerpt : "But the outrages and injuries of England!" Randolph went on. "Bred up in
+            the principles of the Revolution, I can never palliate, much less defend,
+            them. I well remember flying with my mother and her new-born child from
+            Arnold and Philips; and we were driven by Tarleton and other British
+            pandours from pillar to post, while her husband was fighting the battles of
+            his country. The impression is inde...
+  (failed)
+
+========================================================================================
+[MILITARY SCIENCE]  1922  prose_score 1.00
+  excerpt : The resolution would, then, be retained in the hands of the British Empire
+            delegation until they saw fit to bring it forward in the same or amended
+            form. Meanwhile, he assumed that the delegations would seek authority so as
+            to be able to deal with it when it was again presented and he called
+            attention to Mr. Balfour's request that he be advised by the delegations who
+            were going to seek instruction...
+  Q       : What arrangement had been made respecting the mandated islands of the
+            Pacific north of the Equator since the agenda was first circulated?
+  A       : The chairman said that the next subject on the agenda was that of mandated
+            islands; and in the statement of the agenda there was added, after that
+            title, the words "Unless questions earlier settled." The reference was
+            intended to be to islands under mandate in the Pacific Ocean. Since this
+            statement of suggested agenda had been distributed the American Government
+            and the Japanese Government had reached an agreement with regard to the
+            islands in the Pacific north of the Equator to which Japan had received a
+            mandate in which four of the five principal allied and associated powers
+            concurred.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1903  prose_score 0.99
+  excerpt : We passed by some of their huts or houses, and saw people about them, but
+            they ran up into the hills as soon as they saw us. At the end of this valley
+            we met with a peopled country, and at first it put us to some doubt whether
+            we should go among them, or keep up towards the hills northerly; and as our
+            aim was principally as before, to make our way to the river Niger, we
+            inclined to the latter, pur...
+  (failed)
+
+========================================================================================
+[LANGUAGE AND LITERATURE]  1904  prose_score 0.99
+  excerpt : "This day, the Queen being at dinner, the Duchess of Portsmouth, as a lady
+            of the bedchamber, came to wait on her, which was not usual, and put the
+            Queen into that disorder that tears came into her eyes, whilst the other
+            laughed and turned it into jest." The pity of it, that even now, after more
+            than twenty years of neglect, relieved by short intervals of comparative
+            affection, this poor woman sho...
+  Q       : Recount what befell Queen Catherine of Braganza at table when the Duchess of
+            Portsmouth came to wait upon her.
+  A       : This day, the Queen being at dinner, the Duchess of Portsmouth, as a lady of
+            the bedchamber, came to wait on her, which was not usual, and put the Queen
+            into that disorder that tears came into her eyes, whilst the other laughed
+            and turned it into jest.
+
+========================================================================================
+[AUXILIARY SCIENCES OF HISTORY]  1864  prose_score 0.95
+  excerpt : River Potomac, March 8th, 1820. From the enclosed copy of an agreement*
+            between Captain Elliot and myself, you will learn the arrangement for
+            settling your unpleasant business with Commodore Barron. The place, weapons,
+            distance, and mode were prescribed by me. I had intended to have left the
+            mode unfixed, until on the point of meeting; but being pressed by Captain
+            Elliot, under the authority of yo...
+  (failed)
+
+========================================================================================
+[EDUCATION]  1895  prose_score 0.99
+  excerpt : You seem very bad," he would say; "what's your complaint?"-" Oh, I don't
+            know, sir, I feel so ill here," and the hands would be pressed on the waist,
+            "and my head too."-" Headache, I dare say? A sick headache. Eh?". "Exactly,
+            sir."-"Well, you may go to the infirmary "-joy in the visitor's face-" and
+            ask for a black draught-that will do you good. Eaten too many tarts, that's
+            what's the matter with ...
+  (failed)
+
+========================================================================================
+[SCIENCE]  1910  prose_score 0.92
+  excerpt : But she managed to get him up enough to rest on the ice near her, and then
+            to lie perfectly still till the boat came, when she was at length taken off.
+            One of her own legs was through the ice. The tough, salt water ice
+            fortunately does not split as the brittle, fresh water ice does. Her
+            brother's life was saved, and there the incident ended. "What made you go
+            on?" I asked her. "I couldn't see him ...
+  Q       : Recount how a girl rescued her brother who had broken through the ice.
+  A       : But she managed to get him up enough to rest on the ice near her, and then
+            to lie perfectly still till the boat came, when she was at length taken off.
+            One of her own legs was through the ice. The tough, salt water ice
+            fortunately does not split as the brittle, fresh water ice does. Her
+            brother's life was saved, and there the incident ended.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1909  prose_score 0.98
+  excerpt : The garrison consists of fifty or sixty soldiers, unprovided with
+            ammunition. Fort Amsterdam, utterly defenceless, stands open to the enemy
+            night and day. The Company hath few or no effects here (as the Director hath
+            informed us); were it not for this, there would have been still time to
+            receive assistance from the English at the East ere all were lost. But we,
+            helpless inhabitants, are exceedingl...
+  (failed)
+
+========================================================================================
+[GEOGRAPHY. ANTHROPOLOGY. RECREATION]  1903  prose_score 0.38
+  excerpt : The weight of this mass has been computed at 70 tons. It seems as if the
+            enormous pressure caused the supporters more or less to give way; they all
+            incline westward, and the table appears as if it had slipped in that
+            direction, in its course breaking one of the pillars in two. This probably
+            occurred before the block could be placed in its intended position, and it
+            was arrested in its descent by th...
+  (failed)
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1856  prose_score 0.94
+  excerpt : Without the grandeur of Niagara, the falls, when viewed from below, or from
+            the western bank, are beautiful and sublime. The falls were discovered in
+            1680. (See Mississippi River.) By Ramsey co., Min., 7 miles above Fort
+            Snelling, and 8 miles from St. Paul, by land; delightfully situated on the
+            east side of the Mississippi, at the falls of St. Anthony, on an elevated
+            prairie that rises gradually f...
+  Q       : When were the Falls of St. Anthony first discovered?
+  A       : The falls were discovered in 1680.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1851  prose_score 0.97
+  excerpt : But a few, either unwilling or unable to escape, remained; and, as will
+            appear in the ensuing chapter, the war was not considered at an end, until
+            these few were cut off. Chapter 41 THE general court of Plymouth, being in
+            session at the time of Church's return from Boston, resolved to express
+            their high appreciation of his services in a manner more striking than they
+            had hitherto done; and accordi...
+  Q       : What service did Peter Ephraim render in January, 1677?
+  A       : Meanwhile, Peter Ephraim, a Natick Indian, acting under a commission from
+            Massachusetts, went in pursuit of the same party, with twenty-four Indians
+            and a few colonists. The latter soon grew tired of marching through the
+            snow, and returned; but Ephraim, with his countrymen, pushed on till they
+            reached the hostile camp. A skirmish ensued, in which eight of the enemy
+            were shot, and the remainder, numbering thirty-six, taken. In the same
+            month, (January, 1677,) this Indian soldier captured thirty more, who appear
+            not to have been of the party at Rehoboth.
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1905  prose_score 0.98
+  excerpt : A correspondent writes me that there is a church near Appomattox in which
+            great preparations are made for the revival every September. Certain of the
+            membership are specially trained for the "flower dance," which takes place
+            in the church and is not 1 "The Souls of Black Folk," Dubois, 2 Cf.
+            Spencer," Principles of Sociology” (2−1), p. 17 f. very unlike the red-
+            Indian variety in its form and in it...
+  (failed)
+
+========================================================================================
+[MEDICINE]  1902  prose_score 0.99
+  excerpt : Wine I seldom taste when alone, and use instead a little spirits and water.
+            I have of late diminished the quantity, for fear of a weakness inductive to
+            a diabetes a disease which broke up my father's health, though one of the
+            most temperate men who ever lived. I smoke a couple of cigars instead, which
+            operates equally as a sedative- "Just to drive the cold winter away, And
+            drown the fatigues of th...
+  Q       : Relate how Sir Walter Scott came to resume the habit of smoking after a long
+            abstention.
+  A       : I smoked a good deal about twenty years ago when at Ashestiel; but coming
+            down one morning to the parlor, I found, as the room was small and confined,
+            that the smell was unpleasant, and laid aside the use of the Nicotian weed
+            for many years; but was again led to use it by the example of my son, a
+            hussar officer, and my son-in-law, an Oxford student.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1904  prose_score 1.00
+  excerpt : Mr. Claus then spoke but very little french when the General observed he
+            spoke the french wth. a german Accent, he spoke the german to him which
+            surprized Mr. Claus & gave mutual satisfaction, & the Inds. having at last
+            dropd. their Intrusion & Impatience, General Johnson still keeping the
+            Troops at the Breastwork Baron Dieskau in a broken Voice & full of pain told
+            Mr. Claus he wished the fellow t...
+  Q       : Recount how Baron Dieskau came by his mortal wound at Lake George, and to
+            what cause he attributed the failure of the day.
+  A       : Mr. Claus then spoke but very little french when the General observed he
+            spoke the french wth. a german Accent, he spoke the german to him which
+            surprized Mr. Claus & gave mutual satisfaction, & the Inds. having at last
+            dropd. their Intrusion & Impatience, General Johnson still keeping the
+            Troops at the Breastwork Baron Dieskau in a broken Voice & full of pain told
+            Mr. Claus he wished the fellow to whom he offered himself prisoner after the
+            Action had dispatched him at once, he had received a bad wound in the Knee
+            during the Action & finding the day lost determined to surrender himself
+            prisr. to Genl. Johnson but a Provl. Soldier coming up he presented him his
+            Sword when the fellow drew back aimed at him & drove his whole charge thro
+            his Loins, which must only bring on a very painfull lingering Death, and
+            then lamented the Occasion of that Day's Disaster, laying all the Blame on
+            his Indians & Canadians, who disobeyed his orders in the Attack of the
+            Morning, for he had our party entirely surrounded, but when his Indns. saw
+            such a number of ours & knowing King Henry who led them on, on horseback,
+            they seemingly were pannic struck & instead of attacking & demanding our
+            people to surrender (as it would have been Madness in them to refuse) they
+            began to parley with Henery who seemingly & as above mentioned answered them
+            in such manner as to damp their & the Canadians' ardor & courage & began the
+            attack himself, which turned out in a scattered Skirmish & our men allowed
+            to retreat; his troops not acquainted with Wood fighting, the whole turned
+            out a confused drawn affair, whereas had his orders been obeyed, he must
+            inevitably have taken the whole party prisoners & with a Victorious Body
+            abt.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1880  prose_score 0.76
+  excerpt : Colored Troops. December 15, 1863-1.20 p. m. Major-General FOSTER,
+            Knoxville, Tenn.: The great object to be kept in view is to expel Longstreet
+            from East Tennessee and keep him out. In all minor matters you will receive
+            instructions from General Grant. December 15, 1863. Knoxville, Tenn.: As
+            soon as you deem your position secure order the Fourth Corps to return to
+            Chattanooga. They will return by ...
+  Q       : Recount the situation and intentions Major-General Foster reported to
+            General Grant from Knoxville on the afternoon of December 15, 1863,
+            regarding Longstreet's movements and his own dispositions.
+  A       : KNOXVILLE, December 15, 1863-4 p. m. Major-General GRANT: It is evident that
+            I cannot perfect my arrangements for supplies by trains in time to meet the
+            wants of this army for the next month. I have therefore to ask that you will
+            order supplies of breadstuff's KY., SW. VA., TENN., MISS., N. ALA., AND N.
+            GÀ. [CHAP. XL. and small stores to be sent by the river, and that orders be
+            given to get steamers over the shoals in the Tennessee River to be used for
+            that purpose. The information from above is of such a nature, though
+            conflicting, that I am now pushing the Fourth Corps to Blain's Cross-Roads,
+            to meet any demonstration or advance from Longstreet and to cover and
+            protect our trains coming from Cumberland Gap. Should it appear that
+            Longstreet has been re-enforced from Virginia, we will take up the most
+            advantageous position and accept battle. In case he is retreating or
+            attempting to cover his movement into Carolina, we shall endeavor to punish
+            him to the extent of our ability. J. G. FOSTER, Major-General.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1892  prose_score 1.00
+  excerpt : Up to that time he had been opposed to me. Appointed to the command of a
+            corps d'armée in Catalonia, he was unprovided, although in the highest
+            offices, with the necessary funds for his outfit. I knew his embarrassment,
+            and sent him, by the advice of a friend, eighty thousand francs, which I had
+            in reserve, and which it was in my power to dispose of, having obtained the
+            emperor's sanction. In this...
+  Q       : How did the narrator contrive to turn an opposing general into a friend?
+  A       : Up to that time he had been opposed to me. Appointed to the command of a
+            corps d'armée in Catalonia, he was unprovided, although in the highest
+            offices, with the necessary funds for his outfit. I knew his embarrassment,
+            and sent him, by the advice of a friend, eighty thousand francs, which I had
+            in reserve, and which it was in my power to dispose of, having obtained the
+            emperor's sanction. In this manner, in the space of a very few months, I
+            made friends of all enemies.
+
+========================================================================================
+[HISTORY OF THE AMERICAS]  1852  prose_score 1.00
+  excerpt : The Indian at whom he fired appeared to be the chief, and was standing under
+            a large beech tree. At the report of the rifle, the Indian fell, throwing
+            his tomahawk high among the limbs of the tree under which he stood. Seeing
+            two of their number lying dead upon the ground, and two more badly wounded,
+            they immediately made off; passing by Draper, who had left his horse, and
+            concealed himself behind...
+  Q       : Recount what befell the Indians in the skirmish under the beech tree.
+  A       : The Indian at whom he fired appeared to be the chief, and was standing under
+            a large beech tree. At the report of the rifle, the Indian fell, throwing
+            his tomahawk high among the limbs of the tree under which he stood. Seeing
+            two of their number lying dead upon the ground, and two more badly wounded,
+            they immediately made off; passing by Draper, who had left his horse, and
+            concealed himself behind a log.
+
+========================================================================================
+[SCIENCE]  1892  prose_score 0.98
+  excerpt : If a fire is available they cremate the corpse to ensure its not reviving.
+            129 But in the maritime provinces the traces of the ancient Naga-worship are
+            not confined to the cobra, for Singhalese and Tamils alike are extremely
+            averse to killing any serpent. If possible, they coax them into covered
+            wickerbaskets, and float them down some stream, trusting that they may land
+            in safety elsewhere. One of...
+  Q       : Recount the singular method by which a rich man of Negombo secured his
+            treasure about the year 1858, as afterwards recorded by Major Skinner.
+  A       : A very curious instance of this was recorded by Major Skinner in 1858, at
+            which time a certain rich man living near Negombo, and who liked to keep his
+            money in his own house, protected it by keeping tame cobras gliding about as
+            other folk keep watch - dogs. These discriminating creatures were ranted
+            only to molest would-be thieves, and never injured any of the family.

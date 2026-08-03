@@ -1,0 +1,501 @@
+route: conversational_qa
+model: deepseek-v4-pro
+seed:  0
+n:     20
+kept:  8/20
+
+--- SYSTEM PROMPT ---
+You are given a passage of pre-1930s DIALOGUE — a conversation, catechism, or
+question-and-answer exchange between TWO voices. Turn it into a multi-turn conversation.
+
+1. Identify the two speakers. Assign one to the USER role — the voice that asks,
+   prompts, or leads — and the other to the ASSISTANT role — the voice that answers or
+   explains. In a catechism the questioner is the user.
+
+2. Return the exchange as "turns": an ordered list, each turn one speaker's utterance
+   copied VERBATIM from the passage, ALTERNATING user, assistant, user, assistant …,
+   beginning with the user. Keep the natural back-and-forth — several turns, not one
+   pair.
+   - Copy WORD FOR WORD. Do NOT paraphrase, rewrite, summarize, translate, or add any
+     word. Each turn is the spoken words themselves.
+   - Strip ONLY the speaker's label or attribution and the quotation marks that mark
+     who is speaking ("said John", "Q.", "A.", "Socrates.", "" ""). Keep a turn's own
+     wording exactly, punctuation and spelling included.
+   - Drop narration or stage directions that fall BETWEEN turns; keep only what is
+     spoken. Each turn's remaining words must appear verbatim and unbroken in the
+     passage (do not stitch across an interruption like '"I am," he said, "a
+     traveller"').
+   - Begin and end each turn at a natural utterance boundary.
+
+3. The exchange must have at least 4 turns (two full exchanges) and strictly
+   alternate the two roles. If the passage is not a genuine two-party spoken exchange —
+   it is narration, monologue, exposition, or a single Q&A pair — emit NO item for it.
+
+Input: JSON array [{"i": 0, "text": "..."}, ...]
+Output JSON only:
+  [{"i": 0, "turns": [{"role": "user", "content": "..."},
+                       {"role": "assistant", "content": "..."}, ...]}, ...]
+
+
+========================================================================================
+[AGRICULTURE]  1916  turns=12
+  excerpt : I do not pay it out of my own private purse, as Dr. Rendon says he could not
+            imagine that I did; and he is right. [Laughter.] Mr. SPENCER. Whom were you
+            doing this for, in whose behalf? Mr. LUKENS. I did not get that. Mr.
+            SPENCER. Whom were you doing this strenuous work for? Mr. LUKENS. First, as
+            a newspaper man, the first thing was to give our readers the news; that is
+            our principal business, to ...
+  USER  : Whom were you doing this for, in whose behalf?
+  ASST  : I did not get that.
+  USER  : Whom were you doing this strenuous work for?
+  ASST  : First, as a newspaper man, the first thing was to give our readers the news;
+          that is our principal business, to give the implement trade the news of the
+          implement business, and anything having a bearing on the binder twine
+          situation is an important matter, because it is a big thing in the trade. Next
+          to that I was convinced that the result of this deal of the Reguladora control
+          of the sisal fiber would result in exorbitant prices for binder twine to the
+          farmer. That was a conviction with me, and I undertook to pass that along to
+          the dealers, so that they might communicate it to the farmers.
+  USER  : Did you make any row in your paper when the International Harvester Co.
+          threatened to withdraw its guaranties on its binder machines if people used
+          prison fiber?
+  ASST  : I never knew that they did that.
+  USER  : Prison twine?
+  ASST  : I never knew that they did that.
+  USER  : What association was that?
+  ASST  : I do not know. That item was based upon a letter that I received from a dealer
+          telling me about it. I wrote that from the data given me in his letter. I can
+          not remember his name, however.
+  USER  : You do not know what State prison it was?
+  ASST  : No; I have an idea; I think it was Michigan.
+
+========================================================================================
+[TECHNOLOGY]  1911  turns=14
+  excerpt : Of a piston valve working in a bushing or cylinder; two packing rings that
+            act as valves for the relief and leakage ports; a regulating spring by which
+            the piston is held in its normal position against the brake cylinder
+            pressure; a regulating nut or screw by which the tension of the regulating
+            spring may be adjusted; a body; spring case; a spring box; a cap nut, and a
+            nonreturn check valve, with ...
+  USER  : Of a piston valve working in a bushing or cylinder; two packing rings that act
+          as valves for the relief and leakage ports; a regulating spring by which the
+          piston is held in its normal position against the brake cylinder pressure; a
+          regulating nut or screw by which the tension of the regulating spring may be
+          adjusted; a body; spring case; a spring box; a cap nut, and a nonreturn check
+          valve, with casing complete.
+  ASST  : What is the duty of the non-return check valve, which is screwed into spring
+          box?
+  USER  : In emergency applications the air which is vented from the brake pipe into the
+          spring box must pass the non-return check valve, which then seats and prevents
+          the air thus trapped in the spring box from escaping or backing out, except as
+          it passes out slowly through the small port drilled through this check valve.
+  ASST  : How is the compensating valve piped to the brake cylinder and to the triple
+          valve?
+  USER  : A ½-inch pipe connection is made from the chamber above the piston in style A
+          to the brake cylinder; and another is made from the side cap of the quick
+          action triple valve to the spring box and air chamber below piston. In style
+          B. but one pipe connection is necessary, that from chamber B to the brake
+          cylinder.
+  ASST  : Should these pipe connections be absolutely air tight?
+  USER  : The pipe connection from the brake cylinder to the chamber above the piston
+          should be absolutely air tight; the pipe connection from the side cap of the
+          triple to the non-return check valve and spring box air chamber should be
+          securely tight.
+  ASST  : Describe the operation of the compensating valve, style A.
+  USER  : During an emergency application a portion of the brake pipe air vented at the
+          side cap of the quick action triple valve, passes through the pipe leading to
+          the nonreturn check valve and spring box air chamber, charging the spring box
+          chamber, under the piston, with air pressure. This air pressure augments, or
+          reinforces, the regulating spring pressure under the piston, and permits the
+          full equalized pressure from the auxiliary reservoir to be had in the brake
+          cylinder, and to be retained therein for several seconds before the piston can
+          descend and open the relief ports. The air vented into, and trapped in, the
+          spring box air chamber requires several seconds to pass back to the atmosphere
+          through the small port in the non-return check valve. When the air pressure in
+          the spring box chamber has reduced sufficiently the piston will be forced down
+          by the brake cylinder pressure above it, the relief ports controlled by
+          packing rings will be opened, and brake cylinder pressure will be gradually
+          reduced to the point of adjustment of the valve. In service applications,
+          there being no air vented into the spring box air chamber, the only pressure
+          which the piston has to overcome is that of the regulating spring; therefore,
+          when the brake cylinder pressure is sufficient to overcome the spring pressure
+          the piston will descend promptly and open the relief ports.
+  ASST  : Should all joints around the spring box air chamber be made air tight?
+  USER  : Yes; in bolting the spring box to the body of the valve care should be taken
+          to see that the gasket is in good condition and bolted up tight; next the plug
+          that is screwed into the hole that is not used for the non-return check valve,
+          in the spring box, should have a little lead rubbed upon it and be screwed so
+          as to make an air tight joint. The same rule should be observed when screwing
+          the non-return check valve into the other hole. After adjusting the regulating
+          spring the cap nut should be screwed up tight so that no leakage will be had
+          past it.
+  ASST  : Why is it necessary to have the spring box air chamber air tight?
+  USER  : So that air trapped in there by the non-return check valve will find no means
+          of escape except through the small port in this check valve.
+  ASST  : What is the duty of the leather washer on top of the piston?
+
+========================================================================================
+[AGRICULTURE]  1902  turns=10
+  excerpt : KELLY. Well, if a field will yield 25 tons of cane per acre, that cane will
+            yield about 2 tons of sugar. Mr. TAWNEY. Two and a half tons of sugar? Mr.
+            KELLY. About that, yes, sir; say 10 per cent. We generally calculate 10 per
+            cent of the weight of the cane in finished product. 61 Mr. TAWNEY. It would
+            mean, then, a bounty of about $60 per acre on every acre of available sugar
+            land in Cuba if you t...
+  USER  : Well, if a field will yield 25 tons of cane per acre, that cane will yield
+          about 2 tons of sugar.
+  ASST  : Two and a half tons of sugar?
+  USER  : About that, yes, sir; say 10 per cent. We generally calculate 10 per cent of
+          the weight of the cane in finished product.
+  ASST  : It would mean, then, a bounty of about $60 per acre on every acre of available
+          sugar land in Cuba if you took off the duty?
+  USER  : Yes; two and a half tons. The duty is nearly $34 per ton.
+  ASST  : It would increase the value of the land, then, about $75 per acre?
+  USER  : Yes, sir.
+  ASST  : That is assuming that the price of sugar does not fall?
+  USER  : That is assuming a price of about 2 cents per pound for sugar.
+  ASST  : In an article which you have published here you say the area is about the size
+          of the State of New York.
+
+========================================================================================
+[LAW]  1816  turns=0
+  excerpt : Mr. Fazakerley. Was there not then judgment against Howson? King. No, I have
+            always been concerned for Howson. William Howson sworn. Mr. Kettleby. I ask
+            you, whether you were ever in company with Mr. Castell and Bambridge, after
+            he was surrendered at Mr. Corbett's?-Howson. I don't know that. Mr.
+            Kettleby. Were you ever in company with them? Howson. Yes, Mr. Castell
+            employed Mr. Bambridge as his at...
+  (dropped)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1876  turns=14
+  excerpt : Question. OW many Sacraments hath Christ ordained in his Church? Answer. Two
+            only, as generally necessary to salvation; that is to say, Baptism, and the
+            Supper of the Lord. Question. What meanest thou by this word Sacrament?
+            Answer. I mean an outward and visible sign of an inward and spiritual grace
+            given unto us; ordained by Christ himself, as a means whereby we receive the
+            same, and a pledge to ...
+  USER  : OW many Sacraments hath Christ ordained in his Church?
+  ASST  : Two only, as generally necessary to salvation; that is to say, Baptism, and
+          the Supper of the Lord.
+  USER  : What meanest thou by this word Sacrament?
+  ASST  : I mean an outward and visible sign of an inward and spiritual grace given unto
+          us; ordained by Christ himself, as a means whereby we receive the same, and a
+          pledge to assure us thereof.
+  USER  : How many parts are there in a Sacrament?
+  ASST  : Two; the outward visible sign, and the inward spiritual grace.
+  USER  : What is the outward visible sign or form in Baptism?
+  ASST  : Water; wherein the person is baptized, In the Name of the Father, and of the
+          Son, and of the Holy Ghost.
+  USER  : What is the inward and spiritual grace?
+  ASST  : A death unto sin, and a new birth unto righteousness: for being by nature born
+          in sin, and the children of wrath, we are hereby made the children of grace.
+  USER  : What is required of persons to be baptized?
+  ASST  : Repentance, whereby they forsake sin; and Faith, whereby they steadfastly
+          believe the promises of God made to them in that Sacrament.
+  USER  : Why then are Infants baptized, when by reason of their tender age they cannot
+          perform them?
+  ASST  : Because they promise them both by their Sureties; which promise, when they
+          come to age, themselves are bound to perform.
+
+========================================================================================
+[EDUCATION]  1893  turns=0
+  excerpt : T. Now do you know how and when Persia came to conquer and gain possession
+            of Asia Minor? C. is silent. T. Was Persia in possession of many countries?
+            C. is silent. yes sea. T. Was Persia at the head of an empire? C. is silent.
+            T. Who was Xerxes? C. Oh, Xerxes. Xerxes; he invaded Greece; he flogged the
+            7. Right; he flogged the sea: what sea? C. is silent. T. Have you read any
+            history of Persia? . ...
+  (dropped)
+
+========================================================================================
+[SOCIAL SCIENCES]  1915  turns=0
+  excerpt : FISCHER: We were one of the first concerns that went into the state
+            compensation, but the premium on compensation is very insignificant to the
+            total wages you would have to pay out. That is an expense item that can
+            conveniently be borne. It will cut down profits by a couple of hundred
+            dollars a year only. The premium on insurance is insignificant as compared
+            with legislation on wages. Q. Didn't th...
+  (dropped)
+
+========================================================================================
+[LAW]  1816  turns=29
+  excerpt : Conway. There is nothing more discours'd of among the scholars than that,
+            when it happens any one goes out of the college. L. C. J. And pray when did
+            he go away? Conway. In June, about the twentieth, as near as I can remember.
+            Sol. Gen. Did you observe him at dinner there constantly? Conway. Yes, he
+            sat by himself. Sol: Gen. How came that to pass? Conway. He sat at a little
+            table in the hall by hi...
+  USER  : There is nothing more discours'd of among the scholars than that, when it
+          happens any one goes out of the college.
+  ASST  : And pray when did he go away?
+  USER  : In June, about the twentieth, as near as I can remember.
+  ASST  : Did you observe him at dinner there constantly?
+  USER  : Yes, he sat by himself.
+  ASST  : How came that to pass?
+  USER  : He sat at a little table in the hall by himself, for he pretended, being a man
+          in years, he could not diet as the rest of the young students did, and
+          therefore obtained leave to sit alone at a little table by himself, and he sat
+          next to the table of the Fathers, to which all the students were to make their
+          reverence before they sat down.
+  ASST  : He was a very remarkable man by his sitting by himself; did he sit there
+          always?
+  USER  : He changed his table once, and I took notice that he sat on the other side of
+          the refectory.
+  ASST  : When was that, I pray, can you remember?
+  USER  : That was a little after Easter.
+  ASST  : Will Mr. Oates ask him any questions?
+  USER  : Pray, my lord, will you ask this gentleman what religion he is of?
+  ASST  : I am Roman Catholic.
+  USER  : Pray, ask him where he lives?
+  ASST  : Where do you live, Sir?
+  USER  : Where, now at present, my lord?
+  ASST  : Where do you usually live?
+  USER  : I am a Flintshire man, my lord.
+  ASST  : Pray ask him what name he did go by at St. Omers?
+  USER  : By the name of William Parry.
+  ASST  : Pray ask him by what name he gave his evidence in at tive Jesuits Trial?
+  USER  : Were you a witness at the Trial of the five Jesuits?
+  ASST  : Yes, I was.
+  USER  : By what name did you give your evidence there?
+  ASST  : By the name of Parry.
+  USER  : Then I desire the court to take notice he represented himself by a feigned
+          name in a court of record.
+  ASST  : Pray, my lord, ask him, if ever he heard of any consult of the Jesuits held
+          here in England in April 1678.
+  USER  : Yes, I did.
+
+========================================================================================
+[EDUCATION]  1920  turns=0
+  excerpt : You think they were sincere? Their motives were unquestioned? Mr. BRUCE. I
+            think some of the people who were giving the money were perfectly sincere.
+            Senator HARRISON. Don't you think that the Rev. Emory W. Williams was
+            sincere? Mr. BRUCE. I don't know as to that particular individual. Senator
+            HARRISON. What part of that prayer did you object to? Mr. BRUCE. I don't
+            believe I was there when the pra...
+  (dropped)
+
+========================================================================================
+[EDUCATION]  1874  turns=0
+  excerpt : SUMNER. And I have the floor. THE PRESIDING OFFICER. The senator from Mas
+            sachusetts is entitled to the floor. Mr. SUMNER. I shall not occupy much
+            time, nor shall I debate the bill. Some time ago, Mr. President, after the
+            presentation of the memorial from Boston, signed by twenty-nine hundred
+            citizens, without distinction of party, I gave notice that I should, at a
+            day hereafter, ask leave to intr...
+  (dropped)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1913  turns=0
+  excerpt : Q. Were all the friars licentious? A. I believe that they all are. Q. Do you
+            think that was the ground of hostility against the friars? A. No, sir;
+            Cæsarism was. Everything was dependent upon them, and I may say that even
+            the process of eating was under their supervision. Naturally their im-
+            morality had a slight influence in the case, but it became so common that it
+            passed unnoticed. Q. Does the ...
+  (dropped)
+
+========================================================================================
+[SOCIAL SCIENCES]  1914  turns=5
+  excerpt : A. G. Sullivan, Madison, page 28. Upon being asked whether he favored
+            quarantine, Dr. Sullivan said, "I favor quarantine on the score that it is a
+            communicable disease. It would raise a good deal of havoc for a while. The
+            same thing was true when quarantine began for scarlet fever, smallpox,
+            diphtheria. I believe in publicity as a cure for these evils. If you would
+            have the names on file and make ...
+  USER  : I favor quarantine on the score that it is a communicable disease. It would
+          raise a good deal of havoc for a while. The same thing was true when
+          quarantine began for scarlet fever, smallpox, diphtheria. I believe in
+          publicity as a cure for these evils. If you would have the names on file and
+          make the physician liable to quite a severe penalty for not reporting, I think
+          you would find that venereal disease would decrease. I think you would have
+          fewer illegitimate children and less work for the abortionist.
+  ASST  : A few years ago the prostitutes were examined every month as to whether they
+          had disease or not. That I consider one of the greatest farces that could
+          exist. There was nothing whatever to protect members of society who attended
+          those places, because in the meantime they might contract diseases; and I have
+          seen cases where syphilis has been contracted by a number of individuals from
+          one individual who had passed an examination a month before, and in the
+          interval she had infected a number of men. The period is too long. I never saw
+          so many cases of syphilis or gonorrhea in my life as I did at the general
+          hospital in Vienna when I studied there, and still that city is regulated
+          quite well as regards these diseases I think there is an extra danger on
+          account of the security that they suppose is conferred upon them by these
+          examinations, which are too far apart to do any good, and that is one thing
+          that should be abolished immediately, those examinations. They are no earthly
+          good whatever.
+  USER  : Isn't it a fact that some doctors state that a case of gonorrhea is never
+          cured?
+  ASST  : Very likely in all cases. Gonorrhea may affect all the joints of the body, the
+          heart, liver, gall bladder, injures the joints, and for that matter gonorrhea
+          has affected the earsit depends on where the germs happen to go.
+  USER  : In a way, yes, register by number, because if you begin registering venereal
+          diseases, you can register 90 per cent of the people of Milwaukee.
+
+========================================================================================
+[EDUCATION]  1900  turns=0
+  excerpt : Q. Who have charge of it?-A. To a certain extent the priests are paid by the
+            government. Q. By the local government or by the Manila government?-A. The
+            local government. Q. And a tax was levied for that purpose?-A. The priests-
+            they are the judge; education was entirely in the hands of the priests. Q.
+            In the municipal form of government here was there any council of local
+            government?-A. Yes; what t...
+  (dropped)
+
+========================================================================================
+[LAW]  1882  turns=0
+  excerpt : Q. You have seen no other, within the last two years? A. No, sir. Q. By whom
+            has the paddle been used? A. By the principal keeper. Q. Has any other
+            keeper the right to use it? A. No, sir; not as I understand it; I have never
+            seen any other officer use it. Q. You understand that when it is so used, it
+            is used in the presence of the physician? Q. Invariably when you have seen
+            it used? A. Yes, sir. Q...
+  (dropped)
+
+========================================================================================
+[SCIENCE]  1856  turns=26
+  excerpt : If air were a good conductor (like iron and stone) heat would be drawn 80
+            rapidly from our body as to impede the functions of life. Similar evils
+            would be felt also by both the animal and vegetable worlds. Q. Why are
+            WOOLLENS and FURS used for CLOTHING in COLD WEATHER? A. Because they are
+            very bad conductors of heat; and therefore prevent the warmth of the body
+            from being drawn off by the cold air...
+  USER  : Why are WOOLLENS and FURS used for CLOTHING in COLD WEATHER?
+  ASST  : Because they are very bad conductors of heat; and therefore prevent the warmth
+          of the body from being drawn off by the cold air.
+  USER  : Do not woOLLENS and FURS actually IMPART heat to the body?
+  ASST  : No; they merely prevent the heat of the body from escaping.
+  USER  : Where would the heat ESCAPE to, if the body were Nor wrapped in wool or fur?
+  ASST  : The heat of the body would fly off into the air; for the cold air (coming in
+          contact with our body) would gradually draw away its heat, till it was as cold
+          as the air itself.
+  USER  : What, then, is the PRINCIPAL USE of CLOTHING in winter-time?
+  ASST  : 1. To prevent the animal heat from escaping too freely; and 2. To protect the
+          body from the external air, (or wind,) which would carry away its heat too
+          rapidly.
+  USER  : Why are BEASTS covered with FUR, HAIR, or WOOL?
+  ASST  : Because fur, hair, and wool are very bad conductors of heat; and (as dumb
+          animals cannot be clad like human beings) the Creator has given them a most
+          suitable covering of hair or wool to keep them warm.
+  USER  : Why are BIRDS covered with DOWN or FEATHERS?
+  ASST  : Because down and feathers are very bad conductors of heat; and (as birds
+          cannot be clad like human beings) the Creator has given them a most suitable
+          covering of feathers to keep them warm.
+  USER  : Why are wOOL, FUR, HAIR, and FEATHERS such SLOW CONDUCTORS of heat?
+  ASST  : Because a great quantity of air lurks entangled between the fibres; and air is
+          a very bad conductor of heat.
+  USER  : Why is moderately LOOSE clothing WARMER than that which fits TIGHTLY?
+  ASST  : Because air is a bad conductor; and the quantity of air confined between our
+          bodies and clothing prevents, 1. The heat of our bodies from escaping; and 2.
+          The external air from coming into contact with our bodies.
+  USER  : Show how the wisdom and beneficence of the Creator is manifested even in the
+          clothing of BIRDS and BEASTS.
+  ASST  : Small birds, which are the most delicate, have a thicker covering of feathers
+          than those which are larger and more hardy; and beasts which live in the cold
+          regions of the frigid zones have thicker, coarser, and warmer coats than those
+          which dwell in the tropical heat.
+  USER  : How are WHALES, SEALS, and other WARM-BLOODED ANIMALS that live in the water,
+          protected against the cold?
+  ASST  : They are enveloped, beneath the skin, with a thick coating of "blubber" or
+          fat, which, like fur, hair, and feathers, is a nonconductor of heat, and
+          serves to protect them in a like manner.
+  USER  : Why are BLANKETS and WARM WOOLLEN GOODS always made with a NAP or PROJECTION
+          of FIBRES on the outside?
+  ASST  : Because the nap or fibres retain air among them, which, from its non-
+          conducting properties, serves to increase the warmth of the material.
+  USER  : How does the COVERING of HAIR, WOOL, and FEATHERS serve to keep animals COOL
+          in HOT WEATHER, as well as WARM in COOL WEATHER?
+  ASST  : In warm weather the non-conducting medium will not allow the heat to enter the
+          body from without; in cold weather the heat of the body cannot escape from
+          within.
+  USER  : Why do we wrap up ICE in FLANNEL to keep it from melting?
+  ASST  : Because the flannel, being a non-conductor, does not allow the heat of the
+          atmosphere to penetrate to the ice.
+
+========================================================================================
+[LAW]  1895  turns=0
+  excerpt : Q. What did Hoch say to you? A. That was after I spoke to Mr. Lawrence
+            first. Come down to where you spoke with Hoch. Q. You had a talk with Mr.
+            Lawrence; wait awhile. Mr. Goff. It is a very strict application of the
+            rule. I admit it is not competent, but I think, in an investigation of this
+            kind, the whole matter should go in. Chairman Lexow.- Let us see if we can
+            get it out by conver sation with...
+  (dropped)
+
+========================================================================================
+[SCIENCE]  1906  turns=22
+  excerpt : A. Very minute vegetable organisms; a single cell. They may be seen by the
+            microscope at almost any time or place. They are found in the air, in water,
+            on the surface of the earth, on the leaves of the trees, on vegetables and
+            fruit, also in and upon the human body. Q. How are bacteria classed? A. By
+            their function, as healthy, pathogenic and putrefactive. By their
+            form:-micrococci, round shaped (...
+  USER  : How are bacteria classed?
+  ASST  : By their function, as healthy, pathogenic and putrefactive. By their
+          form:-micrococci, round shaped (streptococcus, in chains; staphylococcus, in
+          bunches, like a bunch of grapes; diplococcus, those found in pairs; tetrads in
+          fours, and sarcina in bales) bacilli, rod-shaped; spirilla, screw shaped.
+  USER  : What is the function of the pathogenic bacteria?
+  ASST  : They poison the living body and are believed to be the cause of most of the
+          contagious and infectious diseases.
+  USER  : What is the function of the putrefactive bacteria?
+  ASST  : They cause putrefaction of the tissues and a series of chemical changes which
+          cease only when the lately organized body has been returned to its original or
+          inorganic elements.
+  USER  : What is necessary to the development of bacteria?
+  ASST  : Heat, moisture and congenial food.
+  USER  : How do they increase or grow?
+  ASST  : By fission or division, and by developing from spores.
+  USER  : What are the products of bacteria and what do they cause?
+  ASST  : The products of the pathogenic bacteria are disease and often death; of
+          saprophytic, putrefaction and fermentation.
+  USER  : What kind of bacteria develop in the living body?
+  ASST  : Pathogenic bacteria, which produce nearly all forms of communicable disease.
+  USER  : What kind of bacteria develop in the dead body?
+  ASST  : Saprophytic or putrefractive bacteria. They are the primary cause of
+          putrefaction, which continues until the organic elements are changed to
+          inorganic matter.
+  USER  : Do saprophytic bacteria ever cause disease?
+  ASST  : They do.
+  USER  : What is a spore?
+  ASST  : An undeveloped germ. The equivalent of the bud or germ cell.
+  USER  : Describe the production of spores.
+  ASST  : According to Brefield and others the process is as follows: By the absorption
+          of water they become swollen and pale, losing their shining, refractive
+          appearance. Later a little protuberance is seen upon one side or at one
+          extremity of the spore, and this rapidly grows out to form a rod, which
+          consists of soft-growing protoplasm enveloped in a membrane which is formed of
+          the inner layer of the cellular envelope of the spore. The outer envelope is
+          cast off and may be seen in the vicinity of the newly formed rod. 79 Sometimes
+          the vegetative cell emerges from one extremity of the oval spore, and in other
+          species the exosporium is ruptured and the bacillus emerges from the side.
+
+========================================================================================
+[LAW]  1920  turns=0
+  excerpt : At Washington. Q. What laws can Congress make? A. Only laws that are not in
+            conflict with the Constitution of the United States. Q. How is Congress
+            constituted? A. Congress is composed of two houses-the Senate and the House
+            of Representatives. What are the members of the Senate and the House of
+            Representatives called? A. Senators and Congressmen. Q. How are the Senators
+            elected? A. Each State has ...
+  (dropped)
+
+========================================================================================
+[PHILOSOPHY. PSYCHOLOGY. RELIGION]  1870  turns=0
+  excerpt : Maci. Why, has she deciphered him, gentlemen? Punt. O, most miraculously,
+            and beyond admi. ration. Maci. Is it possible? Fast. She hath gather'd most
+            infallible signs of the gentleman in him, that's certain. Sav. Why,
+            gallants, let me laugh at you a little : was this your device, to try my
+            judgment in a gentleman ? Maci. Nay, lady, do not scorn us, though you have
+            this gift of perspicacy above oth...
+  (dropped)
+
+========================================================================================
+[POLITICAL SCIENCE]  1890  turns=0
+  excerpt : No, sir; One witness testified about the coal fields lying in New Brunswick
+            contiguous to the United States. There are no such coal fields at all,
+            except that at one time we obtained what was called Albert coal, or
+            Albertite; it was not mined in veins, but in pockets, and now they have lost
+            that, and no more comes from there. BOSTON, MASS., September 12, 1889. T.
+            JEFFERSON COOLIDGE, SWorn and exam...
+  (dropped)
