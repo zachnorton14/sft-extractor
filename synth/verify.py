@@ -233,13 +233,14 @@ async def _run_sanity(routes, model, batch, char_budget, n, seed):
 
 
 async def _run_filter(routes, model, batch, char_budget, shard_size, force=False):
-    """Full filter pass: judge every pair of every route, DROP any row that has a pair
-    scored 0 (a whole multiturn conversation goes if any turn fails), and write the kept
-    rows to filtered/<route>/ on HF as uniform shards. Reads fresh (bypass cache) and
-    processes route-by-route so completed routes are durable if interrupted."""
+    """Full filter pass with INTRA-ROUTE checkpointing: judge every pair, DROP any row
+    with a pair scored 0 (a whole multiturn conversation goes if any turn fails), and
+    write kept rows to filtered/<route>/ as uniform shards. Pair judgments are saved to
+    synth/state/verify_<route>.json every ~2000 pairs, so a mid-route stop (out of credit,
+    Ctrl-C) resumes where it left off instead of re-judging the whole route. The
+    checkpoint is deleted once the route's filtered output is written. Reads fresh."""
     from synth import hf_push
     route_cfg = _judge_route(model, batch)
-    # route-level resume: skip any route that already has a filtered/<route>/ output
     done = {f.split("/")[1] for f in
             hf_push._api().list_repo_files(hf_push.HF_REPO, repo_type="dataset")
             if f.startswith("filtered/") and f.endswith(".jsonl")}
@@ -252,13 +253,43 @@ async def _run_filter(routes, model, batch, char_budget, shard_size, force=False
                 continue
             print(f"{tag}: loading from HF...", flush=True)
             rows = _load_route(route, fresh=True)
-            items = [(route, row.get("doc_index"), q, a)
-                     for row in rows for q, a in _pairs(row) if q and a]
-            scored = await _judge_all(client, sem, route_cfg, items, char_budget, batch, tag)
-            drop = {di for (_, di, _, _, sc) in scored if sc == 0}   # any 0 -> drop the row
+            items = []                      # (pair_key, doc_index, q, a)
+            for row in rows:
+                di = row.get("doc_index")
+                for k, (q, a) in enumerate(_pairs(row)):
+                    if q and a:
+                        items.append((f"{di}#{k}", di, q, a))
+
+            ckpt = engine.STATE_DIR / f"verify_{route}.json"
+            scores = json.loads(ckpt.read_text()) if ckpt.exists() else {}
+            pending = [it for it in items if it[0] not in scores]
+            print(f"  {tag}: {len(items) - len(pending):,} judged already, "
+                  f"{len(pending):,} pending", flush=True)
+            bs = _pack(pending, char_budget, batch)
+            n, saved, printed, total = [0], [0], [-1], len(pending)
+
+            async def one(b):
+                for pk, di, q, a, s in await _judge(client, sem, route_cfg, b):
+                    scores[pk] = s
+                n[0] += len(b)
+                if n[0] // 400 != printed[0]:
+                    printed[0] = n[0] // 400
+                    print(f"\r  {tag}: {n[0]:,}/{total:,} judged   ", end="", flush=True)
+                if n[0] - saved[0] >= 2000:      # checkpoint
+                    saved[0] = n[0]
+                    engine.STATE_DIR.mkdir(parents=True, exist_ok=True)
+                    ckpt.write_text(json.dumps(scores))
+
+            if bs:
+                await asyncio.gather(*[asyncio.create_task(one(b)) for b in bs])
+                ckpt.write_text(json.dumps(scores))   # final checkpoint
+                print()
+
+            drop = {di for pk, di, q, a in items if scores.get(pk) == 0}
             kept = [row for row in rows if row.get("doc_index") not in drop]
             print(f"  {tag}: writing filtered/{route}/ ...", flush=True)
             _, nshards, _ = hf_push.write_sharded(f"filtered/{route}", kept, shard_size)
+            ckpt.unlink(missing_ok=True)     # route complete -> drop the checkpoint
             pct = 100 * len(drop) / max(1, len(rows))
             print(f"  {tag}: {len(rows):,} rows -> kept {len(kept):,} "
                   f"(dropped {len(drop):,}, {pct:.1f}%)  -> filtered/{route}/ ({nshards} shards)\n",
