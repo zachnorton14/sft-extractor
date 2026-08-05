@@ -29,7 +29,24 @@ from collections import defaultdict
 from synth import engine
 from synth.ngram_filter import _load_route, ROUTES
 
-BATCH = 40
+BATCH = 40                # max pairs per judge call
+CHAR_BUDGET = 6000        # cap on q+a chars per batch: long-content routes (multiturn)
+                          # get fewer pairs/call automatically, avoiding the model's
+                          # degenerate repetition loop on large payloads
+
+
+def _pack(items, char_budget, max_pairs):
+    """Pack items into batches capped by BOTH a char budget (q+a length) and a max pair
+    count, so short-content routes fill to max_pairs and long-content routes stay small."""
+    batches, cur, sz = [], [], 0
+    for it in items:
+        c = len(it[2]) + len(it[3])
+        if cur and (sz + c > char_budget or len(cur) >= max_pairs):
+            batches.append(cur); cur, sz = [], 0
+        cur.append(it); sz += c
+    if cur:
+        batches.append(cur)
+    return batches
 
 SYSTEM = """\
 You are given a numbered list of QUESTION/ANSWER pairs from pre-1930s books. For each
@@ -135,13 +152,12 @@ async def _judge(client, sem, route, batch):
     return left + right
 
 
-async def _judge_all(client, sem, route_cfg, items, batch, label):
-    """Judge all items in batches, printing live progress (pairs judged / total) on a
-    single updating line."""
+async def _judge_all(client, sem, route_cfg, items, char_budget, max_pairs, label):
+    """Judge all items in content-sized batches, printing live progress on one line."""
     total = len(items)
-    bs = [items[i:i + batch] for i in range(0, total, batch)]
+    bs = _pack(items, char_budget, max_pairs)
     out, done, last = [], [0], [-1]
-    step = max(batch, 400)              # update the line ~every 400 pairs, not every 1%
+    step = 400                          # update the line ~every 400 pairs, not every 1%
 
     async def one(b):
         out.extend(await _judge(client, sem, route_cfg, b))
@@ -157,11 +173,11 @@ async def _judge_all(client, sem, route_cfg, items, batch, label):
     return out
 
 
-async def _run(items, model, batch_size, show):
+async def _run(items, model, batch_size, char_budget, show):
     route = _judge_route(model, batch_size)
     async with engine.open_client() as client:
         sem = asyncio.Semaphore(engine.CONCURRENCY)
-        scored = await _judge_all(client, sem, route, items, batch_size, "judging")
+        scored = await _judge_all(client, sem, route, items, char_budget, batch_size, "judging")
     _report(scored, len(items), show)
     return scored
 
@@ -192,7 +208,7 @@ def _report(scored, n_total, show):
         print(f"      A: {a[:150]}")
 
 
-async def _run_sanity(routes, model, batch, n, seed):
+async def _run_sanity(routes, model, batch, char_budget, n, seed):
     """Discrimination test: judge N real pairs AND N deliberately-WRONG pairs (each
     question given a different question's answer). A discriminating judge scores real
     pairs ~1 and mismatched pairs ~0. If it passes the mismatches as 1, it is rubber-
@@ -205,8 +221,8 @@ async def _run_sanity(routes, model, batch, n, seed):
     route = _judge_route(model, batch)
     async with engine.open_client() as client:
         sem = asyncio.Semaphore(engine.CONCURRENCY)
-        real_scored = await _judge_all(client, sem, route, reals, batch, "sanity real")
-        mism_scored = await _judge_all(client, sem, route, mism, batch, "sanity mismatch")
+        real_scored = await _judge_all(client, sem, route, reals, char_budget, batch, "sanity real")
+        mism_scored = await _judge_all(client, sem, route, mism, char_budget, batch, "sanity mismatch")
     keep = 100 * sum(s for *_, s in real_scored) / max(1, len(real_scored))
     caught = 100 * sum(1 for *_, s in mism_scored if s == 0) / max(1, len(mism_scored))
     print(f"\nSANITY (judge={model}, batch={batch}):")
@@ -216,7 +232,7 @@ async def _run_sanity(routes, model, batch, n, seed):
           f"(DISCRIMINATION — want high; low = rubber-stamping)")
 
 
-async def _run_filter(routes, model, batch, shard_size, force=False):
+async def _run_filter(routes, model, batch, char_budget, shard_size, force=False):
     """Full filter pass: judge every pair of every route, DROP any row that has a pair
     scored 0 (a whole multiturn conversation goes if any turn fails), and write the kept
     rows to filtered/<route>/ on HF as uniform shards. Reads fresh (bypass cache) and
@@ -238,7 +254,7 @@ async def _run_filter(routes, model, batch, shard_size, force=False):
             rows = _load_route(route, fresh=True)
             items = [(route, row.get("doc_index"), q, a)
                      for row in rows for q, a in _pairs(row) if q and a]
-            scored = await _judge_all(client, sem, route_cfg, items, batch, tag)
+            scored = await _judge_all(client, sem, route_cfg, items, char_budget, batch, tag)
             drop = {di for (_, di, _, _, sc) in scored if sc == 0}   # any 0 -> drop the row
             kept = [row for row in rows if row.get("doc_index") not in drop]
             print(f"  {tag}: writing filtered/{route}/ ...", flush=True)
@@ -255,7 +271,8 @@ def main():
     ap.add_argument("--sample", type=int, default=1000, help="rows/route to judge (0 = all)")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--model", default=engine.MODEL, help="judge model (default: engine MODEL)")
-    ap.add_argument("--batch", type=int, default=BATCH, help="pairs per judge call (bare 0/1 array; auto-splits on drift)")
+    ap.add_argument("--batch", type=int, default=BATCH, help="MAX pairs per judge call")
+    ap.add_argument("--char-budget", type=int, default=CHAR_BUDGET, help="max q+a chars per batch (long-content routes get fewer pairs/call)")
     ap.add_argument("--show", type=int, default=20, help="misaligned examples to print")
     ap.add_argument("--sanity", type=int, default=0, metavar="N",
                     help="discrimination test on N real + N shuffled-answer pairs")
@@ -266,14 +283,14 @@ def main():
     args = ap.parse_args()
     routes = [args.route] if args.route else list(ROUTES)
     if args.sanity:
-        asyncio.run(_run_sanity(routes, args.model, args.batch, args.sanity, args.seed))
+        asyncio.run(_run_sanity(routes, args.model, args.batch, args.char_budget, args.sanity, args.seed))
         return
     if args.filter:
-        asyncio.run(_run_filter(routes, args.model, args.batch, args.shard_size, args.force))
+        asyncio.run(_run_filter(routes, args.model, args.batch, args.char_budget, args.shard_size, args.force))
         return
     items = _collect(routes, args.sample, args.seed)
     print(f"collected {len(items):,} pairs from {len(routes)} route(s); judging (batch={args.batch})...")
-    asyncio.run(_run(items, args.model, args.batch, args.show))
+    asyncio.run(_run(items, args.model, args.batch, args.char_budget, args.show))
 
 
 if __name__ == "__main__":
