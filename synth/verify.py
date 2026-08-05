@@ -214,17 +214,24 @@ async def _run_sanity(routes, model, batch, n, seed):
           f"(DISCRIMINATION — want high; low = rubber-stamping)")
 
 
-async def _run_filter(routes, model, batch, shard_size):
+async def _run_filter(routes, model, batch, shard_size, force=False):
     """Full filter pass: judge every pair of every route, DROP any row that has a pair
     scored 0 (a whole multiturn conversation goes if any turn fails), and write the kept
     rows to filtered/<route>/ on HF as uniform shards. Reads fresh (bypass cache) and
     processes route-by-route so completed routes are durable if interrupted."""
     from synth import hf_push
     route_cfg = _judge_route(model, batch)
+    # route-level resume: skip any route that already has a filtered/<route>/ output
+    done = {f.split("/")[1] for f in
+            hf_push._api().list_repo_files(hf_push.HF_REPO, repo_type="dataset")
+            if f.startswith("filtered/") and f.endswith(".jsonl")}
     async with engine.open_client() as client:
         sem = asyncio.Semaphore(engine.CONCURRENCY)
         for ri, route in enumerate(routes, 1):
             tag = f"[{ri}/{len(routes)}] {route}"
+            if route in done and not force:
+                print(f"{tag}: already filtered (filtered/{route}/), skipping", flush=True)
+                continue
             print(f"{tag}: loading from HF...", flush=True)
             rows = _load_route(route, fresh=True)
             items = [(route, row.get("doc_index"), q, a)
@@ -253,13 +260,14 @@ def main():
     ap.add_argument("--filter", action="store_true",
                     help="FULL pass: judge everything, drop rows scored 0, write filtered/<route>/ to HF")
     ap.add_argument("--shard-size", type=int, default=2000, help="rows per filtered shard")
+    ap.add_argument("--force", action="store_true", help="re-filter routes that already have filtered/ output")
     args = ap.parse_args()
     routes = [args.route] if args.route else list(ROUTES)
     if args.sanity:
         asyncio.run(_run_sanity(routes, args.model, args.batch, args.sanity, args.seed))
         return
     if args.filter:
-        asyncio.run(_run_filter(routes, args.model, args.batch, args.shard_size))
+        asyncio.run(_run_filter(routes, args.model, args.batch, args.shard_size, args.force))
         return
     items = _collect(routes, args.sample, args.seed)
     print(f"collected {len(items):,} pairs from {len(routes)} route(s); judging (batch={args.batch})...")

@@ -340,9 +340,14 @@ async def _call(client, semaphore, route, system, payload, n):
                 if resp.status_code == 429:
                     await asyncio.sleep(2 ** attempt)
                     continue
+                if resp.status_code == 402:
+                    raise SystemExit(
+                        "\nOut of API credit (402 Payment Required). Stopping now. Top up "
+                        "and re-run — completed routes are already written and will be "
+                        "skipped, so it resumes where it left off.")
                 if resp.status_code in (401, 403):
                     raise SystemExit(f"\nAPI auth failed ({resp.status_code}). "
-                                     f"Check OPENCODE_API_KEY (env or .env).")
+                                     f"Check the API key (env or .env).")
                 resp.raise_for_status()
                 choice = resp.json()["choices"][0]
                 text = (choice["message"]["content"] or "").strip()
