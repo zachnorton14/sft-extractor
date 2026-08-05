@@ -151,14 +151,16 @@ def out_of_period(question, vocab, min_len=3):
 
 # --- data loading -------------------------------------------------------------------
 
-def _load_route(route):
+def _load_route(route, fresh=False):
+    """Load a route's rows from HF. fresh=True forces a re-download (bypass local cache)
+    — use it when filtering, so you operate on the current published data."""
     from huggingface_hub import hf_hub_download
     api = hf_push._api()
     shards = sorted(f for f in api.list_repo_files(hf_push.HF_REPO, repo_type="dataset")
                     if f.startswith(f"{route}/") and f.endswith(".jsonl"))
     rows = []
     for f in shards:
-        path = hf_hub_download(hf_push.HF_REPO, f, repo_type="dataset")
+        path = hf_hub_download(hf_push.HF_REPO, f, repo_type="dataset", force_download=fresh)
         with open(path, encoding="utf-8") as fh:
             rows.extend(json.loads(line) for line in fh if line.strip())
     return rows

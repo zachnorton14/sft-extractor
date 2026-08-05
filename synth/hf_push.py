@@ -75,6 +75,29 @@ def push_shard(route_name, rows, repo=HF_REPO):
     return f"{repo}/{path_in_repo}"
 
 
+def write_sharded(prefix, rows, shard_size=2000, repo=HF_REPO):
+    """Write `rows` as uniform SHARD_SIZE-row JSONL shards under `prefix`/ on the repo
+    (e.g. prefix='filtered/knowledge_qa' -> filtered/knowledge_qa/part-00000.jsonl …),
+    replacing anything already under that prefix, in ONE atomic commit. Returns
+    (replaced, new_shards, rows)."""
+    from huggingface_hub import CommitOperationAdd, CommitOperationDelete
+    api = _api()
+    api.create_repo(repo_id=repo, repo_type=HF_REPO_TYPE, exist_ok=True)
+    existing = [f for f in api.list_repo_files(repo_id=repo, repo_type=HF_REPO_TYPE)
+                if f.startswith(f"{prefix}/")]
+    ops = [CommitOperationDelete(path_in_repo=f) for f in existing]
+    n_new = 0
+    for i in range(0, len(rows), shard_size):
+        chunk = rows[i:i + shard_size]
+        body = ("\n".join(json.dumps(r, ensure_ascii=False) for r in chunk) + "\n").encode("utf-8")
+        ops.append(CommitOperationAdd(path_in_repo=f"{prefix}/part-{n_new:05d}.jsonl",
+                                      path_or_fileobj=body))
+        n_new += 1
+    api.create_commit(repo_id=repo, repo_type=HF_REPO_TYPE, operations=ops,
+                      commit_message=f"write {prefix}: {len(rows)} rows in {n_new} shards")
+    return len(existing), n_new, len(rows)
+
+
 def compact_route(route_name, shard_size=2000, repo=HF_REPO):
     """Rewrite a route's shards to a uniform SHARD_SIZE rows each (last shard holds the
     remainder). Reads every existing <route>/part-*.jsonl in generation order, re-chunks,

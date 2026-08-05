@@ -200,6 +200,32 @@ async def _run_sanity(routes, model, batch, n, seed):
           f"(DISCRIMINATION — want high; low = rubber-stamping)")
 
 
+async def _run_filter(routes, model, batch, shard_size):
+    """Full filter pass: judge every pair of every route, DROP any row that has a pair
+    scored 0 (a whole multiturn conversation goes if any turn fails), and write the kept
+    rows to filtered/<route>/ on HF as uniform shards. Reads fresh (bypass cache) and
+    processes route-by-route so completed routes are durable if interrupted."""
+    from synth import hf_push
+    route_cfg = engine.Route(name="verify", system=SYSTEM, source=None, answer_fn=None,
+                             model=model, extra_body=JUDGE_EXTRA)
+    async with engine.open_client() as client:
+        sem = asyncio.Semaphore(engine.CONCURRENCY)
+        for route in routes:
+            rows = _load_route(route, fresh=True)
+            items = [(route, row.get("doc_index"), q, a)
+                     for row in rows for q, a in _pairs(row) if q and a]
+            bs = [items[i:i + batch] for i in range(0, len(items), batch)]
+            res = await asyncio.gather(*[_judge(client, sem, route_cfg, b) for b in bs])
+            scored = [s for r in res for s in r]
+            drop = {di for (_, di, _, _, sc) in scored if sc == 0}   # any 0 -> drop the row
+            kept = [row for row in rows if row.get("doc_index") not in drop]
+            _, nshards, _ = hf_push.write_sharded(f"filtered/{route}", kept, shard_size)
+            pct = 100 * len(drop) / max(1, len(rows))
+            print(f"{route:22} {len(rows):>7} rows -> kept {len(kept):>7} "
+                  f"(dropped {len(drop):>5}, {pct:4.1f}%)  -> filtered/{route}/ ({nshards} shards)",
+                  flush=True)
+
+
 def main():
     ap = argparse.ArgumentParser(description="LLM-judge Q/A alignment verification")
     ap.add_argument("--route", choices=ROUTES, help="single route (default: all)")
@@ -210,10 +236,16 @@ def main():
     ap.add_argument("--show", type=int, default=20, help="misaligned examples to print")
     ap.add_argument("--sanity", type=int, default=0, metavar="N",
                     help="discrimination test on N real + N shuffled-answer pairs")
+    ap.add_argument("--filter", action="store_true",
+                    help="FULL pass: judge everything, drop rows scored 0, write filtered/<route>/ to HF")
+    ap.add_argument("--shard-size", type=int, default=2000, help="rows per filtered shard")
     args = ap.parse_args()
     routes = [args.route] if args.route else list(ROUTES)
     if args.sanity:
         asyncio.run(_run_sanity(routes, args.model, args.batch, args.sanity, args.seed))
+        return
+    if args.filter:
+        asyncio.run(_run_filter(routes, args.model, args.batch, args.shard_size))
         return
     items = _collect(routes, args.sample, args.seed)
     print(f"collected {len(items):,} pairs from {len(routes)} route(s); judging (batch={args.batch})...")
