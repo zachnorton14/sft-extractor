@@ -141,14 +141,16 @@ async def _judge_all(client, sem, route_cfg, items, batch, label):
     total = len(items)
     bs = [items[i:i + batch] for i in range(0, total, batch)]
     out, done, last = [], [0], [-1]
+    step = max(batch, 400)              # update the line ~every 400 pairs, not every 1%
 
     async def one(b):
         out.extend(await _judge(client, sem, route_cfg, b))
         done[0] += len(b)
-        pct = done[0] * 100 // max(1, total)
-        if pct != last[0]:
-            last[0] = pct
-            print(f"\r  {label}: {done[0]:,}/{total:,} ({pct}%)   ", end="", flush=True)
+        mark = done[0] // step
+        if mark != last[0] or done[0] == total:
+            last[0] = mark
+            print(f"\r  {label}: {done[0]:,}/{total:,} ({done[0] * 100 // max(1, total)}%)   ",
+                  end="", flush=True)
 
     await asyncio.gather(*[asyncio.create_task(one(b)) for b in bs])
     print()
