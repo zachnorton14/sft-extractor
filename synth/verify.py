@@ -127,18 +127,32 @@ async def _judge(client, sem, route, batch):
     return left + right
 
 
+async def _judge_all(client, sem, route_cfg, items, batch, label):
+    """Judge all items in batches, printing live progress (pairs judged / total) on a
+    single updating line."""
+    total = len(items)
+    bs = [items[i:i + batch] for i in range(0, total, batch)]
+    out, done, last = [], [0], [-1]
+
+    async def one(b):
+        out.extend(await _judge(client, sem, route_cfg, b))
+        done[0] += len(b)
+        pct = done[0] * 100 // max(1, total)
+        if pct != last[0]:
+            last[0] = pct
+            print(f"\r  {label}: {done[0]:,}/{total:,} ({pct}%)   ", end="", flush=True)
+
+    await asyncio.gather(*[asyncio.create_task(one(b)) for b in bs])
+    print()
+    return out
+
+
 async def _run(items, model, batch_size, show):
     route = engine.Route(name="verify", system=SYSTEM, source=None, answer_fn=None,
                          model=model, extra_body=JUDGE_EXTRA)
-    scored = []
-    batches = [items[i:i + batch_size] for i in range(0, len(items), batch_size)]
     async with engine.open_client() as client:
         sem = asyncio.Semaphore(engine.CONCURRENCY)
-
-        async def do(batch):
-            scored.extend(await _judge(client, sem, route, batch))
-
-        await asyncio.gather(*[asyncio.create_task(do(b)) for b in batches])
+        scored = await _judge_all(client, sem, route, items, batch_size, "judging")
     _report(scored, len(items), show)
     return scored
 
@@ -183,14 +197,8 @@ async def _run_sanity(routes, model, batch, n, seed):
                          model=model, extra_body=JUDGE_EXTRA)
     async with engine.open_client() as client:
         sem = asyncio.Semaphore(engine.CONCURRENCY)
-
-        async def judge_all(items):
-            bs = [items[i:i + batch] for i in range(0, len(items), batch)]
-            res = await asyncio.gather(*[_judge(client, sem, route, b) for b in bs])
-            return [s for r in res for s in r]
-
-        real_scored = await judge_all(reals)
-        mism_scored = await judge_all(mism)
+        real_scored = await _judge_all(client, sem, route, reals, batch, "sanity real")
+        mism_scored = await _judge_all(client, sem, route, mism, batch, "sanity mismatch")
     keep = 100 * sum(s for *_, s in real_scored) / max(1, len(real_scored))
     caught = 100 * sum(1 for *_, s in mism_scored if s == 0) / max(1, len(mism_scored))
     print(f"\nSANITY (judge={model}, batch={batch}):")
@@ -210,19 +218,20 @@ async def _run_filter(routes, model, batch, shard_size):
                              model=model, extra_body=JUDGE_EXTRA)
     async with engine.open_client() as client:
         sem = asyncio.Semaphore(engine.CONCURRENCY)
-        for route in routes:
+        for ri, route in enumerate(routes, 1):
+            tag = f"[{ri}/{len(routes)}] {route}"
+            print(f"{tag}: loading from HF...", flush=True)
             rows = _load_route(route, fresh=True)
             items = [(route, row.get("doc_index"), q, a)
                      for row in rows for q, a in _pairs(row) if q and a]
-            bs = [items[i:i + batch] for i in range(0, len(items), batch)]
-            res = await asyncio.gather(*[_judge(client, sem, route_cfg, b) for b in bs])
-            scored = [s for r in res for s in r]
+            scored = await _judge_all(client, sem, route_cfg, items, batch, tag)
             drop = {di for (_, di, _, _, sc) in scored if sc == 0}   # any 0 -> drop the row
             kept = [row for row in rows if row.get("doc_index") not in drop]
+            print(f"  {tag}: writing filtered/{route}/ ...", flush=True)
             _, nshards, _ = hf_push.write_sharded(f"filtered/{route}", kept, shard_size)
             pct = 100 * len(drop) / max(1, len(rows))
-            print(f"{route:22} {len(rows):>7} rows -> kept {len(kept):>7} "
-                  f"(dropped {len(drop):>5}, {pct:4.1f}%)  -> filtered/{route}/ ({nshards} shards)",
+            print(f"  {tag}: {len(rows):,} rows -> kept {len(kept):,} "
+                  f"(dropped {len(drop):,}, {pct:.1f}%)  -> filtered/{route}/ ({nshards} shards)\n",
                   flush=True)
 
 
