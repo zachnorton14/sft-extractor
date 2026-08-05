@@ -80,6 +80,14 @@ Input: JSON array of pairs [{"q": "...", "a": "..."}, ...]
 JUDGE_EXTRA = {**engine.DISABLE_THINKING, "temperature": 0}
 
 
+def _judge_route(model, batch):
+    """Judge Route with output capped tight: a bare 0/1 array is ~2 tokens/pair, so cap
+    max_tokens near that (with margin). Keeps a runaway/ramble on a hard batch from
+    generating a full 8k-token response before it's discarded and the batch is split."""
+    return engine.Route(name="verify", system=SYSTEM, source=None, answer_fn=None,
+                        model=model, extra_body=JUDGE_EXTRA, max_tokens=max(64, batch * 8 + 64))
+
+
 def _pairs(row):
     """(question, answer) pairs for a row. For multiturn, each assistant turn paired with
     a question that carries the conversation so far as context."""
@@ -148,8 +156,7 @@ async def _judge_all(client, sem, route_cfg, items, batch, label):
 
 
 async def _run(items, model, batch_size, show):
-    route = engine.Route(name="verify", system=SYSTEM, source=None, answer_fn=None,
-                         model=model, extra_body=JUDGE_EXTRA)
+    route = _judge_route(model, batch_size)
     async with engine.open_client() as client:
         sem = asyncio.Semaphore(engine.CONCURRENCY)
         scored = await _judge_all(client, sem, route, items, batch_size, "judging")
@@ -193,8 +200,7 @@ async def _run_sanity(routes, model, batch, n, seed):
     perm = [p[3] for p in reals]
     random.Random(seed + 1).shuffle(perm)
     mism = [(r, di, q, a2) for (r, di, q, a), a2 in zip(reals, perm) if a2 != a]
-    route = engine.Route(name="verify", system=SYSTEM, source=None, answer_fn=None,
-                         model=model, extra_body=JUDGE_EXTRA)
+    route = _judge_route(model, batch)
     async with engine.open_client() as client:
         sem = asyncio.Semaphore(engine.CONCURRENCY)
         real_scored = await _judge_all(client, sem, route, reals, batch, "sanity real")
@@ -214,8 +220,7 @@ async def _run_filter(routes, model, batch, shard_size):
     rows to filtered/<route>/ on HF as uniform shards. Reads fresh (bypass cache) and
     processes route-by-route so completed routes are durable if interrupted."""
     from synth import hf_push
-    route_cfg = engine.Route(name="verify", system=SYSTEM, source=None, answer_fn=None,
-                             model=model, extra_body=JUDGE_EXTRA)
+    route_cfg = _judge_route(model, batch)
     async with engine.open_client() as client:
         sem = asyncio.Semaphore(engine.CONCURRENCY)
         for ri, route in enumerate(routes, 1):

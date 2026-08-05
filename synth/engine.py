@@ -349,7 +349,10 @@ async def _call(client, semaphore, route, system, payload, n):
                 if not text:
                     raise ValueError(f"empty response (finish={choice.get('finish_reason')})")
                 if choice.get("finish_reason") == "length":
-                    raise ValueError(f"truncated at max_tokens ({n} in batch)")
+                    # deterministic: retrying the identical request truncates again, and
+                    # it already burned a full max_tokens generation. Give up now — the
+                    # caller (e.g. verify) can split the batch and retry smaller.
+                    return None
                 return _parse_json_array(text)
             except json.JSONDecodeError as e:
                 if attempt == 4:
