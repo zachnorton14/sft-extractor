@@ -235,7 +235,7 @@ async def _run_sanity(routes, model, batch, char_budget, n, seed):
 async def _run_filter(routes, model, batch, char_budget, shard_size, force=False):
     """Full filter pass with INTRA-ROUTE checkpointing: judge every pair, DROP any row
     with a pair scored 0 (a whole multiturn conversation goes if any turn fails), and
-    write kept rows to filtered/<route>/ as uniform shards. Pair judgments are saved to
+    write kept rows to verified/<route>/ as uniform shards. Pair judgments are saved to
     synth/state/verify_<route>.json every ~2000 pairs, so a mid-route stop (out of credit,
     Ctrl-C) resumes where it left off instead of re-judging the whole route. The
     checkpoint is deleted once the route's filtered output is written. Reads fresh."""
@@ -243,13 +243,13 @@ async def _run_filter(routes, model, batch, char_budget, shard_size, force=False
     route_cfg = _judge_route(model, batch)
     done = {f.split("/")[1] for f in
             hf_push._api().list_repo_files(hf_push.HF_REPO, repo_type="dataset")
-            if f.startswith("filtered/") and f.endswith(".jsonl")}
+            if f.startswith("verified/") and f.endswith(".jsonl")}
     async with engine.open_client() as client:
         sem = asyncio.Semaphore(engine.CONCURRENCY)
         for ri, route in enumerate(routes, 1):
             tag = f"[{ri}/{len(routes)}] {route}"
             if route in done and not force:
-                print(f"{tag}: already filtered (filtered/{route}/), skipping", flush=True)
+                print(f"{tag}: already verified (verified/{route}/), skipping", flush=True)
                 continue
             print(f"{tag}: loading from HF...", flush=True)
             rows = _load_route(route, fresh=True)
@@ -287,12 +287,12 @@ async def _run_filter(routes, model, batch, char_budget, shard_size, force=False
 
             drop = {di for pk, di, q, a in items if scores.get(pk) == 0}
             kept = [row for row in rows if row.get("doc_index") not in drop]
-            print(f"  {tag}: writing filtered/{route}/ ...", flush=True)
-            _, nshards, _ = hf_push.write_sharded(f"filtered/{route}", kept, shard_size)
+            print(f"  {tag}: writing verified/{route}/ ...", flush=True)
+            _, nshards, _ = hf_push.write_sharded(f"verified/{route}", kept, shard_size)
             ckpt.unlink(missing_ok=True)     # route complete -> drop the checkpoint
             pct = 100 * len(drop) / max(1, len(rows))
             print(f"  {tag}: {len(rows):,} rows -> kept {len(kept):,} "
-                  f"(dropped {len(drop):,}, {pct:.1f}%)  -> filtered/{route}/ ({nshards} shards)\n",
+                  f"(dropped {len(drop):,}, {pct:.1f}%)  -> verified/{route}/ ({nshards} shards)\n",
                   flush=True)
 
 
@@ -308,9 +308,9 @@ def main():
     ap.add_argument("--sanity", type=int, default=0, metavar="N",
                     help="discrimination test on N real + N shuffled-answer pairs")
     ap.add_argument("--filter", action="store_true",
-                    help="FULL pass: judge everything, drop rows scored 0, write filtered/<route>/ to HF")
+                    help="FULL pass: judge everything, drop rows scored 0, write verified/<route>/ to HF")
     ap.add_argument("--shard-size", type=int, default=2000, help="rows per filtered shard")
-    ap.add_argument("--force", action="store_true", help="re-filter routes that already have filtered/ output")
+    ap.add_argument("--force", action="store_true", help="re-verify routes that already have verified/ output")
     args = ap.parse_args()
     routes = [args.route] if args.route else list(ROUTES)
     if args.sanity:

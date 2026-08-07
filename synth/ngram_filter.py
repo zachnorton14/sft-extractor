@@ -157,7 +157,7 @@ def _load_route(route, fresh=False):
     from huggingface_hub import hf_hub_download
     api = hf_push._api()
     shards = sorted(f for f in api.list_repo_files(hf_push.HF_REPO, repo_type="dataset")
-                    if f.startswith(f"{route}/") and f.endswith(".jsonl"))
+                    if f.startswith(f"unfiltered/{route}/") and f.endswith(".jsonl"))
     rows = []
     for f in shards:
         path = hf_hub_download(hf_push.HF_REPO, f, repo_type="dataset", force_download=fresh)
