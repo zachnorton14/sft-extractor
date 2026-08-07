@@ -1,8 +1,14 @@
 # sft-extractor
 
-Builds a supervised fine-tuning (SFT) dataset from public-domain textbooks and catechisms published before 1930. All source texts are from Internet Archive.
+Builds supervised fine-tuning (SFT) datasets of pre-1930s question-answer pairs. There are two independent pipelines:
 
-## Pipeline
+- **`authentic/`** — *extraction.* Parses real Q&A out of public-domain textbooks and catechisms (Internet Archive OCR) into clean conversations. Every word is genuinely period.
+- **`synth/`** — *generation.* Harvests excerpts from a pre-1930s pretraining corpus, routes them by task type, and generates new Q&A grounded in that period text. Scales far beyond the ~12k authentic pairs while keeping answers verbatim-period.
+- **`encoder/`** — experiments in *register detection* (Talkie-13B embeddings, stylometry) used to probe whether generated questions can be filtered for structural anachronism. See [Register filtering](#register--anachronism-filtering-encoder).
+
+Both pipelines run through `run.py` and share the same DeepSeek/OpenCode model backend.
+
+## Authentic pipeline — extraction (`authentic/`)
 
 ```
 authentic/data/*.txt
@@ -303,3 +309,85 @@ All model passes are resumable — progress is saved to state files (`.bleed_sta
 ## Domains
 
 27 source texts covering: world history, American history, natural science, chemistry, astronomy, botany, agriculture, engineering, electricity, steam engineering, grammar, logic, ethics, mythology, music theory, investment law, labor economics, constitutional law, New York bar examination, American civics, biblical interpretation, and literature.
+
+---
+
+# Synthetic pipeline — generation (`synth/`)
+
+Where the authentic pipeline is limited to what a few dozen scanned books happen to contain, the synthetic pipeline generates fresh Q&A from a large pre-1930s **pretraining corpus** (`jbduran/think-dataset` on Hugging Face). It scales to hundreds of thousands of pairs across many task types, while keeping the answers period-authentic by construction.
+
+```
+pretrain corpus (HF)
+  → run.py harvest        → synth/output/excerpts.jsonl      (candidate passages + metadata)
+  → run.py classify       → excerpts.jsonl (+ classes/primary) (model assigns task type)
+  → run.py <route>        → synth/output/<route>/*.json        (grounded Q&A per task type)
+```
+
+1. **Harvest** — stream documents from the corpus and cut out candidate passages. A cheap regex **affordance gate** (`synth/corpus.py`) is a high-recall net that tags each excerpt with a coarse form (`expository`, `argument`, `narrative`, …). Writes `excerpts.jsonl`, one JSON record per passage with metadata (LoC subject, year, title, `prose_score`, word count). `filter-pool` removes OCR-garbled passages by an `ocr_score` threshold.
+2. **Classify** — a model reads each excerpt and assigns one or more **route classes** from a fixed taxonomy (recall net → precision cut). Multi-label with a conviction bar; the highest-priority label becomes `primary`. Rare, specific classes claim an excerpt before elastic catch-alls, so a scarce class is never strip-mined by a general one. Priority order:
+
+   `stem_reasoning → how_to → verse → conversational → reasoning → narrative_grounded → narrative_fiction → opinion → knowledge → composition → drop`
+
+3. **Routes** — content-bound generators that turn typed excerpts into Q&A. All share one engine (`synth/engine.py`): sample excerpts → batch → one model call per batch → parse → verify → resumable state → write. A route is just a `Route` config (its system prompt, which classes it sources, how a model result becomes an answer).
+
+## The anachronism guarantee (extractive answers)
+
+The core design rule: **answers are verbatim spans of period text, never model-composed.** Each route lifts the answer as 1–2 exact quotations from the source excerpt (verified as literal substrings; spans join with an ellipsis). An answer built only from pre-1930s prose cannot contain a modern word or fact. Only the **question** is model-written (in period-schoolbook register, self-situating so it stands alone). This shifts the anachronism risk entirely onto the question phrasing, which is short and controllable — rather than onto the answer content.
+
+## Routes
+
+| Command | Route(s) | Sources classes | Question framing |
+|---|---|---|---|
+| `knowledge-qa` | knowledge_qa | knowledge | Expository fact → focused schoolbook question |
+| `reasoning-qa` | reasoning_qa | reasoning, knowledge, … | "Why/how does it follow" from a reasoning chain |
+| `stem-reasoning` | stem_reasoning | stem_reasoning | Quantitative/physical reasoning, **math verbalized** (see below) |
+| `narrative-qa` | narrative_grounded, narrative_fiction | narrative_* | Retell/comprehend a real episode, or read a fictional scene |
+| `composition-qa` | composition_qa | composition | Questions about a nameable prose form |
+| `how-to-qa` | how_to_qa | how_to | Procedure / method questions |
+| `opinion-qa` | opinion_qa | opinion | Argument / stance questions |
+| `verse-qa` | verse_qa | verse | Questions on poetry/verse passages |
+| `multiturn-qa` | multiturn_qa | knowledge | Chained follow-up questions (conversation) |
+| `calibration-qa` | calibration_qa | knowledge, reasoning, stem_reasoning, opinion, narrative_grounded | Mixed set for register/quality calibration |
+
+Each supports `--test` (print a small sample, no write), `--sample` (write a review dump under `synth/samples/`), `--size N`, and `--seed`.
+
+## Register & anachronism filtering (`encoder/`)
+
+Downstream filtering was investigated but **is not part of the shipping pipeline** — the extractive-answer design plus corpus OCR-cleaning already remove the bulk of anachronism. Two approaches were tested and their limits documented:
+
+- **Per-token loss filter** (`synth/anachronism_filter.py`) — scores each question by `delta_peak`, a vintage nanochat model's per-word bits-per-byte minus GPT-2's. Catches lexical/OOV anachronism but **falsely flags STEM** (math notation is out-of-distribution for the vintage corpus); mitigated by `synth/notation_mask.py` (`--mask`) and by **verbalizing math** in the stem prompt. On the generated dataset it failed to yield a usable threshold (the true anachronism base rate is too low). This work was split to a separate effort.
+- **Structural-register detection** (`encoder/`) — Talkie-13B sentence embeddings (`talkie_encoder.py`) and topic-blind **stylometry** (`stylometry.py`, `style_oneclass.py`) were used to test whether *structural* anachronism (modern syntax, all period-legal words) is detectable. Finding: the signal is genuinely faint on the two largest routes (knowledge, multiturn; register AUC ≈ 0.75 by any method), so an automated structural filter is not achievable there — the fix belongs on the generation side.
+
+## Synthetic usage
+
+```bash
+# 1. harvest candidate passages (resumable; --stem / --verse for targeted sweeps)
+python3 run.py harvest --total 100000
+python3 run.py filter-pool --threshold 0.15 --apply     # drop OCR-garbled passages
+
+# 2. classify excerpts into route types (resumable)
+python3 run.py classify
+python3 run.py classify --coverage                       # progress vs per-class targets
+
+# 3. generate a route (resumable; --test / --sample to preview)
+python3 run.py knowledge-qa --size 5000
+python3 run.py stem-reasoning --sample
+python3 run.py narrative-qa --size 5000
+```
+
+Model passes use OpenCode Go / DeepSeek; set `OPENCODE_API_KEY` (or `DS_API_KEY`) in the environment or `ROOT/.env`.
+
+## Synthetic output format
+
+Each route writes `synth/output/<route>/*.json`, rows carrying the Q&A plus source metadata:
+
+```json
+{
+  "doc_index": "61634", "category": "SCIENCE", "year": 1871,
+  "prose_score": 0.962,
+  "question": "Why are the trade winds so called?",
+  "answer": "Because ... they are very convenient to those who carry on trade ..."
+}
+```
+
+The full generated dataset is published at [`zachnorton03/synthetic-pre1930-sft`](https://huggingface.co/datasets/zachnorton03/synthetic-pre1930-sft), one folder per route.
