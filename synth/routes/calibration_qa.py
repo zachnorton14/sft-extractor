@@ -158,9 +158,11 @@ def source_excerpts(n, seed=0, **_):
     A prose floor removes the worst OCR cases before they consume generation calls.
     Requires `classify` write-back to have run.
     """
-    if n:
-        # Prefer the targeted overlay so reviews measure the new harvest rather than
-        # mostly re-sampling the older broad prose pool.
+    # Byte-offset sampling is ONLY for small previews — its probe budget scales with n
+    # (n*1000 for the overlay), so a full/large request must NOT use it (30k -> 30M
+    # probes would spin for many minutes). Above the preview size, do the full scan,
+    # which reads the corpus once and returns the whole qualifying pool.
+    if n and n <= 300:
         fast = _random_excerpts(n, seed, affordance="calibration")
         if len(fast) < n:
             fast += _random_excerpts(n - len(fast), seed + 1)
