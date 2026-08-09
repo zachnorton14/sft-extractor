@@ -92,16 +92,65 @@ Return EXACTLY as many values as there are input pairs, e.g. [1,1,0,1,0].
 Input: JSON array of pairs [{"q": "...", "a": "..."}, ...]
 """
 
+# The calibration route INVERTS the standard contract: its answers are supposed NOT to
+# answer (they say "it is not known"). The standard judge would score every one 0 and
+# drop the whole route, so calibration is graded on whether it is a VALID calibrated
+# non-answer instead.
+CALIB_SYSTEM = """\
+You are grading CALIBRATED-UNCERTAINTY pairs from pre-1930s books. Unlike ordinary Q/A,
+the ANSWER here is SUPPOSED to decline — to state that the fact is not known, cannot be
+determined, is disputed, or is unsettled. Judge whether each pair is a VALID calibrated
+non-answer.
+
+Mark 1 (keep) only if ALL hold:
+  - The QUESTION asks a definite factual point (a cause, date, name, number, identity, or
+    outcome), as though a definite answer were expected.
+  - The ANSWER genuinely states that THAT point is not known / not determinable /
+    disputed / unsettled — an honest non-answer to exactly what was asked.
+  - The not-knowing is the SUBSTANCE of the answer and concerns the question's point.
+
+Mark 0 (drop) if ANY hold:
+  - The answer actually SUPPLIES the fact (it answers) — it is not a non-answer.
+  - The uncertainty is incidental or off-topic: the answer really states other facts and
+    only mentions "not known" in passing (e.g. lists works with a parenthetical "a work
+    not known"), or expresses mere personal opinion/hesitation.
+  - The answer's not-knowing is about a DIFFERENT point than the question asks (mismatch:
+    e.g. question asks a person's name, answer says his private history is little known).
+  - The question is not a definite factual question, or does not stand alone (bare "this
+    relief", "the factor in question").
+
+Do NOT fact-check against modern knowledge. Do NOT judge style or era.
+
+Study these examples:
+  Q: "What is the cause of the disease?"  A: "The cause of the disease is not known." -> 1
+  Q: "What were the most valuable works?"  A: "The libraries could supply nothing more
+     valuable than an Antiphonale, a Responsale, and a Grammatica (a work not known)." -> 0
+     (it lists the works; the hedge is incidental)
+  Q: "What was Partridge's real name?"  A: "Little is known of Partridge's private
+     history." -> 0 (non-answer about a different point than the name asked)
+  Q: "How many men fell?"  A: "Five hundred men fell in the assault." -> 0 (it answers)
+
+Output ONLY a bare JSON array of 0/1 — one per pair, in order, nothing else. e.g. [1,0,1]
+Input: JSON array of pairs [{"q": "...", "a": "..."}, ...]
+"""
+
+
+def _system_for(route):
+    """The judge prompt for a route: the calibrated-non-answer grader for calibration,
+    the ordinary 'does the answer answer it' grader for everything else."""
+    return CALIB_SYSTEM if route == "calibration_qa" else SYSTEM
+
+
 # Judge should be deterministic: temperature 0. (extra_body merges into the request; for
 # DeepSeek DISABLE_THINKING is empty, for opencode it carries the thinking-off flag.)
 JUDGE_EXTRA = {**engine.DISABLE_THINKING, "temperature": 0}
 
 
-def _judge_route(model, batch):
+def _judge_route(model, batch, system=SYSTEM):
     """Judge Route with output capped tight: a bare 0/1 array is ~2 tokens/pair, so cap
     max_tokens near that (with margin). Keeps a runaway/ramble on a hard batch from
     generating a full 8k-token response before it's discarded and the batch is split."""
-    return engine.Route(name="verify", system=SYSTEM, source=None, answer_fn=None,
+    return engine.Route(name="verify", system=system, source=None, answer_fn=None,
                         model=model, extra_body=JUDGE_EXTRA, max_tokens=max(64, batch * 8 + 64))
 
 
@@ -140,7 +189,7 @@ async def _judge(client, sem, route, batch):
     drift), split the batch and re-judge so large batches stay safe. Singletons that
     still fail are dropped (left unjudged)."""
     payload = json.dumps([{"q": p[2], "a": p[3]} for p in batch])
-    parsed = await engine._call(client, sem, route, SYSTEM, payload, len(batch))
+    parsed = await engine._call(client, sem, route, route.system, payload, len(batch))
     if (isinstance(parsed, list) and len(parsed) == len(batch)
             and all(v in (0, 1, True, False) for v in parsed)):
         return [(*p, int(v)) for p, v in zip(batch, parsed)]
@@ -173,8 +222,8 @@ async def _judge_all(client, sem, route_cfg, items, char_budget, max_pairs, labe
     return out
 
 
-async def _run(items, model, batch_size, char_budget, show):
-    route = _judge_route(model, batch_size)
+async def _run(items, model, batch_size, char_budget, show, system=SYSTEM):
+    route = _judge_route(model, batch_size, system)
     async with engine.open_client() as client:
         sem = asyncio.Semaphore(engine.CONCURRENCY)
         scored = await _judge_all(client, sem, route, items, char_budget, batch_size, "judging")
@@ -218,7 +267,7 @@ async def _run_sanity(routes, model, batch, char_budget, n, seed):
     perm = [p[3] for p in reals]
     random.Random(seed + 1).shuffle(perm)
     mism = [(r, di, q, a2) for (r, di, q, a), a2 in zip(reals, perm) if a2 != a]
-    route = _judge_route(model, batch)
+    route = _judge_route(model, batch, _system_for(routes[0]) if len(routes) == 1 else SYSTEM)
     async with engine.open_client() as client:
         sem = asyncio.Semaphore(engine.CONCURRENCY)
         real_scored = await _judge_all(client, sem, route, reals, char_budget, batch, "sanity real")
@@ -240,13 +289,13 @@ async def _run_filter(routes, model, batch, char_budget, shard_size, force=False
     Ctrl-C) resumes where it left off instead of re-judging the whole route. The
     checkpoint is deleted once the route's filtered output is written. Reads fresh."""
     from synth import hf_push
-    route_cfg = _judge_route(model, batch)
     done = {f.split("/")[1] for f in
             hf_push._api().list_repo_files(hf_push.HF_REPO, repo_type="dataset")
             if f.startswith("verified/") and f.endswith(".jsonl")}
     async with engine.open_client() as client:
         sem = asyncio.Semaphore(engine.CONCURRENCY)
         for ri, route in enumerate(routes, 1):
+            route_cfg = _judge_route(model, batch, _system_for(route))   # calib gets its own grader
             tag = f"[{ri}/{len(routes)}] {route}"
             if route in done and not force:
                 print(f"{tag}: already verified (verified/{route}/), skipping", flush=True)
@@ -321,7 +370,8 @@ def main():
         return
     items = _collect(routes, args.sample, args.seed)
     print(f"collected {len(items):,} pairs from {len(routes)} route(s); judging (batch={args.batch})...")
-    asyncio.run(_run(items, args.model, args.batch, args.char_budget, args.show))
+    sysprompt = _system_for(args.route) if args.route else SYSTEM
+    asyncio.run(_run(items, args.model, args.batch, args.char_budget, args.show, sysprompt))
 
 
 if __name__ == "__main__":
