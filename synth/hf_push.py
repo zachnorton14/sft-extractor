@@ -55,15 +55,15 @@ def _api():
 
 
 def push_shard(route_name, rows, repo=HF_REPO):
-    """Upload `rows` as a NEW timestamped JSONL shard under <route_name>/ on the HF
-    dataset repo (one compact row per line), so a long run commits incrementally without
-    re-uploading prior shards. Each call is one commit of one part-file; HF load_dataset
-    globs <route_name>/*.jsonl. Returns the repo path. Creates the repo if missing."""
+    """Upload `rows` as a NEW timestamped JSONL shard under unfiltered/<route_name>/ on
+    the HF dataset repo (raw generation output; the verify filter reads from there and
+    writes verified/<route_name>/). Commits incrementally without re-uploading prior
+    shards. Returns the repo path. Creates the repo if missing."""
     from datetime import datetime, timezone
     api = _api()
     api.create_repo(repo_id=repo, repo_type=HF_REPO_TYPE, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")
-    path_in_repo = f"{route_name}/part-{stamp}.jsonl"
+    path_in_repo = f"unfiltered/{route_name}/part-{stamp}.jsonl"
     data = ("\n".join(json.dumps(r, ensure_ascii=False) for r in rows) + "\n").encode("utf-8")
     api.upload_file(
         path_or_fileobj=io.BytesIO(data),
