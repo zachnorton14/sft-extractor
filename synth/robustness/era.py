@@ -1,18 +1,16 @@
-"""Context rows: what the model should say about when and what it is.
+"""Era rows: what year the model thinks it is.
 
-Three things a visitor asks within the first few turns that nothing in the graded
-routes covers:
+The year is the one piece of context it demonstrably gets wrong, so it carries the
+route -- roughly two thirds of the rows -- in both the numeral and the written-out
+spelling.
 
-  what year is it        -> nineteen hundred and thirty, in both spellings
-  are you an AI          -> the term is unfamiliar; ask what it means, claim nothing
-  have you seen <thing>  -> a mix of plain ignorance and honest curiosity
+Identity ("are you an AI"), anachronisms and place are present at token weight
+only. The system prompt already instructs on all three, and the deflection rows in
+unparseable_qa teach the shape of "I do not know that", so a handful here anchors
+the behaviour without spending the route re-teaching what is already covered.
 
-The anachronism stance is deliberately mixed rather than uniform. Always-curious
-reads as credulous and invites the model to spin; always-cold reads as a wall and
-kills the conversation. Roughly half of each gives it both moves.
-
-Nothing here commits to a country. The persona is "a private person" who need not
-give particulars, and an uncommitted row stays valid whichever way that is later
+Nothing commits to a country. The persona is "a private person" who need not give
+particulars, and an uncommitted row stays valid whichever way that is later
 decided -- a row that says "England" does not.
 
     python -m synth.robustness.era --count 30 --preview
@@ -37,6 +35,9 @@ DATE_Q = [
     "What is the date", "What's today's date", "What is present day",
     "What day is it", "What is the present year", "Tell me the year",
     "What century is it", "How do you date the present year",
+    "what year is it", "What's the current year", "Which year is this",
+    "Do you know what year it is", "What year do you take it to be",
+    "Remind me of the year", "In what year are we",
 ]
 # Both spellings on purpose: the tokenizer splits digits into 19 + 30, so the
 # written-out form and the numeral are different sequences and both should map to
@@ -47,6 +48,9 @@ DATE_A = [
     "The year is 1930.", "Nineteen thirty.",
     "We are in nineteen hundred and thirty.",
     "Nineteen hundred and thirty -- the twentieth century, and a third of it gone.",
+    "Eighteen thirty? No -- nineteen hundred and thirty.",
+    "This is the year nineteen hundred and thirty.",
+    "1930, and well into it.",
 ]
 
 # Two different questions wear the same clothes here, and they need different
@@ -157,7 +161,12 @@ def build_rows(count, seed=1930):
     pool = load_pool()
     rng = random.Random(f"robustness:{ROUTE}:{seed}")
     kinds = ["date", "identity", "anachronism", "location"]
-    weights = [26, 24, 38, 12]
+    # The year is the one the model actually gets wrong, so it carries the route.
+    # Identity, anachronisms and place are left in at token weight only: the system
+    # prompt already instructs on all three, and the curriculum plus the deflection
+    # rows cover the shape of "I do not know that". A handful of rows anchors the
+    # behaviour without spending the route on questions that are already handled.
+    weights = [72, 11, 11, 6]
     rows, seen = [], set()
     attempts = 0
     while len(rows) < count and attempts < count * 60:
@@ -196,7 +205,7 @@ def build_rows(count, seed=1930):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--count", type=int, default=350)
+    ap.add_argument("--count", type=int, default=220)
     ap.add_argument("--seed", type=int, default=1930)
     ap.add_argument("--preview", action="store_true")
     args = ap.parse_args()
