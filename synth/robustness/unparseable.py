@@ -34,12 +34,28 @@ _KEY_ROWS = ("qwertyuiop", "asdfghjkl", "zxcvbnm")
 _CONSONANTS = "bcdfghjklmnpqrstvwxz"
 _VOWELS = "aeiou"
 
-# Sentence openers cut mid-clause: input that is well-formed but simply unfinished.
-_FRAGMENT_OPENERS = (
-    "the man who", "and then the", "if it were", "when she had", "but the other",
-    "there was no", "he said that", "it is the", "in the year", "of all the",
-    "after they had", "though it may", "she could not", "what with the",
-)
+FRAGMENT_FILE = Path(__file__).resolve().parent / "fragment_pool.json"
+_FRAGMENTS = None
+
+
+def _fragment_sources():
+    """Real period sentences, truncated at generation time.
+
+    Hand-written openers saturate (there are only ever as many rows as openers) and
+    are inventions rather than corpus text. Cutting genuine sentences is unbounded
+    and authentic -- and a real question stopped mid-way is the input most likely to
+    look like book prose to continue, which is the failure being trained out.
+    """
+    global _FRAGMENTS
+    if _FRAGMENTS is None:
+        if not FRAGMENT_FILE.exists():
+            raise SystemExit(
+                f"{FRAGMENT_FILE.name} missing -- run: "
+                "python -m synth.robustness.mine --fragments 2500"
+            )
+        pool = json.loads(FRAGMENT_FILE.read_text(encoding="utf-8"))
+        _FRAGMENTS = (pool.get("question") or [], pool.get("statement") or [])
+    return _FRAGMENTS
 
 
 def _consonant_run(rng):
@@ -69,7 +85,14 @@ def _single_nonword(rng):
 
 
 def _fragment(rng):
-    return rng.choice(_FRAGMENT_OPENERS)
+    """A genuine period sentence cut off at a random word boundary."""
+    questions, statements = _fragment_sources()
+    pool = questions if (questions and rng.random() < 0.65) else (statements or questions)
+    words = rng.choice(pool).split()
+    # Leave at least two words, and always drop at least two, so the result reads as
+    # unmistakably unfinished rather than as a short but complete thought.
+    cut = rng.randint(2, max(2, min(len(words) - 2, 9)))
+    return " ".join(words[:cut]).rstrip(",;:")
 
 
 def _bare_punctuation(rng):

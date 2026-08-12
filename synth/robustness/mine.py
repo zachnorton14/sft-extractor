@@ -19,6 +19,7 @@ so the generator composes them combinatorially rather than using them as whole a
 
 import argparse
 import collections
+import random
 import json
 import re
 from pathlib import Path
@@ -26,6 +27,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 EXCERPTS = ROOT / "synth" / "output" / "excerpts.jsonl"
 POOL_FILE = Path(__file__).resolve().parent / "deflection_pool.json"
+FRAGMENT_FILE = Path(__file__).resolve().parent / "fragment_pool.json"
+
+# Whole sentences kept intact; the generator truncates them at a random word boundary
+# so the cut varies with its own seed rather than being frozen here. Real period
+# sentences beat hand-written openers: unbounded, and authentically of the corpus.
+_SENT_SPLIT = re.compile(r"(?<=[.!?])\s+(?=[A-Z])")
+_SENT_OK = re.compile(r"^[A-Z][A-Za-z0-9 ,;'\"()-]+[.!?]$")
+_INTERROGATIVE = re.compile(r"^(?:what|who|why|how|when|where|which|is|are|do|does|did|can|could|would|shall|should|has|have)\b", re.IGNORECASE)
 
 # Clauses that say "I did not understand you", with no complement attached.
 DEFLECTION = re.compile(
@@ -83,15 +92,39 @@ BLOCKLIST = {
     "explain yourself",  # a challenge in period usage; wrong tone for the persona
     "i am no scholar",   # means "not qualified to judge", not "did not understand you"
     "i am no judge",     # same
+    # Archaic for a 1930 speaker. Note these cannot be filtered by the excerpt's
+    # `year`: "good morrow" is MORE frequent in 1900s-published books than in
+    # 1800s ones, because publication year does not track register -- the corpus
+    # carries reprints and historical fiction that are deliberately archaic. At
+    # pool sizes of 10-40 clauses, curation is the reliable filter.
+    "good morrow", "good morrow, sir", "good morrow, madam",
+    "adieu", "how d'ye do", "prithee, speak plainly",
+}
+
+
+# Social register. The graded routes are all question-and-answer, so nothing in them
+# teaches the model what to do when a visitor simply says "Hello". Period dialogue is
+# full of these exchanges; the same context-free rule applies, with generic vocatives
+# (sir, madam) allowed since they carry no specific referent.
+_VOC = r"(?:,? (?:sir|madam|ma'am|my dear sir|my dear madam|my friend))?"
+SOCIAL = {
+    "greeting": rf"\b((?:good (?:morning|day|evening|afternoon)|how do you do|well met){_VOC})\b",
+    "wellbeing": r"\b((?:very well,? thank you|quite well,? thank you|tolerably well|pretty well|well enough|i am very well|i am quite well|never better))\b",
+    "farewell": rf"\b((?:good[- ]bye|good night|farewell|good day to you){_VOC})\b",
+    "thanks_reply": r"\b((?:not at all|don't mention it|do not mention it|you are very welcome|you are welcome|with pleasure|by all means))\b",
+    "acknowledge": r"\b((?:i see|indeed|just so|quite so|to be sure|very true|no doubt|so it is))\b",
+    "pleased": r"\b((?:i am glad to see you|glad to see you|i am happy to see you|delighted to see you|it is good to see you))\b",
+    "invite_on": r"\b((?:pray be seated|pray sit down|do sit down|take a chair|pray come in|pray go on|pray continue|go on|say on))\b",
 }
 
 
 def _harvest(limit_bytes=0):
-    """Stream excerpts, returning Counters of context-free deflection/invitation clauses."""
+    """Stream excerpts, returning Counters of context-free clauses per category."""
     if not EXCERPTS.exists():
         raise SystemExit(f"corpus not found: {EXCERPTS}")
-    found = {"deflection": collections.Counter(), "invitation": collections.Counter()}
-    patterns = (("deflection", DEFLECTION), ("invitation", INVITATION))
+    patterns = [("deflection", DEFLECTION), ("invitation", INVITATION)]
+    patterns += [(name, re.compile(rx, re.IGNORECASE)) for name, rx in SOCIAL.items()]
+    found = {name: collections.Counter() for name, _ in patterns}
     read = rows = 0
     with open(EXCERPTS, encoding="utf-8", errors="replace") as fh:
         for line in fh:
@@ -111,13 +144,61 @@ def _harvest(limit_bytes=0):
     return found, read, rows
 
 
+def harvest_fragments(want, limit_bytes, seed=1930):
+    """Collect whole period sentences for the generator to truncate.
+
+    Only a sample is needed, so this reads a slice rather than the whole corpus.
+    Interrogatives are kept preferentially: a question cut mid-way ("What is the
+    reason that the") is the input most likely to read as book text stopped
+    mid-sentence, which is exactly the case that triggers base-model continuation.
+    """
+    rng = random.Random(f"fragments:{seed}")
+    questions, statements = [], []
+    read = 0
+    with open(EXCERPTS, encoding="utf-8", errors="replace") as fh:
+        for line in fh:
+            read += len(line)
+            if limit_bytes and read > limit_bytes:
+                break
+            if len(questions) >= want and len(statements) >= want:
+                break
+            try:
+                text = json.loads(line).get("excerpt") or ""
+            except Exception:
+                continue
+            for sent in _SENT_SPLIT.split(text):
+                sent = " ".join(sent.split())
+                n = len(sent.split())
+                if not (6 <= n <= 22) or not _SENT_OK.match(sent):
+                    continue
+                bucket = questions if _INTERROGATIVE.match(sent) else statements
+                if len(bucket) < want and rng.random() < 0.5:
+                    bucket.append(sent)
+    return {"question": questions, "statement": statements}
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--scan-bytes", type=float, default=0,
                     help="stop after N bytes (0 = whole corpus)")
+    ap.add_argument("--fragments", type=int, default=0,
+                    help="harvest N sentences per kind into fragment_pool.json and exit")
+    ap.add_argument("--fragment-bytes", type=float, default=250e6,
+                    help="corpus slice to sample fragments from")
     ap.add_argument("--min-count", type=int, default=1,
                     help="drop clauses seen fewer than this many times")
     args = ap.parse_args()
+
+    if args.fragments:
+        pool = harvest_fragments(args.fragments, int(args.fragment_bytes))
+        FRAGMENT_FILE.write_text(json.dumps(pool, indent=1) + "\n", encoding="utf-8")
+        print(f"questions: {len(pool['question']):,}  statements: {len(pool['statement']):,}")
+        for s in pool["question"][:4]:
+            print(f"  Q  {s}")
+        for s in pool["statement"][:3]:
+            print(f"  S  {s}")
+        print(f"\nwrote {FRAGMENT_FILE}")
+        return
 
     found, read, rows = _harvest(int(args.scan_bytes))
     pool = {
@@ -128,11 +209,10 @@ def main():
     POOL_FILE.write_text(json.dumps(pool, indent=2) + "\n", encoding="utf-8")
 
     print(f"scanned {read/1e6:.0f} MB, {rows:,} excerpts")
-    for kind in ("deflection", "invitation"):
-        entries = pool[kind]
+    for kind, entries in pool.items():
         print(f"\n{kind}: {len(entries)} distinct, {sum(entries.values()):,} occurrences")
-        for clause, n in list(entries.items())[:15]:
-            print(f"  {n:5,}  {clause}")
+        for clause, n in list(entries.items())[:12]:
+            print(f"  {n:6,}  {clause}")
     print(f"\nwrote {POOL_FILE}")
 
 

@@ -41,5 +41,89 @@
     "put it another way": 7,
     "tell me plainly": 5,
     "try me again": 1
+  },
+  "greeting": {
+    "good morning": 258,
+    "good day": 175,
+    "how do you do": 154,
+    "good evening": 114,
+    "well met": 45,
+    "good afternoon": 25,
+    "good morning, sir": 18,
+    "how do you do, sir": 13,
+    "good day, sir": 9,
+    "good evening, sir": 3,
+    "good evening, madam": 3,
+    "good day, my friend": 2,
+    "good morning, ma'am": 2,
+    "good day, madam": 1,
+    "good morning, madam": 1,
+    "how do you do, madam": 1,
+    "how do you do, my friend": 1,
+    "how do you do, ma'am": 1
+  },
+  "wellbeing": {
+    "well enough": 356,
+    "pretty well": 218,
+    "tolerably well": 75,
+    "never better": 13,
+    "very well, thank you": 12,
+    "i am quite well": 12,
+    "i am very well": 10,
+    "quite well, thank you": 2
+  },
+  "farewell": {
+    "farewell": 2047,
+    "good night": 644,
+    "good-bye": 557,
+    "good bye": 93,
+    "good night, sir": 7,
+    "farewell, sir": 6,
+    "good day to you": 5,
+    "farewell, my friend": 4,
+    "good day to you, sir": 3,
+    "good-bye, sir": 2,
+    "farewell, madam": 1,
+    "good night, madam": 1,
+    "good bye, sir": 1,
+    "good night, ma'am": 1
+  },
+  "thanks_reply": {
+    "not at all": 753,
+    "with pleasure": 479,
+    "by all means": 259,
+    "you are welcome": 52,
+    "don't mention it": 28,
+    "you are very welcome": 4,
+    "do not mention it": 2,
+    "with plea\u017fure": 2
+  },
+  "acknowledge": {
+    "indeed": 21612,
+    "no doubt": 3660,
+    "to be sure": 1412,
+    "i see": 1207,
+    "very true": 309,
+    "so it is": 215,
+    "just so": 184,
+    "quite so": 99
+  },
+  "pleased": {
+    "glad to see you": 135,
+    "i am glad to see you": 40,
+    "delighted to see you": 27,
+    "i am happy to see you": 4,
+    "it is good to see you": 1
+  },
+  "invite_on": {
+    "go on": 1274,
+    "say on": 56,
+    "take a chair": 14,
+    "pray be seated": 12,
+    "pray sit down": 8,
+    "do sit down": 7,
+    "pray go on": 6,
+    "pray come in": 6,
+    "pray continue": 1
   }
 }
