@@ -209,6 +209,7 @@ HARVEST_STATE = ROOT / "synth" / "state" / "harvest.json"
 STEM_HARVEST_STATE = ROOT / "synth" / "state" / "harvest_stem.json"
 VERSE_HARVEST_STATE = ROOT / "synth" / "state" / "harvest_verse.json"
 CONVERSATIONAL_HARVEST_STATE = ROOT / "synth" / "state" / "harvest_conversational.json"
+CALIBRATION_HARVEST_STATE = ROOT / "synth" / "state" / "harvest_calibration.json"
 
 
 def load_excerpts(affordance=None, cls=None, min_prose=0.0, drop_broken_math=False):
@@ -671,6 +672,20 @@ def harvest_conversational(target, per_doc=6, seed=0, max_shards=N_SHARDS):
                             CONVERSATIONAL_HARVEST_STATE, seed=seed, max_shards=max_shards)
 
 
+def harvest_calibration(target, seed=0, min_conf=0.7, max_shards=N_SHARDS):
+    """Targeted calibration overlay around factual non-answer language.
+
+    It sweeps all well-labeled subject classes because refusals occur in history, law,
+    science, medicine, and philosophy alike. Sentence-centered windows are appended to
+    the shared excerpt pool and then must go through the normal classifier write-back.
+    """
+    return _harvest_overlay(
+        "calibration", "ca", calibration_windows, LOC_CLASSES, target,
+        CALIBRATION_HARVEST_STATE, min_conf=min_conf, seed=seed,
+        max_shards=max_shards,
+    )
+
+
 def sample_documents(n, seed=0):
     """Return up to n (text, meta) pairs drawn from random shards.
 
@@ -902,31 +917,117 @@ def has_broken_math(text):
     return bool(_BROKEN_MATH.search(text))
 
 
-# Period expressions of epistemic uncertainty — the calibration route sources passages
-# that contain one, so the verbatim answer can be the author's own "it is not known".
-_HEDGE_PHRASES = [
+# Period expressions of epistemic uncertainty.  Calibration needs a stricter signal
+# than a generic hedge: "an unknown quantity" or "uncertain light" is not a refusal,
+# and "inclined to believe" belongs to the opinion route.  Keep this list focused on
+# claims that the source cannot settle a factual point.
+_CALIBRATION_HEDGE_PHRASES = [
     r"not (?:certainly |precisely |exactly |yet )?known",
-    r"(?:is|are|remains?|was|were) (?:still |yet |as yet )?(?:unknown|uncertain|obscure|doubtful|conjectural|unsettled|undetermined|unascertained)",
+    r"(?:is|are|remains?|was|were) (?:still |yet |as yet )?(?:unknown|obscure|unsettled|undetermined|unascertained)",
     r"cannot (?:be |now be )?(?:known|determined|ascertained|decided|explained|said)",
     r"(?:authorities|opinions|writers|physicians|naturalists|historians|philosophers|critics) (?:differ|are divided|are at variance)",
-    r"(?:a )?matter of (?:conjecture|dispute|doubt|opinion|uncertainty)",
+    r"(?:a )?matter of (?:conjecture|dispute|doubt|uncertainty)",
     r"open to (?:doubt|dispute|question)",
     r"little is (?:certainly )?known",
-    r"we (?:are (?:wholly |as yet )?ignorant|do not know|cannot (?:say|tell|determine))",
+    r"(?:we|I) (?:are (?:wholly |as yet )?ignorant|do not know|cannot (?:say|tell|determine))",
     r"no one (?:knows|can tell)",
     r"impossible to (?:say|determine|ascertain|decide|know)",
-    r"difficult to (?:say|determine|decide)",
+    r"(?:difficult|not easy) to (?:say|determine|decide)",
     r"remains? (?:a )?(?:mystery|secret)",
     r"has not (?:yet |as yet )?been (?:determined|ascertained|explained|discovered|settled)",
+    r"(?:the )?(?:date|year|name|record|account) (?:is|was) lost",
+    r"(?:no|not any) (?:record|account|evidence) (?:exists|remains|survives|can be found)",
+    r"(?:no record|no account) (?:has been|is|was) (?:found|preserved|left|kept)",
+    r"(?:the )?(?:record|account|evidence) (?:is|was) (?:wanting|insufficient)",
+    r"(?:we|I) have no means of (?:knowing|determining|ascertaining|deciding)",
+    r"(?:not|never) recorded",
+    r"cannot safely be affirmed",
+    r"(?:idle|vain) to (?:conjecture|speculate)",
+    r"(?:we|I) (?:refrain|forbear) from (?:conjecture|speculation)",
+    r"beyond (?:our|human) (?:knowledge|ken)",
+    r"(?:is|are|remains?|was|were) (?:still |yet |as yet )?doubtful",
     r"in (?:doubt|dispute)",
 ]
-_HEDGE = re.compile(r"\b(?:" + "|".join(_HEDGE_PHRASES) + r")\b", re.I)
+_CALIBRATION_HEDGE = re.compile(
+    r"\b(?:" + "|".join(_CALIBRATION_HEDGE_PHRASES) + r")\b", re.I
+)
+_NON_EPISTEMIC_UNKNOWN = re.compile(
+    r"\b(?:unknown|uncertain)\s+(?:quantity|quantities|resistance|factor|contingenc(?:y|ies)|light|grave|friend|to\s+our\s+forefathers)\b|"
+    r"\b(?:residence|holder|party|parties|person|object|thing|position|place)[^.]{0,90}\bis unknown\b",
+    re.I,
+)
+
+
+def has_calibration_hedge(text):
+    """True when text contains a factual non-answer suitable for calibration."""
+    if not _CALIBRATION_HEDGE.search(text):
+        return False
+    return not _NON_EPISTEMIC_UNKNOWN.search(text)
 
 
 def has_hedge(text):
-    """True if the span states that something is not known / doubtful / disputed — the
-    calibration route's source signal."""
-    return bool(_HEDGE.search(text))
+    """Backward-compatible alias for the calibration source predicate."""
+    return has_calibration_hedge(text)
+
+
+# High-recall anchors for the calibration harvest. The answer-level predicate above
+# remains the precision gate; these phrases decide which sentence neighborhoods are
+# worth materializing in the first place.
+_CALIBRATION_HARVEST_ANCHOR = re.compile(
+    r"\b(?:not known|unknown|cannot be known|cannot be determined|cannot be ascertained|"
+    r"cannot say|no one knows|little is known|remains obscure|not settled|unsettled|"
+    r"in dispute|matter of (?:conjecture|dispute|doubt)|authorities (?:differ|are divided)|"
+    r"opinions (?:differ|are divided)|no record|no account|record is lost|account is lost|"
+    r"date is lost|year is lost|name is lost|not recorded|never recorded|no means of|"
+    r"impossible to (?:say|determine|ascertain)|difficult to (?:say|determine)|"
+    r"not easy to (?:say|determine)|idle to (?:conjecture|speculate)|"
+    r"refrain from (?:conjecture|speculation)|cannot safely be affirmed|beyond .*?knowledge)\b",
+    re.I,
+)
+
+
+def calibration_windows(text, rng=None, k=8, n_words=260):
+    """Return sentence-centered neighborhoods around factual non-answer anchors.
+
+    Unlike general random prose windows, these keep the hedge sentence plus nearby
+    context so the downstream question writer can identify the unresolved subject.
+    The classifier still decides the final route class; this is a recall overlay only.
+    """
+    sents = _split_sentences(strip_lines(text))
+    if not sents:
+        return []
+    lo = min(len(sents) // 10, len(sents) - 1)
+    anchors = [
+        i for i, s in enumerate(sents)
+        if i >= lo and _CALIBRATION_HARVEST_ANCHOR.search(s)
+        and has_calibration_hedge(s)
+    ]
+    if rng:
+        rng.shuffle(anchors)
+    out, used = [], []
+    for i in anchors:
+        if len(out) >= k:
+            break
+        start = max(lo, i - 2)
+        end = min(len(sents), i + 3)
+        # Pull back one more sentence when the context begins with a dangling reference.
+        while start > lo and not is_self_contained(sents[start]):
+            start -= 1
+        if any(start < ue and end > us for us, ue in used):
+            continue
+        ex = " ".join(sents[start:end])
+        if len(ex.split()) > n_words:
+            # The anchor and one neighboring sentence are the useful minimum context.
+            start = max(lo, i - 1)
+            end = min(len(sents), i + 2)
+            ex = " ".join(sents[start:end])
+        if (not is_self_contained(ex) or not has_affordance(ex) or is_garbage(ex)
+                or region_quality(ex)[0] < 0.70
+                or not has_calibration_hedge(ex)):
+            continue
+        used.append((start, end))
+        out.append((ex, round(region_quality(ex)[0], 3)))
+    return out
 
 
 def _first_word(text):

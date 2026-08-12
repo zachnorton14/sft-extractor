@@ -32,7 +32,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 ROUTES = ["knowledge_qa", "reasoning_qa", "narrative_grounded", "narrative_fiction",
-          "composition_qa", "how_to_qa", "opinion_qa", "verse_qa", "multiturn_qa"]
+          "composition_qa", "how_to_qa", "opinion_qa", "verse_qa", "multiturn_qa",
+          "calibration_qa"]
 TEXT_FIELDS = ("question", "answer", "content")
 
 # Vocab-absent -> vocab-present. Every replacement below was checked against the

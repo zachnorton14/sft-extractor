@@ -254,6 +254,11 @@ def cmd_harvest(args):
         target = float("inf") if args.exhaust else args.total
         corpus.harvest_verse(target, seed=args.seed, max_shards=args.max_shards)
         return
+    if args.calibration:
+        target = float("inf") if args.exhaust else args.total
+        corpus.harvest_calibration(target, seed=args.seed, min_conf=args.min_conf,
+                                    max_shards=args.max_shards)
+        return
     corpus.harvest(args.total, alpha=args.alpha, min_conf=args.min_conf,
                    n_words=args.words, per_doc=args.per_doc, seed=args.seed,
                    max_shards=args.max_shards)
@@ -601,6 +606,8 @@ def main():
                            "excerpts.jsonl via multi-window (uses --total as the STEM target)")
     p_hv.add_argument("--verse", action="store_true",
                       help="targeted verse overlay: line-based windows from poetry/hymn books")
+    p_hv.add_argument("--calibration", action="store_true",
+                      help="targeted calibration overlay: sentence windows around factual non-answers")
     p_hv.add_argument("--exhaust", action="store_true",
                       help="with --stem/--verse: ignore the count target "
                            "and sweep ALL remaining shards, filling the bucket to the brim")

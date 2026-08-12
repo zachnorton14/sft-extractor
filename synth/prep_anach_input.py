@@ -19,7 +19,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 HF_REPO = "zachnorton03/synthetic-pre1930-sft"
 ROUTES = ["knowledge_qa", "reasoning_qa", "narrative_grounded", "narrative_fiction",
-          "composition_qa", "how_to_qa", "opinion_qa", "verse_qa", "multiturn_qa"]
+          "composition_qa", "how_to_qa", "opinion_qa", "verse_qa", "multiturn_qa",
+          "calibration_qa"]
 
 
 def download(routes, cache):

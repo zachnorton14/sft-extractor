@@ -2,3 +2,6 @@ output/
 .*
 __pycache__/
 state/
+*/samples/
+out/
+analysis/

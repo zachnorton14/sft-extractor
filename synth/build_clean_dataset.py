@@ -26,11 +26,12 @@ import json
 import argparse
 from pathlib import Path
 
-from synth.ocr_corruption import corruption_report, join_hyphen_breaks
+from synth.ocr_corruption import corruption_report, repair_hyphenation, unrepairable_hyphen
 
 ROOT = Path(__file__).resolve().parent.parent
 ROUTES = ["knowledge_qa", "reasoning_qa", "narrative_grounded", "narrative_fiction",
-          "composition_qa", "how_to_qa", "opinion_qa", "verse_qa", "multiturn_qa"]
+          "composition_qa", "how_to_qa", "opinion_qa", "verse_qa", "multiturn_qa",
+          "calibration_qa"]
 
 
 def _rows(path):
@@ -50,8 +51,10 @@ def process(row):
 
     def handle(text):
         nonlocal joined
-        text, j, _ = join_hyphen_breaks(text)
-        joined += j
+        text, st = repair_hyphenation(text)
+        joined += sum(st.values())
+        if unrepairable_hyphen(text):
+            reasons["trailing_hyphen"] = reasons.get("trailing_hyphen", 0) + 1
         for k, v in corruption_report(text).items():
             reasons[k] = reasons.get(k, 0) + v
         return text

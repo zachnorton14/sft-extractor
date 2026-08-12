@@ -36,7 +36,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 ROUTES = ["knowledge_qa", "reasoning_qa", "narrative_grounded", "narrative_fiction",
-          "composition_qa", "how_to_qa", "opinion_qa", "verse_qa", "multiturn_qa"]
+          "composition_qa", "how_to_qa", "opinion_qa", "verse_qa", "multiturn_qa",
+          "calibration_qa"]
 DICT_PATH = "/usr/share/dict/words"
 
 _TOK = re.compile(r"[A-Za-z][A-Za-z'-]*")
@@ -187,6 +188,100 @@ def join_hyphen_breaks(text):
         return m.group(0)
 
     return _HYPHEN_BREAK.sub(sub, text), joined, left
+
+
+# A word broken across a page boundary, with the page's furniture (folio number,
+# running head, chapter line) landing between the halves: "par- 21. CHAP. liament".
+# Start of a page-broken word; the wedged furniture that follows is searched token by
+# token in _join_furniture, because a single regex commits to one split and cannot
+# retry when that split fails the dictionary gate.
+_FURN_HEAD = re.compile(r"\b([A-Za-z]{2,})-\s+")
+_FURN_TOKEN = re.compile(r"\S+\s*")
+# Hyphenated compound with a stray space after the hyphen: "Lieutenant- Governor".
+_COMPOUND = re.compile(r"\b([A-Za-z]{2,})-\s+([A-Z][a-z]{1,})\b")
+# A word left hanging at the very end -- its continuation was never captured.
+_TRAILING = re.compile(r"[A-Za-z]{2,}-\s*$")
+_PREFIXES = {"pre", "anti", "cis", "trans", "non", "ex", "post", "semi", "quasi",
+             "vice", "sub", "super", "co", "re", "un", "inter", "intra", "pro", "neo"}
+
+
+def _join_furniture(text, max_wedge=4):
+    """Rejoin a word split across a page boundary, discarding the wedged furniture.
+
+    "par- 21. CHAP. liament" -> "parliament". After each "word-" the following tokens
+    are tried in turn as the wedge, and the first candidate whose tail completes a
+    dictionary word wins; if none does, the span is left untouched. Searching splits
+    here rather than in a regex is what makes it work -- a regex quantifier commits to
+    one split and cannot back up once the dictionary rejects it.
+    """
+    words = _english()
+    if not words:
+        return text, 0
+    out, pos, n = [], 0, 0
+    for m in _FURN_HEAD.finditer(text):
+        if m.start() < pos:
+            continue                      # inside a span already consumed
+        head = m.group(1)
+        rest = text[m.end():]
+        off, skipped, hit = 0, 0, None
+        while skipped <= max_wedge:
+            tm = _FURN_TOKEN.match(rest, off)
+            if not tm:
+                break
+            word = re.match(r"[a-z]{2,}", tm.group().strip())
+            if word and (head + word.group()).lower() in words:
+                # skipped == 0 means the halves are adjacent -> join_hyphen_breaks' job
+                if skipped:
+                    hit = (off + word.end(), head + word.group())
+                break
+            off, skipped = tm.end(), skipped + 1
+        if hit:
+            end, joined = hit
+            out.append(text[pos:m.start()])
+            out.append(joined)
+            pos = m.end() + end
+            n += 1
+    out.append(text[pos:])
+    return "".join(out), n
+
+
+def repair_hyphenation(text):
+    """Repair every recoverable hyphen break. Returns (text, {class: n}).
+
+    Three passes, each gated so a wrong join is impossible or harmless:
+      furniture  "par- 21. CHAP. liament" -> "parliament", accepted only when the two
+                 halves form a dictionary word, so the wedged text is provably junk.
+      compound   "Lieutenant- Governor" -> "Lieutenant-Governor": closes the space but
+                 KEEPS the hyphen, which is the correct rendering of the compound. Only
+                 fires for a known prefix or two capitalised parts.
+      plain      the original dictionary-gated rejoin ("after- wards" -> "afterwards").
+
+    Trailing hyphens are NOT repaired -- see unrepairable_hyphen(); the continuation is
+    gone and inventing it would be worse than dropping the row.
+    """
+    words = _english()
+    stats = {}
+
+    def comp(m):
+        a, b = m.group(1), m.group(2)
+        if a.lower() in _PREFIXES or a[0].isupper():
+            stats["compound"] = stats.get("compound", 0) + 1
+            return f"{a}-{b}"
+        return m.group(0)
+
+    text, n = _join_furniture(text)
+    if n:
+        stats["furniture"] = n
+    text = _COMPOUND.sub(comp, text)
+    text, joined, _ = join_hyphen_breaks(text)
+    if joined:
+        stats["plain"] = joined
+    return text, stats
+
+
+def unrepairable_hyphen(text):
+    """True if the text ends mid-word ("...the most ter-"); nothing can restore it."""
+    return bool(_TRAILING.search(text.rstrip()))
 
 
 def broken_fragments(text):

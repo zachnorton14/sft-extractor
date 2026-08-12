@@ -347,7 +347,7 @@ The core design rule: **answers are verbatim spans of period text, never model-c
 | `opinion-qa` | opinion_qa | opinion | Argument / stance questions |
 | `verse-qa` | verse_qa | verse | Questions on poetry/verse passages |
 | `multiturn-qa` | multiturn_qa | knowledge | Chained follow-up questions (conversation) |
-| `calibration-qa` | calibration_qa | knowledge, reasoning, stem_reasoning, opinion, narrative_grounded | Mixed set for register/quality calibration |
+| `calibration-qa` | calibration_qa | knowledge, reasoning | Factual non-answer when the source cannot settle the point |
 
 Each supports `--test` (print a small sample, no write), `--sample` (write a review dump under `synth/samples/`), `--size N`, and `--seed`.
 
@@ -374,6 +374,29 @@ python3 run.py knowledge-qa --size 5000
 python3 run.py stem-reasoning --sample
 python3 run.py narrative-qa --size 5000
 ```
+
+### Pair grading
+
+After the alignment filter has written `verified/<route>/` on Hugging Face, grade the
+surviving examples for training usefulness with a holistic 0--100 score:
+
+```bash
+python3 -m synth.grade --sample 100       # stats + review file; does not write HF output
+python3 -m synth.grade --sample 100 --show 25
+python3 -m synth.grade                    # full resumable pass
+```
+
+Sample reviews are also written as wrapped text files under `synth/samples/grade/`;
+the file contains per-route clean/flagged/hard-cap statistics, the best structurally
+clean candidates first, and then every sampled grading unit sorted from lowest to
+highest. Any deterministic hard cap is shown beside the affected example.
+
+The pass writes scored copies under `graded/<route>/`. Single-turn rows receive an
+integer `score`; multi-turn rows receive one holistic `score` for the complete
+conversation. Judgments checkpoint to `synth/state/grade_<route>.json`, and a route is
+published only after every grading unit has a valid score. The judge is constrained to
+return only a bare positional integer array such as `[87, 92, 76]`; object-shaped
+responses and filler are rejected.
 
 Model passes use OpenCode Go / DeepSeek; set `OPENCODE_API_KEY` (or `DS_API_KEY`) in the environment or `ROOT/.env`.
 

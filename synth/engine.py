@@ -95,9 +95,16 @@ def _strip_fence(text):
 _THINK_RE = re.compile(r"<think>.*?</think>", re.S)
 
 
-def _parse_json_array(text):
+def _parse_json_array(text, strict=False):
     """Extract the JSON array from a reply that may carry <think> blocks, code fences,
-    or leading prose — reasoning models over chat/completions do all three."""
+    or leading prose — reasoning models over chat/completions do all three.  Strict
+    mode is for callers whose output contract is a bare array: it rejects every
+    wrapper, fence, thought trace, and leading/trailing explanation."""
+    if strict:
+        text = text.strip()
+        if not text.startswith("[") or not text.endswith("]"):
+            raise json.JSONDecodeError("expected a bare array", text, 0)
+        return json.loads(text)
     text = _THINK_RE.sub("", text)
     text = _strip_fence(text).strip()
     text = re.sub(r"^\[?json\]?\s*", "", text, flags=re.I)   # stray leading "[json]" tag
@@ -303,6 +310,7 @@ class Route:
     concurrency: int = CONCURRENCY
     token_budget: int = TOKEN_BUDGET
     extra_body: dict = None       # passed to messages.create (e.g. disable thinking)
+    strict_json: bool = False      # require the model reply to be a bare JSON array
 
 
 def state_file(route):
@@ -358,7 +366,7 @@ async def _call(client, semaphore, route, system, payload, n):
                     # it already burned a full max_tokens generation. Give up now — the
                     # caller (e.g. verify) can split the batch and retry smaller.
                     return None
-                return _parse_json_array(text)
+                return _parse_json_array(text, strict=getattr(route, "strict_json", False))
             except json.JSONDecodeError as e:
                 if attempt == 4:
                     print(f"  batch of {n} failed: unparseable: {e}\n"

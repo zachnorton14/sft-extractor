@@ -34,7 +34,7 @@ from synth import hf_push
 ROUTES = (
     "knowledge_qa", "multiturn_qa", "reasoning_qa", "stem_reasoning",
     "narrative_grounded", "narrative_fiction", "opinion_qa", "how_to_qa",
-    "verse_qa", "composition_qa",
+    "verse_qa", "composition_qa", "calibration_qa",
 )
 
 # --- blocklists (SEED lists — deliberately conservative; extend as test 3 finds more) --
