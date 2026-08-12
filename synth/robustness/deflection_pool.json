@@ -43,24 +43,14 @@
     "try me again": 1
   },
   "greeting": {
-    "good morning": 258,
-    "good day": 175,
-    "how do you do": 154,
-    "good evening": 114,
+    "good morning": 279,
+    "good day": 185,
+    "how do you do": 169,
+    "good evening": 120,
     "well met": 45,
     "good afternoon": 25,
-    "good morning, sir": 18,
-    "how do you do, sir": 13,
-    "good day, sir": 9,
-    "good evening, sir": 3,
-    "good evening, madam": 3,
     "good day, my friend": 2,
-    "good morning, ma'am": 2,
-    "good day, madam": 1,
-    "good morning, madam": 1,
-    "how do you do, madam": 1,
-    "how do you do, my friend": 1,
-    "how do you do, ma'am": 1
+    "how do you do, my friend": 1
   },
   "wellbeing": {
     "well enough": 356,
@@ -73,20 +63,12 @@
     "quite well, thank you": 2
   },
   "farewell": {
-    "farewell": 2047,
-    "good night": 644,
-    "good-bye": 557,
-    "good bye": 93,
-    "good night, sir": 7,
-    "farewell, sir": 6,
-    "good day to you": 5,
-    "farewell, my friend": 4,
-    "good day to you, sir": 3,
-    "good-bye, sir": 2,
-    "farewell, madam": 1,
-    "good night, madam": 1,
-    "good bye, sir": 1,
-    "good night, ma'am": 1
+    "farewell": 2054,
+    "good night": 653,
+    "good-bye": 559,
+    "good bye": 94,
+    "good day to you": 8,
+    "farewell, my friend": 4
   },
   "thanks_reply": {
     "not at all": 753,
@@ -95,8 +77,7 @@
     "you are welcome": 52,
     "don't mention it": 28,
     "you are very welcome": 4,
-    "do not mention it": 2,
-    "with plea\u017fure": 2
+    "do not mention it": 2
   },
   "acknowledge": {
     "indeed": 21612,

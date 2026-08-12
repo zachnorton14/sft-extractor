@@ -81,6 +81,17 @@ INVITATION = re.compile(
 # Reusable only when a terminator follows, not a complement ("by X", "that Y", ...).
 CLEAN_TAIL = re.compile(r"^\s*[.!?,;\"']")
 
+# Period dialogue is full of gendered address, but the model is talking to whoever
+# opened the page and is told nothing about them -- "Good morning, madam" is wrong
+# for roughly half of visitors, and wrong in a way that reads as carelessness rather
+# than as period flavour. Strip the gendered vocative and keep the bare greeting;
+# counts merge into the base form. Ungendered address ("my friend") is left alone.
+GENDERED_VOCATIVE = re.compile(r",\s*(?:my dear\s+)?(?:sir|madam|ma'am)\s*$", re.IGNORECASE)
+
+
+def _normalize(clause):
+    return GENDERED_VOCATIVE.sub("", clause).strip()
+
 # Clauses the regex finds but that do not mean what we need. Frequency is no defence
 # here: "come again" is the single most common invitation match precisely because the
 # period sense is "return", not "repeat that" -- every sampled occurrence is
@@ -140,7 +151,9 @@ def _harvest(limit_bytes=0):
                 for m in rx.finditer(text):
                     if not CLEAN_TAIL.match(text[m.end():m.end() + 3]):
                         continue # a complement follows -> context-bound
-                    found[kind][" ".join(m.group(1).split()).lower()] += 1
+                    clause = _normalize(" ".join(m.group(1).split()).lower())
+                    if clause:
+                        found[kind][clause] += 1
     return found, read, rows
 
 
@@ -201,9 +214,12 @@ def main():
         return
 
     found, read, rows = _harvest(int(args.scan_bytes))
+    # Drop OCR wreckage. The corpus still carries long-s misreads ("with pleaſure")
+    # and mojibake that ocr_corruption.py catalogues; a clause is short enough that
+    # any non-ASCII character in it is corruption rather than legitimate diacritics.
     pool = {
         kind: {c: n for c, n in sorted(counter.items(), key=lambda kv: -kv[1])
-               if n >= args.min_count and c not in BLOCKLIST}
+               if n >= args.min_count and c not in BLOCKLIST and c.isascii()}
         for kind, counter in found.items()
     }
     POOL_FILE.write_text(json.dumps(pool, indent=2) + "\n", encoding="utf-8")
