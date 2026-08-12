@@ -104,16 +104,22 @@ def _mixed_case(rng):
     return "".join(c.upper() if rng.random() < 0.5 else c for c in base)
 
 
-# (name, generator, weight) -- weights favour the classes actually seen in the wild.
+# (name, generator, weight). Weighted by how hard the case is, not how common.
+# Junk strings are the easy lesson -- the model only has to notice it is not
+# language. A real sentence cut mid-clause is the hard one: it looks exactly like
+# book prose worth continuing, which is the failure being trained out. So fragment
+# dominates, with single_nonword next (a plausible-looking word it cannot know).
+# bare_punctuation saturates at 8 rows whatever its weight -- there are only eight
+# distinct values and rows dedup on the question.
 INPUT_CLASSES = (
-    ("consonant_run", _consonant_run, 24),
-    ("keyboard_mash", _keyboard_mash, 18),
-    ("single_nonword", _single_nonword, 14),
-    ("fragment", _fragment, 14),
-    ("alnum_noise", _alnum_noise, 10),
-    ("repeated_char", _repeated_char, 8),
-    ("mixed_case", _mixed_case, 6),
-    ("bare_punctuation", _bare_punctuation, 6),
+    ("fragment", _fragment, 42),
+    ("single_nonword", _single_nonword, 22),
+    ("consonant_run", _consonant_run, 12),
+    ("keyboard_mash", _keyboard_mash, 8),
+    ("alnum_noise", _alnum_noise, 5),
+    ("repeated_char", _repeated_char, 4),
+    ("mixed_case", _mixed_case, 4),
+    ("bare_punctuation", _bare_punctuation, 3),
 )
 
 
@@ -194,7 +200,7 @@ def build_rows(count, seed=1930):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--count", type=int, default=400)
+    ap.add_argument("--count", type=int, default=500)
     ap.add_argument("--seed", type=int, default=1930)
     ap.add_argument("--preview", action="store_true", help="print rows instead of writing")
     args = ap.parse_args()
