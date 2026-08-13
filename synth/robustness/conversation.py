@@ -98,11 +98,43 @@ INPUTS = {
                "I suppose"],
 }
 
-# Light authored connective tissue, used only to open a turn back to the visitor.
-# Kept deliberately plain so the mined clauses carry the period voice.
-_OPENERS = ["What brings you", "What shall we talk of", "Sit, and tell me what you please",
-            "What is on your mind", "And what of you", "Tell me what you please"]
-_CLOSERS = ["Good day to you", "Until we meet again", "Keep well", "Safe home"]
+# Share of replies that hand the turn back with a question. Six phrases at 66% put
+# ~1,300 exposures each into c0 at four epochs, which is enough pressure to make
+# "Indeed. What brings you?" a reflex the model reaches for regardless of input.
+# Wider pool, lower rate: most replies now simply end.
+TURN_BACK_RATE = 0.40
+
+# Authored, and therefore the anachronism surface -- kept peer-to-peer rather than
+# servile, since the persona is a private person in conversation, not staff. The
+# mined invite_on clauses are appended at load time so part of the pool is verbatim.
+_OPENERS = [
+    "What brings you", "What shall we talk of", "What is on your mind",
+    "And what of you", "Tell me what you please", "Sit, and tell me what you please",
+    "What is the news with you", "How does the world use you",
+    "What have you been reading", "Where shall we begin",
+    "What is it you wish to know", "What subject pleases you",
+    "Name your subject", "What do you care to talk of",
+    "What have you to ask", "Have you a question for me",
+    "What can I tell you", "Ask me what you like",
+    "Put your question", "Let us hear it",
+    "What troubles you", "What have you come to ask",
+    "Is there something you would ask", "What shall it be",
+    "I am listening -- what is it", "What has brought this on",
+    "What would you have me tell you", "Tell me your errand",
+    "What have you been turning over", "What is it you are after",
+    "Where would you like to start", "What has your attention",
+]
+_CLOSERS = ["Good day to you", "Until we meet again", "Keep well", "Safe home",
+            "Come again when you like", "Mind how you go", "Rest well",
+            "Until the next time"]
+
+
+def openers(pool):
+    """Authored openers plus the mined invitations that read as openings."""
+    mined = [c for c in (pool.get("invite_on") or [])
+             if c in ("pray go on", "pray continue", "say on", "go on",
+                      "pray come in", "pray be seated", "take a chair", "do sit down")]
+    return _OPENERS + [_cap(c) for c in mined]
 
 
 def load_pool():
@@ -121,16 +153,17 @@ def _cap(s):
 def compose_answer(rng, cls, pool):
     """Assemble a reply for one input class from mined clauses plus a light join."""
     g = lambda k, fallback: pool.get(k) or fallback
+    ops = openers(pool)
 
     if cls == "greeting":
         reply = _cap(rng.choice(g("greeting", ["good day"])))
-        if rng.random() < 0.6:
-            return f"{reply}. {rng.choice(_OPENERS)}?"
+        if rng.random() < TURN_BACK_RATE:
+            return f"{reply}. {rng.choice(ops)}?"
         return f"{reply}."
 
     if cls == "wellbeing":
         state = _cap(rng.choice(g("wellbeing", ["well enough"])))
-        if rng.random() < 0.5:
+        if rng.random() < TURN_BACK_RATE:
             return f"{state}, thank you. And you?"
         return f"{state}, thank you."
 
@@ -145,22 +178,23 @@ def compose_answer(rng, cls, pool):
 
     if cls == "acknowledge":
         ack = _cap(rng.choice(g("acknowledge", ["indeed"])))
-        if rng.random() < 0.55:
-            return f"{ack}. {rng.choice(_OPENERS)}?"
+        if rng.random() < TURN_BACK_RATE:
+            return f"{ack}. {rng.choice(ops)}?"
         return f"{ack}."
 
     if cls == "smalltalk":
         if rng.random() < 0.5:
             lead = _cap(rng.choice(g("pleased", ["glad to see you"])))
-            return f"{lead}. {rng.choice(_OPENERS)}?"
-        return f"{rng.choice(_OPENERS)}?"
+            return f"{lead}. {rng.choice(ops)}?"
+        return f"{rng.choice(ops)}?"
 
     if cls == "politeness":
-        return _cap(rng.choice(g("thanks_reply", ["not at all"]))) + f". {rng.choice(_OPENERS)}?"
+        body = _cap(rng.choice(g("thanks_reply", ["not at all"])))
+        return f"{body}. {rng.choice(ops)}?" if rng.random() < TURN_BACK_RATE else f"{body}."
 
-    # affirm / deny -- acknowledge and hand the turn back
+    # affirm / deny -- acknowledge, and sometimes hand the turn back
     ack = _cap(rng.choice(g("acknowledge", ["indeed"])))
-    return f"{ack}. {rng.choice(_OPENERS)}?"
+    return f"{ack}. {rng.choice(ops)}?" if rng.random() < TURN_BACK_RATE else f"{ack}."
 
 
 # Acknowledge something said at you, then hand the turn back. The visitor has not
@@ -174,8 +208,8 @@ _RECEIVE = [
 def compose_odd(rng, pool):
     """Receive a statement, then open the floor."""
     ack = _cap(rng.choice(pool.get("acknowledge") or _RECEIVE)).rstrip(".")
-    if rng.random() < 0.7:
-        return f"{ack}. {rng.choice(_OPENERS)}?"
+    if rng.random() < TURN_BACK_RATE:
+        return f"{ack}. {rng.choice(openers(pool))}?"
     return f"{ack}."
 
 
@@ -242,6 +276,12 @@ def build_rows(count, seed=1930):
     rng = random.Random(f"robustness:{ROUTE}:{seed}")
     rows, seen = [], set()
     attempts = 0
+    # Enforce the turn-back share on the rows that SURVIVE, not the ones generated.
+    # Opener-bearing replies have ~40x more distinct forms than bare ones, so the bare
+    # ones saturate and get dropped as duplicates -- generating at 40% was landing at
+    # 63%. vague_ref and smalltalk are exempt: asking is the whole point of those.
+    _MUST_ASK = {"vague_ref", "smalltalk"}
+    asked = 0
     while len(rows) < count and attempts < count * 60:
         attempts += 1
         cls = rng.choices(classes, weights=w, k=1)[0]
@@ -255,7 +295,11 @@ def build_rows(count, seed=1930):
         key = (question, answer)
         if key in seen:
             continue
+        ends_q = answer.rstrip().endswith("?")
+        if ends_q and cls not in _MUST_ASK and asked >= TURN_BACK_RATE * count:
+            continue
         seen.add(key)
+        asked += ends_q
         rows.append({
             "doc_index": f"robust-{ROUTE}-{len(rows):05d}",
             "category": ROUTE,
