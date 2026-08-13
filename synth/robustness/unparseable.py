@@ -104,6 +104,37 @@ def _mixed_case(rng):
     return "".join(c.upper() if rng.random() < 0.5 else c for c in base)
 
 
+def _multi_token(rng):
+    """Several gibberish tokens of uneven length: "Acakbvkabkjva c".
+
+    A single blob is easy to spot as junk. Two or three tokens with a stray short
+    one look enough like a sentence to draw the model into continuing them.
+    """
+    n = rng.randint(2, 4)
+    out = []
+    for k in range(n):
+        # one token is deliberately tiny, the rest are word-sized
+        length = rng.randint(1, 2) if (k and rng.random() < 0.4) else rng.randint(4, 13)
+        tok = "".join(rng.choice(_CONSONANTS if i % 3 else _VOWELS) for i in range(length))
+        if rng.random() < 0.35:
+            tok = tok.capitalize()
+        elif rng.random() < 0.15:
+            tok = tok.upper()
+        out.append(tok)
+    return " ".join(out)
+
+
+def _long_run(rng):
+    """A very long unbroken run -- the paste or the leaned-on keyboard."""
+    n = rng.randint(18, 45)
+    return "".join(rng.choice(_CONSONANTS + _VOWELS) for _ in range(n))
+
+
+def _micro(rng):
+    """One or two characters. Almost no signal at all."""
+    return "".join(rng.choice(_CONSONANTS + _VOWELS) for _ in range(rng.randint(1, 3)))
+
+
 # (name, generator, weight). Weighted by how hard the case is, not how common.
 # Junk strings are the easy lesson -- the model only has to notice it is not
 # language. A real sentence cut mid-clause is the hard one: it looks exactly like
@@ -112,14 +143,17 @@ def _mixed_case(rng):
 # bare_punctuation saturates at 8 rows whatever its weight -- there are only eight
 # distinct values and rows dedup on the question.
 INPUT_CLASSES = (
-    ("fragment", _fragment, 42),
-    ("single_nonword", _single_nonword, 22),
-    ("consonant_run", _consonant_run, 12),
-    ("keyboard_mash", _keyboard_mash, 8),
-    ("alnum_noise", _alnum_noise, 5),
-    ("repeated_char", _repeated_char, 4),
-    ("mixed_case", _mixed_case, 4),
-    ("bare_punctuation", _bare_punctuation, 3),
+    ("fragment", _fragment, 34),
+    ("single_nonword", _single_nonword, 16),
+    ("multi_token", _multi_token, 16),
+    ("consonant_run", _consonant_run, 9),
+    ("keyboard_mash", _keyboard_mash, 6),
+    ("long_run", _long_run, 5),
+    ("micro", _micro, 4),
+    ("alnum_noise", _alnum_noise, 4),
+    ("mixed_case", _mixed_case, 3),
+    ("repeated_char", _repeated_char, 2),
+    ("bare_punctuation", _bare_punctuation, 1),
 )
 
 
@@ -143,8 +177,8 @@ def _sentence_case(clause):
 # Deflections that assert the input is not a WORD only make sense for word-shaped
 # input; saying "there is no such word" to "..." or to an unfinished clause is wrong.
 _WORD_ONLY = ("no such word", "never heard the word")
-_WORD_SHAPED = {"consonant_run", "single_nonword", "mixed_case",
-                "keyboard_mash", "alnum_noise", "repeated_char"}
+_WORD_SHAPED = {"consonant_run", "single_nonword", "mixed_case", "keyboard_mash",
+                "alnum_noise", "repeated_char", "multi_token", "long_run", "micro"}
 
 
 def _eligible_deflections(deflections, input_class):
@@ -200,7 +234,7 @@ def build_rows(count, seed=1930):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--count", type=int, default=500)
+    ap.add_argument("--count", type=int, default=2000)
     ap.add_argument("--seed", type=int, default=1930)
     ap.add_argument("--preview", action="store_true", help="print rows instead of writing")
     args = ap.parse_args()

@@ -16,15 +16,16 @@ import argparse
 import json
 
 from synth import hf_push
-from synth.robustness import conversation, era, unparseable
+from synth.robustness import conversation, era, typos, unparseable
 
 HF_REPO = "zachnorton03/vintage-sft-robustness"
 
 # (module, default row count). Counts are the dial for how much of the mixture
 # this becomes; the curriculum spec then multiplies by epochs on top.
 ROUTES = (
-    (conversation, 750),
-    (unparseable, 500),
+    (conversation, 3500),
+    (unparseable, 2000),
+    (typos, 1200),
     (era, 220),
 )
 

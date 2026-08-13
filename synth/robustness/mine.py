@@ -28,6 +28,7 @@ ROOT = Path(__file__).resolve().parents[2]
 EXCERPTS = ROOT / "synth" / "output" / "excerpts.jsonl"
 POOL_FILE = Path(__file__).resolve().parent / "deflection_pool.json"
 FRAGMENT_FILE = Path(__file__).resolve().parent / "fragment_pool.json"
+UTTERANCE_FILE = Path(__file__).resolve().parent / "utterance_pool.json"
 
 # Whole sentences kept intact; the generator truncates them at a random word boundary
 # so the cut varies with its own seed rather than being frozen here. Real period
@@ -157,6 +158,52 @@ def _harvest(limit_bytes=0):
     return found, read, rows
 
 
+_UTTERANCE = re.compile(r'[“"]([A-Z][^”"]{2,40})[”"]')
+_UTTERANCE_OK = re.compile(r"^[A-Z][A-Za-z ,'!?.-]+[.!?]$")
+
+
+def harvest_utterances(want, limit_bytes, seed=1930):
+    """Short standalone quoted utterances: "Praise God!", "Come home."
+
+    These are the odd openers -- grammatical, complete, and no kind of question.
+    A visitor types them and the model has no idea what to do, because every
+    graded row is a well-formed question. Period dialogue is full of them, so
+    they are taken verbatim rather than invented.
+
+    Anything carrying a proper noun is dropped: "Come home, Mr. Weller" is bound
+    to a story the visitor is not in.
+    """
+    rng = random.Random(f"utterances:{seed}")
+    out, seen = [], set()
+    read = 0
+    with open(EXCERPTS, encoding="utf-8", errors="replace") as fh:
+        for line in fh:
+            read += len(line)
+            if limit_bytes and read > limit_bytes:
+                break
+            if len(out) >= want:
+                break
+            try:
+                text = json.loads(line).get("excerpt") or ""
+            except Exception:
+                continue
+            for m in _UTTERANCE.finditer(text):
+                u = " ".join(m.group(1).split())
+                words = u.split()
+                if not (2 <= len(words) <= 6) or not _UTTERANCE_OK.match(u):
+                    continue
+                # a capitalized word after the first is a name/place -> story-bound
+                if any(w[0].isupper() for w in words[1:] if w[0].isalpha()):
+                    continue
+                if u.lower() in seen:
+                    continue
+                seen.add(u.lower())
+                out.append(u)
+                if len(out) >= want:
+                    break
+    return out
+
+
 def harvest_fragments(want, limit_bytes, seed=1930):
     """Collect whole period sentences for the generator to truncate.
 
@@ -194,6 +241,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--scan-bytes", type=float, default=0,
                     help="stop after N bytes (0 = whole corpus)")
+    ap.add_argument("--utterances", type=int, default=0,
+                    help="harvest N short standalone utterances into utterance_pool.json and exit")
     ap.add_argument("--fragments", type=int, default=0,
                     help="harvest N sentences per kind into fragment_pool.json and exit")
     ap.add_argument("--fragment-bytes", type=float, default=250e6,
@@ -201,6 +250,15 @@ def main():
     ap.add_argument("--min-count", type=int, default=1,
                     help="drop clauses seen fewer than this many times")
     args = ap.parse_args()
+
+    if args.utterances:
+        pool = harvest_utterances(args.utterances, int(args.fragment_bytes))
+        UTTERANCE_FILE.write_text(json.dumps(pool, indent=1) + "\n", encoding="utf-8")
+        print(f"utterances: {len(pool):,}")
+        for u in pool[:12]:
+            print(f"  {u}")
+        print(f"\nwrote {UTTERANCE_FILE}")
+        return
 
     if args.fragments:
         pool = harvest_fragments(args.fragments, int(args.fragment_bytes))

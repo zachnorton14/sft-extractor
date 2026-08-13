@@ -21,11 +21,59 @@ import argparse
 import collections
 import json
 import random
+import re
 from pathlib import Path
 
 POOL_FILE = Path(__file__).resolve().parent / "deflection_pool.json"
+UTTERANCE_FILE = Path(__file__).resolve().parent / "utterance_pool.json"
 ROUTE = "conversation_qa"
 SCORE = 100
+
+# Pronouns with nothing to point at. "What is it?" opening a conversation refers to
+# nothing, and answering it requires guessing; asking is correct.
+_DANGLING = re.compile(r"\b(it|its|they|them|their|he|him|his|she|her|that|this|those|these)\b",
+                       re.IGNORECASE)
+
+
+# A caption ("Current indicator.") and a name ("Brandt, beware!") both survive the
+# miner's shape checks but neither is something a person says to you. Require a
+# function word so what is left reads as speech, and drop gendered address and
+# possessive proper nouns.
+_SPEECHY = re.compile(r"\b(i|you|we|my|your|our|me|us|is|are|was|were|be|do|does|did|"
+                      r"come|go|let|will|shall|not|no|yes|have|has|there|here|god|"
+                      r"never|ever|pray|tell|know|think|say)\b", re.IGNORECASE)
+_GENDERED = re.compile(r"\b(madam|madame|ma'am|sir|mister|mistress|miss)\b", re.IGNORECASE)
+
+
+def _speechlike(u):
+    if not _SPEECHY.search(u) or _GENDERED.search(u):
+        return False
+    if re.search(r"^[A-Z][a-z]+'s\b", u):     # "Stonewall's way." -- a name
+        return False
+    return True
+
+
+def _load_utterances():
+    """Short standalone things people say that are not questions to you.
+
+    "Praise God!", "Come home." are grammatical, complete, and no kind of request.
+    Every graded row is a well-formed question, so these are wholly uncovered, and
+    they are exactly what a visitor types when not asking anything.
+    """
+    if not UTTERANCE_FILE.exists():
+        return [], []
+    pool = json.loads(UTTERANCE_FILE.read_text(encoding="utf-8"))
+    odd, vague = [], []
+    for u in pool:
+        if not _speechlike(u):
+            continue
+        if u.rstrip().endswith("?"):
+            # a bare question whose subject is a dangling pronoun has no referent
+            if _DANGLING.search(u):
+                vague.append(u)
+        else:
+            odd.append(u)
+    return odd, vague
 
 # What a present-day visitor actually types. Modern forms are intentional.
 INPUTS = {
@@ -115,6 +163,64 @@ def compose_answer(rng, cls, pool):
     return f"{ack}. {rng.choice(_OPENERS)}?"
 
 
+# Acknowledge something said at you, then hand the turn back. The visitor has not
+# asked anything, so there is nothing to answer -- only something to receive.
+_RECEIVE = [
+    "Just so.", "Indeed.", "So it is.", "Quite so.", "To be sure.", "Very true.",
+    "There is something in that.", "I take your meaning.", "As you say.",
+]
+
+
+def compose_odd(rng, pool):
+    """Receive a statement, then open the floor."""
+    ack = _cap(rng.choice(pool.get("acknowledge") or _RECEIVE)).rstrip(".")
+    if rng.random() < 0.7:
+        return f"{ack}. {rng.choice(_OPENERS)}?"
+    return f"{ack}."
+
+
+# The visitor's sentence parses perfectly well; it simply points at something that
+# was never named. Claiming not to understand would be false -- the honest reply
+# asks which thing is meant.
+# Generic asks, safe whatever the pronoun was.
+_WHICH = [
+    "Which do you mean? You have not said.",
+    "I have nothing to go on -- what are you asking after?",
+    "You must name the thing first.",
+    "That points at something you have not mentioned.",
+    "I would answer if I knew what you meant by it.",
+    "Begin at the beginning -- what are we speaking of?",
+]
+# Asks that quote the pronoun back. Only usable when the question actually used it:
+# answering "Where did you get that?" with "Who is 'he'?" names a word that was
+# never said.
+_WHICH_BY_PRONOUN = {
+    "he": ["Who is 'he'? We have not spoken of anyone.", "Who do you mean by 'he'?"],
+    "she": ["Who is 'she'? You have not said.", "Who do you mean by 'she'?"],
+    "they": ["Who are 'they'? We have named nobody.", "Who do you mean by 'they'?"],
+    "it": ["What is 'it'? You have not told me.", "What do you mean by 'it'?"],
+    "that": ["What is 'that'? I have nothing to point at.", "Which thing is 'that'?"],
+    "this": ["What is 'this'? You have not said.", "Which do you mean by 'this'?"],
+}
+_PRONOUN_GROUP = {"he": "he", "him": "he", "his": "he", "she": "she", "her": "she",
+                  "they": "they", "them": "they", "their": "they", "it": "it",
+                  "its": "it", "that": "that", "this": "this",
+                  "those": "they", "these": "they"}
+
+
+def compose_vague(rng, question, pool):
+    """A pronoun with no antecedent: ask which, do not claim incomprehension."""
+    found = _DANGLING.search(question)
+    group = _PRONOUN_GROUP.get(found.group(0).lower()) if found else None
+    choices = list(_WHICH)
+    if group in _WHICH_BY_PRONOUN:
+        choices += _WHICH_BY_PRONOUN[group] * 2   # prefer the specific ask
+    if rng.random() < 0.8:
+        return rng.choice(choices)
+    tail = rng.choice(pool.get("invitation") or ["what do you mean"])
+    return f"{rng.choice(choices).rstrip('?.')} -- {tail}?"
+
+
 def build_rows(count, seed=1930):
     """Deterministic for a given (count, seed).
 
@@ -124,10 +230,14 @@ def build_rows(count, seed=1930):
     pair, not the question alone.
     """
     pool = load_pool()
-    classes = list(INPUTS)
+    odd_pool, vague_pool = _load_utterances()
+    classes = list(INPUTS) + (["odd_opener"] if odd_pool else []) + (["vague_ref"] if vague_pool else [])
     # Weight toward greetings and acknowledgements -- the most common real openers.
-    weights = {"greeting": 26, "acknowledge": 16, "wellbeing": 14, "smalltalk": 12,
-               "farewell": 12, "thanks": 8, "affirm": 7, "politeness": 5}
+    # odd_opener carries the volume: it has thousands of distinct corpus inputs,
+    # where the templated classes saturate at a few dozen surface forms each.
+    weights = {"greeting": 14, "acknowledge": 9, "wellbeing": 7, "smalltalk": 7,
+               "farewell": 7, "thanks": 5, "affirm": 4, "politeness": 3,
+               "odd_opener": 60, "vague_ref": 18}
     w = [weights.get(c, 5) for c in classes]
     rng = random.Random(f"robustness:{ROUTE}:{seed}")
     rows, seen = [], set()
@@ -135,8 +245,13 @@ def build_rows(count, seed=1930):
     while len(rows) < count and attempts < count * 60:
         attempts += 1
         cls = rng.choices(classes, weights=w, k=1)[0]
-        question = rng.choice(INPUTS[cls])
-        answer = compose_answer(rng, cls, pool)
+        if cls == "odd_opener":
+            question, answer = rng.choice(odd_pool), compose_odd(rng, pool)
+        elif cls == "vague_ref":
+            question = rng.choice(vague_pool)
+            answer = compose_vague(rng, question, pool)
+        else:
+            question, answer = rng.choice(INPUTS[cls]), compose_answer(rng, cls, pool)
         key = (question, answer)
         if key in seen:
             continue
@@ -155,7 +270,7 @@ def build_rows(count, seed=1930):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--count", type=int, default=750)
+    ap.add_argument("--count", type=int, default=3500)
     ap.add_argument("--seed", type=int, default=1930)
     ap.add_argument("--preview", action="store_true")
     args = ap.parse_args()
